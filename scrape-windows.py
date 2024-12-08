@@ -83,24 +83,6 @@ def extract_http_section(soup):
 
     return all_text
 
-# def dom_to_json(element):
-#     """Recursive function to convert BeautifulSoup elements to JSON and remove empty nodes."""
-#     if element.name is None:
-#         # Return text nodes as plain strings (strip whitespace)
-#         text = element.strip()
-#         return text if text else None
-
-#     # Process children recursively
-#     children = [dom_to_json(child) for child in element.contents if child]
-#     # Filter out None (empty) children
-#     children = [child for child in children if child is not None]
-
-#     return {
-#         "tag": element.name,
-#         "attributes": element.attrs if element.attrs else None,
-#         "children": children
-#     }
-
 if __name__ == "__main__":
     # Scrape the page content
     soup = scrape_dynamic_content(url)
@@ -112,14 +94,3 @@ if __name__ == "__main__":
     with open("http_section_content.txt", "w", encoding="utf-8") as file:
         file.write("\n".join(http_section))
     print("HTTP section content saved as http_section_content.txt.")
-
-    # # Save the cleaned DOM as HTML
-    # with open("cleaned_dom.html", "w", encoding="utf-8") as file:
-    #     file.write(soup.prettify())
-    # print("Cleaned DOM saved as cleaned_dom.html.")
-
-    # # Convert DOM to JSON
-    # dom_json = dom_to_json(soup)
-    # with open("dom_structure.json", "w", encoding="utf-8") as file:
-    #     json.dump(dom_json, file, indent=2)
-    # print("DOM structure saved as dom_structure.json.")

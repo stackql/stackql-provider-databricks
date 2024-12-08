@@ -1,0 +1,56 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/preview/accounts/{account_id}/access-control/assignable-roles",
+  "description": "Gets all the roles that can be granted on an account level resource. A role is grantable",
+  "pathParameters": {
+    "account_id": {
+      "required": true,
+      "description": "Query parameters"
+    },
+    "resource": {
+      "required": true,
+      "type": "string",
+      "description": "Summary"
+    },
+    "resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>": {
+      "required": false,
+      "description": "A resource name for the service principal."
+    },
+    "resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>": {
+      "required": false,
+      "description": "A resource name for the group."
+    },
+    "resource=accounts/<ACCOUNT_ID>": {
+      "required": false,
+      "description": "A resource name for the account."
+    }
+  },
+  "responses": {
+    "200": {
+      "roles": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Role to assign to a principal or a list of principals on a resource."
+            }
+          }
+        }
+      }
+    },
+    "400": {
+      "error_code": "BAD_REQUEST",
+      "description": "Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

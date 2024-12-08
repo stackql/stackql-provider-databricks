@@ -1,0 +1,80 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/preview/accounts/{account_id}/access-control/rule-sets",
+  "description": "Get a rule set by its name. A rule set is always attached to a resource and contains a",
+  "pathParameters": {
+    "account_id": {
+      "required": true,
+      "description": "Query parameters"
+    },
+    "name": {
+      "required": true,
+      "type": "string",
+      "description": "Summary"
+    },
+    "name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default": {
+      "required": false,
+      "description": "A name for a rule set on the service principal."
+    },
+    "name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default": {
+      "required": false,
+      "description": "A name for a rule set on the group."
+    },
+    "name=accounts/<ACCOUNT_ID>/ruleSets/default": {
+      "required": false,
+      "description": "A name for a rule set on the account."
+    },
+    "etag": {
+      "required": true,
+      "type": "string",
+      "description": "Summary"
+    },
+    "etag=": {
+      "required": false,
+      "description": "An empty etag can only be used in GET to indicate no freshness requirements."
+    },
+    "etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==": {
+      "required": false,
+      "description": "An etag encoded a specific version of the rule set to get or to be updated."
+    }
+  },
+  "responses": {
+    "200": {
+      "name": {
+        "type": "string",
+        "description": "Name of the rule set."
+      },
+      "grant_rules": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "principals": {
+              "description": "Principals this grant rule applies to."
+            },
+            "role": {
+              "type": "string",
+              "description": "Role that is assigned to the list of principals."
+            }
+          }
+        }
+      },
+      "etag": {
+        "type": "string",
+        "description": "Identifies the version of the rule set returned."
+      }
+    },
+    "400": {
+      "error_code": "BAD_REQUEST",
+      "description": "Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

@@ -1,0 +1,74 @@
+PUT
+/api/2.0/preview/accounts/{account_id}/access-control/rule-sets
+Replace the rules of a rule set.
+First, use  get to read the current version of the rule set before modifying it. This
+pattern helps prevent conflicts between concurrent updates.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type.
+Request body
+The rule set to update to.
+code: name
+required
+string
+Name of the rule set.
+code: rule_set
+object
+code: name
+required
+string
+Name of the rule set.
+code: grant_rules
+Array of object
+code: etag
+required
+string
+The expected etag of the rule set to update. The update will fail if the value does
+not match the value that is stored in account access control service.
+Responses
+200
+Rule sets on the resource was updated successfully.
+Rule sets on the resource was updated successfully.
+code: name
+string
+Name of the rule set.
+code: grant_rules
+Array of object
+Array [
+code: principals
+Array of string
+Principals this grant rule applies to.
+code: role
+required
+string
+Role that is assigned to the list of principals.
+]
+code: etag
+string
+Identifies the version of the rule set returned.
+This method might return the following HTTP codes: 400, 401, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+400
+BAD_REQUEST
+Request is invalid.
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

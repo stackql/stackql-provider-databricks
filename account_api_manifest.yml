@@ -1,6 +1,6 @@
 services:
   iam:
-    description: something
+    description: Identity and Access Management
     resources:
       - name: assignable_roles
         methods:
@@ -90,7 +90,7 @@ services:
             docPath: https://docs.databricks.com/api/account/workspaceassignment/get
             verb: select
   unity_catalog:
-    description: something
+    description: Unity Catalog
     resources:
       - name: metastore_assignments
         methods:
@@ -144,7 +144,7 @@ services:
             docPath: https://docs.databricks.com/api/account/accountstoragecredentials/delete
             verb: delete
   settings:
-    description: something
+    description: Account Settings
     resources:
       - name: ip_access_lists
         methods:
@@ -197,7 +197,7 @@ services:
             docPath: https://docs.databricks.com/api/account/networkconnectivity/deletenetworkconnectivityconfiguration
             verb: delete
   provisioning:
-    description: something
+    description: Account Provisioning
     resources:
       - name: credentials
         methods:
@@ -304,7 +304,7 @@ services:
             docPath: https://docs.databricks.com/api/account/workspaces/delete
             verb: delete
   billing:
-    description: something
+    description: Account Billing
     resources:
       - name: billable_usage
         methods:
@@ -337,7 +337,7 @@ services:
             docPath: https://docs.databricks.com/api/account/budgets/delete
             verb: delete
   logging:
-    description: something
+    description: Log Delivery
     resources:
       - name: log_delivery
         methods:
@@ -354,7 +354,7 @@ services:
             docPath: https://docs.databricks.com/api/account/logdelivery/patchstatus
             verb: exec
   oauth:
-    description: something
+    description: OAuth Integrations
     resources:
       - name: custom_app_integrations
         methods:
