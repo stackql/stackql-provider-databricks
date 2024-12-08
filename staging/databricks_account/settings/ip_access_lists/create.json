@@ -1,0 +1,118 @@
+{
+  "verb": "post",
+  "path": "/api/2.0/accounts/{account_id}/ip-access-lists",
+  "description": "Creates an IP access list for the account.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "string"
+    }
+  },
+  "requestBody": {
+    "properties": {
+      "label": {
+        "type": "string",
+        "description": "Example"
+      },
+      "\"Office VPN\"": {},
+      "list_type": {
+        "type": "string",
+        "description": "Type of IP access list. Valid values are as follows and are case-sensitive:",
+        "enum": [
+          "ALLOW",
+          "BLOCK"
+        ]
+      },
+      "ALLOW": {
+        "description": ": An allow list. Include this IP or range."
+      },
+      "BLOCK": {
+        "description": ": A block list. Exclude this IP or range. IP addresses in the block list are excluded even if they are included in an allow list."
+      },
+      "ip_addresses": {
+        "description": "Array of string"
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "ip_access_list": {
+        "description": "Definition of an IP Access list"
+      },
+      "list_id": {
+        "description": "Universally unique identifier (UUID) of the IP access list."
+      },
+      "label": {
+        "type": "string",
+        "description": "Example"
+      },
+      "\"Office VPN\"": {
+        "description": "be empty."
+      },
+      "ip_addresses": {
+        "description": "Array of string"
+      },
+      "address_count": {
+        "description": "Example"
+      },
+      "2": {
+        "description": "Total number of IP or CIDR values."
+      },
+      "list_type": {
+        "type": "string",
+        "description": "Enum:"
+      },
+      "ALLOW | BLOCK": {
+        "description": "Type of IP access list. Valid values are as follows and are case-sensitive:"
+      },
+      "ALLOW": {
+        "description": ": An allow list. Include this IP or range."
+      },
+      "BLOCK": {
+        "description": ": A block list. Exclude this IP or range. IP addresses in the block list are excluded even if they are included in an allow list."
+      },
+      "created_at": {
+        "description": "Example"
+      },
+      "1580265020299": {
+        "description": "Update timestamp in milliseconds."
+      },
+      "created_by": {
+        "description": "Example"
+      },
+      "202480738464078": {
+        "description": "The ID of the user that created this list."
+      },
+      "updated_at": {
+        "description": "Example"
+      },
+      "updated_by": {
+        "description": "Example"
+      },
+      "202480738464089": {
+        "description": "The ID of the user that last updated this list."
+      },
+      "enabled": {
+        "type": "boolean",
+        "description": "Specifies whether this IP access list is enabled."
+      }
+    },
+    "400": {
+      "error_code": "QUOTA_EXCEEDED, BAD_REQUEST",
+      "description": "QUOTA_EXCEEDED -"
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+      "error_code": "PERMISSION_DENIED",
+      "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

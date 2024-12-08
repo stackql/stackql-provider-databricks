@@ -1,0 +1,178 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/scim/v2/Users/{id}",
+  "description": "Gets information for a specific user in Databricks account.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Databricks account ID"
+    },
+    "id": {
+      "in": "path",
+      "required": true,
+      "description": "Unique ID for a user in the Databricks account."
+    },
+    "filter": {
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Query by which the results have to be filtered. Supported operators are equals("
+    },
+    "eq": {
+      "in": "query",
+      "required": false,
+      "description": "), contains("
+    },
+    "co": {
+      "in": "query",
+      "required": false,
+      "description": "), starts with("
+    },
+    "sw": {
+      "in": "query",
+      "required": false,
+      "description": ") and not equals("
+    },
+    "ne": {
+      "in": "query",
+      "required": false,
+      "description": "). Additionally, simple expressions can be formed using logical operators -"
+    },
+    "and": {
+      "in": "query",
+      "required": false,
+      "description": "and"
+    },
+    "or": {
+      "in": "query",
+      "required": false,
+      "description": "Users whose displayName contains john and userName contains doe."
+    },
+    "attributes": {
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Comma-separated list of attributes to return in response."
+    },
+    "excludedAttributes": {
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Comma-separated list of attributes to exclude in response."
+    },
+    "startIndex": {
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "description": "Specifies the index of the first result. First item is number 1."
+    },
+    "count": {
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "description": "Desired number of results per page. Default is 10000."
+    },
+    "sortBy": {
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Attribute to sort the results. Multi-part paths are supported. For example,"
+    },
+    "userName": {
+      "in": "query",
+      "required": false,
+      "description": ","
+    },
+    "name.givenName": {
+      "in": "query",
+      "required": false,
+      "description": ", and"
+    },
+    "emails": {
+      "in": "query",
+      "required": false,
+      "description": "."
+    },
+    "sortOrder": {
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "Enum:"
+    },
+    "ascending | descending": {
+      "in": "query",
+      "required": false,
+      "description": "The order to sort the results."
+    }
+  },
+  "responses": {
+    "200": {
+      "id": {
+        "description": "Databricks user ID. This is automatically set by Databricks. Any value provided by the client will be ignored."
+      },
+      "userName": {
+        "description": "Email address of the Databricks user."
+      },
+      "emails": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "$ref": {
+        "type": "string"
+      },
+      "value": {
+        "type": "string"
+      },
+      "display": {
+        "type": "string"
+      },
+      "primary": {
+        "type": "boolean"
+      },
+      "type": {
+        "type": "string",
+        "description": "]"
+      },
+      "name": {
+        "description": "object"
+      },
+      "givenName": {
+        "type": "string",
+        "description": "Given name of the Databricks user."
+      },
+      "familyName": {
+        "type": "string",
+        "description": "Family name of the Databricks user."
+      },
+      "displayName": {
+        "type": "string",
+        "description": "String that represents a concatenation of given and family names. For example"
+      },
+      "John Smith": {
+        "description": "."
+      },
+      "roles": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "externalId": {
+        "type": "string",
+        "description": "External ID is not currently supported. It is reserved for future use."
+      },
+      "active": {
+        "type": "boolean",
+        "description": "If this user is active"
+      }
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

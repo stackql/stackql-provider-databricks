@@ -1,0 +1,78 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/vpc-endpoints",
+  "description": "Gets a list of all VPC endpoints for an account, specified by ID.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    }
+  },
+  "responses": {
+    "200": {
+      "vpc_endpoint_id": {
+        "description": "Databricks VPC endpoint ID. This is the Databricks-specific name of the VPC endpoint. Do not confuse this with the"
+      },
+      "aws_vpc_endpoint_id": {
+        "type": "string",
+        "description": "The ID of the VPC endpoint object in AWS."
+      },
+      "vpc_endpoint_name": {
+        "type": "string",
+        "description": "The human-readable name of the storage configuration."
+      },
+      "aws_endpoint_service_id": {
+        "type": "string",
+        "description": "."
+      },
+      "use_case": {
+        "type": "string",
+        "description": "Enum:"
+      },
+      "WORKSPACE_ACCESS | DATAPLANE_RELAY_ACCESS": {
+        "description": "If the VPC endpoint connects to the Databricks control plane for either the front-end connection or the back-end REST API connection, the value is"
+      },
+      "WORKSPACE_ACCESS": {
+        "description": "relay, the value is"
+      },
+      "DATAPLANE_RELAY_ACCESS": {
+        "description": "."
+      },
+      "region": {
+        "type": "string",
+        "description": "The AWS region in which this VPC endpoint object exists."
+      },
+      "account_id": {
+        "description": "The Databricks account ID that hosts the VPC endpoint configuration."
+      },
+      "aws_account_id": {
+        "type": "string",
+        "description": "The AWS Account in which the VPC endpoint object exists."
+      },
+      "state": {
+        "type": "string",
+        "description": "The current state (such as"
+      },
+      "available": {
+        "description": "or"
+      },
+      "rejected": {
+        "description": "]"
+      }
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments",
+  "description": "Get the permission assignments for the specified Databricks account and Databricks workspace.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The account ID."
+    },
+    "workspace_id": {
+      "in": "path",
+      "required": true,
+      "description": "The workspace ID for the account."
+    }
+  },
+  "responses": {
+    "200": {
+      "permission_assignments": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "principal": {
+        "description": "Information about the principal assigned to the workspace."
+      },
+      "permissions": {
+        "description": "The permissions level of the principal."
+      },
+      "error": {
+        "type": "string",
+        "description": "]"
+      }
+    },
+    "400": {
+      "error_code": "BAD_REQUEST, MALFORMED_REQUEST",
+      "description": "BAD_REQUEST - Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+      "error_code": "PERMISSION_DENIED",
+      "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+      "error_code": "RESOURCE_DOES_NOT_EXIST",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

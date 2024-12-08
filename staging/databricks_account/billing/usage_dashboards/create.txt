@@ -1,0 +1,53 @@
+POST
+/api/2.0/accounts/{account_id}/dashboard
+Create a usage dashboard specified by workspaceId, accountId, and dashboard type.
+Path parameters
+code: account_id
+required
+string
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+Request body
+code: workspace_id
+int64
+The workspace ID of the workspace in which the usage dashboard is created.
+code: dashboard_type
+string
+Enum:
+code: USAGE_DASHBOARD_TYPE_WORKSPACE | USAGE_DASHBOARD_TYPE_GLOBAL
+Workspace level usage dashboard shows usage data for the specified workspace ID. Global level usage dashboard shows usage data for all workspaces in the account.
+Responses
+200
+Request completed successfully.
+Request completed successfully.
+code: dashboard_id
+string
+The unique id of the usage dashboard.
+This method might return the following HTTP codes: 400, 401, 403, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+400
+BAD_REQUEST
+Request is invalid.
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+403
+PERMISSION_DENIED
+Caller does not have permission to execute the specified operation.
+500
+INTERNAL_ERROR
+Internal error.

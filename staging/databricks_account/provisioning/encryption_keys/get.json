@@ -1,0 +1,84 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/customer-managed-keys/{customer_managed_key_id}",
+  "description": "Gets a customer-managed key configuration object for an account, specified by ID.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "customer_managed_key_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Databricks encryption key configuration ID."
+    }
+  },
+  "responses": {
+    "200": {
+      "customer_managed_key_id": {
+        "description": "ID of the encryption key configuration object."
+      },
+      "account_id": {
+        "description": "The Databricks account ID that holds the customer-managed key."
+      },
+      "aws_key_info": {
+        "description": "object"
+      },
+      "key_arn": {
+        "type": "string",
+        "description": "Example"
+      },
+      "\"arn:aws:kms:us-west-2:111122223333:key/0987dcba-09fe-87dc-65ba-ab0987654321\"": {
+        "description": "The AWS KMS key's Amazon Resource Name (ARN)."
+      },
+      "key_alias": {
+        "type": "string",
+        "description": "Example"
+      },
+      "\"alias/projectKey1\"": {
+        "description": "The AWS KMS key alias."
+      },
+      "key_region": {
+        "type": "string",
+        "description": "Example"
+      },
+      "\"us-east-1\"": {
+        "description": "The AWS KMS key region."
+      },
+      "reuse_key_for_cluster_volumes": {
+        "type": "boolean",
+        "description": "Example"
+      },
+      "true": {
+        "description": "or omitted, the key is also used to encrypt cluster EBS volumes. If you do not want to use this key for encrypting EBS volumes, set to"
+      },
+      "use_cases": {
+        "description": "The cases that the key can be used for."
+      },
+      "STORAGE": {
+        "description": ". If this is set to"
+      },
+      "false": {
+        "description": "."
+      },
+      "creation_time": {
+        "description": "Time in epoch milliseconds when the customer key was created."
+      }
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

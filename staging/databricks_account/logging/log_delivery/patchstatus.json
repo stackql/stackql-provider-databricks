@@ -1,0 +1,47 @@
+{
+  "verb": "patch",
+  "path": "/api/2.0/accounts/{account_id}/log-delivery/{log_delivery_configuration_id}",
+  "description": "Enables or disables a log delivery configuration. Deletion of delivery configurations is not supported, so disable log delivery configurations that are no longer needed. Note that you can't re-enable a delivery configuration if this would violate the delivery configuration limits described under",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "log_delivery_configuration_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Databricks log delivery configuration ID"
+    }
+  },
+  "requestBody": {
+    "properties": {
+      "status": {
+        "type": "string",
+        "description": "Status of log delivery configuration. Set to",
+        "enum": [
+          "ENABLED",
+          "DISABLED"
+        ]
+      },
+      "ENABLED": {
+        "description": "later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed."
+      },
+      "DISABLED": {
+        "description": "(disabled). Defaults to"
+      }
+    }
+  },
+  "responses": {
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

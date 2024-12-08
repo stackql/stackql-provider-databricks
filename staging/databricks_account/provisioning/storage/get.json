@@ -1,0 +1,55 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/storage-configurations/{storage_configuration_id}",
+  "description": "Gets a Databricks storage configuration for an account, both specified by ID.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "storage_configuration_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Databricks Account API storage configuration ID."
+    }
+  },
+  "responses": {
+    "200": {
+      "storage_configuration_id": {
+        "description": "Databricks storage configuration ID."
+      },
+      "storage_configuration_name": {
+        "type": "string",
+        "description": "The human-readable name of the storage configuration."
+      },
+      "root_bucket_info": {
+        "description": "Root S3 bucket information."
+      },
+      "bucket_name": {
+        "type": "string",
+        "description": "The name of the S3 bucket."
+      },
+      "account_id": {
+        "description": "The Databricks account ID that hosts the credential."
+      },
+      "creation_time": {
+        "description": "Time in epoch milliseconds when the storage configuration was created."
+      }
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

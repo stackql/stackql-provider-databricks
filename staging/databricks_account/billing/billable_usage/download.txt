@@ -1,0 +1,64 @@
+GET
+/api/2.0/accounts/{account_id}/usage/download
+Returns billable usage logs in CSV format for the specified account and date range.
+For the data schema, see
+CSV file schema
+.
+Note that this method might take multiple minutes to complete.
+Warning
+: Depending on the queried date range, the number of workspaces
+in the account, the size of the response and the internet speed of the caller,
+this API may hit a timeout after a few minutes. If you experience this, try to mitigate
+by calling the API with narrower date ranges.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+Query parameters
+code: start_month
+required
+string
+2[0-9][0-9][0-9]-(0[1-9]|1[012])
+Format:
+code: YYYY-MM
+. First month to return billable usage logs for. This field is required.
+code: end_month
+required
+string
+2[0-9][0-9][0-9]-(0[1-9]|1[012])
+Format:
+code: YYYY-MM
+. Last month to return billable usage logs for. This field is required.
+code: personal_data
+boolean
+Default
+code: false
+Specify whether to include personally identifiable information in the billable usage logs, for example the email addresses of cluster creators. Handle this information with care. Defaults to false.
+Responses
+200
+Billable usage data was returned successfully.
+Billable usage data was returned successfully.
+This method might return the following HTTP codes: 400, 401, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

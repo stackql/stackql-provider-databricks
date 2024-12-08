@@ -1,0 +1,121 @@
+GET
+/api/2.0/accounts/{account_id}/scim/v2/ServicePrincipals
+Gets the set of service principals associated with a Databricks account.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID
+Query parameters
+code: filter
+string
+Query by which the results have to be filtered. Supported operators are equals(
+code: eq
+), contains(
+code: co
+), starts with(
+code: sw
+) and not equals(
+code: ne
+). Additionally, simple expressions can be formed using logical operators -
+code: and
+and
+code: or
+. The
+SCIM RFC
+has more details but we currently only support simple expressions.
+Examples
+Summary
+code: filter=displayName eq "foo"
+Service principals whose displayName equals foo.
+code: filter=displayName sw "baz"
+Service principals whose displayName starts with baz.
+code: filter=displayName co "sp" or displayName co "foo"
+Service principals whose displayName contains sp or displayName contains foo.
+code: filter=displayName ne "qux"
+Service principals whose displayName not equals qux.
+code: filter=displayName co "bar"
+Service principals whose displayName contains bar.
+code: filter=displayName co "sp" and displayName co "foo"
+Service principals whose displayName contains sp and displayName contains foo.
+code: attributes
+string
+Comma-separated list of attributes to return in response.
+code: excludedAttributes
+string
+Comma-separated list of attributes to exclude in response.
+code: startIndex
+int64
+Specifies the index of the first result. First item is number 1.
+code: count
+int64
+<= 100
+Desired number of results per page. Default is 10000.
+code: sortBy
+string
+Attribute to sort the results.
+code: sortOrder
+string
+Enum:
+code: ascending | descending
+The order to sort the results.
+Responses
+200
+List service principals operation was succesful.
+List service principals operation was succesful.
+code: totalResults
+int64
+Total results that match the request filters.
+code: startIndex
+int64
+Default
+code: 1
+Starting index of all the results that matched the request filters. First item is number 1.
+code: itemsPerPage
+int64
+Total results returned in the response.
+code: Resources
+Array of object
+User objects returned in the response.
+Array [
+code: id
+int64
+Databricks service principal ID.
+code: applicationId
+uuid
+UUID relating to the service principal
+code: displayName
+string
+Example
+code: "etl-service"
+String that represents a concatenation of given and family names.
+code: roles
+Array of object
+Indicates if the user has the admin role.
+code: externalId
+string
+code: active
+boolean
+If this user is active
+]
+This method might return the following HTTP codes: 400, 401, 403, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

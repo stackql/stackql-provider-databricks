@@ -1,0 +1,57 @@
+{
+  "verb": "post",
+  "path": "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/metastores/{metastore_id}",
+  "description": "Creates an assignment to a metastore for a workspace",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "workspace_id": {
+      "in": "path",
+      "required": true,
+      "description": "Workspace ID."
+    },
+    "metastore_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Unity Catalog metastore ID"
+    }
+  },
+  "requestBody": {
+    "properties": {
+      "metastore_assignment": {
+        "description": "object"
+      },
+      "metastore_id": {
+        "type": "string",
+        "description": "The unique ID of the metastore."
+      },
+      "default_catalog_name": {
+        "type": "string",
+        "description": "configure the default catalog for a Databricks workspace."
+      }
+    }
+  },
+  "responses": {
+    "400": {
+      "error_code": "BAD_REQUEST",
+      "description": "Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

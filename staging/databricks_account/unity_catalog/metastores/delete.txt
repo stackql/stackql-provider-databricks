@@ -1,0 +1,46 @@
+DELETE
+/api/2.0/accounts/{account_id}/metastores/{metastore_id}
+Deletes a Unity Catalog metastore for an account, both specified by ID.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+code: metastore_id
+required
+uuid
+Unity Catalog metastore ID
+Query parameters
+code: force
+boolean
+Force deletion even if the metastore is not empty. Default is false.
+Responses
+200
+The metastore was successfully deleted.
+The metastore was successfully deleted.
+This method might return the following HTTP codes: 401, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+404
+NOT_FOUND
+Operation was performed on a resource that does not exist.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

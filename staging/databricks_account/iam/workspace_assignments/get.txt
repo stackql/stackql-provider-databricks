@@ -1,0 +1,58 @@
+GET
+/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments/permissions
+Get an array of workspace permissions for the specified account and workspace.
+Path parameters
+code: account_id
+required
+string
+The account ID.
+code: workspace_id
+required
+int64
+The workspace ID.
+Responses
+200
+Request completed successfully.
+Request completed successfully.
+code: permissions
+Array of object
+Array of permissions defined for a workspace.
+Array [
+code: permission_level
+string
+Enum:
+code: UNKNOWN | USER | ADMIN
+code: description
+string
+The results of a permissions query.
+]
+This method might return the following HTTP codes: 400, 401, 403, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+400
+BAD_REQUEST
+Request is invalid.
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+403
+PERMISSION_DENIED
+Caller does not have permission to execute the specified operation.
+404
+RESOURCE_DOES_NOT_EXIST
+Operation was performed on a resource that does not exist.
+500
+INTERNAL_ERROR
+Internal error.

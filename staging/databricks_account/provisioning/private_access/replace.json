@@ -1,0 +1,73 @@
+{
+  "verb": "put",
+  "path": "/api/2.0/accounts/{account_id}/private-access-settings/{private_access_settings_id}",
+  "description": "Updates an existing private access settings object, which specifies how your workspace is",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "private_access_settings_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Databricks Account API private access settings ID."
+    }
+  },
+  "requestBody": {
+    "properties": {
+      "private_access_settings_name": {
+        "type": "string",
+        "description": "The human-readable name of the private access settings object."
+      },
+      "region": {
+        "type": "string",
+        "description": "."
+      },
+      "public_access_enabled": {
+        "description": "to"
+      },
+      "false": {
+        "description": ", but only if you implement both the front-end and the back-end PrivateLink connections. Otherwise, specify"
+      },
+      "true": {
+        "description": "."
+      },
+      "private_access_level": {
+        "description": "is set to"
+      },
+      "\"ENDPOINT\"": {
+        "description": "The private access level controls which VPC endpoints can connect to the UI or API of any workspace that attaches this private access settings object."
+      },
+      "ACCOUNT": {
+        "description": "level access (the default) allows only VPC endpoints that are registered in your Databricks account connect to your workspace."
+      },
+      "ENDPOINT": {
+        "description": "If hybrid access to your workspace is enabled by setting"
+      },
+      "allowed_vpc_endpoint_ids": {
+        "description": "Only used when"
+      }
+    }
+  },
+  "responses": {
+    "400": {
+      "error_code": "BAD_REQUEST",
+      "description": "Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

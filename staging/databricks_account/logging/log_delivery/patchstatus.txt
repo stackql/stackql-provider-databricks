@@ -1,0 +1,57 @@
+PATCH
+/api/2.0/accounts/{account_id}/log-delivery/{log_delivery_configuration_id}
+Enables or disables a log delivery configuration. Deletion of delivery configurations is not supported, so disable log delivery configurations that are no longer needed. Note that you can't re-enable a delivery configuration if this would violate the delivery configuration limits described under
+Create log delivery
+.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+code: log_delivery_configuration_id
+required
+uuid
+Databricks log delivery configuration ID
+Request body
+The new status for this log delivery configuration object.
+code: status
+required
+string
+Enum:
+code: ENABLED | DISABLED
+Status of log delivery configuration. Set to
+code: ENABLED
+(enabled) or
+code: DISABLED
+(disabled). Defaults to
+code: ENABLED
+. You can
+enable or disable the configuration
+later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed.
+Responses
+200
+The log delivery configuration was successfully updated.
+The log delivery configuration was successfully updated.
+This method might return the following HTTP codes: 400, 401, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

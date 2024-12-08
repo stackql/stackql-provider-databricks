@@ -1,0 +1,83 @@
+GET
+/api/2.0/preview/accounts/{account_id}/access-control/rule-sets
+Get a rule set by its name. A rule set is always attached to a resource and contains a
+list of access rules on the said resource. Currently only a default rule set for each
+resource is supported.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type.
+Query parameters
+code: name
+required
+string
+The ruleset name associated with the request.
+Examples
+Summary
+code: name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default
+A name for a rule set on the service principal.
+code: name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default
+A name for a rule set on the group.
+code: name=accounts/<ACCOUNT_ID>/ruleSets/default
+A name for a rule set on the account.
+code: etag
+required
+string
+Etag used for versioning. The response is at least as fresh as the eTag provided.
+Etag is used for optimistic concurrency control as a way to help prevent simultaneous
+updates of a rule set from overwriting each other. It is strongly suggested that systems
+make use of the etag in the read -> modify -> write pattern to perform rule set updates in
+order to avoid race conditions that is get an etag from a GET rule set request, and pass it
+with the PUT update request to identify the rule set version you are updating.
+Examples
+Summary
+code: etag=
+An empty etag can only be used in GET to indicate no freshness requirements.
+code: etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==
+An etag encoded a specific version of the rule set to get or to be updated.
+Responses
+200
+The rule set was returned successfully.
+The rule set was returned successfully.
+code: name
+string
+Name of the rule set.
+code: grant_rules
+Array of object
+Array [
+code: principals
+Array of string
+Principals this grant rule applies to.
+code: role
+required
+string
+Role that is assigned to the list of principals.
+]
+code: etag
+string
+Identifies the version of the rule set returned.
+This method might return the following HTTP codes: 400, 401, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+400
+BAD_REQUEST
+Request is invalid.
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

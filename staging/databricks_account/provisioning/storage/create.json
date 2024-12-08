@@ -1,0 +1,71 @@
+{
+  "verb": "post",
+  "path": "/api/2.0/accounts/{account_id}/storage-configurations",
+  "description": "Creates new storage configuration for an account, specified by ID. Uploads a storage configuration object that represents the root AWS S3 bucket in your account. Databricks stores related workspace assets including DBFS, cluster logs, and job results. For the AWS S3 bucket, you need to configure the required bucket policy.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    }
+  },
+  "requestBody": {
+    "properties": {
+      "storage_configuration_name": {
+        "type": "string",
+        "description": "Example"
+      },
+      "\"storage_conf_1\"": {
+        "description": "The human-readable name of the storage configuration."
+      },
+      "root_bucket_info": {
+        "description": "Root S3 bucket information."
+      },
+      "bucket_name": {
+        "type": "string",
+        "description": "The name of the S3 bucket."
+      }
+    }
+  },
+  "responses": {
+    "201": {
+      "storage_configuration_id": {
+        "description": "Databricks storage configuration ID."
+      },
+      "storage_configuration_name": {
+        "type": "string",
+        "description": "The human-readable name of the storage configuration."
+      },
+      "root_bucket_info": {
+        "description": "Root S3 bucket information."
+      },
+      "bucket_name": {
+        "type": "string",
+        "description": "The name of the S3 bucket."
+      },
+      "account_id": {
+        "description": "The Databricks account ID that hosts the credential."
+      },
+      "creation_time": {
+        "description": "Time in epoch milliseconds when the storage configuration was created."
+      }
+    },
+    "400": {
+      "error_code": "BAD_REQUEST",
+      "description": "Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

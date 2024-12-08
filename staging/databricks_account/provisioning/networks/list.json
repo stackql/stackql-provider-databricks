@@ -1,0 +1,94 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/networks",
+  "description": "Gets a list of all Databricks network configurations for an account, specified by ID.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    }
+  },
+  "responses": {
+    "200": {
+      "network_id": {
+        "description": "The Databricks network configuration ID."
+      },
+      "network_name": {
+        "type": "string",
+        "description": "Example"
+      },
+      "\"my-databricks-network\"": {
+        "description": "The human-readable name of the network configuration."
+      },
+      "vpc_id": {
+        "type": "string",
+        "description": "The ID of the VPC associated with this network configuration. VPC IDs can be used in multiple networks."
+      },
+      "subnet_ids": {
+        "description": ">= 2 characters"
+      },
+      "security_group_ids": {
+        "description": "[ 1 .. 5 ] characters"
+      },
+      "vpc_status": {
+        "type": "string",
+        "description": "Enum:"
+      },
+      "UNATTACHED | VALID | BROKEN | WARNED": {
+        "description": "The status of this network configuration object in terms of its use in a workspace:"
+      },
+      "UNATTACHED": {
+        "description": ": Unattached."
+      },
+      "VALID": {
+        "description": ": Valid."
+      },
+      "BROKEN": {
+        "description": ": Broken."
+      },
+      "WARNED": {
+        "description": ": Warned."
+      },
+      "warning_messages": {
+        "type": "Array of object",
+        "description": "Array of warning messages about the network configuration."
+      },
+      "error_messages": {
+        "type": "Array of object",
+        "description": "Array of error messages about the network configuration."
+      },
+      "workspace_id": {
+        "description": "Example"
+      },
+      "1614665312930232": {
+        "description": "Workspace ID associated with this network configuration."
+      },
+      "account_id": {
+        "description": "The Databricks account ID associated with this network configuration."
+      },
+      "creation_time": {
+        "description": "Example"
+      },
+      "1643668346544": {
+        "description": "Time in epoch milliseconds when the network was created."
+      },
+      "vpc_endpoints": {
+        "description": "]"
+      }
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

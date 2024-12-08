@@ -1,0 +1,78 @@
+GET
+/api/2.0/accounts/{account_id}/network-connectivity-configs/{network_connectivity_config_id}
+Gets a network connectivity configuration.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+code: network_connectivity_config_id
+required
+uuid
+Your Network Connectvity Configuration ID.
+Responses
+200
+The network connectivity configuration was successfully returned.
+The network connectivity configuration was successfully returned.
+code: network_connectivity_config_id
+uuid
+Databricks network connectivity configuration ID.
+code: account_id
+uuid
+The Databricks account ID that hosts the credential.
+code: name
+uuid
+Example
+code: "my-example-ncc"
+The name of the network connectivity configuration.
+The name can contain alphanumeric characters, hyphens, and underscores.
+The length must be between 3 and 30 characters.
+The name must match the regular expression
+code: ^[0-9a-zA-Z-_]{3,30}$
+.
+code: region
+string
+The region for the network connectivity configuration. Only workspaces in the same region can be attached to the network connectivity configuration.
+code: egress_config
+object
+The network connectivity rules that apply to network traffic from your serverless compute resources.
+code: default_rules
+object
+The network connectivity rules that are applied by default without resource specific configurations.
+You can find the stable network information of your serverless compute resources here.
+code: creation_time
+int64
+Example
+code: 1691436121706
+Time in epoch milliseconds when this object was created.
+code: updated_time
+int64
+Example
+code: 1691436121777
+Time in epoch milliseconds when this object was updated.
+This method might return the following HTTP codes: 401, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+404
+NOT_FOUND
+Operation was performed on a resource that does not exist.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

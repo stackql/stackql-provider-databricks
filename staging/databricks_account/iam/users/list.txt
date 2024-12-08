@@ -1,0 +1,135 @@
+GET
+/api/2.0/accounts/{account_id}/scim/v2/Users
+Gets details for all the users associated with a Databricks account.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID
+Query parameters
+code: filter
+string
+Query by which the results have to be filtered. Supported operators are equals(
+code: eq
+), contains(
+code: co
+), starts with(
+code: sw
+) and not equals(
+code: ne
+). Additionally, simple expressions can be formed using logical operators -
+code: and
+and
+code: or
+. The
+SCIM RFC
+has more details but we currently only support simple expressions.
+Examples
+Summary
+code: filter=displayName eq "john"
+Users whose displayName equals john.
+code: filter=displayName sw "jo"
+Users whose displayName starts with jo.
+code: filter=displayName co "john" or userName co "doe"
+Users whose displayName contains john or userName contains doe.
+code: filter=displayName ne "john"
+Users whose displayName not equals john.
+code: filter=displayName co "doe"
+Users whose displayName contains doe.
+code: filter=displayName co "john" and userName co "doe"
+Users whose displayName contains john and userName contains doe.
+code: attributes
+string
+Comma-separated list of attributes to return in response.
+code: excludedAttributes
+string
+Comma-separated list of attributes to exclude in response.
+code: startIndex
+int64
+Specifies the index of the first result. First item is number 1.
+code: count
+int64
+<= 100
+Desired number of results per page. Default is 10000.
+code: sortBy
+string
+Attribute to sort the results. Multi-part paths are supported. For example,
+code: userName
+,
+code: name.givenName
+, and
+code: emails
+.
+code: sortOrder
+string
+Enum:
+code: ascending | descending
+The order to sort the results.
+Responses
+200
+List users operation was succesful.
+List users operation was succesful.
+code: totalResults
+int64
+Default
+code: 10
+Total results that match the request filters.
+code: startIndex
+int64
+Default
+code: 1
+Starting index of all the results that matched the request filters. First item is number 1.
+code: itemsPerPage
+int64
+Total results returned in the response.
+code: Resources
+Array of object
+User objects returned in the response.
+Array [
+code: id
+int64
+Databricks user ID. This is automatically set by Databricks. Any value provided by the client will be ignored.
+code: userName
+email
+Email address of the Databricks user.
+code: emails
+Array of object
+All the emails associated with the Databricks user.
+code: name
+object
+code: displayName
+string
+String that represents a concatenation of given and family names. For example
+code: John Smith
+.
+code: roles
+Array of object
+Indicates if the user has the admin role.
+code: externalId
+string
+External ID is not currently supported. It is reserved for future use.
+code: active
+boolean
+If this user is active
+]
+This method might return the following HTTP codes: 400, 401, 403, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

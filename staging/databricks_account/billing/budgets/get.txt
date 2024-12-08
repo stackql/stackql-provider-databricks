@@ -1,0 +1,68 @@
+GET
+/api/2.1/accounts/{account_id}/budgets/{budget_id}
+Gets a budget configuration for an account. Both account and budget configuration are specified by ID.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+code: budget_id
+required
+uuid
+The budget configuration ID
+Responses
+200
+Request completed successfully.
+Request completed successfully.
+code: budget
+object
+code: budget_configuration_id
+uuid
+Databricks budget configuration ID.
+code: account_id
+uuid
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+code: create_time
+int64
+Creation time of this budget configuration.
+code: update_time
+int64
+Update time of this budget configuration.
+code: alert_configurations
+Array of object
+Alerts to configure when this budget is in a triggered state. Budgets must have exactly one alert configuration.
+code: filter
+object
+Configured filters for this budget. These are applied to your account's usage to limit the scope of what is considered for this budget.
+Leave empty to include all usage for this account. All provided filters must be matched for usage to be included.
+code: display_name
+string
+Human-readable name of budget configuration. Max Length: 128
+This method might return the following HTTP codes: 401, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHENTICATED
+Request does not have valid authentication credentials for the operation.
+404
+NOT_FOUND
+Operation was performed on a resource that does not exist.
+500
+INTERNAL_ERROR
+Internal error.

@@ -1,0 +1,134 @@
+POST
+/api/2.0/accounts/{account_id}/customer-managed-keys
+Creates a customer-managed key configuration object for an account, specified by ID.
+This operation uploads a reference to a customer-managed key to Databricks.
+If the key is assigned as a workspace's customer-managed key for managed services,
+Databricks uses the key to encrypt the workspaces notebooks and secrets in the control plane,
+in addition to Databricks SQL queries and query history. If it is specified as a
+workspace's customer-managed key for workspace storage, the key encrypts the
+workspace's root S3 bucket (which contains the workspace's root DBFS and system data)
+and, optionally, cluster EBS volume data.
+Important
+: Customer-managed keys are supported only for some deployment types,
+subscription types, and AWS regions that currently support creation of Databricks workspaces.
+This operation is available only if your account is on the E2 version of the
+platform or on a select custom plan that allows multiple workspaces per account.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+Request body
+Properties of the encryption key configuration.
+code: aws_key_info
+object
+code: key_arn
+required
+string
+Example
+code: "arn:aws:kms:us-west-2:111122223333:key/0987dcba-09fe-87dc-65ba-ab0987654321"
+The AWS KMS key's Amazon Resource Name (ARN). Note that the key's AWS region is inferred from the ARN.
+code: key_alias
+string
+Example
+code: "alias/projectKey1"
+The AWS KMS key alias.
+code: reuse_key_for_cluster_volumes
+boolean
+Example
+code: true
+This field applies only if the
+code: use_cases
+property includes
+code: STORAGE
+. If this is set to
+code: true
+or omitted, the key is also used to encrypt cluster EBS volumes. To not use this key also for encrypting EBS volumes, set this to
+code: false
+.
+code: use_cases
+required
+Array of string
+Example
+The cases that the key can be used for.
+Responses
+201
+The encryption key configuration was successfully created.
+The encryption key configuration was successfully created.
+code: customer_managed_key_id
+uuid
+ID of the encryption key configuration object.
+code: account_id
+uuid
+The Databricks account ID that holds the customer-managed key.
+code: aws_key_info
+object
+code: key_arn
+required
+string
+Example
+code: "arn:aws:kms:us-west-2:111122223333:key/0987dcba-09fe-87dc-65ba-ab0987654321"
+The AWS KMS key's Amazon Resource Name (ARN).
+code: key_alias
+string
+Example
+code: "alias/projectKey1"
+The AWS KMS key alias.
+code: key_region
+required
+string
+Example
+code: "us-east-1"
+The AWS KMS key region.
+code: reuse_key_for_cluster_volumes
+boolean
+Example
+code: true
+This field applies only if the
+code: use_cases
+property includes
+code: STORAGE
+. If this is set to
+code: true
+or omitted, the key is also used to encrypt cluster EBS volumes. If you do not want to use this key for encrypting EBS volumes, set to
+code: false
+.
+code: creation_time
+int64
+Time in epoch milliseconds when the customer key was created.
+code: use_cases
+Array of string
+Example
+The cases that the key can be used for.
+This method might return the following HTTP codes: 400, 401, 403, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+400
+BAD_REQUEST
+Request is invalid.
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+403
+PERMISSION_DENIED
+Caller does not have permission to execute the specified operation.
+404
+NOT_FOUND
+Operation was performed on a resource that does not exist.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

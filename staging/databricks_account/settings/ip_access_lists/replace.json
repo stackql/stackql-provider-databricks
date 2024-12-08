@@ -1,0 +1,72 @@
+{
+  "verb": "put",
+  "path": "/api/2.0/accounts/{account_id}/ip-access-lists/{ip_access_list_id}",
+  "description": "Replaces an IP access list, specified by its ID.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "string"
+    },
+    "ip_access_list_id": {
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The ID for the corresponding IP access list"
+    }
+  },
+  "requestBody": {
+    "properties": {
+      "label": {
+        "type": "string",
+        "description": "Example"
+      },
+      "\"Office VPN\"": {
+        "description": "be empty."
+      },
+      "list_type": {
+        "type": "string",
+        "description": "Type of IP access list. Valid values are as follows and are case-sensitive:",
+        "enum": [
+          "ALLOW",
+          "BLOCK"
+        ]
+      },
+      "ALLOW": {
+        "description": ": An allow list. Include this IP or range."
+      },
+      "BLOCK": {
+        "description": ": A block list. Exclude this IP or range. IP addresses in the block list are excluded even if they are included in an allow list."
+      },
+      "ip_addresses": {
+        "description": "Array of string"
+      },
+      "enabled": {
+        "type": "boolean",
+        "description": "Specifies whether this IP access list is enabled."
+      }
+    }
+  },
+  "responses": {
+    "400": {
+      "error_code": "QUOTA_EXCEEDED, BAD_REQUEST",
+      "description": "QUOTA_EXCEEDED -"
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+      "error_code": "PERMISSION_DENIED",
+      "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+      "error_code": "RESOURCE_DOES_NOT_EXIST",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

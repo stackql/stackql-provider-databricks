@@ -1,0 +1,99 @@
+GET
+/api/2.0/accounts/{account_id}/vpc-endpoints/{vpc_endpoint_id}
+Gets a VPC endpoint configuration, which represents
+a
+VPC endpoint
+object in AWS used to communicate privately with Databricks over
+AWS PrivateLink
+.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+code: vpc_endpoint_id
+required
+uuid
+Databricks VPC endpoint ID.
+Responses
+200
+The VPC endpoint was successfully returned.
+The VPC endpoint was successfully returned.
+code: vpc_endpoint_id
+uuid
+Databricks VPC endpoint ID. This is the Databricks-specific name of the VPC endpoint. Do not confuse this with the
+code: aws_vpc_endpoint_id
+, which is the ID within AWS of the VPC endpoint.
+code: vpc_endpoint_name
+string
+[ 4 .. 256 ] characters
+The human-readable name of the storage configuration.
+code: aws_vpc_endpoint_id
+string
+The ID of the VPC endpoint object in AWS.
+code: aws_endpoint_service_id
+string
+The ID of the Databricks
+endpoint service
+that this VPC endpoint is connected to. For a list of endpoint service IDs for each supported AWS region, see the
+Databricks PrivateLink documentation
+.
+code: use_case
+string
+Enum:
+code: WORKSPACE_ACCESS | DATAPLANE_RELAY_ACCESS
+This enumeration represents the type of Databricks VPC
+endpoint service
+that was used when creating this VPC endpoint.
+If the VPC endpoint connects to the Databricks control plane for either the front-end connection or the back-end REST API connection, the value is
+code: WORKSPACE_ACCESS
+.
+If the VPC endpoint connects to the Databricks workspace for the back-end
+secure cluster connectivity
+relay, the value is
+code: DATAPLANE_RELAY_ACCESS
+.
+code: region
+string
+The AWS region in which this VPC endpoint object exists.
+code: account_id
+uuid
+The Databricks account ID that hosts the VPC endpoint configuration.
+code: aws_account_id
+string
+The AWS Account in which the VPC endpoint object exists.
+code: state
+string
+The current state (such as
+code: available
+or
+code: rejected
+) of the VPC endpoint. Derived from AWS. For the full set of values, see
+AWS DescribeVpcEndpoint documentation
+.
+This method might return the following HTTP codes: 401, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+404
+NOT_FOUND
+Operation was performed on a resource that does not exist.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

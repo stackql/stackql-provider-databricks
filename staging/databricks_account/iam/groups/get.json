@@ -1,0 +1,64 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/scim/v2/Groups/{id}",
+  "description": "Gets the information for a specific group in the Databricks account.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Databricks account ID"
+    },
+    "id": {
+      "in": "path",
+      "required": true,
+      "description": "Unique ID for a group in the Databricks account."
+    }
+  },
+  "responses": {
+    "200": {
+      "id": {
+        "description": "Databricks group ID"
+      },
+      "displayName": {
+        "type": "string",
+        "description": "String that represents a human-readable group name"
+      },
+      "members": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "$ref": {
+        "type": "string"
+      },
+      "value": {
+        "type": "string"
+      },
+      "display": {
+        "type": "string"
+      },
+      "primary": {
+        "type": "boolean"
+      },
+      "type": {
+        "type": "string",
+        "description": "]"
+      },
+      "roles": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "externalId": {
+        "type": "string"
+      }
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

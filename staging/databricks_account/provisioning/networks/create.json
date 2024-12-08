@@ -1,0 +1,153 @@
+{
+  "verb": "post",
+  "path": "/api/2.0/accounts/{account_id}/networks",
+  "description": "Creates a Databricks network configuration that represents an AWS VPC and its resources. The VPC will be used for new Databricks clusters. This requires a pre-existing VPC and subnets. For VPC requirements, see",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    }
+  },
+  "requestBody": {
+    "properties": {
+      "network_name": {
+        "type": "string",
+        "description": "The human-readable name of the network configuration."
+      },
+      "vpc_id": {
+        "type": "string",
+        "description": "The ID of the VPC associated with this network. VPC IDs can be used in multiple network configurations."
+      },
+      "subnet_ids": {
+        "description": "be used in multiple network configurations."
+      },
+      "security_group_ids": {
+        "description": "be used in multiple network configurations."
+      },
+      "vpc_endpoints": {
+        "description": "."
+      },
+      "rest_api": {
+        "description": ": This is the Databricks-specific ID of the VPC endpoint object in the Account API, not the AWS VPC endpoint ID that you see for your endpoint in the AWS Console."
+      },
+      "dataplane_relay": {
+        "description": ": This is the Databricks-specific ID of the VPC endpoint object in the Account API, not the AWS VPC endpoint ID that you see for your endpoint in the AWS Console."
+      }
+    }
+  },
+  "responses": {
+    "201": {
+      "network_id": {
+        "description": "The Databricks network configuration ID."
+      },
+      "network_name": {
+        "type": "string",
+        "description": "Example"
+      },
+      "\"my-databricks-network\"": {
+        "description": "The human-readable name of the network configuration."
+      },
+      "vpc_id": {
+        "type": "string",
+        "description": "The ID of the VPC associated with this network configuration. VPC IDs can be used in multiple networks."
+      },
+      "subnet_ids": {
+        "description": ">= 2 characters"
+      },
+      "security_group_ids": {
+        "description": "[ 1 .. 5 ] characters"
+      },
+      "vpc_status": {
+        "type": "string",
+        "description": "Enum:"
+      },
+      "UNATTACHED | VALID | BROKEN | WARNED": {
+        "description": "The status of this network configuration object in terms of its use in a workspace:"
+      },
+      "UNATTACHED": {
+        "description": ": Unattached."
+      },
+      "VALID": {
+        "description": ": Valid."
+      },
+      "BROKEN": {
+        "description": ": Broken."
+      },
+      "WARNED": {
+        "description": ": Warned."
+      },
+      "warning_messages": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "warning_type": {
+        "type": "string",
+        "description": "Enum:"
+      },
+      "subnet | securityGroup": {
+        "description": "The AWS resource associated with this warning: a subnet or a security group."
+      },
+      "warning_message": {
+        "type": "string",
+        "description": "]"
+      },
+      "error_messages": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "error_type": {
+        "type": "string",
+        "description": "Enum:"
+      },
+      "credentials | vpc | subnet | securityGroup | networkAcl": {
+        "description": "The AWS resource associated with this error: credentials, VPC, subnet, security group, or network ACL."
+      },
+      "error_message": {
+        "type": "string",
+        "description": "]"
+      },
+      "workspace_id": {
+        "description": "Example"
+      },
+      "1614665312930232": {
+        "description": "Workspace ID associated with this network configuration."
+      },
+      "account_id": {
+        "description": "The Databricks account ID associated with this network configuration."
+      },
+      "creation_time": {
+        "description": "Example"
+      },
+      "1643668346544": {
+        "description": "Time in epoch milliseconds when the network was created."
+      },
+      "vpc_endpoints": {
+        "description": "."
+      },
+      "rest_api": {
+        "description": ": This is the Databricks-specific ID of the VPC endpoint object in the Account API, not the AWS VPC endpoint ID that you see for your endpoint in the AWS Console."
+      },
+      "dataplane_relay": {
+        "description": ": This is the Databricks-specific ID of the VPC endpoint object in the Account API, not the AWS VPC endpoint ID that you see for your endpoint in the AWS Console."
+      }
+    },
+    "400": {
+      "error_code": "BAD_REQUEST",
+      "description": "Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

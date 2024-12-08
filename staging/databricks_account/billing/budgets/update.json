@@ -1,0 +1,93 @@
+{
+  "verb": "put",
+  "path": "/api/2.1/accounts/{account_id}/budgets/{budget_id}",
+  "description": "Updates a budget configuration for an account. Both account and budget configuration are specified by ID.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "budget_id": {
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The Databricks budget configuration ID."
+    }
+  },
+  "requestBody": {
+    "properties": {
+      "budget": {
+        "description": "The updated budget. This will overwrite the budget specified by the budget ID."
+      },
+      "budget_configuration_id": {
+        "description": "Databricks budget configuration ID."
+      },
+      "account_id": {
+        "description": "."
+      },
+      "alert_configurations": {
+        "type": "Array of object",
+        "description": "Alerts to configure when this budget is in a triggered state. Budgets must have exactly one alert configuration."
+      },
+      "filter": {
+        "description": "Leave empty to include all usage for this account. All provided filters must be matched for usage to be included."
+      },
+      "display_name": {
+        "type": "string",
+        "description": "Human-readable name of budget configuration. Max Length: 128"
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "budget": {
+        "description": "The updated budget."
+      },
+      "budget_configuration_id": {
+        "description": "Databricks budget configuration ID."
+      },
+      "account_id": {
+        "description": "."
+      },
+      "create_time": {
+        "description": "Creation time of this budget configuration."
+      },
+      "update_time": {
+        "description": "Update time of this budget configuration."
+      },
+      "alert_configurations": {
+        "type": "Array of object",
+        "description": "Alerts to configure when this budget is in a triggered state. Budgets must have exactly one alert configuration."
+      },
+      "filter": {
+        "description": "Leave empty to include all usage for this account. All provided filters must be matched for usage to be included."
+      },
+      "display_name": {
+        "type": "string",
+        "description": "Human-readable name of budget configuration. Max Length: 128"
+      }
+    },
+    "400": {
+      "error_code": "INVALID_PARAMETER_VALUE",
+      "description": "Supplied value for a parameter was invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHENTICATED",
+      "description": "Request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+      "error_code": "RESOURCE_EXHAUSTED",
+      "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+      "error_code": "INTERNAL_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

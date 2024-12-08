@@ -1,0 +1,61 @@
+{
+  "verb": "get",
+  "path": "/api/2.1/accounts/{account_id}/budgets/{budget_id}",
+  "description": "Gets a budget configuration for an account. Both account and budget configuration are specified by ID.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "budget_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "The budget configuration ID"
+    }
+  },
+  "responses": {
+    "200": {
+      "budget": {
+        "description": "object"
+      },
+      "budget_configuration_id": {
+        "description": "Databricks budget configuration ID."
+      },
+      "account_id": {
+        "description": "."
+      },
+      "create_time": {
+        "description": "Creation time of this budget configuration."
+      },
+      "update_time": {
+        "description": "Update time of this budget configuration."
+      },
+      "alert_configurations": {
+        "type": "Array of object",
+        "description": "Alerts to configure when this budget is in a triggered state. Budgets must have exactly one alert configuration."
+      },
+      "filter": {
+        "description": "Leave empty to include all usage for this account. All provided filters must be matched for usage to be included."
+      },
+      "display_name": {
+        "type": "string",
+        "description": "Human-readable name of budget configuration. Max Length: 128"
+      }
+    },
+    "401": {
+      "error_code": "UNAUTHENTICATED",
+      "description": "Request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

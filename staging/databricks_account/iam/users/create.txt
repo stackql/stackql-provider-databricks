@@ -1,0 +1,145 @@
+POST
+/api/2.0/accounts/{account_id}/scim/v2/Users
+Creates a new user in the Databricks account. This new user will also be added to the Databricks account.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID
+Request body
+Properties of the new user.
+code: id
+int64
+Databricks user ID. This is automatically set by Databricks. Any value provided by the client will be ignored.
+code: userName
+email
+Email address of the Databricks user.
+code: emails
+Array of object
+All the emails associated with the Databricks user.
+Array [
+code: $ref
+string
+code: value
+string
+code: display
+string
+code: primary
+boolean
+code: type
+string
+]
+code: name
+object
+code: givenName
+string
+Given name of the Databricks user.
+code: familyName
+string
+Family name of the Databricks user.
+code: displayName
+string
+String that represents a concatenation of given and family names. For example
+code: John Smith
+.
+code: roles
+Array of object
+Indicates if the user has the admin role.
+Array [
+code: $ref
+string
+code: value
+string
+code: display
+string
+code: primary
+boolean
+code: type
+string
+]
+code: externalId
+string
+External ID is not currently supported. It is reserved for future use.
+code: active
+boolean
+If this user is active
+Responses
+201
+The user creation request succeeded.
+The user creation request succeeded.
+code: id
+int64
+Databricks user ID. This is automatically set by Databricks. Any value provided by the client will be ignored.
+code: userName
+email
+Email address of the Databricks user.
+code: emails
+Array of object
+All the emails associated with the Databricks user.
+Array [
+code: $ref
+string
+code: value
+string
+code: display
+string
+code: primary
+boolean
+code: type
+string
+]
+code: name
+object
+code: givenName
+string
+Given name of the Databricks user.
+code: familyName
+string
+Family name of the Databricks user.
+code: displayName
+string
+String that represents a concatenation of given and family names. For example
+code: John Smith
+.
+code: roles
+Array of object
+Indicates if the user has the admin role.
+Array [
+code: $ref
+string
+code: value
+string
+code: display
+string
+code: primary
+boolean
+code: type
+string
+]
+code: externalId
+string
+External ID is not currently supported. It is reserved for future use.
+code: active
+boolean
+If this user is active
+This method might return the following HTTP codes: 400, 401, 403, 409, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

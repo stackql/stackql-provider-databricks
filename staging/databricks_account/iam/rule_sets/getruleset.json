@@ -1,0 +1,60 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/preview/accounts/{account_id}/access-control/rule-sets",
+  "description": "Get a rule set by its name. A rule set is always attached to a resource and contains a",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Databricks account ID of any type."
+    },
+    "name": {
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "A name for a rule set on the account."
+    },
+    "etag": {
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "An etag encoded a specific version of the rule set to get or to be updated."
+    }
+  },
+  "responses": {
+    "200": {
+      "name": {
+        "type": "string",
+        "description": "Name of the rule set."
+      },
+      "grant_rules": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "principals": {
+        "description": "Principals this grant rule applies to."
+      },
+      "role": {
+        "type": "string",
+        "description": "]"
+      },
+      "etag": {
+        "type": "string",
+        "description": "Identifies the version of the rule set returned."
+      }
+    },
+    "400": {
+      "error_code": "BAD_REQUEST",
+      "description": "Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

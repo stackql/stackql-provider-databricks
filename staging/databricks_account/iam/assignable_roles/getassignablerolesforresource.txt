@@ -1,0 +1,59 @@
+GET
+/api/2.0/preview/accounts/{account_id}/access-control/assignable-roles
+Gets all the roles that can be granted on an account level resource. A role is grantable
+if the rule set on the resource can contain an access rule of the role.
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type.
+Query parameters
+code: resource
+required
+string
+The resource name for which assignable roles will be listed.
+Examples
+Summary
+code: resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>
+A resource name for the service principal.
+code: resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>
+A resource name for the group.
+code: resource=accounts/<ACCOUNT_ID>
+A resource name for the account.
+Responses
+200
+Assignable roles were returned successfully.
+Assignable roles were returned successfully.
+code: roles
+Array of object
+Array [
+code: name
+required
+string
+Example
+Role to assign to a principal or a list of principals on a resource.
+]
+This method might return the following HTTP codes: 400, 401, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+400
+BAD_REQUEST
+Request is invalid.
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

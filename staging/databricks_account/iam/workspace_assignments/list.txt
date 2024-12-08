@@ -1,0 +1,61 @@
+GET
+/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments
+Get the permission assignments for the specified Databricks account and Databricks workspace.
+Path parameters
+code: account_id
+required
+string
+The account ID.
+code: workspace_id
+required
+int64
+The workspace ID for the account.
+Responses
+200
+Request completed successfully.
+Request completed successfully.
+code: permission_assignments
+Array of object
+Array of permissions assignments defined for a workspace.
+Array [
+code: principal
+object
+Information about the principal assigned to the workspace.
+code: permissions
+Array of string
+The permissions level of the principal.
+code: error
+string
+Error response associated with a workspace permission assignment, if any.
+]
+This method might return the following HTTP codes: 400, 401, 403, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+400
+BAD_REQUEST, MALFORMED_REQUEST
+BAD_REQUEST - Request is invalid.
+MALFORMED_REQUEST - Request was malformed.
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+403
+PERMISSION_DENIED
+Caller does not have permission to execute the specified operation.
+404
+RESOURCE_DOES_NOT_EXIST
+Operation was performed on a resource that does not exist.
+500
+INTERNAL_ERROR
+Internal error.

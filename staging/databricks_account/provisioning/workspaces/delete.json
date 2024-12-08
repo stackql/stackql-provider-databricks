@@ -1,0 +1,36 @@
+{
+  "verb": "delete",
+  "path": "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}",
+  "description": "Terminates and deletes a Databricks workspace. From an API perspective, deletion is immediate. However, it might take a few minutes for all workspaces resources to be deleted, depending on the size and number of workspace resources.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "workspace_id": {
+      "in": "path",
+      "required": true,
+      "description": "Workspace ID."
+    }
+  },
+  "responses": {
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+      "error_code": "NOT_FOUND",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+      "error_code": "RESOURCE_CONFLICT",
+      "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

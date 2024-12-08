@@ -1,0 +1,55 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments/permissions",
+  "description": "Get an array of workspace permissions for the specified account and workspace.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The account ID."
+    },
+    "workspace_id": {
+      "in": "path",
+      "required": true,
+      "description": "The workspace ID."
+    }
+  },
+  "responses": {
+    "200": {
+      "permissions": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "permission_level": {
+        "type": "string",
+        "description": "Enum:"
+      },
+      "UNKNOWN | USER | ADMIN": {},
+      "description": {
+        "type": "string",
+        "description": "]"
+      }
+    },
+    "400": {
+      "error_code": "BAD_REQUEST",
+      "description": "Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+      "error_code": "PERMISSION_DENIED",
+      "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+      "error_code": "RESOURCE_DOES_NOT_EXIST",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+      "error_code": "INTERNAL_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

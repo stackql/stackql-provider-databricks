@@ -1,0 +1,50 @@
+DELETE
+/api/2.0/accounts/{account_id}/private-access-settings/{private_access_settings_id}
+Deletes a private access settings object, which determines how your workspace is accessed over
+AWS PrivateLink
+.
+Before configuring PrivateLink, read the
+Databricks article about PrivateLink
+.",
+Path parameters
+code: account_id
+required
+uuid
+Databricks account ID of any type. For non-E2 account types, get your account ID from the
+Accounts Console
+.
+code: private_access_settings_id
+required
+uuid
+Databricks Account API private access settings ID.
+Responses
+200
+The private access settings was successfully deleted.
+The private access settings was successfully deleted.
+This method might return the following HTTP codes: 401, 404, 409, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+404
+NOT_FOUND
+Operation was performed on a resource that does not exist.
+409
+RESOURCE_CONFLICT
+Request was rejected due a conflict with an existing resource.
+500
+INTERNAL_SERVER_ERROR
+Internal error.

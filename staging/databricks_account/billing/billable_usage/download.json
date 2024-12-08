@@ -1,0 +1,51 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/usage/download",
+  "description": "Returns billable usage logs in CSV format for the specified account and date range.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "start_month": {
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Format:"
+    },
+    "YYYY-MM": {
+      "in": "query",
+      "required": false,
+      "description": ". Last month to return billable usage logs for. This field is required."
+    },
+    "end_month": {
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Format:"
+    },
+    "personal_data": {
+      "in": "query",
+      "required": false,
+      "type": "boolean",
+      "description": "Default"
+    },
+    "false": {
+      "in": "query",
+      "required": false,
+      "description": "Specify whether to include personally identifiable information in the billable usage logs, for example the email addresses of cluster creators. Handle this information with care. Defaults to false."
+    }
+  },
+  "responses": {
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+      "error_code": "INTERNAL_SERVER_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

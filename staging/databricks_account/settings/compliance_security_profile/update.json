@@ -1,0 +1,85 @@
+{
+  "verb": "patch",
+  "path": "/api/2.0/accounts/{account_id}/settings/types/shield_csp_enablement_ac/names/default",
+  "description": "Updates the value of the compliance security profile setting for new workspaces.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Databricks account ID of the account being managed."
+    }
+  },
+  "requestBody": {
+    "properties": {
+      "allow_missing": {
+        "type": "boolean",
+        "description": "This should always be set to true for Settings API. Added for AIP compliance."
+      },
+      "setting": {
+        "description": "object"
+      },
+      "etag": {
+        "type": "string",
+        "description": "with the PATCH request to identify the setting version you are updating."
+      },
+      "setting_name": {
+        "type": "string",
+        "description": "respected instead. Setting name is required to be 'default' if the setting only has one instance per workspace."
+      },
+      "csp_enablement_account": {
+        "description": "Account level policy for CSP"
+      },
+      "field_mask": {
+        "type": "string",
+        "description": "use comma as the separator (no space)."
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "etag": {
+        "type": "string",
+        "description": "with the PATCH request to identify the setting version you are updating."
+      },
+      "setting_name": {
+        "type": "string",
+        "description": "respected instead. Setting name is required to be 'default' if the setting only has one instance per workspace."
+      },
+      "csp_enablement_account": {
+        "description": "Account level policy for CSP"
+      },
+      "is_enforced": {
+        "type": "boolean",
+        "description": "Enforced = it cannot be overriden at workspace level."
+      },
+      "compliance_standards": {
+        "description": "Invariants are enforced in Settings policy."
+      }
+    },
+    "400": {
+      "error_code": "BAD_REQUEST",
+      "description": "Request is invalid."
+    },
+    "401": {
+      "error_code": "UNAUTHORIZED",
+      "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+      "error_code": "PERMISSION_DENIED",
+      "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+      "error_code": "RESOURCE_DOES_NOT_EXIST",
+      "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+      "error_code": "RESOURCE_CONFLICT",
+      "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+      "error_code": "INTERNAL_ERROR",
+      "description": "Internal error."
+    }
+  }
+}

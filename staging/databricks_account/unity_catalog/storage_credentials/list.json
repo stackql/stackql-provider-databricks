@@ -1,0 +1,83 @@
+{
+  "verb": "get",
+  "path": "/api/2.0/accounts/{account_id}/metastores/{metastore_id}/storage-credentials",
+  "description": "Gets a list of all storage credentials that have been assigned to given metastore.",
+  "parameters": {
+    "account_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "."
+    },
+    "metastore_id": {
+      "in": "path",
+      "required": true,
+      "type": "uuid",
+      "description": "Unity Catalog metastore ID"
+    }
+  },
+  "responses": {
+    "200": {
+      "storage_credentials": {
+        "type": "Array of object",
+        "description": "Array ["
+      },
+      "name": {
+        "type": "string",
+        "description": "The credential name. The name must be unique within the metastore."
+      },
+      "aws_iam_role": {
+        "description": "The AWS IAM role configuration."
+      },
+      "comment": {
+        "type": "string",
+        "description": "Comment associated with the credential."
+      },
+      "read_only": {
+        "type": "boolean",
+        "description": "Whether the storage credential is only usable for read operations."
+      },
+      "owner": {
+        "type": "string",
+        "description": "Username of current owner of credential."
+      },
+      "full_name": {
+        "type": "string",
+        "description": "The full name of the credential."
+      },
+      "id": {
+        "type": "string",
+        "description": "The unique identifier of the credential."
+      },
+      "metastore_id": {
+        "type": "string",
+        "description": "Unique identifier of parent metastore."
+      },
+      "created_at": {
+        "description": "Time at which this Credential was created, in epoch milliseconds."
+      },
+      "created_by": {
+        "type": "string",
+        "description": "Username of credential creator."
+      },
+      "updated_at": {
+        "description": "Time at which this credential was last modified, in epoch milliseconds."
+      },
+      "updated_by": {
+        "type": "string",
+        "description": "Username of user who last modified the credential."
+      },
+      "used_for_managed_storage": {
+        "type": "boolean",
+        "description": "Whether this credential is the current metastore's root storage credential."
+      },
+      "isolation_mode": {
+        "type": "string",
+        "description": "Enum:"
+      },
+      "ISOLATION_MODE_OPEN | ISOLATION_MODE_ISOLATED": {
+        "description": "]"
+      }
+    }
+  }
+}
