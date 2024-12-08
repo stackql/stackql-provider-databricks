@@ -1,0 +1,84 @@
+PUT
+/api/2.0/permissions/clusters/{cluster_id}
+Sets permissions on an object, replacing existing permissions if they exist. Deletes all direct permissions if none are specified. Objects can inherit permissions from their root object.
+Path parameters
+code: cluster_id
+required
+string
+The cluster for which to get or manage permissions.
+Request body
+code: access_control_list
+Array of object
+Array [
+code: user_name
+string
+name of the user
+code: group_name
+string
+name of the group
+code: service_principal_name
+string
+application ID of a service principal
+code: permission_level
+string
+Enum:
+code: CAN_MANAGE | CAN_RESTART | CAN_ATTACH_TO
+Permission level
+]
+Responses
+200
+code: object_id
+string
+code: object_type
+string
+code: access_control_list
+Array of object
+Array [
+code: user_name
+string
+name of the user
+code: group_name
+string
+name of the group
+code: service_principal_name
+string
+Name of the service principal.
+code: display_name
+string
+Display name of the user or service principal.
+code: all_permissions
+Array of object
+All permissions.
+]
+This method might return the following HTTP codes: 400, 401, 403, 404, 500
+Error responses are returned in the following format:
+{
+"error_code"
+:
+"Error code"
+,
+"message"
+:
+"Human-readable error message."
+}
+Possible error codes:
+HTTP code
+error_code
+Description
+400
+BAD_REQUEST, INVALID_PARAMETER_VALUE
+BAD_REQUEST - Request is invalid.
+INVALID_PARAMETER_VALUE - Supplied value for a parameter was invalid.
+401
+UNAUTHORIZED
+The request does not have valid authentication credentials for the operation.
+403
+PERMISSION_DENIED
+Caller does not have permission to execute the specified operation.
+404
+FEATURE_DISABLED, RESOURCE_DOES_NOT_EXIST
+FEATURE_DISABLED - If a given user/entity is trying to use a feature which has been disabled.
+RESOURCE_DOES_NOT_EXIST - Operation was performed on a resource that does not exist.
+500
+INTERNAL_SERVER_ERROR
+Internal error.
