@@ -581,8 +581,11 @@ def parse_doc_content(content):
     
     return cleanup_dict(output)
 
-
 def process_endpoint(provider, service, resource, method, docPath, verb, debug):
+    # Create output directory structure
+    output_dir = f"staging/databricks_{provider}/{service}/{resource}"
+    os.makedirs(output_dir, exist_ok=True)
+
     # Scrape the documentation page
     soup = scrape_dynamic_content(docPath)
     
@@ -598,10 +601,6 @@ def process_endpoint(provider, service, resource, method, docPath, verb, debug):
 
     # Parse the content into structured format
     api_spec = parse_doc_content(http_content)
-
-    # Create output directory structure
-    output_dir = f"staging/databricks_{provider}/{service}/{resource}"
-    os.makedirs(output_dir, exist_ok=True)
 
     # Write the output
     output_file = f"{output_dir}/{method}.json"
