@@ -1,43 +1,53 @@
 {
-  "verb": "get",
-  "path": "/api/2.0/preview/accounts/{account_id}/access-control/assignable-roles",
-  "description": "Gets all the roles that can be granted on an account level resource. A role is grantable",
-  "parameters": {
-    "account_id": {
-      "in": "path",
-      "required": true,
-      "type": "uuid",
-      "description": "Databricks account ID of any type."
-    },
-    "resource": {
-      "in": "query",
-      "required": true,
-      "type": "string",
-      "description": "A resource name for the account."
-    }
+ "path": "/api/2.0/preview/accounts/{account_id}/access-control/assignable-roles",
+ "verb": "get",
+ "operationId": "assignable-roles-getassignablerolesforresource",
+ "description": "Gets all the roles that can be granted on an account level resource. A role is grantable\nif the rule set on the resource can contain an access rule of the role.",
+ "externalDocs": {
+  "url": "https://docs.databricks.com/api/account/accountaccesscontrol/getassignablerolesforresource"
+ },
+ "parameters": [
+  {
+   "name": "account_id",
+   "in": "path",
+   "description": "",
+   "required": false
   },
-  "responses": {
-    "200": {
-      "roles": {
-        "type": "Array of object",
-        "description": "Array ["
-      },
-      "name": {
-        "type": "string",
-        "description": "]"
-      }
-    },
-    "400": {
-      "error_code": "BAD_REQUEST",
-      "description": "Request is invalid."
-    },
-    "401": {
-      "error_code": "UNAUTHORIZED",
-      "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "500": {
-      "error_code": "INTERNAL_SERVER_ERROR",
-      "description": "Internal error."
-    }
+  {
+   "name": "resource",
+   "in": "query",
+   "description": "The resource name for which assignable roles will be listed. (string)",
+   "required": true
+  },
+  {
+   "name": "resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "resource=accounts/<ACCOUNT_ID>",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "roles",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "name",
+   "in": "query",
+   "description": "Request is invalid. (BAD_REQUEST)",
+   "required": true
   }
+ ]
 }

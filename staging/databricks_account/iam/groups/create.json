@@ -1,120 +1,17 @@
 {
-  "verb": "post",
-  "path": "/api/2.0/accounts/{account_id}/scim/v2/Groups",
-  "description": "Creates a group in the Databricks account with a unique name, using the supplied group details.",
-  "parameters": {
-    "account_id": {
-      "in": "path",
-      "required": true,
-      "type": "uuid",
-      "description": "Databricks account ID"
-    }
-  },
-  "requestBody": {
-    "properties": {
-      "id": {
-        "description": "Databricks group ID"
-      },
-      "displayName": {
-        "type": "string",
-        "description": "String that represents a human-readable group name"
-      },
-      "members": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "$ref": {
-              "type": "string"
-            },
-            "value": {
-              "type": "string"
-            },
-            "display": {
-              "type": "string"
-            },
-            "primary": {
-              "type": "boolean"
-            },
-            "type": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "roles": {
-        "type": "array",
-        "description": "Indicates if the group has the admin role.",
-        "items": {
-          "type": "object",
-          "properties": {
-            "$ref": {
-              "type": "string"
-            },
-            "value": {
-              "type": "string"
-            },
-            "display": {
-              "type": "string"
-            },
-            "primary": {
-              "type": "boolean"
-            },
-            "type": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "externalId": {
-        "type": "string"
-      }
-    }
-  },
-  "responses": {
-    "201": {
-      "id": {
-        "description": "Databricks group ID"
-      },
-      "displayName": {
-        "type": "string",
-        "description": "String that represents a human-readable group name"
-      },
-      "members": {
-        "type": "Array of object",
-        "description": "Array ["
-      },
-      "$ref": {
-        "type": "string"
-      },
-      "value": {
-        "type": "string"
-      },
-      "display": {
-        "type": "string"
-      },
-      "primary": {
-        "type": "boolean"
-      },
-      "type": {
-        "type": "string",
-        "description": "]"
-      },
-      "roles": {
-        "type": "Array of object",
-        "description": "Array ["
-      },
-      "externalId": {
-        "type": "string"
-      }
-    },
-    "401": {
-      "error_code": "UNAUTHORIZED",
-      "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "500": {
-      "error_code": "INTERNAL_SERVER_ERROR",
-      "description": "Internal error."
-    }
+ "path": "/api/2.0/accounts/{account_id}/scim/v2/Groups",
+ "verb": "post",
+ "operationId": "groups-create",
+ "description": "Creates a group in the Databricks account with a unique name, using the supplied group details.",
+ "externalDocs": {
+  "url": "https://docs.databricks.com/api/account/accountgroups/create"
+ },
+ "parameters": [
+  {
+   "name": "account_id",
+   "in": "path",
+   "description": "",
+   "required": false
   }
+ ]
 }

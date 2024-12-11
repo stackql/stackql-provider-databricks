@@ -1,134 +1,197 @@
 {
-  "verb": "get",
-  "path": "/api/2.0/accounts/{account_id}/scim/v2/Groups",
-  "description": "Gets all details of the groups associated with the Databricks account.",
-  "parameters": {
-    "account_id": {
-      "in": "path",
-      "required": true,
-      "type": "uuid",
-      "description": "Databricks account ID"
-    },
-    "filter": {
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Query by which the results have to be filtered. Supported operators are equals("
-    },
-    "eq": {
-      "in": "query",
-      "required": false,
-      "description": "), contains("
-    },
-    "co": {
-      "in": "query",
-      "required": false,
-      "description": "), starts with("
-    },
-    "sw": {
-      "in": "query",
-      "required": false,
-      "description": ") and not equals("
-    },
-    "ne": {
-      "in": "query",
-      "required": false,
-      "description": "). Additionally, simple expressions can be formed using logical operators -"
-    },
-    "and": {
-      "in": "query",
-      "required": false,
-      "description": "and"
-    },
-    "or": {
-      "in": "query",
-      "required": false,
-      "description": "Group whose displayName contains foo and displayName contains bar."
-    },
-    "attributes": {
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Comma-separated list of attributes to return in response."
-    },
-    "excludedAttributes": {
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Comma-separated list of attributes to exclude in response."
-    },
-    "startIndex": {
-      "in": "query",
-      "required": false,
-      "description": "Specifies the index of the first result. First item is number 1."
-    },
-    "count": {
-      "in": "query",
-      "required": false,
-      "description": "Desired number of results per page. Default is 10000."
-    },
-    "sortBy": {
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Attribute to sort the results."
-    },
-    "sortOrder": {
-      "in": "query",
-      "required": false,
-      "type": "string",
-      "description": "Enum:"
-    },
-    "ascending | descending": {
-      "in": "query",
-      "required": false,
-      "description": "The order to sort the results."
-    }
+ "path": "/api/2.0/accounts/{account_id}/scim/v2/Groups",
+ "verb": "get",
+ "operationId": "groups-list",
+ "description": "Gets all details of the groups associated with the Databricks account.",
+ "externalDocs": {
+  "url": "https://docs.databricks.com/api/account/accountgroups/list"
+ },
+ "parameters": [
+  {
+   "name": "account_id",
+   "in": "path",
+   "description": "",
+   "required": false
   },
-  "responses": {
-    "200": {
-      "totalResults": {
-        "description": "Total results that match the request filters."
-      },
-      "startIndex": {
-        "description": "Default"
-      },
-      "1": {
-        "description": "Starting index of all the results that matched the request filters. First item is number 1."
-      },
-      "itemsPerPage": {
-        "description": "Total results returned in the response."
-      },
-      "Resources": {
-        "type": "Array of object",
-        "description": "Array ["
-      },
-      "id": {
-        "description": "Databricks group ID"
-      },
-      "displayName": {
-        "type": "string",
-        "description": "String that represents a human-readable group name"
-      },
-      "members": {
-        "type": "Array of object"
-      },
-      "roles": {
-        "type": "Array of object",
-        "description": "Indicates if the group has the admin role."
-      },
-      "externalId": {
-        "type": "string",
-        "description": "]"
-      }
-    },
-    "401": {
-      "error_code": "UNAUTHORIZED",
-      "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "500": {
-      "error_code": "INTERNAL_SERVER_ERROR",
-      "description": "Internal error."
-    }
+  {
+   "name": "filter",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "eq",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "co",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "sw",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "ne",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "and",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "or",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "filter=displayName eq \"admins\"",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "filter=displayName sw \"bar\"",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "filter=displayName co \"foo\" or displayName co \"bar\"",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "filter=displayName ne \"baz\"",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "filter=displayName co \"foo\"",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "filter=displayName co \"foo\" and displayName co \"bar\"",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "attributes",
+   "in": "query",
+   "description": "Comma-separated list of attributes to return in response. (string)",
+   "required": false
+  },
+  {
+   "name": "excludedAttributes",
+   "in": "query",
+   "description": "Comma-separated list of attributes to exclude in response. (string)",
+   "required": false
+  },
+  {
+   "name": "startIndex",
+   "in": "query",
+   "description": "Specifies the index of the first result. First item is number 1. (int64)",
+   "required": false
+  },
+  {
+   "name": "count",
+   "in": "query",
+   "description": "Desired number of results per page. Default is 10000. (<= 100)",
+   "required": false
+  },
+  {
+   "name": "sortBy",
+   "in": "query",
+   "description": "Attribute to sort the results. (string)",
+   "required": false
+  },
+  {
+   "name": "sortOrder",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "ascending | descending",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "totalResults",
+   "in": "query",
+   "description": "Total results that match the request filters. (int64)",
+   "required": false
+  },
+  {
+   "name": "startIndex",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "1",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "itemsPerPage",
+   "in": "query",
+   "description": "Total results returned in the response. (int64)",
+   "required": false
+  },
+  {
+   "name": "Resources",
+   "in": "query",
+   "description": "User objects returned in the response. (Array of object)",
+   "required": false
+  },
+  {
+   "name": "id",
+   "in": "query",
+   "description": "Databricks group ID (int64)",
+   "required": false
+  },
+  {
+   "name": "displayName",
+   "in": "query",
+   "description": "String that represents a human-readable group name (string)",
+   "required": false
+  },
+  {
+   "name": "members",
+   "in": "query",
+   "description": "",
+   "required": false
+  },
+  {
+   "name": "roles",
+   "in": "query",
+   "description": "Indicates if the group has the admin role. (Array of object)",
+   "required": false
+  },
+  {
+   "name": "externalId",
+   "in": "query",
+   "description": "",
+   "required": false
   }
+ ]
 }
