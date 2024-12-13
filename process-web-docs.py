@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import yaml, argparse , sys, json, os, re
+import yaml, argparse , sys, json, os, re, time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -177,9 +177,10 @@ sqlVerb: {sqlVerb}""")
     if selector.xpath(f"{doc_base_path}/h3[1]/text()").get() == "Request body":
         request_body_desc_ix = max(path_params_ix, query_params_ix) + 1
         request_body_props_ix = request_body_desc_ix + 1
-        request_body_desc = selector.xpath(f"{doc_base_path}/div[{request_body_desc_ix}]/text()").get().replace("\n", " ").strip()
-        print(f"request body description: {request_body_desc}") if debug else None
+        request_body_desc = selector.xpath(f"{doc_base_path}/div[{request_body_desc_ix}]/text()").get()
         if request_body_desc:
+            request_body_desc.replace("\n", " ").strip()
+            print(f"request body description: {request_body_desc}") if debug else None
             request_body["description"] = request_body_desc
         request_body["content"] = {}
         request_body["content"]["application/json"] = {}
@@ -196,7 +197,7 @@ sqlVerb: {sqlVerb}""")
     responses = {}
 
     responses_ix = max(path_params_ix, query_params_ix, request_body_props_ix) + 1
-    resp_code = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/strong/text()").get()
+    resp_code = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/strong/text()").get().replace("\u00a0", "").strip()
     resp_code_desc = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/span[2]/text()").get()
     print(f"resp_code: {resp_code}") if debug else None
     print(f"resp_code_desc: {resp_code_desc}") if debug else None
@@ -263,6 +264,8 @@ error_codes_set = set()
 def main():
     global error_codes_set
 
+    start_time = time.time()
+
     parser = argparse.ArgumentParser(description='Process Databricks API documentation')
     parser.add_argument('provider', choices=['account', 'workspace'],
                       help='The provider type to process (account or workspace)')
@@ -278,6 +281,9 @@ def main():
     process_manifest(args.provider, args.debug)
 
     print(f"Error codes: {error_codes_set}")
+
+    elapsed_time = time.time() - start_time
+    print(f"Elapsed time: {elapsed_time:.2f} seconds")
 
 if __name__ == "__main__":
     main()
