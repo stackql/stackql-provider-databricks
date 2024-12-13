@@ -127,17 +127,16 @@ sqlVerb: {sqlVerb}""")
     # has path params?
     if path_params_ix > 0:
         direct_divs = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/*[name()=\"div\"]")
-        print(f"number of path params: {len(direct_divs)}")
         for idx, div in enumerate(direct_divs):
             param = {}
             param["name"] = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/a/span[2]/code/text()").get()
             if selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[1]/text()").get() == "required":
                 param["required"] = True
-            param["type"] = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
-            param["description"] = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
+            type_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
+            param_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get().replace("\n", " ").strip()
+            param["description"] = f"({type_desc}) {param_desc}" if type_desc else param_desc
+            param["in"] = "path"
             params.append(param)
-        print(f"params: {params}")
-
 
     #
     # query params
@@ -151,7 +150,18 @@ sqlVerb: {sqlVerb}""")
 
     if query_params_ix > 0:
         direct_divs = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/*[name()=\"div\"]")
-        print(f"number of query params: {len(direct_divs)}")    
+        for idx, div in enumerate(direct_divs):
+            param = {}
+            param["name"] = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[1]/a/span[2]/code/text()").get()
+            if selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[1]/span[1]/text()").get() == "required":
+                param["required"] = True
+            type_desc = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
+            param_desc = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get().replace("\n", " ").strip()
+            param["description"] = f"({type_desc}) {param_desc}" if type_desc else param_desc
+            param["in"] = "query"
+            params.append(param)
+        
+    print(f"params: {params}")
 
     #
     # req body params
