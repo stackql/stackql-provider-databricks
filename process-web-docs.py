@@ -87,17 +87,19 @@ sqlVerb: {sqlVerb}""")
     
     selector = Selector(text=str(soup))
 
-    http_verb = selector.xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/article/span/code/div/div/text()').get().lower()
+    doc_base_path = "/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]"
+
+    http_verb = selector.xpath(f"{doc_base_path}/article/span/code/div/div/text()").get().lower()
     print(f"\nhttp_verb: {http_verb}")
     if http_verb not in ["get", "post", "put", "delete", "patch"]:
         raise ValueError(f"Invalid HTTP verb: {http_verb}")
 
-    http_path = selector.xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/article/span/code/span/text()').get()
+    http_path = selector.xpath(f"{doc_base_path}/article/span/code/span/text()").get()
     print(f"http_path: {http_path}")
     if not http_path.startswith('/api/2.0/'):
         raise ValueError(f"Invalid HTTP path: {http_path}")
     
-    op_desc = selector.xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[3]/div[2]/text()').get().replace('\n', ' ').strip()
+    op_desc = selector.xpath(f"{doc_base_path}/div[3]/div[2]/text()").get().replace("\n", " ").strip()
     print(f"op_desc: {op_desc}")
     if op_desc is None:
         raise ValueError(f"Invalid operation description: {http_path}")
@@ -115,19 +117,27 @@ sqlVerb: {sqlVerb}""")
 
     # Find the index of the <div> containing the <h3> with text "Path parameters"
     path_params_ix = int(float(selector.xpath(
-        "count(/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/*[self::div and .//h3[text()='Path parameters']]/preceding-sibling::div)"
+        f"count({doc_base_path}/*[self::div and .//h3[text()='Path parameters']]/preceding-sibling::div)"
     ).get()))
     if path_params_ix > 0:
         path_params_ix += 1
 
     # has path params?
     if path_params_ix > 0:
-        direct_divs = selector.xpath(f"/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{path_params_ix}]/div/*[name()=\"div\"]")
+        direct_divs = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/*[name()=\"div\"]")
         print(f"number of path params: {len(direct_divs)}")
-        # Extract HTML for each path parameter
         for idx, div in enumerate(direct_divs):
-            html_dump = div.get()  # Get the raw HTML of the div
-            print(f"Path param {idx + 1} HTML dump:\n{html_dump}\n")
+            param_required = False
+            param_name = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/a/span[2]/code/text()").get()
+            if selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[1]/text()").get() == "required":
+                param_required = True
+            param_type = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
+            param_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
+
+            print(f"Path param {idx} name: {param_name}")
+            print(f"Path param {idx} type: {param_type}")
+            print(f"Path param {idx} required: {param_required}")
+            print(f"Path param {idx} desc: {param_desc}")
 
 
     #
@@ -135,25 +145,25 @@ sqlVerb: {sqlVerb}""")
     #
     
     query_params_ix = int(float(selector.xpath(
-        "count(/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/*[self::div and .//h3[text()='Query parameters']]/preceding-sibling::div)"
+        f"count({doc_base_path}/*[self::div and .//h3[text()='Query parameters']]/preceding-sibling::div)"
     ).get()))
     if query_params_ix > 0:
         query_params_ix += 1
 
     if query_params_ix > 0:
-        direct_divs = selector.xpath(f"/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{query_params_ix}]/div/*[name()=\"div\"]")
+        direct_divs = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/*[name()=\"div\"]")
         print(f"number of query params: {len(direct_divs)}")    
 
     #
     # req body params
     #
 
-    if selector.xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/h3[1]/text()').get() == "Request body":
+    if selector.xpath(f"{doc_base_path}/h3[1]/text()").get() == "Request body":
         request_body_desc_ix = max(path_params_ix, query_params_ix) + 1
         request_body_props_ix = request_body_desc_ix + 1
-        request_body_desc = selector.xpath(f'/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{request_body_desc_ix}]/text()').get().replace('\n', ' ').strip()
+        request_body_desc = selector.xpath(f"{doc_base_path}/div[{request_body_desc_ix}]/text()").get().replace("\n", " ").strip()
         print(f"request body description: {request_body_desc}")
-        direct_divs = selector.xpath(f"/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{request_body_props_ix}]/*[name()=\"div\"]")
+        direct_divs = selector.xpath(f"{doc_base_path}/div[{request_body_props_ix}]/*[name()=\"div\"]")
         print(f"number of req body params: {len(direct_divs)}")    
 
     #
@@ -161,14 +171,14 @@ sqlVerb: {sqlVerb}""")
     #
 
     responses_ix = max(path_params_ix, query_params_ix, request_body_props_ix) + 1
-    resp_code = selector.xpath(f'/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{responses_ix}]/div[1]/div/strong/text()').get()
-    resp_code_desc = selector.xpath(f'/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{responses_ix}]/div[1]/div/span[2]/text()').get()
+    resp_code = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/strong/text()").get()
+    resp_code_desc = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/span[2]/text()").get()
     print(f"resp_code: {resp_code}")
     print(f"resp_code_desc: {resp_code_desc}")
-    direct_divs = selector.xpath(f"/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{responses_ix}]/div[2]/div/div[2]/*[name()=\"div\"]")
+    direct_divs = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[2]/div/div[2]/*[name()=\"div\"]")
     print(f"number of response fields: {len(direct_divs)}")    
 
-    error_responses_raw_str = selector.xpath(f'/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{responses_ix+2}]/div[1]/div/text()').get()
+    error_responses_raw_str = selector.xpath(f"{doc_base_path}/div[{responses_ix+2}]/div[1]/div/text()").get()
     error_responses = list(re.findall(r'\b\d{3}\b', error_responses_raw_str))
     print(f"error_responses: {error_responses}")
 
