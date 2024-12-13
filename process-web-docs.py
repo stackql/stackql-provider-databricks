@@ -104,6 +104,8 @@ sqlVerb: {sqlVerb}""")
     if op_desc is None:
         raise ValueError(f"Invalid operation description: {http_path}")
 
+    params = []
+
     # default index values
     path_params_ix = 0
     query_params_ix = 0
@@ -127,17 +129,14 @@ sqlVerb: {sqlVerb}""")
         direct_divs = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/*[name()=\"div\"]")
         print(f"number of path params: {len(direct_divs)}")
         for idx, div in enumerate(direct_divs):
-            param_required = False
-            param_name = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/a/span[2]/code/text()").get()
+            param = {}
+            param["name"] = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/a/span[2]/code/text()").get()
             if selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[1]/text()").get() == "required":
-                param_required = True
-            param_type = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
-            param_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
-
-            print(f"Path param {idx} name: {param_name}")
-            print(f"Path param {idx} type: {param_type}")
-            print(f"Path param {idx} required: {param_required}")
-            print(f"Path param {idx} desc: {param_desc}")
+                param["required"] = True
+            param["type"] = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
+            param["description"] = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
+            params.append(param)
+        print(f"params: {params}")
 
 
     #
