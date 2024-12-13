@@ -101,7 +101,7 @@ sqlVerb: {sqlVerb}""")
 
     http_path = selector.xpath(f"{doc_base_path}/article/span/code/span/text()").get()
     print(f"http_path: {http_path}") if debug else None
-    if not http_path.startswith('/api/2.0/'):
+    if not http_path.startswith('/api/'):
         raise ValueError(f"Invalid HTTP path: {http_path}")
     
     op_desc = selector.xpath(f"{doc_base_path}/div[3]/div[2]/text()").get().replace("\n", " ").strip()
@@ -117,6 +117,7 @@ sqlVerb: {sqlVerb}""")
     request_body_desc_ix = 0
     request_body_props_ix = 0
     responses_ix = 0
+    err_resp_ix = 0
 
     #
     # path params
@@ -138,8 +139,13 @@ sqlVerb: {sqlVerb}""")
             if selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[1]/text()").get() == "required":
                 param["required"] = True
             type_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
-            param_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get().replace("\n", " ").strip()
-            param["description"] = f"({type_desc}) {param_desc}" if type_desc else param_desc
+            param_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
+            if param_desc:
+                param_desc.replace("\n", " ").strip()
+            if param_desc and type_desc:
+                param["description"] = f"({type_desc}) {param_desc}" 
+            elif param_desc:
+                param["description"] = param_desc
             param["in"] = "path"
             params.append(param)
 
@@ -161,8 +167,13 @@ sqlVerb: {sqlVerb}""")
             if selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[1]/span[1]/text()").get() == "required":
                 param["required"] = True
             type_desc = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
-            param_desc = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get().replace("\n", " ").strip()
-            param["description"] = f"({type_desc}) {param_desc}" if type_desc else param_desc
+            param_desc = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
+            if param_desc:
+                param_desc = param_desc.replace("\n", " ").strip()
+            if param_desc and type_desc:
+                param["description"] = f"({type_desc}) {param_desc}"
+            elif param_desc:
+                param["description"] = param_desc
             param["in"] = "query"
             params.append(param)
         
@@ -173,21 +184,85 @@ sqlVerb: {sqlVerb}""")
     #
 
     request_body = {}
-
+    
     if selector.xpath(f"{doc_base_path}/h3[1]/text()").get() == "Request body":
-        request_body_desc_ix = max(path_params_ix, query_params_ix) + 1
-        request_body_props_ix = request_body_desc_ix + 1
-        request_body_desc = selector.xpath(f"{doc_base_path}/div[{request_body_desc_ix}]/text()").get()
-        if request_body_desc:
-            request_body_desc.replace("\n", " ").strip()
-            print(f"request body description: {request_body_desc}") if debug else None
-            request_body["description"] = request_body_desc
-        request_body["content"] = {}
-        request_body["content"]["application/json"] = {}
-        request_body["content"]["application/json"]["schema"] = {}
-        direct_divs = selector.xpath(f"{doc_base_path}/div[{request_body_props_ix}]/*[name()=\"div\"]")
-        print(f"number of req body params: {len(direct_divs)}") if debug else None  
-        # TODO: handle nested objects
+        # Get the next div after the "Request body" heading
+        next_div = selector.xpath(f"{doc_base_path}/h3[1]/following-sibling::div[1]")
+        
+        # Check if the next div contains text
+        contains_text = bool(next_div.xpath("text()").get())
+        if contains_text:
+            # Extract and clean the request body description
+            request_body_desc = next_div.xpath("text()").get()
+            if request_body_desc:
+                request_body_desc = request_body_desc.replace("\n", " ").strip()
+                print(f"request body description: {request_body_desc}") if debug else None
+                request_body["description"] = request_body_desc
+            
+            req_body_props_xpath = next_div.xpath('following-sibling::*')
+
+        else:
+            # If no text, assume the next div contains parameters
+            req_body_props_xpath = next_div
+
+        req_body_props_divs = req_body_props_xpath.get()
+        req_body_selector = Selector(text=req_body_props_divs)
+
+        # scalar props
+        names = req_body_selector.xpath("//body/div/div/div/a/span/code/text()").getall()
+        types = req_body_selector.xpath("//body/div/div/div/a/following-sibling::span/text()").getall()
+        descriptions = req_body_selector.xpath("//body/div/div[.//code]/div[last()]/div/text()").getall()
+
+        # Extend descriptions list to match length of names, padding with None
+        while len(descriptions) < len(names):
+            descriptions.append(None)
+
+        scalar_props = list(zip(names, types, descriptions))
+
+        # complex props
+        complex_names = req_body_selector.xpath("//body/div/div/div/div/div/a/span/code/text()").getall()
+        complex_types = req_body_selector.xpath("//body/div/div/div/div/div/a/following-sibling::span/text()").getall()
+        complex_props = [(name, type_, None) for name, type_ in zip(complex_names, complex_types)]
+
+        # Merge both lists
+        all_props = scalar_props + complex_props
+        print(all_props)
+
+        # TODO count the divs directly under req_body_props_divs
+
+        code_block = selector.xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[2]/div[1]/div/div[2]/div/div[1]/div/pre//text()').getall()
+        code_text = ''.join(code_block)
+
+        properties = {}
+        for name, type_, description in all_props:
+            prop = {
+                "type": type_ if type_ != "int64" else "integer",  # OpenAPI uses integer, not int64
+                "format": "int64" if type_ == "int64" else None,
+            }
+            if description:
+                prop["description"] = description
+            
+            # Remove None values
+            prop = {k: v for k, v in prop.items() if v is not None}
+            
+            properties[name] = prop
+
+        request_body = {
+            "description": request_body_desc,
+            "required": True,
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": properties,
+                        "example": json.loads(code_text)
+                    }
+                }
+            }
+        }
+
+        # Pretty print
+        print("request_body:", json.dumps(request_body, indent=2))
 
 
     #
@@ -195,29 +270,53 @@ sqlVerb: {sqlVerb}""")
     #
 
     responses = {}
+    h3_ix = 1
 
-    responses_ix = max(path_params_ix, query_params_ix, request_body_props_ix) + 1
-    resp_code = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/strong/text()").get().replace("\u00a0", "").strip()
-    resp_code_desc = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/span[2]/text()").get()
-    print(f"resp_code: {resp_code}") if debug else None
-    print(f"resp_code_desc: {resp_code_desc}") if debug else None
-    responses[resp_code] = {}
-    if resp_code_desc:
-        responses[resp_code]["description"] = resp_code_desc
-    responses[resp_code]["content"] = {}
-    responses[resp_code]["content"]["application/json"] = {}
-    responses[resp_code]["content"]["application/json"]["schema"] = {}
-    direct_divs = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[2]/div/div[2]/*[name()=\"div\"]")
-    print(f"number of response fields: {len(direct_divs)}") if debug else None
-    # TODO: handle nested objects   
+    if not request_body:
+        h3_ix = 2
 
-    error_responses_raw_str = selector.xpath(f"{doc_base_path}/div[{responses_ix+2}]/div[1]/div/text()").get()
-    error_responses = list(re.findall(r'\b\d{3}\b', error_responses_raw_str))
-    print(f"error_responses: {error_responses}") if debug else None
-    for code in error_responses:
-        error_codes_set.add(code)
-        responses[code] = {}
-        responses[code]["description"] = "Error response"
+    # /html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/h3[2]
+
+    # responses_ix = max(path_params_ix, query_params_ix, request_body_props_ix) + 1
+    # # resp_code = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/strong/text()").getall()
+    # resp_code = selector.xpath(f"{doc_base_path}/div[6]/div[1]/div").getall()
+    # print(resp_code)
+
+    
+    # # responses_ix is 7    
+    # # xpath from chrome inspect is /html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[7]/div[1]/div/strong
+
+    # if resp_code is None:
+    #     # try the next index
+    #     responses_ix += 1
+    #     resp_code = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/strong/text()").get()
+    # if resp_code is None:
+    #     print(f"responses_ix: {responses_ix}")
+    #     raise ValueError(f"Invalid response code: {docPath}")
+    # err_resp_ix = responses_ix + 2
+    # resp_code = resp_code.replace("\u00a0", "").strip()
+    # resp_code_desc = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/span[2]/text()").get()
+    # print(f"resp_code: {resp_code}") if debug else None
+    # print(f"resp_code_desc: {resp_code_desc}") if debug else None
+    # responses[resp_code] = {}
+    # if resp_code_desc:
+    #     responses[resp_code]["description"] = resp_code_desc
+    # if http_verb == "get":
+    #     responses[resp_code]["content"] = {}
+    #     responses[resp_code]["content"]["application/json"] = {}
+    #     responses[resp_code]["content"]["application/json"]["schema"] = {}
+    
+    #     direct_divs = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[2]/div/div[2]/*[name()=\"div\"]")
+    #     print(f"number of response fields: {len(direct_divs)}") if debug else None
+    #     # TODO: handle nested objects   
+
+    # error_responses_raw_str = selector.xpath(f"{doc_base_path}/div[{err_resp_ix}]/div[1]/div/text()").get()
+    # error_responses = list(re.findall(r'\b\d{3}\b', error_responses_raw_str))
+    # print(f"error_responses: {error_responses}") if debug else None
+    # for code in error_responses:
+    #     error_codes_set.add(code)
+    #     responses[code] = {}
+    #     responses[code]["description"] = "Error response"
 
     # stitch complete operation object together
     operation = {}
@@ -232,7 +331,7 @@ sqlVerb: {sqlVerb}""")
     operation[http_path][http_verb]["x-numReqParams"] = len([param for param in params if param.get("required")])
     operation[http_path][http_verb]["parameters"] = params
     operation[http_path][http_verb]["requestBody"] = request_body
-    operation[http_path][http_verb]["responses"] = responses
+    # operation[http_path][http_verb]["responses"] = responses
 
     write_output(output_dir, method, operation)
 
