@@ -10,6 +10,9 @@ import bs4
 from parsel import Selector
 
 def process_manifest(provider, debug):
+
+    global error_codes_set
+
     """Process the API manifest file based on provider type."""
     # Determine which manifest file to read
     manifest_file = f"manifests/{provider}_api_manifest.yml"
@@ -71,6 +74,8 @@ def scrape_dynamic_content(url):
         driver.quit()
 
 def process_endpoint(provider, service, resource, method, docPath, sqlVerb, debug):
+    global error_codes_set
+    
     print(f"""processing docPath: {docPath}
 provider: {provider}
 service: {service}
@@ -90,17 +95,17 @@ sqlVerb: {sqlVerb}""")
     doc_base_path = "/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]"
 
     http_verb = selector.xpath(f"{doc_base_path}/article/span/code/div/div/text()").get().lower()
-    print(f"\nhttp_verb: {http_verb}")
+    print(f"\nhttp_verb: {http_verb}") if debug else None
     if http_verb not in ["get", "post", "put", "delete", "patch"]:
         raise ValueError(f"Invalid HTTP verb: {http_verb}")
 
     http_path = selector.xpath(f"{doc_base_path}/article/span/code/span/text()").get()
-    print(f"http_path: {http_path}")
+    print(f"http_path: {http_path}") if debug else None
     if not http_path.startswith('/api/2.0/'):
         raise ValueError(f"Invalid HTTP path: {http_path}")
     
     op_desc = selector.xpath(f"{doc_base_path}/div[3]/div[2]/text()").get().replace("\n", " ").strip()
-    print(f"op_desc: {op_desc}")
+    print(f"op_desc: {op_desc}") if debug else None
     if op_desc is None:
         raise ValueError(f"Invalid operation description: {http_path}")
 
@@ -161,42 +166,81 @@ sqlVerb: {sqlVerb}""")
             param["in"] = "query"
             params.append(param)
         
-    print(f"params: {params}")
+    print(f"params: {params}") if debug else None
 
     #
     # req body params
     #
 
+    request_body = {}
+
     if selector.xpath(f"{doc_base_path}/h3[1]/text()").get() == "Request body":
         request_body_desc_ix = max(path_params_ix, query_params_ix) + 1
         request_body_props_ix = request_body_desc_ix + 1
         request_body_desc = selector.xpath(f"{doc_base_path}/div[{request_body_desc_ix}]/text()").get().replace("\n", " ").strip()
-        print(f"request body description: {request_body_desc}")
+        print(f"request body description: {request_body_desc}") if debug else None
+        if request_body_desc:
+            request_body["description"] = request_body_desc
+        request_body["content"] = {}
+        request_body["content"]["application/json"] = {}
+        request_body["content"]["application/json"]["schema"] = {}
         direct_divs = selector.xpath(f"{doc_base_path}/div[{request_body_props_ix}]/*[name()=\"div\"]")
-        print(f"number of req body params: {len(direct_divs)}")    
+        print(f"number of req body params: {len(direct_divs)}") if debug else None  
+        # TODO: handle nested objects
+
 
     #
     # responses
     #
 
+    responses = {}
+
     responses_ix = max(path_params_ix, query_params_ix, request_body_props_ix) + 1
     resp_code = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/strong/text()").get()
     resp_code_desc = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[1]/div/span[2]/text()").get()
-    print(f"resp_code: {resp_code}")
-    print(f"resp_code_desc: {resp_code_desc}")
+    print(f"resp_code: {resp_code}") if debug else None
+    print(f"resp_code_desc: {resp_code_desc}") if debug else None
+    responses[resp_code] = {}
+    if resp_code_desc:
+        responses[resp_code]["description"] = resp_code_desc
+    responses[resp_code]["content"] = {}
+    responses[resp_code]["content"]["application/json"] = {}
+    responses[resp_code]["content"]["application/json"]["schema"] = {}
     direct_divs = selector.xpath(f"{doc_base_path}/div[{responses_ix}]/div[2]/div/div[2]/*[name()=\"div\"]")
-    print(f"number of response fields: {len(direct_divs)}")    
+    print(f"number of response fields: {len(direct_divs)}") if debug else None
+    # TODO: handle nested objects   
 
     error_responses_raw_str = selector.xpath(f"{doc_base_path}/div[{responses_ix+2}]/div[1]/div/text()").get()
     error_responses = list(re.findall(r'\b\d{3}\b', error_responses_raw_str))
-    print(f"error_responses: {error_responses}")
+    print(f"error_responses: {error_responses}") if debug else None
+    for code in error_responses:
+        error_codes_set.add(code)
+        responses[code] = {}
+        responses[code]["description"] = "Error response"
+
+    # stitch complete operation object together
+    operation = {}
+    operation[http_path] = {}
+    operation[http_path][http_verb] = {}
+    operation[http_path][http_verb]["description"] = op_desc
+    operation[http_path][http_verb]["operationId"] = f"{resource}-{method}".replace("_", "-") 
+    operation[http_path][http_verb]["externalDocs"] = { "url": docPath }
+    operation[http_path][http_verb]["x-stackQL-resource"] = resource
+    operation[http_path][http_verb]["x-stackQL-method"] = method
+    operation[http_path][http_verb]["x-stackQL-verb"] = sqlVerb
+    operation[http_path][http_verb]["x-numReqParams"] = len([param for param in params if param.get("required")])
+    operation[http_path][http_verb]["parameters"] = params
+    operation[http_path][http_verb]["requestBody"] = request_body
+    operation[http_path][http_verb]["responses"] = responses
+
+    write_output(output_dir, method, operation)
 
     print(f"\n========\n")
 
 
 def write_output(output_dir, method, result):
     print(f"\nWriting output to {output_dir}/{method}.json\n")
-    # Write the output
+    # Write the output with prettified JSON format
     output_file = f"{output_dir}/{method}.json"
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(result, f, indent=1)
@@ -214,7 +258,11 @@ def clean_target_dir(provider):
                 os.rmdir(os.path.join(root, name))
         os.rmdir(target_dir)
 
+error_codes_set = set()
+
 def main():
+    global error_codes_set
+
     parser = argparse.ArgumentParser(description='Process Databricks API documentation')
     parser.add_argument('provider', choices=['account', 'workspace'],
                       help='The provider type to process (account or workspace)')
@@ -228,6 +276,8 @@ def main():
     
     # Process the manifest for the specified provider
     process_manifest(args.provider, args.debug)
+
+    print(f"Error codes: {error_codes_set}")
 
 if __name__ == "__main__":
     main()
