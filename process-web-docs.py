@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import yaml, argparse , sys, json, os
+import yaml, argparse , sys, json, os, re
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import bs4
+from parsel import Selector
 
 def process_manifest(provider, debug):
     """Process the API manifest file based on provider type."""
@@ -75,8 +76,7 @@ provider: {provider}
 service: {service}
 resource: {resource}
 method: {method}
-sqlVerb: {sqlVerb}
-""")
+sqlVerb: {sqlVerb}""")
 
     # Create output directory structure
     output_dir = f"staging/databricks_{provider}/{service}/{resource}"
@@ -85,163 +85,94 @@ sqlVerb: {sqlVerb}
     # Scrape the documentation page
     soup = scrape_dynamic_content(docPath)
     
-    main_article = soup.find("article", role="main")
-    if main_article is None:
-        print("Could not find <article role='main'>")
-        return
+    selector = Selector(text=str(soup))
 
-    result = []
-    start_processing = False  # To skip everything before 'GET'
+    http_verb = selector.xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/article/span/code/div/div/text()').get().lower()
+    print(f"\nhttp_verb: {http_verb}")
+    if http_verb not in ["get", "post", "put", "delete", "patch"]:
+        raise ValueError(f"Invalid HTTP verb: {http_verb}")
 
-    for element in main_article.descendants:
-        # Only process elements that contain text
-        if isinstance(element, bs4.element.Tag) and element.string:
-            text = element.string.strip()  # Get and clean the text
-            if not text:  # Skip empty text
-                continue
+    http_path = selector.xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/article/span/code/span/text()').get()
+    print(f"http_path: {http_path}")
+    if not http_path.startswith('/api/2.0/'):
+        raise ValueError(f"Invalid HTTP path: {http_path}")
+    
+    op_desc = selector.xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[3]/div[2]/text()').get().replace('\n', ' ').strip()
+    print(f"op_desc: {op_desc}")
+    if op_desc is None:
+        raise ValueError(f"Invalid operation description: {http_path}")
 
-            # Rule 1: Start processing at the first instance of http verb
-            if not start_processing:
-                if text in ('GET', 'POST', 'PUT', 'PATCH', 'DELETE'):
-                    start_processing = True
-                else:
-                    continue
-
-            # Create the current tuple
-            current_item = (element.name, text)
-
-            # Rule 2: Take only the last tuple if consecutive values are the same
-            if len(result) > 0 and result[-1][1] == text:
-                result[-1] = current_item  # Replace the last tuple
-            else:
-                result.append(current_item)
-
-    process_main_article_data(result, output_dir, resource, method, sqlVerb, docPath)
-
-def process_main_article_data(main_article_data, output_dir, resource, method, sqlVerb, docPath):
-
-    write_output(output_dir, f"{method}-raw", main_article_data)
+    # default index values
+    path_params_ix = 0
+    query_params_ix = 0
+    request_body_desc_ix = 0
+    request_body_props_ix = 0
+    responses_ix = 0
 
     #
-    # helper functions
+    # path params
     #
-    def process_params(param_data, param_type, params):
-        current_param = None
-        i = 0
-        
-        while i < len(param_data):
-            element_type, value = param_data[i]
-            
-            if element_type == 'code':
-                # If we have a current parameter, add it to params
-                if current_param:
-                    params.append(current_param)
-                
-                # Start new parameter
-                current_param = {
-                    'name': value,
-                    'in': param_type,
-                    'description': '',
-                    'required': False
-                }
-                
-                # Look ahead for required and app_type
-                j = i + 1
-                while j < len(param_data):
-                    next_type, next_value = param_data[j]
-                    
-                    if next_type == 'code':  # Stop if we hit another parameter
-                        break
-                        
-                    if next_type == 'span' and next_value == 'required':
-                        current_param['required'] = True
-                    elif next_type == 'span':  # This is the app_type
-                        app_type = next_value
-                        # Look for description in next element
-                        if j + 1 < len(param_data) and param_data[j + 1][0] == 'div':
-                            description = param_data[j + 1][1]
-                            current_param['description'] = f"{description} ({app_type})"
-                    
-                    j += 1
-                    
-            i += 1
-        
-        if current_param:
-            params.append(current_param)
-            
-        return params    
+
+    # Find the index of the <div> containing the <h3> with text "Path parameters"
+    path_params_ix = int(float(selector.xpath(
+        "count(/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/*[self::div and .//h3[text()='Path parameters']]/preceding-sibling::div)"
+    ).get()))
+    if path_params_ix > 0:
+        path_params_ix += 1
+
+    # has path params?
+    if path_params_ix > 0:
+        direct_divs = selector.xpath(f"/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{path_params_ix}]/div/*[name()=\"div\"]")
+        print(f"number of path params: {len(direct_divs)}")
+        # Extract HTML for each path parameter
+        for idx, div in enumerate(direct_divs):
+            html_dump = div.get()  # Get the raw HTML of the div
+            print(f"Path param {idx + 1} HTML dump:\n{html_dump}\n")
+
 
     #
-    # main processing
+    # query params
     #
-    verb = (main_article_data[0][1]).lower()
-    path = main_article_data[1][1]
-    description = main_article_data[2][1]
-    operationId = f"{resource.replace('_', '-')}-{method.replace('_', '-')}"
-    externalDocs = { "url": docPath }
+    
+    query_params_ix = int(float(selector.xpath(
+        "count(/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/*[self::div and .//h3[text()='Query parameters']]/preceding-sibling::div)"
+    ).get()))
+    if query_params_ix > 0:
+        query_params_ix += 1
 
-    #
-    # find anchor points
-    #
-    path_parameter_index = -1
-    query_parameter_index = -1
-    request_body_index = -1
-    responses_index = -1
-    error_codes_index = -1
-
-    # start from 3rd element
-    for i, item in enumerate(main_article_data[3:]):
-        if item[0] in ('h1','h2','h3', 'h4'):
-            if item[1] == 'Path parameters':
-                path_parameter_index = i + 1
-            elif item[1] == 'Query parameters':
-                query_parameter_index = i + 1
-            elif item[1] == 'Request body':
-                request_body_index = i + 1
-            elif item[1] == 'Responses':
-                responses_index =  i + 1
-            elif item[1] == 'Possible error codes:':
-                error_codes_index = i + 1
-
-    parameters = []
-
-    path_param_stop = len(main_article_data)
-    query_param_stop = len(main_article_data)
-
-    if query_parameter_index > 0:
-        path_param_stop = query_parameter_index-1
-    elif request_body_index > 0:
-        path_param_stop = request_body_index-1
-        query_param_stop = request_body_index-1
-    elif responses_index > 0:
-        path_param_stop = responses_index-1
-        query_param_stop = responses_index-1
-    elif error_codes_index > 0:
-        path_param_stop = error_codes_index-1
-        query_param_stop = error_codes_index-1
+    if query_params_ix > 0:
+        direct_divs = selector.xpath(f"/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{query_params_ix}]/div/*[name()=\"div\"]")
+        print(f"number of query params: {len(direct_divs)}")    
 
     #
-    # path parameters
+    # req body params
     #
-    if path_parameter_index > 0:
-        parameters = process_params(main_article_data[path_parameter_index:path_param_stop], 'path', parameters)
+
+    if selector.xpath('/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/h3[1]/text()').get() == "Request body":
+        request_body_desc_ix = max(path_params_ix, query_params_ix) + 1
+        request_body_props_ix = request_body_desc_ix + 1
+        request_body_desc = selector.xpath(f'/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{request_body_desc_ix}]/text()').get().replace('\n', ' ').strip()
+        print(f"request body description: {request_body_desc}")
+        direct_divs = selector.xpath(f"/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{request_body_props_ix}]/*[name()=\"div\"]")
+        print(f"number of req body params: {len(direct_divs)}")    
 
     #
-    # query parameters
+    # responses
     #
-    if query_parameter_index > 0:
-        parameters = process_params(main_article_data[query_parameter_index:query_param_stop], 'query', parameters)
 
+    responses_ix = max(path_params_ix, query_params_ix, request_body_props_ix) + 1
+    resp_code = selector.xpath(f'/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{responses_ix}]/div[1]/div/strong/text()').get()
+    resp_code_desc = selector.xpath(f'/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{responses_ix}]/div[1]/div/span[2]/text()').get()
+    print(f"resp_code: {resp_code}")
+    print(f"resp_code_desc: {resp_code_desc}")
+    direct_divs = selector.xpath(f"/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{responses_ix}]/div[2]/div/div[2]/*[name()=\"div\"]")
+    print(f"number of response fields: {len(direct_divs)}")    
 
-    operation_object = {}
-    operation_object['path'] = path
-    operation_object['verb'] = verb
-    operation_object['operationId'] = operationId
-    operation_object['description'] = description
-    operation_object['externalDocs'] = externalDocs
-    operation_object['parameters'] = parameters
+    error_responses_raw_str = selector.xpath(f'/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]/div[{responses_ix+2}]/div[1]/div/text()').get()
+    error_responses = list(re.findall(r'\b\d{3}\b', error_responses_raw_str))
+    print(f"error_responses: {error_responses}")
 
-    write_output(output_dir, method, operation_object)
+    print(f"\n========\n")
 
 
 def write_output(output_dir, method, result):
@@ -255,7 +186,8 @@ def clean_target_dir(provider):
     """Clean the target directory and all subdirectories"""
     target_dir = f"staging/databricks_{provider}"
     if os.path.exists(target_dir):
-        print(f"Cleaning directory: {target_dir}")
+        print(f"Cleaning directory: {target_dir}\n")
+        print(f"========\n")
         for root, dirs, files in os.walk(target_dir, topdown=False):
             for name in files:
                 os.remove(os.path.join(root, name))
