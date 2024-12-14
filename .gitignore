@@ -4,7 +4,6 @@ staging/
 openapi/
 __pycache__/
 lib/__pycache__/
-error_codes.txt
 stackql-zip
 stackql-aws-cloud-shell.sh
 stackql-azure-cloud-shell.sh
