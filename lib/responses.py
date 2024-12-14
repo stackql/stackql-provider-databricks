@@ -2,6 +2,18 @@ from parsel import Selector
 
 error_codes_set = set()
 
+error_code_descriptions = {
+    "400": "Request is invalid or malformed.",
+    "401": "The request does not have valid authentication credentials for the operation.",
+    "403": "Caller does not have permission to execute the specified operation.",
+    "404": "Operation was performed on a resource that does not exist.",
+    "409": "Request was rejected due a conflict with an existing resource.",
+    "429": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota.",
+    "500": "Internal error.",
+    "501": "Operation is not implemented or is not supported/enabled in this service.",
+    "509": "An external service is unavailable temporarily as it is being updated."
+}
+
 def process_responses(selector, doc_base_path, debug=False):
     global error_codes_set
     responses = {}
@@ -41,7 +53,13 @@ def process_responses(selector, doc_base_path, debug=False):
         # Split by comma, strip whitespace and any periods
         error_codes = [code.strip().rstrip('.') for code in codes_part.split(',')]
         print(f"error codes: {error_codes}") if debug else None   
-   
+        for code in error_codes:
+            if code in error_code_descriptions:
+                err_response_obj = { "description": error_code_descriptions[code] }
+            else:
+                err_response_obj = {}   
+            responses[code] = err_response_obj
+
         # Write codes to file
         with open('error_codes.txt', 'a') as f:
             for code in error_codes:

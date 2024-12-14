@@ -365,7 +365,7 @@ services:
             docPath: https://docs.databricks.com/api/account/customappintegration/create
             verb: insert
           - name: get
-            docPath: https://docs.databricks.com/api/account/customappintegration
+            docPath: https://docs.databricks.com/api/account/customappintegration/get
             verb: select
           - name: update
             docPath: https://docs.databricks.com/api/account/customappintegration/update

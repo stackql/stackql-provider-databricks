@@ -108,10 +108,10 @@ sqlVerb: {sqlVerb}""")
     if not http_path.startswith('/api/'):
         raise ValueError(f"Invalid HTTP path: {http_path}")
     
-    op_desc = selector.xpath(f"{doc_base_path}/div[3]/div[2]/text()").get().replace("\n", " ").strip()
-    print(f"op_desc: {op_desc}") if debug else None
-    if op_desc is None:
-        raise ValueError(f"Invalid operation description: {http_path}")
+    op_desc_node = selector.xpath(f"{doc_base_path}/div[3]/div[2]/text()").get()
+    if op_desc_node:     
+        op_desc = op_desc_node.replace("\n", " ").strip()
+        print(f"op_desc: {op_desc}") if debug else None
 
     params = process_parameters(selector, doc_base_path, debug)
     print(f"params: {params}") if debug else None
@@ -126,7 +126,6 @@ sqlVerb: {sqlVerb}""")
     operation = {
         http_path: {
             http_verb: {
-                "description": op_desc,
                 "operationId": f"{resource}-{method}".replace("_", "-"),
                 "externalDocs": {"url": docPath},
                 "x-stackQL-resource": resource,
@@ -139,6 +138,18 @@ sqlVerb: {sqlVerb}""")
             }
         }
     }
+
+    if op_desc:
+        operation[http_path][http_verb]["description"] = op_desc
+
+    if http_verb == "get":
+        # Filter responses to get all 2xx response codes
+        two_xx_responses = [code for code in responses if code.startswith("2")]
+        
+        if len(two_xx_responses) == 1 and two_xx_responses[0] != "200":
+            # Add x-stackQL-responseCode with the non-200 2xx response code
+            operation[http_path][http_verb]["x-stackQL-responseCode"] = two_xx_responses[0]
+
 
     write_output(output_dir, method, operation)
 
