@@ -1,1377 +1,1371 @@
 services:
-  apps:
-    description: Apps
-    resources:
-    - name: apps
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/apps/delete
-        verb: delete
-      - name: deploy
-        docPath: https://docs.databricks.com/api/workspace/apps/deploy
-        verb: exec
-      - name: start
-        docPath: https://docs.databricks.com/api/workspace/apps/start
-        verb: exec
-      - name: stop
-        docPath: https://docs.databricks.com/api/workspace/apps/stop
-        verb: exec
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/apps/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/apps/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/apps/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/apps/update
-        verb: update
-    - name: deployments
-      methods:
-      - name: getdeployment
-        docPath: https://docs.databricks.com/api/workspace/apps/getdeployment
-        verb: select
-      - name: listdeployments
-        docPath: https://docs.databricks.com/api/workspace/apps/listdeployments
-        verb: select
-    - name: permission_levels
-      methods:
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/apps/getpermissionlevels
-        verb: select
-    - name: permissions
-      methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/apps/setpermissions
-        verb: replace
-      - name: getpermissions
-        docPath: https://docs.databricks.com/api/workspace/apps/getpermissions
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/apps/updatepermissions
-        verb: update
-  cleanrooms:
-    description: Cleanrooms
-    resources:
-    - name: assets
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/cleanroomassets/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/cleanroomassets/create
-        verb: insert
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/cleanroomassets/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/cleanroomassets/update
-        verb: update
-    - name: clean_rooms
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/cleanrooms/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/cleanrooms/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/cleanrooms/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/cleanrooms/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/cleanrooms/update
-        verb: update
-    - name: output_catalog
-      methods:
-      - name: createoutputcatalog
-        docPath: https://docs.databricks.com/api/workspace/cleanrooms/createoutputcatalog
-        verb: insert
-    - name: task_runs
-      methods:
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/cleanroomtaskruns/list
-        verb: select
-  compute:
-    description: Compute
-    resources:
-    - name: cluster_events
-      methods:
-      - name: events
-        docPath: https://docs.databricks.com/api/workspace/clusters/events
-        verb: select
-    - name: cluster_permission_levels
-      methods:
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/clusters/getpermissionlevels
-        verb: select
-    - name: cluster_permissions
-      methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/clusters/setpermissions
-        verb: replace
-      - name: getpermissions
-        docPath: https://docs.databricks.com/api/workspace/clusters/getpermissions
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/clusters/updatepermissions
-        verb: update
-    - name: cluster_policies
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/clusterpolicies/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/clusterpolicies/create
-        verb: insert
-      - name: edit
-        docPath: https://docs.databricks.com/api/workspace/clusterpolicies/edit
-        verb: replace
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/clusterpolicies/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/clusterpolicies/list
-        verb: select
-    - name: cluster_policies_permissions
-      methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/clusterpolicies/setpermissions
-        verb: replace
-      - name: getpermissions
-        docPath: https://docs.databricks.com/api/workspace/clusterpolicies/getpermissions
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/clusterpolicies/updatepermissions
-        verb: update
-    - name: cluster_policy_compliance
-      methods:
-      - name: enforcecompliance
-        docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/enforcecompliance
-        verb: replace
-      - name: getcompliance
-        docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/getcompliance
-        verb: select
-      - name: listcompliance
-        docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/listcompliance
-        verb: select
-    - name: clusters
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/clusters/delete
-        verb: delete
-      - name: changeowner
-        docPath: https://docs.databricks.com/api/workspace/clusters/changeowner
-        verb: exec
-      - name: permanentdelete
-        docPath: https://docs.databricks.com/api/workspace/clusters/permanentdelete
-        verb: exec
-      - name: pin
-        docPath: https://docs.databricks.com/api/workspace/clusters/pin
-        verb: exec
-      - name: resize
-        docPath: https://docs.databricks.com/api/workspace/clusters/resize
-        verb: exec
-      - name: restart
-        docPath: https://docs.databricks.com/api/workspace/clusters/restart
-        verb: exec
-      - name: start
-        docPath: https://docs.databricks.com/api/workspace/clusters/start
-        verb: exec
-      - name: unpin
-        docPath: https://docs.databricks.com/api/workspace/clusters/unpin
-        verb: exec
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/clusters/create
-        verb: insert
-      - name: edit
-        docPath: https://docs.databricks.com/api/workspace/clusters/edit
-        verb: replace
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/clusters/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/clusters/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/clusters/update
-        verb: update
-    - name: command_status
-      methods:
-      - name: contextstatus
-        docPath: https://docs.databricks.com/api/workspace/commandexecution/contextstatus
-        verb: select
-    - name: commands
-      methods:
-      - name: cancel
-        docPath: https://docs.databricks.com/api/workspace/commandexecution/cancel
-        verb: exec
-      - name: destroy
-        docPath: https://docs.databricks.com/api/workspace/commandexecution/destroy
-        verb: exec
-      - name: execute
-        docPath: https://docs.databricks.com/api/workspace/commandexecution/execute
-        verb: exec
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/commandexecution/create
-        verb: insert
-      - name: commandstatus
-        docPath: https://docs.databricks.com/api/workspace/commandexecution/commandstatus
-        verb: select
-    - name: global_init_scripts
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/globalinitscripts/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/globalinitscripts/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/globalinitscripts/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/globalinitscripts/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/globalinitscripts/update
-        verb: update
-    - name: instance_pool_permission_levels
-      methods:
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/instancepools/getpermissionlevels
-        verb: select
-    - name: instance_pool_permissions
-      methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/instancepools/setpermissions
-        verb: replace
-      - name: getpermissions
-        docPath: https://docs.databricks.com/api/workspace/instancepools/getpermissions
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/instancepools/updatepermissions
-        verb: update
-    - name: instance_pools
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/instancepools/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/instancepools/create
-        verb: insert
-      - name: edit
-        docPath: https://docs.databricks.com/api/workspace/instancepools/edit
-        verb: replace
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/instancepools/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/instancepools/list
-        verb: select
-    - name: instance_profiles
-      methods:
-      - name: remove
-        docPath: https://docs.databricks.com/api/workspace/instanceprofiles/remove
-        verb: delete
-      - name: add
-        docPath: https://docs.databricks.com/api/workspace/instanceprofiles/add
-        verb: insert
-      - name: edit
-        docPath: https://docs.databricks.com/api/workspace/instanceprofiles/edit
-        verb: replace
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/instanceprofiles/list
-        verb: select
-    - name: libraries
-      methods:
-      - name: uninstall
-        docPath: https://docs.databricks.com/api/workspace/libraries/uninstall
-        verb: delete
-      - name: install
-        docPath: https://docs.databricks.com/api/workspace/libraries/install
-        verb: insert
-      - name: allclusterlibrarystatuses
-        docPath: https://docs.databricks.com/api/workspace/libraries/allclusterlibrarystatuses
-        verb: select
-      - name: clusterstatus
-        docPath: https://docs.databricks.com/api/workspace/libraries/clusterstatus
-        verb: select
-    - name: node_types
-      methods:
-      - name: listnodetypes
-        docPath: https://docs.databricks.com/api/workspace/clusters/listnodetypes
-        verb: select
-    - name: policy_families
-      methods:
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/policyfamilies/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/policyfamilies/list
-        verb: select
-    - name: policy_permission_levels
-      methods:
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/clusterpolicies/getpermissionlevels
-        verb: select
-    - name: spark_versions
-      methods:
-      - name: sparkversions
-        docPath: https://docs.databricks.com/api/workspace/clusters/sparkversions
-        verb: select
-    - name: zones
-      methods:
-      - name: listzones
-        docPath: https://docs.databricks.com/api/workspace/clusters/listzones
-        verb: select
-  dbsql:
-    description: Dbsql
-    resources:
-    - name: alerts
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/alerts/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/alerts/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/alerts/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/alerts/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/alerts/update
-        verb: update
-    - name: alerts_legacy
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/alertslegacy/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/alertslegacy/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/alertslegacy/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/alertslegacy/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/alertslegacy/update
-        verb: update
-    - name: dashboards
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/dashboards/delete
-        verb: delete
-      - name: restore
-        docPath: https://docs.databricks.com/api/workspace/dashboards/restore
-        verb: exec
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/dashboards/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/dashboards/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/dashboards/list
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/datasources/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/dashboards/update
-        verb: update
-    - name: permissions
-      methods:
-      - name: transferownership
-        docPath: https://docs.databricks.com/api/workspace/dbsqlpermissions/transferownership
-        verb: exec
-      - name: set
-        docPath: https://docs.databricks.com/api/workspace/dbsqlpermissions/set
-        verb: replace
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/dbsqlpermissions/get
-        verb: select
-    - name: queries
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/queries/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/queries/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/queries/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/queries/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/queries/update
-        verb: update
-    - name: queries_legacy
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/querieslegacy/delete
-        verb: delete
-      - name: restore
-        docPath: https://docs.databricks.com/api/workspace/querieslegacy/restore
-        verb: exec
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/querieslegacy/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/querieslegacy/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/querieslegacy/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/querieslegacy/update
-        verb: update
-    - name: query_history
-      methods:
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/queryhistory/list
-        verb: select
-    - name: statement_execution
-      methods:
-      - name: cancelexecution
-        docPath: https://docs.databricks.com/api/workspace/statementexecution/cancelexecution
-        verb: exec
-      - name: executestatement
-        docPath: https://docs.databricks.com/api/workspace/statementexecution/executestatement
-        verb: exec
-      - name: getstatement
-        docPath: https://docs.databricks.com/api/workspace/statementexecution/getstatement
-        verb: select
-    - name: statement_execution_results
-      methods:
-      - name: getstatementresultchunkn
-        docPath: https://docs.databricks.com/api/workspace/statementexecution/getstatementresultchunkn
-        verb: select
-    - name: warehouse_config
-      methods:
-      - name: setworkspacewarehouseconfig
-        docPath: https://docs.databricks.com/api/workspace/warehouses/setworkspacewarehouseconfig
-        verb: replace
-      - name: getworkspacewarehouseconfig
-        docPath: https://docs.databricks.com/api/workspace/warehouses/getworkspacewarehouseconfig
-        verb: select
-    - name: warehouse_permission_levels
-      methods:
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/warehouses/getpermissionlevels
-        verb: select
-    - name: warehouse_permissions
-      methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/warehouses/setpermissions
-        verb: replace
-      - name: getpermissions
-        docPath: https://docs.databricks.com/api/workspace/warehouses/getpermissions
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/warehouses/updatepermissions
-        verb: update
-    - name: warehouses
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/warehouses/delete
-        verb: delete
-      - name: start
-        docPath: https://docs.databricks.com/api/workspace/warehouses/start
-        verb: exec
-      - name: stop
-        docPath: https://docs.databricks.com/api/workspace/warehouses/stop
-        verb: exec
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/warehouses/create
-        verb: insert
-      - name: edit
-        docPath: https://docs.databricks.com/api/workspace/warehouses/edit
-        verb: replace
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/warehouses/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/warehouses/list
-        verb: select
-  deltalivetables:
-    description: Deltalivetables
-    resources:
-    - name: pipeline_events
-      methods:
-      - name: listpipelineevents
-        docPath: https://docs.databricks.com/api/workspace/pipelines/listpipelineevents
-        verb: select
-    - name: pipeline_permission_levels
-      methods:
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/pipelines/getpermissionlevels
-        verb: select
-    - name: pipeline_permissions
-      methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/pipelines/setpermissions
-        verb: replace
-      - name: getpermissions
-        docPath: https://docs.databricks.com/api/workspace/pipelines/getpermissions
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/pipelines/updatepermissions
-        verb: update
-    - name: pipeline_updates
-      methods:
-      - name: startupdate
-        docPath: https://docs.databricks.com/api/workspace/pipelines/startupdate
-        verb: exec
-      - name: getupdate
-        docPath: https://docs.databricks.com/api/workspace/pipelines/getupdate
-        verb: select
-      - name: listupdates
-        docPath: https://docs.databricks.com/api/workspace/pipelines/listupdates
-        verb: select
-    - name: pipelines
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/pipelines/delete
-        verb: delete
-      - name: stop
-        docPath: https://docs.databricks.com/api/workspace/pipelines/stop
-        verb: exec
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/pipelines/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/pipelines/get
-        verb: select
-      - name: listpipelines
-        docPath: https://docs.databricks.com/api/workspace/pipelines/listpipelines
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/pipelines/update
-        verb: update
-  deltasharing:
-    description: Deltasharing
-    resources:
-    - name: provider_shares
-      methods:
-      - name: listshares
-        docPath: https://docs.databricks.com/api/workspace/providers/listshares
-        verb: select
-    - name: providers
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/providers/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/providers/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/providers/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/providers/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/providers/update
-        verb: update
-    - name: recipient_activation_token
-      methods:
-      - name: retrievetoken
-        docPath: https://docs.databricks.com/api/workspace/recipientactivation/retrievetoken
-        verb: select
-    - name: recipient_activation_url
-      methods:
-      - name: getactivationurlinfo
-        docPath: https://docs.databricks.com/api/workspace/recipientactivation/getactivationurlinfo
-        verb: select
-    - name: recipient_share_permissions
-      methods:
-      - name: sharepermissions
-        docPath: https://docs.databricks.com/api/workspace/recipients/sharepermissions
-        verb: select
-    - name: recipients
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/recipients/delete
-        verb: delete
-      - name: rotatetoken
-        docPath: https://docs.databricks.com/api/workspace/recipients/rotatetoken
-        verb: exec
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/recipients/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/recipients/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/recipients/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/recipients/update
-        verb: update
-    - name: share_permissions
-      methods:
-      - name: sharepermissions
-        docPath: https://docs.databricks.com/api/workspace/shares/sharepermissions
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/shares/updatepermissions
-        verb: update
-    - name: shares
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/shares/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/shares/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/shares/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/shares/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/shares/update
-        verb: update
-  filemanagement:
-    description: Filemanagement
-    resources:
-    - name: dbfs_files
-      methods:
-      - name: put
-        docPath: https://docs.databricks.com/api/workspace/dbfs/put
-        verb: exec
-      - name: read
-        docPath: https://docs.databricks.com/api/workspace/dbfs/read
-        verb: select
-      - name: move
-        docPath: https://docs.databricks.com/api/workspace/dbfs/move
-        verb: exec
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/dbfs/delete
-        verb: delete
-    - name: dbfs_objects
-      methods:
-      - name: getstatus
-        docPath: https://docs.databricks.com/api/workspace/dbfs/getstatus
-        verb: select
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/dbfs/delete
-        verb: delete
-    - name: dbfs_directories
-      methods:
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/dbfs/list
-        verb: select
-      - name: mkdirs
-        docPath: https://docs.databricks.com/api/workspace/dbfs/mkdirs
-        verb: insert
-    - name: dbfs_streams
-      methods:
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/dbfs/create
-        verb: insert
-      - name: close
-        docPath: https://docs.databricks.com/api/workspace/dbfs/close
-        verb: delete
-      - name: addblock
-        docPath: https://docs.databricks.com/api/workspace/dbfs/addblock
-        verb: exec
-    - name: directories
-      methods:
-      - name: deletedirectory
-        docPath: https://docs.databricks.com/api/workspace/files/deletedirectory
-        verb: delete
-      - name: createdirectory
-        docPath: https://docs.databricks.com/api/workspace/files/createdirectory
-        verb: insert
-      - name: getdirectorymetadata
-        docPath: https://docs.databricks.com/api/workspace/files/getdirectorymetadata
-        verb: select
-    - name: directory_contents
-      methods:
-      - name: listdirectorycontents
-        docPath: https://docs.databricks.com/api/workspace/files/listdirectorycontents
-        verb: select
-    - name: files
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/files/delete
-        verb: delete
-      - name: download
-        docPath: https://docs.databricks.com/api/workspace/files/download
-        verb: exec
-      - name: upload
-        docPath: https://docs.databricks.com/api/workspace/files/upload
-        verb: exec
-      - name: getmetadata
-        docPath: https://docs.databricks.com/api/workspace/files/getmetadata
-        verb: select
-  iam:
-    description: Iam
-    resources:
-    - name: assignable_roles
-      methods:
-      - name: getassignablerolesforresource
-        docPath: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy/getassignablerolesforresource
-        verb: select
-    - name: currentuser
-      methods:
-      - name: me
-        docPath: https://docs.databricks.com/api/workspace/currentuser/me
-        verb: select
-    - name: groups
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/groups/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/groups/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/groups/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/groups/list
-        verb: select
-      - name: patch
-        docPath: https://docs.databricks.com/api/workspace/groups/patch
-        verb: update
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/groups/update
-        verb: update
-    - name: permission_levels
-      methods:
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/permissions/getpermissionlevels
-        verb: select
-    - name: permissions
-      methods:
-      - name: set
-        docPath: https://docs.databricks.com/api/workspace/permissions/set
-        verb: replace
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/permissions/get
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/permissions/update
-        verb: update
-    - name: rule_sets
-      methods:
-      - name: getruleset
-        docPath: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy/getruleset
-        verb: select
-      - name: updateruleset
-        docPath: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy/updateruleset
-        verb: update
-    - name: service_principals
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/serviceprincipals/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/serviceprincipals/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/serviceprincipals/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/serviceprincipals/list
-        verb: select
-      - name: patch
-        docPath: https://docs.databricks.com/api/workspace/serviceprincipals/patch
-        verb: update
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/serviceprincipals/update
-        verb: update
-    - name: user_permission_levels
-      methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/users/setpermissions
-        verb: replace
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/users/getpermissionlevels
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/users/updatepermissions
-        verb: update
-    - name: user_permissions
-      methods:
-      - name: getpermissions
-        docPath: https://docs.databricks.com/api/workspace/users/getpermissions
-        verb: select
-    - name: users
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/users/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/users/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/users/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/users/list
-        verb: select
-      - name: patch
-        docPath: https://docs.databricks.com/api/workspace/users/patch
-        verb: update
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/users/update
-        verb: update
-  lakeview:
-    description: Lakeview
-    resources:
-    - name: dashboard_schedules
-      methods:
-      - name: deleteschedule
-        docPath: https://docs.databricks.com/api/workspace/lakeview/deleteschedule
-        verb: delete
-      - name: createschedule
-        docPath: https://docs.databricks.com/api/workspace/lakeview/createschedule
-        verb: insert
-      - name: getschedule
-        docPath: https://docs.databricks.com/api/workspace/lakeview/getschedule
-        verb: select
-      - name: listschedules
-        docPath: https://docs.databricks.com/api/workspace/lakeview/listschedules
-        verb: select
-      - name: updateschedule
-        docPath: https://docs.databricks.com/api/workspace/lakeview/updateschedule
-        verb: update
-    - name: dashboard_subscriptions
-      methods:
-      - name: deletesubscription
-        docPath: https://docs.databricks.com/api/workspace/lakeview/deletesubscription
-        verb: delete
-      - name: createsubscription
-        docPath: https://docs.databricks.com/api/workspace/lakeview/createsubscription
-        verb: insert
-      - name: getsubscription
-        docPath: https://docs.databricks.com/api/workspace/lakeview/getsubscription
-        verb: select
-      - name: listsubscriptions
-        docPath: https://docs.databricks.com/api/workspace/lakeview/listsubscriptions
-        verb: select
-    - name: dashboards
-      methods:
-      - name: trash
-        docPath: https://docs.databricks.com/api/workspace/lakeview/trash
-        verb: delete
-      - name: migrate
-        docPath: https://docs.databricks.com/api/workspace/lakeview/migrate
-        verb: exec
-      - name: publish
-        docPath: https://docs.databricks.com/api/workspace/lakeview/publish
-        verb: exec
-      - name: unpublish
-        docPath: https://docs.databricks.com/api/workspace/lakeview/unpublish
-        verb: exec
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/lakeview/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/lakeview/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/lakeview/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/lakeview/update
-        verb: update
-    - name: dashboards_published
-      methods:
-      - name: getpublished
-        docPath: https://docs.databricks.com/api/workspace/lakeview/getpublished
-        verb: select
-  machinelearning:
-    description: Machinelearning
-    resources:
-    - name: experiment_artifacts
-      methods:
-      - name: listartifacts
-        docPath: https://docs.databricks.com/api/workspace/experiments/listartifacts
-        verb: select
-    - name: experiment_permission_levels
-      methods:
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/experiments/getpermissionlevels
-        verb: select
-    - name: experiment_permissions
-      methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/experiments/setpermissions
-        verb: replace
-      - name: getpermissions
-        docPath: https://docs.databricks.com/api/workspace/experiments/getpermissions
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/experiments/updatepermissions
-        verb: update
-    - name: experiment_run_tags
-      methods:
-      - name: settag
-        docPath: https://docs.databricks.com/api/workspace/experiments/settag
-        verb: replace
-    - name: experiment_runs
-      methods:
-      - name: deleterun
-        docPath: https://docs.databricks.com/api/workspace/experiments/deleterun
-        verb: delete
-      - name: deleteruns
-        docPath: https://docs.databricks.com/api/workspace/experiments/deleteruns
-        verb: delete
-      - name: logbatch
-        docPath: https://docs.databricks.com/api/workspace/experiments/logbatch
-        verb: exec
-      - name: loginputs
-        docPath: https://docs.databricks.com/api/workspace/experiments/loginputs
-        verb: exec
-      - name: logmetric
-        docPath: https://docs.databricks.com/api/workspace/experiments/logmetric
-        verb: exec
-      - name: logmodel
-        docPath: https://docs.databricks.com/api/workspace/experiments/logmodel
-        verb: exec
-      - name: logparam
-        docPath: https://docs.databricks.com/api/workspace/experiments/logparam
-        verb: exec
-      - name: restorerun
-        docPath: https://docs.databricks.com/api/workspace/experiments/restorerun
-        verb: exec
-      - name: restoreruns
-        docPath: https://docs.databricks.com/api/workspace/experiments/restoreruns
-        verb: exec
-      - name: createrun
-        docPath: https://docs.databricks.com/api/workspace/experiments/createrun
-        verb: insert
-      - name: getrun
-        docPath: https://docs.databricks.com/api/workspace/experiments/getrun
-        verb: select
-      - name: searchruns
-        docPath: https://docs.databricks.com/api/workspace/experiments/searchruns
-        verb: select
-      - name: updaterun
-        docPath: https://docs.databricks.com/api/workspace/experiments/updaterun
-        verb: update
-    - name: experiment_tags
-      methods:
-      - name: deletetag
-        docPath: https://docs.databricks.com/api/workspace/experiments/deletetag
-        verb: delete
-      - name: setexperimenttag
-        docPath: https://docs.databricks.com/api/workspace/experiments/setexperimenttag
-        verb: replace
-    - name: experiments
-      methods:
-      - name: deleteexperiment
-        docPath: https://docs.databricks.com/api/workspace/experiments/deleteexperiment
-        verb: delete
-      - name: restoreexperiment
-        docPath: https://docs.databricks.com/api/workspace/experiments/restoreexperiment
-        verb: exec
-      - name: createexperiment
-        docPath: https://docs.databricks.com/api/workspace/experiments/createexperiment
-        verb: insert
-      - name: getbyname
-        docPath: https://docs.databricks.com/api/workspace/experiments/getbyname
-        verb: select
-      - name: getexperiment
-        docPath: https://docs.databricks.com/api/workspace/experiments/getexperiment
-        verb: select
-      - name: listexperiments
-        docPath: https://docs.databricks.com/api/workspace/experiments/listexperiments
-        verb: select
-      - name: searchexperiments
-        docPath: https://docs.databricks.com/api/workspace/experiments/searchexperiments
-        verb: select
-      - name: updateexperiment
-        docPath: https://docs.databricks.com/api/workspace/experiments/updateexperiment
-        verb: update
-    - name: experiments_history
-      methods:
-      - name: gethistory
-        docPath: https://docs.databricks.com/api/workspace/experiments/gethistory
-        verb: select
-    - name: model_latest_versions
-      methods:
-      - name: getlatestversions
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/getlatestversions
-        verb: select
-    - name: model_permission_levels
-      methods:
-      - name: getpermissionlevels
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/getpermissionlevels
-        verb: select
-    - name: model_permissions
-      methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/setpermissions
-        verb: replace
-      - name: getpermissions
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/getpermissions
-        verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/updatepermissions
-        verb: update
-    - name: model_tags
-      methods:
-      - name: deletemodeltag
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/deletemodeltag
-        verb: delete
-      - name: setmodeltag
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/setmodeltag
-        verb: replace
-    - name: model_transition_requests
-      methods:
-      - name: deletetransitionrequest
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/deletetransitionrequest
-        verb: delete
-      - name: approvetransitionrequest
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/approvetransitionrequest
-        verb: exec
-      - name: transitionstage
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/transitionstage
-        verb: exec
-      - name: createtransitionrequest
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/createtransitionrequest
-        verb: insert
-      - name: listtransitionrequests
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/listtransitionrequests
-        verb: select
-      - name: rejecttransitionrequest
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/rejecttransitionrequest
-        verb: exec
-    - name: model_version_comments
-      methods:
-      - name: deletecomment
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/deletecomment
-        verb: delete
-      - name: createcomment
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/createcomment
-        verb: insert
-      - name: updatecomment
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/updatecomment
-        verb: update
-    - name: model_version_download_urls
-      methods:
-      - name: getmodelversiondownloaduri
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/getmodelversiondownloaduri
-        verb: select
-    - name: model_version_tags
-      methods:
-      - name: deletemodelversiontag
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/deletemodelversiontag
-        verb: delete
-      - name: setmodelversiontag
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/setmodelversiontag
-        verb: replace
-    - name: model_versions
-      methods:
-      - name: deletemodelversion
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/deletemodelversion
-        verb: delete
-      - name: createmodelversion
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/createmodelversion
-        verb: insert
-      - name: getmodelversion
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/getmodelversion
-        verb: select
-      - name: searchmodelversions
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/searchmodelversions
-        verb: select
-      - name: updatemodelversion
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/updatemodelversion
-        verb: update
-    - name: model_web_hooks
-      methods:
-      - name: deletewebhook
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/deletewebhook
-        verb: delete
-      - name: testregistrywebhook
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/testregistrywebhook
-        verb: exec
-      - name: createwebhook
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/createwebhook
-        verb: insert
-      - name: listwebhooks
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/listwebhooks
-        verb: select
-      - name: updatewebhook
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/updatewebhook
-        verb: update
-    - name: models
-      methods:
-      - name: deletemodel
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/deletemodel
-        verb: delete
-      - name: renamemodel
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/renamemodel
-        verb: exec
-      - name: createmodel
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/createmodel
-        verb: insert
-      - name: getmodel
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/getmodel
-        verb: select
-      - name: listmodels
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/listmodels
-        verb: select
-      - name: searchmodels
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/searchmodels
-        verb: select
-      - name: updatemodel
-        docPath: https://docs.databricks.com/api/workspace/modelregistry/updatemodel
-        verb: update
-  marketplace:
-    description: Marketplace
-    resources:
-    - name: consumer_fulfillments
-      methods:
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/consumerfulfillments/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/consumerfulfillments/list
-        verb: select
-    - name: consumer_installations
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/consumerinstallations/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/consumerinstallations/create
-        verb: insert
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/consumerinstallations/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/consumerinstallations/update
-        verb: update
-    - name: consumer_listings
-      methods:
-      - name: batchget
-        docPath: https://docs.databricks.com/api/workspace/consumerlistings/batchget
-        verb: exec
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/consumerlistings/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/consumerlistings/list
-        verb: select
-      - name: search
-        docPath: https://docs.databricks.com/api/workspace/consumerlistings/search
-        verb: select
-    - name: consumer_personalization_requests
-      methods:
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/consumerpersonalizationrequests/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/consumerpersonalizationrequests/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/consumerpersonalizationrequests/list
-        verb: select
-    - name: consumer_providers
-      methods:
-      - name: batchget
-        docPath: https://docs.databricks.com/api/workspace/consumerproviders/batchget
-        verb: exec
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/consumerproviders/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/consumerproviders/list
-        verb: select
-    - name: listing_installations
-      methods:
-      - name: listlistinginstallations
-        docPath: https://docs.databricks.com/api/workspace/consumerinstallations/listlistinginstallations
-        verb: select
-    - name: provider_analytics_dashboards
-      methods:
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/get
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/update
-        verb: update
-    - name: provider_analytics_dashboards_latest
-      methods:
-      - name: getlatestversion
-        docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/getlatestversion
-        verb: select
-    - name: provider_exchange_filters
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/create
-        verb: insert
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/update
-        verb: update
-    - name: provider_exchanges
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/providerexchanges/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/providerexchanges/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/providerexchanges/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/providerexchanges/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/providerexchanges/update
-        verb: update
-    - name: provider_exchange_listings
-      methods:
-      - name: deletelistingfromexchange
-        docPath: https://docs.databricks.com/api/workspace/providerexchanges/deletelistingfromexchange
-        verb: delete
-      - name: listexchangesforlisting
-        docPath: https://docs.databricks.com/api/workspace/providerexchanges/listexchangesforlisting
-        verb: select
-      - name: listlistingsforexchange
-        docPath: https://docs.databricks.com/api/workspace/providerexchanges/listlistingsforexchange
-        verb: select
-      - name: addlistingtoexchange
-        docPath: https://docs.databricks.com/api/workspace/providerexchanges/addlistingtoexchange
-        verb: select
-    - name: provider_files
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/providerfiles/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/providerfiles/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/providerfiles/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/providerfiles/list
-        verb: select
-    - name: provider_listings
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/providerlistings/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/providerlistings/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/providerlistings/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/providerlistings/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/providerlistings/update
-        verb: update
-    - name: provider_personalization_requests
-      methods:
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/providerpersonalizationrequests/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/providerpersonalizationrequests/update
-        verb: update
-    - name: providers
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/providerproviders/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/providerproviders/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/providerproviders/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/providerproviders/list
-        verb: select
-      - name: update
-        docPath: https://docs.databricks.com/api/workspace/providerproviders/update
-        verb: update
+  # apps:
+  #   description: Apps
+  #   resources:
+  #   - name: apps
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/apps/delete
+  #       verb: delete
+  #     - name: deploy
+  #       docPath: https://docs.databricks.com/api/workspace/apps/deploy
+  #       verb: exec
+  #     - name: start
+  #       docPath: https://docs.databricks.com/api/workspace/apps/start
+  #       verb: exec
+  #     - name: stop
+  #       docPath: https://docs.databricks.com/api/workspace/apps/stop
+  #       verb: exec
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/apps/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/apps/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/apps/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/apps/update
+  #       verb: update
+  #   - name: deployments
+  #     methods:
+  #     - name: getdeployment
+  #       docPath: https://docs.databricks.com/api/workspace/apps/getdeployment
+  #       verb: select
+  #     - name: listdeployments
+  #       docPath: https://docs.databricks.com/api/workspace/apps/listdeployments
+  #       verb: select
+  #   - name: permission_levels
+  #     methods:
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/apps/getpermissionlevels
+  #       verb: select
+  #   - name: permissions
+  #     methods:
+  #     - name: setpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/apps/setpermissions
+  #       verb: replace
+  #     - name: getpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/apps/getpermissions
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/apps/updatepermissions
+  #       verb: update
+  # cleanrooms:
+  #   description: Cleanrooms
+  #   resources:
+  #   - name: assets
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/cleanroomassets/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/cleanroomassets/create
+  #       verb: insert
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/cleanroomassets/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/cleanroomassets/update
+  #       verb: update
+  #   - name: clean_rooms
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/cleanrooms/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/cleanrooms/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/cleanrooms/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/cleanrooms/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/cleanrooms/update
+  #       verb: update
+  #   - name: output_catalog
+  #     methods:
+  #     - name: createoutputcatalog
+  #       docPath: https://docs.databricks.com/api/workspace/cleanrooms/createoutputcatalog
+  #       verb: insert
+  #   - name: task_runs
+  #     methods:
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/cleanroomtaskruns/list
+  #       verb: select
+  # compute:
+  #   description: Compute
+  #   resources:
+  #   - name: cluster_events
+  #     methods:
+  #     - name: events
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/events
+  #       verb: select
+  #   - name: cluster_permission_levels
+  #     methods:
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/getpermissionlevels
+  #       verb: select
+  #   - name: cluster_permissions
+  #     methods:
+  #     - name: setpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/setpermissions
+  #       verb: replace
+  #     - name: getpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/getpermissions
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/updatepermissions
+  #       verb: update
+  #   - name: cluster_policies
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/clusterpolicies/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/clusterpolicies/create
+  #       verb: insert
+  #     - name: edit
+  #       docPath: https://docs.databricks.com/api/workspace/clusterpolicies/edit
+  #       verb: replace
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/clusterpolicies/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/clusterpolicies/list
+  #       verb: select
+  #   - name: cluster_policies_permissions
+  #     methods:
+  #     - name: setpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/clusterpolicies/setpermissions
+  #       verb: replace
+  #     - name: getpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/clusterpolicies/getpermissions
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/clusterpolicies/updatepermissions
+  #       verb: update
+  #   - name: cluster_policy_compliance
+  #     methods:
+  #     - name: enforcecompliance
+  #       docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/enforcecompliance
+  #       verb: replace
+  #     - name: getcompliance
+  #       docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/getcompliance
+  #       verb: select
+  #     - name: listcompliance
+  #       docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/listcompliance
+  #       verb: select
+  #   - name: clusters
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/delete
+  #       verb: delete
+  #     - name: changeowner
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/changeowner
+  #       verb: exec
+  #     - name: permanentdelete
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/permanentdelete
+  #       verb: exec
+  #     - name: pin
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/pin
+  #       verb: exec
+  #     - name: resize
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/resize
+  #       verb: exec
+  #     - name: restart
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/restart
+  #       verb: exec
+  #     - name: start
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/start
+  #       verb: exec
+  #     - name: unpin
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/unpin
+  #       verb: exec
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/create
+  #       verb: insert
+  #     - name: edit
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/edit
+  #       verb: replace
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/update
+  #       verb: update
+  #   - name: command_status
+  #     methods:
+  #     - name: contextstatus
+  #       docPath: https://docs.databricks.com/api/workspace/commandexecution/contextstatus
+  #       verb: select
+  #   - name: commands
+  #     methods:
+  #     - name: cancel
+  #       docPath: https://docs.databricks.com/api/workspace/commandexecution/cancel
+  #       verb: exec
+  #     - name: destroy
+  #       docPath: https://docs.databricks.com/api/workspace/commandexecution/destroy
+  #       verb: exec
+  #     - name: execute
+  #       docPath: https://docs.databricks.com/api/workspace/commandexecution/execute
+  #       verb: exec
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/commandexecution/create
+  #       verb: insert
+  #     - name: commandstatus
+  #       docPath: https://docs.databricks.com/api/workspace/commandexecution/commandstatus
+  #       verb: select
+  #   - name: global_init_scripts
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/globalinitscripts/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/globalinitscripts/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/globalinitscripts/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/globalinitscripts/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/globalinitscripts/update
+  #       verb: update
+  #   - name: instance_pool_permission_levels
+  #     methods:
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/instancepools/getpermissionlevels
+  #       verb: select
+  #   - name: instance_pool_permissions
+  #     methods:
+  #     - name: setpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/instancepools/setpermissions
+  #       verb: replace
+  #     - name: getpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/instancepools/getpermissions
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/instancepools/updatepermissions
+  #       verb: update
+  #   - name: instance_pools
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/instancepools/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/instancepools/create
+  #       verb: insert
+  #     - name: edit
+  #       docPath: https://docs.databricks.com/api/workspace/instancepools/edit
+  #       verb: replace
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/instancepools/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/instancepools/list
+  #       verb: select
+  #   - name: instance_profiles
+  #     methods:
+  #     - name: remove
+  #       docPath: https://docs.databricks.com/api/workspace/instanceprofiles/remove
+  #       verb: delete
+  #     - name: add
+  #       docPath: https://docs.databricks.com/api/workspace/instanceprofiles/add
+  #       verb: insert
+  #     - name: edit
+  #       docPath: https://docs.databricks.com/api/workspace/instanceprofiles/edit
+  #       verb: replace
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/instanceprofiles/list
+  #       verb: select
+  #   - name: libraries
+  #     methods:
+  #     - name: uninstall
+  #       docPath: https://docs.databricks.com/api/workspace/libraries/uninstall
+  #       verb: delete
+  #     - name: install
+  #       docPath: https://docs.databricks.com/api/workspace/libraries/install
+  #       verb: insert
+  #     - name: allclusterlibrarystatuses
+  #       docPath: https://docs.databricks.com/api/workspace/libraries/allclusterlibrarystatuses
+  #       verb: select
+  #     - name: clusterstatus
+  #       docPath: https://docs.databricks.com/api/workspace/libraries/clusterstatus
+  #       verb: select
+  #   - name: node_types
+  #     methods:
+  #     - name: listnodetypes
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/listnodetypes
+  #       verb: select
+  #   - name: policy_families
+  #     methods:
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/policyfamilies/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/policyfamilies/list
+  #       verb: select
+  #   - name: policy_permission_levels
+  #     methods:
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/clusterpolicies/getpermissionlevels
+  #       verb: select
+  #   - name: spark_versions
+  #     methods:
+  #     - name: sparkversions
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/sparkversions
+  #       verb: select
+  #   - name: zones
+  #     methods:
+  #     - name: listzones
+  #       docPath: https://docs.databricks.com/api/workspace/clusters/listzones
+  #       verb: select
+  # dbsql:
+  #   description: Dbsql
+  #   resources:
+  #   - name: alerts
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/alerts/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/alerts/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/alerts/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/alerts/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/alerts/update
+  #       verb: update
+  #   - name: alerts_legacy
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/alertslegacy/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/alertslegacy/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/alertslegacy/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/alertslegacy/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/alertslegacy/update
+  #       verb: update
+  #   - name: dashboards
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/dashboards/delete
+  #       verb: delete
+  #     - name: restore
+  #       docPath: https://docs.databricks.com/api/workspace/dashboards/restore
+  #       verb: exec
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/dashboards/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/dashboards/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/dashboards/list
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/datasources/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/dashboards/update
+  #       verb: update
+  #   - name: permissions
+  #     methods:
+  #     - name: transferownership
+  #       docPath: https://docs.databricks.com/api/workspace/dbsqlpermissions/transferownership
+  #       verb: exec
+  #     - name: set
+  #       docPath: https://docs.databricks.com/api/workspace/dbsqlpermissions/set
+  #       verb: replace
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/dbsqlpermissions/get
+  #       verb: select
+  #   - name: queries
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/queries/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/queries/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/queries/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/queries/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/queries/update
+  #       verb: update
+  #   - name: queries_legacy
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/querieslegacy/delete
+  #       verb: delete
+  #     - name: restore
+  #       docPath: https://docs.databricks.com/api/workspace/querieslegacy/restore
+  #       verb: exec
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/querieslegacy/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/querieslegacy/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/querieslegacy/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/querieslegacy/update
+  #       verb: update
+  #   - name: query_history
+  #     methods:
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/queryhistory/list
+  #       verb: select
+  #   - name: statement_execution
+  #     methods:
+  #     - name: cancelexecution
+  #       docPath: https://docs.databricks.com/api/workspace/statementexecution/cancelexecution
+  #       verb: exec
+  #     - name: executestatement
+  #       docPath: https://docs.databricks.com/api/workspace/statementexecution/executestatement
+  #       verb: exec
+  #     - name: getstatement
+  #       docPath: https://docs.databricks.com/api/workspace/statementexecution/getstatement
+  #       verb: select
+  #   - name: statement_execution_results
+  #     methods:
+  #     - name: getstatementresultchunkn
+  #       docPath: https://docs.databricks.com/api/workspace/statementexecution/getstatementresultchunkn
+  #       verb: select
+  #   - name: warehouse_config
+  #     methods:
+  #     - name: setworkspacewarehouseconfig
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/setworkspacewarehouseconfig
+  #       verb: replace
+  #     - name: getworkspacewarehouseconfig
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/getworkspacewarehouseconfig
+  #       verb: select
+  #   - name: warehouse_permission_levels
+  #     methods:
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/getpermissionlevels
+  #       verb: select
+  #   - name: warehouse_permissions
+  #     methods:
+  #     - name: setpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/setpermissions
+  #       verb: replace
+  #     - name: getpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/getpermissions
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/updatepermissions
+  #       verb: update
+  #   - name: warehouses
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/delete
+  #       verb: delete
+  #     - name: start
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/start
+  #       verb: exec
+  #     - name: stop
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/stop
+  #       verb: exec
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/create
+  #       verb: insert
+  #     - name: edit
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/edit
+  #       verb: replace
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/warehouses/list
+  #       verb: select
+  # deltalivetables:
+  #   description: Deltalivetables
+  #   resources:
+  #   - name: pipeline_events
+  #     methods:
+  #     - name: listpipelineevents
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/listpipelineevents
+  #       verb: select
+  #   - name: pipeline_permission_levels
+  #     methods:
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/getpermissionlevels
+  #       verb: select
+  #   - name: pipeline_permissions
+  #     methods:
+  #     - name: setpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/setpermissions
+  #       verb: replace
+  #     - name: getpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/getpermissions
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/updatepermissions
+  #       verb: update
+  #   - name: pipeline_updates
+  #     methods:
+  #     - name: startupdate
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/startupdate
+  #       verb: exec
+  #     - name: getupdate
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/getupdate
+  #       verb: select
+  #     - name: listupdates
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/listupdates
+  #       verb: select
+  #   - name: pipelines
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/delete
+  #       verb: delete
+  #     - name: stop
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/stop
+  #       verb: exec
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/get
+  #       verb: select
+  #     - name: listpipelines
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/listpipelines
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/pipelines/update
+  #       verb: update
+  # deltasharing:
+  #   description: Deltasharing
+  #   resources:
+  #   - name: provider_shares
+  #     methods:
+  #     - name: listshares
+  #       docPath: https://docs.databricks.com/api/workspace/providers/listshares
+  #       verb: select
+  #   - name: providers
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/providers/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/providers/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/providers/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/providers/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/providers/update
+  #       verb: update
+  #   - name: recipient_activation_token
+  #     methods:
+  #     - name: retrievetoken
+  #       docPath: https://docs.databricks.com/api/workspace/recipientactivation/retrievetoken
+  #       verb: select
+  #   - name: recipient_activation_url
+  #     methods:
+  #     - name: getactivationurlinfo
+  #       docPath: https://docs.databricks.com/api/workspace/recipientactivation/getactivationurlinfo
+  #       verb: select
+  #   - name: recipient_share_permissions
+  #     methods:
+  #     - name: sharepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/recipients/sharepermissions
+  #       verb: select
+  #   - name: recipients
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/recipients/delete
+  #       verb: delete
+  #     - name: rotatetoken
+  #       docPath: https://docs.databricks.com/api/workspace/recipients/rotatetoken
+  #       verb: exec
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/recipients/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/recipients/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/recipients/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/recipients/update
+  #       verb: update
+  #   - name: share_permissions
+  #     methods:
+  #     - name: sharepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/shares/sharepermissions
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/shares/updatepermissions
+  #       verb: update
+  #   - name: shares
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/shares/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/shares/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/shares/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/shares/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/shares/update
+  #       verb: update
+  # filemanagement:
+  #   description: Filemanagement
+  #   resources:
+  #   - name: dbfs_files
+  #     methods:
+  #     - name: put
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/put
+  #       verb: exec
+  #     - name: read
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/read
+  #       verb: select
+  #     - name: move
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/move
+  #       verb: exec
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/delete
+  #       verb: delete
+  #   - name: dbfs_objects
+  #     methods:
+  #     - name: getstatus
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/getstatus
+  #       verb: select
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/delete
+  #       verb: delete
+  #   - name: dbfs_directories
+  #     methods:
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/list
+  #       verb: select
+  #     - name: mkdirs
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/mkdirs
+  #       verb: insert
+  #   - name: dbfs_streams
+  #     methods:
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/create
+  #       verb: insert
+  #     - name: close
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/close
+  #       verb: delete
+  #     - name: addblock
+  #       docPath: https://docs.databricks.com/api/workspace/dbfs/addblock
+  #       verb: exec
+  #   - name: directories
+  #     methods:
+  #     - name: deletedirectory
+  #       docPath: https://docs.databricks.com/api/workspace/files/deletedirectory
+  #       verb: delete
+  #     - name: createdirectory
+  #       docPath: https://docs.databricks.com/api/workspace/files/createdirectory
+  #       verb: insert
+  #   - name: directory_contents
+  #     methods:
+  #     - name: listdirectorycontents
+  #       docPath: https://docs.databricks.com/api/workspace/files/listdirectorycontents
+  #       verb: select
+  #   - name: files
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/files/delete
+  #       verb: delete
+  #     - name: download
+  #       docPath: https://docs.databricks.com/api/workspace/files/download
+  #       verb: exec
+  #     - name: upload
+  #       docPath: https://docs.databricks.com/api/workspace/files/upload
+  #       verb: exec
+  # iam:
+  #   description: Iam
+  #   resources:
+  #   - name: assignable_roles
+  #     methods:
+  #     - name: getassignablerolesforresource
+  #       docPath: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy/getassignablerolesforresource
+  #       verb: select
+  #   - name: currentuser
+  #     methods:
+  #     - name: me
+  #       docPath: https://docs.databricks.com/api/workspace/currentuser/me
+  #       verb: select
+  #   - name: groups
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/groups/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/groups/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/groups/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/groups/list
+  #       verb: select
+  #     - name: patch
+  #       docPath: https://docs.databricks.com/api/workspace/groups/patch
+  #       verb: update
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/groups/update
+  #       verb: update
+  #   - name: permission_levels
+  #     methods:
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/permissions/getpermissionlevels
+  #       verb: select
+  #   - name: permissions
+  #     methods:
+  #     - name: set
+  #       docPath: https://docs.databricks.com/api/workspace/permissions/set
+  #       verb: replace
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/permissions/get
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/permissions/update
+  #       verb: update
+  #   - name: rule_sets
+  #     methods:
+  #     - name: getruleset
+  #       docPath: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy/getruleset
+  #       verb: select
+  #     - name: updateruleset
+  #       docPath: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy/updateruleset
+  #       verb: update
+  #   - name: service_principals
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/serviceprincipals/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/serviceprincipals/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/serviceprincipals/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/serviceprincipals/list
+  #       verb: select
+  #     - name: patch
+  #       docPath: https://docs.databricks.com/api/workspace/serviceprincipals/patch
+  #       verb: update
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/serviceprincipals/update
+  #       verb: update
+  #   - name: user_permission_levels
+  #     methods:
+  #     - name: setpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/users/setpermissions
+  #       verb: replace
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/users/getpermissionlevels
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/users/updatepermissions
+  #       verb: update
+  #   - name: user_permissions
+  #     methods:
+  #     - name: getpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/users/getpermissions
+  #       verb: select
+  #   - name: users
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/users/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/users/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/users/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/users/list
+  #       verb: select
+  #     - name: patch
+  #       docPath: https://docs.databricks.com/api/workspace/users/patch
+  #       verb: update
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/users/update
+  #       verb: update
+  # lakeview:
+  #   description: Lakeview
+  #   resources:
+  #   - name: dashboard_schedules
+  #     methods:
+  #     - name: deleteschedule
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/deleteschedule
+  #       verb: delete
+  #     - name: createschedule
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/createschedule
+  #       verb: insert
+  #     - name: getschedule
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/getschedule
+  #       verb: select
+  #     - name: listschedules
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/listschedules
+  #       verb: select
+  #     - name: updateschedule
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/updateschedule
+  #       verb: update
+  #   - name: dashboard_subscriptions
+  #     methods:
+  #     - name: deletesubscription
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/deletesubscription
+  #       verb: delete
+  #     - name: createsubscription
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/createsubscription
+  #       verb: insert
+  #     - name: getsubscription
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/getsubscription
+  #       verb: select
+  #     - name: listsubscriptions
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/listsubscriptions
+  #       verb: select
+  #   - name: dashboards
+  #     methods:
+  #     - name: trash
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/trash
+  #       verb: delete
+  #     - name: migrate
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/migrate
+  #       verb: exec
+  #     - name: publish
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/publish
+  #       verb: exec
+  #     - name: unpublish
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/unpublish
+  #       verb: exec
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/update
+  #       verb: update
+  #   - name: dashboards_published
+  #     methods:
+  #     - name: getpublished
+  #       docPath: https://docs.databricks.com/api/workspace/lakeview/getpublished
+  #       verb: select
+  # machinelearning:
+  #   description: Machinelearning
+  #   resources:
+  #   - name: experiment_artifacts
+  #     methods:
+  #     - name: listartifacts
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/listartifacts
+  #       verb: select
+  #   - name: experiment_permission_levels
+  #     methods:
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/getpermissionlevels
+  #       verb: select
+  #   - name: experiment_permissions
+  #     methods:
+  #     - name: setpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/setpermissions
+  #       verb: replace
+  #     - name: getpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/getpermissions
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/updatepermissions
+  #       verb: update
+  #   - name: experiment_run_tags
+  #     methods:
+  #     - name: settag
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/settag
+  #       verb: replace
+  #   - name: experiment_runs
+  #     methods:
+  #     - name: deleterun
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/deleterun
+  #       verb: delete
+  #     - name: deleteruns
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/deleteruns
+  #       verb: delete
+  #     - name: logbatch
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/logbatch
+  #       verb: exec
+  #     - name: loginputs
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/loginputs
+  #       verb: exec
+  #     - name: logmetric
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/logmetric
+  #       verb: exec
+  #     - name: logmodel
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/logmodel
+  #       verb: exec
+  #     - name: logparam
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/logparam
+  #       verb: exec
+  #     - name: restorerun
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/restorerun
+  #       verb: exec
+  #     - name: restoreruns
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/restoreruns
+  #       verb: exec
+  #     - name: createrun
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/createrun
+  #       verb: insert
+  #     - name: getrun
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/getrun
+  #       verb: select
+  #     - name: searchruns
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/searchruns
+  #       verb: select
+  #     - name: updaterun
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/updaterun
+  #       verb: update
+  #   - name: experiment_tags
+  #     methods:
+  #     - name: deletetag
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/deletetag
+  #       verb: delete
+  #     - name: setexperimenttag
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/setexperimenttag
+  #       verb: replace
+  #   - name: experiments
+  #     methods:
+  #     - name: deleteexperiment
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/deleteexperiment
+  #       verb: delete
+  #     - name: restoreexperiment
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/restoreexperiment
+  #       verb: exec
+  #     - name: createexperiment
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/createexperiment
+  #       verb: insert
+  #     - name: getbyname
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/getbyname
+  #       verb: select
+  #     - name: getexperiment
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/getexperiment
+  #       verb: select
+  #     - name: listexperiments
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/listexperiments
+  #       verb: select
+  #     - name: searchexperiments
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/searchexperiments
+  #       verb: select
+  #     - name: updateexperiment
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/updateexperiment
+  #       verb: update
+  #   - name: experiments_history
+  #     methods:
+  #     - name: gethistory
+  #       docPath: https://docs.databricks.com/api/workspace/experiments/gethistory
+  #       verb: select
+  #   - name: model_latest_versions
+  #     methods:
+  #     - name: getlatestversions
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/getlatestversions
+  #       verb: select
+  #   - name: model_permission_levels
+  #     methods:
+  #     - name: getpermissionlevels
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/getpermissionlevels
+  #       verb: select
+  #   - name: model_permissions
+  #     methods:
+  #     - name: setpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/setpermissions
+  #       verb: replace
+  #     - name: getpermissions
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/getpermissions
+  #       verb: select
+  #     - name: updatepermissions
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/updatepermissions
+  #       verb: update
+  #   - name: model_tags
+  #     methods:
+  #     - name: deletemodeltag
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/deletemodeltag
+  #       verb: delete
+  #     - name: setmodeltag
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/setmodeltag
+  #       verb: replace
+  #   - name: model_transition_requests
+  #     methods:
+  #     - name: deletetransitionrequest
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/deletetransitionrequest
+  #       verb: delete
+  #     - name: approvetransitionrequest
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/approvetransitionrequest
+  #       verb: exec
+  #     - name: transitionstage
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/transitionstage
+  #       verb: exec
+  #     - name: createtransitionrequest
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/createtransitionrequest
+  #       verb: insert
+  #     - name: listtransitionrequests
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/listtransitionrequests
+  #       verb: select
+  #     - name: rejecttransitionrequest
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/rejecttransitionrequest
+  #       verb: exec
+  #   - name: model_version_comments
+  #     methods:
+  #     - name: deletecomment
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/deletecomment
+  #       verb: delete
+  #     - name: createcomment
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/createcomment
+  #       verb: insert
+  #     - name: updatecomment
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/updatecomment
+  #       verb: update
+  #   - name: model_version_download_urls
+  #     methods:
+  #     - name: getmodelversiondownloaduri
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/getmodelversiondownloaduri
+  #       verb: select
+  #   - name: model_version_tags
+  #     methods:
+  #     - name: deletemodelversiontag
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/deletemodelversiontag
+  #       verb: delete
+  #     - name: setmodelversiontag
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/setmodelversiontag
+  #       verb: replace
+  #   - name: model_versions
+  #     methods:
+  #     - name: deletemodelversion
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/deletemodelversion
+  #       verb: delete
+  #     - name: createmodelversion
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/createmodelversion
+  #       verb: insert
+  #     - name: getmodelversion
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/getmodelversion
+  #       verb: select
+  #     - name: searchmodelversions
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/searchmodelversions
+  #       verb: select
+  #     - name: updatemodelversion
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/updatemodelversion
+  #       verb: update
+  #   - name: model_web_hooks
+  #     methods:
+  #     - name: deletewebhook
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/deletewebhook
+  #       verb: delete
+  #     - name: testregistrywebhook
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/testregistrywebhook
+  #       verb: exec
+  #     - name: createwebhook
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/createwebhook
+  #       verb: insert
+  #     - name: listwebhooks
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/listwebhooks
+  #       verb: select
+  #     - name: updatewebhook
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/updatewebhook
+  #       verb: update
+  #   - name: models
+  #     methods:
+  #     - name: deletemodel
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/deletemodel
+  #       verb: delete
+  #     - name: renamemodel
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/renamemodel
+  #       verb: exec
+  #     - name: createmodel
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/createmodel
+  #       verb: insert
+  #     - name: getmodel
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/getmodel
+  #       verb: select
+  #     - name: listmodels
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/listmodels
+  #       verb: select
+  #     - name: searchmodels
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/searchmodels
+  #       verb: select
+  #     - name: updatemodel
+  #       docPath: https://docs.databricks.com/api/workspace/modelregistry/updatemodel
+  #       verb: update
+  # marketplace:
+  #   description: Marketplace
+  #   resources:
+  #   - name: consumer_fulfillments
+  #     methods:
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/consumerfulfillments/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/consumerfulfillments/list
+  #       verb: select
+  #   - name: consumer_installations
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/consumerinstallations/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/consumerinstallations/create
+  #       verb: insert
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/consumerinstallations/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/consumerinstallations/update
+  #       verb: update
+  #   - name: consumer_listings
+  #     methods:
+  #     - name: batchget
+  #       docPath: https://docs.databricks.com/api/workspace/consumerlistings/batchget
+  #       verb: exec
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/consumerlistings/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/consumerlistings/list
+  #       verb: select
+  #     - name: search
+  #       docPath: https://docs.databricks.com/api/workspace/consumerlistings/search
+  #       verb: select
+  #   - name: consumer_personalization_requests
+  #     methods:
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/consumerpersonalizationrequests/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/consumerpersonalizationrequests/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/consumerpersonalizationrequests/list
+  #       verb: select
+  #   - name: consumer_providers
+  #     methods:
+  #     - name: batchget
+  #       docPath: https://docs.databricks.com/api/workspace/consumerproviders/batchget
+  #       verb: exec
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/consumerproviders/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/consumerproviders/list
+  #       verb: select
+  #   - name: listing_installations
+  #     methods:
+  #     - name: listlistinginstallations
+  #       docPath: https://docs.databricks.com/api/workspace/consumerinstallations/listlistinginstallations
+  #       verb: select
+  #   - name: provider_analytics_dashboards
+  #     methods:
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/get
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/update
+  #       verb: update
+  #   - name: provider_analytics_dashboards_latest
+  #     methods:
+  #     - name: getlatestversion
+  #       docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/getlatestversion
+  #       verb: select
+  #   - name: provider_exchange_filters
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/create
+  #       verb: insert
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/update
+  #       verb: update
+  #   - name: provider_exchanges
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchanges/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchanges/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchanges/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchanges/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchanges/update
+  #       verb: update
+  #   - name: provider_exchange_listings
+  #     methods:
+  #     - name: deletelistingfromexchange
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchanges/deletelistingfromexchange
+  #       verb: delete
+  #     - name: listexchangesforlisting
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchanges/listexchangesforlisting
+  #       verb: select
+  #     - name: listlistingsforexchange
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchanges/listlistingsforexchange
+  #       verb: select
+  #     - name: addlistingtoexchange
+  #       docPath: https://docs.databricks.com/api/workspace/providerexchanges/addlistingtoexchange
+  #       verb: select
+  #   - name: provider_files
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/providerfiles/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/providerfiles/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/providerfiles/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/providerfiles/list
+  #       verb: select
+  #   - name: provider_listings
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/providerlistings/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/providerlistings/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/providerlistings/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/providerlistings/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/providerlistings/update
+  #       verb: update
+  #   - name: provider_personalization_requests
+  #     methods:
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/providerpersonalizationrequests/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/providerpersonalizationrequests/update
+  #       verb: update
+  #   - name: providers
+  #     methods:
+  #     - name: delete
+  #       docPath: https://docs.databricks.com/api/workspace/providerproviders/delete
+  #       verb: delete
+  #     - name: create
+  #       docPath: https://docs.databricks.com/api/workspace/providerproviders/create
+  #       verb: insert
+  #     - name: get
+  #       docPath: https://docs.databricks.com/api/workspace/providerproviders/get
+  #       verb: select
+  #     - name: list
+  #       docPath: https://docs.databricks.com/api/workspace/providerproviders/list
+  #       verb: select
+  #     - name: update
+  #       docPath: https://docs.databricks.com/api/workspace/providerproviders/update
+  #       verb: update
   realtimeserving:
     description: Realtimeserving
     resources:
-    - name: ai_gateways
-      methods:
-      - name: putaigateway
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/putaigateway
-        verb: exec
-    - name: build_logs
-      methods:
-      - name: buildlogs
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/buildlogs
-        verb: select
-    - name: logs
-      methods:
-      - name: logs
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/logs
-        verb: select
-    - name: metrics
-      methods:
-      - name: exportmetrics
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/exportmetrics
-        verb: exec
-    - name: schemas
-      methods:
-      - name: getopenapi
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/getopenapi
-        verb: select
-    - name: serving_endpoints
-      methods:
-      - name: delete
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/delete
-        verb: delete
-      - name: create
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/create
-        verb: insert
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/get
-        verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/list
-        verb: select
-      - name: patch
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/patch
-        verb: update
-      - name: updateconfig
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/updateconfig
-        verb: update
-      - name: put
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/put
-        verb: replace
-      - name: query
-        docPath: https://docs.databricks.com/api/workspace/servingendpoints/query
-        verb: select
+  #   - name: ai_gateways
+  #     methods:
+  #     - name: putaigateway
+  #       docPath: https://docs.databricks.com/api/workspace/servingendpoints/putaigateway
+  #       verb: exec
+  #   - name: build_logs
+  #     methods:
+  #     - name: buildlogs
+  #       docPath: https://docs.databricks.com/api/workspace/servingendpoints/buildlogs
+  #       verb: select
+  #   - name: logs
+  #     methods:
+  #     - name: logs
+  #       docPath: https://docs.databricks.com/api/workspace/servingendpoints/logs
+  #       verb: select
+  #   - name: metrics
+  #     methods:
+  #     - name: exportmetrics
+  #       docPath: https://docs.databricks.com/api/workspace/servingendpoints/exportmetrics
+  #       verb: exec
+  #   - name: schemas
+  #     methods:
+  #     - name: getopenapi
+  #       docPath: https://docs.databricks.com/api/workspace/servingendpoints/getopenapi
+  #       verb: select
+    # - name: serving_endpoints
+    #   methods:
+    #   - name: delete
+    #     docPath: https://docs.databricks.com/api/workspace/servingendpoints/delete
+    #     verb: delete
+    #   - name: create
+    #     docPath: https://docs.databricks.com/api/workspace/servingendpoints/create
+    #     verb: insert
+    #   - name: get
+    #     docPath: https://docs.databricks.com/api/workspace/servingendpoints/get
+    #     verb: select
+    #   - name: list
+    #     docPath: https://docs.databricks.com/api/workspace/servingendpoints/list
+    #     verb: select
+    #   - name: patch
+    #     docPath: https://docs.databricks.com/api/workspace/servingendpoints/patch
+    #     verb: update
+    #   - name: updateconfig
+    #     docPath: https://docs.databricks.com/api/workspace/servingendpoints/updateconfig
+    #     verb: update
+    #   - name: put
+    #     docPath: https://docs.databricks.com/api/workspace/servingendpoints/put
+    #     verb: replace
+    #   - name: query
+    #     docPath: https://docs.databricks.com/api/workspace/servingendpoints/query
+    #     verb: select
     - name: serving_endpoints_permission_levels
       methods:
       - name: getpermissionlevels
@@ -2173,4 +2167,3 @@ services:
       - name: listtokens
         docPath: https://docs.databricks.com/api/workspace/tokens/listtokens
         verb: select
-

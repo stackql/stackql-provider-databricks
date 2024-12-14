@@ -1,7 +1,5 @@
 from parsel import Selector
 
-error_codes_set = set()
-
 error_code_descriptions = {
     "400": "Request is invalid or malformed.",
     "401": "The request does not have valid authentication credentials for the operation.",
@@ -9,16 +7,16 @@ error_code_descriptions = {
     "404": "Operation was performed on a resource that does not exist.",
     "409": "Request was rejected due a conflict with an existing resource.",
     "429": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota.",
+    "499": "Operation was canceled by the caller.",
     "500": "Internal error.",
     "501": "Operation is not implemented or is not supported/enabled in this service.",
+    "503": "Service is currently unavailable.",
+    "504": "Deadline expired before the operation could complete.",
     "509": "An external service is unavailable temporarily as it is being updated."
 }
 
 def process_responses(selector, doc_base_path, debug=False):
-    global error_codes_set
     responses = {}
-    
-    # doc_base_path = "/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]"
 
     responses_header_ix = 0
     if selector.xpath(f"{doc_base_path}/h3[2]/text()").get() == "Responses":
@@ -57,13 +55,9 @@ def process_responses(selector, doc_base_path, debug=False):
             if code in error_code_descriptions:
                 err_response_obj = { "description": error_code_descriptions[code] }
             else:
-                err_response_obj = {}   
+                raise ValueError(f"Uknown HTTP response code: {code}")
             responses[code] = err_response_obj
 
-        # Write codes to file
-        with open('error_codes.txt', 'a') as f:
-            for code in error_codes:
-                f.write(f"{code}\n")
     
     # Get all response blocks
     # response_blocks = responses_div.xpath(".//div[contains(@aria-expanded, 'true') or contains(@aria-expanded, 'false')]")

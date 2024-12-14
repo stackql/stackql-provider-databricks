@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
-import yaml, argparse , sys, json, os, re, time
+import yaml, argparse , sys, json, os, re, time, ssl
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import WebDriverException, TimeoutException
+from urllib3.exceptions import MaxRetryError
 import bs4
 from parsel import Selector
 from lib.parameters import process_parameters
@@ -13,8 +15,6 @@ from lib.request_body import process_request_body
 from lib.responses import process_responses
 
 def process_manifest(provider, debug):
-
-    global error_codes_set
 
     """Process the API manifest file based on provider type."""
     # Determine which manifest file to read
@@ -37,7 +37,7 @@ def process_manifest(provider, debug):
             for method in resource['methods']:
                 process_endpoint(provider, service_name, resource_name, method['name'], method['docPath'], method['verb'], debug)
 
-def scrape_dynamic_content(url):
+def scrape_dynamic_content(url, max_retries=5, retry_delay=5):
     # Configure Selenium WebDriver with headless Chrome
     chrome_options = Options()
     chrome_options.add_argument("--headless")
@@ -46,39 +46,55 @@ def scrape_dynamic_content(url):
     chrome_options.add_argument("--disable-dev-shm-usage")
 
     # Specify the path to the downloaded ChromeDriver
-    driver = webdriver.Chrome(
-        service=Service("inc/chromedriver.exe"),
-        options=chrome_options
-    )
+    driver = None
 
-    try:
-        # Open the page
-        driver.get(url)
+    for attempt in range(max_retries):
+        try:
+            driver = webdriver.Chrome(
+                service=Service("inc/chromedriver.exe"),
+                options=chrome_options
+            )
 
-        # Wait for a specific element to load
-        WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.ID, "root"))
-        )
+            # Open the page
+            driver.get(url)
 
-        # Extract the full rendered HTML
-        page_source = driver.page_source
+            # Wait for a specific element to load
+            WebDriverWait(driver, 20).until(
+                EC.presence_of_element_located((By.ID, "root"))
+            )
 
-        # Parse the content using BeautifulSoup
-        soup = bs4.BeautifulSoup(page_source, "html.parser")
+            # Extract the full rendered HTML
+            page_source = driver.page_source
 
-        # Remove unwanted elements
-        for tag in soup(["head", "script", "meta", "title", "style", "svg", "input", "iframe"]):
-            tag.decompose()
+            # Parse the content using BeautifulSoup
+            soup = bs4.BeautifulSoup(page_source, "html.parser")
 
-        return soup
+            # Remove unwanted elements
+            for tag in soup(["head", "script", "meta", "title", "style", "svg", "input", "iframe"]):
+                tag.decompose()
 
-    finally:
-        # Close the browser
-        driver.quit()
+            return soup
+
+        except (ssl.SSLError, MaxRetryError, TimeoutException, WebDriverException) as e:
+            print(f"Known error occurred on attempt {attempt + 1}/{max_retries}: {e}")
+            if attempt + 1 == max_retries:
+                print("Max retries reached. Failing program.")
+                raise
+            else:
+                print(f"Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+
+        except Exception as e:
+            # Unknown or unexpected error, fail immediately
+            print(f"Unexpected error: {e}")
+            raise
+
+        finally:
+            if driver:
+                driver.quit()
 
 def process_endpoint(provider, service, resource, method, docPath, sqlVerb, debug):
-    global error_codes_set
-    
+   
     print(f"""processing docPath: {docPath}
 provider: {provider}
 service: {service}
@@ -104,10 +120,12 @@ sqlVerb: {sqlVerb}""")
         raise ValueError(f"Invalid HTTP verb: {http_verb}")
 
     http_path = selector.xpath(f"{doc_base_path}/article/span/code/span/text()").get()
-    print(f"http_path: {http_path}") if debug else None
-    if not http_path.startswith('/api/'):
+    if http_path.startswith('/api/') or http_path.startswith('/serving-endpoints/'):
+        print(f"http_path: {http_path}") if debug else None
+    else:
         raise ValueError(f"Invalid HTTP path: {http_path}")
     
+    op_desc = None
     op_desc_node = selector.xpath(f"{doc_base_path}/div[3]/div[2]/text()").get()
     if op_desc_node:     
         op_desc = op_desc_node.replace("\n", " ").strip()
@@ -176,11 +194,8 @@ def clean_target_dir(provider):
                 os.rmdir(os.path.join(root, name))
         os.rmdir(target_dir)
 
-error_codes_set = set()
 
 def main():
-    global error_codes_set
-
     start_time = time.time()
 
     parser = argparse.ArgumentParser(description='Process Databricks API documentation')
@@ -188,22 +203,20 @@ def main():
                       help='The provider type to process (account or workspace)')
     parser.add_argument('--debug', action='store_true',
                       help='Save raw text files alongside JSON for debugging')
+    parser.add_argument('--clean', action='store_true',
+                      help='Clean the entire target directory before processing')    
 
     args = parser.parse_args()
     
-    # Clean target directory before processing
-    clean_target_dir(args.provider)
+    if args.clean:
+        # Clean target directory before processing
+        clean_target_dir(args.provider)    
 
     # Process the manifest for the specified provider
     process_manifest(args.provider, args.debug)    
 
     elapsed_time = time.time() - start_time
     print(f"Elapsed time: {elapsed_time:.2f} seconds")
-
-    # At the end of main()
-    with open('error_codes.txt', 'r') as f:
-        unique_codes = sorted(set(f.read().splitlines()))
-    print(f"All error codes found: {unique_codes}")
 
 if __name__ == "__main__":
     main()
