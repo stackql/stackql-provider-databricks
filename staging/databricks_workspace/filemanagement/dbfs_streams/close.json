@@ -1,0 +1,52 @@
+{
+ "/api/2.0/dbfs/close": {
+  "post": {
+   "operationId": "dbfs-streams-close",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dbfs/close"
+   },
+   "x-stackQL-resource": "dbfs_streams",
+   "x-stackQL-method": "close",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "handle": {
+         "type": "required",
+         "description": "The handle on an open stream."
+        }
+       },
+       "example": {
+        "handle": 0
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Closes the stream specified by the input handle. If the handle does not exist, this call throws an exception with"
+  }
+ }
+}

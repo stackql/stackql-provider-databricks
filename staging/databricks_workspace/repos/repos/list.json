@@ -1,0 +1,40 @@
+{
+ "/api/2.0/repos": {
+  "get": {
+   "operationId": "repos-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/repos/list"
+   },
+   "x-stackQL-resource": "repos",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "path_prefix",
+     "in": "query"
+    },
+    {
+     "name": "next_page_token",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Returns repos that the calling user has Manage permissions on. Use"
+  }
+ }
+}

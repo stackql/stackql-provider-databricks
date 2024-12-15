@@ -1,0 +1,54 @@
+{
+ "/api/2.0/accounts/{account_id}/scim/v2/Groups/{id}": {
+  "delete": {
+   "operationId": "groups-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountgroups/delete"
+   },
+   "x-stackQL-resource": "groups",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID",
+     "in": "path"
+    },
+    {
+     "name": "id",
+     "required": true,
+     "description": "(int64) Unique ID for a group in the Databricks account.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "204": {
+     "description": "Group was deleted successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Deletes a group from the Databricks account."
+  }
+ }
+}

@@ -1,0 +1,38 @@
+{
+ "/api/2.0/serving-endpoints/{name}/openapi": {
+  "get": {
+   "operationId": "schemas-getopenapi",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/getopenapi"
+   },
+   "x-stackQL-resource": "schemas",
+   "x-stackQL-method": "getopenapi",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The OpenAPI spec for the invocation schema was fetched successfully"
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get the query schema of the serving endpoint in OpenAPI format. The schema contains information for the supported paths, input and output format and datatypes."
+  }
+ }
+}

@@ -1,0 +1,44 @@
+{
+ "/api/2.0/permissions/experiments/{experiment_id}": {
+  "get": {
+   "operationId": "experiment-permissions-getpermissions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/getpermissions"
+   },
+   "x-stackQL-resource": "experiment_permissions",
+   "x-stackQL-method": "getpermissions",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "experiment_id",
+     "required": true,
+     "description": "(string) The experiment for which to get or manage permissions.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the permissions of an experiment. Experiments can inherit permissions from their root object."
+  }
+ }
+}

@@ -1,0 +1,65 @@
+{
+ "/api/2.0/accounts/{account_id}/dashboard": {
+  "get": {
+   "operationId": "usage-dashboards-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/usagedashboards/get"
+   },
+   "x-stackQL-resource": "usage_dashboards",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(string) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "workspace_id",
+     "description": "The workspace ID of the workspace in which the usage dashboard is created.",
+     "in": "query"
+    },
+    {
+     "name": "dashboard_type",
+     "description": "Workspace level usage dashboard shows usage data for the specified workspace ID. Global level usage dashboard shows usage data for all workspaces in the account.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "dashboard_id": {
+          "type": "string"
+         },
+         "dashboard_url": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get a usage dashboard specified by workspaceId, accountId, and dashboard type."
+  }
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "/api/2.0/marketplace-provider/listings": {
+  "get": {
+   "operationId": "provider-listings-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerlistings/list"
+   },
+   "x-stackQL-resource": "provider_listings",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "List listings owned by this provider"
+  }
+ }
+}

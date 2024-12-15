@@ -1,0 +1,34 @@
+{
+ "/api/2.1/unity-catalog/schemas/{full_name}": {
+  "get": {
+   "operationId": "schemas-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/schemas/get"
+   },
+   "x-stackQL-resource": "schemas",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) Full name of the schema.",
+     "in": "path"
+    },
+    {
+     "name": "include_browse",
+     "description": "Whether to include schemas in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The schema was successfully retrieved."
+    }
+   },
+   "description": "Gets the specified schema within the metastore. The caller must be a metastore admin, the owner of the schema, or a user that has the"
+  }
+ }
+}

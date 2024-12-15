@@ -1,0 +1,34 @@
+{
+ "/api/2.1/unity-catalog/external-locations/{name}": {
+  "delete": {
+   "operationId": "external-locations-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/externallocations/delete"
+   },
+   "x-stackQL-resource": "external_locations",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the external location.",
+     "in": "path"
+    },
+    {
+     "name": "force",
+     "description": "Force deletion even if there are dependent external tables or mounts.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The external location was successfully deleted."
+    }
+   },
+   "description": "Deletes the specified external location from the metastore. The caller must be the owner of the external location."
+  }
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "/api/2.1/marketplace-consumer/listings/{id}": {
+  "get": {
+   "operationId": "consumer-listings-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerlistings/get"
+   },
+   "x-stackQL-resource": "consumer_listings",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Get a published listing in the Databricks Marketplace that the consumer has access to."
+  }
+ }
+}

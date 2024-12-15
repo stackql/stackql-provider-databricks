@@ -1,0 +1,34 @@
+{
+ "/api/2.0/instance-profiles/list": {
+  "get": {
+   "operationId": "instance-profiles-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/instanceprofiles/list"
+   },
+   "x-stackQL-resource": "instance_profiles",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "List the instance profiles that the calling user can use to launch a cluster."
+  }
+ }
+}

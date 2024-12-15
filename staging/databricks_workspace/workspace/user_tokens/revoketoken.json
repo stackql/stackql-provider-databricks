@@ -1,0 +1,49 @@
+{
+ "/api/2.0/token/delete": {
+  "post": {
+   "operationId": "user-tokens-revoketoken",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/tokens/revoketoken"
+   },
+   "x-stackQL-resource": "user_tokens",
+   "x-stackQL-method": "revoketoken",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "token_id": {
+         "type": "required",
+         "description": "The ID of the token to be revoked."
+        }
+       },
+       "example": {
+        "token_id": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Revokes an access token."
+  }
+ }
+}

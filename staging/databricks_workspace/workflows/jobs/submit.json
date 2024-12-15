@@ -1,0 +1,262 @@
+{
+ "/api/2.1/jobs/runs/submit": {
+  "post": {
+   "operationId": "jobs-submit",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/jobs/submit"
+   },
+   "x-stackQL-resource": "jobs",
+   "x-stackQL-method": "submit",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "run_name": {
+         "type": "string",
+         "description": " "
+        },
+        "timeout_seconds": {
+         "type": "int32",
+         "description": " "
+        },
+        "idempotency_token": {
+         "type": "string",
+         "description": "An optional name for the run. The default value is "
+        },
+        "health": {
+         "type": "object"
+        },
+        "tasks": {
+         "type": "Array of object"
+        },
+        "git_source": {
+         "type": "object"
+        },
+        "webhook_notifications": {
+         "type": "object"
+        },
+        "email_notifications": {
+         "type": "object"
+        },
+        "notification_settings": {
+         "type": "object"
+        },
+        "environments": {
+         "type": "Array of object"
+        },
+        "access_control_list": {
+         "type": "Array of object"
+        },
+        "queue": {
+         "type": "object"
+        },
+        "run_as": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "run_name": "A multitask job run",
+        "timeout_seconds": 86400,
+        "health": {
+         "rules": [
+          {
+           "metric": "RUN_DURATION_SECONDS",
+           "op": "GREATER_THAN",
+           "value": 10
+          }
+         ]
+        },
+        "idempotency_token": "8f018174-4792-40d5-bcbc-3e6a527352c8",
+        "tasks": [
+         {
+          "task_key": "Sessionize",
+          "description": "Extracts session data from events",
+          "min_retry_interval_millis": 2000,
+          "depends_on": [],
+          "timeout_seconds": 86400,
+          "spark_jar_task": {
+           "main_class_name": "com.databricks.Sessionize",
+           "parameters": [
+            "--data",
+            "dbfs:/path/to/data.json"
+           ]
+          },
+          "libraries": [
+           {
+            "jar": "dbfs:/mnt/databricks/Sessionize.jar"
+           }
+          ],
+          "retry_on_timeout": false,
+          "existing_cluster_id": "0923-164208-meows279"
+         },
+         {
+          "task_key": "Orders_Ingest",
+          "description": "Ingests order data",
+          "depends_on": [],
+          "timeout_seconds": 86400,
+          "spark_jar_task": {
+           "main_class_name": "com.databricks.OrdersIngest",
+           "parameters": [
+            "--data",
+            "dbfs:/path/to/order-data.json"
+           ]
+          },
+          "libraries": [
+           {
+            "jar": "dbfs:/mnt/databricks/OrderIngest.jar"
+           }
+          ],
+          "existing_cluster_id": "0923-164208-meows279"
+         },
+         {
+          "task_key": "Match",
+          "description": "Matches orders with user sessions",
+          "notebook_task": {
+           "base_parameters": {
+            "age": "35",
+            "name": "John Doe"
+           },
+           "notebook_path": "/Users/user.name@databricks.com/Match"
+          },
+          "depends_on": [
+           {
+            "task_key": "Orders_Ingest"
+           },
+           {
+            "task_key": "Sessionize"
+           }
+          ],
+          "new_cluster": {
+           "autoscale": {
+            "max_workers": 16,
+            "min_workers": 2
+           },
+           "node_type_id": null,
+           "spark_conf": {
+            "spark.speculation": true
+           },
+           "spark_version": "7.3.x-scala2.12"
+          },
+          "timeout_seconds": 86400,
+          "retry_on_timeout": false,
+          "run_if": "ALL_SUCCESS"
+         }
+        ],
+        "git_source": {
+         "git_branch": "main",
+         "git_provider": "gitHub",
+         "git_url": "https://github.com/databricks/databricks-cli"
+        },
+        "webhook_notifications": {
+         "on_start": [
+          [
+           {
+            "id": "0481e838-0a59-4eff-9541-a4ca6f149574"
+           }
+          ]
+         ],
+         "on_success": [
+          [
+           {
+            "id": "0481e838-0a59-4eff-9541-a4ca6f149574"
+           }
+          ]
+         ],
+         "on_failure": [
+          [
+           {
+            "id": "0481e838-0a59-4eff-9541-a4ca6f149574"
+           }
+          ]
+         ],
+         "on_duration_warning_threshold_exceeded": [
+          [
+           {
+            "id": "0481e838-0a59-4eff-9541-a4ca6f149574"
+           }
+          ]
+         ]
+        },
+        "email_notifications": {
+         "on_start": [
+          "user.name@databricks.com"
+         ],
+         "on_success": [
+          "user.name@databricks.com"
+         ],
+         "on_failure": [
+          "user.name@databricks.com"
+         ],
+         "on_duration_warning_threshold_exceeded": [
+          "user.name@databricks.com"
+         ],
+         "no_alert_for_skipped_runs": false
+        },
+        "notification_settings": {
+         "no_alert_for_skipped_runs": false,
+         "no_alert_for_canceled_runs": false
+        },
+        "environments": [
+         {
+          "environment_key": "string",
+          "spec": {
+           "client": "1",
+           "dependencies": [
+            "string"
+           ]
+          }
+         }
+        ],
+        "access_control_list": [
+         {
+          "user_name": "string",
+          "group_name": "string",
+          "service_principal_name": "string",
+          "permission_level": "CAN_MANAGE"
+         }
+        ],
+        "queue": {
+         "enabled": true
+        },
+        "run_as": {
+         "user_name": "user@databricks.com",
+         "service_principal_name": "692bc6d0-ffa3-11ed-be56-0242ac120002"
+        }
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Submit a one-time run. This endpoint allows you to submit a workload directly without creating a job. Runs submitted using this endpoint don\u2019t display in the UI. Use the"
+  }
+ }
+}

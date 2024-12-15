@@ -1,0 +1,44 @@
+{
+ "/api/2.0/lakeview/dashboards/{dashboard_id}": {
+  "get": {
+   "operationId": "dashboards-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/lakeview/get"
+   },
+   "x-stackQL-resource": "dashboards",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "dashboard_id",
+     "required": true,
+     "description": "(string) UUID identifying the dashboard.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get a draft dashboard."
+  }
+ }
+}

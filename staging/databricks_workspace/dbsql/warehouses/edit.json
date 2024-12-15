@@ -1,0 +1,115 @@
+{
+ "/api/2.0/sql/warehouses/{id}/edit": {
+  "post": {
+   "operationId": "warehouses-edit",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/warehouses/edit"
+   },
+   "x-stackQL-resource": "warehouses",
+   "x-stackQL-method": "edit",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(string) Required. Id of the warehouse to configure.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string",
+         "description": "Logical name for the cluster."
+        },
+        "cluster_size": {
+         "type": "string",
+         "description": "Supported values:"
+        },
+        "min_num_clusters": {
+         "type": "int32",
+         "description": "Size of the clusters allocated for this warehouse.\nIncreasing the size of a spark cluster allows you to run larger queries on it.\nIf you want to increase the number of concurrent queries, please tune max_num_clusters."
+        },
+        "max_num_clusters": {
+         "type": "int32",
+         "description": "Supported values:"
+        },
+        "auto_stop_mins": {
+         "type": "int32",
+         "description": " "
+        },
+        "creator_name": {
+         "type": "string",
+         "description": "Minimum number of available clusters that will be maintained for this SQL warehouse.\nIncreasing this will ensure that a larger number of clusters are always running and therefore may reduce\nthe cold start time for new queries. This is similar to reserved vs. revocable cores in a resource manager."
+        },
+        "instance_profile_arn": {
+         "type": "string",
+         "description": "Supported values:"
+        },
+        "spot_instance_policy": {
+         "type": "string",
+         "description": "Defaults to 1"
+        },
+        "enable_photon": {
+         "type": "boolean",
+         "description": "Maximum number of clusters that the autoscaler will create to handle concurrent queries."
+        },
+        "enable_serverless_compute": {
+         "type": "boolean",
+         "description": "Supported values:"
+        },
+        "warehouse_type": {
+         "type": "string",
+         "description": "Defaults to min_clusters if unset."
+        },
+        "tags": {
+         "type": "object"
+        },
+        "channel": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "string",
+        "cluster_size": "string",
+        "min_num_clusters": "1",
+        "max_num_clusters": 0,
+        "auto_stop_mins": "120",
+        "creator_name": "string",
+        "instance_profile_arn": "string",
+        "tags": {
+         "custom_tags": [
+          {
+           "key": "string",
+           "value": "string"
+          }
+         ]
+        },
+        "spot_instance_policy": "POLICY_UNSPECIFIED",
+        "enable_photon": true,
+        "channel": {
+         "name": "CHANNEL_NAME_PREVIEW",
+         "dbsql_version": "string"
+        },
+        "enable_serverless_compute": true,
+        "warehouse_type": "TYPE_UNSPECIFIED"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Updates the configuration for a SQL warehouse."
+  }
+ }
+}

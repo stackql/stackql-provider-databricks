@@ -1,0 +1,111 @@
+{
+ "/api/2.0/accounts/{account_id}/scim/v2/Groups/{id}": {
+  "put": {
+   "operationId": "groups-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountgroups/update"
+   },
+   "x-stackQL-resource": "groups",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID",
+     "in": "path"
+    },
+    {
+     "name": "id",
+     "required": true,
+     "description": "(int64) Unique ID for a group in the Databricks account.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Group information was updated successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "id": {
+         "type": "integer",
+         "format": "int64",
+         "description": "Databricks group ID"
+        },
+        "displayName": {
+         "type": "string",
+         "description": "String that represents a human-readable group name"
+        },
+        "externalId": {
+         "type": "string"
+        },
+        "members": {
+         "type": "Array of object"
+        },
+        "roles": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "id": "string",
+        "displayName": "string",
+        "members": [
+         {
+          "$ref": "string",
+          "value": "string",
+          "display": "string",
+          "primary": true,
+          "type": "string"
+         }
+        ],
+        "roles": [
+         {
+          "$ref": "string",
+          "value": "string",
+          "display": "string",
+          "primary": true,
+          "type": "string"
+         }
+        ],
+        "externalId": "string"
+       }
+      }
+     }
+    },
+    "description": "Operations to be applied on group information."
+   },
+   "description": "Updates the details of a group by replacing the entire group entity."
+  }
+ }
+}

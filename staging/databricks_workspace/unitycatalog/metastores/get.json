@@ -1,0 +1,29 @@
+{
+ "/api/2.1/unity-catalog/metastores/{id}": {
+  "get": {
+   "operationId": "metastores-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/metastores/get"
+   },
+   "x-stackQL-resource": "metastores",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(string) Unique ID of the metastore.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The metastore was successfully retrieved."
+    }
+   },
+   "description": "Gets a metastore that matches the supplied ID. The caller must be a metastore admin to retrieve this info."
+  }
+ }
+}

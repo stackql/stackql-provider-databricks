@@ -1,0 +1,54 @@
+{
+ "/api/2.0/mlflow/registered-models/create": {
+  "post": {
+   "operationId": "models-createmodel",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/createmodel"
+   },
+   "x-stackQL-resource": "models",
+   "x-stackQL-method": "createmodel",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Register models under this name"
+        },
+        "description": {
+         "type": "string",
+         "description": "Optional description for registered model."
+        },
+        "tags": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "name": "string",
+        "tags": [
+         {
+          "key": "string",
+          "value": "string"
+         }
+        ],
+        "description": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Creates a new registered model with the name specified in the request body."
+  }
+ }
+}

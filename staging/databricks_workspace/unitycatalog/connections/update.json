@@ -1,0 +1,59 @@
+{
+ "/api/2.1/unity-catalog/connections/{name}": {
+  "patch": {
+   "operationId": "connections-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/connections/update"
+   },
+   "x-stackQL-resource": "connections",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the connection.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "owner": {
+         "type": "string",
+         "description": "Username of current owner of the connection."
+        },
+        "new_name": {
+         "type": "string",
+         "description": "New name for the connection."
+        },
+        "options": {
+         "type": "required"
+        }
+       },
+       "example": {
+        "options": {
+         "property1": "string",
+         "property2": "string"
+        },
+        "owner": "string",
+        "new_name": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "The connection was successfully updated."
+    }
+   },
+   "description": "Updates the connection that matches the supplied name."
+  }
+ }
+}

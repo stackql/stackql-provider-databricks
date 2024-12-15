@@ -1,0 +1,72 @@
+{
+ "/api/2.0/mlflow/runs/create": {
+  "post": {
+   "operationId": "experiment-runs-createrun",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/createrun"
+   },
+   "x-stackQL-resource": "experiment_runs",
+   "x-stackQL-method": "createrun",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "experiment_id": {
+         "type": "string",
+         "description": "ID of the associated experiment."
+        },
+        "user_id": {
+         "type": "string",
+         "description": "ID of the user executing the run.\nThis field is deprecated as of MLflow 1.0, and will be removed in a future\nMLflow release. Use 'mlflow.user' tag instead."
+        },
+        "start_time": {
+         "type": "integer",
+         "format": "int64",
+         "description": "Unix timestamp in milliseconds of when the run started."
+        },
+        "tags": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "experiment_id": "string",
+        "user_id": "string",
+        "start_time": 0,
+        "tags": [
+         {
+          "key": "string",
+          "value": "string"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates a new run within an experiment. A run is usually a single execution of a machine learning or data ETL pipeline. MLflow uses runs to track the"
+  }
+ }
+}

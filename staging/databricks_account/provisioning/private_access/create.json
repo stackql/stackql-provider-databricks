@@ -1,0 +1,115 @@
+{
+ "/api/2.0/accounts/{account_id}/private-access-settings": {
+  "post": {
+   "operationId": "private-access-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/privateaccess/create"
+   },
+   "x-stackQL-resource": "private_access",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The private access settings object was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "private_access_settings_id": {
+          "type": "string"
+         },
+         "private_access_settings_name": {
+          "type": "string"
+         },
+         "public_access_enabled": {
+          "type": "boolean"
+         },
+         "region": {
+          "type": "string"
+         },
+         "account_id": {
+          "type": "string"
+         },
+         "private_access_level": {
+          "type": "string"
+         },
+         "allowed_vpc_endpoint_ids": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "private_access_settings_name": {
+         "type": "required",
+         "description": "The human-readable name of the private access settings object."
+        },
+        "region": {
+         "type": "string",
+         "description": "The AWS region for workspaces attached to this private access settings object. This must be a "
+        },
+        "public_access_enabled": {
+         "type": "required",
+         "description": "."
+        },
+        "private_access_level": {
+         "type": "string",
+         "description": " "
+        },
+        "allowed_vpc_endpoint_ids": {
+         "type": "boolean",
+         "description": "Determines if the workspace can be accessed over public internet. For fully private workspaces, you can optionally specify "
+        }
+       },
+       "example": {
+        "private_access_settings_name": "string",
+        "region": "string",
+        "public_access_enabled": false,
+        "private_access_level": "ENDPOINT",
+        "allowed_vpc_endpoint_ids": [
+         "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+        ]
+       }
+      }
+     }
+    },
+    "description": "Properties of the new private access settings object."
+   },
+   "description": "Creates a private access settings object, which specifies how your workspace is accessed over"
+  }
+ }
+}

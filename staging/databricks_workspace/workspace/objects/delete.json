@@ -1,0 +1,57 @@
+{
+ "/api/2.0/workspace/delete": {
+  "post": {
+   "operationId": "objects-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/workspace/delete"
+   },
+   "x-stackQL-resource": "objects",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "path": {
+         "type": "required",
+         "description": "The absolute path of the notebook or directory."
+        },
+        "recursive": {
+         "type": "string",
+         "description": " "
+        }
+       },
+       "example": {
+        "path": "/Users/me@example.com/MyFolder",
+        "recursive": true
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Deletes an object or a directory (and optionally recursively deletes all objects in the directory)."
+  }
+ }
+}

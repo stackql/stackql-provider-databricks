@@ -1,0 +1,87 @@
+{
+ "/api/2.0/preview/sql/queries": {
+  "post": {
+   "operationId": "queries-legacy-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/querieslegacy/create"
+   },
+   "x-stackQL-resource": "queries_legacy",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "data_source_id": {
+         "type": "UUID",
+         "description": " "
+        },
+        "query": {
+         "type": "string",
+         "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. "
+        },
+        "name": {
+         "type": "string",
+         "description": " "
+        },
+        "parent": {
+         "type": "string",
+         "description": "The text of the query to be run."
+        },
+        "description": {
+         "type": "string",
+         "description": " "
+        },
+        "options": {
+         "type": "object",
+         "description": "The title of this query that appears in list views, widget headings, and on the query page."
+        },
+        "run_as_role": {
+         "type": "string",
+         "description": " "
+        },
+        "tags": {
+         "type": "Array of string",
+         "description": " "
+        }
+       },
+       "example": {
+        "data_source_id": "0c205e24-5db2-4940-adb1-fb13c7ce960b",
+        "query": "SELECT field FROM table WHERE field = {{ param }}",
+        "name": "Orders by month by customer",
+        "parent": "folders/2025532471912059",
+        "description": "Summarizes total order dollars for customers in the Europe/Asia region.",
+        "options": {
+         "parameters": [
+          {
+           "title": "customer",
+           "name": "param",
+           "type": "text",
+           "value": "acme"
+          }
+         ]
+        },
+        "run_as_role": "viewer",
+        "tags": [
+         "Payroll"
+        ]
+       }
+      }
+     }
+    },
+    "description": "A query object to be created."
+   },
+   "responses": {
+    "200": {
+     "description": "Query created successfully"
+    }
+   },
+   "description": "Creates a new query definition. Queries created with this endpoint belong to the authenticated user making the request."
+  }
+ }
+}

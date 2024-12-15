@@ -1,0 +1,86 @@
+{
+ "/api/2.0/accounts/{account_id}/ip-access-lists": {
+  "get": {
+   "operationId": "ip-access-lists-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountipaccesslists/list"
+   },
+   "x-stackQL-resource": "ip_access_lists",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "ip_access_lists": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "address_count": {
+             "type": "integer"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "integer"
+            },
+            "enabled": {
+             "type": "boolean"
+            },
+            "ip_addresses": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "label": {
+             "type": "string"
+            },
+            "list_id": {
+             "type": "string"
+            },
+            "list_type": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "integer"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets all IP access lists for the specified account."
+  }
+ }
+}

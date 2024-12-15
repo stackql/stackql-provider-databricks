@@ -1,0 +1,55 @@
+{
+ "/api/2.0/sql/statements/{statement_id}": {
+  "get": {
+   "operationId": "statement-execution-getstatement",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/statementexecution/getstatement"
+   },
+   "x-stackQL-resource": "statement_execution",
+   "x-stackQL-method": "getstatement",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "statement_id",
+     "required": true,
+     "description": "(string) The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all\nsubsequent calls.",
+     "in": "path"
+    },
+    {
+     "name": "statement_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. In case of an error during execution of the SQL statement -- as opposed to an error while processing the request -- a 200 response is returned with error details in the `status` field."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    },
+    "503": {
+     "description": "Service is currently unavailable."
+    }
+   },
+   "description": "This request can be used to poll for the statement's status. When the"
+  }
+ }
+}

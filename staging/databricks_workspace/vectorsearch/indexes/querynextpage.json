@@ -1,0 +1,64 @@
+{
+ "/api/2.0/vector-search/indexes/{index_name}/query-next-page": {
+  "post": {
+   "operationId": "indexes-querynextpage",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchindexes/querynextpage"
+   },
+   "x-stackQL-resource": "indexes",
+   "x-stackQL-method": "querynextpage",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "index_name",
+     "required": true,
+     "description": "(string) Name of the vector index to query.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "endpoint_name": {
+         "type": "string",
+         "description": "Name of the endpoint."
+        },
+        "page_token": {
+         "type": "string",
+         "description": "Page token returned from previous "
+        }
+       },
+       "example": {
+        "endpoint_name": "demo-endpoint",
+        "page_token": "dummy-page-token"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Successful response with query results."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Use"
+  }
+ }
+}

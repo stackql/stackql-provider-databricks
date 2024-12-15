@@ -1,0 +1,81 @@
+{
+ "/api/2.0/accounts/{account_id}/customer-managed-keys": {
+  "get": {
+   "operationId": "encryption-keys-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/encryptionkeys/list"
+   },
+   "x-stackQL-resource": "encryption_keys",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The encryption key configurations were successfully returned.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "customer_managed_key_id": {
+           "type": "string"
+          },
+          "account_id": {
+           "type": "string"
+          },
+          "aws_key_info": {
+           "type": "object",
+           "properties": {
+            "key_arn": {
+             "type": "string"
+            },
+            "key_alias": {
+             "type": "string"
+            },
+            "key_region": {
+             "type": "string"
+            },
+            "reuse_key_for_cluster_volumes": {
+             "type": "boolean"
+            }
+           }
+          },
+          "creation_time": {
+           "type": "integer"
+          },
+          "use_cases": {
+           "type": "array",
+           "items": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets all customer-managed key configuration objects for an account. If the key is specified as a workspace's managed services customer-managed key, Databricks uses the key to encrypt the workspace's notebooks and secrets in the control plane, in addition to Databricks SQL queries and query history. If the key is specified as a workspace's storage customer-managed key, the key is used to encrypt the workspace's root S3 bucket and optionally can encrypt cluster EBS volumes data in the data plane."
+  }
+ }
+}

@@ -1,0 +1,72 @@
+{
+ "/api/2.0/accounts/{account_id}/storage-configurations/{storage_configuration_id}": {
+  "get": {
+   "operationId": "storage-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/storage/get"
+   },
+   "x-stackQL-resource": "storage",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "storage_configuration_id",
+     "required": true,
+     "description": "(uuid) Databricks Account API storage configuration ID.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The storage configuration was successfully returned.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "storage_configuration_id": {
+          "type": "string"
+         },
+         "storage_configuration_name": {
+          "type": "string"
+         },
+         "root_bucket_info": {
+          "type": "object",
+          "properties": {
+           "bucket_name": {
+            "type": "string"
+           }
+          }
+         },
+         "account_id": {
+          "type": "string"
+         },
+         "creation_time": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a Databricks storage configuration for an account, both specified by ID."
+  }
+ }
+}

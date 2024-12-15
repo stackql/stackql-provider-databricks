@@ -1,0 +1,104 @@
+{
+ "/api/2.0/accounts/{account_id}/metastores/{metastore_id}/storage-credentials": {
+  "get": {
+   "operationId": "storage-credentials-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountstoragecredentials/list"
+   },
+   "x-stackQL-resource": "storage_credentials",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "metastore_id",
+     "required": true,
+     "description": "(uuid) Unity Catalog metastore ID",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The metastore storage credentials were successfully returned.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "storage_credentials": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "aws_iam_role": {
+             "type": "object",
+             "properties": {
+              "role_arn": {
+               "type": "string"
+              },
+              "unity_catalog_iam_arn": {
+               "type": "string"
+              },
+              "external_id": {
+               "type": "string"
+              }
+             }
+            },
+            "comment": {
+             "type": "string"
+            },
+            "read_only": {
+             "type": "boolean"
+            },
+            "owner": {
+             "type": "string"
+            },
+            "full_name": {
+             "type": "string"
+            },
+            "id": {
+             "type": "string"
+            },
+            "metastore_id": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "used_for_managed_storage": {
+             "type": "boolean"
+            },
+            "isolation_mode": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Gets a list of all storage credentials that have been assigned to given metastore."
+  }
+ }
+}

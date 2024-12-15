@@ -1,0 +1,28 @@
+{
+ "/api/2.0/preview/sql/dashboards/trash/{dashboard_id}": {
+  "post": {
+   "operationId": "dashboards-restore",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dashboards/restore"
+   },
+   "x-stackQL-resource": "dashboards",
+   "x-stackQL-method": "restore",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "dashboard_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Dashboard restored successfully."
+    }
+   },
+   "description": "A restored dashboard appears in list views and searches and can be shared."
+  }
+ }
+}

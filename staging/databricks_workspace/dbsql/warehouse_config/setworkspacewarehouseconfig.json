@@ -1,0 +1,126 @@
+{
+ "/api/2.0/sql/config/warehouses": {
+  "put": {
+   "operationId": "warehouse-config-setworkspacewarehouseconfig",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/warehouses/setworkspacewarehouseconfig"
+   },
+   "x-stackQL-resource": "warehouse_config",
+   "x-stackQL-method": "setworkspacewarehouseconfig",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "security_policy": {
+         "type": "string",
+         "description": "Security policy for warehouses"
+        },
+        "instance_profile_arn": {
+         "type": "string",
+         "description": "AWS Only: Instance profile used to pass IAM role to the cluster"
+        },
+        "google_service_account": {
+         "type": "string",
+         "description": "GCP only: Google Service Account used to pass to cluster to access Google Cloud Storage"
+        },
+        "data_access_config": {
+         "type": "Array of object"
+        },
+        "channel": {
+         "type": "object"
+        },
+        "global_param": {
+         "type": "object"
+        },
+        "config_param": {
+         "type": "object"
+        },
+        "sql_configuration_parameters": {
+         "type": "object"
+        },
+        "enabled_warehouse_types": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "security_policy": "NONE",
+        "data_access_config": [
+         {
+          "key": "string",
+          "value": "string"
+         }
+        ],
+        "instance_profile_arn": "string",
+        "channel": {
+         "name": "CHANNEL_NAME_PREVIEW",
+         "dbsql_version": "string"
+        },
+        "global_param": {
+         "config_pair": [
+          {
+           "key": "string",
+           "value": "string"
+          }
+         ],
+         "configuration_pairs": [
+          {
+           "key": "string",
+           "value": "string"
+          }
+         ]
+        },
+        "config_param": {
+         "config_pair": [
+          {
+           "key": "string",
+           "value": "string"
+          }
+         ],
+         "configuration_pairs": [
+          {
+           "key": "string",
+           "value": "string"
+          }
+         ]
+        },
+        "sql_configuration_parameters": {
+         "config_pair": [
+          {
+           "key": "string",
+           "value": "string"
+          }
+         ],
+         "configuration_pairs": [
+          {
+           "key": "string",
+           "value": "string"
+          }
+         ]
+        },
+        "google_service_account": "string",
+        "enabled_warehouse_types": [
+         {
+          "warehouse_type": "TYPE_UNSPECIFIED",
+          "enabled": true
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Sets the workspace level configuration that is shared by all SQL warehouses in a workspace."
+  }
+ }
+}

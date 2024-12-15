@@ -1,0 +1,73 @@
+{
+ "/api/2.0/accounts/{account_id}/private-access-settings": {
+  "get": {
+   "operationId": "private-access-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/privateaccess/list"
+   },
+   "x-stackQL-resource": "private_access",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The private access settings object was successfully returned.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "private_access_settings_id": {
+           "type": "string"
+          },
+          "private_access_settings_name": {
+           "type": "string"
+          },
+          "public_access_enabled": {
+           "type": "boolean"
+          },
+          "region": {
+           "type": "string"
+          },
+          "account_id": {
+           "type": "string"
+          },
+          "private_access_level": {
+           "type": "string"
+          },
+          "allowed_vpc_endpoint_ids": {
+           "type": "array",
+           "items": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a list of all private access settings objects for an account, specified by ID."
+  }
+ }
+}

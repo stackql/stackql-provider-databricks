@@ -1,0 +1,83 @@
+{
+ "/api/2.1/unity-catalog/storage-credentials/{name}": {
+  "patch": {
+   "operationId": "storage-credentials-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/storagecredentials/update"
+   },
+   "x-stackQL-resource": "storage_credentials",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the storage credential.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "comment": {
+         "type": "string",
+         "description": "Comment associated with the credential."
+        },
+        "read_only": {
+         "type": "boolean",
+         "description": "Whether the storage credential is only usable for read operations."
+        },
+        "owner": {
+         "type": "string",
+         "description": "Username of current owner of credential."
+        },
+        "isolation_mode": {
+         "type": "string",
+         "description": "New name for the storage credential."
+        },
+        "new_name": {
+         "type": "string",
+         "description": " "
+        },
+        "skip_validation": {
+         "type": "boolean",
+         "description": "Supplying true to this argument skips validation of the updated credential."
+        },
+        "force": {
+         "type": "boolean",
+         "description": "Force update even if there are dependent external locations or external tables."
+        },
+        "aws_iam_role": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "comment": "string",
+        "read_only": true,
+        "owner": "string",
+        "aws_iam_role": {
+         "role_arn": "string"
+        },
+        "isolation_mode": "ISOLATION_MODE_OPEN",
+        "new_name": "string",
+        "skip_validation": false,
+        "force": true
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "The storage credential was successfully updated."
+    }
+   },
+   "description": "Updates a storage credential on the metastore."
+  }
+ }
+}

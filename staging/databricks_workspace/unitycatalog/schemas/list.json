@@ -1,0 +1,44 @@
+{
+ "/api/2.1/unity-catalog/schemas": {
+  "get": {
+   "operationId": "schemas-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/schemas/list"
+   },
+   "x-stackQL-resource": "schemas",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "catalog_name",
+     "required": true,
+     "description": "(string) Parent catalog for schemas of interest.",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of schemas to return. If not set, all the schemas are returned (not recommended).",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    },
+    {
+     "name": "include_browse",
+     "description": "Whether to include schemas in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The schemas list was successfully retrieved."
+    }
+   },
+   "description": "Gets an array of schemas for a catalog in the metastore. If the caller is the metastore admin or the owner of the parent catalog, all schemas for the catalog will be retrieved. Otherwise, only schemas owned by the caller (or for which the caller has the"
+  }
+ }
+}

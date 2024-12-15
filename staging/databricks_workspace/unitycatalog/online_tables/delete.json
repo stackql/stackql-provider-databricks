@@ -1,0 +1,29 @@
+{
+ "/api/2.0/online-tables/{name}": {
+  "delete": {
+   "operationId": "online-tables-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/onlinetables/delete"
+   },
+   "x-stackQL-resource": "online_tables",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Full three-part (catalog, schema, table) name of the table.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Delete an online table. Warning: This will delete all the data in the online table. If the source Delta table was deleted or modified since this Online Table was created, this will lose the data forever!"
+  }
+ }
+}

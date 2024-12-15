@@ -1,0 +1,83 @@
+{
+ "/api/2.0/accounts/{account_id}/servicePrincipals/{service_principal_id}/credentials/secrets": {
+  "get": {
+   "operationId": "service-principal-secrets-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/serviceprincipalsecrets/list"
+   },
+   "x-stackQL-resource": "service_principal_secrets",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(string) The account ID.",
+     "in": "path"
+    },
+    {
+     "name": "service_principal_id",
+     "required": true,
+     "description": "(int64) The service principal ID.",
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "description": "An opaque page token which was the",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "secrets": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "secret_hash": {
+             "type": "string"
+            },
+            "create_time": {
+             "type": "string"
+            },
+            "update_time": {
+             "type": "string"
+            },
+            "status": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "List all secrets associated with the given service principal. This operation only returns information about the secrets themselves and does not include the secret values."
+  }
+ }
+}

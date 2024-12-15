@@ -1,0 +1,43 @@
+{
+ "/api/2.0/sql/alerts/{id}": {
+  "delete": {
+   "operationId": "alerts-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/alerts/delete"
+   },
+   "x-stackQL-resource": "alerts",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Moves an alert to the trash. Trashed alerts immediately disappear from searches and list views, and can no longer trigger. You can restore a trashed alert through the UI. A trashed alert is permanently deleted after 30 days."
+  }
+ }
+}

@@ -1,0 +1,91 @@
+{
+ "/api/2.0/accounts/{account_id}/network-connectivity-configs/{network_connectivity_config_id}": {
+  "get": {
+   "operationId": "network-connectivity-getnetworkconnectivityconfiguration",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/networkconnectivity/getnetworkconnectivityconfiguration"
+   },
+   "x-stackQL-resource": "network_connectivity",
+   "x-stackQL-method": "getnetworkconnectivityconfiguration",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "network_connectivity_config_id",
+     "required": true,
+     "description": "(uuid) Your Network Connectvity Configuration ID.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The network connectivity configuration was successfully returned.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "network_connectivity_config_id": {
+          "type": "string"
+         },
+         "account_id": {
+          "type": "string"
+         },
+         "name": {
+          "type": "string"
+         },
+         "region": {
+          "type": "string"
+         },
+         "egress_config": {
+          "type": "object",
+          "properties": {
+           "default_rules": {
+            "type": "object",
+            "properties": {
+             "aws_stable_ip_rule": {
+              "type": "object",
+              "properties": {
+               "cidr_blocks": {
+                "type": "array",
+                "items": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "creation_time": {
+          "type": "integer"
+         },
+         "updated_time": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a network connectivity configuration."
+  }
+ }
+}

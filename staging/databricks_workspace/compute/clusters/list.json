@@ -1,0 +1,51 @@
+{
+ "/api/2.1/clusters/list": {
+  "get": {
+   "operationId": "clusters-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/list"
+   },
+   "x-stackQL-resource": "clusters",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    },
+    {
+     "name": null,
+     "in": "query"
+    },
+    {
+     "name": null,
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Return information about all pinned and active clusters, and all clusters terminated within the last 30 days. Clusters terminated prior to this period are not included."
+  }
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "/api/2.1/jobs/runs/cancel": {
+  "post": {
+   "operationId": "job-runs-cancelrun",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/jobs/cancelrun"
+   },
+   "x-stackQL-resource": "job_runs",
+   "x-stackQL-method": "cancelrun",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "run_id": {
+         "type": "required",
+         "description": " "
+        }
+       },
+       "example": {
+        "run_id": 455644833
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Cancels a job run or a task run. The run is canceled asynchronously, so it may still be running when this request completes."
+  }
+ }
+}

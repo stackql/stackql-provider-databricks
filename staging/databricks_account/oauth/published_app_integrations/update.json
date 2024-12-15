@@ -1,0 +1,78 @@
+{
+ "/api/2.0/accounts/{account_id}/oauth2/published-app-integrations/{integration_id}": {
+  "patch": {
+   "operationId": "published-app-integrations-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/publishedappintegration/update"
+   },
+   "x-stackQL-resource": "published_app_integrations",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "in": "path"
+    },
+    {
+     "name": "integration_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    },
+    "501": {
+     "description": "Operation is not implemented or is not supported/enabled in this service."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "token_access_policy": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "value": {
+         "token_access_policy": {
+          "access_token_ttl_in_minutes": 120,
+          "refresh_token_ttl_in_minutes": 200
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates an existing published OAuth App Integration. You can retrieve the published OAuth app integration via"
+  }
+ }
+}

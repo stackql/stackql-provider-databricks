@@ -1,0 +1,156 @@
+{
+ "/api/2.1/accounts/{account_id}/budgets/{budget_id}": {
+  "get": {
+   "operationId": "budgets-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/budgets/get"
+   },
+   "x-stackQL-resource": "budgets",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "budget_id",
+     "required": true,
+     "description": "(uuid) The budget configuration ID",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "budget": {
+          "type": "object",
+          "properties": {
+           "budget_configuration_id": {
+            "type": "string"
+           },
+           "account_id": {
+            "type": "string"
+           },
+           "create_time": {
+            "type": "integer"
+           },
+           "update_time": {
+            "type": "integer"
+           },
+           "alert_configurations": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "alert_configuration_id": {
+               "type": "string"
+              },
+              "time_period": {
+               "type": "string"
+              },
+              "trigger_type": {
+               "type": "string"
+              },
+              "quantity_type": {
+               "type": "string"
+              },
+              "quantity_threshold": {
+               "type": "string"
+              },
+              "action_configurations": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "action_configuration_id": {
+                  "type": "string"
+                 },
+                 "action_type": {
+                  "type": "string"
+                 },
+                 "target": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            }
+           },
+           "filter": {
+            "type": "object",
+            "properties": {
+             "workspace_id": {
+              "type": "object",
+              "properties": {
+               "operator": {
+                "type": "string"
+               },
+               "values": {
+                "type": "array",
+                "items": {
+                 "type": "integer"
+                }
+               }
+              }
+             },
+             "tags": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "key": {
+                 "type": "string"
+                },
+                "value": {
+                 "type": "object",
+                 "properties": {
+                  "operator": {
+                   "type": "string"
+                  },
+                  "values": {
+                   "type": "array",
+                   "items": {
+                    "type": "string"
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           },
+           "display_name": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a budget configuration for an account. Both account and budget configuration are specified by ID."
+  }
+ }
+}

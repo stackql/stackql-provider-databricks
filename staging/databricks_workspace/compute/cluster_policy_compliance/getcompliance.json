@@ -1,0 +1,44 @@
+{
+ "/api/2.0/policies/clusters/get-compliance": {
+  "get": {
+   "operationId": "cluster-policy-compliance-getcompliance",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/policycomplianceforclusters/getcompliance"
+   },
+   "x-stackQL-resource": "cluster_policy_compliance",
+   "x-stackQL-method": "getcompliance",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "cluster_id",
+     "required": true,
+     "description": "(string) The ID of the cluster to get the compliance status",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Returns the policy compliance status of a cluster. Clusters could be out of compliance if their policy was updated after the cluster was last edited."
+  }
+ }
+}

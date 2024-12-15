@@ -1,0 +1,33 @@
+{
+ "/api/1.2/contexts/status": {
+  "get": {
+   "operationId": "command-status-contextstatus",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/commandexecution/contextstatus"
+   },
+   "x-stackQL-resource": "command_status",
+   "x-stackQL-method": "contextstatus",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "clusterId",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "contextId",
+     "required": true,
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Status was returned successfully."
+    }
+   },
+   "description": "Gets the status for an execution context."
+  }
+ }
+}

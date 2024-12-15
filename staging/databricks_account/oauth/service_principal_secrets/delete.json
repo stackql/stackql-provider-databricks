@@ -1,0 +1,49 @@
+{
+ "/api/2.0/accounts/{account_id}/servicePrincipals/{service_principal_id}/credentials/secrets/{secret_id}": {
+  "delete": {
+   "operationId": "service-principal-secrets-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/serviceprincipalsecrets/delete"
+   },
+   "x-stackQL-resource": "service_principal_secrets",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 3,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(string) The account ID.",
+     "in": "path"
+    },
+    {
+     "name": "service_principal_id",
+     "required": true,
+     "description": "(int64) The service principal ID.",
+     "in": "path"
+    },
+    {
+     "name": "secret_id",
+     "required": true,
+     "description": "(string) The secret ID.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The secret was successfully deleted."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Delete a secret from the given service principal."
+  }
+ }
+}

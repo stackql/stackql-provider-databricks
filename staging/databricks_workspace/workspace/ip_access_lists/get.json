@@ -1,0 +1,41 @@
+{
+ "/api/2.0/ip-access-lists/{ip_access_list_id}": {
+  "get": {
+   "operationId": "ip-access-lists-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/ipaccesslists/get"
+   },
+   "x-stackQL-resource": "ip_access_lists",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "ip_access_list_id",
+     "required": true,
+     "description": "(string) The ID for the corresponding IP access list",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets an IP access list, specified by its list ID."
+  }
+ }
+}

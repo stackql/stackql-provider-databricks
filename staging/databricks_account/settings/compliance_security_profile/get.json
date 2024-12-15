@@ -1,0 +1,76 @@
+{
+ "/api/2.0/accounts/{account_id}/settings/types/shield_csp_enablement_ac/names/default": {
+  "get": {
+   "operationId": "compliance-security-profile-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/cspenablementaccount/get"
+   },
+   "x-stackQL-resource": "compliance_security_profile",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "in": "path"
+    },
+    {
+     "name": "etag",
+     "description": "etag used for versioning. The response is at least as fresh as the eTag provided. This is used for optimistic concurrency control as a way to help prevent simultaneous writes of a setting overwriting each other. It is strongly suggested that systems make use of the etag in the read -> delete pattern to perform setting deletions in order to avoid race conditions. That is, get an etag from a GET request, and pass it with the DELETE request to identify the rule set version you are deleting.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "etag": {
+          "type": "string"
+         },
+         "setting_name": {
+          "type": "string"
+         },
+         "csp_enablement_account": {
+          "type": "object",
+          "properties": {
+           "is_enforced": {
+            "type": "boolean"
+           },
+           "compliance_standards": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the compliance security profile setting for new workspaces."
+  }
+ }
+}

@@ -1,0 +1,57 @@
+{
+ "/api/2.0/dbfs/move": {
+  "post": {
+   "operationId": "dbfs-files-move",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dbfs/move"
+   },
+   "x-stackQL-resource": "dbfs_files",
+   "x-stackQL-method": "move",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "source_path": {
+         "type": "required",
+         "description": " "
+        },
+        "destination_path": {
+         "type": "string",
+         "description": "The source path of the file or directory. The path should be the absolute DBFS path."
+        }
+       },
+       "example": {
+        "source_path": "/mnt/foo",
+        "destination_path": "/mnt/bar"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Moves a file from one location to another location within DBFS. If the source file does not exist, this call throws an exception with"
+  }
+ }
+}

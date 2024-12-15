@@ -1,0 +1,106 @@
+{
+ "/api/2.0/accounts/{account_id}/oauth2/custom-app-integrations": {
+  "post": {
+   "operationId": "custom-app-integrations-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/customappintegration/create"
+   },
+   "x-stackQL-resource": "custom_app_integrations",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "client_id": {
+          "type": "string"
+         },
+         "client_secret": {
+          "type": "string"
+         },
+         "integration_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    },
+    "501": {
+     "description": "Operation is not implemented or is not supported/enabled in this service."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "redirect_urls": {
+         "type": "Array of string",
+         "description": "List of OAuth redirect urls"
+        },
+        "name": {
+         "type": "string",
+         "description": "Name of the custom OAuth app"
+        },
+        "confidential": {
+         "type": "boolean",
+         "description": " "
+        },
+        "scopes": {
+         "type": "Array of string",
+         "description": "This field indicates whether an OAuth client secret is required to authenticate this client."
+        },
+        "token_access_policy": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "summary": "Create Tableau Cloud OAuth App Integration",
+        "value": {
+         "name": "Example Tableau Server",
+         "scopes": [
+          "all-apis",
+          "offline_access"
+         ],
+         "token_access_policy": {
+          "access_token_ttl_in_minutes": 120,
+          "refresh_token_ttl_in_minutes": 200
+         },
+         "redirect_urls": [
+          "https://example.online.tableau.com/auth/add_oauth_token"
+         ],
+         "confidential": true
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Create Custom OAuth App Integration."
+  }
+ }
+}

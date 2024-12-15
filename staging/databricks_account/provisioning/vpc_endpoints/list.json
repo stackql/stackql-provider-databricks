@@ -1,0 +1,76 @@
+{
+ "/api/2.0/accounts/{account_id}/vpc-endpoints": {
+  "get": {
+   "operationId": "vpc-endpoints-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/vpcendpoints/list"
+   },
+   "x-stackQL-resource": "vpc_endpoints",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The VPC endpoints were successfully returned.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "vpc_endpoint_id": {
+           "type": "string"
+          },
+          "vpc_endpoint_name": {
+           "type": "string"
+          },
+          "aws_vpc_endpoint_id": {
+           "type": "string"
+          },
+          "aws_endpoint_service_id": {
+           "type": "string"
+          },
+          "use_case": {
+           "type": "string"
+          },
+          "region": {
+           "type": "string"
+          },
+          "account_id": {
+           "type": "string"
+          },
+          "aws_account_id": {
+           "type": "string"
+          },
+          "state": {
+           "type": "string"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a list of all VPC endpoints for an account, specified by ID."
+  }
+ }
+}

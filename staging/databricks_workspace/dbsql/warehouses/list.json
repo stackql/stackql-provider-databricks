@@ -1,0 +1,28 @@
+{
+ "/api/2.0/sql/warehouses": {
+  "get": {
+   "operationId": "warehouses-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/warehouses/list"
+   },
+   "x-stackQL-resource": "warehouses",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "run_as_user_id",
+     "description": "Service Principal which will be used to fetch the list of warehouses. If not specified, the user from the session header is used.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Lists all SQL warehouses that a user has manager permissions on."
+  }
+ }
+}

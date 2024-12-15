@@ -1,0 +1,47 @@
+{
+ "/api/2.0/mlflow/registered-models/get-latest-versions": {
+  "post": {
+   "operationId": "model-latest-versions-getlatestversions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/getlatestversions"
+   },
+   "x-stackQL-resource": "model_latest_versions",
+   "x-stackQL-method": "getlatestversions",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Registered model unique name identifier."
+        },
+        "stages": {
+         "type": "string",
+         "description": "List of stages."
+        }
+       },
+       "example": {
+        "name": "string",
+        "stages": [
+         "string"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Gets the latest version of a registered model."
+  }
+ }
+}

@@ -1,0 +1,34 @@
+{
+ "/api/2.0/global-init-scripts": {
+  "get": {
+   "operationId": "global-init-scripts-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/globalinitscripts/list"
+   },
+   "x-stackQL-resource": "global_init_scripts",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Response indicating that the scripts were retrieved successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Manages global init scripts for this workspace."
+  }
+ }
+}

@@ -1,0 +1,142 @@
+{
+ "/api/2.0/accounts/{account_id}/scim/v2/ServicePrincipals": {
+  "get": {
+   "operationId": "service-principals-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountserviceprincipals/list"
+   },
+   "x-stackQL-resource": "service_principals",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID",
+     "in": "path"
+    },
+    {
+     "name": "filter",
+     "description": "Query by which the results have to be filtered. Supported operators are equals(",
+     "in": "query"
+    },
+    {
+     "name": "attributes",
+     "description": "Comma-separated list of attributes to return in response.",
+     "in": "query"
+    },
+    {
+     "name": "excludedAttributes",
+     "description": "Comma-separated list of attributes to exclude in response.",
+     "in": "query"
+    },
+    {
+     "name": "startIndex",
+     "description": "Specifies the index of the first result. First item is number 1.",
+     "in": "query"
+    },
+    {
+     "name": "count",
+     "description": "Desired number of results per page. Default is 10000.",
+     "in": "query"
+    },
+    {
+     "name": "sortBy",
+     "description": "Attribute to sort the results.",
+     "in": "query"
+    },
+    {
+     "name": "sortOrder",
+     "description": "The order to sort the results.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "List service principals operation was succesful.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "totalResults": {
+          "type": "integer"
+         },
+         "startIndex": {
+          "type": "integer"
+         },
+         "itemsPerPage": {
+          "type": "integer"
+         },
+         "Resources": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "applicationId": {
+             "type": "string"
+            },
+            "displayName": {
+             "type": "string"
+            },
+            "roles": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "$ref": {
+                "type": "string"
+               },
+               "value": {
+                "type": "string"
+               },
+               "display": {
+                "type": "string"
+               },
+               "primary": {
+                "type": "boolean"
+               },
+               "type": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "externalId": {
+             "type": "string"
+            },
+            "active": {
+             "type": "boolean"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the set of service principals associated with a Databricks account."
+  }
+ }
+}

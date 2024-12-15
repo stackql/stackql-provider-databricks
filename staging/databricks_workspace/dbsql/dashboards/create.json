@@ -1,0 +1,67 @@
+{
+ "/api/2.0/preview/sql/dashboards": {
+  "post": {
+   "operationId": "dashboards-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dashboards/create"
+   },
+   "x-stackQL-resource": "dashboards",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": " "
+        },
+        "parent": {
+         "type": "string",
+         "description": "The title of this dashboard that appears in list views and at the top of the dashboard page."
+        },
+        "tags": {
+         "type": "string",
+         "description": " "
+        },
+        "is_favorite": {
+         "type": "Array of string",
+         "description": " "
+        },
+        "run_as_role": {
+         "type": "boolean",
+         "description": "The identifier of the workspace folder containing the object."
+        },
+        "dashboard_filters_enabled": {
+         "type": "string",
+         "description": "Indicates whether this dashboard object should appear in the current user's favorites list."
+        }
+       },
+       "example": {
+        "name": "Sales Dashboard",
+        "parent": "folders/2025532471912059",
+        "tags": [
+         "Payroll"
+        ],
+        "is_favorite": true,
+        "run_as_role": "viewer",
+        "dashboard_filters_enabled": true
+       }
+      }
+     }
+    },
+    "description": "Creates a new dashboard object. Only the"
+   },
+   "responses": {
+    "200": {
+     "description": "A dashboard object was successfully created."
+    }
+   }
+  }
+ }
+}

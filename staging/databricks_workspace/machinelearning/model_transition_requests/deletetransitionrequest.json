@@ -1,0 +1,62 @@
+{
+ "/api/2.0/mlflow/transition-requests/delete": {
+  "delete": {
+   "operationId": "model-transition-requests-deletetransitionrequest",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/deletetransitionrequest"
+   },
+   "x-stackQL-resource": "model_transition_requests",
+   "x-stackQL-method": "deletetransitionrequest",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 4,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "version",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "stage",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "creator",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "comment",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Transition request was deleted successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Cancels a model version stage transition request."
+  }
+ }
+}

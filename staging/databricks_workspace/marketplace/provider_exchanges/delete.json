@@ -1,0 +1,28 @@
+{
+ "/api/2.0/marketplace-exchange/exchanges/{id}": {
+  "delete": {
+   "operationId": "provider-exchanges-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchanges/delete"
+   },
+   "x-stackQL-resource": "provider_exchanges",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "This removes a listing from marketplace."
+  }
+ }
+}

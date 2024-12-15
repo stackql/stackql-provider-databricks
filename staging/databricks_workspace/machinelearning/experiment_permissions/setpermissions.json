@@ -1,0 +1,68 @@
+{
+ "/api/2.0/permissions/experiments/{experiment_id}": {
+  "put": {
+   "operationId": "experiment-permissions-setpermissions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/setpermissions"
+   },
+   "x-stackQL-resource": "experiment_permissions",
+   "x-stackQL-method": "setpermissions",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "experiment_id",
+     "required": true,
+     "description": "(string) The experiment for which to get or manage permissions.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "access_control_list": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "access_control_list": [
+         {
+          "user_name": "string",
+          "group_name": "string",
+          "service_principal_name": "string",
+          "permission_level": "CAN_MANAGE"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Sets permissions on an object, replacing existing permissions if they exist. Deletes all direct permissions if none are specified. Objects can inherit permissions from their root object."
+  }
+ }
+}

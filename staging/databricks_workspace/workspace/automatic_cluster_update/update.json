@@ -1,0 +1,91 @@
+{
+ "/api/2.0/settings/types/automatic_cluster_update/names/default": {
+  "patch": {
+   "operationId": "automatic-cluster-update-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/automaticclusterupdate/update"
+   },
+   "x-stackQL-resource": "automatic_cluster_update",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "allow_missing": {
+         "type": "required",
+         "description": "This should always be set to true for Settings API. Added for AIP compliance."
+        },
+        "field_mask": {
+         "type": "boolean",
+         "description": "Field mask is required to be passed into the PATCH request. Field mask specifies which fields\nof the setting payload will be updated.\nThe field mask needs to be supplied as single string. To specify multiple fields in the field mask,\nuse comma as the separator (no space)."
+        },
+        "setting": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "allow_missing": true,
+        "setting": {
+         "etag": "string",
+         "setting_name": "string",
+         "automatic_cluster_update_workspace": {
+          "enabled": true,
+          "can_toggle": true,
+          "maintenance_window": {
+           "week_day_based_schedule": {
+            "frequency": "FIRST_OF_MONTH",
+            "day_of_week": "MONDAY",
+            "window_start_time": {
+             "hours": 0,
+             "minutes": 0
+            }
+           }
+          },
+          "enablement_details": {
+           "unavailable_for_non_enterprise_tier": true,
+           "unavailable_for_disabled_entitlement": true,
+           "forced_for_compliance_mode": true
+          },
+          "restart_even_if_no_updates_available": true
+         }
+        },
+        "field_mask": "string"
+       }
+      }
+     }
+    },
+    "description": "Details required to update a setting."
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Updates the automatic cluster update setting for the workspace. A fresh etag needs to be provided in"
+  }
+ }
+}

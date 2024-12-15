@@ -1,0 +1,77 @@
+{
+ "/api/2.0/accounts/{account_id}/dashboard": {
+  "post": {
+   "operationId": "usage-dashboards-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/usagedashboards/create"
+   },
+   "x-stackQL-resource": "usage_dashboards",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(string) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "dashboard_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "workspace_id": {
+         "type": "integer",
+         "format": "int64",
+         "description": "The workspace ID of the workspace in which the usage dashboard is created."
+        },
+        "dashboard_type": {
+         "type": "string",
+         "description": "Workspace level usage dashboard shows usage data for the specified workspace ID. Global level usage dashboard shows usage data for all workspaces in the account."
+        }
+       },
+       "example": {
+        "workspace_id": 0,
+        "dashboard_type": "USAGE_DASHBOARD_TYPE_WORKSPACE"
+       }
+      }
+     }
+    }
+   },
+   "description": "Create a usage dashboard specified by workspaceId, accountId, and dashboard type."
+  }
+ }
+}

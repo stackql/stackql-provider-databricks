@@ -1,0 +1,48 @@
+{
+ "/api/2.0/mlflow/transition-requests/list": {
+  "get": {
+   "operationId": "model-transition-requests-listtransitionrequests",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/listtransitionrequests"
+   },
+   "x-stackQL-resource": "model_transition_requests",
+   "x-stackQL-method": "listtransitionrequests",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "version",
+     "required": true,
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Fetched all open requests successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a list of all open stage transition requests for the model version."
+  }
+ }
+}

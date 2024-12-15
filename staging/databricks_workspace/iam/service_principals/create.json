@@ -1,0 +1,120 @@
+{
+ "/api/2.0/preview/scim/v2/ServicePrincipals": {
+  "post": {
+   "operationId": "service-principals-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/serviceprincipals/create"
+   },
+   "x-stackQL-resource": "service_principals",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "schemas": {
+         "type": "Array of string",
+         "description": "The schema of the List response."
+        },
+        "id": {
+         "type": "integer",
+         "format": "int64",
+         "description": "Databricks service principal ID."
+        },
+        "applicationId": {
+         "type": "uuid",
+         "description": "UUID relating to the service principal"
+        },
+        "displayName": {
+         "type": "string",
+         "description": " "
+        },
+        "externalId": {
+         "type": "string",
+         "description": "String that represents a concatenation of given and family names."
+        },
+        "active": {
+         "type": "boolean",
+         "description": "If this user is active"
+        },
+        "groups": {
+         "type": "Array of object"
+        },
+        "roles": {
+         "type": "Array of object"
+        },
+        "entitlements": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "schemas": [
+         "urn:ietf:params:scim:schemas:core:2.0:ServicePrincipal"
+        ],
+        "id": "string",
+        "applicationId": "97ab27fa-30e2-43e3-92a3-160e80f4c0d5",
+        "displayName": "etl-service",
+        "groups": [
+         {
+          "$ref": "string",
+          "value": "string",
+          "display": "string",
+          "primary": true,
+          "type": "string"
+         }
+        ],
+        "roles": [
+         {
+          "$ref": "string",
+          "value": "string",
+          "display": "string",
+          "primary": true,
+          "type": "string"
+         }
+        ],
+        "entitlements": [
+         {
+          "$ref": "string",
+          "value": "string",
+          "display": "string",
+          "primary": true,
+          "type": "string"
+         }
+        ],
+        "externalId": "string",
+        "active": true
+       }
+      }
+     }
+    },
+    "description": "Properties of the new service principal."
+   },
+   "responses": {
+    "201": {
+     "description": "The user creation request succeeded."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates a new service principal in the Databricks workspace."
+  }
+ }
+}

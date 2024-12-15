@@ -1,0 +1,45 @@
+{
+ "/api/2.0/policy-families": {
+  "get": {
+   "operationId": "policy-families-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/policyfamilies/list"
+   },
+   "x-stackQL-resource": "policy_families",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "max_results",
+     "description": "Maximum number of policy families to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "A token that can be used to get the next page of results.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Returns the list of policy definition types available to use at their latest version. This API is paginated."
+  }
+ }
+}

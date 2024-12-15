@@ -1,0 +1,38 @@
+{
+ "/api/1.2/commands/status": {
+  "get": {
+   "operationId": "commands-commandstatus",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/commandexecution/commandstatus"
+   },
+   "x-stackQL-resource": "commands",
+   "x-stackQL-method": "commandstatus",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 3,
+   "parameters": [
+    {
+     "name": "clusterId",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "contextId",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "commandId",
+     "required": true,
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Status was returned successfully."
+    }
+   },
+   "description": "Gets the status of and, if available, the results from a currently executing command."
+  }
+ }
+}

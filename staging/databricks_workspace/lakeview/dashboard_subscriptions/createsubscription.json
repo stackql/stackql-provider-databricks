@@ -1,0 +1,65 @@
+{
+ "/api/2.0/lakeview/dashboards/{dashboard_id}/schedules/{schedule_id}/subscriptions": {
+  "post": {
+   "operationId": "dashboard-subscriptions-createsubscription",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/lakeview/createsubscription"
+   },
+   "x-stackQL-resource": "dashboard_subscriptions",
+   "x-stackQL-method": "createsubscription",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "etag": {
+         "type": "string",
+         "description": " "
+        },
+        "subscriber": {
+         "type": "required"
+        }
+       },
+       "example": {
+        "subscriber": {
+         "user_subscriber": {
+          "user_id": "3294322584244938"
+         }
+        },
+        "etag": "80611980"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,63 @@
+{
+ "/api/2.0/preview/accounts/{account_id}/access-control/assignable-roles": {
+  "get": {
+   "operationId": "assignable-roles-getassignablerolesforresource",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountaccesscontrol/getassignablerolesforresource"
+   },
+   "x-stackQL-resource": "assignable_roles",
+   "x-stackQL-method": "getassignablerolesforresource",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type.",
+     "in": "path"
+    },
+    {
+     "name": "resource",
+     "required": true,
+     "description": "(string) The resource name for which assignable roles will be listed.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Assignable roles were returned successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "roles": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets all the roles that can be granted on an account level resource. A role is grantable if the rule set on the resource can contain an access rule of the role."
+  }
+ }
+}

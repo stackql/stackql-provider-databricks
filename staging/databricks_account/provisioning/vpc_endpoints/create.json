@@ -1,0 +1,106 @@
+{
+ "/api/2.0/accounts/{account_id}/vpc-endpoints": {
+  "post": {
+   "operationId": "vpc-endpoints-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/vpcendpoints/create"
+   },
+   "x-stackQL-resource": "vpc_endpoints",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The VPC endpoint configuration was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "vpc_endpoint_id": {
+          "type": "string"
+         },
+         "vpc_endpoint_name": {
+          "type": "string"
+         },
+         "aws_vpc_endpoint_id": {
+          "type": "string"
+         },
+         "aws_endpoint_service_id": {
+          "type": "string"
+         },
+         "use_case": {
+          "type": "string"
+         },
+         "region": {
+          "type": "string"
+         },
+         "account_id": {
+          "type": "string"
+         },
+         "aws_account_id": {
+          "type": "string"
+         },
+         "state": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "vpc_endpoint_name": {
+         "type": "required",
+         "description": "The human-readable name of the storage configuration."
+        },
+        "aws_vpc_endpoint_id": {
+         "type": "string",
+         "description": "The ID of the VPC endpoint object in AWS."
+        },
+        "region": {
+         "type": "string",
+         "description": "The AWS region in which this VPC endpoint object exists."
+        }
+       },
+       "example": {
+        "vpc_endpoint_name": "string",
+        "aws_vpc_endpoint_id": "string",
+        "region": "string"
+       }
+      }
+     }
+    },
+    "description": "Properties of the new VPC endpoint configuration."
+   },
+   "description": "Creates a VPC endpoint configuration, which represents a"
+  }
+ }
+}

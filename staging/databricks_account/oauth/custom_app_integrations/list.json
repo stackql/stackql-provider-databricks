@@ -1,0 +1,112 @@
+{
+ "/api/2.0/accounts/{account_id}/oauth2/custom-app-integrations": {
+  "get": {
+   "operationId": "custom-app-integrations-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/customappintegration/list"
+   },
+   "x-stackQL-resource": "custom_app_integrations",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    },
+    {
+     "name": "include_creator_username",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "apps": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "integration_id": {
+             "type": "string"
+            },
+            "client_id": {
+             "type": "string"
+            },
+            "redirect_urls": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "name": {
+             "type": "string"
+            },
+            "confidential": {
+             "type": "boolean"
+            },
+            "token_access_policy": {
+             "type": "object",
+             "properties": {
+              "access_token_ttl_in_minutes": {
+               "type": "integer"
+              },
+              "refresh_token_ttl_in_minutes": {
+               "type": "integer"
+              }
+             }
+            },
+            "scopes": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "created_by": {
+             "type": "integer"
+            },
+            "create_time": {
+             "type": "string"
+            },
+            "creator_username": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    },
+    "501": {
+     "description": "Operation is not implemented or is not supported/enabled in this service."
+    }
+   },
+   "description": "Get the list of custom OAuth app integrations for the specified Databricks account"
+  }
+ }
+}

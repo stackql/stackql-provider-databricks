@@ -1,0 +1,22 @@
+{
+ "/api/2.1/unity-catalog/metastore_summary": {
+  "get": {
+   "operationId": "metastore-summary-summary",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/metastores/summary"
+   },
+   "x-stackQL-resource": "metastore_summary",
+   "x-stackQL-method": "summary",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The metastore summary was successfully retrieved."
+    }
+   },
+   "description": "Gets information about a metastore. This summary includes the storage credential, the cloud vendor, the cloud region, and the global metastore ID."
+  }
+ }
+}

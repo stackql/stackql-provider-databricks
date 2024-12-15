@@ -1,0 +1,38 @@
+{
+ "/api/2.1/unity-catalog/catalogs": {
+  "get": {
+   "operationId": "catalogs-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/catalogs/list"
+   },
+   "x-stackQL-resource": "catalogs",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "include_browse",
+     "description": "Whether to include catalogs in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of catalogs to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The catalog list was successfully retrieved."
+    }
+   },
+   "description": "Gets an array of catalogs in the metastore. If the caller is the metastore admin, all catalogs will be retrieved. Otherwise, only catalogs owned by the caller (or for which the caller has the"
+  }
+ }
+}

@@ -1,0 +1,54 @@
+{
+ "/api/2.1/clusters/pin": {
+  "post": {
+   "operationId": "clusters-pin",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/pin"
+   },
+   "x-stackQL-resource": "clusters",
+   "x-stackQL-method": "pin",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "cluster_id": {
+         "type": "required"
+        }
+       },
+       "example": {
+        "cluster_id": "1234-567890-reef123"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Pinning a cluster ensures that the cluster will always be returned by the ListClusters API. Pinning a cluster that is already pinned will have no effect. This API can only be called by workspace admins."
+  }
+ }
+}

@@ -1,0 +1,68 @@
+{
+ "/api/2.0/permissions/cluster-policies/{cluster_policy_id}": {
+  "patch": {
+   "operationId": "cluster-policies-permissions-updatepermissions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusterpolicies/updatepermissions"
+   },
+   "x-stackQL-resource": "cluster_policies_permissions",
+   "x-stackQL-method": "updatepermissions",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "cluster_policy_id",
+     "required": true,
+     "description": "(string) The cluster policy for which to get or manage permissions.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "access_control_list": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "access_control_list": [
+         {
+          "user_name": "string",
+          "group_name": "string",
+          "service_principal_name": "string",
+          "permission_level": "CAN_USE"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Updates the permissions on a cluster policy. Cluster policies can inherit permissions from their root object."
+  }
+ }
+}

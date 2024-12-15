@@ -1,0 +1,136 @@
+{
+ "/api/2.0/accounts/{account_id}/metastores/{metastore_id}/storage-credentials": {
+  "post": {
+   "operationId": "storage-credentials-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountstoragecredentials/create"
+   },
+   "x-stackQL-resource": "storage_credentials",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "metastore_id",
+     "required": true,
+     "description": "(uuid) Unity Catalog metastore ID",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The new storage credential was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "credential_info": {
+          "type": "object",
+          "properties": {
+           "name": {
+            "type": "string"
+           },
+           "aws_iam_role": {
+            "type": "object",
+            "properties": {
+             "role_arn": {
+              "type": "string"
+             },
+             "unity_catalog_iam_arn": {
+              "type": "string"
+             },
+             "external_id": {
+              "type": "string"
+             }
+            }
+           },
+           "comment": {
+            "type": "string"
+           },
+           "read_only": {
+            "type": "boolean"
+           },
+           "owner": {
+            "type": "string"
+           },
+           "full_name": {
+            "type": "string"
+           },
+           "id": {
+            "type": "string"
+           },
+           "metastore_id": {
+            "type": "string"
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "created_by": {
+            "type": "string"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "updated_by": {
+            "type": "string"
+           },
+           "used_for_managed_storage": {
+            "type": "boolean"
+           },
+           "isolation_mode": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "credential_info": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "credential_info": {
+         "name": "string",
+         "comment": "string",
+         "read_only": true,
+         "aws_iam_role": {
+          "role_arn": "string"
+         },
+         "skip_validation": false
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates a new storage credential. The request object is specific to the cloud:"
+  }
+ }
+}

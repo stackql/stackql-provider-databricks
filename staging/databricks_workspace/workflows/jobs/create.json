@@ -1,0 +1,253 @@
+{
+ "/api/2.1/jobs/create": {
+  "post": {
+   "operationId": "jobs-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/jobs/create"
+   },
+   "x-stackQL-resource": "jobs",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string",
+         "description": " "
+        },
+        "description": {
+         "type": "string",
+         "description": " "
+        },
+        "timeout_seconds": {
+         "type": "int32",
+         "description": "An optional name for the job. The maximum length is 4096 bytes in UTF-8 encoding."
+        },
+        "max_concurrent_runs": {
+         "type": "int32",
+         "description": " "
+        },
+        "format": {
+         "type": "string",
+         "description": "An optional description for the job. The maximum length is 27700 characters in UTF-8 encoding."
+        },
+        "edit_mode": {
+         "type": "string",
+         "description": " "
+        },
+        "email_notifications": {
+         "type": "object"
+        },
+        "webhook_notifications": {
+         "type": "object"
+        },
+        "notification_settings": {
+         "type": "object"
+        },
+        "health": {
+         "type": "object"
+        },
+        "schedule": {
+         "type": "object"
+        },
+        "trigger": {
+         "type": "object"
+        },
+        "continuous": {
+         "type": "object"
+        },
+        "tasks": {
+         "type": "Array of object"
+        },
+        "job_clusters": {
+         "type": "Array of object"
+        },
+        "git_source": {
+         "type": "object"
+        },
+        "tags": {
+         "type": "object"
+        },
+        "queue": {
+         "type": "object"
+        },
+        "parameters": {
+         "type": "Array of object"
+        },
+        "run_as": {
+         "type": "object"
+        },
+        "deployment": {
+         "type": "object"
+        },
+        "environments": {
+         "type": "Array of object"
+        },
+        "access_control_list": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "email_notifications": {
+         "on_failure": [
+          "sharky@databricks.com"
+         ]
+        },
+        "format": "MULTI_TASK",
+        "max_concurrent_runs": 1,
+        "name": "Shark Predictor",
+        "notification_settings": {
+         "alert_on_last_attempt": false,
+         "no_alert_for_canceled_runs": false,
+         "no_alert_for_skipped_runs": false
+        },
+        "run_as": {
+         "user_name": "sharky@databricks.com"
+        },
+        "tasks": [
+         {
+          "existing_cluster_id": "0914-084715-44dhyjfb",
+          "notebook_task": {
+           "notebook_path": "/Users/sharky@databricks.com/weather_ingest",
+           "source": "WORKSPACE"
+          },
+          "run_if": "ALL_SUCCESS",
+          "task_key": "weather_ocean_data"
+         },
+         {
+          "existing_cluster_id": "0914-084715-44dhyjfb",
+          "notebook_task": {
+           "notebook_path": "/Users/sharky@databricks.com/shark_sightings_scraper",
+           "source": "WORKSPACE"
+          },
+          "run_if": "ALL_SUCCESS",
+          "task_key": "shark_sightings"
+         },
+         {
+          "existing_cluster_id": "0914-084715-44dhyjfb",
+          "notebook_task": {
+           "notebook_path": "/Users/sharky@databricks.com/reef_data",
+           "source": "WORKSPACE"
+          },
+          "run_if": "ALL_SUCCESS",
+          "task_key": "reef_data"
+         },
+         {
+          "depends_on": [
+           {
+            "task_key": "reef_data"
+           },
+           {
+            "task_key": "shark_sightings"
+           },
+           {
+            "task_key": "weather_ocean_data"
+           }
+          ],
+          "pipeline_task": {
+           "pipeline_id": "1165597e-f650-4bf3-9a4f-fc2f2d40d2c3"
+          },
+          "run_if": "AT_LEAST_ONE_SUCCESS",
+          "task_key": "combine_shark_data"
+         },
+         {
+          "depends_on": [
+           {
+            "task_key": "combine_shark_data"
+           }
+          ],
+          "existing_cluster_id": "0914-084715-44dhyjfb",
+          "notebook_task": {
+           "notebook_path": "/Users/sharky@databricks.com/check_drift",
+           "source": "WORKSPACE"
+          },
+          "run_if": "ALL_SUCCESS",
+          "task_key": "check_drift"
+         },
+         {
+          "condition_task": {
+           "left": "{{tasks.check_drift.values.retrain}}",
+           "op": "EQUAL_TO",
+           "right": "true"
+          },
+          "depends_on": [
+           {
+            "task_key": "check_drift"
+           }
+          ],
+          "run_if": "ALL_SUCCESS",
+          "task_key": "if_drift_above_threshold"
+         },
+         {
+          "depends_on": [
+           {
+            "outcome": "true",
+            "task_key": "if_drift_above_threshold"
+           }
+          ],
+          "existing_cluster_id": "0914-084715-44dhyjfb",
+          "run_if": "ALL_SUCCESS",
+          "spark_python_task": {
+           "python_file": "/Users/sharky@databricks.com/retrain.py"
+          },
+          "task_key": "retrain_model"
+         },
+         {
+          "depends_on": [
+           {
+            "task_key": "retrain_model"
+           },
+           {
+            "outcome": "false",
+            "task_key": "if_drift_above_threshold"
+           }
+          ],
+          "run_if": "ALL_SUCCESS",
+          "sql_task": {
+           "dashboard": {
+            "dashboard_id": "0007ce2d-9d7d-48ca-b273-734c75080f58"
+           },
+           "warehouse_id": "791ba2a31c7fd70a"
+          },
+          "task_key": "refresh_shark_dashboard"
+         }
+        ],
+        "webhook_notifications": {}
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Create a new job."
+  }
+ }
+}

@@ -1,0 +1,41 @@
+{
+ "/api/2.0/mlflow/experiments/get": {
+  "get": {
+   "operationId": "experiments-getexperiment",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/getexperiment"
+   },
+   "x-stackQL-resource": "experiments",
+   "x-stackQL-method": "getexperiment",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "experiment_id",
+     "required": true,
+     "description": "(string) ID of the associated experiment.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets metadata for an experiment. This method works on deleted experiments."
+  }
+ }
+}

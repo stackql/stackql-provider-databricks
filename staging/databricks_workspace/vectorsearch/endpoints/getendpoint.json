@@ -1,0 +1,37 @@
+{
+ "/api/2.0/vector-search/endpoints/{endpoint_name}": {
+  "get": {
+   "operationId": "endpoints-getendpoint",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchendpoints/getendpoint"
+   },
+   "x-stackQL-resource": "endpoints",
+   "x-stackQL-method": "getendpoint",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "endpoint_name",
+     "required": true,
+     "description": "(string) Name of the endpoint",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Details of the endpoint."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

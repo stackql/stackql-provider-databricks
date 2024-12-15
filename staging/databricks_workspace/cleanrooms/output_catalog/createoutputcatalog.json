@@ -1,0 +1,47 @@
+{
+ "/api/2.0/clean-rooms/{clean_room_name}/output-catalogs": {
+  "post": {
+   "operationId": "output-catalog-createoutputcatalog",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/cleanrooms/createoutputcatalog"
+   },
+   "x-stackQL-resource": "output_catalog",
+   "x-stackQL-method": "createoutputcatalog",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "clean_room_name",
+     "required": true,
+     "description": "(string) Name of the clean room.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "catalog_name": {
+         "type": "string",
+         "description": "The name of the output catalog in UC.\nIt should follow "
+        }
+       },
+       "example": {
+        "catalog_name": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Create the output catalog of the clean room."
+  }
+ }
+}

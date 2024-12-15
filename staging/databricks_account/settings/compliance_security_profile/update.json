@@ -1,0 +1,113 @@
+{
+ "/api/2.0/accounts/{account_id}/settings/types/shield_csp_enablement_ac/names/default": {
+  "patch": {
+   "operationId": "compliance-security-profile-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/cspenablementaccount/update"
+   },
+   "x-stackQL-resource": "compliance_security_profile",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of the account being managed.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "etag": {
+          "type": "string"
+         },
+         "setting_name": {
+          "type": "string"
+         },
+         "csp_enablement_account": {
+          "type": "object",
+          "properties": {
+           "is_enforced": {
+            "type": "boolean"
+           },
+           "compliance_standards": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "allow_missing": {
+         "type": "required",
+         "description": "This should always be set to true for Settings API. Added for AIP compliance."
+        },
+        "field_mask": {
+         "type": "boolean",
+         "description": "Field mask is required to be passed into the PATCH request. Field mask specifies which fields\nof the setting payload will be updated.\nThe field mask needs to be supplied as single string. To specify multiple fields in the field mask,\nuse comma as the separator (no space)."
+        },
+        "setting": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "allow_missing": true,
+        "setting": {
+         "etag": "string",
+         "setting_name": "string",
+         "csp_enablement_account": {
+          "is_enforced": true,
+          "compliance_standards": [
+           "NONE"
+          ]
+         }
+        },
+        "field_mask": "string"
+       }
+      }
+     }
+    },
+    "description": "Details required to update a setting."
+   },
+   "description": "Updates the value of the compliance security profile setting for new workspaces."
+  }
+ }
+}

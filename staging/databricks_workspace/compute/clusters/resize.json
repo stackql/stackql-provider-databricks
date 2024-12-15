@@ -1,0 +1,63 @@
+{
+ "/api/2.1/clusters/resize": {
+  "post": {
+   "operationId": "clusters-resize",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/resize"
+   },
+   "x-stackQL-resource": "clusters",
+   "x-stackQL-method": "resize",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "num_workers": {
+         "type": "int32",
+         "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver\nand "
+        },
+        "cluster_id": {
+         "type": "required",
+         "description": " Executors for a total of "
+        },
+        "autoscale": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "cluster_id": "1202-211320-brick1",
+        "num_workers": 30
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Resizes a cluster to have a desired number of workers. This will fail unless the cluster is in a"
+  }
+ }
+}

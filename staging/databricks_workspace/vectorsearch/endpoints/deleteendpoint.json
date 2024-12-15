@@ -1,0 +1,37 @@
+{
+ "/api/2.0/vector-search/endpoints/{endpoint_name}": {
+  "delete": {
+   "operationId": "endpoints-deleteendpoint",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchendpoints/deleteendpoint"
+   },
+   "x-stackQL-resource": "endpoints",
+   "x-stackQL-method": "deleteendpoint",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "endpoint_name",
+     "required": true,
+     "description": "(string) Name of the endpoint",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Endpoint deletion initiated."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

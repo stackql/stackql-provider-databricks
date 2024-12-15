@@ -1,0 +1,52 @@
+{
+ "/api/2.0/workspace/mkdirs": {
+  "post": {
+   "operationId": "directories-mkdirs",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/workspace/mkdirs"
+   },
+   "x-stackQL-resource": "directories",
+   "x-stackQL-method": "mkdirs",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "path": {
+         "type": "required",
+         "description": "The absolute path of the directory. If the parent directories do not exist, it will also create them.\nIf the directory already exists, this command will do nothing and succeed."
+        }
+       },
+       "example": {
+        "path": "/Users/user@example.com/project"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates the specified directory (and necessary parent directories if they do not exist).  If there is an object (not a directory) at any prefix of the input path, this call returns  an error"
+  }
+ }
+}

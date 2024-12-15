@@ -1,0 +1,69 @@
+{
+ "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/metastore": {
+  "get": {
+   "operationId": "metastore-assignments-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountmetastoreassignments/get"
+   },
+   "x-stackQL-resource": "metastore_assignments",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "workspace_id",
+     "required": true,
+     "description": "(int64) Workspace ID.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The workspace metastore assignment was successfully returned.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "metastore_assignment": {
+          "type": "object",
+          "properties": {
+           "metastore_id": {
+            "type": "string"
+           },
+           "workspace_id": {
+            "type": "integer"
+           },
+           "default_catalog_name": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the metastore assignment, if any, for the workspace specified by ID. If the workspace is assigned a metastore, the mappig will be returned. If no metastore is assigned to the workspace, the assignment will not be found and a 404 returned."
+  }
+ }
+}

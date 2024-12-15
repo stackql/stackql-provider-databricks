@@ -1,0 +1,64 @@
+{
+ "/api/2.1/unity-catalog/volumes": {
+  "post": {
+   "operationId": "volumes-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/volumes/create"
+   },
+   "x-stackQL-resource": "volumes",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "catalog_name": {
+         "type": "required",
+         "description": "The name of the catalog where the schema and the volume are"
+        },
+        "schema_name": {
+         "type": "string",
+         "description": "The name of the schema where the volume is"
+        },
+        "name": {
+         "type": "required",
+         "description": "The name of the volume"
+        },
+        "volume_type": {
+         "type": "string",
+         "description": "The storage location on the cloud"
+        },
+        "storage_location": {
+         "type": "required",
+         "description": "The comment attached to the volume"
+        },
+        "comment": {
+         "type": "string"
+        }
+       },
+       "example": {
+        "catalog_name": "main",
+        "schema_name": "default",
+        "name": "my_volume",
+        "volume_type": "EXTERNAL",
+        "storage_location": "s3://my-bucket/hello/world/my-volume",
+        "comment": "This is my first volume"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Successfully created the volume"
+    }
+   },
+   "description": "Creates a new volume."
+  }
+ }
+}

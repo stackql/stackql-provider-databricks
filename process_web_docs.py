@@ -35,7 +35,10 @@ def process_manifest(provider, debug):
         for resource in service_data['resources']:
             resource_name = resource['name']
             for method in resource['methods']:
-                process_endpoint(provider, service_name, resource_name, method['name'], method['docPath'], method['verb'], debug)
+                hasRespData = True
+                if 'hasRespData' in method:
+                    hasRespData = method['hasRespData']
+                process_endpoint(provider, service_name, resource_name, method['name'], method['docPath'], method['verb'], hasRespData, debug)
 
 def scrape_dynamic_content(url, max_retries=5, retry_delay=5):
     # Configure Selenium WebDriver with headless Chrome
@@ -93,14 +96,15 @@ def scrape_dynamic_content(url, max_retries=5, retry_delay=5):
             if driver:
                 driver.quit()
 
-def process_endpoint(provider, service, resource, method, docPath, sqlVerb, debug):
+def process_endpoint(provider, service, resource, method, docPath, sqlVerb, hasRespData, debug):
    
     print(f"""processing docPath: {docPath}
 provider: {provider}
 service: {service}
 resource: {resource}
 method: {method}
-sqlVerb: {sqlVerb}""")
+sqlVerb: {sqlVerb}
+hasRespData: {hasRespData}""")
 
     # Create output directory structure
     output_dir = f"staging/databricks_{provider}/{service}/{resource}"
@@ -144,7 +148,7 @@ sqlVerb: {sqlVerb}""")
     request_body = process_request_body(selector, doc_base_path, examples_doc_path, False)
     print("request_body:", json.dumps(request_body, indent=2)) if debug else None
 
-    responses = process_responses(selector, doc_base_path, examples_doc_path, debug)
+    responses = process_responses(selector, doc_base_path, examples_doc_path, hasRespData, debug)
     print("responses:", json.dumps(responses, indent=2)) if debug else None
 
     # stitch complete operation object together
@@ -158,11 +162,13 @@ sqlVerb: {sqlVerb}""")
                 "x-stackQL-verb": sqlVerb,
                 "x-numReqParams": len([param for param in params if param.get("required")]),
                 "parameters": params,
-                "requestBody": request_body,
                 "responses": responses,
             }
         }
     }
+
+    if request_body:
+        operation[http_path][http_verb]["requestBody"] = request_body
 
     if op_desc:
         operation[http_path][http_verb]["description"] = op_desc

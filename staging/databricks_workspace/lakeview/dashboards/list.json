@@ -1,0 +1,53 @@
+{
+ "/api/2.0/lakeview/dashboards": {
+  "get": {
+   "operationId": "dashboards-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/lakeview/list"
+   },
+   "x-stackQL-resource": "dashboards",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_size",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "show_trashed",
+     "in": "query"
+    },
+    {
+     "name": "view",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

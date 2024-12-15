@@ -1,0 +1,29 @@
+{
+ "/api/2.0/mlflow/registered-models/delete": {
+  "delete": {
+   "operationId": "models-deletemodel",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/deletemodel"
+   },
+   "x-stackQL-resource": "models",
+   "x-stackQL-method": "deletemodel",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Registered model unique name identifier.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Deletes a registered model."
+  }
+ }
+}

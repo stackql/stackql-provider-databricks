@@ -1,0 +1,34 @@
+{
+ "/api/2.1/clusters/list-node-types": {
+  "get": {
+   "operationId": "node-types-listnodetypes",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/listnodetypes"
+   },
+   "x-stackQL-resource": "node_types",
+   "x-stackQL-method": "listnodetypes",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Returns a list of supported Spark node types. These node types can be used to launch a cluster."
+  }
+ }
+}

@@ -1,0 +1,105 @@
+{
+ "/api/2.0/accounts/{account_id}/workspaces": {
+  "get": {
+   "operationId": "workspaces-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/workspaces/list"
+   },
+   "x-stackQL-resource": "workspaces",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The workspaces were returned successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "workspace_id": {
+           "type": "integer"
+          },
+          "workspace_name": {
+           "type": "string"
+          },
+          "deployment_name": {
+           "type": "string"
+          },
+          "network_id": {
+           "type": "string"
+          },
+          "aws_region": {
+           "type": "string"
+          },
+          "credentials_id": {
+           "type": "string"
+          },
+          "storage_configuration_id": {
+           "type": "string"
+          },
+          "account_id": {
+           "type": "string"
+          },
+          "workspace_status": {
+           "type": "string"
+          },
+          "workspace_status_message": {
+           "type": "string"
+          },
+          "managed_services_customer_managed_key_id": {
+           "type": "string"
+          },
+          "private_access_settings_id": {
+           "type": "string"
+          },
+          "creation_time": {
+           "type": "integer"
+          },
+          "pricing_tier": {
+           "type": "string"
+          },
+          "storage_customer_managed_key_id": {
+           "type": "string"
+          },
+          "custom_tags": {
+           "type": "object",
+           "properties": {
+            "property1": {
+             "type": "string"
+            },
+            "property2": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a list of all workspaces associated with an account, specified by ID."
+  }
+ }
+}

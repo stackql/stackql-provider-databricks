@@ -1,0 +1,34 @@
+{
+ "/api/2.1/unity-catalog/functions/{name}": {
+  "delete": {
+   "operationId": "functions-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/functions/delete"
+   },
+   "x-stackQL-resource": "functions",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The fully-qualified name of the function (of the form ",
+     "in": "path"
+    },
+    {
+     "name": "force",
+     "description": "Force deletion even if the function is notempty.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The function was successfully deleted."
+    }
+   },
+   "description": "Deletes the function that matches the supplied name. For the deletion to succeed, the user must satisfy one of the following conditions:"
+  }
+ }
+}

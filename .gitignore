@@ -1,9 +1,6 @@
 .venv/
 venv/
-staging/
-openapi/
-__pycache__/
-lib/__pycache__/
+**/__pycache__/
 stackql-zip
 stackql-aws-cloud-shell.sh
 stackql-azure-cloud-shell.sh

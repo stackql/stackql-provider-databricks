@@ -1,0 +1,79 @@
+{
+ "/api/2.0/mlflow/runs/log-batch": {
+  "post": {
+   "operationId": "experiment-runs-logbatch",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/logbatch"
+   },
+   "x-stackQL-resource": "experiment_runs",
+   "x-stackQL-method": "logbatch",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "run_id": {
+         "type": "string",
+         "description": "ID of the run to log under"
+        },
+        "metrics": {
+         "type": "Array of object"
+        },
+        "params": {
+         "type": "Array of object"
+        },
+        "tags": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "run_id": "2a14ed5c6a87499199e0106c3501eab8",
+        "metrics": [
+         {
+          "key": "mae",
+          "value": 2.5,
+          "timestamp": 1552550804
+         },
+         {
+          "key": "rmse",
+          "value": 2.7,
+          "timestamp": 1552550804
+         }
+        ],
+        "params": [
+         {
+          "key": "model_class",
+          "value": "LogisticRegression"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Logs a batch of metrics, params, and tags for a run. If any data failed to be persisted, the server will respond with an error (non-200 status code)."
+  }
+ }
+}

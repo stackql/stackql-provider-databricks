@@ -1,0 +1,114 @@
+{
+ "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments/principals/{principal_id}": {
+  "put": {
+   "operationId": "workspace-assignments-createorupdate",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/workspaceassignment/update"
+   },
+   "x-stackQL-resource": "workspace_assignments",
+   "x-stackQL-method": "createorupdate",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 3,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(string) The account ID.",
+     "in": "path"
+    },
+    {
+     "name": "workspace_id",
+     "required": true,
+     "description": "(int64) The workspace ID.",
+     "in": "path"
+    },
+    {
+     "name": "principal_id",
+     "required": true,
+     "description": "(int64) The ID of the user, service principal, or group.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "principal": {
+          "type": "object",
+          "properties": {
+           "user_name": {
+            "type": "string"
+           },
+           "group_name": {
+            "type": "string"
+           },
+           "service_principal_name": {
+            "type": "string"
+           },
+           "principal_id": {
+            "type": "integer"
+           },
+           "display_name": {
+            "type": "string"
+           }
+          }
+         },
+         "permissions": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "error": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "permissions": {
+         "type": "Array of string",
+         "description": "Array of permissions assignments to update on the workspace.\nValid values are \"USER\" and \"ADMIN\" (case-sensitive).\nIf both \"USER\" and \"ADMIN\" are provided, \"ADMIN\" takes precedence.\nOther values will be ignored.\nNote that excluding this field, or providing unsupported values, will have the same effect as providing an empty list, which will result in the deletion of all permissions for the principal."
+        }
+       },
+       "example": {
+        "permissions": [
+         "UNKNOWN"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates or updates the workspace permissions assignment in a given account and workspace for the specified principal."
+  }
+ }
+}

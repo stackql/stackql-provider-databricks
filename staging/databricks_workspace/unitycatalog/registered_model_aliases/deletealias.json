@@ -1,0 +1,50 @@
+{
+ "/api/2.1/unity-catalog/models/{full_name}/aliases/{alias}": {
+  "delete": {
+   "operationId": "registered-model-aliases-deletealias",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/registeredmodels/deletealias"
+   },
+   "x-stackQL-resource": "registered_model_aliases",
+   "x-stackQL-method": "deletealias",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) The three-level (fully qualified) name of the registered model",
+     "in": "path"
+    },
+    {
+     "name": "alias",
+     "required": true,
+     "description": "(string) The name of the alias",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Successfully deleted the registered model alias"
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Deletes a registered model alias."
+  }
+ }
+}

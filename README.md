@@ -24,3 +24,16 @@ deactivate
 
 
 
+# testing
+
+```bash
+curl -L https://bit.ly/stackql-zip -O && unzip stackql-zip
+```
+
+## Inspect
+
+```bash
+PROVIDER_REGISTRY_ROOT_DIR="$(pwd)/openapi_providers"
+REG_STR='{"url": "file://'${PROVIDER_REGISTRY_ROOT_DIR}'", "localDocRoot": "'${PROVIDER_REGISTRY_ROOT_DIR}'", "verifyConfig": {"nopVerify": true}}'
+./stackql shell --registry="${REG_STR}"
+```

@@ -1,0 +1,33 @@
+{
+ "/api/2.1/marketplace-consumer/listings/{listing_id}/installations/{installation_id}": {
+  "delete": {
+   "operationId": "consumer-installations-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerinstallations/delete"
+   },
+   "x-stackQL-resource": "consumer_installations",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "listing_id",
+     "required": true,
+     "in": "path"
+    },
+    {
+     "name": "installation_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Uninstall an installation associated with a Databricks Marketplace listing."
+  }
+ }
+}

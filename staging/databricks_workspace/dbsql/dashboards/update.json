@@ -1,0 +1,59 @@
+{
+ "/api/2.0/preview/sql/dashboards/{dashboard_id}": {
+  "post": {
+   "operationId": "dashboards-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dashboards/update"
+   },
+   "x-stackQL-resource": "dashboards",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "dashboard_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string",
+         "description": " "
+        },
+        "run_as_role": {
+         "type": "string",
+         "description": "The title of this dashboard that appears in list views and at the top of the dashboard page."
+        },
+        "tags": {
+         "type": "Array of string",
+         "description": "Sets the "
+        }
+       },
+       "example": {
+        "name": "Sales Dashboard",
+        "run_as_role": "viewer",
+        "tags": [
+         "Payroll"
+        ]
+       }
+      }
+     }
+    },
+    "description": "The dashboard definition that replaces the current definition for this"
+   },
+   "responses": {
+    "200": {
+     "description": "Dashboard updated successfully."
+    }
+   },
+   "description": "Modify this dashboard definition. This operation only affects attributes of the dashboard object. It does not add, modify, or remove widgets."
+  }
+ }
+}

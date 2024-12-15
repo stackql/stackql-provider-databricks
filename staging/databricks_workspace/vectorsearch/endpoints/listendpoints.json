@@ -1,0 +1,27 @@
+{
+ "/api/2.0/vector-search/endpoints": {
+  "get": {
+   "operationId": "endpoints-listendpoints",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchendpoints/listendpoints"
+   },
+   "x-stackQL-resource": "endpoints",
+   "x-stackQL-method": "listendpoints",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_token",
+     "description": "Token for pagination",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "List of all endpoints"
+    }
+   }
+  }
+ }
+}

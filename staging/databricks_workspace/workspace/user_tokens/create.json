@@ -1,0 +1,55 @@
+{
+ "/api/2.0/token/create": {
+  "post": {
+   "operationId": "user-tokens-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/tokens/create"
+   },
+   "x-stackQL-resource": "user_tokens",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "lifetime_seconds": {
+         "type": "integer",
+         "format": "int64",
+         "description": "The lifetime of the token, in seconds."
+        },
+        "comment": {
+         "type": "string",
+         "description": "If the lifetime is not specified, this token remains valid indefinitely."
+        }
+       },
+       "example": {
+        "lifetime_seconds": 0,
+        "comment": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates and returns a token for a user. If this call is made through token authentication, it creates a token with the same client ID as the authenticated token. If the user's token quota is exceeded, this call returns an error"
+  }
+ }
+}

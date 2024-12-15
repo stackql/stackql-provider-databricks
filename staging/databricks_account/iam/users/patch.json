@@ -1,0 +1,89 @@
+{
+ "/api/2.0/accounts/{account_id}/scim/v2/Users/{id}": {
+  "patch": {
+   "operationId": "users-patch",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountusers/patch"
+   },
+   "x-stackQL-resource": "users",
+   "x-stackQL-method": "patch",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID",
+     "in": "path"
+    },
+    {
+     "name": "id",
+     "required": true,
+     "description": "(int64) Unique ID for a user in the Databricks account.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "User information was updated successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "schemas": {
+         "type": "Array of string",
+         "description": "The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
+        },
+        "Operations": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "schemas": [
+         "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+        ],
+        "Operations": [
+         {
+          "op": "add",
+          "path": "string",
+          "value": null
+         }
+        ]
+       }
+      }
+     }
+    },
+    "description": "Operations to be applied on user information."
+   },
+   "description": "Partially updates a user resource by applying the supplied operations on specific user attributes."
+  }
+ }
+}

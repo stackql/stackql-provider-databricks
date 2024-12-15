@@ -1,0 +1,44 @@
+{
+ "/api/2.0/serving-endpoints/{name}/served-models/{served_model_name}/build-logs": {
+  "get": {
+   "operationId": "build-logs-buildlogs",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/buildlogs"
+   },
+   "x-stackQL-resource": "build_logs",
+   "x-stackQL-method": "buildlogs",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    },
+    {
+     "name": "served_model_name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Build logs were fetched successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Retrieves the build logs associated with the provided served model."
+  }
+ }
+}

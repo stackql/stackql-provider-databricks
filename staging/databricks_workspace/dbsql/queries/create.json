@@ -1,0 +1,67 @@
+{
+ "/api/2.0/sql/queries": {
+  "post": {
+   "operationId": "queries-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/queries/create"
+   },
+   "x-stackQL-resource": "queries",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "query": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "query": {
+         "description": "Example description",
+         "tags": [
+          "Tag 1"
+         ],
+         "display_name": "Example query",
+         "parent_path": "/Workspace/Users/user@acme.com",
+         "query_text": "SELECT 1",
+         "parameters": [
+          {
+           "name": "foo",
+           "text_value": {
+            "value": "bar"
+           },
+           "title": "foo"
+          }
+         ],
+         "warehouse_id": "a7066a8ef796be84",
+         "run_as_mode": "OWNER"
+        }
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates a query."
+  }
+ }
+}

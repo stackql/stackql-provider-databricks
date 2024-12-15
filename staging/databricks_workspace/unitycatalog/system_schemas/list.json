@@ -1,0 +1,39 @@
+{
+ "/api/2.1/unity-catalog/metastores/{metastore_id}/systemschemas": {
+  "get": {
+   "operationId": "system-schemas-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/systemschemas/list"
+   },
+   "x-stackQL-resource": "system_schemas",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "metastore_id",
+     "required": true,
+     "description": "(string) The ID for the metastore in which the system schema resides.",
+     "in": "path"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of schemas to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The schemas list was successfully retrieved."
+    }
+   },
+   "description": "Gets an array of system schemas for a metastore. The caller must be an account admin or a metastore admin."
+  }
+ }
+}

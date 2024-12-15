@@ -1,0 +1,86 @@
+{
+ "/api/2.0/apps": {
+  "post": {
+   "operationId": "apps-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/apps/create"
+   },
+   "x-stackQL-resource": "apps",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": " "
+        },
+        "description": {
+         "type": "string",
+         "description": "The name of the app. The name must contain only lowercase alphanumeric characters and hyphens.\nIt must be unique within the workspace."
+        },
+        "resources": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "name": "my-custom-app",
+        "description": "My app description.",
+        "resources": [
+         {
+          "name": "api-key",
+          "description": "API key for external service.",
+          "secret": {
+           "scope": "my-scope",
+           "key": "my-key",
+           "permission": "READ"
+          },
+          "sql_warehouse": {
+           "id": "e9ca293f79a74b5c",
+           "permission": "CAN_MANAGE"
+          },
+          "serving_endpoint": {
+           "name": "databricks-meta-llama-3-1-70b-instruct",
+           "permission": "CAN_MANAGE"
+          },
+          "job": {
+           "id": "1234",
+           "permission": "CAN_MANAGE"
+          }
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates a new app."
+  }
+ }
+}

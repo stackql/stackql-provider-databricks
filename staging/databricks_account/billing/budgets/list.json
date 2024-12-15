@@ -1,0 +1,161 @@
+{
+ "/api/2.1/accounts/{account_id}/budgets": {
+  "get": {
+   "operationId": "budgets-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/budgets/list"
+   },
+   "x-stackQL-resource": "budgets",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "description": "A page token received from a previous get all budget configurations call. This token can be used to retrieve the subsequent page. Requests first page if absent.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "budgets": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "budget_configuration_id": {
+             "type": "string"
+            },
+            "account_id": {
+             "type": "string"
+            },
+            "create_time": {
+             "type": "integer"
+            },
+            "update_time": {
+             "type": "integer"
+            },
+            "alert_configurations": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "alert_configuration_id": {
+                "type": "string"
+               },
+               "time_period": {
+                "type": "string"
+               },
+               "trigger_type": {
+                "type": "string"
+               },
+               "quantity_type": {
+                "type": "string"
+               },
+               "quantity_threshold": {
+                "type": "string"
+               },
+               "action_configurations": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "action_configuration_id": {
+                   "type": "string"
+                  },
+                  "action_type": {
+                   "type": "string"
+                  },
+                  "target": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "filter": {
+             "type": "object",
+             "properties": {
+              "workspace_id": {
+               "type": "object",
+               "properties": {
+                "operator": {
+                 "type": "string"
+                },
+                "values": {
+                 "type": "array",
+                 "items": {
+                  "type": "integer"
+                 }
+                }
+               }
+              },
+              "tags": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "key": {
+                  "type": "string"
+                 },
+                 "value": {
+                  "type": "object",
+                  "properties": {
+                   "operator": {
+                    "type": "string"
+                   },
+                   "values": {
+                    "type": "array",
+                    "items": {
+                     "type": "string"
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "display_name": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets all budgets associated with this account."
+  }
+ }
+}

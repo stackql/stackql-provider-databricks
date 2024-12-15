@@ -1,0 +1,43 @@
+{
+ "/api/2.0/mlflow/comments/delete": {
+  "delete": {
+   "operationId": "model-version-comments-deletecomment",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/deletecomment"
+   },
+   "x-stackQL-resource": "model_version_comments",
+   "x-stackQL-method": "deletecomment",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Comment was deleted successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Deletes a comment on a model version."
+  }
+ }
+}

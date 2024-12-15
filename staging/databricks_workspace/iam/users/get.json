@@ -1,0 +1,76 @@
+{
+ "/api/2.0/preview/scim/v2/Users/{id}": {
+  "get": {
+   "operationId": "users-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/users/get"
+   },
+   "x-stackQL-resource": "users",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(int64) Unique ID for a user in the Databricks workspace.",
+     "in": "path"
+    },
+    {
+     "name": "filter",
+     "description": "Query by which the results have to be filtered. Supported operators are equals(",
+     "in": "query"
+    },
+    {
+     "name": "attributes",
+     "description": "Comma-separated list of attributes to return in response.",
+     "in": "query"
+    },
+    {
+     "name": "excludedAttributes",
+     "description": "Comma-separated list of attributes to exclude in response.",
+     "in": "query"
+    },
+    {
+     "name": "startIndex",
+     "description": "Specifies the index of the first result. First item is number 1.",
+     "in": "query"
+    },
+    {
+     "name": "count",
+     "description": "Desired number of results per page.",
+     "in": "query"
+    },
+    {
+     "name": "sortBy",
+     "description": "Attribute to sort the results. Multi-part paths are supported. For example,",
+     "in": "query"
+    },
+    {
+     "name": "sortOrder",
+     "description": "The order to sort the results.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "User information was returned successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets information for a specific user in Databricks workspace."
+  }
+ }
+}

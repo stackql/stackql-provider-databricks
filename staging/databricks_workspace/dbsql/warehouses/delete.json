@@ -1,0 +1,29 @@
+{
+ "/api/2.0/sql/warehouses/{id}": {
+  "delete": {
+   "operationId": "warehouses-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/warehouses/delete"
+   },
+   "x-stackQL-resource": "warehouses",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(string) Required. Id of the SQL warehouse.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Deletes a SQL warehouse."
+  }
+ }
+}

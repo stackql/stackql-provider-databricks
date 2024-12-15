@@ -1,0 +1,89 @@
+{
+ "/api/2.0/preview/sql/queries/{query_id}": {
+  "post": {
+   "operationId": "queries-legacy-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/querieslegacy/update"
+   },
+   "x-stackQL-resource": "queries_legacy",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "query_id",
+     "required": true,
+     "description": "(UUID)  ",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "data_source_id": {
+         "type": "UUID",
+         "description": " "
+        },
+        "query": {
+         "type": "string",
+         "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. "
+        },
+        "name": {
+         "type": "string",
+         "description": " "
+        },
+        "description": {
+         "type": "string",
+         "description": "The text of the query to be run."
+        },
+        "options": {
+         "type": "object",
+         "description": " "
+        },
+        "run_as_role": {
+         "type": "string",
+         "description": "The title of this query that appears in list views, widget headings, and on the query page."
+        },
+        "tags": {
+         "type": "Array of string",
+         "description": " "
+        }
+       },
+       "example": {
+        "data_source_id": "0c205e24-5db2-4940-adb1-fb13c7ce960b",
+        "query": "SELECT field FROM table WHERE field = {{ param }}",
+        "name": "Orders by month by customer",
+        "description": "Summarizes total order dollars for customers in the Europe/Asia region.",
+        "options": {
+         "parameters": [
+          {
+           "title": "customer",
+           "name": "param",
+           "type": "text",
+           "value": "acme"
+          }
+         ]
+        },
+        "run_as_role": "viewer",
+        "tags": [
+         "Payroll"
+        ]
+       }
+      }
+     }
+    },
+    "description": "The query definition that will replace the current definition for this"
+   },
+   "responses": {
+    "200": {
+     "description": "Query updated successfully."
+    }
+   },
+   "description": "Modify this query definition."
+  }
+ }
+}

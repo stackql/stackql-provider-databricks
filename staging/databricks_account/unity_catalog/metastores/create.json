@@ -1,0 +1,131 @@
+{
+ "/api/2.0/accounts/{account_id}/metastores": {
+  "post": {
+   "operationId": "metastores-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountmetastores/create"
+   },
+   "x-stackQL-resource": "metastores",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "201": {
+     "description": "The metastore was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "metastore_info": {
+          "type": "object",
+          "properties": {
+           "name": {
+            "type": "string"
+           },
+           "storage_root": {
+            "type": "string"
+           },
+           "default_data_access_config_id": {
+            "type": "string"
+           },
+           "storage_root_credential_id": {
+            "type": "string"
+           },
+           "delta_sharing_scope": {
+            "type": "string"
+           },
+           "delta_sharing_recipient_token_lifetime_in_seconds": {
+            "type": "integer"
+           },
+           "delta_sharing_organization_name": {
+            "type": "string"
+           },
+           "owner": {
+            "type": "string"
+           },
+           "privilege_model_version": {
+            "type": "string"
+           },
+           "region": {
+            "type": "string"
+           },
+           "metastore_id": {
+            "type": "string"
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "created_by": {
+            "type": "string"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "updated_by": {
+            "type": "string"
+           },
+           "storage_root_credential_name": {
+            "type": "string"
+           },
+           "cloud": {
+            "type": "string"
+           },
+           "global_metastore_id": {
+            "type": "string"
+           },
+           "external_access_enabled": {
+            "type": "boolean"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "metastore_info": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "metastore_info": {
+         "name": "string",
+         "storage_root": "string",
+         "region": "string"
+        }
+       }
+      }
+     }
+    },
+    "description": "Properties of the new metastore."
+   },
+   "description": "Creates a Unity Catalog metastore."
+  }
+ }
+}

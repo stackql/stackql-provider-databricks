@@ -1,0 +1,38 @@
+{
+ "/api/2.1/unity-catalog/recipients": {
+  "get": {
+   "operationId": "recipients-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/recipients/list"
+   },
+   "x-stackQL-resource": "recipients",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "data_recipient_global_metastore_id",
+     "description": "If not provided, all recipients will be returned. If no recipients exist with this ID, no results will be returned.",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of recipients to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The list of recipients was successfully retrieved."
+    }
+   },
+   "description": "Gets an array of all share recipients within the current metastore where:"
+  }
+ }
+}

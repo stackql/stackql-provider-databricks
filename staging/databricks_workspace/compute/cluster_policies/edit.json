@@ -1,0 +1,87 @@
+{
+ "/api/2.0/policies/clusters/edit": {
+  "post": {
+   "operationId": "cluster-policies-edit",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusterpolicies/edit"
+   },
+   "x-stackQL-resource": "cluster_policies",
+   "x-stackQL-method": "edit",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "policy_id": {
+         "type": "required",
+         "description": "The ID of the policy to update."
+        },
+        "name": {
+         "type": "string",
+         "description": "Cluster Policy name requested by the user. This has to be unique. Length must be between 1 and 100\ncharacters."
+        },
+        "definition": {
+         "type": "string",
+         "description": "Policy definition document expressed in "
+        },
+        "description": {
+         "type": "JSON",
+         "description": "."
+        },
+        "policy_family_id": {
+         "type": "string",
+         "description": "Additional human-readable description of the cluster policy."
+        },
+        "policy_family_definition_overrides": {
+         "type": "string",
+         "description": "ID of the policy family. The cluster policy's policy definition inherits the policy\nfamily's policy definition."
+        },
+        "max_clusters_per_user": {
+         "type": "JSON",
+         "description": "Cannot be used with "
+        },
+        "libraries": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "definition": "{ \"custom_tags.test_tag\": { \"type\": \"fixed\", \"value\": \"test_value\" } }",
+        "name": "Test policy",
+        "policy_id": "ABCD000000000000"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Update an existing policy for cluster. This operation may make some clusters governed by the previous policy invalid."
+  }
+ }
+}

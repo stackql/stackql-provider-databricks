@@ -1,0 +1,99 @@
+{
+ "/api/2.0/instance-pools/create": {
+  "post": {
+   "operationId": "instance-pools-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/instancepools/create"
+   },
+   "x-stackQL-resource": "instance_pools",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "instance_pool_name": {
+         "type": "required",
+         "description": "Pool name requested by the user. Pool name must be unique. Length must be between 1 and 100\ncharacters."
+        },
+        "min_idle_instances": {
+         "type": "string",
+         "description": "Minimum number of idle instances to keep in the instance pool"
+        },
+        "max_capacity": {
+         "type": "int32",
+         "description": "Maximum number of outstanding instances to keep in the pool, including both instances used by\nclusters and idle instances. Clusters that require further instance provisioning will fail during\nupsize requests."
+        },
+        "node_type_id": {
+         "type": "int32",
+         "description": "This field encodes, through a single value, the resources available to each of\nthe Spark nodes in this cluster. For example, the Spark nodes can be provisioned\nand optimized for memory or compute intensive workloads. A list of available node\ntypes can be retrieved by using the "
+        },
+        "idle_instance_autotermination_minutes": {
+         "type": "required",
+         "description": " API call."
+        },
+        "enable_elastic_disk": {
+         "type": "string",
+         "description": "Automatically terminates the extra instances in the pool cache after they are inactive for this\ntime in minutes if min_idle_instances requirement is already met. If not set, the extra pool\ninstances will be automatically terminated after a default timeout. If specified, the\nthreshold must be between 0 and 10000 minutes.\nUsers can also set this value to 0 to instantly remove idle instances from the cache if\nmin cache size could still hold."
+        },
+        "preloaded_spark_versions": {
+         "type": "int32",
+         "description": "Autoscaling Local Storage: when enabled, this instances in this pool will dynamically acquire\nadditional disk space when its Spark workers are running low on disk space. In AWS, this\nfeature requires specific AWS permissions to function correctly - refer to the User Guide for\nmore details."
+        },
+        "aws_attributes": {
+         "type": "object"
+        },
+        "custom_tags": {
+         "type": "object"
+        },
+        "disk_spec": {
+         "type": "object"
+        },
+        "preloaded_docker_images": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "instance_pool_name": "my-pool",
+        "node_type_id": "i3.xlarge",
+        "min_idle_instances": 10,
+        "aws_attributes": {
+         "availability": "SPOT"
+        },
+        "custom_tags": [
+         {
+          "key": "my-key",
+          "value": "my-value"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates a new instance pool using idle and ready-to-use cloud instances."
+  }
+ }
+}

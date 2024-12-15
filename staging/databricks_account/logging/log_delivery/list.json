@@ -1,0 +1,131 @@
+{
+ "/api/2.0/accounts/{account_id}/log-delivery": {
+  "get": {
+   "operationId": "log-delivery-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/logdelivery/list"
+   },
+   "x-stackQL-resource": "log_delivery",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "status",
+     "description": "Filter by status",
+     "in": "query"
+    },
+    {
+     "name": "credentials_id",
+     "description": "Filter by credential configuration ID.",
+     "in": "query"
+    },
+    {
+     "name": "storage_configuration_id",
+     "description": "Filter by storage configuration ID.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Log delivery configurations were returned successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "log_delivery_configurations": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "account_id": {
+             "type": "string"
+            },
+            "config_id": {
+             "type": "string"
+            },
+            "creation_time": {
+             "type": "integer"
+            },
+            "update_time": {
+             "type": "integer"
+            },
+            "log_delivery_status": {
+             "type": "object",
+             "properties": {
+              "status": {
+               "type": "string"
+              },
+              "message": {
+               "type": "string"
+              },
+              "last_attempt_time": {
+               "type": "string"
+              },
+              "last_successful_attempt_time": {
+               "type": "string"
+              }
+             }
+            },
+            "config_name": {
+             "type": "string"
+            },
+            "status": {
+             "type": "string"
+            },
+            "log_type": {
+             "type": "string"
+            },
+            "output_format": {
+             "type": "string"
+            },
+            "credentials_id": {
+             "type": "string"
+            },
+            "storage_configuration_id": {
+             "type": "string"
+            },
+            "workspace_ids_filter": {
+             "type": "array",
+             "items": {
+              "type": "integer"
+             }
+            },
+            "delivery_path_prefix": {
+             "type": "string"
+            },
+            "delivery_start_time": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets all Databricks log delivery configurations associated with an account specified by ID."
+  }
+ }
+}

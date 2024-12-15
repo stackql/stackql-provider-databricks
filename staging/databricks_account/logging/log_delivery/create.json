@@ -1,0 +1,144 @@
+{
+ "/api/2.0/accounts/{account_id}/log-delivery": {
+  "post": {
+   "operationId": "log-delivery-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/logdelivery/create"
+   },
+   "x-stackQL-resource": "log_delivery",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The log delivery configuration creation request succeeded.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "log_delivery_configuration": {
+          "type": "object",
+          "properties": {
+           "account_id": {
+            "type": "string"
+           },
+           "config_id": {
+            "type": "string"
+           },
+           "creation_time": {
+            "type": "integer"
+           },
+           "update_time": {
+            "type": "integer"
+           },
+           "log_delivery_status": {
+            "type": "object",
+            "properties": {
+             "status": {
+              "type": "string"
+             },
+             "message": {
+              "type": "string"
+             },
+             "last_attempt_time": {
+              "type": "string"
+             },
+             "last_successful_attempt_time": {
+              "type": "string"
+             }
+            }
+           },
+           "config_name": {
+            "type": "string"
+           },
+           "status": {
+            "type": "string"
+           },
+           "log_type": {
+            "type": "string"
+           },
+           "output_format": {
+            "type": "string"
+           },
+           "credentials_id": {
+            "type": "string"
+           },
+           "storage_configuration_id": {
+            "type": "string"
+           },
+           "workspace_ids_filter": {
+            "type": "array",
+            "items": {
+             "type": "integer"
+            }
+           },
+           "delivery_path_prefix": {
+            "type": "string"
+           },
+           "delivery_start_time": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "log_delivery_configuration": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "log_delivery_configuration": {
+         "config_name": "string",
+         "status": "ENABLED",
+         "log_type": "BILLABLE_USAGE",
+         "output_format": "CSV",
+         "credentials_id": "c7814269-df58-4ca3-85e9-f6672ef43d77",
+         "storage_configuration_id": "04aae505-1b1e-4cb9-997d-e1c49282675d",
+         "workspace_ids_filter": [
+          0
+         ],
+         "delivery_path_prefix": "string",
+         "delivery_start_time": "string"
+        }
+       }
+      }
+     }
+    },
+    "description": "Properties of the new log delivery configuration."
+   },
+   "description": "Creates a new Databricks log delivery configuration to enable delivery of the specified type of logs to your storage location. This requires that you already created a"
+  }
+ }
+}

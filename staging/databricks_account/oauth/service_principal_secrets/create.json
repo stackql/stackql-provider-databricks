@@ -1,0 +1,70 @@
+{
+ "/api/2.0/accounts/{account_id}/servicePrincipals/{service_principal_id}/credentials/secrets": {
+  "post": {
+   "operationId": "service-principal-secrets-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/serviceprincipalsecrets/create"
+   },
+   "x-stackQL-resource": "service_principal_secrets",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(string) The account ID.",
+     "in": "path"
+    },
+    {
+     "name": "service_principal_id",
+     "required": true,
+     "description": "(int64) The service principal ID.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         },
+         "secret": {
+          "type": "string"
+         },
+         "secret_hash": {
+          "type": "string"
+         },
+         "create_time": {
+          "type": "string"
+         },
+         "update_time": {
+          "type": "string"
+         },
+         "status": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Create a secret for the given service principal."
+  }
+ }
+}

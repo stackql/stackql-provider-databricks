@@ -1,0 +1,93 @@
+{
+ "/api/2.0/libraries/uninstall": {
+  "post": {
+   "operationId": "libraries-uninstall",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/libraries/uninstall"
+   },
+   "x-stackQL-resource": "libraries",
+   "x-stackQL-method": "uninstall",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "cluster_id": {
+         "type": "required",
+         "description": "Unique identifier for the cluster on which to uninstall these libraries."
+        },
+        "libraries": {
+         "type": "required"
+        }
+       },
+       "example": {
+        "cluster_id": "1234-56789-abcde",
+        "libraries": [
+         {
+          "pypi": {
+           "package": "numpy",
+           "repo": "http://my-pypi-repo.com"
+          }
+         },
+         {
+          "jar": "/Workspace/path/to/library.jar"
+         },
+         {
+          "whl": "/Workspace/path/to/library.whl"
+         },
+         {
+          "maven": {
+           "coordinates": "com.databricks:spark-csv_2.11:1.5.0",
+           "exclusions": [
+            "org.slf4j:slf4j-log4j12"
+           ],
+           "repo": "http://my-maven-repo.com"
+          }
+         },
+         {
+          "cran": {
+           "package": "ggplot2",
+           "repo": "http://cran.us.r-project.org"
+          }
+         },
+         {
+          "requirements": "/Workspace/path/to/requirements.txt"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Set libraries to uninstall from a cluster. The libraries won't be uninstalled until the cluster is restarted. A request to uninstall a library that is not currently installed is ignored."
+  }
+ }
+}

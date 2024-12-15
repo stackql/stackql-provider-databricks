@@ -1,0 +1,92 @@
+{
+ "/api/2.0/vector-search/indexes/{index_name}/query": {
+  "post": {
+   "operationId": "index-query-queryindex",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchindexes/queryindex"
+   },
+   "x-stackQL-resource": "index_query",
+   "x-stackQL-method": "queryindex",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "index_name",
+     "required": true,
+     "description": "(string) Name of the vector index to query.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "num_results": {
+         "type": "integer",
+         "description": "Number of results to return. Defaults to 10."
+        },
+        "columns": {
+         "type": "required",
+         "description": "List of column names to include in the response."
+        },
+        "filters_json": {
+         "type": "Array of string",
+         "description": "JSON string representing query filters."
+        },
+        "query_vector": {
+         "type": "string",
+         "description": "Example filters:"
+        },
+        "query_text": {
+         "type": "Array of double",
+         "description": "Query vector. Required for Direct Vector Access Index and Delta Sync Index using self-managed vectors."
+        },
+        "score_threshold": {
+         "type": "string",
+         "description": "Query text. Required for Delta Sync Index using model endpoint."
+        },
+        "query_type": {
+         "type": "double",
+         "description": "Threshold for the approximate nearest neighbor search. Defaults to 0.0."
+        }
+       },
+       "example": {
+        "query_vector": [
+         1,
+         2,
+         3
+        ],
+        "columns": [
+         "id",
+         "text"
+        ],
+        "num_results": 10
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Successful response with query results."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Query the specified vector index."
+  }
+ }
+}

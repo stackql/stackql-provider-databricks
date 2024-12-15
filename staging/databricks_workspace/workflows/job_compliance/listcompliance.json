@@ -1,0 +1,56 @@
+{
+ "/api/2.0/policies/jobs/list-compliance": {
+  "get": {
+   "operationId": "job-compliance-listcompliance",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/policycomplianceforjobs/listcompliance"
+   },
+   "x-stackQL-resource": "job_compliance",
+   "x-stackQL-method": "listcompliance",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "policy_id",
+     "required": true,
+     "description": "(string) Canonical unique identifier for the cluster policy.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "A page token that can be used to navigate to the next page or previous page as returned by",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Returns the policy compliance status of all jobs that use a given policy. Jobs could be out of compliance if a cluster policy they use was updated after the job was last edited and its job clusters no longer comply with the updated policy."
+  }
+ }
+}

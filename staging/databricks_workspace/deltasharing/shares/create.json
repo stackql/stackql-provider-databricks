@@ -1,0 +1,50 @@
+{
+ "/api/2.1/unity-catalog/shares": {
+  "post": {
+   "operationId": "shares-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/shares/create"
+   },
+   "x-stackQL-resource": "shares",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Name of the share."
+        },
+        "comment": {
+         "type": "string",
+         "description": "User-provided free-form text description."
+        },
+        "storage_root": {
+         "type": "string",
+         "description": "Storage root URL for the share."
+        }
+       },
+       "example": {
+        "name": "string",
+        "comment": "string",
+        "storage_root": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "The new share was successfully created."
+    }
+   },
+   "description": "Creates a new share for data objects. Data objects can be added after creation with"
+  }
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "/api/2.0/fs/files{file_path}": {
+  "put": {
+   "operationId": "files-upload",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/files/upload"
+   },
+   "x-stackQL-resource": "files",
+   "x-stackQL-method": "upload",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "file_path",
+     "required": true,
+     "description": "(string) The absolute path of the file.",
+     "in": "path"
+    },
+    {
+     "name": "overwrite",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "204": {
+     "description": "The file was successfully uploaded."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Uploads a file of up to 5 GiB. The file contents should be sent as the request body as raw bytes (an octet stream); do not encode or otherwise modify the bytes before sending. The contents of the resulting file will be exactly the bytes sent in the request body. If the request is successful, there is no response body."
+  }
+ }
+}

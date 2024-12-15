@@ -1,0 +1,34 @@
+{
+ "/api/2.1/unity-catalog/volumes/{name}": {
+  "get": {
+   "operationId": "volumes-read",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/volumes/read"
+   },
+   "x-stackQL-resource": "volumes",
+   "x-stackQL-method": "read",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The three-level (fully qualified) name of the volume",
+     "in": "path"
+    },
+    {
+     "name": "include_browse",
+     "description": "Whether to include volumes in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Successfully retrieved the properties of the volume"
+    }
+   },
+   "description": "Gets a volume from the metastore for a specific catalog and schema."
+  }
+ }
+}

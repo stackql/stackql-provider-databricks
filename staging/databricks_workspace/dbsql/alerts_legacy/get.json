@@ -1,0 +1,43 @@
+{
+ "/api/2.0/preview/sql/alerts/{alert_id}": {
+  "get": {
+   "operationId": "alerts-legacy-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/alertslegacy/get"
+   },
+   "x-stackQL-resource": "alerts_legacy",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "alert_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Alert was successfully fetched."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets an alert."
+  }
+ }
+}

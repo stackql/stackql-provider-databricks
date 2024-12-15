@@ -1,0 +1,55 @@
+{
+ "/api/2.0/online-tables": {
+  "post": {
+   "operationId": "online-tables-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/onlinetables/create"
+   },
+   "x-stackQL-resource": "online_tables",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string",
+         "description": "Full three-part (catalog, schema, table) name of the table."
+        },
+        "spec": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "string",
+        "spec": {
+         "run_continuously": {},
+         "run_triggered": {},
+         "source_table_full_name": "string",
+         "primary_key_columns": [
+          "string"
+         ],
+         "timeseries_key": "string",
+         "perform_full_copy": false,
+         "pipeline_id": "string"
+        }
+       }
+      }
+     }
+    },
+    "description": "Online Table information."
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Create a new Online Table."
+  }
+ }
+}

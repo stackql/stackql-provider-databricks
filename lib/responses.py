@@ -16,12 +16,11 @@ error_code_descriptions = {
     "509": "An external service is unavailable temporarily as it is being updated."
 }
 
-def process_responses(selector, doc_base_path, examples_doc_path, debug=False):
+def process_responses(selector, doc_base_path, examples_doc_path, hasRespData, debug=False):
     responses = {}
 
     # Find h3 element containing exactly "Responses"
     responses_h3 = selector.xpath(f"{doc_base_path}//h3[text()='Responses']")
-    print(f"Found responses element: {bool(responses_h3)}") if debug else None
     
     if responses_h3:
         # Get the response div xpath string for later use
@@ -43,15 +42,23 @@ def process_responses(selector, doc_base_path, examples_doc_path, debug=False):
     else:
         raise ValueError("Could not find response code")
 
-    resp_example = get_response_example(selector, examples_doc_path, response_code, debug)
-    if not resp_example:
-        raise ValueError("No response examples found")
-    # else:
-    #     print(f"resp_example: {resp_example}") if debug else None
+    if hasRespData:
+        resp_example = get_response_example(selector, examples_doc_path, response_code, debug)
+        if not isinstance(resp_example, (dict, list)):
+            print(f"resp_example: {resp_example}") if debug else None
+            raise ValueError(f"Response example must be a dictionary or array, got: {type(resp_example)}")
+        else:
+            print(f"resp_example: {json.dumps(resp_example, indent=2)}") if debug else None    
 
-    # derive the schema from the example
-    resp_schema = example_to_json_schema(resp_example)
-    print(f"resp_example schema: {resp_schema}") if debug else None
+        # derive the schema from the example
+        resp_schema = example_to_json_schema(resp_example)
+        print(f"resp_example schema: {json.dumps(resp_schema, indent=2)}") if debug else None
+
+        responses[response_code]["content"] = {
+            "application/json": {
+                "schema": resp_schema
+            }
+        }
 
     #
     # error responses

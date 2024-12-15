@@ -1,0 +1,53 @@
+{
+ "/api/2.0/policies/clusters/list": {
+  "get": {
+   "operationId": "cluster-policies-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusterpolicies/list"
+   },
+   "x-stackQL-resource": "cluster_policies",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "sort_order",
+     "in": "query"
+    },
+    {
+     "name": "sort_column",
+     "description": "The cluster policy attribute to sort by.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    },
+    "503": {
+     "description": "Service is currently unavailable."
+    },
+    "504": {
+     "description": "Deadline expired before the operation could complete."
+    }
+   },
+   "description": "Returns a list of policies accessible by the requesting user."
+  }
+ }
+}

@@ -1,0 +1,52 @@
+{
+ "/api/2.0/mlflow/experiments/delete": {
+  "post": {
+   "operationId": "experiments-deleteexperiment",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/deleteexperiment"
+   },
+   "x-stackQL-resource": "experiments",
+   "x-stackQL-method": "deleteexperiment",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "experiment_id": {
+         "type": "required",
+         "description": "ID of the associated experiment."
+        }
+       },
+       "example": {
+        "experiment_id": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Marks an experiment and associated metadata, runs, metrics, params, and tags for deletion. If the experiment uses FileStore, artifacts associated with experiment are also deleted."
+  }
+ }
+}

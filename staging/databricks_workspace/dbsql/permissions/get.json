@@ -1,0 +1,50 @@
+{
+ "/api/2.0/preview/sql/permissions/{objectType}/{objectId}": {
+  "get": {
+   "operationId": "permissions-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dbsqlpermissions/get"
+   },
+   "x-stackQL-resource": "permissions",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "objectType",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    },
+    {
+     "name": "objectId",
+     "required": true,
+     "description": "(uuid)  ",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a JSON representation of the access control list (ACL) for a specified object."
+  }
+ }
+}

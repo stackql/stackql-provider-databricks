@@ -1,0 +1,27 @@
+{
+ "/api/2.0/serving-endpoints": {
+  "get": {
+   "operationId": "serving-endpoints-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/list"
+   },
+   "x-stackQL-resource": "serving_endpoints",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "List of serving endpoints was retrieved successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

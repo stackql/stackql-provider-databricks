@@ -1,0 +1,37 @@
+{
+ "/api/2.0/serving-endpoints/{name}": {
+  "delete": {
+   "operationId": "serving-endpoints-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/delete"
+   },
+   "x-stackQL-resource": "serving_endpoints",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Serving endpoint was deleted successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

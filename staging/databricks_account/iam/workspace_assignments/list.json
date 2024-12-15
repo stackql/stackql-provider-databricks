@@ -1,0 +1,95 @@
+{
+ "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments": {
+  "get": {
+   "operationId": "workspace-assignments-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/workspaceassignment/list"
+   },
+   "x-stackQL-resource": "workspace_assignments",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(string) The account ID.",
+     "in": "path"
+    },
+    {
+     "name": "workspace_id",
+     "required": true,
+     "description": "(int64) The workspace ID for the account.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "permission_assignments": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "principal": {
+             "type": "object",
+             "properties": {
+              "user_name": {
+               "type": "string"
+              },
+              "group_name": {
+               "type": "string"
+              },
+              "service_principal_name": {
+               "type": "string"
+              },
+              "principal_id": {
+               "type": "integer"
+              },
+              "display_name": {
+               "type": "string"
+              }
+             }
+            },
+            "permissions": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "error": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get the permission assignments for the specified Databricks account and Databricks workspace."
+  }
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "/api/2.0/pipelines/{pipeline_id}": {
+  "get": {
+   "operationId": "pipelines-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/pipelines/get"
+   },
+   "x-stackQL-resource": "pipelines",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "pipeline_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

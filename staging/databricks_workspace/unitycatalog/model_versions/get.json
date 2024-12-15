@@ -1,0 +1,60 @@
+{
+ "/api/2.1/unity-catalog/models/{full_name}/versions/{version}": {
+  "get": {
+   "operationId": "model-versions-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelversions/get"
+   },
+   "x-stackQL-resource": "model_versions",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) The three-level (fully qualified) name of the model version",
+     "in": "path"
+    },
+    {
+     "name": "version",
+     "required": true,
+     "description": "(integer) The integer version number of the model version",
+     "in": "path"
+    },
+    {
+     "name": "include_browse",
+     "description": "Whether to include model versions in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    },
+    {
+     "name": "include_aliases",
+     "description": "Whether to include aliases associated with the model version in the response",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Successfully retrieved the properties of the model version"
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get a model version."
+  }
+ }
+}

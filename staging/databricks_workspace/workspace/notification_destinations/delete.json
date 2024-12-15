@@ -1,0 +1,44 @@
+{
+ "/api/2.0/notification-destinations/{id}": {
+  "delete": {
+   "operationId": "notification-destinations-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/notificationdestinations/delete"
+   },
+   "x-stackQL-resource": "notification_destinations",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Deletes a notification destination. Requires workspace admin permissions."
+  }
+ }
+}

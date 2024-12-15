@@ -1,0 +1,145 @@
+{
+ "/api/2.0/preview/scim/v2/Users/{id}": {
+  "put": {
+   "operationId": "users-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/users/update"
+   },
+   "x-stackQL-resource": "users",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(int64) Unique ID for a user in the Databricks workspace.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "schemas": {
+         "type": "Array of string",
+         "description": "The schema of the user."
+        },
+        "id": {
+         "type": "integer",
+         "format": "int64",
+         "description": "Databricks user ID. This is automatically set by Databricks. Any value provided by the client will be ignored."
+        },
+        "userName": {
+         "type": "email",
+         "description": "Email address of the Databricks user."
+        },
+        "displayName": {
+         "type": "string",
+         "description": "String that represents a concatenation of given and family names. For example "
+        },
+        "externalId": {
+         "type": "string",
+         "description": ". This field cannot be updated through the Workspace SCIM APIs when "
+        },
+        "active": {
+         "type": "boolean",
+         "description": ". Use Account SCIM APIs to update "
+        },
+        "emails": {
+         "type": "Array of object"
+        },
+        "name": {
+         "type": "object"
+        },
+        "groups": {
+         "type": "Array of object"
+        },
+        "roles": {
+         "type": "Array of object"
+        },
+        "entitlements": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "schemas": [
+         "urn:ietf:params:scim:schemas:core:2.0:User"
+        ],
+        "id": "string",
+        "userName": "user@example.com",
+        "emails": [
+         {
+          "$ref": "string",
+          "value": "string",
+          "display": "string",
+          "primary": true,
+          "type": "string"
+         }
+        ],
+        "name": {
+         "givenName": "string",
+         "familyName": "string"
+        },
+        "displayName": "string",
+        "groups": [
+         {
+          "$ref": "string",
+          "value": "string",
+          "display": "string",
+          "primary": true,
+          "type": "string"
+         }
+        ],
+        "roles": [
+         {
+          "$ref": "string",
+          "value": "string",
+          "display": "string",
+          "primary": true,
+          "type": "string"
+         }
+        ],
+        "entitlements": [
+         {
+          "$ref": "string",
+          "value": "string",
+          "display": "string",
+          "primary": true,
+          "type": "string"
+         }
+        ],
+        "externalId": "string",
+        "active": true
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "User information was updated successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Replaces a user's information with the data supplied in request."
+  }
+ }
+}

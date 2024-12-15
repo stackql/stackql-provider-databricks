@@ -1,0 +1,27 @@
+{
+ "/api/2.1/marketplace-consumer/listings:batchGet": {
+  "get": {
+   "operationId": "consumer-listings-batchget",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerlistings/batchget"
+   },
+   "x-stackQL-resource": "consumer_listings",
+   "x-stackQL-method": "batchget",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "ids",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Batch get a published listing in the Databricks Marketplace that the consumer has access to."
+  }
+ }
+}

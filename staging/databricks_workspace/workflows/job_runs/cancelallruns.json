@@ -1,0 +1,61 @@
+{
+ "/api/2.1/jobs/runs/cancel-all": {
+  "post": {
+   "operationId": "job-runs-cancelallruns",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/jobs/cancelallruns"
+   },
+   "x-stackQL-resource": "job_runs",
+   "x-stackQL-method": "cancelallruns",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "job_id": {
+         "type": "integer",
+         "format": "int64",
+         "description": " "
+        },
+        "all_queued_runs": {
+         "type": "boolean",
+         "description": "The canonical identifier of the job to cancel all runs of."
+        }
+       },
+       "example": {
+        "job_id": 11223344,
+        "all_queued_runs": false
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Cancels all active runs of a job. The runs are canceled asynchronously, so it doesn't prevent new runs from being started."
+  }
+ }
+}

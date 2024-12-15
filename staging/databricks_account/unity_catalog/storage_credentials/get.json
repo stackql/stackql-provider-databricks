@@ -1,0 +1,116 @@
+{
+ "/api/2.0/accounts/{account_id}/metastores/{metastore_id}/storage-credentials/{storage_credential_name}": {
+  "get": {
+   "operationId": "storage-credentials-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountstoragecredentials/get"
+   },
+   "x-stackQL-resource": "storage_credentials",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 3,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "metastore_id",
+     "required": true,
+     "description": "(uuid) Unity Catalog metastore ID",
+     "in": "path"
+    },
+    {
+     "name": "storage_credential_name",
+     "required": true,
+     "description": "(string) Name of the storage credential.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The storage credential was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "credential_info": {
+          "type": "object",
+          "properties": {
+           "name": {
+            "type": "string"
+           },
+           "aws_iam_role": {
+            "type": "object",
+            "properties": {
+             "role_arn": {
+              "type": "string"
+             },
+             "unity_catalog_iam_arn": {
+              "type": "string"
+             },
+             "external_id": {
+              "type": "string"
+             }
+            }
+           },
+           "comment": {
+            "type": "string"
+           },
+           "read_only": {
+            "type": "boolean"
+           },
+           "owner": {
+            "type": "string"
+           },
+           "full_name": {
+            "type": "string"
+           },
+           "id": {
+            "type": "string"
+           },
+           "metastore_id": {
+            "type": "string"
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "created_by": {
+            "type": "string"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "updated_by": {
+            "type": "string"
+           },
+           "used_for_managed_storage": {
+            "type": "boolean"
+           },
+           "isolation_mode": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a storage credential from the metastore. The caller must be a metastore admin, the owner of the storage credential, or have a level of privilege on the storage credential."
+  }
+ }
+}

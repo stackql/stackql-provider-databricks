@@ -1,0 +1,60 @@
+{
+ "/api/2.1/marketplace-consumer/search-listings": {
+  "get": {
+   "operationId": "consumer-listings-search",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerlistings/search"
+   },
+   "x-stackQL-resource": "consumer_listings",
+   "x-stackQL-method": "search",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "query",
+     "required": true,
+     "description": "(string) Fuzzy matches query",
+     "in": "query"
+    },
+    {
+     "name": "is_free",
+     "in": "query"
+    },
+    {
+     "name": "is_private_exchange",
+     "in": "query"
+    },
+    {
+     "name": "provider_ids",
+     "description": "Matches any of the following provider ids",
+     "in": "query"
+    },
+    {
+     "name": "categories",
+     "description": "Matches any of the following categories",
+     "in": "query"
+    },
+    {
+     "name": "assets",
+     "description": "Matches any of the following asset types",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Search published listings in the Databricks Marketplace that the consumer has access to. This query supports a variety of different search parameters and performs fuzzy matching."
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "/api/2.0/preview/accounts/{account_id}/access-control/rule-sets": {
+  "put": {
+   "operationId": "rule-sets-updateruleset",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountaccesscontrol/updateruleset"
+   },
+   "x-stackQL-resource": "rule_sets",
+   "x-stackQL-method": "updateruleset",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Rule sets on the resource was updated successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "grant_rules": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "role": {
+             "type": "string"
+            },
+            "principals": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         },
+         "etag": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Name of the rule set."
+        },
+        "rule_set": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "string",
+        "rule_set": {
+         "name": "string",
+         "grant_rules": [
+          {
+           "principals": [
+            "string"
+           ],
+           "role": "string"
+          }
+         ],
+         "etag": "string"
+        }
+       }
+      }
+     }
+    },
+    "description": "The rule set to update to."
+   },
+   "description": "Replace the rules of a rule set. First, use  get to read the current version of the rule set before modifying it. This pattern helps prevent conflicts between concurrent updates."
+  }
+ }
+}

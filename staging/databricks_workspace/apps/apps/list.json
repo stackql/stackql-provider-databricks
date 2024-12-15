@@ -1,0 +1,45 @@
+{
+ "/api/2.0/apps": {
+  "get": {
+   "operationId": "apps-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/apps/list"
+   },
+   "x-stackQL-resource": "apps",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_token",
+     "description": "Pagination token to go to the next page of apps. Requests first page if absent.",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "description": "Upper bound for items returned.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Lists all apps in the workspace."
+  }
+ }
+}

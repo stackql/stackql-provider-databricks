@@ -1,0 +1,38 @@
+{
+ "/api/2.1/unity-catalog/providers": {
+  "get": {
+   "operationId": "providers-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providers/list"
+   },
+   "x-stackQL-resource": "providers",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "data_provider_global_metastore_id",
+     "description": "If not provided, all providers will be returned. If no providers exist with this ID, no results will be returned.",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of providers to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The provider list was successfully retrieved."
+    }
+   },
+   "description": "Gets an array of available authentication providers. The caller must either be a metastore admin or the owner of the providers. Providers not owned by the caller are not included in the response. There is no guarantee of a specific ordering of the elements in the array."
+  }
+ }
+}

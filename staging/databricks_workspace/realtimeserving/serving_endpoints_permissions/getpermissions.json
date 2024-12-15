@@ -1,0 +1,44 @@
+{
+ "/api/2.0/permissions/serving-endpoints/{serving_endpoint_id}": {
+  "get": {
+   "operationId": "serving-endpoints-permissions-getpermissions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/getpermissions"
+   },
+   "x-stackQL-resource": "serving_endpoints_permissions",
+   "x-stackQL-method": "getpermissions",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "serving_endpoint_id",
+     "required": true,
+     "description": "(string) The serving endpoint for which to get or manage permissions.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the permissions of a serving endpoint. Serving endpoints can inherit permissions from their root object."
+  }
+ }
+}

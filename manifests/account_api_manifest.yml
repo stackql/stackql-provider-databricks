@@ -1,296 +1,297 @@
 services:
-  # iam:
-  #   description: Identity and Access Management
-  #   resources:
-  #     - name: assignable_roles
-  #       methods:
-  #         - name: getassignablerolesforresource
-  #           docPath: https://docs.databricks.com/api/account/accountaccesscontrol/getassignablerolesforresource
-  #           verb: select
-  #     - name: rule_sets
-  #       methods:
-  #         - name: getruleset
-  #           docPath: https://docs.databricks.com/api/account/accountaccesscontrol/getruleset
-  #           verb: select
-  #         - name: updateruleset
-  #           docPath: https://docs.databricks.com/api/account/accountaccesscontrol/updateruleset
-  #           verb: select
-  #     - name: groups
-  #       methods:
-  #         - name: list
-  #           docPath: https://docs.databricks.com/api/account/accountgroups/list
-  #           verb: select
-  #         - name: create
-  #           docPath: https://docs.databricks.com/api/account/accountgroups/create
-  #           verb: insert
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/accountgroups/get
-  #           verb: select
-  #         - name: update
-  #           docPath: https://docs.databricks.com/api/account/accountgroups/update
-  #           verb: replace
-  #         - name: patch
-  #           docPath: https://docs.databricks.com/api/account/accountgroups/patch
-  #           verb: update
-  #         - name: delete
-  #           docPath: https://docs.databricks.com/api/account/accountgroups/delete
-  #           verb: delete
-  #     - name: service_principals
-  #       methods:
-  #         - name: list
-  #           docPath: https://docs.databricks.com/api/account/accountserviceprincipals/list
-  #           verb: select
-  #         - name: create
-  #           docPath: https://docs.databricks.com/api/account/accountserviceprincipals/create
-  #           verb: insert
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/accountserviceprincipals/get
-  #           verb: select
-  #         - name: update
-  #           docPath: https://docs.databricks.com/api/account/accountserviceprincipals/update
-  #           verb: replace
-  #         - name: patch
-  #           docPath: https://docs.databricks.com/api/account/accountserviceprincipals/patch
-  #           verb: update
-  #         - name: delete
-  #           docPath: https://docs.databricks.com/api/account/accountserviceprincipals/delete
-  #           verb: delete
-  #     - name: users
-  #       methods:
-  #         - name: list
-  #           docPath: https://docs.databricks.com/api/account/accountusers/list
-  #           verb: select
-  #         - name: create
-  #           docPath: https://docs.databricks.com/api/account/accountusers/create
-  #           verb: insert
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/accountusers/get
-  #           verb: select
-  #         - name: update
-  #           docPath: https://docs.databricks.com/api/account/accountusers/update
-  #           verb: replace
-  #         - name: patch
-  #           docPath: https://docs.databricks.com/api/account/accountusers/patch
-  #           verb: update
-  #         - name: delete
-  #           docPath: https://docs.databricks.com/api/account/accountusers/delete
-  #           verb: delete
-  #     - name: workspace_assignments
-  #       methods:
-  #         - name: list
-  #           docPath: https://docs.databricks.com/api/account/workspaceassignment/list
-  #           verb: select
-  #         - name: createorupdate
-  #           docPath: https://docs.databricks.com/api/account/workspaceassignment/update
-  #           verb: insert
-  #         - name: delete
-  #           docPath: https://docs.databricks.com/api/account/workspaceassignment/delete
-  #           verb: delete
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/workspaceassignment/get
-  #           verb: select
-  # unity_catalog:
-  #   description: Unity Catalog
-  #   resources:
-  #     - name: metastore_assignments
-  #       methods:
-  #         - name: list
-  #           docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/list
-  #           verb: select
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/get
-  #           verb: select
-  #         - name: create
-  #           docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/create
-  #           verb: insert
-  #         - name: update
-  #           docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/update
-  #           verb: replace
-  #         - name: delete
-  #           docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/delete
-  #           verb: delete
-  #     - name: metastores
-  #       methods:
-  #         - name: list
-  #           docPath: https://docs.databricks.com/api/account/accountmetastores/list
-  #           verb: select
-  #         - name: create
-  #           docPath: https://docs.databricks.com/api/account/accountmetastores/create
-  #           verb: insert
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/accountmetastores/get
-  #           verb: select
-  #         - name: update
-  #           docPath: https://docs.databricks.com/api/account/accountmetastores/update
-  #           verb: replace
-  #         - name: delete
-  #           docPath: https://docs.databricks.com/api/account/accountmetastores/delete
-  #           verb: delete
-  #     - name: storage_credentials
-  #       methods:
-  #         - name: list
-  #           docPath: https://docs.databricks.com/api/account/accountstoragecredentials/list
-  #           verb: select
-  #         - name: create
-  #           docPath: https://docs.databricks.com/api/account/accountstoragecredentials/create
-  #           verb: insert
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/accountstoragecredentials/get
-  #           verb: select
-  #         - name: update
-  #           docPath: https://docs.databricks.com/api/account/accountstoragecredentials/update
-  #           verb: replace
-  #         - name: delete
-  #           docPath: https://docs.databricks.com/api/account/accountstoragecredentials/delete
-  #           verb: delete
-  # settings:
-  #   description: Account Settings
-  #   resources:
-  #     - name: ip_access_lists
-  #       methods:
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/accountipaccesslists/get
-  #           verb: select
-  #         - name: replace
-  #           docPath: https://docs.databricks.com/api/account/accountipaccesslists/replace
-  #           verb: replace
-  #         - name: update
-  #           docPath: https://docs.databricks.com/api/account/accountipaccesslists/update
-  #           verb: update
-  #         - name: delete
-  #           docPath: https://docs.databricks.com/api/account/accountipaccesslists/delete
-  #           verb: delete
-  #         - name: list
-  #           docPath: https://docs.databricks.com/api/account/accountipaccesslists/list
-  #           verb: select
-  #         - name: create
-  #           docPath: https://docs.databricks.com/api/account/accountipaccesslists/create
-  #           verb: insert
-  #     - name: compliance_security_profile
-  #       methods:
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/cspenablementaccount/get
-  #           verb: select
-  #         - name: update
-  #           docPath: https://docs.databricks.com/api/account/cspenablementaccount/update
-  #           verb: update
-  #     - name: enhanced_security_monitoring
-  #       methods:
-  #         - name: get
-  #           docPath: https://docs.databricks.com/api/account/esmenablementaccount/get
-  #           verb: select
-  #         - name: update
-  #           docPath: https://docs.databricks.com/api/account/esmenablementaccount/update
-  #           verb: update
-  #     - name: network_connectivity
-  #       methods:
-  #         - name: listnetworkconnectivityconfigurations
-  #           docPath: https://docs.databricks.com/api/account/networkconnectivity/listnetworkconnectivityconfigurations
-  #           verb: select
-  #         - name: createnetworkconnectivityconfiguration
-  #           docPath: https://docs.databricks.com/api/account/networkconnectivity/createnetworkconnectivityconfiguration
-  #           verb: insert
-  #         - name: getnetworkconnectivityconfiguration
-  #           docPath: https://docs.databricks.com/api/account/networkconnectivity/getnetworkconnectivityconfiguration
-  #           verb: select
-  #         - name: deletenetworkconnectivityconfiguration
-  #           docPath: https://docs.databricks.com/api/account/networkconnectivity/deletenetworkconnectivityconfiguration
-  #           verb: delete
+  iam:
+    description: Identity and Access Management
+    resources:
+      - name: assignable_roles
+        methods:
+          - name: getassignablerolesforresource
+            docPath: https://docs.databricks.com/api/account/accountaccesscontrol/getassignablerolesforresource
+            verb: select
+      - name: rule_sets
+        methods:
+          - name: getruleset
+            docPath: https://docs.databricks.com/api/account/accountaccesscontrol/getruleset
+            verb: select
+          - name: updateruleset
+            docPath: https://docs.databricks.com/api/account/accountaccesscontrol/updateruleset
+            verb: select
+      - name: groups
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/accountgroups/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/accountgroups/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/accountgroups/get
+            verb: select
+          - name: update
+            docPath: https://docs.databricks.com/api/account/accountgroups/update
+            verb: replace
+          - name: patch
+            docPath: https://docs.databricks.com/api/account/accountgroups/patch
+            verb: update
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/accountgroups/delete
+            verb: delete
+      - name: service_principals
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/accountserviceprincipals/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/accountserviceprincipals/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/accountserviceprincipals/get
+            verb: select
+          - name: update
+            docPath: https://docs.databricks.com/api/account/accountserviceprincipals/update
+            verb: replace
+          - name: patch
+            docPath: https://docs.databricks.com/api/account/accountserviceprincipals/patch
+            verb: update
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/accountserviceprincipals/delete
+            verb: delete
+      - name: users
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/accountusers/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/accountusers/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/accountusers/get
+            verb: select
+          - name: update
+            docPath: https://docs.databricks.com/api/account/accountusers/update
+            verb: replace
+          - name: patch
+            docPath: https://docs.databricks.com/api/account/accountusers/patch
+            verb: update
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/accountusers/delete
+            verb: delete
+      - name: workspace_assignments
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/workspaceassignment/list
+            verb: select
+          - name: createorupdate
+            docPath: https://docs.databricks.com/api/account/workspaceassignment/update
+            verb: insert
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/workspaceassignment/delete
+            verb: delete
+          - name: get
+            docPath: https://docs.databricks.com/api/account/workspaceassignment/get
+            verb: select
+  unity_catalog:
+    description: Unity Catalog
+    resources:
+      - name: metastore_assignments
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/list
+            verb: select
+          - name: get
+            docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/get
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/create
+            verb: insert
+            hasRespData: false
+          - name: update
+            docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/update
+            verb: replace
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/delete
+            verb: delete
+      - name: metastores
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/accountmetastores/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/accountmetastores/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/accountmetastores/get
+            verb: select
+          - name: update
+            docPath: https://docs.databricks.com/api/account/accountmetastores/update
+            verb: replace
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/accountmetastores/delete
+            verb: delete
+      - name: storage_credentials
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/accountstoragecredentials/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/accountstoragecredentials/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/accountstoragecredentials/get
+            verb: select
+          - name: update
+            docPath: https://docs.databricks.com/api/account/accountstoragecredentials/update
+            verb: replace
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/accountstoragecredentials/delete
+            verb: delete
+  settings:
+    description: Account Settings
+    resources:
+      - name: ip_access_lists
+        methods:
+          - name: get
+            docPath: https://docs.databricks.com/api/account/accountipaccesslists/get
+            verb: select
+          - name: replace
+            docPath: https://docs.databricks.com/api/account/accountipaccesslists/replace
+            verb: replace
+          - name: update
+            docPath: https://docs.databricks.com/api/account/accountipaccesslists/update
+            verb: update
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/accountipaccesslists/delete
+            verb: delete
+          - name: list
+            docPath: https://docs.databricks.com/api/account/accountipaccesslists/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/accountipaccesslists/create
+            verb: insert
+      - name: compliance_security_profile
+        methods:
+          - name: get
+            docPath: https://docs.databricks.com/api/account/cspenablementaccount/get
+            verb: select
+          - name: update
+            docPath: https://docs.databricks.com/api/account/cspenablementaccount/update
+            verb: update
+      - name: enhanced_security_monitoring
+        methods:
+          - name: get
+            docPath: https://docs.databricks.com/api/account/esmenablementaccount/get
+            verb: select
+          - name: update
+            docPath: https://docs.databricks.com/api/account/esmenablementaccount/update
+            verb: update
+      - name: network_connectivity
+        methods:
+          - name: listnetworkconnectivityconfigurations
+            docPath: https://docs.databricks.com/api/account/networkconnectivity/listnetworkconnectivityconfigurations
+            verb: select
+          - name: createnetworkconnectivityconfiguration
+            docPath: https://docs.databricks.com/api/account/networkconnectivity/createnetworkconnectivityconfiguration
+            verb: insert
+          - name: getnetworkconnectivityconfiguration
+            docPath: https://docs.databricks.com/api/account/networkconnectivity/getnetworkconnectivityconfiguration
+            verb: select
+          - name: deletenetworkconnectivityconfiguration
+            docPath: https://docs.databricks.com/api/account/networkconnectivity/deletenetworkconnectivityconfiguration
+            verb: delete
   provisioning:
     description: Account Provisioning
     resources:
-      # - name: credentials
-      #   methods:
-      #     - name: list
-      #       docPath: https://docs.databricks.com/api/account/credentials/list
-      #       verb: select
-      #     - name: create
-      #       docPath: https://docs.databricks.com/api/account/credentials/create
-      #       verb: insert
-      #     - name: get
-      #       docPath: https://docs.databricks.com/api/account/credentials/get
-      #       verb: select
-      #     - name: delete
-      #       docPath: https://docs.databricks.com/api/account/credentials/delete
-      #       verb: delete
-      # - name: encryption_keys
-      #   methods:
-      #     - name: list
-      #       docPath: https://docs.databricks.com/api/account/encryptionkeys/list
-      #       verb: select
-      #     - name: create
-      #       docPath: https://docs.databricks.com/api/account/encryptionkeys/create
-      #       verb: insert
-      #     - name: get
-      #       docPath: https://docs.databricks.com/api/account/encryptionkeys/get
-      #       verb: select
-      #     - name: delete
-      #       docPath: https://docs.databricks.com/api/account/encryptionkeys/delete
-      #       verb: delete
-      # - name: networks
-      #   methods:
-      #     - name: list
-      #       docPath: https://docs.databricks.com/api/account/networks/list
-      #       verb: select
-      #     - name: create
-      #       docPath: https://docs.databricks.com/api/account/networks/create
-      #       verb: insert
-      #     - name: get
-      #       docPath: https://docs.databricks.com/api/account/networks/get
-      #       verb: select
-      #     - name: delete
-      #       docPath: https://docs.databricks.com/api/account/networks/delete
-      #       verb: delete
-      # - name: private_access
-      #   methods:
-      #     - name: list
-      #       docPath: https://docs.databricks.com/api/account/privateaccess/list
-      #       verb: select
-      #     - name: create
-      #       docPath: https://docs.databricks.com/api/account/privateaccess/create
-      #       verb: insert
-      #     - name: get
-      #       docPath: https://docs.databricks.com/api/account/privateaccess/get
-      #       verb: select
-      #     - name: replace
-      #       docPath: https://docs.databricks.com/api/account/privateaccess/replace
-      #       verb: replace
-      #     - name: delete
-      #       docPath: https://docs.databricks.com/api/account/privateaccess/delete
-      #       verb: delete
-      # - name: storage
-      #   methods:
-      #     - name: list
-      #       docPath: https://docs.databricks.com/api/account/storage/list
-      #       verb: select
-      #     - name: create
-      #       docPath: https://docs.databricks.com/api/account/storage/create
-      #       verb: insert
-      #     - name: get
-      #       docPath: https://docs.databricks.com/api/account/storage/get
-      #       verb: select
-      #     - name: delete
-      #       docPath: https://docs.databricks.com/api/account/storage/delete
-      #       verb: delete
-      # - name: vpc_endpoints
-      #   methods:
-      #     - name: list
-      #       docPath: https://docs.databricks.com/api/account/vpcendpoints/list
-      #       verb: select
-      #     - name: create
-      #       docPath: https://docs.databricks.com/api/account/vpcendpoints/create
-      #       verb: insert
-      #     - name: get
-      #       docPath: https://docs.databricks.com/api/account/vpcendpoints/get
-      #       verb: select
-      #     - name: delete
-      #       docPath: https://docs.databricks.com/api/account/vpcendpoints/delete
-      #       verb: delete
+      - name: credentials
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/credentials/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/credentials/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/credentials/get
+            verb: select
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/credentials/delete
+            verb: delete
+      - name: encryption_keys
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/encryptionkeys/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/encryptionkeys/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/encryptionkeys/get
+            verb: select
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/encryptionkeys/delete
+            verb: delete
+      - name: networks
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/networks/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/networks/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/networks/get
+            verb: select
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/networks/delete
+            verb: delete
+      - name: private_access
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/privateaccess/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/privateaccess/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/privateaccess/get
+            verb: select
+          - name: replace
+            docPath: https://docs.databricks.com/api/account/privateaccess/replace
+            verb: replace
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/privateaccess/delete
+            verb: delete
+      - name: storage
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/storage/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/storage/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/storage/get
+            verb: select
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/storage/delete
+            verb: delete
+      - name: vpc_endpoints
+        methods:
+          - name: list
+            docPath: https://docs.databricks.com/api/account/vpcendpoints/list
+            verb: select
+          - name: create
+            docPath: https://docs.databricks.com/api/account/vpcendpoints/create
+            verb: insert
+          - name: get
+            docPath: https://docs.databricks.com/api/account/vpcendpoints/get
+            verb: select
+          - name: delete
+            docPath: https://docs.databricks.com/api/account/vpcendpoints/delete
+            verb: delete
       - name: workspaces
         methods:
-          # - name: list
-          #   docPath: https://docs.databricks.com/api/account/workspaces/list
-          #   verb: select
+          - name: list
+            docPath: https://docs.databricks.com/api/account/workspaces/list
+            verb: select
           - name: create
             docPath: https://docs.databricks.com/api/account/workspaces/create
             verb: insert
@@ -311,6 +312,7 @@ services:
           - name: download
             docPath: https://docs.databricks.com/api/account/billableusage/download
             verb: exec
+            hasRespData: false
       - name: usage_dashboards
         methods:
           - name: get
@@ -406,3 +408,4 @@ services:
           - name: delete
             docPath: https://docs.databricks.com/api/account/serviceprincipalsecrets/delete
             verb: delete
+            hasRespData: false

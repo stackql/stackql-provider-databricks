@@ -1,0 +1,40 @@
+{
+ "/api/2.0/preview/sql/queries": {
+  "get": {
+   "operationId": "queries-legacy-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/querieslegacy/list"
+   },
+   "x-stackQL-resource": "queries_legacy",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_size",
+     "in": "query"
+    },
+    {
+     "name": "page",
+     "in": "query"
+    },
+    {
+     "name": "order",
+     "description": "Name of query attribute to order by. Default sort order is ascending. Append a dash (",
+     "in": "query"
+    },
+    {
+     "name": "q",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Gets a list of queries. Optionally, this list can be filtered by a search term."
+  }
+ }
+}

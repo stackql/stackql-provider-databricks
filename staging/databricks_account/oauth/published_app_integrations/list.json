@@ -1,0 +1,90 @@
+{
+ "/api/2.0/accounts/{account_id}/oauth2/published-app-integrations": {
+  "get": {
+   "operationId": "published-app-integrations-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/publishedappintegration/list"
+   },
+   "x-stackQL-resource": "published_app_integrations",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "apps": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "app_id": {
+             "type": "string"
+            },
+            "integration_id": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "token_access_policy": {
+             "type": "object",
+             "properties": {
+              "access_token_ttl_in_minutes": {
+               "type": "integer"
+              },
+              "refresh_token_ttl_in_minutes": {
+               "type": "integer"
+              }
+             }
+            },
+            "created_by": {
+             "type": "integer"
+            },
+            "create_time": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    },
+    "501": {
+     "description": "Operation is not implemented or is not supported/enabled in this service."
+    }
+   },
+   "description": "Get the list of published OAuth app integrations for the specified Databricks account"
+  }
+ }
+}

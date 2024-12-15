@@ -1,0 +1,75 @@
+{
+ "/api/2.0/mlflow/registry-webhooks/update": {
+  "patch": {
+   "operationId": "model-web-hooks-updatewebhook",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/updatewebhook"
+   },
+   "x-stackQL-resource": "model_web_hooks",
+   "x-stackQL-method": "updatewebhook",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "id": {
+         "type": "required",
+         "description": " "
+        },
+        "events": {
+         "type": "string",
+         "description": "Webhook ID"
+        },
+        "description": {
+         "type": "Array of string",
+         "description": "Events that can trigger a registry webhook:"
+        },
+        "status": {
+         "type": "string",
+         "description": " "
+        },
+        "http_url_spec": {
+         "type": "object"
+        },
+        "job_spec": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "id": "124323",
+        "status": "DISABLED"
+       }
+      }
+     }
+    },
+    "description": "Details required to update a registry webhook. Only the fields that need to be updated should be specified, and both"
+   },
+   "responses": {
+    "200": {
+     "description": "Registry webhook was updated successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "This endpoint is in Public Preview."
+  }
+ }
+}

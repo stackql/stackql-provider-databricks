@@ -1,0 +1,59 @@
+{
+ "/api/2.0/pipelines/{pipeline_id}/updates": {
+  "get": {
+   "operationId": "pipeline-updates-listupdates",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/pipelines/listupdates"
+   },
+   "x-stackQL-resource": "pipeline_updates",
+   "x-stackQL-method": "listupdates",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "pipeline_id",
+     "required": true,
+     "description": "(string) The pipeline to return updates for.",
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "description": "Page token returned by previous call",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "description": "Max number of entries to return in a single page.",
+     "in": "query"
+    },
+    {
+     "name": "until_update_id",
+     "description": "If present, returns updates until and including this update_id.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "List updates for an active pipeline."
+  }
+ }
+}

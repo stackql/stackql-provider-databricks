@@ -1,0 +1,40 @@
+{
+ "/api/2.0/sql/queries": {
+  "get": {
+   "operationId": "queries-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/queries/list"
+   },
+   "x-stackQL-resource": "queries",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a list of queries accessible to the user, ordered by creation time."
+  }
+ }
+}

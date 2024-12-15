@@ -1,0 +1,29 @@
+{
+ "/api/2.0/sql/warehouses/{id}": {
+  "get": {
+   "operationId": "warehouses-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/warehouses/get"
+   },
+   "x-stackQL-resource": "warehouses",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(string) Required. Id of the SQL warehouse.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Gets the information for a single SQL warehouse."
+  }
+ }
+}

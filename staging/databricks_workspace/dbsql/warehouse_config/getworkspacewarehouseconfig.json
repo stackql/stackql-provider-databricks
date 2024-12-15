@@ -1,0 +1,22 @@
+{
+ "/api/2.0/sql/config/warehouses": {
+  "get": {
+   "operationId": "warehouse-config-getworkspacewarehouseconfig",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/warehouses/getworkspacewarehouseconfig"
+   },
+   "x-stackQL-resource": "warehouse_config",
+   "x-stackQL-method": "getworkspacewarehouseconfig",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Gets the workspace level configuration that is shared by all SQL warehouses in a workspace."
+  }
+ }
+}

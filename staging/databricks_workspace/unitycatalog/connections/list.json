@@ -1,0 +1,33 @@
+{
+ "/api/2.1/unity-catalog/connections": {
+  "get": {
+   "operationId": "connections-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/connections/list"
+   },
+   "x-stackQL-resource": "connections",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "max_results",
+     "description": "Maximum number of connections to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The connection list was successfully retrieved."
+    }
+   },
+   "description": "List all connections."
+  }
+ }
+}

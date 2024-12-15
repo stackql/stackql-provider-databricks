@@ -1,0 +1,28 @@
+{
+ "/api/2.0/preview/sql/dashboards/{dashboard_id}": {
+  "get": {
+   "operationId": "dashboards-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dashboards/get"
+   },
+   "x-stackQL-resource": "dashboards",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "dashboard_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Dashboard fetched successfully."
+    }
+   },
+   "description": "Returns a JSON representation of a dashboard object, including its visualization and query objects."
+  }
+ }
+}

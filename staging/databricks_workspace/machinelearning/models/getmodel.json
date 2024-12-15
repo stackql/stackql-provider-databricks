@@ -1,0 +1,41 @@
+{
+ "/api/2.0/mlflow/databricks/registered-models/get": {
+  "get": {
+   "operationId": "models-getmodel",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/getmodel"
+   },
+   "x-stackQL-resource": "models",
+   "x-stackQL-method": "getmodel",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Registered model unique name identifier.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Model details were returned successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get the details of a model. This is a Databricks workspace version of the"
+  }
+ }
+}

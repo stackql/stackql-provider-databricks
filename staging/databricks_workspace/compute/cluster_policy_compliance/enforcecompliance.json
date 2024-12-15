@@ -1,0 +1,63 @@
+{
+ "/api/2.0/policies/clusters/enforce-compliance": {
+  "post": {
+   "operationId": "cluster-policy-compliance-enforcecompliance",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/policycomplianceforclusters/enforcecompliance"
+   },
+   "x-stackQL-resource": "cluster_policy_compliance",
+   "x-stackQL-method": "enforcecompliance",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "cluster_id": {
+         "type": "required",
+         "description": "The ID of the cluster you want to enforce policy compliance on."
+        },
+        "validate_only": {
+         "type": "string",
+         "description": " "
+        }
+       },
+       "example": {
+        "cluster_id": "string",
+        "validate_only": false
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Updates a cluster to be compliant with the current version of its policy. A cluster can be updated if it is in a"
+  }
+ }
+}

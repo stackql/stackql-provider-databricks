@@ -1,0 +1,65 @@
+{
+ "/api/2.0/ip-access-lists": {
+  "post": {
+   "operationId": "ip-access-lists-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/ipaccesslists/create"
+   },
+   "x-stackQL-resource": "ip_access_lists",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "label": {
+         "type": "required",
+         "description": " "
+        },
+        "list_type": {
+         "type": "string",
+         "description": "Label for the IP access list. This "
+        },
+        "ip_addresses": {
+         "type": "required",
+         "description": " be empty."
+        }
+       },
+       "example": {
+        "label": "Office VPN",
+        "list_type": "ALLOW",
+        "ip_addresses": [
+         "192.168.100.0/22"
+        ]
+       }
+      }
+     }
+    },
+    "description": "Details required to configure a block list or allow list."
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates an IP access list for this workspace."
+  }
+ }
+}

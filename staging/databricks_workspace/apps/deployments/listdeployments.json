@@ -1,0 +1,51 @@
+{
+ "/api/2.0/apps/{app_name}/deployments": {
+  "get": {
+   "operationId": "deployments-listdeployments",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/apps/listdeployments"
+   },
+   "x-stackQL-resource": "deployments",
+   "x-stackQL-method": "listdeployments",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "app_name",
+     "required": true,
+     "description": "(string) The name of the app.",
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "description": "Pagination token to go to the next page of apps. Requests first page if absent.",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "description": "Upper bound for items returned.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Lists all app deployments for the app with the supplied name."
+  }
+ }
+}

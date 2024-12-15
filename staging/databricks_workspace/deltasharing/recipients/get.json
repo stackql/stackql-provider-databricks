@@ -1,0 +1,29 @@
+{
+ "/api/2.1/unity-catalog/recipients/{name}": {
+  "get": {
+   "operationId": "recipients-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/recipients/get"
+   },
+   "x-stackQL-resource": "recipients",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the recipient.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The recipient was successfully retrieved."
+    }
+   },
+   "description": "Gets a share recipient from the metastore if:"
+  }
+ }
+}

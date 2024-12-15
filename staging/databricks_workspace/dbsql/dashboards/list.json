@@ -1,0 +1,31 @@
+{
+ "/api/2.0/preview/sql/data_sources": {
+  "get": {
+   "operationId": "dashboards-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/datasources/list"
+   },
+   "x-stackQL-resource": "dashboards",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Retrieves a full list of SQL warehouses available in this workspace. All fields that appear in this API response are enumerated for clarity. However, you need only a SQL warehouse's"
+  }
+ }
+}

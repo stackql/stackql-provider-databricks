@@ -1,0 +1,42 @@
+{
+ "/api/2.0/mlflow/registry-webhooks/delete": {
+  "delete": {
+   "operationId": "model-web-hooks-deletewebhook",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/deletewebhook"
+   },
+   "x-stackQL-resource": "model_web_hooks",
+   "x-stackQL-method": "deletewebhook",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "id",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Registry webhook was deleted successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "This endpoint is in Public Preview."
+  }
+ }
+}

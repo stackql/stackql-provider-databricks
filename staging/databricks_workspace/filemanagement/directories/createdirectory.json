@@ -1,0 +1,47 @@
+{
+ "/api/2.0/fs/directories{directory_path}": {
+  "put": {
+   "operationId": "directories-createdirectory",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/files/createdirectory"
+   },
+   "x-stackQL-resource": "directories",
+   "x-stackQL-method": "createdirectory",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "directory_path",
+     "required": true,
+     "description": "(string) The absolute path of a directory.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "204": {
+     "description": "The directory was successfully created or already exists."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates an empty directory. If necessary, also creates any parent directories of the new, empty directory (like the shell command"
+  }
+ }
+}

@@ -1,0 +1,55 @@
+{
+ "/api/2.0/mlflow/model-versions/set-tag": {
+  "post": {
+   "operationId": "model-version-tags-setmodelversiontag",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/setmodelversiontag"
+   },
+   "x-stackQL-resource": "model_version_tags",
+   "x-stackQL-method": "setmodelversiontag",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Unique name of the model."
+        },
+        "version": {
+         "type": "string",
+         "description": "Model version number."
+        },
+        "key": {
+         "type": "required",
+         "description": "Name of the tag. Maximum size depends on storage backend.\nIf a tag with this name already exists, its preexisting value will be replaced by the specified "
+        },
+        "value": {
+         "type": "string",
+         "description": ".\nAll storage backends are guaranteed to support key values up to 250 bytes in size."
+        }
+       },
+       "example": {
+        "name": "string",
+        "version": "string",
+        "key": "string",
+        "value": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Sets a model version tag."
+  }
+ }
+}

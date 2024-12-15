@@ -1,0 +1,59 @@
+{
+ "/api/2.1/clusters/change-owner": {
+  "post": {
+   "operationId": "clusters-changeowner",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/changeowner"
+   },
+   "x-stackQL-resource": "clusters",
+   "x-stackQL-method": "changeowner",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "cluster_id": {
+         "type": "required",
+         "description": "New owner of the cluster_id after this RPC."
+        },
+        "owner_username": {
+         "type": "string"
+        }
+       },
+       "example": {
+        "cluster_id": "string",
+        "owner_username": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Change the owner of the cluster. You must be an admin and the cluster must be terminated to perform this operation. The service principal application ID can be supplied as an argument to"
+  }
+ }
+}

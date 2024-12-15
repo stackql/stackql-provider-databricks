@@ -1,0 +1,65 @@
+{
+ "/api/2.0/sql/history/queries": {
+  "get": {
+   "operationId": "query-history-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/queryhistory/list"
+   },
+   "x-stackQL-resource": "query_history",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": null,
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "A token that can be used to get the next page of results. The token can contains characters that need to be encoded before using it in a URL. For example, the character '+' needs to be replaced by %2B. This field is optional.",
+     "in": "query"
+    },
+    {
+     "name": "include_metrics",
+     "description": "Whether to include the query metrics with each query. Only use this for a small subset of queries (max_results). Defaults to false.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "499": {
+     "description": "Operation was canceled by the caller."
+    },
+    "500": {
+     "description": "Internal error."
+    },
+    "503": {
+     "description": "Service is currently unavailable."
+    }
+   },
+   "description": "List the history of queries through SQL warehouses, and serverless compute."
+  }
+ }
+}

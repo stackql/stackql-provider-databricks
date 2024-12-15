@@ -1,0 +1,75 @@
+{
+ "/api/2.1/unity-catalog/tables": {
+  "get": {
+   "operationId": "tables-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/tables/list"
+   },
+   "x-stackQL-resource": "tables",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "catalog_name",
+     "required": true,
+     "description": "(string) Name of parent catalog for tables of interest.",
+     "in": "query"
+    },
+    {
+     "name": "schema_name",
+     "required": true,
+     "description": "(string) Parent schema of tables.",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of tables to return. If not set, all the tables are returned (not recommended).",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque token to send for the next page of results (pagination).",
+     "in": "query"
+    },
+    {
+     "name": "include_delta_metadata",
+     "description": "Whether delta metadata should be included in the response.",
+     "in": "query"
+    },
+    {
+     "name": "omit_columns",
+     "description": "Whether to omit the columns of the table from the response or not.",
+     "in": "query"
+    },
+    {
+     "name": "omit_properties",
+     "description": "Whether to omit the properties of the table from the response or not.",
+     "in": "query"
+    },
+    {
+     "name": "omit_username",
+     "description": "Whether to omit the username of the table (e.g. owner, updated_by, created_by) from the response or not.",
+     "in": "query"
+    },
+    {
+     "name": "include_browse",
+     "description": "Whether to include tables in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    },
+    {
+     "name": "include_manifest_capabilities",
+     "description": "Whether to include a manifest containing capabilities the table has.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The tables list was successfully retrieved."
+    }
+   },
+   "description": "Gets an array of all tables for the current metastore under the parent catalog and schema. The caller must be a metastore admin or an owner of (or have the"
+  }
+ }
+}

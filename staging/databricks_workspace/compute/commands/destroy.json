@@ -1,0 +1,43 @@
+{
+ "/api/1.2/contexts/destroy": {
+  "post": {
+   "operationId": "commands-destroy",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/commandexecution/destroy"
+   },
+   "x-stackQL-resource": "commands",
+   "x-stackQL-method": "destroy",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "clusterId": {
+         "type": "required"
+        },
+        "contextId": {
+         "type": "string"
+        }
+       },
+       "example": {
+        "clusterId": "string",
+        "contextId": "string"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Status was returned successfully."
+    }
+   },
+   "description": "Deletes an execution context."
+  }
+ }
+}

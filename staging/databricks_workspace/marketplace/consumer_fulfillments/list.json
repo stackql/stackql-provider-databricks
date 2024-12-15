@@ -1,0 +1,36 @@
+{
+ "/api/2.1/marketplace-consumer/listings/{listing_id}/fulfillments": {
+  "get": {
+   "operationId": "consumer-fulfillments-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerfulfillments/list"
+   },
+   "x-stackQL-resource": "consumer_fulfillments",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "listing_id",
+     "required": true,
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Get all listings fulfillments associated with a listing. A"
+  }
+ }
+}

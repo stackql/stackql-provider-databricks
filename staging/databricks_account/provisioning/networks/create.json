@@ -1,0 +1,177 @@
+{
+ "/api/2.0/accounts/{account_id}/networks": {
+  "post": {
+   "operationId": "networks-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/networks/create"
+   },
+   "x-stackQL-resource": "networks",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "201": {
+     "description": "The network configuration was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "network_id": {
+          "type": "string"
+         },
+         "network_name": {
+          "type": "string"
+         },
+         "vpc_id": {
+          "type": "string"
+         },
+         "subnet_ids": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "security_group_ids": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "vpc_status": {
+          "type": "string"
+         },
+         "warning_messages": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "warning_type": {
+             "type": "string"
+            },
+            "warning_message": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "error_messages": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "error_type": {
+             "type": "string"
+            },
+            "error_message": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "workspace_id": {
+          "type": "integer"
+         },
+         "account_id": {
+          "type": "string"
+         },
+         "creation_time": {
+          "type": "integer"
+         },
+         "vpc_endpoints": {
+          "type": "object",
+          "properties": {
+           "rest_api": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           },
+           "dataplane_relay": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "network_name": {
+         "type": "required",
+         "description": "The human-readable name of the network configuration."
+        },
+        "vpc_id": {
+         "type": "string",
+         "description": "The ID of the VPC associated with this network. VPC IDs can be used in multiple network configurations."
+        },
+        "subnet_ids": {
+         "type": "string",
+         "description": "IDs of at least two subnets associated with this network. Subnet IDs "
+        },
+        "security_group_ids": {
+         "type": "Array of string",
+         "description": " be used in multiple network configurations."
+        },
+        "vpc_endpoints": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "network_name": "string",
+        "vpc_id": "string",
+        "subnet_ids": [
+         "string"
+        ],
+        "security_group_ids": [
+         "string"
+        ],
+        "vpc_endpoints": {
+         "rest_api": [
+          "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+         ],
+         "dataplane_relay": [
+          "497f6eca-6276-4993-bfeb-53cbbbba6f08"
+         ]
+        }
+       }
+      }
+     }
+    },
+    "description": "Properties of the new network configuration."
+   },
+   "description": "Creates a Databricks network configuration that represents an AWS VPC and its resources. The VPC will be used for new Databricks clusters. This requires a pre-existing VPC and subnets. For VPC requirements, see"
+  }
+ }
+}

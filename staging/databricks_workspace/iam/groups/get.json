@@ -1,0 +1,41 @@
+{
+ "/api/2.0/preview/scim/v2/Groups/{id}": {
+  "get": {
+   "operationId": "groups-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/groups/get"
+   },
+   "x-stackQL-resource": "groups",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(int64) Unique ID for a group in the Databricks workspace.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Group information was returned successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the information for a specific group in the Databricks workspace."
+  }
+ }
+}

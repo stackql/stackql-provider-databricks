@@ -1,0 +1,56 @@
+{
+ "/api/2.0/fs/directories{directory_path}": {
+  "get": {
+   "operationId": "directory-contents-listdirectorycontents",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/files/listdirectorycontents"
+   },
+   "x-stackQL-resource": "directory_contents",
+   "x-stackQL-method": "listdirectorycontents",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "directory_path",
+     "required": true,
+     "description": "(string) The absolute path of a directory.",
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "description": "An opaque page token which was the",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "An array of DirectoryEntry for the contents of the directory. If `next_page_token` is set, there may be more entries in the directory."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Returns the contents of a directory. If there is no directory at the specified path, the API returns a HTTP 404 error."
+  }
+ }
+}

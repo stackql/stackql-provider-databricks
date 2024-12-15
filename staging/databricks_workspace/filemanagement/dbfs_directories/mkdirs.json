@@ -1,0 +1,52 @@
+{
+ "/api/2.0/dbfs/mkdirs": {
+  "post": {
+   "operationId": "dbfs-directories-mkdirs",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dbfs/mkdirs"
+   },
+   "x-stackQL-resource": "dbfs_directories",
+   "x-stackQL-method": "mkdirs",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "path": {
+         "type": "required",
+         "description": " "
+        }
+       },
+       "example": {
+        "path": "/mnt/foo"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates the given directory and necessary parent directories if they do not exist. If a file (not a directory) exists at any prefix of the input path, this call throws an exception with"
+  }
+ }
+}

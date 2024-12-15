@@ -1,0 +1,149 @@
+{
+ "/api/2.0/accounts/{account_id}/metastores/{metastore_id}/storage-credentials/{storage_credential_name}": {
+  "put": {
+   "operationId": "storage-credentials-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountstoragecredentials/update"
+   },
+   "x-stackQL-resource": "storage_credentials",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 3,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "metastore_id",
+     "required": true,
+     "description": "(uuid) Unity Catalog metastore ID",
+     "in": "path"
+    },
+    {
+     "name": "storage_credential_name",
+     "required": true,
+     "description": "(string) Name of the storage credential.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "201": {
+     "description": "The storage credential was successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "credential_info": {
+          "type": "object",
+          "properties": {
+           "name": {
+            "type": "string"
+           },
+           "aws_iam_role": {
+            "type": "object",
+            "properties": {
+             "role_arn": {
+              "type": "string"
+             },
+             "unity_catalog_iam_arn": {
+              "type": "string"
+             },
+             "external_id": {
+              "type": "string"
+             }
+            }
+           },
+           "comment": {
+            "type": "string"
+           },
+           "read_only": {
+            "type": "boolean"
+           },
+           "owner": {
+            "type": "string"
+           },
+           "full_name": {
+            "type": "string"
+           },
+           "id": {
+            "type": "string"
+           },
+           "metastore_id": {
+            "type": "string"
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "created_by": {
+            "type": "string"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "updated_by": {
+            "type": "string"
+           },
+           "used_for_managed_storage": {
+            "type": "boolean"
+           },
+           "isolation_mode": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "credential_info": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "credential_info": {
+         "comment": "string",
+         "read_only": true,
+         "owner": "string",
+         "aws_iam_role": {
+          "role_arn": "string"
+         },
+         "isolation_mode": "ISOLATION_MODE_OPEN",
+         "new_name": "string",
+         "skip_validation": false,
+         "force": true
+        }
+       }
+      }
+     }
+    },
+    "description": "The storage credential to update."
+   },
+   "description": "Updates a storage credential on the metastore. The caller must be the owner of the storage credential. If the caller is a metastore admin, only the"
+  }
+ }
+}

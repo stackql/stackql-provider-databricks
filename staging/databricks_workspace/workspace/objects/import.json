@@ -1,0 +1,72 @@
+{
+ "/api/2.0/workspace/import": {
+  "post": {
+   "operationId": "objects-import",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/workspace/import"
+   },
+   "x-stackQL-resource": "objects",
+   "x-stackQL-method": "import",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "path": {
+         "type": "required",
+         "description": "The absolute path of the object or directory. Importing a directory is only supported for the "
+        },
+        "format": {
+         "type": "string",
+         "description": " and "
+        },
+        "language": {
+         "type": "string",
+         "description": " formats."
+        },
+        "content": {
+         "type": "string",
+         "description": " "
+        },
+        "overwrite": {
+         "type": "string",
+         "description": "This specifies the format of the file to be imported."
+        }
+       },
+       "example": {
+        "format": "SOURCE",
+        "path": "/Users/user@example.com/project/ScalaExampleNotebook",
+        "language": "SCALA",
+        "content": "MSsx",
+        "overwrite": true
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Imports a workspace object (for example, a notebook or file) or the contents of an entire directory. If"
+  }
+ }
+}

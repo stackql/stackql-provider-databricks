@@ -1,0 +1,49 @@
+{
+ "/api/2.0/policy-families/{policy_family_id}": {
+  "get": {
+   "operationId": "policy-families-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/policyfamilies/get"
+   },
+   "x-stackQL-resource": "policy_families",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "policy_family_id",
+     "required": true,
+     "description": "(string) The family ID about which to retrieve information.",
+     "in": "path"
+    },
+    {
+     "name": "version",
+     "description": "The version number for the family to fetch. Defaults to the latest version.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Retrieve the information for an policy family based on its identifier and version"
+  }
+ }
+}

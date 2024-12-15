@@ -1,0 +1,40 @@
+{
+ "/api/2.1/unity-catalog/effective-permissions/{securable_type}/{full_name}": {
+  "get": {
+   "operationId": "effective-grants-geteffective",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/grants/geteffective"
+   },
+   "x-stackQL-resource": "effective_grants",
+   "x-stackQL-method": "geteffective",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "securable_type",
+     "required": true,
+     "description": "(string) Type of securable.",
+     "in": "path"
+    },
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) Full name of securable.",
+     "in": "path"
+    },
+    {
+     "name": "principal",
+     "description": "If provided, only the effective permissions for the specified principal (user or group) are returned.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The effective permissions list for securable was successfully retrieved."
+    }
+   },
+   "description": "Gets the effective permissions for a securable."
+  }
+ }
+}

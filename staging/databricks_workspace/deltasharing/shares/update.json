@@ -1,0 +1,96 @@
+{
+ "/api/2.1/unity-catalog/shares/{name}": {
+  "patch": {
+   "operationId": "shares-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/shares/update"
+   },
+   "x-stackQL-resource": "shares",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The name of the share.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "owner": {
+         "type": "string",
+         "description": "Username of current owner of share."
+        },
+        "comment": {
+         "type": "string",
+         "description": "User-provided free-form text description."
+        },
+        "storage_root": {
+         "type": "string",
+         "description": "Storage root URL for the share."
+        },
+        "new_name": {
+         "type": "string",
+         "description": "New name for the share."
+        },
+        "updates": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "owner": "string",
+        "comment": "string",
+        "storage_root": "string",
+        "new_name": "string",
+        "updates": [
+         {
+          "action": "ADD",
+          "data_object": {
+           "name": "string",
+           "comment": "string",
+           "shared_as": "string",
+           "string_shared_as": "string",
+           "content": "string",
+           "history_data_sharing_status": "ENABLED",
+           "partitions": [
+            {
+             "values": [
+              {
+               "name": "string",
+               "value": "string",
+               "recipient_property_key": "string",
+               "op": "EQUAL"
+              }
+             ]
+            }
+           ],
+           "cdf_enabled": true,
+           "start_version": 0,
+           "data_object_type": "TABLE",
+           "added_at": 0,
+           "added_by": "string",
+           "status": "ACTIVE"
+          }
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "The share was successfully updated."
+    }
+   },
+   "description": "Updates the share with the changes and data objects in the request. The caller must be the owner of the share or a metastore admin."
+  }
+ }
+}

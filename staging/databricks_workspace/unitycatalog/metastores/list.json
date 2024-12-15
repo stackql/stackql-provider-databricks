@@ -1,0 +1,22 @@
+{
+ "/api/2.1/unity-catalog/metastores": {
+  "get": {
+   "operationId": "metastores-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/metastores/list"
+   },
+   "x-stackQL-resource": "metastores",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The metastore list was successfully retrieved."
+    }
+   },
+   "description": "Gets an array of the available metastores (as"
+  }
+ }
+}

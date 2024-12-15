@@ -1,0 +1,28 @@
+{
+ "/api/2.0/marketplace-provider/providers/{id}": {
+  "get": {
+   "operationId": "providers-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerproviders/get"
+   },
+   "x-stackQL-resource": "providers",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Get provider profile"
+  }
+ }
+}

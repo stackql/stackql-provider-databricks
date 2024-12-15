@@ -1,0 +1,41 @@
+{
+ "/api/2.0/preview/scim/v2/Groups/{id}": {
+  "delete": {
+   "operationId": "groups-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/groups/delete"
+   },
+   "x-stackQL-resource": "groups",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(int64) Unique ID for a group in the Databricks workspace.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "204": {
+     "description": "Group was deleted successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Deletes a group from the Databricks workspace."
+  }
+ }
+}

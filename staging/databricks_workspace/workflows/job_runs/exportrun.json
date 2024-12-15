@@ -1,0 +1,47 @@
+{
+ "/api/2.1/jobs/runs/export": {
+  "get": {
+   "operationId": "job-runs-exportrun",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/jobs/exportrun"
+   },
+   "x-stackQL-resource": "job_runs",
+   "x-stackQL-method": "exportrun",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "run_id",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "views_to_export",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Export and retrieve the job run task."
+  }
+ }
+}

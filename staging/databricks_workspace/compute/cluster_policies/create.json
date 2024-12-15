@@ -1,0 +1,80 @@
+{
+ "/api/2.0/policies/clusters/create": {
+  "post": {
+   "operationId": "cluster-policies-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusterpolicies/create"
+   },
+   "x-stackQL-resource": "cluster_policies",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string",
+         "description": "Cluster Policy name requested by the user. This has to be unique. Length must be between 1 and 100\ncharacters."
+        },
+        "definition": {
+         "type": "JSON",
+         "description": "Policy definition document expressed in "
+        },
+        "description": {
+         "type": "string",
+         "description": "."
+        },
+        "policy_family_id": {
+         "type": "string",
+         "description": "Additional human-readable description of the cluster policy."
+        },
+        "policy_family_definition_overrides": {
+         "type": "JSON",
+         "description": "ID of the policy family. The cluster policy's policy definition inherits the policy\nfamily's policy definition."
+        },
+        "max_clusters_per_user": {
+         "type": "integer",
+         "format": "int64",
+         "description": "Cannot be used with "
+        },
+        "libraries": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "definition": "{ \"custom_tags.test_tag\": { \"type\": \"fixed\", \"value\": \"test_value\" } }",
+        "name": "Test policy"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Creates a new policy with prescribed settings."
+  }
+ }
+}

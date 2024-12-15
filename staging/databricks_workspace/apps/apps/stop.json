@@ -1,0 +1,41 @@
+{
+ "/api/2.0/apps/{name}/stop": {
+  "post": {
+   "operationId": "apps-stop",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/apps/stop"
+   },
+   "x-stackQL-resource": "apps",
+   "x-stackQL-method": "stop",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The name of the app.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Stops the active deployment of the app in the workspace."
+  }
+ }
+}

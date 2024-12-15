@@ -1,0 +1,50 @@
+{
+ "/api/2.0/mlflow/experiments/list": {
+  "get": {
+   "operationId": "experiments-listexperiments",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/listexperiments"
+   },
+   "x-stackQL-resource": "experiments",
+   "x-stackQL-method": "listexperiments",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "view_type",
+     "description": "Qualifier for type of experiments to be returned. If unspecified, return only active experiments.",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of experiments desired. If",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Token indicating the page of experiments to fetch",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a list of all experiments."
+  }
+ }
+}

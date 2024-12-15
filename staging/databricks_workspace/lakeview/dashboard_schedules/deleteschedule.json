@@ -1,0 +1,53 @@
+{
+ "/api/2.0/lakeview/dashboards/{dashboard_id}/schedules/{schedule_id}": {
+  "delete": {
+   "operationId": "dashboard-schedules-deleteschedule",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/lakeview/deleteschedule"
+   },
+   "x-stackQL-resource": "dashboard_schedules",
+   "x-stackQL-method": "deleteschedule",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "dashboard_id",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    },
+    {
+     "name": "schedule_id",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    },
+    {
+     "name": "etag",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

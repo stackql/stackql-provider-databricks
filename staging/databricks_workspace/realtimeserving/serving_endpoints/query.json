@@ -1,0 +1,106 @@
+{
+ "/serving-endpoints/{name}/invocations": {
+  "post": {
+   "operationId": "serving-endpoints-query",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/query"
+   },
+   "x-stackQL-resource": "serving_endpoints",
+   "x-stackQL-method": "query",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "prompt": {
+         "type": "object",
+         "description": " "
+        },
+        "input": {
+         "type": "object",
+         "description": "The prompt string (or array of strings) field used ONLY for "
+        },
+        "temperature": {
+         "type": "double",
+         "description": "\nserving endpoints and should only be used with other completions query fields."
+        },
+        "stop": {
+         "type": "Array of string",
+         "description": " "
+        },
+        "max_tokens": {
+         "type": "integer",
+         "description": "The input string (or array of strings) field used ONLY for "
+        },
+        "n": {
+         "type": "integer",
+         "description": "\nserving endpoints and is the only field (along with extra_params if needed) used by embeddings queries."
+        },
+        "stream": {
+         "type": "boolean",
+         "description": " "
+        },
+        "dataframe_records": {
+         "type": "Array of object",
+         "description": "The temperature field used ONLY for "
+        },
+        "instances": {
+         "type": "Array of object",
+         "description": " and "
+        },
+        "inputs": {
+         "type": "object",
+         "description": " serving\nendpoints. This is a float between 0.0 and 2.0 with a default of 1.0 and should only be used with other\nchat/completions query fields."
+        },
+        "messages": {
+         "type": "Array of object"
+        },
+        "extra_params": {
+         "type": "object"
+        },
+        "dataframe_split": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "dataframe_records": [
+         {
+          "user_latitude": 37,
+          "user_longitude": 122.4,
+          "destination_id": 10
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Serving endpoint was queried successfully and returned predictions."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

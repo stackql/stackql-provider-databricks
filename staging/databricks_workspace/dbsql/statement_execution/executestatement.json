@@ -1,0 +1,104 @@
+{
+ "/api/2.0/sql/statements/": {
+  "post": {
+   "operationId": "statement-execution-executestatement",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/statementexecution/executestatement"
+   },
+   "x-stackQL-resource": "statement_execution",
+   "x-stackQL-method": "executestatement",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "statement": {
+         "type": "required",
+         "description": " "
+        },
+        "warehouse_id": {
+         "type": "string",
+         "description": "The SQL statement to execute. The statement can optionally be parameterized, see "
+        },
+        "catalog": {
+         "type": "required",
+         "description": "."
+        },
+        "schema": {
+         "type": "string",
+         "description": "Warehouse upon which to execute a statement. See also "
+        },
+        "row_limit": {
+         "type": "string",
+         "description": "Sets default catalog for statement execution, similar to "
+        },
+        "byte_limit": {
+         "type": "string",
+         "description": " in SQL."
+        },
+        "disposition": {
+         "type": "integer",
+         "format": "int64",
+         "description": "Sets default schema for statement execution, similar to "
+        },
+        "format": {
+         "type": "integer",
+         "format": "int64",
+         "description": " in SQL."
+        },
+        "wait_timeout": {
+         "type": "string",
+         "description": "Applies the given row limit to the statement's result set, but unlike the "
+        },
+        "on_wait_timeout": {
+         "type": "string",
+         "description": " clause in SQL,\nit also sets the "
+        },
+        "parameters": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "warehouse_id": "abcdef0123456789",
+        "statement": "SELECT * FROM range(100)",
+        "wait_timeout": "0s"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. If the SQL warehouse fails to execute the provided statement, a 200 response is returned with `status.state` set to `FAILED` (in constract to a failure when accepting the request, which results in a non-200 response). Details of the error can be found at `status.error` in case of execution failures."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    },
+    "503": {
+     "description": "Service is currently unavailable."
+    }
+   },
+   "description": "Execute a SQL statement and optionally await its results for a specified time."
+  }
+ }
+}

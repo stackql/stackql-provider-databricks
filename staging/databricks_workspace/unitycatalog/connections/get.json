@@ -1,0 +1,29 @@
+{
+ "/api/2.1/unity-catalog/connections/{name}": {
+  "get": {
+   "operationId": "connections-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/connections/get"
+   },
+   "x-stackQL-resource": "connections",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the connection.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The connection was successfully retrieved."
+    }
+   },
+   "description": "Gets a connection from it's name."
+  }
+ }
+}

@@ -1,0 +1,61 @@
+{
+ "/api/2.0/mlflow/comments/update": {
+  "patch": {
+   "operationId": "model-version-comments-updatecomment",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/updatecomment"
+   },
+   "x-stackQL-resource": "model_version_comments",
+   "x-stackQL-method": "updatecomment",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "id": {
+         "type": "required",
+         "description": " "
+        },
+        "comment": {
+         "type": "uuid",
+         "description": "Unique identifier of an activity"
+        }
+       },
+       "example": {
+        "id": "6fc74c92704341aaa49e74dcc6031057",
+        "comment": "This version is great!"
+       }
+      }
+     }
+    },
+    "description": "Details required to edit a comment on a model version."
+   },
+   "responses": {
+    "200": {
+     "description": "Comment was updated successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Post an edit to a comment on a model version."
+  }
+ }
+}

@@ -1,0 +1,54 @@
+{
+ "/api/1.2/commands/execute": {
+  "post": {
+   "operationId": "commands-execute",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/commandexecution/execute"
+   },
+   "x-stackQL-resource": "commands",
+   "x-stackQL-method": "execute",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "clusterId": {
+         "type": "string",
+         "description": "Running cluster id"
+        },
+        "contextId": {
+         "type": "string",
+         "description": "Running context id"
+        },
+        "language": {
+         "type": "string",
+         "description": "Executable code"
+        },
+        "command": {
+         "type": "string"
+        }
+       },
+       "example": {
+        "clusterId": "1234-567890-span123",
+        "contextId": "1234567890123456789",
+        "language": "python",
+        "command": "print('Hello, World!')"
+       }
+      }
+     }
+    }
+   },
+   "responses": {
+    "200": {
+     "description": "Status was returned successfully."
+    }
+   },
+   "description": "Runs a cluster command in the given execution context, using the provided language."
+  }
+ }
+}

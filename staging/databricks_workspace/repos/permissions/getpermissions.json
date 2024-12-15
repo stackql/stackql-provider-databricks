@@ -1,0 +1,44 @@
+{
+ "/api/2.0/permissions/repos/{repo_id}": {
+  "get": {
+   "operationId": "permissions-getpermissions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/repos/getpermissions"
+   },
+   "x-stackQL-resource": "permissions",
+   "x-stackQL-method": "getpermissions",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "repo_id",
+     "required": true,
+     "description": "(string) The repo for which to get or manage permissions.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": ""
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the permissions of a repo. Repos can inherit permissions from their root object."
+  }
+ }
+}

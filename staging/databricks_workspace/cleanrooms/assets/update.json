@@ -1,0 +1,186 @@
+{
+ "/api/2.0/clean-rooms/{clean_room_name}/assets/{asset_type}/{name}": {
+  "patch": {
+   "operationId": "assets-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/cleanroomassets/update"
+   },
+   "x-stackQL-resource": "assets",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 3,
+   "parameters": [
+    {
+     "name": "clean_room_name",
+     "required": true,
+     "description": "(string) Name of the clean room.",
+     "in": "path"
+    },
+    {
+     "name": "asset_type",
+     "required": true,
+     "description": "(string) The type of the asset.",
+     "in": "path"
+    },
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string",
+         "description": " "
+        },
+        "asset_type": {
+         "type": "string",
+         "description": "A fully qualified name that uniquely identifies the asset within the clean room.\nThis is also the name displayed in the clean room UI."
+        },
+        "table_local_details": {
+         "type": "object"
+        },
+        "volume_local_details": {
+         "type": "object"
+        },
+        "view_local_details": {
+         "type": "object"
+        },
+        "foreign_table_local_details": {
+         "type": "object"
+        },
+        "table": {
+         "type": "object"
+        },
+        "notebook": {
+         "type": "object"
+        },
+        "view": {
+         "type": "object"
+        },
+        "foreign_table": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "creator.sales.products",
+        "asset_type": "TABLE",
+        "table_local_details": {
+         "local_name": "demo.sales.products",
+         "partitions": [
+          {
+           "values": [
+            {
+             "name": "string",
+             "value": "string",
+             "recipient_property_key": "string",
+             "op": "EQUAL"
+            }
+           ]
+          }
+         ]
+        },
+        "volume_local_details": {
+         "local_name": "demo.sales.products"
+        },
+        "view_local_details": {
+         "local_name": "demo.sales.products"
+        },
+        "foreign_table_local_details": {
+         "local_name": "demo.sales.products"
+        },
+        "table": {
+         "columns": [
+          {
+           "name": "string",
+           "type_text": "string",
+           "type_name": "BOOLEAN",
+           "position": 0,
+           "type_precision": 0,
+           "type_scale": 0,
+           "type_interval_type": "string",
+           "type_json": "string",
+           "comment": "string",
+           "nullable": true,
+           "partition_index": 0,
+           "mask": {
+            "function_name": "string",
+            "using_column_names": [
+             "string"
+            ]
+           }
+          }
+         ]
+        },
+        "notebook": {
+         "notebook_content": "string",
+         "etag": "string"
+        },
+        "view": {
+         "columns": [
+          {
+           "name": "string",
+           "type_text": "string",
+           "type_name": "BOOLEAN",
+           "position": 0,
+           "type_precision": 0,
+           "type_scale": 0,
+           "type_interval_type": "string",
+           "type_json": "string",
+           "comment": "string",
+           "nullable": true,
+           "partition_index": 0,
+           "mask": {
+            "function_name": "string",
+            "using_column_names": [
+             "string"
+            ]
+           }
+          }
+         ]
+        },
+        "foreign_table": {
+         "columns": [
+          {
+           "name": "string",
+           "type_text": "string",
+           "type_name": "BOOLEAN",
+           "position": 0,
+           "type_precision": 0,
+           "type_scale": 0,
+           "type_interval_type": "string",
+           "type_json": "string",
+           "comment": "string",
+           "nullable": true,
+           "partition_index": 0,
+           "mask": {
+            "function_name": "string",
+            "using_column_names": [
+             "string"
+            ]
+           }
+          }
+         ]
+        }
+       }
+      }
+     }
+    },
+    "description": "Metadata of the clean room asset"
+   },
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Update a clean room asset. For example, updating the content of a notebook; changing the shared partitions of a table; etc."
+  }
+ }
+}

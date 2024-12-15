@@ -1,0 +1,33 @@
+{
+ "/api/2.1/unity-catalog/shares": {
+  "get": {
+   "operationId": "shares-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/shares/list"
+   },
+   "x-stackQL-resource": "shares",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "max_results",
+     "description": "Maximum number of shares to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The shares list was successfully retrieved."
+    }
+   },
+   "description": "Gets an array of data object shares from the metastore. The caller must be a metastore admin or the owner of the share. There is no guarantee of a specific ordering of the elements in the array."
+  }
+ }
+}

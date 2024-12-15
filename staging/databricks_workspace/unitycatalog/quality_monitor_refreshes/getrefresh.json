@@ -1,0 +1,35 @@
+{
+ "/api/2.1/unity-catalog/tables/{table_name}/monitor/refreshes/{refresh_id}": {
+  "get": {
+   "operationId": "quality-monitor-refreshes-getrefresh",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/qualitymonitors/getrefresh"
+   },
+   "x-stackQL-resource": "quality_monitor_refreshes",
+   "x-stackQL-method": "getrefresh",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "table_name",
+     "required": true,
+     "description": "(string) Full name of the table.",
+     "in": "path"
+    },
+    {
+     "name": "refresh_id",
+     "required": true,
+     "description": "(string) ID of the refresh.",
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The refresh info was successfully retrieved."
+    }
+   },
+   "description": "Gets info about a specific monitor refresh using the given refresh ID."
+  }
+ }
+}

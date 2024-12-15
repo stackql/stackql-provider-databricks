@@ -1,0 +1,36 @@
+{
+ "/api/2.0/marketplace-exchange/filters": {
+  "get": {
+   "operationId": "provider-exchange-filters-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchangefilters/list"
+   },
+   "x-stackQL-resource": "provider_exchange_filters",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "exchange_id",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "List exchange filter"
+  }
+ }
+}

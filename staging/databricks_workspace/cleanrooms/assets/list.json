@@ -1,0 +1,33 @@
+{
+ "/api/2.0/clean-rooms/{clean_room_name}/assets": {
+  "get": {
+   "operationId": "assets-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/cleanroomassets/list"
+   },
+   "x-stackQL-resource": "assets",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "clean_room_name",
+     "required": true,
+     "description": "(string) Name of the clean room.",
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   }
+  }
+ }
+}

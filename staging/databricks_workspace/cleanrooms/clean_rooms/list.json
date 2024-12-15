@@ -1,0 +1,33 @@
+{
+ "/api/2.0/clean-rooms": {
+  "get": {
+   "operationId": "clean-rooms-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/cleanrooms/list"
+   },
+   "x-stackQL-resource": "clean_rooms",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_size",
+     "description": "Maximum number of clean rooms to return (i.e., the page length). Defaults to 100.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Get a list of all clean rooms of the metastore. Only clean rooms the caller has access to are returned."
+  }
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/metastores/{metastore_id}": {
+  "post": {
+   "operationId": "metastore-assignments-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/accountmetastoreassignments/create"
+   },
+   "x-stackQL-resource": "metastore_assignments",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 3,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "workspace_id",
+     "required": true,
+     "description": "(int64) Workspace ID.",
+     "in": "path"
+    },
+    {
+     "name": "metastore_id",
+     "required": true,
+     "description": "(uuid) Unity Catalog metastore ID",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "201": {
+     "description": "The metastore assignment was successfully created."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "metastore_assignment": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "metastore_assignment": {
+         "metastore_id": "string",
+         "default_catalog_name": "string"
+        }
+       }
+      }
+     }
+    },
+    "description": "The mapping from workspace to metastore."
+   },
+   "description": "Creates an assignment to a metastore for a workspace"
+  }
+ }
+}

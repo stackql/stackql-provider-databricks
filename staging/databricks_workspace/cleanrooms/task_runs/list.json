@@ -1,0 +1,44 @@
+{
+ "/api/2.0/clean-rooms/{clean_room_name}/runs": {
+  "get": {
+   "operationId": "task-runs-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/cleanroomtaskruns/list"
+   },
+   "x-stackQL-resource": "task_runs",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "clean_room_name",
+     "required": true,
+     "description": "(string) Name of the clean room.",
+     "in": "path"
+    },
+    {
+     "name": "notebook_name",
+     "description": "Notebook name",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "description": "The maximum number of task runs to return",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "List all the historical notebook task runs in a clean room."
+  }
+ }
+}

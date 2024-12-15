@@ -1,0 +1,92 @@
+{
+ "/api/2.0/accounts/{account_id}/network-connectivity-configs": {
+  "get": {
+   "operationId": "network-connectivity-listnetworkconnectivityconfigurations",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/account/networkconnectivity/listnetworkconnectivityconfigurations"
+   },
+   "x-stackQL-resource": "network_connectivity",
+   "x-stackQL-method": "listnetworkconnectivityconfigurations",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "account_id",
+     "required": true,
+     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "description": "Pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The network connectivity configuration list was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "items": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "network_connectivity_config_id": {
+             "type": "string"
+            },
+            "account_id": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "region": {
+             "type": "string"
+            },
+            "egress_config": {
+             "type": "object",
+             "properties": {
+              "default_rules": {
+               "type": "object",
+               "properties": {
+                "aws_stable_ip_rule": {
+                 "type": "object",
+                 "properties": {
+                  "cidr_blocks": {
+                   "type": "array",
+                   "items": {
+                    "type": "string"
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "creation_time": {
+             "type": "integer"
+            },
+            "updated_time": {
+             "type": "integer"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Gets an array of network connectivity configurations."
+  }
+ }
+}

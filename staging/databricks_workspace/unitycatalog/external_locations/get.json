@@ -1,0 +1,34 @@
+{
+ "/api/2.1/unity-catalog/external-locations/{name}": {
+  "get": {
+   "operationId": "external-locations-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/externallocations/get"
+   },
+   "x-stackQL-resource": "external_locations",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the external location.",
+     "in": "path"
+    },
+    {
+     "name": "include_browse",
+     "description": "Whether to include external locations in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The external location was successfully retrieved."
+    }
+   },
+   "description": "Gets an external location from the metastore. The caller must be either a metastore admin, the owner of the external location, or a user that has some privilege on the external location."
+  }
+ }
+}

@@ -1,0 +1,28 @@
+{
+ "/api/2.0/marketplace-provider/files/{file_id}": {
+  "get": {
+   "operationId": "provider-files-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerfiles/get"
+   },
+   "x-stackQL-resource": "provider_files",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "file_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Request completed successfully."
+    }
+   },
+   "description": "Get a file"
+  }
+ }
+}

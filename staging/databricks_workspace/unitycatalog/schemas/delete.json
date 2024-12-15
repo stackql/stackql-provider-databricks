@@ -1,0 +1,34 @@
+{
+ "/api/2.1/unity-catalog/schemas/{full_name}": {
+  "delete": {
+   "operationId": "schemas-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/schemas/delete"
+   },
+   "x-stackQL-resource": "schemas",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) Full name of the schema.",
+     "in": "path"
+    },
+    {
+     "name": "force",
+     "description": "Force deletion even if the schema is not empty.",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "The schema was successfully deleted."
+    }
+   },
+   "description": "Deletes the specified schema from the parent catalog. The caller must be the owner of the schema or an owner of the parent catalog."
+  }
+ }
+}

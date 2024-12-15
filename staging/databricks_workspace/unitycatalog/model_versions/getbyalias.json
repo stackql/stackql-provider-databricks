@@ -1,0 +1,55 @@
+{
+ "/api/2.1/unity-catalog/models/{full_name}/aliases/{alias}": {
+  "get": {
+   "operationId": "model-versions-getbyalias",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelversions/getbyalias"
+   },
+   "x-stackQL-resource": "model_versions",
+   "x-stackQL-method": "getbyalias",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) The three-level (fully qualified) name of the registered model",
+     "in": "path"
+    },
+    {
+     "name": "alias",
+     "required": true,
+     "description": "(string) The name of the alias",
+     "in": "path"
+    },
+    {
+     "name": "include_aliases",
+     "description": "Whether to include aliases associated with the model version in the response",
+     "in": "query"
+    }
+   ],
+   "requestBody": {},
+   "responses": {
+    "200": {
+     "description": "Successfully retrieved the properties of the model version"
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get a model version by alias."
+  }
+ }
+}
