@@ -1,4 +1,5 @@
 from parsel import Selector
+import json
 
 error_code_descriptions = {
     "400": "Request is invalid or malformed.",
@@ -15,20 +16,22 @@ error_code_descriptions = {
     "509": "An external service is unavailable temporarily as it is being updated."
 }
 
-def process_responses(selector, doc_base_path, debug=False):
+def process_responses(selector, doc_base_path, examples_doc_path, debug=False):
     responses = {}
 
-    responses_header_ix = 0
-    if selector.xpath(f"{doc_base_path}/h3[2]/text()").get() == "Responses":
-        responses_header_ix = 2
-    elif selector.xpath(f"{doc_base_path}/h3[3]/text()").get() == "Responses":
-        responses_header_ix = 3
-
-    # Get the first div sibling after our Responses h3
-    h3_elem = f"h3[{responses_header_ix}]" if responses_header_ix > 0 else "h3"
-    response_xpath = f"{doc_base_path}/{h3_elem}/following-sibling::div[1]"
-    response_code = selector.xpath(f"{response_xpath}/div[1]/div/strong/text()").get()[0:3]
-    response_desc = selector.xpath(f"{response_xpath}/div[1]/div/span[2]/text()").get()
+    # Find h3 element containing exactly "Responses"
+    responses_h3 = selector.xpath(f"{doc_base_path}//h3[text()='Responses']")
+    print(f"Found responses element: {bool(responses_h3)}") if debug else None
+    
+    if responses_h3:
+        # Get the response div xpath string for later use
+        response_xpath = f"{doc_base_path}//h3[text()='Responses']/following-sibling::div[1]"
+        # Now work with the div that follows the h3
+        response_div = responses_h3.xpath("following-sibling::div[1]")
+        response_code = response_div.xpath("div[1]/div/strong/text()").get()[0:3]
+        response_desc = response_div.xpath("div[1]/div/span[2]/text()").get()
+    else:
+        raise ValueError("Could not find Responses h3 element")
 
     print(f"response_code: {response_code}") if debug else None
     if response_code:
@@ -37,6 +40,18 @@ def process_responses(selector, doc_base_path, debug=False):
         else:
             response_obj = {}
         responses[response_code] = response_obj
+    else:
+        raise ValueError("Could not find response code")
+
+    resp_example = get_response_example(selector, examples_doc_path, response_code, debug)
+    if not resp_example:
+        raise ValueError("No response examples found")
+    # else:
+    #     print(f"resp_example: {resp_example}") if debug else None
+
+    # derive the schema from the example
+    resp_schema = example_to_json_schema(resp_example)
+    print(f"resp_example schema: {resp_schema}") if debug else None
 
     #
     # error responses
@@ -51,6 +66,8 @@ def process_responses(selector, doc_base_path, debug=False):
         # Split by comma, strip whitespace and any periods
         error_codes = [code.strip().rstrip('.') for code in codes_part.split(',')]
         print(f"error codes: {error_codes}") if debug else None   
+        if len(error_codes) == 0:
+            raise ValueError("No error codes found")
         for code in error_codes:
             if code in error_code_descriptions:
                 err_response_obj = { "description": error_code_descriptions[code] }
@@ -58,81 +75,97 @@ def process_responses(selector, doc_base_path, debug=False):
                 raise ValueError(f"Uknown HTTP response code: {code}")
             responses[code] = err_response_obj
 
-    
-    # Get all response blocks
-    # response_blocks = responses_div.xpath(".//div[contains(@aria-expanded, 'true') or contains(@aria-expanded, 'false')]")
-    
-    # for block in response_blocks:
-    #     # Get response code - clean non-printable chars
-    #     code_raw = block.xpath(".//strong/text()").get()
-    #     if code_raw:
-    #         code = ''.join(c for c in code_raw if c.isprintable()).strip()
-            
-    #         # Get description if it exists
-    #         desc = block.xpath(".//span[2]/text()").get()
-            
-    #         # Find the response properties div - look within the block
-    #         props_div = block.xpath(".//div[2]/div")  # Changed this line
-    #         if props_div:
-    #             props_div_text = props_div.get()
-    #             if props_div_text:  # Add null check
-    #                 # Skip if first div is just text (description repeat)
-    #                 first_div = props_div.xpath("string(.)").get()
-    #                 if first_div and not first_div.strip().startswith('<'):
-    #                     props_div = props_div.xpath("following-sibling::div")
-    #                     props_div_text = props_div.get()
-
-    #                 if props_div_text:  # Another null check after possible reassignment
-    #                     # Process properties similar to request body
-    #                     props_selector = Selector(text=props_div_text)
-                        
-    #                     # Get scalar properties
-    #                     names = props_selector.xpath("//body/div/div/div/a/span/code/text()").getall()
-    #                     types = props_selector.xpath("//body/div/div/div/a/following-sibling::span/text()").getall()
-    #                     descriptions = props_selector.xpath("//body/div/div[.//code]/div[last()]/div/text()").getall()
-
-    #                     # Extend descriptions list to match length of names
-    #                     while len(descriptions) < len(names):
-    #                         descriptions.append(None)
-
-    #                     scalar_props = list(zip(names, types, descriptions))
-
-    #                     # Get complex properties (arrays/objects)
-    #                     complex_names = props_selector.xpath("//body/div/div/div/div/div/a/span/code/text()").getall()
-    #                     complex_types = props_selector.xpath("//body/div/div/div/div/div/a/following-sibling::span/text()").getall()
-    #                     complex_props = [(name, type_, None) for name, type_ in zip(complex_names, complex_types)]
-
-    #                     # Combine properties
-    #                     all_props = scalar_props + complex_props
-
-    #                     # Build response schema
-    #                     properties = {}
-    #                     for name, type_, description in all_props:
-    #                         prop = {
-    #                             "type": type_ if type_ != "int64" else "integer",
-    #                             "format": "int64" if type_ == "int64" else None,
-    #                         }
-    #                         if description:
-    #                             prop["description"] = description
-                            
-    #                         # Remove None values
-    #                         prop = {k: v for k, v in prop.items() if v is not None}
-    #                         properties[name] = prop
-
-    #                     # Build response object
-    #                     response_obj = {
-    #                         "content": {
-    #                             "application/json": {
-    #                                 "schema": {
-    #                                     "type": "object",
-    #                                     "properties": properties
-    #                                 }
-    #                             }
-    #                         }
-    #                     }
-    #                     if desc:
-    #                         response_obj["description"] = desc.strip()
-                        
-    #                     responses[code] = response_obj
-    
     return responses
+
+def get_response_example(selector, examples_doc_path, response_code, debug=False):
+    # Find 'Response samples' h1 element
+    response_samples = selector.xpath(f"{examples_doc_path}//h1[text()='Response samples']")
+   
+    if not response_samples:
+        print("No response samples section found") if debug else None
+        return None
+
+    # Get tabs from the next div 
+    response_tabs_xpath = f"{examples_doc_path}//h1[text()='Response samples']/following-sibling::div[1]//div[@role='tab']"
+    tabs = selector.xpath(response_tabs_xpath)
+  
+    #
+    # test: there should be 0 or 1 response sample tabs
+    #
+    if len(tabs) == 0:
+        print("No response sample tabs found") if debug else None
+        return None
+    elif len(tabs) > 1:
+        raise ValueError(f"Expected 1 response sample tab, found {len(tabs)}")
+
+    discovered_response_code = tabs[0].xpath('.//text()').get()
+
+    #
+    # test: response code should match the response code in the tab in examples
+    #
+    if discovered_response_code:
+        if discovered_response_code != response_code:
+            raise ValueError(f"Expected response code {response_code}, found {discovered_response_code}")
+    else:
+        raise ValueError("Could not find response code in tab")
+
+    # Get the response example from the pre element
+    example_xpath = f"{examples_doc_path}//h1[text()='Response samples']/following-sibling::div[1]//pre//text()"
+    example_text = selector.xpath(example_xpath).getall()
+   
+    if example_text:
+        # Join all text pieces and parse as JSON
+        try:
+            example_json = json.loads(''.join(example_text))
+            return example_json
+        except json.JSONDecodeError:
+            raise ValueError("Could not parse response example as JSON")
+    else:
+        raise ValueError("Could not find response example")
+
+def example_to_json_schema(example):
+    """Convert a JSON example into a JSON schema"""
+    
+    def _get_type(value):
+        """Helper function to get the type of a value"""
+        if isinstance(value, dict):
+            return "object"
+        elif isinstance(value, list):
+            return "array"
+        elif isinstance(value, bool):
+            return "boolean"
+        elif isinstance(value, int):
+            return "integer"
+        elif isinstance(value, float):
+            return "number"
+        elif value is None:
+            return "null"
+        else:
+            return "string"
+
+    def _process_value(value):
+        """Recursively process a value to build schema"""
+        value_type = _get_type(value)
+        
+        if value_type == "object":
+            return {
+                "type": "object",
+                "properties": {
+                    k: _process_value(v) for k, v in value.items()
+                }
+            }
+        elif value_type == "array":
+            if not value:  # Empty array
+                return {
+                    "type": "array",
+                    "items": {}
+                }
+            # Get schema of first item as representative
+            return {
+                "type": "array",
+                "items": _process_value(value[0])
+            }
+        else:
+            return {"type": value_type}
+
+    return _process_value(example)

@@ -114,16 +114,20 @@ sqlVerb: {sqlVerb}""")
     doc_base_path = "/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]"
     examples_doc_path = "/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[2]"
 
-    http_verb = selector.xpath(f"{doc_base_path}/article/span/code/div/div/text()").get().lower()
+    http_verb = selector.xpath(f"{doc_base_path}/article/span/code/div/div/text()").get()
+    if not http_verb:
+        raise ValueError(f"Could not find HTTP verb in {docPath}")
+    else:
+        http_verb = http_verb.lower()
     print(f"\nhttp_verb: {http_verb}") if debug else None
     if http_verb not in ["get", "post", "put", "delete", "patch"]:
-        raise ValueError(f"Invalid HTTP verb: {http_verb}")
+        raise ValueError(f"Invalid HTTP verb: {http_verb} in {docPath}")
 
     http_path = selector.xpath(f"{doc_base_path}/article/span/code/span/text()").get()
     if http_path.startswith('/api/') or http_path.startswith('/serving-endpoints/'):
         print(f"http_path: {http_path}") if debug else None
     else:
-        raise ValueError(f"Invalid HTTP path: {http_path}")
+        raise ValueError(f"Invalid HTTP path: {http_path} in {docPath}")
     
     op_desc = None
     op_desc_node = selector.xpath(f"{doc_base_path}/div[3]/div[2]/text()").get()
@@ -132,12 +136,15 @@ sqlVerb: {sqlVerb}""")
         print(f"op_desc: {op_desc}") if debug else None
 
     params = process_parameters(selector, doc_base_path, debug)
-    print(f"params: {params}") if debug else None
+    if params:
+        print(f"params: {params}") if debug else None
+    else:
+        raise ValueError(f"No params found in {docPath}")
 
     request_body = process_request_body(selector, doc_base_path, examples_doc_path, False)
     print("request_body:", json.dumps(request_body, indent=2)) if debug else None
 
-    responses = process_responses(selector, doc_base_path, debug)
+    responses = process_responses(selector, doc_base_path, examples_doc_path, debug)
     print("responses:", json.dumps(responses, indent=2)) if debug else None
 
     # stitch complete operation object together

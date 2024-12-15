@@ -59,7 +59,7 @@ def process_request_body(selector, doc_base_path, examples_doc_path, debug=False
             code_block = selector.xpath(f"{examples_doc_path}/div[1]/div/div[2]/div/div[1]/div/pre//text()").getall()
             code_text = ''.join(code_block)
         else:
-            code_text = "{}"
+            raise ValueError(f"No requestBody examples found")
 
         properties = {}
         for name, type_, description in all_props:
