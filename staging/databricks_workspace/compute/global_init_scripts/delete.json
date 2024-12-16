@@ -17,7 +17,6 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
      "description": "The script was deleted successfully."

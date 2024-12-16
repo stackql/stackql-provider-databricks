@@ -21,6 +21,38 @@
      "in": "path"
     }
    ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "message": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -40,26 +72,6 @@
      }
     },
     "description": "Email address for the new owner, who must exist in the workspace."
-   },
-   "responses": {
-    "200": {
-     "description": ""
-    },
-    "400": {
-     "description": "Request is invalid or malformed."
-    },
-    "401": {
-     "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "403": {
-     "description": "Caller does not have permission to execute the specified operation."
-    },
-    "404": {
-     "description": "Operation was performed on a resource that does not exist."
-    },
-    "500": {
-     "description": "Internal error."
-    }
    },
    "description": "Transfer ownership of a single object."
   }

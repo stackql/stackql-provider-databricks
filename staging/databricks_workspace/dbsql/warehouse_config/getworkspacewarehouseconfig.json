@@ -10,10 +10,165 @@
    "x-stackQL-verb": "select",
    "x-numReqParams": 0,
    "parameters": [],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "security_policy": {
+          "type": "string"
+         },
+         "data_access_config": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "key": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "instance_profile_arn": {
+          "type": "string"
+         },
+         "channel": {
+          "type": "object",
+          "properties": {
+           "name": {
+            "type": "string"
+           },
+           "dbsql_version": {
+            "type": "string"
+           }
+          }
+         },
+         "global_param": {
+          "type": "object",
+          "properties": {
+           "config_pair": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "configuration_pairs": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "config_param": {
+          "type": "object",
+          "properties": {
+           "config_pair": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "configuration_pairs": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "sql_configuration_parameters": {
+          "type": "object",
+          "properties": {
+           "config_pair": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "configuration_pairs": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "google_service_account": {
+          "type": "string"
+         },
+         "enabled_warehouse_types": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "warehouse_type": {
+             "type": "string"
+            },
+            "enabled": {
+             "type": "boolean"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     }
    },
    "description": "Gets the workspace level configuration that is shared by all SQL warehouses in a workspace."

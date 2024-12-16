@@ -17,10 +17,71 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "The provider was successfully retrieved."
+     "description": "The provider was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "authentication_type": {
+          "type": "string"
+         },
+         "recipient_profile_str": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "recipient_profile": {
+          "type": "object",
+          "properties": {
+           "share_credentials_version": {
+            "type": "integer"
+           },
+           "endpoint": {
+            "type": "string"
+           },
+           "bearer_token": {
+            "type": "string"
+           }
+          }
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "cloud": {
+          "type": "string"
+         },
+         "region": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "data_provider_global_metastore_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     }
    },
    "description": "Gets a specific authentication provider. The caller must supply the name of the provider, and must either be a metastore admin or the owner of the provider."

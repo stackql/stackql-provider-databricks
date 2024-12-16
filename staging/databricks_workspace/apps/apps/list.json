@@ -21,10 +21,229 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Request completed successfully."
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "apps": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "description": {
+             "type": "string"
+            },
+            "compute_status": {
+             "type": "object",
+             "properties": {
+              "state": {
+               "type": "string"
+              },
+              "message": {
+               "type": "string"
+              }
+             }
+            },
+            "app_status": {
+             "type": "object",
+             "properties": {
+              "state": {
+               "type": "string"
+              },
+              "message": {
+               "type": "string"
+              }
+             }
+            },
+            "url": {
+             "type": "string"
+            },
+            "active_deployment": {
+             "type": "object",
+             "properties": {
+              "deployment_id": {
+               "type": "string"
+              },
+              "source_code_path": {
+               "type": "string"
+              },
+              "mode": {
+               "type": "string"
+              },
+              "deployment_artifacts": {
+               "type": "object",
+               "properties": {
+                "source_code_path": {
+                 "type": "string"
+                }
+               }
+              },
+              "status": {
+               "type": "object",
+               "properties": {
+                "state": {
+                 "type": "string"
+                },
+                "message": {
+                 "type": "string"
+                }
+               }
+              },
+              "create_time": {
+               "type": "string"
+              },
+              "creator": {
+               "type": "string"
+              },
+              "update_time": {
+               "type": "string"
+              }
+             }
+            },
+            "create_time": {
+             "type": "string"
+            },
+            "creator": {
+             "type": "string"
+            },
+            "update_time": {
+             "type": "string"
+            },
+            "updater": {
+             "type": "string"
+            },
+            "pending_deployment": {
+             "type": "object",
+             "properties": {
+              "deployment_id": {
+               "type": "string"
+              },
+              "source_code_path": {
+               "type": "string"
+              },
+              "mode": {
+               "type": "string"
+              },
+              "deployment_artifacts": {
+               "type": "object",
+               "properties": {
+                "source_code_path": {
+                 "type": "string"
+                }
+               }
+              },
+              "status": {
+               "type": "object",
+               "properties": {
+                "state": {
+                 "type": "string"
+                },
+                "message": {
+                 "type": "string"
+                }
+               }
+              },
+              "create_time": {
+               "type": "string"
+              },
+              "creator": {
+               "type": "string"
+              },
+              "update_time": {
+               "type": "string"
+              }
+             }
+            },
+            "resources": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": "string"
+               },
+               "description": {
+                "type": "string"
+               },
+               "secret": {
+                "type": "object",
+                "properties": {
+                 "scope": {
+                  "type": "string"
+                 },
+                 "key": {
+                  "type": "string"
+                 },
+                 "permission": {
+                  "type": "string"
+                 }
+                }
+               },
+               "sql_warehouse": {
+                "type": "object",
+                "properties": {
+                 "id": {
+                  "type": "string"
+                 },
+                 "permission": {
+                  "type": "string"
+                 }
+                }
+               },
+               "serving_endpoint": {
+                "type": "object",
+                "properties": {
+                 "name": {
+                  "type": "string"
+                 },
+                 "permission": {
+                  "type": "string"
+                 }
+                }
+               },
+               "job": {
+                "type": "object",
+                "properties": {
+                 "id": {
+                  "type": "string"
+                 },
+                 "permission": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            },
+            "service_principal_id": {
+             "type": "integer"
+            },
+            "service_principal_name": {
+             "type": "string"
+            },
+            "default_source_code_path": {
+             "type": "string"
+            },
+            "service_principal_client_id": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -39,6 +258,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.apps",
    "description": "Lists all apps in the workspace."
   }
  }

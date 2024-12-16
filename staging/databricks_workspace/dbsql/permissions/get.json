@@ -23,10 +23,41 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "object_id": {
+          "type": "string"
+         },
+         "object_type": {
+          "type": "string"
+         },
+         "access_control_list": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "user_name": {
+             "type": "string"
+            },
+            "group_name": {
+             "type": "string"
+            },
+            "permission_level": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."

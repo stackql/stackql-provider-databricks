@@ -10,6 +10,34 @@
    "x-stackQL-verb": "exec",
    "x-numReqParams": 0,
    "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -30,26 +58,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": ""
-    },
-    "400": {
-     "description": "Request is invalid or malformed."
-    },
-    "401": {
-     "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "403": {
-     "description": "Caller does not have permission to execute the specified operation."
-    },
-    "404": {
-     "description": "Operation was performed on a resource that does not exist."
-    },
-    "500": {
-     "description": "Internal error."
     }
    },
    "description": "Restarts a Spark cluster with the supplied ID. If the cluster is not currently in a"

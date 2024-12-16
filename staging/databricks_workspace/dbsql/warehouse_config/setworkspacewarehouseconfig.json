@@ -10,6 +10,19 @@
    "x-stackQL-verb": "replace",
    "x-numReqParams": 0,
    "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -113,11 +126,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": ""
     }
    },
    "description": "Sets the workspace level configuration that is shared by all SQL warehouses in a workspace."

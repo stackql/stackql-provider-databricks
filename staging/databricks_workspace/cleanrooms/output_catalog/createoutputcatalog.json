@@ -17,6 +17,31 @@
      "in": "path"
     }
    ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "output_catalog": {
+          "type": "object",
+          "properties": {
+           "status": {
+            "type": "string"
+           },
+           "catalog_name": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -34,11 +59,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "Request completed successfully."
     }
    },
    "description": "Create the output catalog of the clean room."

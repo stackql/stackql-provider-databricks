@@ -21,12 +21,223 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Request completed successfully."
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "clean_rooms": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "remote_detailed_info": {
+             "type": "object",
+             "properties": {
+              "central_clean_room_id": {
+               "type": "string"
+              },
+              "cloud_vendor": {
+               "type": "string"
+              },
+              "region": {
+               "type": "string"
+              },
+              "collaborators": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "global_metastore_id": {
+                  "type": "string"
+                 },
+                 "organization_name": {
+                  "type": "string"
+                 },
+                 "invite_recipient_workspace_id": {
+                  "type": "integer"
+                 },
+                 "invite_recipient_email": {
+                  "type": "string"
+                 },
+                 "collaborator_alias": {
+                  "type": "string"
+                 },
+                 "display_name": {
+                  "type": "string"
+                 }
+                }
+               }
+              },
+              "creator": {
+               "type": "object",
+               "properties": {
+                "global_metastore_id": {
+                 "type": "string"
+                },
+                "organization_name": {
+                 "type": "string"
+                },
+                "invite_recipient_workspace_id": {
+                 "type": "integer"
+                },
+                "invite_recipient_email": {
+                 "type": "string"
+                },
+                "collaborator_alias": {
+                 "type": "string"
+                },
+                "display_name": {
+                 "type": "string"
+                }
+               }
+              },
+              "egress_network_policy": {
+               "type": "object",
+               "properties": {
+                "internet_access": {
+                 "type": "object",
+                 "properties": {
+                  "restriction_mode": {
+                   "type": "string"
+                  },
+                  "allowed_internet_destinations": {
+                   "type": "array",
+                   "items": {
+                    "type": "object",
+                    "properties": {
+                     "destination": {
+                      "type": "string"
+                     },
+                     "type": {
+                      "type": "string"
+                     },
+                     "protocol": {
+                      "type": "string"
+                     }
+                    }
+                   }
+                  },
+                  "allowed_storage_destinations": {
+                   "type": "array",
+                   "items": {
+                    "type": "object",
+                    "properties": {
+                     "bucket_name": {
+                      "type": "string"
+                     },
+                     "region": {
+                      "type": "string"
+                     },
+                     "type": {
+                      "type": "string"
+                     },
+                     "azure_storage_account": {
+                      "type": "string"
+                     },
+                     "allowed_paths": {
+                      "type": "array",
+                      "items": {
+                       "type": "string"
+                      }
+                     },
+                     "azure_storage_service": {
+                      "type": "string"
+                     },
+                     "azure_dns_zone": {
+                      "type": "string"
+                     },
+                     "azure_container": {
+                      "type": "string"
+                     }
+                    }
+                   }
+                  },
+                  "log_only_mode": {
+                   "type": "object",
+                   "properties": {
+                    "log_only_mode_type": {
+                     "type": "string"
+                    },
+                    "workloads": {
+                     "type": "array",
+                     "items": {
+                      "type": "string"
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              },
+              "compliance_security_profile": {
+               "type": "object",
+               "properties": {
+                "is_enabled": {
+                 "type": "boolean"
+                },
+                "compliance_standards": {
+                 "type": "array",
+                 "items": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            },
+            "owner": {
+             "type": "string"
+            },
+            "comment": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "status": {
+             "type": "string"
+            },
+            "local_collaborator_alias": {
+             "type": "string"
+            },
+            "output_catalog": {
+             "type": "object",
+             "properties": {
+              "status": {
+               "type": "string"
+              },
+              "catalog_name": {
+               "type": "string"
+              }
+             }
+            },
+            "access_restricted": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     }
    },
+   "x-stackQL-objectKey": "$.clean_rooms",
    "description": "Get a list of all clean rooms of the metastore. Only clean rooms the caller has access to are returned."
   }
  }

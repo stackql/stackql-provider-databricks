@@ -17,10 +17,17 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Request completed successfully."
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
     }
    },
    "description": "Delete a clean room. After deletion, the clean room will be removed from the metastore. If the other collaborators have not deleted the clean room, they will still have the clean room in their metastore, but it will be in a DELETED state and no operations other than deletion can be performed on it."

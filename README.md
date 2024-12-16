@@ -36,8 +36,7 @@ databricks_account \
 false \
 /mnt/c/LocalGitRepos/stackql/openapi-conversion/stackql-databricks-openapi/openapi_providers \
 true
-# stop the server
-sh stop.sh
+# back to starting dir
 cd /mnt/c/LocalGitRepos/stackql/openapi-conversion/stackql-databricks-openapi
 ```
 

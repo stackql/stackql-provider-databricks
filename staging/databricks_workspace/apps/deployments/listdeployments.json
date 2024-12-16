@@ -27,10 +27,66 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Request completed successfully."
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "app_deployments": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "deployment_id": {
+             "type": "string"
+            },
+            "source_code_path": {
+             "type": "string"
+            },
+            "mode": {
+             "type": "string"
+            },
+            "deployment_artifacts": {
+             "type": "object",
+             "properties": {
+              "source_code_path": {
+               "type": "string"
+              }
+             }
+            },
+            "status": {
+             "type": "object",
+             "properties": {
+              "state": {
+               "type": "string"
+              },
+              "message": {
+               "type": "string"
+              }
+             }
+            },
+            "create_time": {
+             "type": "string"
+            },
+            "creator": {
+             "type": "string"
+            },
+            "update_time": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -45,6 +101,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.app_deployments",
    "description": "Lists all app deployments for the app with the supplied name."
   }
  }

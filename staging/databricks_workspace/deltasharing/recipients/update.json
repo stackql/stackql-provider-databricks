@@ -17,6 +17,19 @@
      "in": "path"
     }
    ],
+   "responses": {
+    "200": {
+     "description": "The recipient was successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -67,11 +80,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "The recipient was successfully updated."
     }
    },
    "description": "Updates an existing recipient in the metastore. The caller must be a metastore admin or the owner of the recipient. If the recipient name will be updated, the user must be both a metastore admin and the owner of the recipient."

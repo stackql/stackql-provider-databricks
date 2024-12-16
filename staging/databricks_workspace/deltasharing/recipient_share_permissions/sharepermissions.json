@@ -27,12 +27,52 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "The recipient share permissions list was successfully retrieved."
+     "description": "The recipient share permissions list was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "permissions_out": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "share_name": {
+             "type": "string"
+            },
+            "privilege_assignments": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "principal": {
+                "type": "string"
+               },
+               "privileges": {
+                "type": "array",
+                "items": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     }
    },
+   "x-stackQL-objectKey": "$.permissions_out",
    "description": "Gets the share permissions for the specified Recipient. The caller must be a metastore admin or the owner of the Recipient."
   }
  }

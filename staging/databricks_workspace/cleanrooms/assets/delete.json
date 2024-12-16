@@ -29,10 +29,17 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Request completed successfully."
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
     }
    },
    "description": "Delete a clean room asset - unshare/remove the asset from the clean room"

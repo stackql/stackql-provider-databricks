@@ -23,10 +23,116 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "update": {
+          "type": "object",
+          "properties": {
+           "creation_time": {
+            "type": "integer"
+           },
+           "pipeline_id": {
+            "type": "string"
+           },
+           "state": {
+            "type": "string"
+           },
+           "update_id": {
+            "type": "string"
+           },
+           "config": {
+            "type": "object",
+            "properties": {
+             "continuous": {
+              "type": "boolean"
+             },
+             "name": {
+              "type": "string"
+             },
+             "clusters": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "label": {
+                 "type": "string"
+                },
+                "autoscale": {
+                 "type": "object",
+                 "properties": {
+                  "min_workers": {
+                   "type": "integer"
+                  },
+                  "max_workers": {
+                   "type": "integer"
+                  },
+                  "mode": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              }
+             },
+             "id": {
+              "type": "string"
+             },
+             "libraries": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "notebook": {
+                 "type": "object",
+                 "properties": {
+                  "path": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              }
+             },
+             "configuration": {
+              "type": "object",
+              "properties": {
+               "pipelines.numStreamRetryAttempts": {
+                "type": "string"
+               }
+              }
+             },
+             "storage": {
+              "type": "string"
+             },
+             "target": {
+              "type": "string"
+             },
+             "development": {
+              "type": "boolean"
+             }
+            }
+           },
+           "full_refresh": {
+            "type": "boolean"
+           },
+           "cause": {
+            "type": "string"
+           },
+           "request_id": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -44,6 +150,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.update",
    "description": "Gets an update from an active pipeline."
   }
  }

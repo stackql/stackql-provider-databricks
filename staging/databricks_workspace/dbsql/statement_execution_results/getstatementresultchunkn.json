@@ -32,10 +32,42 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Successful return; depending on `disposition` returns chunks of data either inline, or as links."
+     "description": "Successful return; depending on `disposition` returns chunks of data either inline, or as links.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "chunk_index": {
+          "type": "integer"
+         },
+         "row_offset": {
+          "type": "integer"
+         },
+         "row_count": {
+          "type": "integer"
+         },
+         "next_chunk_index": {
+          "type": "integer"
+         },
+         "next_chunk_internal_link": {
+          "type": "string"
+         },
+         "data_array": {
+          "type": "array",
+          "items": {
+           "type": "array",
+           "items": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."

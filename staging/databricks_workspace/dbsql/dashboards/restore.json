@@ -16,10 +16,17 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Dashboard restored successfully."
+     "description": "Dashboard restored successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
     }
    },
    "description": "A restored dashboard appears in list views and searches and can be shared."

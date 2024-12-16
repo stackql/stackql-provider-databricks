@@ -30,10 +30,61 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "statuses": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "pipeline_id": {
+             "type": "string"
+            },
+            "state": {
+             "type": "string"
+            },
+            "latest_updates": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "update_id": {
+                "type": "string"
+               },
+               "state": {
+                "type": "string"
+               },
+               "creation_time": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "creator_user_name": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         },
+         "prev_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -45,6 +96,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.statuses",
    "description": "Lists pipelines defined in the Delta Live Tables system."
   }
  }

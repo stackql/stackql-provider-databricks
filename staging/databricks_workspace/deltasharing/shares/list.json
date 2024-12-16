@@ -21,12 +21,131 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "The shares list was successfully retrieved."
+     "description": "The shares list was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "shares": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "owner": {
+             "type": "string"
+            },
+            "comment": {
+             "type": "string"
+            },
+            "storage_root": {
+             "type": "string"
+            },
+            "objects": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": "string"
+               },
+               "comment": {
+                "type": "string"
+               },
+               "shared_as": {
+                "type": "string"
+               },
+               "string_shared_as": {
+                "type": "string"
+               },
+               "content": {
+                "type": "string"
+               },
+               "history_data_sharing_status": {
+                "type": "string"
+               },
+               "partitions": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "values": {
+                   "type": "array",
+                   "items": {
+                    "type": "object",
+                    "properties": {
+                     "name": {
+                      "type": "string"
+                     },
+                     "value": {
+                      "type": "string"
+                     },
+                     "recipient_property_key": {
+                      "type": "string"
+                     },
+                     "op": {
+                      "type": "string"
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               },
+               "cdf_enabled": {
+                "type": "boolean"
+               },
+               "start_version": {
+                "type": "integer"
+               },
+               "data_object_type": {
+                "type": "string"
+               },
+               "added_at": {
+                "type": "integer"
+               },
+               "added_by": {
+                "type": "string"
+               },
+               "status": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "storage_location": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     }
    },
+   "x-stackQL-objectKey": "$.shares",
    "description": "Gets an array of data object shares from the metastore. The caller must be a metastore admin or the owner of the share. There is no guarantee of a specific ordering of the elements in the array."
   }
  }

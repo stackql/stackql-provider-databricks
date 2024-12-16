@@ -17,6 +17,19 @@
      "in": "path"
     }
    ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -102,11 +115,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": ""
     }
    },
    "description": "Updates the configuration for a SQL warehouse."

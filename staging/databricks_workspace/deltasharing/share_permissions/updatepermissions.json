@@ -27,6 +27,19 @@
      "in": "query"
     }
    ],
+   "responses": {
+    "200": {
+     "description": "The share permissions were successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -53,11 +66,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "The share permissions were successfully updated."
     }
    },
    "description": "Updates the permissions for a data share in the metastore. The caller must be a metastore admin or an owner of the share."

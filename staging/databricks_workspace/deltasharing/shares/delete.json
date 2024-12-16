@@ -17,10 +17,17 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "The share was successfully deleted."
+     "description": "The share was successfully deleted.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
     }
    },
    "description": "Deletes a data object share from the metastore. The caller must be an owner of the share."

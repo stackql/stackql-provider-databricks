@@ -16,7 +16,7 @@ error_code_descriptions = {
     "509": "An external service is unavailable temporarily as it is being updated."
 }
 
-def process_responses(selector, doc_base_path, examples_doc_path, hasRespData, debug=False):
+def process_responses(selector, doc_base_path, examples_doc_path, hasRespData, http_verb, debug=False):
     responses = {}
 
     # Find h3 element containing exactly "Responses"

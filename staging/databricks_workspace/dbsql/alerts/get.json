@@ -16,10 +16,82 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Request completed successfully."
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "state": {
+          "type": "string"
+         },
+         "seconds_to_retrigger": {
+          "type": "integer"
+         },
+         "owner_user_name": {
+          "type": "string"
+         },
+         "display_name": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         },
+         "condition": {
+          "type": "object",
+          "properties": {
+           "op": {
+            "type": "string"
+           },
+           "operand": {
+            "type": "object",
+            "properties": {
+             "column": {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": "string"
+               }
+              }
+             }
+            }
+           },
+           "threshold": {
+            "type": "object",
+            "properties": {
+             "value": {
+              "type": "object",
+              "properties": {
+               "string_value": {
+                "type": "string"
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "query_id": {
+          "type": "string"
+         },
+         "parent_path": {
+          "type": "string"
+         },
+         "lifecycle_state": {
+          "type": "string"
+         },
+         "update_time": {
+          "type": "string"
+         },
+         "create_time": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."

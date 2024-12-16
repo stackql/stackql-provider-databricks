@@ -27,12 +27,38 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "The share permissions list was successfully retrieved."
+     "description": "The share permissions list was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "privilege_assignments": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "principal": {
+             "type": "string"
+            },
+            "privileges": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     }
    },
+   "x-stackQL-objectKey": "$.privilege_assignments",
    "description": "Gets the permissions for a data share from the metastore. The caller must be a metastore admin or the owner of the share."
   }
  }

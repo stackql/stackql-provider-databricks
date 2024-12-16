@@ -10,6 +10,35 @@
    "x-stackQL-verb": "insert",
    "x-numReqParams": 0,
    "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "handle": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -32,23 +61,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "Request completed successfully."
-    },
-    "400": {
-     "description": "Request is invalid or malformed."
-    },
-    "401": {
-     "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "404": {
-     "description": "Operation was performed on a resource that does not exist."
-    },
-    "500": {
-     "description": "Internal error."
     }
    },
    "description": "Opens a stream to write to a file and returns a handle to this stream. There is a 10 minute idle timeout on this handle. If a file or directory already exists on the given path and"

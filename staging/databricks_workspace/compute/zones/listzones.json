@@ -10,10 +10,27 @@
    "x-stackQL-verb": "select",
    "x-numReqParams": 0,
    "parameters": [],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "zones": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "default_zone": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."

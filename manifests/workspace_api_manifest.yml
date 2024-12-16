@@ -19,6 +19,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/apps/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/apps/get
         verb: select
@@ -81,6 +82,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/cleanrooms/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/cleanrooms/get
         verb: select
@@ -110,6 +112,7 @@ services:
       - name: events
         docPath: https://docs.databricks.com/api/workspace/clusters/events
         verb: select
+        hasParams: false
     - name: cluster_permission_levels
       methods:
       - name: getpermissionlevels
@@ -132,12 +135,15 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/clusterpolicies/delete
         verb: delete
+        hasParams: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/clusterpolicies/create
         verb: insert
+        hasParams: false
       - name: edit
         docPath: https://docs.databricks.com/api/workspace/clusterpolicies/edit
         verb: replace
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/clusterpolicies/get
         verb: select
@@ -161,6 +167,7 @@ services:
       - name: enforcecompliance
         docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/enforcecompliance
         verb: replace
+        hasParams: false
       - name: getcompliance
         docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/getcompliance
         verb: select
@@ -175,33 +182,43 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/clusters/delete
         verb: delete
+        hasParams: false
       - name: changeowner
         docPath: https://docs.databricks.com/api/workspace/clusters/changeowner
         verb: exec
+        hasParams: false
       - name: permanentdelete
         docPath: https://docs.databricks.com/api/workspace/clusters/permanentdelete
         verb: exec
+        hasParams: false
       - name: pin
         docPath: https://docs.databricks.com/api/workspace/clusters/pin
         verb: exec
+        hasParams: false
       - name: resize
         docPath: https://docs.databricks.com/api/workspace/clusters/resize
         verb: exec
+        hasParams: false
       - name: restart
         docPath: https://docs.databricks.com/api/workspace/clusters/restart
         verb: exec
+        hasParams: false
       - name: start
         docPath: https://docs.databricks.com/api/workspace/clusters/start
         verb: exec
+        hasParams: false
       - name: unpin
         docPath: https://docs.databricks.com/api/workspace/clusters/unpin
         verb: exec
+        hasParams: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/clusters/create
         verb: insert
+        hasParams: false
       - name: edit
         docPath: https://docs.databricks.com/api/workspace/clusters/edit
         verb: replace
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/clusters/get
         verb: select
@@ -212,6 +229,7 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/clusters/update
         verb: update
+        hasParams: false
     - name: command_status
       methods:
       - name: contextstatus
@@ -222,15 +240,19 @@ services:
       - name: cancel
         docPath: https://docs.databricks.com/api/workspace/commandexecution/cancel
         verb: exec
+        hasParams: false
       - name: destroy
         docPath: https://docs.databricks.com/api/workspace/commandexecution/destroy
         verb: exec
+        hasParams: false
       - name: execute
         docPath: https://docs.databricks.com/api/workspace/commandexecution/execute
         verb: exec
+        hasParams: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/commandexecution/create
         verb: insert
+        hasParams: false
       - name: commandstatus
         docPath: https://docs.databricks.com/api/workspace/commandexecution/commandstatus
         verb: select
@@ -239,6 +261,7 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/globalinitscripts/delete
         verb: delete
+        hasRespData: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/globalinitscripts/create
         verb: insert
@@ -252,6 +275,7 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/globalinitscripts/update
         verb: update
+        hasRespData: false
     - name: instance_pool_permission_levels
       methods:
       - name: getpermissionlevels
@@ -323,6 +347,7 @@ services:
         docPath: https://docs.databricks.com/api/workspace/clusters/listnodetypes
         verb: select
         objectKey: $.node_types
+        hasParams: false
     - name: policy_families
       methods:
       - name: get
@@ -344,11 +369,13 @@ services:
         docPath: https://docs.databricks.com/api/workspace/clusters/sparkversions
         verb: select
         objectKey: $.versions
+        hasParams: false
     - name: zones
       methods:
       - name: listzones
         docPath: https://docs.databricks.com/api/workspace/clusters/listzones
         verb: select
+        hasParams: false
   dbsql:
     description: Dbsql
     resources:
@@ -469,6 +496,7 @@ services:
       - name: cancelexecution
         docPath: https://docs.databricks.com/api/workspace/statementexecution/cancelexecution
         verb: exec
+        hasRespData: false
       - name: executestatement
         docPath: https://docs.databricks.com/api/workspace/statementexecution/executestatement
         verb: exec
@@ -730,9 +758,11 @@ services:
       - name: deletedirectory
         docPath: https://docs.databricks.com/api/workspace/files/deletedirectory
         verb: delete
+        hasRespData: false
       - name: createdirectory
         docPath: https://docs.databricks.com/api/workspace/files/createdirectory
         verb: insert
+        hasRespData: false
     - name: directory_contents
       methods:
       - name: listdirectorycontents
@@ -744,12 +774,15 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/files/delete
         verb: delete
+        hasRespData: false
       - name: download
         docPath: https://docs.databricks.com/api/workspace/files/download
         verb: exec
+        hasRespData: false
       - name: upload
         docPath: https://docs.databricks.com/api/workspace/files/upload
         verb: exec
+        hasRespData: false
   iam:
     description: Iam
     resources:

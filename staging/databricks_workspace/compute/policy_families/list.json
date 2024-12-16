@@ -21,10 +21,54 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Request completed successfully."
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "policy_families": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "policy_family_id": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "description": {
+             "type": "string"
+            },
+            "definition": {
+             "type": "object",
+             "properties": {
+              "custom_tags.test_tag": {
+               "type": "object",
+               "properties": {
+                "type": {
+                 "type": "string"
+                },
+                "value": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -39,6 +83,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.policy_families",
    "description": "Returns the list of policy definition types available to use at their latest version. This API is paginated."
   }
  }

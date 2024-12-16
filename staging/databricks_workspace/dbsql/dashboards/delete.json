@@ -16,10 +16,17 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Dashboard successfully moved to trash."
+     "description": "Dashboard successfully moved to trash.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
     }
    },
    "description": "Moves a dashboard to the trash. Trashed dashboards do not appear in list views or searches, and cannot be shared."

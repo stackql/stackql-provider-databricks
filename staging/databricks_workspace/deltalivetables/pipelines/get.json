@@ -16,10 +16,125 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "pipeline_id": {
+          "type": "string"
+         },
+         "state": {
+          "type": "string"
+         },
+         "latest_updates": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "update_id": {
+             "type": "string"
+            },
+            "state": {
+             "type": "string"
+            },
+            "creation_time": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "creator_user_name": {
+          "type": "string"
+         },
+         "spec": {
+          "type": "object",
+          "properties": {
+           "continuous": {
+            "type": "boolean"
+           },
+           "name": {
+            "type": "string"
+           },
+           "deployment": {
+            "type": "object",
+            "properties": {
+             "kind": {
+              "type": "string"
+             },
+             "metadata_file_path": {
+              "type": "string"
+             }
+            }
+           },
+           "clusters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "label": {
+               "type": "string"
+              },
+              "autoscale": {
+               "type": "object",
+               "properties": {
+                "min_workers": {
+                 "type": "integer"
+                },
+                "max_workers": {
+                 "type": "integer"
+                },
+                "mode": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           },
+           "id": {
+            "type": "string"
+           },
+           "libraries": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "notebook": {
+               "type": "object",
+               "properties": {
+                "path": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           },
+           "storage": {
+            "type": "string"
+           },
+           "target": {
+            "type": "string"
+           }
+          }
+         },
+         "run_as_user_name": {
+          "type": "string"
+         },
+         "cluster_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."

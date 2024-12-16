@@ -10,6 +10,80 @@
    "x-stackQL-verb": "select",
    "x-numReqParams": 0,
    "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "events": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "cluster_id": {
+             "type": "string"
+            },
+            "timestamp": {
+             "type": "integer"
+            },
+            "event_type": {
+             "type": "string"
+            },
+            "event_details": {
+             "type": "object",
+             "properties": {
+              "username": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "next_page": {
+          "type": "object",
+          "properties": {
+           "cluster_id": {
+            "type": "string"
+           },
+           "end_time": {
+            "type": "integer"
+           },
+           "order": {
+            "type": "string"
+           },
+           "offset": {
+            "type": "integer"
+           }
+          }
+         },
+         "total_count": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -62,26 +136,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": ""
-    },
-    "400": {
-     "description": "Request is invalid or malformed."
-    },
-    "401": {
-     "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "403": {
-     "description": "Caller does not have permission to execute the specified operation."
-    },
-    "404": {
-     "description": "Operation was performed on a resource that does not exist."
-    },
-    "500": {
-     "description": "Internal error."
     }
    },
    "description": "Retrieves a list of events about the activity of a cluster. This API is paginated. If there are more events to read, the response includes all the nparameters necessary to request the next page of events."

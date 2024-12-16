@@ -17,10 +17,17 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Query restored successfully."
+     "description": "Query restored successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
     }
    },
    "description": "Restore a query that has been moved to the trash. A restored query appears in list views and searches. You can use restored queries for alerts."

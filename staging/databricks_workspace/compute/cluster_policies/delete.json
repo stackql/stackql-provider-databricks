@@ -10,28 +10,17 @@
    "x-stackQL-verb": "delete",
    "x-numReqParams": 0,
    "parameters": [],
-   "requestBody": {
-    "required": true,
-    "content": {
-     "application/json": {
-      "schema": {
-       "type": "object",
-       "properties": {
-        "policy_id": {
-         "type": "required",
-         "description": "The ID of the policy to delete."
-        }
-       },
-       "example": {
-        "policy_id": "string"
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "Request completed successfully."
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -50,6 +39,25 @@
     },
     "500": {
      "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "policy_id": {
+         "type": "required",
+         "description": "The ID of the policy to delete."
+        }
+       },
+       "example": {
+        "policy_id": "string"
+       }
+      }
+     }
     }
    },
    "description": "Delete a policy for a cluster. Clusters governed by this policy can still run, but cannot be edited."

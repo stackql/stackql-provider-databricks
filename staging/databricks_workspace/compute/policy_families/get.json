@@ -22,10 +22,43 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Request completed successfully."
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "policy_family_id": {
+          "type": "string"
+         },
+         "name": {
+          "type": "string"
+         },
+         "description": {
+          "type": "string"
+         },
+         "definition": {
+          "type": "object",
+          "properties": {
+           "custom_tags.test_tag": {
+            "type": "object",
+            "properties": {
+             "type": {
+              "type": "string"
+             },
+             "value": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."

@@ -32,12 +32,78 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Request completed successfully."
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "runs": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "notebook_name": {
+             "type": "string"
+            },
+            "start_time": {
+             "type": "integer"
+            },
+            "run_duration": {
+             "type": "integer"
+            },
+            "notebook_job_run_state": {
+             "type": "object",
+             "properties": {
+              "life_cycle_state": {
+               "type": "string"
+              },
+              "result_state": {
+               "type": "string"
+              }
+             }
+            },
+            "collaborator_job_run_info": {
+             "type": "object",
+             "properties": {
+              "collaborator_job_id": {
+               "type": "integer"
+              },
+              "collaborator_job_run_id": {
+               "type": "integer"
+              },
+              "collaborator_task_run_id": {
+               "type": "integer"
+              },
+              "collaborator_workspace_id": {
+               "type": "integer"
+              },
+              "collaborator_alias": {
+               "type": "string"
+              }
+             }
+            },
+            "output_schema_name": {
+             "type": "string"
+            },
+            "output_schema_expiration_time": {
+             "type": "integer"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     }
    },
+   "x-stackQL-objectKey": "$.runs",
    "description": "List all the historical notebook task runs in a clean room."
   }
  }

@@ -16,10 +16,121 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "instance_pool_name": {
+          "type": "string"
+         },
+         "min_idle_instances": {
+          "type": "integer"
+         },
+         "aws_attributes": {
+          "type": "object",
+          "properties": {
+           "availability": {
+            "type": "string"
+           },
+           "zone_id": {
+            "type": "string"
+           },
+           "spot_bid_price_percent": {
+            "type": "integer"
+           }
+          }
+         },
+         "node_type_id": {
+          "type": "string"
+         },
+         "custom_tags": {
+          "type": "object",
+          "properties": {
+           "my-key": {
+            "type": "string"
+           }
+          }
+         },
+         "idle_instance_autotermination_minutes": {
+          "type": "integer"
+         },
+         "enable_elastic_disk": {
+          "type": "boolean"
+         },
+         "disk_spec": {
+          "type": "object",
+          "properties": {
+           "disk_type": {
+            "type": "object",
+            "properties": {
+             "ebs_volume_type": {
+              "type": "string"
+             }
+            }
+           },
+           "disk_count": {
+            "type": "integer"
+           },
+           "disk_size": {
+            "type": "integer"
+           }
+          }
+         },
+         "preloaded_spark_versions": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "instance_pool_id": {
+          "type": "string"
+         },
+         "default_tags": {
+          "type": "object",
+          "properties": {
+           "Vendor": {
+            "type": "string"
+           },
+           "DatabricksInstancePoolCreatorId": {
+            "type": "string"
+           },
+           "DatabricksInstancePoolId": {
+            "type": "string"
+           }
+          }
+         },
+         "state": {
+          "type": "string"
+         },
+         "stats": {
+          "type": "object",
+          "properties": {
+           "used_count": {
+            "type": "integer"
+           },
+           "idle_count": {
+            "type": "integer"
+           },
+           "pending_used_count": {
+            "type": "integer"
+           },
+           "pending_idle_count": {
+            "type": "integer"
+           }
+          }
+         },
+         "status": {
+          "type": "object",
+          "properties": {}
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."

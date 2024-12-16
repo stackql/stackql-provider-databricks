@@ -1,19 +1,27 @@
 {
- "/api/2.0/libraries/cluster-status": {
+ "/api/2.0/policies/clusters/list-compliance": {
   "get": {
-   "operationId": "libraries-clusterstatus",
+   "operationId": "all-clusters-policy-compliance-listcompliance",
    "externalDocs": {
-    "url": "https://docs.databricks.com/api/workspace/libraries/clusterstatus"
+    "url": "https://docs.databricks.com/api/workspace/policycomplianceforclusters/listcompliance"
    },
-   "x-stackQL-resource": "libraries",
-   "x-stackQL-method": "clusterstatus",
+   "x-stackQL-resource": "all_clusters_policy_compliance",
+   "x-stackQL-method": "listcompliance",
    "x-stackQL-verb": "select",
    "x-numReqParams": 1,
    "parameters": [
     {
-     "name": "cluster_id",
+     "name": "policy_id",
      "required": true,
-     "description": "(string) Unique identifier of the cluster whose status should be retrieved.",
+     "description": "(string) Canonical unique identifier for the cluster policy.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
      "in": "query"
     }
    ],
@@ -25,38 +33,33 @@
        "schema": {
         "type": "object",
         "properties": {
-         "cluster_id": {
-          "type": "string"
-         },
-         "library_statuses": {
+         "clusters": {
           "type": "array",
           "items": {
            "type": "object",
            "properties": {
-            "is_library_for_all_clusters": {
+            "cluster_id": {
+             "type": "string"
+            },
+            "is_compliant": {
              "type": "boolean"
             },
-            "library": {
+            "violations": {
              "type": "object",
              "properties": {
-              "pypi": {
-               "type": "object",
-               "properties": {
-                "package": {
-                 "type": "string"
-                },
-                "repo": {
-                 "type": "string"
-                }
-               }
+              "custom_tags.test_tag": {
+               "type": "string"
               }
              }
-            },
-            "status": {
-             "type": "string"
             }
            }
           }
+         },
+         "next_page_token": {
+          "type": "string"
+         },
+         "prev_page_token": {
+          "type": "string"
          }
         }
        }
@@ -69,9 +72,6 @@
     "401": {
      "description": "The request does not have valid authentication credentials for the operation."
     },
-    "403": {
-     "description": "Caller does not have permission to execute the specified operation."
-    },
     "404": {
      "description": "Operation was performed on a resource that does not exist."
     },
@@ -82,7 +82,8 @@
      "description": "Internal error."
     }
    },
-   "description": "Get the status of libraries on a cluster. A status is returned for all libraries installed on this cluster via the API or the libraries UI. The order of returned libraries is as follows:"
+   "x-stackQL-objectKey": "$.clusters",
+   "description": "Returns the policy compliance status of all clusters that use a given policy. Clusters could be out of compliance if their policy was updated after the cluster was last edited."
   }
  }
 }

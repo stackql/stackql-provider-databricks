@@ -32,10 +32,603 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "updates": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "pipeline_id": {
+             "type": "string"
+            },
+            "update_id": {
+             "type": "string"
+            },
+            "config": {
+             "type": "object",
+             "properties": {
+              "id": {
+               "type": "string"
+              },
+              "name": {
+               "type": "string"
+              },
+              "storage": {
+               "type": "string"
+              },
+              "configuration": {
+               "type": "object",
+               "properties": {
+                "property1": {
+                 "type": "string"
+                },
+                "property2": {
+                 "type": "string"
+                }
+               }
+              },
+              "clusters": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "label": {
+                  "type": "string"
+                 },
+                 "spark_conf": {
+                  "type": "object",
+                  "properties": {
+                   "spark.speculation": {
+                    "type": "boolean"
+                   },
+                   "spark.streaming.ui.retainedBatches": {
+                    "type": "integer"
+                   }
+                  }
+                 },
+                 "aws_attributes": {
+                  "type": "object",
+                  "properties": {
+                   "first_on_demand": {
+                    "type": "string"
+                   },
+                   "availability": {
+                    "type": "string"
+                   },
+                   "zone_id": {
+                    "type": "string"
+                   },
+                   "instance_profile_arn": {
+                    "type": "string"
+                   },
+                   "spot_bid_price_percent": {
+                    "type": "string"
+                   },
+                   "ebs_volume_type": {
+                    "type": "string"
+                   },
+                   "ebs_volume_count": {
+                    "type": "string"
+                   },
+                   "ebs_volume_size": {
+                    "type": "integer"
+                   },
+                   "ebs_volume_iops": {
+                    "type": "integer"
+                   },
+                   "ebs_volume_throughput": {
+                    "type": "integer"
+                   }
+                  }
+                 },
+                 "node_type_id": {
+                  "type": "string"
+                 },
+                 "driver_node_type_id": {
+                  "type": "string"
+                 },
+                 "ssh_public_keys": {
+                  "type": "array",
+                  "items": {
+                   "type": "string"
+                  }
+                 },
+                 "custom_tags": {
+                  "type": "object",
+                  "properties": {
+                   "property1": {
+                    "type": "string"
+                   },
+                   "property2": {
+                    "type": "string"
+                   }
+                  }
+                 },
+                 "cluster_log_conf": {
+                  "type": "object",
+                  "properties": {
+                   "dbfs": {
+                    "type": "object",
+                    "properties": {
+                     "destination": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "s3": {
+                    "type": "object",
+                    "properties": {
+                     "destination": {
+                      "type": "string"
+                     },
+                     "region": {
+                      "type": "string"
+                     },
+                     "endpoint": {
+                      "type": "string"
+                     },
+                     "enable_encryption": {
+                      "type": "boolean"
+                     },
+                     "encryption_type": {
+                      "type": "string"
+                     },
+                     "kms_key": {
+                      "type": "string"
+                     },
+                     "canned_acl": {
+                      "type": "string"
+                     }
+                    }
+                   }
+                  }
+                 },
+                 "init_scripts": {
+                  "type": "array",
+                  "items": {
+                   "type": "object",
+                   "properties": {
+                    "workspace": {
+                     "type": "object",
+                     "properties": {
+                      "destination": {
+                       "type": "string"
+                      }
+                     }
+                    },
+                    "volumes": {
+                     "type": "object",
+                     "properties": {
+                      "destination": {
+                       "type": "string"
+                      }
+                     }
+                    },
+                    "s3": {
+                     "type": "object",
+                     "properties": {
+                      "destination": {
+                       "type": "string"
+                      },
+                      "region": {
+                       "type": "string"
+                      },
+                      "endpoint": {
+                       "type": "string"
+                      },
+                      "enable_encryption": {
+                       "type": "boolean"
+                      },
+                      "encryption_type": {
+                       "type": "string"
+                      },
+                      "kms_key": {
+                       "type": "string"
+                      },
+                      "canned_acl": {
+                       "type": "string"
+                      }
+                     }
+                    },
+                    "file": {
+                     "type": "object",
+                     "properties": {
+                      "destination": {
+                       "type": "string"
+                      }
+                     }
+                    },
+                    "dbfs": {
+                     "type": "object",
+                     "properties": {
+                      "destination": {
+                       "type": "string"
+                      }
+                     }
+                    },
+                    "abfss": {
+                     "type": "object",
+                     "properties": {
+                      "destination": {
+                       "type": "string"
+                      }
+                     }
+                    },
+                    "gcs": {
+                     "type": "object",
+                     "properties": {
+                      "destination": {
+                       "type": "string"
+                      }
+                     }
+                    }
+                   }
+                  }
+                 },
+                 "spark_env_vars": {
+                  "type": "object",
+                  "properties": {
+                   "property1": {
+                    "type": "string"
+                   },
+                   "property2": {
+                    "type": "string"
+                   }
+                  }
+                 },
+                 "instance_pool_id": {
+                  "type": "string"
+                 },
+                 "driver_instance_pool_id": {
+                  "type": "string"
+                 },
+                 "policy_id": {
+                  "type": "string"
+                 },
+                 "num_workers": {
+                  "type": "integer"
+                 },
+                 "autoscale": {
+                  "type": "object",
+                  "properties": {
+                   "min_workers": {
+                    "type": "integer"
+                   },
+                   "max_workers": {
+                    "type": "integer"
+                   },
+                   "mode": {
+                    "type": "string"
+                   }
+                  }
+                 },
+                 "apply_policy_default_values": {
+                  "type": "boolean"
+                 },
+                 "enable_local_disk_encryption": {
+                  "type": "boolean"
+                 }
+                }
+               }
+              },
+              "libraries": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "notebook": {
+                  "type": "object",
+                  "properties": {
+                   "path": {
+                    "type": "string"
+                   }
+                  }
+                 },
+                 "file": {
+                  "type": "object",
+                  "properties": {
+                   "path": {
+                    "type": "string"
+                   }
+                  }
+                 },
+                 "whl": {
+                  "type": "string"
+                 }
+                }
+               }
+              },
+              "trigger": {
+               "type": "object",
+               "properties": {
+                "manual": {
+                 "type": "object",
+                 "properties": {}
+                },
+                "cron": {
+                 "type": "object",
+                 "properties": {
+                  "quartz_cron_schedule": {
+                   "type": "string"
+                  },
+                  "timezone_id": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              },
+              "target": {
+               "type": "string"
+              },
+              "schema": {
+               "type": "string"
+              },
+              "filters": {
+               "type": "object",
+               "properties": {
+                "include": {
+                 "type": "array",
+                 "items": {
+                  "type": "string"
+                 }
+                },
+                "exclude": {
+                 "type": "array",
+                 "items": {
+                  "type": "string"
+                 }
+                }
+               }
+              },
+              "continuous": {
+               "type": "boolean"
+              },
+              "development": {
+               "type": "boolean"
+              },
+              "photon": {
+               "type": "boolean"
+              },
+              "edition": {
+               "type": "string"
+              },
+              "channel": {
+               "type": "string"
+              },
+              "catalog": {
+               "type": "string"
+              },
+              "notifications": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "email_recipients": {
+                  "type": "array",
+                  "items": {
+                   "type": "string"
+                  }
+                 },
+                 "alerts": {
+                  "type": "array",
+                  "items": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              },
+              "serverless": {
+               "type": "boolean"
+              },
+              "deployment": {
+               "type": "object",
+               "properties": {
+                "kind": {
+                 "type": "string"
+                },
+                "metadata_file_path": {
+                 "type": "string"
+                }
+               }
+              },
+              "ingestion_definition": {
+               "type": "object",
+               "properties": {
+                "connection_name": {
+                 "type": "string"
+                },
+                "ingestion_gateway_id": {
+                 "type": "string"
+                },
+                "objects": {
+                 "type": "array",
+                 "items": {
+                  "type": "object",
+                  "properties": {
+                   "schema": {
+                    "type": "object",
+                    "properties": {
+                     "source_catalog": {
+                      "type": "string"
+                     },
+                     "source_schema": {
+                      "type": "string"
+                     },
+                     "destination_catalog": {
+                      "type": "string"
+                     },
+                     "destination_schema": {
+                      "type": "string"
+                     },
+                     "table_configuration": {
+                      "type": "object",
+                      "properties": {
+                       "primary_keys": {
+                        "type": "array",
+                        "items": {
+                         "type": "string"
+                        }
+                       },
+                       "sequence_by": {
+                        "type": "array",
+                        "items": {
+                         "type": "string"
+                        }
+                       }
+                      }
+                     }
+                    }
+                   },
+                   "table": {
+                    "type": "object",
+                    "properties": {
+                     "source_catalog": {
+                      "type": "string"
+                     },
+                     "source_schema": {
+                      "type": "string"
+                     },
+                     "source_table": {
+                      "type": "string"
+                     },
+                     "destination_catalog": {
+                      "type": "string"
+                     },
+                     "destination_schema": {
+                      "type": "string"
+                     },
+                     "destination_table": {
+                      "type": "string"
+                     },
+                     "table_configuration": {
+                      "type": "object",
+                      "properties": {
+                       "primary_keys": {
+                        "type": "array",
+                        "items": {
+                         "type": "string"
+                        }
+                       },
+                       "sequence_by": {
+                        "type": "array",
+                        "items": {
+                         "type": "string"
+                        }
+                       }
+                      }
+                     }
+                    }
+                   },
+                   "report": {
+                    "type": "object",
+                    "properties": {
+                     "source_url": {
+                      "type": "string"
+                     },
+                     "destination_catalog": {
+                      "type": "string"
+                     },
+                     "destination_schema": {
+                      "type": "string"
+                     },
+                     "destination_table": {
+                      "type": "string"
+                     },
+                     "table_configuration": {
+                      "type": "object",
+                      "properties": {
+                       "primary_keys": {
+                        "type": "array",
+                        "items": {
+                         "type": "string"
+                        }
+                       },
+                       "sequence_by": {
+                        "type": "array",
+                        "items": {
+                         "type": "string"
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                },
+                "table_configuration": {
+                 "type": "object",
+                 "properties": {
+                  "primary_keys": {
+                   "type": "array",
+                   "items": {
+                    "type": "string"
+                   }
+                  },
+                  "sequence_by": {
+                   "type": "array",
+                   "items": {
+                    "type": "string"
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "cause": {
+             "type": "string"
+            },
+            "state": {
+             "type": "string"
+            },
+            "cluster_id": {
+             "type": "string"
+            },
+            "creation_time": {
+             "type": "integer"
+            },
+            "validate_only": {
+             "type": "boolean"
+            },
+            "full_refresh": {
+             "type": "boolean"
+            },
+            "refresh_selection": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "full_refresh_selection": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         },
+         "prev_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -53,6 +646,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.updates",
    "description": "List updates for an active pipeline."
   }
  }

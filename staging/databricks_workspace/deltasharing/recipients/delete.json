@@ -17,10 +17,17 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "The recipient was successfully deleted."
+     "description": "The recipient was successfully deleted.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
     }
    },
    "description": "Deletes the specified recipient from the metastore. The caller must be the owner of the recipient."

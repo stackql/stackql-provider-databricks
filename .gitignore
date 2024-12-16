@@ -8,3 +8,4 @@ stackql-google-cloud-shell.sh
 stackql
 /.stackql
 .env
+output.log

@@ -16,6 +16,34 @@
      "in": "path"
     }
    ],
+   "responses": {
+    "200": {
+     "description": "Alert was successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -55,26 +83,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "Alert was successfully updated."
-    },
-    "400": {
-     "description": "Request is invalid or malformed."
-    },
-    "401": {
-     "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "403": {
-     "description": "Caller does not have permission to execute the specified operation."
-    },
-    "404": {
-     "description": "Operation was performed on a resource that does not exist."
-    },
-    "500": {
-     "description": "Internal error."
     }
    },
    "description": "Updates an alert."

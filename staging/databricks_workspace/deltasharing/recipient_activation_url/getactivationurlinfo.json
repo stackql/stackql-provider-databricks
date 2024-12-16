@@ -7,7 +7,7 @@
    },
    "x-stackQL-resource": "recipient_activation_url",
    "x-stackQL-method": "getactivationurlinfo",
-   "x-stackQL-verb": "select",
+   "x-stackQL-verb": "exec",
    "x-numReqParams": 1,
    "parameters": [
     {
@@ -17,10 +17,17 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "The activation URL fetch was successful."
+     "description": "The activation URL fetch was successful.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
     }
    },
    "description": "Gets an activation URL for a share."

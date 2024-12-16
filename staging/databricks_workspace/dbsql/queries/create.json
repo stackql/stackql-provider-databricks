@@ -10,6 +10,90 @@
    "x-stackQL-verb": "insert",
    "x-numReqParams": 0,
    "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "description": {
+          "type": "string"
+         },
+         "owner_user_name": {
+          "type": "string"
+         },
+         "tags": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "display_name": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         },
+         "parent_path": {
+          "type": "string"
+         },
+         "lifecycle_state": {
+          "type": "string"
+         },
+         "last_modifier_user_name": {
+          "type": "string"
+         },
+         "query_text": {
+          "type": "string"
+         },
+         "parameters": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "text_value": {
+             "type": "object",
+             "properties": {
+              "value": {
+               "type": "string"
+              }
+             }
+            },
+            "title": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "warehouse_id": {
+          "type": "string"
+         },
+         "run_as_mode": {
+          "type": "string"
+         },
+         "create_time": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -45,20 +129,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "Request completed successfully."
-    },
-    "400": {
-     "description": "Request is invalid or malformed."
-    },
-    "401": {
-     "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "500": {
-     "description": "Internal error."
     }
    },
    "description": "Creates a query."

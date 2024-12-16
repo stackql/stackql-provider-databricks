@@ -21,10 +21,24 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Status was returned successfully."
+     "description": "Status was returned successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         },
+         "status": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     }
    },
    "description": "Gets the status for an execution context."

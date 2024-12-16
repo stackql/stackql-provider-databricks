@@ -10,6 +10,58 @@
    "x-stackQL-verb": "replace",
    "x-numReqParams": 0,
    "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "has_changes": {
+          "type": "boolean"
+         },
+         "changes": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "field": {
+             "type": "string"
+            },
+            "previous_value": {
+             "type": "string"
+            },
+            "new_value": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -32,29 +84,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "Request completed successfully."
-    },
-    "400": {
-     "description": "Request is invalid or malformed."
-    },
-    "401": {
-     "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "403": {
-     "description": "Caller does not have permission to execute the specified operation."
-    },
-    "404": {
-     "description": "Operation was performed on a resource that does not exist."
-    },
-    "429": {
-     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
-    },
-    "500": {
-     "description": "Internal error."
     }
    },
    "description": "Updates a cluster to be compliant with the current version of its policy. A cluster can be updated if it is in a"

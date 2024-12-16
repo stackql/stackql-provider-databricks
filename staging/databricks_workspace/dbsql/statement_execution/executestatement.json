@@ -10,6 +10,111 @@
    "x-stackQL-verb": "exec",
    "x-numReqParams": 0,
    "parameters": [],
+   "responses": {
+    "200": {
+     "description": "StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. If the SQL warehouse fails to execute the provided statement, a 200 response is returned with `status.state` set to `FAILED` (in constract to a failure when accepting the request, which results in a non-200 response). Details of the error can be found at `status.error` in case of execution failures.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "statement_id": {
+          "type": "string"
+         },
+         "status": {
+          "type": "object",
+          "properties": {
+           "state": {
+            "type": "string"
+           }
+          }
+         },
+         "manifest": {
+          "type": "object",
+          "properties": {
+           "format": {
+            "type": "string"
+           },
+           "schema": {
+            "type": "object",
+            "properties": {
+             "column_count": {
+              "type": "integer"
+             },
+             "columns": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "name": {
+                 "type": "string"
+                },
+                "position": {
+                 "type": "integer"
+                },
+                "type_name": {
+                 "type": "string"
+                },
+                "type_text": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "result": {
+          "type": "object",
+          "properties": {
+           "chunk_index": {
+            "type": "integer"
+           },
+           "row_offset": {
+            "type": "integer"
+           },
+           "row_count": {
+            "type": "integer"
+           },
+           "data_array": {
+            "type": "array",
+            "items": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    },
+    "503": {
+     "description": "Service is currently unavailable."
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -70,32 +175,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "StatementResponse contains `statement_id` and `status`; other fields might be absent or present depending on context. If the SQL warehouse fails to execute the provided statement, a 200 response is returned with `status.state` set to `FAILED` (in constract to a failure when accepting the request, which results in a non-200 response). Details of the error can be found at `status.error` in case of execution failures."
-    },
-    "400": {
-     "description": "Request is invalid or malformed."
-    },
-    "401": {
-     "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "403": {
-     "description": "Caller does not have permission to execute the specified operation."
-    },
-    "404": {
-     "description": "Operation was performed on a resource that does not exist."
-    },
-    "429": {
-     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
-    },
-    "500": {
-     "description": "Internal error."
-    },
-    "503": {
-     "description": "Service is currently unavailable."
     }
    },
    "description": "Execute a SQL statement and optionally await its results for a specified time."

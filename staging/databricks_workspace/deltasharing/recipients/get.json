@@ -17,10 +17,119 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "The recipient was successfully retrieved."
+     "description": "The recipient was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "authentication_type": {
+          "type": "string"
+         },
+         "sharing_code": {
+          "type": "string"
+         },
+         "data_recipient_global_metastore_id": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "ip_access_list": {
+          "type": "object",
+          "properties": {
+           "allowed_ip_addresses": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "properties_kvpairs": {
+          "type": "object",
+          "properties": {
+           "properties": {
+            "type": "object",
+            "properties": {
+             "property1": {
+              "type": "string"
+             },
+             "property2": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         },
+         "activation_url": {
+          "type": "string"
+         },
+         "activated": {
+          "type": "boolean"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "tokens": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "activation_url": {
+             "type": "string"
+            },
+            "expiration_time": {
+             "type": "integer"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "cloud": {
+          "type": "string"
+         },
+         "region": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     }
    },
    "description": "Gets a share recipient from the metastore if:"

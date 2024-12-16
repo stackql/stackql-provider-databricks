@@ -36,10 +36,167 @@
      "in": "query"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "next_page_token": {
+          "type": "string"
+         },
+         "prev_page_token": {
+          "type": "string"
+         },
+         "events": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "sequence": {
+             "type": "object",
+             "properties": {
+              "data_plane_id": {
+               "type": "object",
+               "properties": {
+                "instance": {
+                 "type": "string"
+                },
+                "seq_no": {
+                 "type": "integer"
+                }
+               }
+              },
+              "control_plane_seq_no": {
+               "type": "integer"
+              }
+             }
+            },
+            "origin": {
+             "type": "object",
+             "properties": {
+              "cloud": {
+               "type": "string"
+              },
+              "region": {
+               "type": "string"
+              },
+              "org_id": {
+               "type": "integer"
+              },
+              "pipeline_id": {
+               "type": "string"
+              },
+              "pipeline_name": {
+               "type": "string"
+              },
+              "cluster_id": {
+               "type": "string"
+              },
+              "update_id": {
+               "type": "string"
+              },
+              "maintenance_id": {
+               "type": "string"
+              },
+              "table_id": {
+               "type": "string"
+              },
+              "dataset_name": {
+               "type": "string"
+              },
+              "flow_id": {
+               "type": "string"
+              },
+              "flow_name": {
+               "type": "string"
+              },
+              "batch_id": {
+               "type": "integer"
+              },
+              "request_id": {
+               "type": "string"
+              },
+              "uc_resource_id": {
+               "type": "string"
+              },
+              "host": {
+               "type": "string"
+              },
+              "materialization_name": {
+               "type": "string"
+              }
+             }
+            },
+            "timestamp": {
+             "type": "string"
+            },
+            "message": {
+             "type": "string"
+            },
+            "level": {
+             "type": "string"
+            },
+            "error": {
+             "type": "object",
+             "properties": {
+              "fatal": {
+               "type": "boolean"
+              },
+              "exceptions": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "class_name": {
+                  "type": "string"
+                 },
+                 "message": {
+                  "type": "string"
+                 },
+                 "stack": {
+                  "type": "array",
+                  "items": {
+                   "type": "object",
+                   "properties": {
+                    "declaring_class": {
+                     "type": "string"
+                    },
+                    "method_name": {
+                     "type": "string"
+                    },
+                    "file_name": {
+                     "type": "string"
+                    },
+                    "line_number": {
+                     "type": "integer"
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "event_type": {
+             "type": "string"
+            },
+            "maturity_level": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -57,6 +214,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.events",
    "description": "Retrieves events for a pipeline."
   }
  }

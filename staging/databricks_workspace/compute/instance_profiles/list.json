@@ -10,10 +10,32 @@
    "x-stackQL-verb": "select",
    "x-numReqParams": 0,
    "parameters": [],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "instance_profiles": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "instance_profile_arn": {
+             "type": "string"
+            },
+            "is_meta_instance_profile": {
+             "type": "boolean"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -28,6 +50,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.instance_profiles",
    "description": "List the instance profiles that the calling user can use to launch a cluster."
   }
  }

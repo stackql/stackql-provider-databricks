@@ -17,10 +17,17 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "The provider was successfully deleted."
+     "description": "The provider was successfully deleted.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
     }
    },
    "description": "Deletes an authentication provider, if the caller is a metastore admin or is the owner of the provider."

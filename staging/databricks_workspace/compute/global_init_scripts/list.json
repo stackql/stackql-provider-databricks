@@ -10,10 +10,50 @@
    "x-stackQL-verb": "select",
    "x-numReqParams": 0,
    "parameters": [],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Response indicating that the scripts were retrieved successfully."
+     "description": "Response indicating that the scripts were retrieved successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "scripts": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "script_id": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "position": {
+             "type": "integer"
+            },
+            "enabled": {
+             "type": "boolean"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -28,6 +68,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.scripts",
    "description": "Manages global init scripts for this workspace."
   }
  }

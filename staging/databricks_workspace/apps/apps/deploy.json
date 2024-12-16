@@ -17,6 +17,72 @@
      "in": "path"
     }
    ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "deployment_id": {
+          "type": "string"
+         },
+         "source_code_path": {
+          "type": "string"
+         },
+         "mode": {
+          "type": "string"
+         },
+         "deployment_artifacts": {
+          "type": "object",
+          "properties": {
+           "source_code_path": {
+            "type": "string"
+           }
+          }
+         },
+         "status": {
+          "type": "object",
+          "properties": {
+           "state": {
+            "type": "string"
+           },
+           "message": {
+            "type": "string"
+           }
+          }
+         },
+         "create_time": {
+          "type": "string"
+         },
+         "creator": {
+          "type": "string"
+         },
+         "update_time": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -44,26 +110,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "Request completed successfully."
-    },
-    "400": {
-     "description": "Request is invalid or malformed."
-    },
-    "401": {
-     "description": "The request does not have valid authentication credentials for the operation."
-    },
-    "403": {
-     "description": "Caller does not have permission to execute the specified operation."
-    },
-    "404": {
-     "description": "Operation was performed on a resource that does not exist."
-    },
-    "500": {
-     "description": "Internal error."
     }
    },
    "description": "Creates an app deployment for the app with the supplied name."

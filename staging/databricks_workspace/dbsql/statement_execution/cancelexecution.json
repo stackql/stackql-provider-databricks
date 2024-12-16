@@ -22,7 +22,6 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
      "description": "Cancel response is empty; receiving response indicates successful receipt."

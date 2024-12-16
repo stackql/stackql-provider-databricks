@@ -10,6 +10,23 @@
    "x-stackQL-verb": "insert",
    "x-numReqParams": 0,
    "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -95,11 +112,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": ""
     }
    },
    "description": "Creates a new SQL warehouse."

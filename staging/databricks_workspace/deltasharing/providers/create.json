@@ -10,6 +10,73 @@
    "x-stackQL-verb": "insert",
    "x-numReqParams": 0,
    "parameters": [],
+   "responses": {
+    "200": {
+     "description": "The new provider was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "authentication_type": {
+          "type": "string"
+         },
+         "recipient_profile_str": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "recipient_profile": {
+          "type": "object",
+          "properties": {
+           "share_credentials_version": {
+            "type": "integer"
+           },
+           "endpoint": {
+            "type": "string"
+           },
+           "bearer_token": {
+            "type": "string"
+           }
+          }
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "cloud": {
+          "type": "string"
+         },
+         "region": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "data_provider_global_metastore_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -42,11 +109,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "The new provider was successfully created."
     }
    },
    "description": "Creates a new authentication provider minimally based on a name and authentication type. The caller must be an admin on the metastore."

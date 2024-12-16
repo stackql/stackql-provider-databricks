@@ -17,10 +17,346 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Query fetched successfully."
+     "description": "Query fetched successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         },
+         "parent": {
+          "type": "string"
+         },
+         "latest_query_data_id": {
+          "type": "string"
+         },
+         "name": {
+          "type": "string"
+         },
+         "description": {
+          "type": "string"
+         },
+         "query": {
+          "type": "string"
+         },
+         "query_hash": {
+          "type": "string"
+         },
+         "is_archived": {
+          "type": "boolean"
+         },
+         "is_draft": {
+          "type": "boolean"
+         },
+         "updated_at": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "string"
+         },
+         "data_source_id": {
+          "type": "string"
+         },
+         "options": {
+          "type": "object",
+          "properties": {
+           "moved_to_trash_at": {
+            "type": "string"
+           },
+           "catalog": {
+            "type": "string"
+           },
+           "schema": {
+            "type": "string"
+           },
+           "parameters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "title": {
+               "type": "string"
+              },
+              "name": {
+               "type": "string"
+              },
+              "type": {
+               "type": "string"
+              },
+              "enumOptions": {
+               "type": "string"
+              },
+              "queryId": {
+               "type": "string"
+              },
+              "multiValuesOptions": {
+               "type": "object",
+               "properties": {
+                "prefix": {
+                 "type": "string"
+                },
+                "separator": {
+                 "type": "string"
+                },
+                "suffix": {
+                 "type": "string"
+                }
+               }
+              },
+              "value": {
+               "type": "null"
+              }
+             }
+            }
+           }
+          }
+         },
+         "tags": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "is_safe": {
+          "type": "boolean"
+         },
+         "user_id": {
+          "type": "integer"
+         },
+         "last_modified_by_id": {
+          "type": "integer"
+         },
+         "visualizations": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "type": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "description": {
+             "type": "string"
+            },
+            "options": {
+             "type": "null"
+            },
+            "updated_at": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "string"
+            },
+            "query": {
+             "type": "object",
+             "properties": {
+              "id": {
+               "type": "string"
+              },
+              "parent": {
+               "type": "string"
+              },
+              "latest_query_data_id": {
+               "type": "string"
+              },
+              "name": {
+               "type": "string"
+              },
+              "description": {
+               "type": "string"
+              },
+              "query": {
+               "type": "string"
+              },
+              "query_hash": {
+               "type": "string"
+              },
+              "is_archived": {
+               "type": "boolean"
+              },
+              "is_draft": {
+               "type": "boolean"
+              },
+              "updated_at": {
+               "type": "string"
+              },
+              "created_at": {
+               "type": "string"
+              },
+              "data_source_id": {
+               "type": "string"
+              },
+              "options": {
+               "type": "object",
+               "properties": {
+                "moved_to_trash_at": {
+                 "type": "string"
+                },
+                "catalog": {
+                 "type": "string"
+                },
+                "schema": {
+                 "type": "string"
+                },
+                "parameters": {
+                 "type": "array",
+                 "items": {
+                  "type": "object",
+                  "properties": {
+                   "title": {
+                    "type": "string"
+                   },
+                   "name": {
+                    "type": "string"
+                   },
+                   "type": {
+                    "type": "string"
+                   },
+                   "enumOptions": {
+                    "type": "string"
+                   },
+                   "queryId": {
+                    "type": "string"
+                   },
+                   "multiValuesOptions": {
+                    "type": "object",
+                    "properties": {
+                     "prefix": {
+                      "type": "string"
+                     },
+                     "separator": {
+                      "type": "string"
+                     },
+                     "suffix": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "value": {
+                    "type": "null"
+                   }
+                  }
+                 }
+                }
+               }
+              },
+              "tags": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               }
+              },
+              "is_safe": {
+               "type": "boolean"
+              },
+              "user_id": {
+               "type": "integer"
+              },
+              "last_modified_by_id": {
+               "type": "integer"
+              },
+              "visualizations": {
+               "type": "array",
+               "items": {}
+              },
+              "is_favorite": {
+               "type": "boolean"
+              },
+              "user": {
+               "type": "object",
+               "properties": {
+                "id": {
+                 "type": "integer"
+                },
+                "name": {
+                 "type": "string"
+                },
+                "email": {
+                 "type": "string"
+                }
+               }
+              },
+              "last_modified_by": {
+               "type": "object",
+               "properties": {
+                "id": {
+                 "type": "integer"
+                },
+                "name": {
+                 "type": "string"
+                },
+                "email": {
+                 "type": "string"
+                }
+               }
+              },
+              "can_edit": {
+               "type": "boolean"
+              },
+              "permission_tier": {
+               "type": "string"
+              },
+              "run_as_role": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "is_favorite": {
+          "type": "boolean"
+         },
+         "user": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "integer"
+           },
+           "name": {
+            "type": "string"
+           },
+           "email": {
+            "type": "string"
+           }
+          }
+         },
+         "last_modified_by": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "integer"
+           },
+           "name": {
+            "type": "string"
+           },
+           "email": {
+            "type": "string"
+           }
+          }
+         },
+         "can_edit": {
+          "type": "boolean"
+         },
+         "permission_tier": {
+          "type": "string"
+         },
+         "run_as_role": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     }
    },
    "description": "Retrieve a query object definition along with contextual permissions information about the currently authenticated user."

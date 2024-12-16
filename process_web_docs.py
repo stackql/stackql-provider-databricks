@@ -38,10 +38,13 @@ def process_manifest(provider, debug):
                 hasRespData = True
                 if 'hasRespData' in method:
                     hasRespData = method['hasRespData']
+                hasParams = True
+                if 'hasParams' in method:
+                    hasParams = method['hasParams']                    
                 objectKey = None
                 if 'objectKey' in method:
                     objectKey = method['objectKey']
-                process_endpoint(provider, service_name, resource_name, method['name'], method['docPath'], method['verb'], hasRespData, objectKey, debug)
+                process_endpoint(provider, service_name, resource_name, method['name'], method['docPath'], method['verb'], hasRespData, hasParams, objectKey, debug)
 
 def scrape_dynamic_content(url, max_retries=5, retry_delay=5):
     # Configure Selenium WebDriver with headless Chrome
@@ -99,7 +102,7 @@ def scrape_dynamic_content(url, max_retries=5, retry_delay=5):
             if driver:
                 driver.quit()
 
-def process_endpoint(provider, service, resource, method, docPath, sqlVerb, hasRespData, objectKey, debug):
+def process_endpoint(provider, service, resource, method, docPath, sqlVerb, hasRespData, hasParams, objectKey, debug):
    
     print(f"""processing docPath: {docPath}
 provider: {provider}
@@ -108,7 +111,8 @@ resource: {resource}
 method: {method}
 sqlVerb: {sqlVerb}
 objectKey: {objectKey}
-hasRespData: {hasRespData}""")
+hasRespData: {hasRespData}
+hasParams: {hasParams}""")
 
     # Create output directory structure
     output_dir = f"staging/databricks_{provider}/{service}/{resource}"
@@ -153,12 +157,14 @@ hasRespData: {hasRespData}""")
     if params:
         print(f"params: {params}") if debug else None
     else:
-        raise ValueError(f"No params found in {docPath}")
+        if hasParams:
+            print(f"No params found in {docPath}")
+            # raise ValueError(f"No params found in {docPath}")
 
     request_body = process_request_body(selector, doc_base_path, examples_doc_path, False)
     print("request_body:", json.dumps(request_body, indent=2)) if debug else None
 
-    responses = process_responses(selector, doc_base_path, examples_doc_path, hasRespData, debug)
+    responses = process_responses(selector, doc_base_path, examples_doc_path, hasRespData, http_verb, debug)
     print("responses:", json.dumps(responses, indent=2)) if debug else None
 
     # stitch complete operation object together

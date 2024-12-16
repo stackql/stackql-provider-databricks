@@ -17,6 +17,286 @@
      "in": "path"
     }
    ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "asset_type": {
+          "type": "string"
+         },
+         "added_at": {
+          "type": "integer"
+         },
+         "status": {
+          "type": "string"
+         },
+         "owner_collaborator_alias": {
+          "type": "string"
+         },
+         "table_local_details": {
+          "type": "object",
+          "properties": {
+           "local_name": {
+            "type": "string"
+           },
+           "partitions": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "values": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "name": {
+                  "type": "string"
+                 },
+                 "value": {
+                  "type": "string"
+                 },
+                 "recipient_property_key": {
+                  "type": "string"
+                 },
+                 "op": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "volume_local_details": {
+          "type": "object",
+          "properties": {
+           "local_name": {
+            "type": "string"
+           }
+          }
+         },
+         "view_local_details": {
+          "type": "object",
+          "properties": {
+           "local_name": {
+            "type": "string"
+           }
+          }
+         },
+         "foreign_table_local_details": {
+          "type": "object",
+          "properties": {
+           "local_name": {
+            "type": "string"
+           }
+          }
+         },
+         "table": {
+          "type": "object",
+          "properties": {
+           "columns": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "type_text": {
+               "type": "string"
+              },
+              "type_name": {
+               "type": "string"
+              },
+              "position": {
+               "type": "integer"
+              },
+              "type_precision": {
+               "type": "integer"
+              },
+              "type_scale": {
+               "type": "integer"
+              },
+              "type_interval_type": {
+               "type": "string"
+              },
+              "type_json": {
+               "type": "string"
+              },
+              "comment": {
+               "type": "string"
+              },
+              "nullable": {
+               "type": "boolean"
+              },
+              "partition_index": {
+               "type": "integer"
+              },
+              "mask": {
+               "type": "object",
+               "properties": {
+                "function_name": {
+                 "type": "string"
+                },
+                "using_column_names": {
+                 "type": "array",
+                 "items": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "notebook": {
+          "type": "object",
+          "properties": {
+           "notebook_content": {
+            "type": "string"
+           },
+           "etag": {
+            "type": "string"
+           }
+          }
+         },
+         "view": {
+          "type": "object",
+          "properties": {
+           "columns": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "type_text": {
+               "type": "string"
+              },
+              "type_name": {
+               "type": "string"
+              },
+              "position": {
+               "type": "integer"
+              },
+              "type_precision": {
+               "type": "integer"
+              },
+              "type_scale": {
+               "type": "integer"
+              },
+              "type_interval_type": {
+               "type": "string"
+              },
+              "type_json": {
+               "type": "string"
+              },
+              "comment": {
+               "type": "string"
+              },
+              "nullable": {
+               "type": "boolean"
+              },
+              "partition_index": {
+               "type": "integer"
+              },
+              "mask": {
+               "type": "object",
+               "properties": {
+                "function_name": {
+                 "type": "string"
+                },
+                "using_column_names": {
+                 "type": "array",
+                 "items": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "foreign_table": {
+          "type": "object",
+          "properties": {
+           "columns": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "type_text": {
+               "type": "string"
+              },
+              "type_name": {
+               "type": "string"
+              },
+              "position": {
+               "type": "integer"
+              },
+              "type_precision": {
+               "type": "integer"
+              },
+              "type_scale": {
+               "type": "integer"
+              },
+              "type_interval_type": {
+               "type": "string"
+              },
+              "type_json": {
+               "type": "string"
+              },
+              "comment": {
+               "type": "string"
+              },
+              "nullable": {
+               "type": "boolean"
+              },
+              "partition_index": {
+               "type": "integer"
+              },
+              "mask": {
+               "type": "object",
+               "properties": {
+                "function_name": {
+                 "type": "string"
+                },
+                "using_column_names": {
+                 "type": "array",
+                 "items": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -162,11 +442,6 @@
      }
     },
     "description": "Metadata of the clean room asset"
-   },
-   "responses": {
-    "200": {
-     "description": "Request completed successfully."
-    }
    },
    "description": "Create a clean room asset \u2014share an asset like a notebook or table into the clean room. For each UC asset that is added through this method, the clean room owner must also have enough privilege on the asset to consume it. The privilege must be maintained indefinitely for the clean room to be able to access the asset. Typically, you should use a group as the clean room owner."
   }

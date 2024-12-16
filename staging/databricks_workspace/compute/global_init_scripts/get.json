@@ -17,10 +17,45 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": "Response indicating that the script was retrieved successfully."
+     "description": "Response indicating that the script was retrieved successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "script_id": {
+          "type": "string"
+         },
+         "name": {
+          "type": "string"
+         },
+         "position": {
+          "type": "integer"
+         },
+         "enabled": {
+          "type": "boolean"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "script": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
     },
     "401": {
      "description": "The request does not have valid authentication credentials for the operation."

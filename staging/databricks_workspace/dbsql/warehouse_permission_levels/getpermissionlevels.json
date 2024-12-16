@@ -17,10 +17,32 @@
      "in": "path"
     }
    ],
-   "requestBody": {},
    "responses": {
     "200": {
-     "description": ""
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "permission_levels": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "permission_level": {
+             "type": "string"
+            },
+            "description": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
     },
     "400": {
      "description": "Request is invalid or malformed."
@@ -38,6 +60,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.permission_levels",
    "description": "Gets the permission levels that a user can have on an object."
   }
  }

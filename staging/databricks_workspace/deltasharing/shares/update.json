@@ -17,6 +17,119 @@
      "in": "path"
     }
    ],
+   "responses": {
+    "200": {
+     "description": "The share was successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "storage_root": {
+          "type": "string"
+         },
+         "objects": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "comment": {
+             "type": "string"
+            },
+            "shared_as": {
+             "type": "string"
+            },
+            "string_shared_as": {
+             "type": "string"
+            },
+            "content": {
+             "type": "string"
+            },
+            "history_data_sharing_status": {
+             "type": "string"
+            },
+            "partitions": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "values": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "name": {
+                   "type": "string"
+                  },
+                  "value": {
+                   "type": "string"
+                  },
+                  "recipient_property_key": {
+                   "type": "string"
+                  },
+                  "op": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "cdf_enabled": {
+             "type": "boolean"
+            },
+            "start_version": {
+             "type": "integer"
+            },
+            "data_object_type": {
+             "type": "string"
+            },
+            "added_at": {
+             "type": "integer"
+            },
+            "added_by": {
+             "type": "string"
+            },
+            "status": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "storage_location": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
    "requestBody": {
     "required": true,
     "content": {
@@ -83,11 +196,6 @@
        }
       }
      }
-    }
-   },
-   "responses": {
-    "200": {
-     "description": "The share was successfully updated."
     }
    },
    "description": "Updates the share with the changes and data objects in the request. The caller must be the owner of the share or a metastore admin."
