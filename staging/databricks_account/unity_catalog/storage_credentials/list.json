@@ -98,6 +98,7 @@
      }
     }
    },
+   "x-stackQL-objectKey": "$.storage_credentials",
    "description": "Gets a list of all storage credentials that have been assigned to given metastore."
   }
  }

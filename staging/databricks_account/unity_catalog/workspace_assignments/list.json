@@ -1,11 +1,11 @@
 {
  "/api/2.0/accounts/{account_id}/metastores/{metastore_id}/workspaces": {
   "get": {
-   "operationId": "metastore-assignments-list",
+   "operationId": "workspace-assignments-list",
    "externalDocs": {
     "url": "https://docs.databricks.com/api/account/accountmetastoreassignments/list"
    },
-   "x-stackQL-resource": "metastore_assignments",
+   "x-stackQL-resource": "workspace_assignments",
    "x-stackQL-method": "list",
    "x-stackQL-verb": "select",
    "x-numReqParams": 2,

@@ -30,7 +30,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"id\": \"09094e3230c893775eac3a9e7d912a8ad08ffd7e592feec9afd51958cb662110\", ...}",
         "properties": {
          "id": {
           "type": "string"

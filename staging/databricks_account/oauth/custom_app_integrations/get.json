@@ -30,7 +30,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"integration_id\": \"string\", ...}",
         "properties": {
          "integration_id": {
           "type": "string"

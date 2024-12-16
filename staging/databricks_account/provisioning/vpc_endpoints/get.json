@@ -30,7 +30,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"vpc_endpoint_id\": \"a4ebc4a2-6e00-4da7-8ca0-ca04c7b573a7\", ...}",
         "properties": {
          "vpc_endpoint_id": {
           "type": "string"

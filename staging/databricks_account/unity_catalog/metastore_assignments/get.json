@@ -63,6 +63,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.metastore_assignment",
    "description": "Gets the metastore assignment, if any, for the workspace specified by ID. If the workspace is assigned a metastore, the mappig will be returned. If no metastore is assigned to the workspace, the assignment will not be found and a 404 returned."
   }
  }

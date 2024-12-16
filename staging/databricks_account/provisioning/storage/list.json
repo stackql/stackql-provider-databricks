@@ -24,7 +24,6 @@
       "application/json": {
        "schema": {
         "type": "array",
-        "description": "example: [{\"storage_configuration_id\": \"04aae505-1b1e-4cb9-997d-e1c49282675d\", \"storage_configuration_name\": \"string\", \"root_bucket_info\": {\"bucket_name\": \"string\"}, \"account_id\": \"449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65\", \"creation_time\": 0}, ...]",
         "items": {
          "type": "object",
          "properties": {

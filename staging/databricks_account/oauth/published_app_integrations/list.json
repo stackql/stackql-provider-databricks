@@ -31,7 +31,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"apps\": [{\"app_id\": \"string\", \"integration_id\": \"string\", \"name\": \"string\", \"token_access_policy\": {\"access_token_ttl_in_minutes\": 5, \"refresh_token_ttl_in_minutes\": 5}, \"created_by\": 0, \"create_time\": \"string\"}], ...}",
         "properties": {
          "apps": {
           "type": "array",
@@ -85,6 +84,7 @@
      "description": "Operation is not implemented or is not supported/enabled in this service."
     }
    },
+   "x-stackQL-objectKey": "$.apps",
    "description": "Get the list of published OAuth app integrations for the specified Databricks account"
   }
  }

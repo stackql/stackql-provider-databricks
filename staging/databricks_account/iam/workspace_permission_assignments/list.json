@@ -1,11 +1,11 @@
 {
  "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments": {
   "get": {
-   "operationId": "workspace-assignments-list",
+   "operationId": "workspace-permission-assignments-list",
    "externalDocs": {
     "url": "https://docs.databricks.com/api/account/workspaceassignment/list"
    },
-   "x-stackQL-resource": "workspace_assignments",
+   "x-stackQL-resource": "workspace_permission_assignments",
    "x-stackQL-method": "list",
    "x-stackQL-verb": "select",
    "x-numReqParams": 2,
@@ -89,6 +89,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.permission_assignments",
    "description": "Get the permission assignments for the specified Databricks account and Databricks workspace."
   }
  }

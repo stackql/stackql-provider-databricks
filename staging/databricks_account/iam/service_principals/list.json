@@ -136,6 +136,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.Resources",
    "description": "Gets the set of service principals associated with a Databricks account."
   }
  }

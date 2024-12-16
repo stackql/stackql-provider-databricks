@@ -96,6 +96,7 @@
      }
     }
    },
+   "x-stackQL-objectKey": "$.metastores",
    "description": "Gets all Unity Catalog metastores associated with an account specified by ID."
   }
  }

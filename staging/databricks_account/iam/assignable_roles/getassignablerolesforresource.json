@@ -57,6 +57,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.roles",
    "description": "Gets all the roles that can be granted on an account level resource. A role is grantable if the rule set on the resource can contain an access rule of the role."
   }
  }

@@ -110,6 +110,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.credential_info",
    "description": "Gets a storage credential from the metastore. The caller must be a metastore admin, the owner of the storage credential, or have a level of privilege on the storage credential."
   }
  }

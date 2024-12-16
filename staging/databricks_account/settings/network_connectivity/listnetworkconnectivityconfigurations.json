@@ -29,7 +29,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"items\": [{\"network_connectivity_config_id\": \"d6df3889-eefc-4ddb-bbb4-613efcb30035\", \"account_id\": \"449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65\", \"name\": \"my-example-ncc\", \"region\": \"string\", \"egress_config\": {\"default_rules\": {\"aws_stable_ip_rule\": {\"cidr_blocks\": [\"10.0.0.0/24\"]}}}, \"creation_time\": 1691436121706, \"updated_time\": 1691436121777}], ...}",
         "properties": {
          "items": {
           "type": "array",

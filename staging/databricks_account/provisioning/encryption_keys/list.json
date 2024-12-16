@@ -24,7 +24,6 @@
       "application/json": {
        "schema": {
         "type": "array",
-        "description": "example: [{\"customer_managed_key_id\": \"680290f4-6931-497c-a6b4-514f6694e228\", \"account_id\": \"449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65\", \"aws_key_info\": {\"key_arn\": \"arn:aws:kms:us-west-2:111122223333:key/0987dcba-09fe-87dc-65ba-ab0987654321\", \"key_alias\": \"alias/projectKey1\", \"key_region\": \"us-east-1\", \"reuse_key_for_cluster_volumes\": true}, \"creation_time\": 0, \"use_cases\": [\"MANAGED_SERVICES\", \"STORAGE\"]}, ...]",
         "items": {
          "type": "object",
          "properties": {

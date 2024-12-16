@@ -170,6 +170,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.Resources",
    "description": "Gets details for all the users associated with a Databricks account."
   }
  }

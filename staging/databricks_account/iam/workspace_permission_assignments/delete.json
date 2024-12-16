@@ -1,11 +1,11 @@
 {
  "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments/principals/{principal_id}": {
   "delete": {
-   "operationId": "workspace-assignments-delete",
+   "operationId": "workspace-permission-assignments-delete",
    "externalDocs": {
     "url": "https://docs.databricks.com/api/account/workspaceassignment/delete"
    },
-   "x-stackQL-resource": "workspace_assignments",
+   "x-stackQL-resource": "workspace_permission_assignments",
    "x-stackQL-method": "delete",
    "x-stackQL-verb": "delete",
    "x-numReqParams": 3,

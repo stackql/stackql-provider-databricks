@@ -24,7 +24,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"customer_managed_key_id\": \"680290f4-6931-497c-a6b4-514f6694e228\", ...}",
         "properties": {
          "customer_managed_key_id": {
           "type": "string"

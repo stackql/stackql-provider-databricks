@@ -39,7 +39,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"etag": "string", ...}'
                 properties:
                   etag:
                     type: string
@@ -86,7 +85,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"etag": "string", ...}'
                 properties:
                   etag:
                     type: string
@@ -180,7 +178,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"etag": "string", ...}'
                 properties:
                   etag:
                     type: string
@@ -223,7 +220,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"etag": "string", ...}'
                 properties:
                   etag:
                     type: string
@@ -302,11 +298,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"ip_access_list": {"list_id": "430bbdbc-9d7f-4d06-a273-67ca4ba4ae4b",
-                  "label": "Office VPN", "ip_addresses": ["192.168.100.0/22"], "address_count":
-                  2, "list_type": "ALLOW", "created_at": 1580265020299, "created_by":
-                  202480738464078, "updated_at": 1580265020299, "updated_by": 202480738464089,
-                  "enabled": true}, ...}'
                 properties:
                   ip_access_list:
                     type: object
@@ -384,16 +375,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"ip_access_lists": [{"address_count": 2, "created_at":
-                  1668721146261, "created_by": 5145712326753123, "enabled": true,
-                  "ip_addresses": ["32.19.112.0", "192.168.100.0/22"], "label": "Office
-                  VPN", "list_id": "4da50de0-fa72-4959-a76f-ca434c61e79a", "list_type":
-                  "ALLOW", "updated_at": 1679462174641, "updated_by": 5145712326753123},
-                  {"address_count": 3, "created_at": 1679681892421, "created_by":
-                  5145712326753123, "enabled": true, "ip_addresses": ["198.54.117.59",
-                  "3.46.85.235/24", "251.3.208.1"], "label": "Public Lobby", "list_id":
-                  "103e0ef1-a04b-4dda-8dcb-9c4369cb655d", "list_type": "BLOCK", "updated_at":
-                  1679681892421, "updated_by": 5145712326753123}], ...}'
                 properties:
                   ip_access_lists:
                     type: array
@@ -429,6 +410,7 @@ paths:
           description: Caller does not have permission to execute the specified operation.
         '500':
           description: Internal error.
+      x-stackQL-objectKey: $.ip_access_lists
       description: Gets all IP access lists for the specified account.
   /api/2.0/accounts/{account_id}/ip-access-lists/{ip_access_list_id}:
     delete:
@@ -454,7 +436,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -489,11 +470,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"ip_access_list": {"list_id": "430bbdbc-9d7f-4d06-a273-67ca4ba4ae4b",
-                  "label": "Office VPN", "ip_addresses": ["192.168.100.0/22"], "address_count":
-                  2, "list_type": "ALLOW", "created_at": 1580265020299, "created_by":
-                  202480738464078, "updated_at": 1580265020299, "updated_by": 202480738464089,
-                  "enabled": true}, ...}'
                 properties:
                   ip_access_list:
                     type: object
@@ -529,6 +505,7 @@ paths:
           description: Operation was performed on a resource that does not exist.
         '500':
           description: Internal error.
+      x-stackQL-objectKey: $.ip_access_list
       description: Gets an IP access list, specified by its list ID.
     put:
       operationId: ip-access-lists-replace
@@ -553,7 +530,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -617,7 +593,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -680,8 +655,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"network_connectivity_config_id": "d6df3889-eefc-4ddb-bbb4-613efcb30035",
-                  ...}'
                 properties:
                   network_connectivity_config_id:
                     type: string
@@ -770,11 +743,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"items": [{"network_connectivity_config_id":
-                  "d6df3889-eefc-4ddb-bbb4-613efcb30035", "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
-                  "name": "my-example-ncc", "region": "string", "egress_config": {"default_rules":
-                  {"aws_stable_ip_rule": {"cidr_blocks": ["10.0.0.0/24"]}}}, "creation_time":
-                  1691436121706, "updated_time": 1691436121777}], ...}'
                 properties:
                   items:
                     type: array
@@ -835,7 +803,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -872,8 +839,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"network_connectivity_config_id": "d6df3889-eefc-4ddb-bbb4-613efcb30035",
-                  ...}'
                 properties:
                   network_connectivity_config_id:
                     type: string
@@ -979,6 +944,7 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+            objectKey: $.ip_access_lists
         delete:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1ip-access-lists~1{ip_access_list_id}/delete'
@@ -991,6 +957,7 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+            objectKey: $.ip_access_list
         replace:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1ip-access-lists~1{ip_access_list_id}/put'

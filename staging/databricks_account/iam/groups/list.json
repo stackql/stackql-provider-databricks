@@ -153,6 +153,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.Resources",
    "description": "Gets all details of the groups associated with the Databricks account."
   }
  }

@@ -29,7 +29,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {}",
         "properties": {}
        }
       }

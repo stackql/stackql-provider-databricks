@@ -34,7 +34,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"dashboard_id\": \"string\", ...}",
         "properties": {
          "dashboard_id": {
           "type": "string"

@@ -28,7 +28,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"app_id\": \"string\", ...}",
         "properties": {
          "app_id": {
           "type": "string"

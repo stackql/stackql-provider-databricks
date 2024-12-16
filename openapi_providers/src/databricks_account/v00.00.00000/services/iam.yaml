@@ -36,8 +36,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"roles": [{"name": "roles/servicePrincipal.manager"},
-                  {"name": "roles/servicePrincipal.user"}], ...}'
                 properties:
                   roles:
                     type: array
@@ -53,6 +51,7 @@ paths:
             for the operation.
         '500':
           description: Internal error.
+      x-stackQL-objectKey: $.roles
       description: Gets all the roles that can be granted on an account level resource.
         A role is grantable if the rule set on the resource can contain an access
         rule of the role.
@@ -77,7 +76,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"id": "string", ...}'
                 properties:
                   id:
                     type: string
@@ -208,7 +206,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"totalResults": 0, ...}'
                 properties:
                   totalResults:
                     type: integer
@@ -268,6 +265,7 @@ paths:
           description: Operation was performed on a resource that does not exist.
         '500':
           description: Internal error.
+      x-stackQL-objectKey: $.Resources
       description: Gets all details of the groups associated with the Databricks account.
   /api/2.0/accounts/{account_id}/scim/v2/Groups/{id}:
     delete:
@@ -294,7 +292,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -330,7 +327,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"id": "string", ...}'
                 properties:
                   id:
                     type: string
@@ -402,7 +398,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -460,7 +455,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -547,7 +541,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"name": "string", ...}'
                 properties:
                   name:
                     type: string
@@ -594,8 +587,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"name": "accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default",
-                  ...}'
                 properties:
                   name:
                     type: string
@@ -665,7 +656,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"id": "string", ...}'
                 properties:
                   id:
                     type: string
@@ -786,7 +776,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"totalResults": 0, ...}'
                 properties:
                   totalResults:
                     type: integer
@@ -835,6 +824,7 @@ paths:
           description: Operation was performed on a resource that does not exist.
         '500':
           description: Internal error.
+      x-stackQL-objectKey: $.Resources
       description: Gets the set of service principals associated with a Databricks
         account.
   /api/2.0/accounts/{account_id}/scim/v2/ServicePrincipals/{id}:
@@ -862,7 +852,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -898,7 +887,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"id": "string", ...}'
                 properties:
                   id:
                     type: string
@@ -960,7 +948,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -1019,7 +1006,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -1092,7 +1078,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"id": "string", ...}'
                 properties:
                   id:
                     type: string
@@ -1252,7 +1237,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"totalResults": 10, ...}'
                 properties:
                   totalResults:
                     type: integer
@@ -1323,6 +1307,7 @@ paths:
           description: Operation was performed on a resource that does not exist.
         '500':
           description: Internal error.
+      x-stackQL-objectKey: $.Resources
       description: Gets details for all the users associated with a Databricks account.
   /api/2.0/accounts/{account_id}/scim/v2/Users/{id}:
     delete:
@@ -1349,7 +1334,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -1410,7 +1394,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"id": "string", ...}'
                 properties:
                   id:
                     type: string
@@ -1493,7 +1476,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -1552,7 +1534,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -1619,12 +1600,61 @@ paths:
                 externalId: string
                 active: true
       description: Replaces a user's information with the data supplied in request.
+  /api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments/permissions:
+    get:
+      operationId: workspace-permissions-get
+      externalDocs:
+        url: https://docs.databricks.com/api/account/workspaceassignment/get
+      x-stackQL-resource: workspace_permissions
+      x-stackQL-method: get
+      x-stackQL-verb: select
+      x-numReqParams: 2
+      parameters:
+      - name: account_id
+        required: true
+        description: (string) The account ID.
+        in: path
+      - name: workspace_id
+        required: true
+        description: (int64) The workspace ID.
+        in: path
+      responses:
+        '200':
+          description: Request completed successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  permissions:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        permission_level:
+                          type: string
+                        description:
+                          type: string
+        '400':
+          description: Request is invalid or malformed.
+        '401':
+          description: The request does not have valid authentication credentials
+            for the operation.
+        '403':
+          description: Caller does not have permission to execute the specified operation.
+        '404':
+          description: Operation was performed on a resource that does not exist.
+        '500':
+          description: Internal error.
+      x-stackQL-objectKey: $.permissions
+      description: Get an array of workspace permissions for the specified account
+        and workspace.
   /api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments/principals/{principal_id}:
     put:
-      operationId: workspace-assignments-createorupdate
+      operationId: workspace-permission-assignments-createorupdate
       externalDocs:
         url: https://docs.databricks.com/api/account/workspaceassignment/update
-      x-stackQL-resource: workspace_assignments
+      x-stackQL-resource: workspace_permission_assignments
       x-stackQL-method: createorupdate
       x-stackQL-verb: insert
       x-numReqParams: 3
@@ -1648,9 +1678,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"principal": {"user_name": "string", "group_name":
-                  "string", "service_principal_name": "string", "principal_id": 0,
-                  "display_name": "string"}, ...}'
                 properties:
                   principal:
                     type: object
@@ -1709,10 +1736,10 @@ paths:
       description: Creates or updates the workspace permissions assignment in a given
         account and workspace for the specified principal.
     delete:
-      operationId: workspace-assignments-delete
+      operationId: workspace-permission-assignments-delete
       externalDocs:
         url: https://docs.databricks.com/api/account/workspaceassignment/delete
-      x-stackQL-resource: workspace_assignments
+      x-stackQL-resource: workspace_permission_assignments
       x-stackQL-method: delete
       x-stackQL-verb: delete
       x-numReqParams: 3
@@ -1736,7 +1763,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -1747,62 +1773,12 @@ paths:
           description: Internal error.
       description: Deletes the workspace permissions assignment in a given account
         and workspace for the specified principal.
-  /api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments/permissions:
-    get:
-      operationId: workspace-assignments-get
-      externalDocs:
-        url: https://docs.databricks.com/api/account/workspaceassignment/get
-      x-stackQL-resource: workspace_assignments
-      x-stackQL-method: get
-      x-stackQL-verb: select
-      x-numReqParams: 2
-      parameters:
-      - name: account_id
-        required: true
-        description: (string) The account ID.
-        in: path
-      - name: workspace_id
-        required: true
-        description: (int64) The workspace ID.
-        in: path
-      responses:
-        '200':
-          description: Request completed successfully.
-          content:
-            application/json:
-              schema:
-                type: object
-                description: 'example: {"permissions": [{"permission_level": "UNKNOWN",
-                  "description": "string"}], ...}'
-                properties:
-                  permissions:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        permission_level:
-                          type: string
-                        description:
-                          type: string
-        '400':
-          description: Request is invalid or malformed.
-        '401':
-          description: The request does not have valid authentication credentials
-            for the operation.
-        '403':
-          description: Caller does not have permission to execute the specified operation.
-        '404':
-          description: Operation was performed on a resource that does not exist.
-        '500':
-          description: Internal error.
-      description: Get an array of workspace permissions for the specified account
-        and workspace.
   /api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments:
     get:
-      operationId: workspace-assignments-list
+      operationId: workspace-permission-assignments-list
       externalDocs:
         url: https://docs.databricks.com/api/account/workspaceassignment/list
-      x-stackQL-resource: workspace_assignments
+      x-stackQL-resource: workspace_permission_assignments
       x-stackQL-method: list
       x-stackQL-verb: select
       x-numReqParams: 2
@@ -1822,10 +1798,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"permission_assignments": [{"principal": {"user_name":
-                  "string", "group_name": "string", "service_principal_name": "string",
-                  "principal_id": 0, "display_name": "string"}, "permissions": ["UNKNOWN"],
-                  "error": "string"}], ...}'
                 properties:
                   permission_assignments:
                     type: array
@@ -1862,6 +1834,7 @@ paths:
           description: Operation was performed on a resource that does not exist.
         '500':
           description: Internal error.
+      x-stackQL-objectKey: $.permission_assignments
       description: Get the permission assignments for the specified Databricks account
         and Databricks workspace.
 components:
@@ -1877,6 +1850,7 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+            objectKey: $.roles
       sqlVerbs:
         select:
         - $ref: '#/components/x-stackQL-resources/assignable_roles/methods/getassignablerolesforresource'
@@ -1902,6 +1876,7 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+            objectKey: $.Resources
         delete:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Groups~1{id}/delete'
@@ -1982,6 +1957,7 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+            objectKey: $.Resources
         delete:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1ServicePrincipals~1{id}/delete'
@@ -2036,6 +2012,7 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+            objectKey: $.Resources
         delete:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Users~1{id}/delete'
@@ -2073,10 +2050,30 @@ components:
         delete:
         - $ref: '#/components/x-stackQL-resources/users/methods/delete'
         exec: []
-    workspace_assignments:
-      id: databricks_account.iam.workspace_assignments
-      name: workspace_assignments
-      title: Workspace_assignments
+    workspace_permissions:
+      id: databricks_account.iam.workspace_permissions
+      name: workspace_permissions
+      title: Workspace_permissions
+      methods:
+        get:
+          operation:
+            $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1permissionassignments~1permissions/get'
+          response:
+            mediaType: application/json
+            openAPIDocKey: '200'
+            objectKey: $.permissions
+      sqlVerbs:
+        select:
+        - $ref: '#/components/x-stackQL-resources/workspace_permissions/methods/get'
+        insert: []
+        update: []
+        replace: []
+        delete: []
+        exec: []
+    workspace_permission_assignments:
+      id: databricks_account.iam.workspace_permission_assignments
+      name: workspace_permission_assignments
+      title: Workspace_permission_assignments
       methods:
         createorupdate:
           operation:
@@ -2090,26 +2087,20 @@ components:
           response:
             mediaType: application/json
             openAPIDocKey: '200'
-        get:
-          operation:
-            $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1permissionassignments~1permissions/get'
-          response:
-            mediaType: application/json
-            openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1permissionassignments/get'
           response:
             mediaType: application/json
             openAPIDocKey: '200'
+            objectKey: $.permission_assignments
       sqlVerbs:
         select:
-        - $ref: '#/components/x-stackQL-resources/workspace_assignments/methods/list'
-        - $ref: '#/components/x-stackQL-resources/workspace_assignments/methods/get'
+        - $ref: '#/components/x-stackQL-resources/workspace_permission_assignments/methods/list'
         insert:
-        - $ref: '#/components/x-stackQL-resources/workspace_assignments/methods/createorupdate'
+        - $ref: '#/components/x-stackQL-resources/workspace_permission_assignments/methods/createorupdate'
         update: []
         replace: []
         delete:
-        - $ref: '#/components/x-stackQL-resources/workspace_assignments/methods/delete'
+        - $ref: '#/components/x-stackQL-resources/workspace_permission_assignments/methods/delete'
         exec: []

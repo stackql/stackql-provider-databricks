@@ -35,7 +35,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"apps\": [{\"integration_id\": \"string\", \"client_id\": \"string\", \"redirect_urls\": [\"string\"], \"name\": \"string\", \"confidential\": false, \"token_access_policy\": {\"access_token_ttl_in_minutes\": 5, \"refresh_token_ttl_in_minutes\": 5}, \"scopes\": [\"string\"], \"created_by\": 0, \"create_time\": \"string\", \"creator_username\": \"string\"}], ...}",
         "properties": {
          "apps": {
           "type": "array",
@@ -107,6 +106,7 @@
      "description": "Operation is not implemented or is not supported/enabled in this service."
     }
    },
+   "x-stackQL-objectKey": "$.apps",
    "description": "Get the list of custom OAuth app integrations for the specified Databricks account"
   }
  }

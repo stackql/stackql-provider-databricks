@@ -30,7 +30,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"workspace_id\": 1614665312930232, ...}",
         "properties": {
          "workspace_id": {
           "type": "integer"

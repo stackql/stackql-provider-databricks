@@ -108,6 +108,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.metastore_info",
    "description": "Gets a Unity Catalog metastore from an account, both specified by ID."
   }
  }

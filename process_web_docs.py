@@ -116,7 +116,6 @@ hasRespData: {hasRespData}""")
 
     # Scrape the documentation page
     soup = scrape_dynamic_content(docPath)
-    
     selector = Selector(text=str(soup))
 
     doc_base_path = "/html/body/div[1]/div/div[2]/div/div[2]/div[3]/article/div/div[1]"
@@ -124,6 +123,13 @@ hasRespData: {hasRespData}""")
 
     http_verb = selector.xpath(f"{doc_base_path}/article/span/code/div/div/text()").get()
     if not http_verb:
+        # lets try this again, take it from the top, stuff happens....
+        soup = scrape_dynamic_content(docPath)
+        selector = Selector(text=str(soup))
+        http_verb = selector.xpath(f"{doc_base_path}/article/span/code/div/div/text()").get()
+
+    if not http_verb:
+        # ok we still have nothing, lets eject
         raise ValueError(f"Could not find HTTP verb in {docPath}")
     else:
         http_verb = http_verb.lower()

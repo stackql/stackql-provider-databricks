@@ -1,11 +1,11 @@
 {
  "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments/permissions": {
   "get": {
-   "operationId": "workspace-assignments-get",
+   "operationId": "workspace-permissions-get",
    "externalDocs": {
     "url": "https://docs.databricks.com/api/account/workspaceassignment/get"
    },
-   "x-stackQL-resource": "workspace_assignments",
+   "x-stackQL-resource": "workspace_permissions",
    "x-stackQL-method": "get",
    "x-stackQL-verb": "select",
    "x-numReqParams": 2,
@@ -66,6 +66,7 @@
      "description": "Internal error."
     }
    },
+   "x-stackQL-objectKey": "$.permissions",
    "description": "Get an array of workspace permissions for the specified account and workspace."
   }
  }

@@ -1,11 +1,11 @@
 {
  "/api/2.0/accounts/{account_id}/workspaces/{workspace_id}/permissionassignments/principals/{principal_id}": {
   "put": {
-   "operationId": "workspace-assignments-createorupdate",
+   "operationId": "workspace-permission-assignments-createorupdate",
    "externalDocs": {
     "url": "https://docs.databricks.com/api/account/workspaceassignment/update"
    },
-   "x-stackQL-resource": "workspace_assignments",
+   "x-stackQL-resource": "workspace_permission_assignments",
    "x-stackQL-method": "createorupdate",
    "x-stackQL-verb": "insert",
    "x-numReqParams": 3,

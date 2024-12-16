@@ -28,7 +28,6 @@
       "application/json": {
        "schema": {
         "type": "object",
-        "description": "example: {\"etag\": \"string\", ...}",
         "properties": {
          "etag": {
           "type": "string"

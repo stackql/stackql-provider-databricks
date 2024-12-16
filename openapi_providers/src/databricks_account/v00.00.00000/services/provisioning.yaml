@@ -32,8 +32,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"credentials_id": "c7814269-df58-4ca3-85e9-f6672ef43d77",
-                  ...}'
                 properties:
                   credentials_id:
                     type: string
@@ -107,11 +105,6 @@ paths:
             application/json:
               schema:
                 type: array
-                description: 'example: [{"credentials_id": "c7814269-df58-4ca3-85e9-f6672ef43d77",
-                  "credentials_name": "string", "aws_credentials": {"sts_role": {"role_arn":
-                  "arn-aws-iam::111110000000:role/test_role", "external_id": "422935c0-fa17-411e-b2f6-639f8083bfce"}},
-                  "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65", "creation_time":
-                  0}, ...]'
                 items:
                   type: object
                   properties:
@@ -168,7 +161,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -207,8 +199,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"credentials_id": "c7814269-df58-4ca3-85e9-f6672ef43d77",
-                  ...}'
                 properties:
                   credentials_id:
                     type: string
@@ -259,8 +249,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"customer_managed_key_id": "680290f4-6931-497c-a6b4-514f6694e228",
-                  ...}'
                 properties:
                   customer_managed_key_id:
                     type: string
@@ -345,12 +333,6 @@ paths:
             application/json:
               schema:
                 type: array
-                description: 'example: [{"customer_managed_key_id": "680290f4-6931-497c-a6b4-514f6694e228",
-                  "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65", "aws_key_info":
-                  {"key_arn": "arn:aws:kms:us-west-2:111122223333:key/0987dcba-09fe-87dc-65ba-ab0987654321",
-                  "key_alias": "alias/projectKey1", "key_region": "us-east-1", "reuse_key_for_cluster_volumes":
-                  true}, "creation_time": 0, "use_cases": ["MANAGED_SERVICES", "STORAGE"]},
-                  ...]'
                 items:
                   type: object
                   properties:
@@ -415,7 +397,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -453,8 +434,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"customer_managed_key_id": "680290f4-6931-497c-a6b4-514f6694e228",
-                  ...}'
                 properties:
                   customer_managed_key_id:
                     type: string
@@ -514,8 +493,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"network_id": "d6797cf4-42b9-4cad-8591-9dd91c3f0fc3",
-                  ...}'
                 properties:
                   network_id:
                     type: string
@@ -637,14 +614,6 @@ paths:
             application/json:
               schema:
                 type: array
-                description: 'example: [{"network_id": "d6797cf4-42b9-4cad-8591-9dd91c3f0fc3",
-                  "network_name": "my-databricks-network", "vpc_id": "string", "subnet_ids":
-                  ["string"], "security_group_ids": ["string"], "vpc_status": "UNATTACHED",
-                  "warning_messages": [{"warning_type": "subnet", "warning_message":
-                  "string"}], "error_messages": [{"error_type": "credentials", "error_message":
-                  "string"}], "workspace_id": 1614665312930232, "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
-                  "creation_time": 1643668346544, "vpc_endpoints": {"rest_api": ["497f6eca-6276-4993-bfeb-53cbbbba6f08"],
-                  "dataplane_relay": ["497f6eca-6276-4993-bfeb-53cbbbba6f08"]}}, ...]'
                 items:
                   type: object
                   properties:
@@ -734,7 +703,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -773,8 +741,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"network_id": "d6797cf4-42b9-4cad-8591-9dd91c3f0fc3",
-                  ...}'
                 properties:
                   network_id:
                     type: string
@@ -858,8 +824,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"private_access_settings_id": "3b3bbcb5-46bd-4b03-944e-97eb44ed7991",
-                  ...}'
                 properties:
                   private_access_settings_id:
                     type: string
@@ -942,11 +906,6 @@ paths:
             application/json:
               schema:
                 type: array
-                description: 'example: [{"private_access_settings_id": "3b3bbcb5-46bd-4b03-944e-97eb44ed7991",
-                  "private_access_settings_name": "string", "public_access_enabled":
-                  true, "region": "string", "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
-                  "private_access_level": "ENDPOINT", "allowed_vpc_endpoint_ids":
-                  ["497f6eca-6276-4993-bfeb-53cbbbba6f08"]}, ...]'
                 items:
                   type: object
                   properties:
@@ -1001,7 +960,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -1039,8 +997,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"private_access_settings_id": "3b3bbcb5-46bd-4b03-944e-97eb44ed7991",
-                  ...}'
                 properties:
                   private_access_settings_id:
                     type: string
@@ -1092,7 +1048,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -1160,8 +1115,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"storage_configuration_id": "04aae505-1b1e-4cb9-997d-e1c49282675d",
-                  ...}'
                 properties:
                   storage_configuration_id:
                     type: string
@@ -1228,10 +1181,6 @@ paths:
             application/json:
               schema:
                 type: array
-                description: 'example: [{"storage_configuration_id": "04aae505-1b1e-4cb9-997d-e1c49282675d",
-                  "storage_configuration_name": "string", "root_bucket_info": {"bucket_name":
-                  "string"}, "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
-                  "creation_time": 0}, ...]'
                 items:
                   type: object
                   properties:
@@ -1283,7 +1232,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -1321,8 +1269,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"storage_configuration_id": "04aae505-1b1e-4cb9-997d-e1c49282675d",
-                  ...}'
                 properties:
                   storage_configuration_id:
                     type: string
@@ -1368,8 +1314,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"vpc_endpoint_id": "a4ebc4a2-6e00-4da7-8ca0-ca04c7b573a7",
-                  ...}'
                 properties:
                   vpc_endpoint_id:
                     type: string
@@ -1441,11 +1385,6 @@ paths:
             application/json:
               schema:
                 type: array
-                description: 'example: [{"vpc_endpoint_id": "a4ebc4a2-6e00-4da7-8ca0-ca04c7b573a7",
-                  "vpc_endpoint_name": "string", "aws_vpc_endpoint_id": "string",
-                  "aws_endpoint_service_id": "string", "use_case": "WORKSPACE_ACCESS",
-                  "region": "string", "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
-                  "aws_account_id": "string", "state": "string"}, ...]'
                 items:
                   type: object
                   properties:
@@ -1501,7 +1440,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -1538,8 +1476,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"vpc_endpoint_id": "a4ebc4a2-6e00-4da7-8ca0-ca04c7b573a7",
-                  ...}'
                 properties:
                   vpc_endpoint_id:
                     type: string
@@ -1589,7 +1525,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"workspace_id": 1614665312930232, ...}'
                 properties:
                   workspace_id:
                     type: integer
@@ -1726,17 +1661,6 @@ paths:
             application/json:
               schema:
                 type: array
-                description: 'example: [{"workspace_id": 1614665312930232, "workspace_name":
-                  "string", "deployment_name": "string", "network_id": "d6797cf4-42b9-4cad-8591-9dd91c3f0fc3",
-                  "aws_region": "string", "credentials_id": "c7814269-df58-4ca3-85e9-f6672ef43d77",
-                  "storage_configuration_id": "04aae505-1b1e-4cb9-997d-e1c49282675d",
-                  "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65", "workspace_status":
-                  "RUNNING", "workspace_status_message": "Workspace resources are
-                  being set up.", "managed_services_customer_managed_key_id": "faacdc79-6530-4583-a154-5d427a663e53",
-                  "private_access_settings_id": "3b3bbcb5-46bd-4b03-944e-97eb44ed7991",
-                  "creation_time": 0, "pricing_tier": "PREMIUM", "storage_customer_managed_key_id":
-                  "14138d0f-a575-4ae2-be71-ddfd0b602286", "custom_tags": {"property1":
-                  "string", "property2": "string"}}, ...]'
                 items:
                   type: object
                   properties:
@@ -1812,7 +1736,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -1851,7 +1774,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {"workspace_id": 1614665312930232, ...}'
                 properties:
                   workspace_id:
                     type: integer
@@ -1924,7 +1846,6 @@ paths:
             application/json:
               schema:
                 type: object
-                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.

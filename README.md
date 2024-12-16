@@ -15,11 +15,11 @@ python -m venv venv
 pip install -r requirements.txt
 pip freeze
 # scrape web docs
-python .\process-web-docs.py account --debug --clean
-python .\process-web-docs.py workspace --debug --clean
+python .\process_web_docs.py account --clean --debug 
+python .\process_web_docs.py workspace --clean --debug
 # generate openapi specs
- python .\generate_openapi_specs.py account --debug --clean
-python .\generate_openapi_specs.py workspace --debug --clean
+ python .\generate_openapi_specs.py account --clean --debug
+python .\generate_openapi_specs.py workspace --clean --debug
 
 deactivate
 ```

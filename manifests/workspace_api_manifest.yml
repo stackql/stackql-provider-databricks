@@ -25,6 +25,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/apps/list
         verb: select
+        objectKey: $.apps
       - name: update
         docPath: https://docs.databricks.com/api/workspace/apps/update
         verb: update
@@ -36,11 +37,13 @@ services:
       - name: listdeployments
         docPath: https://docs.databricks.com/api/workspace/apps/listdeployments
         verb: select
+        objectKey: $.app_deployments
     - name: permission_levels
       methods:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/apps/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: permissions
       methods:
       - name: setpermissions
@@ -66,6 +69,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/cleanroomassets/list
         verb: select
+        objectKey: $.assets
       - name: update
         docPath: https://docs.databricks.com/api/workspace/cleanroomassets/update
         verb: update
@@ -83,6 +87,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/cleanrooms/list
         verb: select
+        objectKey: $.clean_rooms
       - name: update
         docPath: https://docs.databricks.com/api/workspace/cleanrooms/update
         verb: update
@@ -96,6 +101,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/cleanroomtaskruns/list
         verb: select
+        objectKey: $.runs
   compute:
     description: Compute
     resources:
@@ -109,6 +115,7 @@ services:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/clusters/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: cluster_permissions
       methods:
       - name: setpermissions
@@ -137,6 +144,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/clusterpolicies/list
         verb: select
+        objectKey: $.policies
     - name: cluster_policies_permissions
       methods:
       - name: setpermissions
@@ -156,9 +164,12 @@ services:
       - name: getcompliance
         docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/getcompliance
         verb: select
+    - name: all_clusters_policy_compliance
+      methods:
       - name: listcompliance
         docPath: https://docs.databricks.com/api/workspace/policycomplianceforclusters/listcompliance
         verb: select
+        objectKey: $.clusters
     - name: clusters
       methods:
       - name: delete
@@ -197,6 +208,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/clusters/list
         verb: select
+        objectKey: $.clusters
       - name: update
         docPath: https://docs.databricks.com/api/workspace/clusters/update
         verb: update
@@ -236,6 +248,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/globalinitscripts/list
         verb: select
+        objectKey: $.scripts
       - name: update
         docPath: https://docs.databricks.com/api/workspace/globalinitscripts/update
         verb: update
@@ -244,6 +257,7 @@ services:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/instancepools/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: instance_pool_permissions
       methods:
       - name: setpermissions
@@ -272,6 +286,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/instancepools/list
         verb: select
+        objectKey: $.instance_pools
     - name: instance_profiles
       methods:
       - name: remove
@@ -286,6 +301,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/instanceprofiles/list
         verb: select
+        objectKey: $.instance_profiles
     - name: libraries
       methods:
       - name: uninstall
@@ -297,6 +313,7 @@ services:
       - name: allclusterlibrarystatuses
         docPath: https://docs.databricks.com/api/workspace/libraries/allclusterlibrarystatuses
         verb: select
+        objectKey: $.statuses
       - name: clusterstatus
         docPath: https://docs.databricks.com/api/workspace/libraries/clusterstatus
         verb: select
@@ -305,6 +322,7 @@ services:
       - name: listnodetypes
         docPath: https://docs.databricks.com/api/workspace/clusters/listnodetypes
         verb: select
+        objectKey: $.node_types
     - name: policy_families
       methods:
       - name: get
@@ -313,16 +331,19 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/policyfamilies/list
         verb: select
+        objectKey: $.policy_families
     - name: policy_permission_levels
       methods:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/clusterpolicies/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: spark_versions
       methods:
       - name: sparkversions
         docPath: https://docs.databricks.com/api/workspace/clusters/sparkversions
         verb: select
+        objectKey: $.versions
     - name: zones
       methods:
       - name: listzones
@@ -345,6 +366,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/alerts/list
         verb: select
+        objectKey: $.results
       - name: update
         docPath: https://docs.databricks.com/api/workspace/alerts/update
         verb: update
@@ -382,9 +404,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/dashboards/list
         verb: select
-      - name: list
-        docPath: https://docs.databricks.com/api/workspace/datasources/list
-        verb: select
+        objectKey: $.results
       - name: update
         docPath: https://docs.databricks.com/api/workspace/dashboards/update
         verb: update
@@ -413,6 +433,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/queries/list
         verb: select
+        objectKey: $.results
       - name: update
         docPath: https://docs.databricks.com/api/workspace/queries/update
         verb: update
@@ -433,6 +454,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/querieslegacy/list
         verb: select
+        objectKey: $.results
       - name: update
         docPath: https://docs.databricks.com/api/workspace/querieslegacy/update
         verb: update
@@ -441,6 +463,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/queryhistory/list
         verb: select
+        objectKey: $.res
     - name: statement_execution
       methods:
       - name: cancelexecution
@@ -470,6 +493,7 @@ services:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/warehouses/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: warehouse_permissions
       methods:
       - name: setpermissions
@@ -504,6 +528,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/warehouses/list
         verb: select
+        objectKey: $.warehouses
   deltalivetables:
     description: Deltalivetables
     resources:
@@ -512,11 +537,13 @@ services:
       - name: listpipelineevents
         docPath: https://docs.databricks.com/api/workspace/pipelines/listpipelineevents
         verb: select
+        objectKey: $.events
     - name: pipeline_permission_levels
       methods:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/pipelines/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: pipeline_permissions
       methods:
       - name: setpermissions
@@ -536,9 +563,11 @@ services:
       - name: getupdate
         docPath: https://docs.databricks.com/api/workspace/pipelines/getupdate
         verb: select
+        objectKey: $.update
       - name: listupdates
         docPath: https://docs.databricks.com/api/workspace/pipelines/listupdates
         verb: select
+        objectKey: $.updates
     - name: pipelines
       methods:
       - name: delete
@@ -556,6 +585,7 @@ services:
       - name: listpipelines
         docPath: https://docs.databricks.com/api/workspace/pipelines/listpipelines
         verb: select
+        objectKey: $.statuses
       - name: update
         docPath: https://docs.databricks.com/api/workspace/pipelines/update
         verb: update
@@ -567,6 +597,7 @@ services:
       - name: listshares
         docPath: https://docs.databricks.com/api/workspace/providers/listshares
         verb: select
+        objectKey: $.shares
     - name: providers
       methods:
       - name: delete
@@ -581,6 +612,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/providers/list
         verb: select
+        objectKey: $.providers
       - name: update
         docPath: https://docs.databricks.com/api/workspace/providers/update
         verb: update
@@ -593,12 +625,13 @@ services:
       methods:
       - name: getactivationurlinfo
         docPath: https://docs.databricks.com/api/workspace/recipientactivation/getactivationurlinfo
-        verb: select
+        verb: exec
     - name: recipient_share_permissions
       methods:
       - name: sharepermissions
         docPath: https://docs.databricks.com/api/workspace/recipients/sharepermissions
         verb: select
+        objectKey: $.permissions_out
     - name: recipients
       methods:
       - name: delete
@@ -616,6 +649,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/recipients/list
         verb: select
+        objectKey: $.recipients
       - name: update
         docPath: https://docs.databricks.com/api/workspace/recipients/update
         verb: update
@@ -624,6 +658,7 @@ services:
       - name: sharepermissions
         docPath: https://docs.databricks.com/api/workspace/shares/sharepermissions
         verb: select
+        objectKey: $.privilege_assignments
       - name: updatepermissions
         docPath: https://docs.databricks.com/api/workspace/shares/updatepermissions
         verb: update
@@ -641,6 +676,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/shares/list
         verb: select
+        objectKey: $.shares
       - name: update
         docPath: https://docs.databricks.com/api/workspace/shares/update
         verb: update
@@ -674,6 +710,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/dbfs/list
         verb: select
+        objectKey: $.files
       - name: mkdirs
         docPath: https://docs.databricks.com/api/workspace/dbfs/mkdirs
         verb: insert
@@ -701,6 +738,7 @@ services:
       - name: listdirectorycontents
         docPath: https://docs.databricks.com/api/workspace/files/listdirectorycontents
         verb: select
+        objectKey: $.contents
     - name: files
       methods:
       - name: delete
@@ -720,6 +758,7 @@ services:
       - name: getassignablerolesforresource
         docPath: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy/getassignablerolesforresource
         verb: select
+        objectKey: $.roles
     - name: currentuser
       methods:
       - name: me
@@ -739,6 +778,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/groups/list
         verb: select
+        objectKey: $.Resources
       - name: patch
         docPath: https://docs.databricks.com/api/workspace/groups/patch
         verb: update
@@ -750,6 +790,7 @@ services:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/permissions/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: permissions
       methods:
       - name: set
@@ -783,6 +824,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/serviceprincipals/list
         verb: select
+        objectKey: $.Resources
       - name: patch
         docPath: https://docs.databricks.com/api/workspace/serviceprincipals/patch
         verb: update
@@ -791,20 +833,21 @@ services:
         verb: update
     - name: user_permission_levels
       methods:
-      - name: setpermissions
-        docPath: https://docs.databricks.com/api/workspace/users/setpermissions
-        verb: replace
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/users/getpermissionlevels
         verb: select
-      - name: updatepermissions
-        docPath: https://docs.databricks.com/api/workspace/users/updatepermissions
-        verb: update
+        objectKey: $.permission_levels
     - name: user_permissions
       methods:
       - name: getpermissions
         docPath: https://docs.databricks.com/api/workspace/users/getpermissions
         verb: select
+      - name: setpermissions
+        docPath: https://docs.databricks.com/api/workspace/users/setpermissions
+        verb: replace
+      - name: updatepermissions
+        docPath: https://docs.databricks.com/api/workspace/users/updatepermissions
+        verb: update
     - name: users
       methods:
       - name: delete
@@ -819,6 +862,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/users/list
         verb: select
+        objectKey: $.Resources
       - name: patch
         docPath: https://docs.databricks.com/api/workspace/users/patch
         verb: update
@@ -842,6 +886,7 @@ services:
       - name: listschedules
         docPath: https://docs.databricks.com/api/workspace/lakeview/listschedules
         verb: select
+        objectKey: $.schedules
       - name: updateschedule
         docPath: https://docs.databricks.com/api/workspace/lakeview/updateschedule
         verb: update
@@ -859,6 +904,7 @@ services:
       - name: listsubscriptions
         docPath: https://docs.databricks.com/api/workspace/lakeview/listsubscriptions
         verb: select
+        objectKey: $.subscriptions
     - name: dashboards
       methods:
       - name: trash
@@ -882,6 +928,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/lakeview/list
         verb: select
+        objectKey: $.dashboards
       - name: update
         docPath: https://docs.databricks.com/api/workspace/lakeview/update
         verb: update
@@ -903,6 +950,7 @@ services:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/experiments/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: experiment_permissions
       methods:
       - name: setpermissions
@@ -954,9 +1002,11 @@ services:
       - name: getrun
         docPath: https://docs.databricks.com/api/workspace/experiments/getrun
         verb: select
+        objectKey: $.run
       - name: searchruns
         docPath: https://docs.databricks.com/api/workspace/experiments/searchruns
         verb: select
+        objectKey: $.runs
       - name: updaterun
         docPath: https://docs.databricks.com/api/workspace/experiments/updaterun
         verb: update
@@ -982,15 +1032,19 @@ services:
       - name: getbyname
         docPath: https://docs.databricks.com/api/workspace/experiments/getbyname
         verb: select
+        objectKey: $.experiment
       - name: getexperiment
         docPath: https://docs.databricks.com/api/workspace/experiments/getexperiment
         verb: select
+        objectKey: $.experiment
       - name: listexperiments
         docPath: https://docs.databricks.com/api/workspace/experiments/listexperiments
         verb: select
+        objectKey: $.experiments
       - name: searchexperiments
         docPath: https://docs.databricks.com/api/workspace/experiments/searchexperiments
         verb: select
+        objectKey: $.experiments
       - name: updateexperiment
         docPath: https://docs.databricks.com/api/workspace/experiments/updateexperiment
         verb: update
@@ -999,16 +1053,19 @@ services:
       - name: gethistory
         docPath: https://docs.databricks.com/api/workspace/experiments/gethistory
         verb: select
+        objectKey: $.metrics
     - name: model_latest_versions
       methods:
       - name: getlatestversions
         docPath: https://docs.databricks.com/api/workspace/modelregistry/getlatestversions
         verb: select
+        objectKey: $.model_versions
     - name: model_permission_levels
       methods:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/modelregistry/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: model_permissions
       methods:
       - name: setpermissions
@@ -1045,6 +1102,7 @@ services:
       - name: listtransitionrequests
         docPath: https://docs.databricks.com/api/workspace/modelregistry/listtransitionrequests
         verb: select
+        objectKey: $.requests
       - name: rejecttransitionrequest
         docPath: https://docs.databricks.com/api/workspace/modelregistry/rejecttransitionrequest
         verb: exec
@@ -1083,9 +1141,11 @@ services:
       - name: getmodelversion
         docPath: https://docs.databricks.com/api/workspace/modelregistry/getmodelversion
         verb: select
+        objectKey: $.model_version
       - name: searchmodelversions
         docPath: https://docs.databricks.com/api/workspace/modelregistry/searchmodelversions
         verb: select
+        objectKey: $.model_versions
       - name: updatemodelversion
         docPath: https://docs.databricks.com/api/workspace/modelregistry/updatemodelversion
         verb: update
@@ -1103,6 +1163,7 @@ services:
       - name: listwebhooks
         docPath: https://docs.databricks.com/api/workspace/modelregistry/listwebhooks
         verb: select
+        objectKey: $.webhooks
       - name: updatewebhook
         docPath: https://docs.databricks.com/api/workspace/modelregistry/updatewebhook
         verb: update
@@ -1123,9 +1184,11 @@ services:
       - name: listmodels
         docPath: https://docs.databricks.com/api/workspace/modelregistry/listmodels
         verb: select
+        objectKey: $.registered_models
       - name: searchmodels
         docPath: https://docs.databricks.com/api/workspace/modelregistry/searchmodels
         verb: select
+        objectKey: $.registered_models
       - name: updatemodel
         docPath: https://docs.databricks.com/api/workspace/modelregistry/updatemodel
         verb: update
@@ -1134,12 +1197,16 @@ services:
     resources:
     - name: consumer_fulfillments
       methods:
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/consumerfulfillments/get
-        verb: select
       - name: list
         docPath: https://docs.databricks.com/api/workspace/consumerfulfillments/list
         verb: select
+        objectKey: $.fulfillments
+    - name: consumer_listing_content
+      methods:
+      - name: get
+        docPath: https://docs.databricks.com/api/workspace/consumerfulfillments/get
+        verb: select
+        objectKey: $.shared_data_objects
     - name: consumer_installations
       methods:
       - name: delete
@@ -1151,6 +1218,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/consumerinstallations/list
         verb: select
+        objectKey: $.installations
       - name: update
         docPath: https://docs.databricks.com/api/workspace/consumerinstallations/update
         verb: update
@@ -1162,12 +1230,15 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/consumerlistings/get
         verb: select
+        objectKey: $.listing
       - name: list
         docPath: https://docs.databricks.com/api/workspace/consumerlistings/list
         verb: select
+        objectKey: $.listings
       - name: search
         docPath: https://docs.databricks.com/api/workspace/consumerlistings/search
         verb: select
+        objectKey: $.listings
     - name: consumer_personalization_requests
       methods:
       - name: create
@@ -1176,9 +1247,11 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/consumerpersonalizationrequests/get
         verb: select
+        objectKey: $.personalization_requests
       - name: list
         docPath: https://docs.databricks.com/api/workspace/consumerpersonalizationrequests/list
         verb: select
+        objectKey: $.personalization_requests
     - name: consumer_providers
       methods:
       - name: batchget
@@ -1187,14 +1260,17 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/consumerproviders/get
         verb: select
+        objectKey: $.provider
       - name: list
         docPath: https://docs.databricks.com/api/workspace/consumerproviders/list
         verb: select
+        objectKey: $.providers
     - name: listing_installations
       methods:
       - name: listlistinginstallations
         docPath: https://docs.databricks.com/api/workspace/consumerinstallations/listlistinginstallations
         verb: select
+        objectKey: $.installations
     - name: provider_analytics_dashboards
       methods:
       - name: create
@@ -1222,6 +1298,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/list
         verb: select
+        objectKey: $.filters
       - name: update
         docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/update
         verb: update
@@ -1236,9 +1313,11 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providerexchanges/get
         verb: select
+        objectKey: $.exchange
       - name: list
         docPath: https://docs.databricks.com/api/workspace/providerexchanges/list
         verb: select
+        objectKey: $.exchanges
       - name: update
         docPath: https://docs.databricks.com/api/workspace/providerexchanges/update
         verb: update
@@ -1250,12 +1329,14 @@ services:
       - name: listexchangesforlisting
         docPath: https://docs.databricks.com/api/workspace/providerexchanges/listexchangesforlisting
         verb: select
+        objectKey: $.exchange_listing
       - name: listlistingsforexchange
         docPath: https://docs.databricks.com/api/workspace/providerexchanges/listlistingsforexchange
         verb: select
+        objectKey: $.exchange_listings
       - name: addlistingtoexchange
         docPath: https://docs.databricks.com/api/workspace/providerexchanges/addlistingtoexchange
-        verb: select
+        verb: insert
     - name: provider_files
       methods:
       - name: delete
@@ -1267,9 +1348,11 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providerfiles/get
         verb: select
+        objectKey: $.file_info
       - name: list
         docPath: https://docs.databricks.com/api/workspace/providerfiles/list
         verb: select
+        objectKey: $.file_infos
     - name: provider_listings
       methods:
       - name: delete
@@ -1281,9 +1364,11 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providerlistings/get
         verb: select
+        objectKey: $.listing
       - name: list
         docPath: https://docs.databricks.com/api/workspace/providerlistings/list
         verb: select
+        objectKey: $.listings
       - name: update
         docPath: https://docs.databricks.com/api/workspace/providerlistings/update
         verb: update
@@ -1292,6 +1377,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/providerpersonalizationrequests/list
         verb: select
+        objectKey: $.personalization_requests
       - name: update
         docPath: https://docs.databricks.com/api/workspace/providerpersonalizationrequests/update
         verb: update
@@ -1306,9 +1392,11 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providerproviders/get
         verb: select
+        objectKey: $.provider
       - name: list
         docPath: https://docs.databricks.com/api/workspace/providerproviders/list
         verb: select
+        objectKey: $.providers
       - name: update
         docPath: https://docs.databricks.com/api/workspace/providerproviders/update
         verb: update
@@ -1354,6 +1442,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/servingendpoints/list
         verb: select
+        objectKey: $.endpoints
       - name: patch
         docPath: https://docs.databricks.com/api/workspace/servingendpoints/patch
         verb: update
@@ -1365,12 +1454,13 @@ services:
         verb: replace
       - name: query
         docPath: https://docs.databricks.com/api/workspace/servingendpoints/query
-        verb: select
+        verb: exec
     - name: serving_endpoints_permission_levels
       methods:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/servingendpoints/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: serving_endpoints_permissions
       methods:
       - name: setpermissions
@@ -1399,6 +1489,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/gitcredentials/list
         verb: select
+        objectKey: $.credentials
       - name: update
         docPath: https://docs.databricks.com/api/workspace/gitcredentials/update
         verb: update
@@ -1407,6 +1498,7 @@ services:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/repos/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: permissions
       methods:
       - name: setpermissions
@@ -1432,6 +1524,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/repos/list
         verb: select
+        objectKey: $.repos
       - name: update
         docPath: https://docs.databricks.com/api/workspace/repos/update
         verb: update
@@ -1449,6 +1542,7 @@ services:
       - name: listacls
         docPath: https://docs.databricks.com/api/workspace/secrets/listacls
         verb: select
+        objectKey: $.acls
       - name: putacl
         docPath: https://docs.databricks.com/api/workspace/secrets/putacl
         verb: replace
@@ -1463,6 +1557,7 @@ services:
       - name: listscopes
         docPath: https://docs.databricks.com/api/workspace/secrets/listscopes
         verb: select
+        objectKey: $.scopes
     - name: secrets
       methods:
       - name: deletesecret
@@ -1474,6 +1569,7 @@ services:
       - name: listsecrets
         docPath: https://docs.databricks.com/api/workspace/secrets/listsecrets
         verb: select
+        objectKey: $.secrets
       - name: putsecret
         docPath: https://docs.databricks.com/api/workspace/secrets/putsecret
         verb: replace
@@ -1502,6 +1598,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/catalogs/list
         verb: select
+        objectKey: $.catalogs
       - name: update
         docPath: https://docs.databricks.com/api/workspace/catalogs/update
         verb: update
@@ -1519,6 +1616,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/connections/list
         verb: select
+        objectKey: $.connections
       - name: update
         docPath: https://docs.databricks.com/api/workspace/connections/update
         verb: update
@@ -1544,6 +1642,7 @@ services:
       - name: listcredentials
         docPath: https://docs.databricks.com/api/workspace/credentials/listcredentials
         verb: select
+        objectKey: $.credentials
       - name: updatecredential
         docPath: https://docs.databricks.com/api/workspace/credentials/updatecredential
         verb: update
@@ -1552,6 +1651,7 @@ services:
       - name: geteffective
         docPath: https://docs.databricks.com/api/workspace/grants/geteffective
         verb: select
+        objectKey: $.privilege_assignments
     - name: external_locations
       methods:
       - name: delete
@@ -1566,6 +1666,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/externallocations/list
         verb: select
+        objectKey: $.external_locations
       - name: update
         docPath: https://docs.databricks.com/api/workspace/externallocations/update
         verb: update
@@ -1583,6 +1684,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/functions/list
         verb: select
+        objectKey: $.functions
       - name: update
         docPath: https://docs.databricks.com/api/workspace/functions/update
         verb: update
@@ -1591,6 +1693,7 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/grants/get
         verb: select
+        objectKey: $.privilege_assignments
       - name: update
         docPath: https://docs.databricks.com/api/workspace/grants/update
         verb: update
@@ -1627,6 +1730,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/metastores/list
         verb: select
+        objectKey: $.metastores
       - name: update
         docPath: https://docs.databricks.com/api/workspace/metastores/update
         verb: update
@@ -1644,6 +1748,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/modelversions/list
         verb: select
+        objectKey: $.model_versions
       - name: update
         docPath: https://docs.databricks.com/api/workspace/modelversions/update
         verb: update
@@ -1669,6 +1774,7 @@ services:
       - name: listrefreshes
         docPath: https://docs.databricks.com/api/workspace/qualitymonitors/listrefreshes
         verb: select
+        objectKey: $.refreshes
     - name: quality_monitors
       methods:
       - name: delete
@@ -1705,6 +1811,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/registeredmodels/list
         verb: select
+        objectKey: $.registered_models
       - name: update
         docPath: https://docs.databricks.com/api/workspace/registeredmodels/update
         verb: update
@@ -1713,9 +1820,11 @@ services:
       - name: getquota
         docPath: https://docs.databricks.com/api/workspace/resourcequotas/getquota
         verb: select
+        objectKey: $.quota_info
       - name: listquotas
         docPath: https://docs.databricks.com/api/workspace/resourcequotas/listquotas
         verb: select
+        objectKey: $.quotas
     - name: schemas
       methods:
       - name: delete
@@ -1730,6 +1839,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/schemas/list
         verb: select
+        objectKey: $.schemas
       - name: update
         docPath: https://docs.databricks.com/api/workspace/schemas/update
         verb: update
@@ -1752,6 +1862,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/storagecredentials/list
         verb: select
+        objectKey: $.storage_credentials
       - name: update
         docPath: https://docs.databricks.com/api/workspace/storagecredentials/update
         verb: update
@@ -1766,6 +1877,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/systemschemas/list
         verb: select
+        objectKey: $.schemas
     - name: table_constraints
       methods:
       - name: delete
@@ -1784,6 +1896,7 @@ services:
       - name: listsummaries
         docPath: https://docs.databricks.com/api/workspace/tables/listsummaries
         verb: select
+        objectKey: $.tables
     - name: tables
       methods:
       - name: delete
@@ -1795,6 +1908,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/tables/list
         verb: select
+        objectKey: $.tables
     - name: temporary_table_credentials
       methods:
       - name: generatetemporarytablecredentials
@@ -1811,6 +1925,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/volumes/list
         verb: select
+        objectKey: $.volumes
       - name: update
         docPath: https://docs.databricks.com/api/workspace/volumes/update
         verb: update
@@ -1819,12 +1934,10 @@ services:
         verb: select
     - name: workspace_bindings
       methods:
-      - name: get
-        docPath: https://docs.databricks.com/api/workspace/workspacebindings/get
-        verb: select
       - name: getbindings
         docPath: https://docs.databricks.com/api/workspace/workspacebindings/getbindings
         verb: select
+        objectKey: $.bindings
       - name: update
         docPath: https://docs.databricks.com/api/workspace/workspacebindings/update
         verb: update
@@ -1856,6 +1969,7 @@ services:
       - name: listendpoints
         docPath: https://docs.databricks.com/api/workspace/vectorsearchendpoints/listendpoints
         verb: select
+        objectKey: $.endpoints
     - name: index_query
       methods:
       - name: queryindex
@@ -1886,6 +2000,7 @@ services:
       - name: listindexes
         docPath: https://docs.databricks.com/api/workspace/vectorsearchindexes/listindexes
         verb: select
+        objectKey: $.vector_indexes
   workflows:
     description: Workflows
     resources:
@@ -1900,11 +2015,13 @@ services:
       - name: listcompliance
         docPath: https://docs.databricks.com/api/workspace/policycomplianceforjobs/listcompliance
         verb: select
+        objectKey: $.jobs
     - name: job_permission_levels
       methods:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/jobs/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: job_permissions
       methods:
       - name: setpermissions
@@ -1944,6 +2061,7 @@ services:
       - name: listruns
         docPath: https://docs.databricks.com/api/workspace/jobs/listruns
         verb: select
+        objectKey: $.runs
     - name: jobs
       methods:
       - name: delete
@@ -1967,6 +2085,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/jobs/list
         verb: select
+        objectKey: $.jobs
       - name: update
         docPath: https://docs.databricks.com/api/workspace/jobs/update
         verb: update
@@ -2019,6 +2138,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/workspace/list
         verb: select
+        objectKey: $.objects
     - name: enhanced_security_monitoring
       methods:
       - name: get
@@ -2049,9 +2169,11 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/ipaccesslists/get
         verb: select
+        objectKey: $.ip_access_list
       - name: list
         docPath: https://docs.databricks.com/api/workspace/ipaccesslists/list
         verb: select
+        objectKey: $.ip_access_lists
       - name: update
         docPath: https://docs.databricks.com/api/workspace/ipaccesslists/update
         verb: update
@@ -2069,6 +2191,7 @@ services:
       - name: list
         docPath: https://docs.databricks.com/api/workspace/notificationdestinations/list
         verb: select
+        objectKey: $.results
       - name: update
         docPath: https://docs.databricks.com/api/workspace/notificationdestinations/update
         verb: update
@@ -2077,6 +2200,7 @@ services:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/workspace/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: object_permissions
       methods:
       - name: setpermissions
@@ -2131,6 +2255,7 @@ services:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/tokenmanagement/getpermissionlevels
         verb: select
+        objectKey: $.permission_levels
     - name: token_permissions
       methods:
       - name: setpermissions
@@ -2153,9 +2278,11 @@ services:
       - name: get
         docPath: https://docs.databricks.com/api/workspace/tokenmanagement/get
         verb: select
+        objectKey: $.token_info
       - name: list
         docPath: https://docs.databricks.com/api/workspace/tokenmanagement/list
         verb: select
+        objectKey: $.token_infos
     - name: user_tokens
       methods:
       - name: revoketoken
@@ -2167,3 +2294,4 @@ services:
       - name: listtokens
         docPath: https://docs.databricks.com/api/workspace/tokens/listtokens
         verb: select
+        objectKey: $.token_infos
