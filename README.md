@@ -24,16 +24,34 @@ python .\generate_openapi_specs.py workspace --clean --debug
 deactivate
 ```
 
-# testing
+## tests
+
+To run tests locally, clone [stackql-provider-tests](https://github.com/stackql/stackql-provider-tests), and run locally:
+
+```bash
+# run from the directory you cloned into
+cd /mnt/c/LocalGitRepos/stackql/core/stackql-provider-tests
+bash test-provider.sh \
+databricks_account \
+false \
+/mnt/c/LocalGitRepos/stackql/openapi-conversion/stackql-databricks-openapi/openapi_providers \
+true
+# stop the server
+sh stop.sh
+cd /mnt/c/LocalGitRepos/stackql/openapi-conversion/stackql-databricks-openapi
+```
+
+# inspect
 
 ```bash
 curl -L https://bit.ly/stackql-zip -O && unzip stackql-zip
 ```
-
-## Inspect
 
 ```bash
 PROVIDER_REGISTRY_ROOT_DIR="$(pwd)/openapi_providers"
 REG_STR='{"url": "file://'${PROVIDER_REGISTRY_ROOT_DIR}'", "localDocRoot": "'${PROVIDER_REGISTRY_ROOT_DIR}'", "verifyConfig": {"nopVerify": true}}'
 ./stackql shell --registry="${REG_STR}"
 ```
+
+
+
