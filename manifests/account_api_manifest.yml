@@ -79,7 +79,7 @@ services:
           - name: delete
             docPath: https://docs.databricks.com/api/account/accountusers/delete
             verb: delete
-      - name: workspace_assignments
+      - name: workspace_permission_assignments
         methods:
           - name: list
             docPath: https://docs.databricks.com/api/account/workspaceassignment/list
@@ -91,9 +91,12 @@ services:
           - name: delete
             docPath: https://docs.databricks.com/api/account/workspaceassignment/delete
             verb: delete
+      - name: workspace_permissions
+        methods:            
           - name: get
             docPath: https://docs.databricks.com/api/account/workspaceassignment/get
             verb: select
+            objectKey: $.permissions
   unity_catalog:
     description: Unity Catalog
     resources:
@@ -107,6 +110,7 @@ services:
           - name: get
             docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/get
             verb: select
+            objectKey: $.metastore_assignment
           - name: create
             docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/create
             verb: insert
@@ -141,12 +145,14 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/accountstoragecredentials/list
             verb: select
+            objectKey: $.storage_credentials
           - name: create
             docPath: https://docs.databricks.com/api/account/accountstoragecredentials/create
             verb: insert
           - name: get
             docPath: https://docs.databricks.com/api/account/accountstoragecredentials/get
             verb: select
+            objectKey: $.credential_info
           - name: update
             docPath: https://docs.databricks.com/api/account/accountstoragecredentials/update
             verb: replace
@@ -161,6 +167,7 @@ services:
           - name: get
             docPath: https://docs.databricks.com/api/account/accountipaccesslists/get
             verb: select
+            objectKey: $.ip_access_list
           - name: replace
             docPath: https://docs.databricks.com/api/account/accountipaccesslists/replace
             verb: replace
@@ -173,6 +180,7 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/accountipaccesslists/list
             verb: select
+            objectKey: $.ip_access_lists
           - name: create
             docPath: https://docs.databricks.com/api/account/accountipaccesslists/create
             verb: insert
@@ -335,12 +343,14 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/budgets/list
             verb: select
+            objectKey: $.budgets
           - name: create
             docPath: https://docs.databricks.com/api/account/budgets/create
             verb: insert
           - name: get
             docPath: https://docs.databricks.com/api/account/budgets/get
             verb: select
+            objectKey: $.budget
           - name: update
             docPath: https://docs.databricks.com/api/account/budgets/update
             verb: replace
@@ -355,12 +365,14 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/logdelivery/list
             verb: select
+            objectKey: $.log_delivery_configurations
           - name: create
             docPath: https://docs.databricks.com/api/account/logdelivery/create
             verb: insert
           - name: get
             docPath: https://docs.databricks.com/api/account/logdelivery/get
             verb: select
+            objectKey: $.log_delivery_configuration
           - name: patchstatus
             docPath: https://docs.databricks.com/api/account/logdelivery/patchstatus
             verb: exec
@@ -372,6 +384,7 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/customappintegration/list
             verb: select
+            objectKey: $.apps
           - name: create
             docPath: https://docs.databricks.com/api/account/customappintegration/create
             verb: insert
@@ -389,11 +402,13 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/oauthpublishedapps/list
             verb: select
+            objectKey: $.apps
       - name: published_app_integrations
         methods:
           - name: list
             docPath: https://docs.databricks.com/api/account/publishedappintegration/list
             verb: select
+            objectKey: $.apps
           - name: create
             docPath: https://docs.databricks.com/api/account/publishedappintegration/create
             verb: insert
@@ -411,6 +426,7 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/serviceprincipalsecrets/list
             verb: select
+            objectKey: $.secrets
           - name: create
             docPath: https://docs.databricks.com/api/account/serviceprincipalsecrets/create
             verb: insert
