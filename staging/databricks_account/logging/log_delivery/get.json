@@ -30,6 +30,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"log_delivery_configuration\": {\"account_id\": \"449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65\", \"config_id\": \"d1d31429-d888-4f1c-b9c1-4e842f9bce5b\", \"creation_time\": 0, \"update_time\": 0, \"log_delivery_status\": {\"status\": \"CREATED\", \"message\": \"string\", \"last_attempt_time\": \"2019-08-24T14:15:22Z\", \"last_successful_attempt_time\": \"2019-08-24T14:15:22Z\"}, \"config_name\": \"string\", \"status\": \"ENABLED\", \"log_type\": \"BILLABLE_USAGE\", \"output_format\": \"CSV\", \"credentials_id\": \"c7814269-df58-4ca3-85e9-f6672ef43d77\", \"storage_configuration_id\": \"04aae505-1b1e-4cb9-997d-e1c49282675d\", \"workspace_ids_filter\": [0], \"delivery_path_prefix\": \"string\", \"delivery_start_time\": \"string\"}, ...}",
         "properties": {
          "log_delivery_configuration": {
           "type": "object",

@@ -24,6 +24,7 @@
       "application/json": {
        "schema": {
         "type": "array",
+        "description": "example: [{\"workspace_id\": 1614665312930232, \"workspace_name\": \"string\", \"deployment_name\": \"string\", \"network_id\": \"d6797cf4-42b9-4cad-8591-9dd91c3f0fc3\", \"aws_region\": \"string\", \"credentials_id\": \"c7814269-df58-4ca3-85e9-f6672ef43d77\", \"storage_configuration_id\": \"04aae505-1b1e-4cb9-997d-e1c49282675d\", \"account_id\": \"449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65\", \"workspace_status\": \"RUNNING\", \"workspace_status_message\": \"Workspace resources are being set up.\", \"managed_services_customer_managed_key_id\": \"faacdc79-6530-4583-a154-5d427a663e53\", \"private_access_settings_id\": \"3b3bbcb5-46bd-4b03-944e-97eb44ed7991\", \"creation_time\": 0, \"pricing_tier\": \"PREMIUM\", \"storage_customer_managed_key_id\": \"14138d0f-a575-4ae2-be71-ddfd0b602286\", \"custom_tags\": {\"property1\": \"string\", \"property2\": \"string\"}}, ...]",
         "items": {
          "type": "object",
          "properties": {

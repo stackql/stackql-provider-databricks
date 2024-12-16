@@ -38,7 +38,10 @@ def process_manifest(provider, debug):
                 hasRespData = True
                 if 'hasRespData' in method:
                     hasRespData = method['hasRespData']
-                process_endpoint(provider, service_name, resource_name, method['name'], method['docPath'], method['verb'], hasRespData, debug)
+                objectKey = None
+                if 'objectKey' in method:
+                    objectKey = method['objectKey']
+                process_endpoint(provider, service_name, resource_name, method['name'], method['docPath'], method['verb'], hasRespData, objectKey, debug)
 
 def scrape_dynamic_content(url, max_retries=5, retry_delay=5):
     # Configure Selenium WebDriver with headless Chrome
@@ -96,7 +99,7 @@ def scrape_dynamic_content(url, max_retries=5, retry_delay=5):
             if driver:
                 driver.quit()
 
-def process_endpoint(provider, service, resource, method, docPath, sqlVerb, hasRespData, debug):
+def process_endpoint(provider, service, resource, method, docPath, sqlVerb, hasRespData, objectKey, debug):
    
     print(f"""processing docPath: {docPath}
 provider: {provider}
@@ -104,6 +107,7 @@ service: {service}
 resource: {resource}
 method: {method}
 sqlVerb: {sqlVerb}
+objectKey: {objectKey}
 hasRespData: {hasRespData}""")
 
     # Create output directory structure
@@ -166,6 +170,9 @@ hasRespData: {hasRespData}""")
             }
         }
     }
+
+    if objectKey:
+        operation[http_path][http_verb]["x-stackQL-objectKey"] = objectKey
 
     if request_body:
         operation[http_path][http_verb]["requestBody"] = request_body

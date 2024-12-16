@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import yaml, json, os, sys,argparse, time
 from pathlib import Path
+from datetime import datetime
 
 def read_manifest(provider):
 
@@ -21,12 +22,21 @@ def read_manifest(provider):
 
 def create_base_openapi_spec():
     """Create the base OpenAPI specification structure"""
+    current_date = datetime.now().strftime("%Y-%m-%d")
+
     return {
         "openapi": "3.0.0",
         "info": {
-            "title": "Databricks API",
-            "version": "v00.00.00000"
+            "version": f"{current_date}-stackql-generated",
+            "contact": {
+                "name": "StackQL Studios",
+                "url": "https://stackql.io/",
+                "email": "info@stackql.io"
+            }        
         },
+        "servers": [
+            { "url": "https://accounts.cloud.databricks.com" }
+        ],
         "paths": {},
         "components": {}
     }
@@ -126,7 +136,7 @@ def build_resource_entry(provider, service_name, resource_name):
         }
     }
 
-def add_method_to_resource(resource, method_name, path, verb, response_code="200"):
+def add_method_to_resource(resource, method_name, path, verb, object_key, response_code="200"):
     """Add a method to a resource's methods collection"""
     # Create the path reference, replacing / with ~1 per OpenAPI spec
     path_ref = path.replace("/", "~1")
@@ -139,6 +149,9 @@ def add_method_to_resource(resource, method_name, path, verb, response_code="200
             "openAPIDocKey": response_code
         }
     }
+    if object_key:
+        resource["methods"][method_name]["response"]["objectKey"] = object_key
+
 
 def generate_stackql_resources(provider, debug):
     """Generate x-stackQL-resources components for each service"""
@@ -176,8 +189,10 @@ def generate_stackql_resources(provider, debug):
                     if resource_name not in resources:
                         resources[resource_name] = build_resource_entry(provider, service_name, resource_name)
                     
+                    object_key = operation.get('x-stackQL-objectKey', None)
+
                     # Add method to resource
-                    add_method_to_resource(resources[resource_name], method_name, path, verb, response_code)
+                    add_method_to_resource(resources[resource_name], method_name, path, verb, object_key, response_code)
                     
                     # Add method reference to appropriate sqlVerb list
                     method_ref = f"#/components/x-stackQL-resources/{resource_name}/methods/{method_name}"
@@ -223,12 +238,17 @@ def generate_provider_yaml(provider):
         "providerServices": {},
         "config": {
             "auth": {
-                "credentialsenvvar": "DATABRICKS_CREDENTIALS",
-                "type": "service_account"
+                "type": "oauth2",
+                "client_id_env_var": "DATABRICKS_CLIENT_ID",
+                "client_secret_env_var": "DATABRICKS_CLIENT_SECRET",
+                "grant_type": "client_credentials",
+                # "token_url": "https://accounts.cloud.databricks.com/oidc/accounts/{DATABRICKS_ACCOUNT_ID}/v1/token",
+                "token_url": "https://accounts.cloud.databricks.com/oidc/accounts/21ea1c76-f4b7-4b24-b6cc-5fb13ef9321a/v1/token",
+                "scopes": ["all-apis"]
             }
         }
     }
-    
+
     # Process each service YAML file
     for service_file in os.scandir(services_dir):
         if service_file.name.endswith('.yaml'):

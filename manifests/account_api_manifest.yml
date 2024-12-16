@@ -7,6 +7,7 @@ services:
           - name: getassignablerolesforresource
             docPath: https://docs.databricks.com/api/account/accountaccesscontrol/getassignablerolesforresource
             verb: select
+            objectKey: $.roles
       - name: rule_sets
         methods:
           - name: getruleset
@@ -20,6 +21,7 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/accountgroups/list
             verb: select
+            objectKey: $.Resources
           - name: create
             docPath: https://docs.databricks.com/api/account/accountgroups/create
             verb: insert
@@ -40,6 +42,7 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/accountserviceprincipals/list
             verb: select
+            objectKey: $.Resources
           - name: create
             docPath: https://docs.databricks.com/api/account/accountserviceprincipals/create
             verb: insert
@@ -60,6 +63,7 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/accountusers/list
             verb: select
+            objectKey: $.Resources
           - name: create
             docPath: https://docs.databricks.com/api/account/accountusers/create
             verb: insert
@@ -80,6 +84,7 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/workspaceassignment/list
             verb: select
+            objectKey: $.permission_assignments
           - name: createorupdate
             docPath: https://docs.databricks.com/api/account/workspaceassignment/update
             verb: insert
@@ -92,11 +97,13 @@ services:
   unity_catalog:
     description: Unity Catalog
     resources:
-      - name: metastore_assignments
+      - name: workspace_assignments
         methods:
           - name: list
             docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/list
             verb: select
+      - name: metastore_assignments
+        methods:
           - name: get
             docPath: https://docs.databricks.com/api/account/accountmetastoreassignments/get
             verb: select
@@ -115,12 +122,14 @@ services:
           - name: list
             docPath: https://docs.databricks.com/api/account/accountmetastores/list
             verb: select
+            objectKey: $.metastores
           - name: create
             docPath: https://docs.databricks.com/api/account/accountmetastores/create
             verb: insert
           - name: get
             docPath: https://docs.databricks.com/api/account/accountmetastores/get
             verb: select
+            objectKey: $.metastore_info
           - name: update
             docPath: https://docs.databricks.com/api/account/accountmetastores/update
             verb: replace

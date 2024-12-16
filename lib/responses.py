@@ -131,9 +131,9 @@ def get_response_example(selector, examples_doc_path, response_code, debug=False
         raise ValueError("Could not find response example")
 
 def example_to_json_schema(example):
-    """Convert a JSON example into a JSON schema"""
+    """Convert a JSON example into a JSON schema with example descriptions"""
     
-    def _get_type(value):
+    def get_type(value):
         """Helper function to get the type of a value"""
         if isinstance(value, dict):
             return "object"
@@ -150,29 +150,22 @@ def example_to_json_schema(example):
         else:
             return "string"
 
-    def _process_value(value):
+    def process_value(value):
         """Recursively process a value to build schema"""
-        value_type = _get_type(value)
+        value_type = get_type(value)
+        schema = {"type": value_type}
         
         if value_type == "object":
-            return {
-                "type": "object",
-                "properties": {
-                    k: _process_value(v) for k, v in value.items()
-                }
+            schema["properties"] = {
+                k: process_value(v) for k, v in value.items()
             }
         elif value_type == "array":
             if not value:  # Empty array
-                return {
-                    "type": "array",
-                    "items": {}
-                }
-            # Get schema of first item as representative
-            return {
-                "type": "array",
-                "items": _process_value(value[0])
-            }
-        else:
-            return {"type": value_type}
+                schema["items"] = {}
+            else:
+                # Get schema of first item as representative
+                schema["items"] = process_value(value[0])
+        
+        return schema
 
-    return _process_value(example)
+    return process_value(example)

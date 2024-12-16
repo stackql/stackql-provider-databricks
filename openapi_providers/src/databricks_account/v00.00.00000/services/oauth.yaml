@@ -1,8 +1,14 @@
 openapi: 3.0.0
 info:
+  version: 2024-12-16-stackql-generated
+  contact:
+    name: StackQL Studios
+    url: https://stackql.io/
+    email: info@stackql.io
   title: Databricks Oauth API
-  version: v00.00.00000
   description: OAuth Integrations
+servers:
+- url: https://accounts.cloud.databricks.com
 paths:
   /api/2.0/accounts/{account_id}/oauth2/custom-app-integrations:
     post:
@@ -24,6 +30,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"client_id": "0oa6ahowk1AUgLWxL1d8", ...}'
                 properties:
                   client_id:
                     type: string
@@ -102,6 +109,11 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"apps": [{"integration_id": "string", "client_id":
+                  "string", "redirect_urls": ["string"], "name": "string", "confidential":
+                  false, "token_access_policy": {"access_token_ttl_in_minutes": 5,
+                  "refresh_token_ttl_in_minutes": 5}, "scopes": ["string"], "created_by":
+                  0, "create_time": "string", "creator_username": "string"}], ...}'
                 properties:
                   apps:
                     type: array
@@ -172,6 +184,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -209,6 +222,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"integration_id": "string", ...}'
                 properties:
                   integration_id:
                     type: string
@@ -273,6 +287,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -332,6 +347,10 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"apps": [{"app_id": "01234567-1234-5678-90ab-76543210",
+                  "client_id": "databricks-cli", "name": "Databricks CLI", "description":
+                  "string", "is_confidential_client": false, "redirect_urls": ["http://localhost:8020"],
+                  "scopes": ["sql", "offline_access"]}], ...}'
                 properties:
                   apps:
                     type: array
@@ -387,6 +406,8 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"integration_id": "c1b137c2-b832-1abc-ad12-995a0209e213",
+                  ...}'
                 properties:
                   integration_id:
                     type: string
@@ -447,6 +468,10 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"apps": [{"app_id": "string", "integration_id":
+                  "string", "name": "string", "token_access_policy": {"access_token_ttl_in_minutes":
+                  5, "refresh_token_ttl_in_minutes": 5}, "created_by": 0, "create_time":
+                  "string"}], ...}'
                 properties:
                   apps:
                     type: array
@@ -505,6 +530,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -540,6 +566,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"app_id": "string", ...}'
                 properties:
                   app_id:
                     type: string
@@ -592,6 +619,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -646,6 +674,8 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"id": "09094e3230c893775eac3a9e7d912a8ad08ffd7e592feec9afd51958cb662110",
+                  ...}'
                 properties:
                   id:
                     type: string
@@ -694,6 +724,10 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"secrets": [{"id": "09094e3230c893775eac3a9e7d912a8ad08ffd7e592feec9afd51958cb662110",
+                  "secret_hash": "string", "create_time": "2023-01-01T19:30:41.000Z",
+                  "update_time": "2023-01-01T19:30:41.000Z", "status": "ACTIVE"}],
+                  ...}'
                 properties:
                   secrets:
                     type: array

@@ -24,6 +24,7 @@
       "application/json": {
        "schema": {
         "type": "array",
+        "description": "example: [{\"network_id\": \"d6797cf4-42b9-4cad-8591-9dd91c3f0fc3\", \"network_name\": \"my-databricks-network\", \"vpc_id\": \"string\", \"subnet_ids\": [\"string\"], \"security_group_ids\": [\"string\"], \"vpc_status\": \"UNATTACHED\", \"warning_messages\": [{\"warning_type\": \"subnet\", \"warning_message\": \"string\"}], \"error_messages\": [{\"error_type\": \"credentials\", \"error_message\": \"string\"}], \"workspace_id\": 1614665312930232, \"account_id\": \"449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65\", \"creation_time\": 1643668346544, \"vpc_endpoints\": {\"rest_api\": [\"497f6eca-6276-4993-bfeb-53cbbbba6f08\"], \"dataplane_relay\": [\"497f6eca-6276-4993-bfeb-53cbbbba6f08\"]}}, ...]",
         "items": {
          "type": "object",
          "properties": {

@@ -31,6 +31,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"apps\": [{\"app_id\": \"string\", \"integration_id\": \"string\", \"name\": \"string\", \"token_access_policy\": {\"access_token_ttl_in_minutes\": 5, \"refresh_token_ttl_in_minutes\": 5}, \"created_by\": 0, \"create_time\": \"string\"}], ...}",
         "properties": {
          "apps": {
           "type": "array",

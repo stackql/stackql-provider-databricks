@@ -24,6 +24,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"private_access_settings_id\": \"3b3bbcb5-46bd-4b03-944e-97eb44ed7991\", ...}",
         "properties": {
          "private_access_settings_id": {
           "type": "string"

@@ -24,6 +24,7 @@
       "application/json": {
        "schema": {
         "type": "array",
+        "description": "example: [{\"vpc_endpoint_id\": \"a4ebc4a2-6e00-4da7-8ca0-ca04c7b573a7\", \"vpc_endpoint_name\": \"string\", \"aws_vpc_endpoint_id\": \"string\", \"aws_endpoint_service_id\": \"string\", \"use_case\": \"WORKSPACE_ACCESS\", \"region\": \"string\", \"account_id\": \"449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65\", \"aws_account_id\": \"string\", \"state\": \"string\"}, ...]",
         "items": {
          "type": "object",
          "properties": {

@@ -67,5 +67,10 @@ providerServices:
     description: Unity Catalog
 config:
   auth:
-    credentialsenvvar: DATABRICKS_CREDENTIALS
-    type: service_account
+    type: oauth2
+    client_id_env_var: DATABRICKS_CLIENT_ID
+    client_secret_env_var: DATABRICKS_CLIENT_SECRET
+    grant_type: client_credentials
+    token_url: https://accounts.cloud.databricks.com/oidc/accounts/21ea1c76-f4b7-4b24-b6cc-5fb13ef9321a/v1/token
+    scopes:
+    - all-apis

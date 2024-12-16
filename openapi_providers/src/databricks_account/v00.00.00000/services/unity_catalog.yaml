@@ -1,8 +1,14 @@
 openapi: 3.0.0
 info:
+  version: 2024-12-16-stackql-generated
+  contact:
+    name: StackQL Studios
+    url: https://stackql.io/
+    email: info@stackql.io
   title: Databricks Unity_catalog API
-  version: v00.00.00000
   description: Unity Catalog
+servers:
+- url: https://accounts.cloud.databricks.com
 paths:
   /api/2.0/accounts/{account_id}/metastores:
     post:
@@ -26,6 +32,15 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"metastore_info": {"name": "string", "storage_root":
+                  "string", "default_data_access_config_id": "string", "storage_root_credential_id":
+                  "string", "delta_sharing_scope": "INTERNAL", "delta_sharing_recipient_token_lifetime_in_seconds":
+                  0, "delta_sharing_organization_name": "string", "owner": "string",
+                  "privilege_model_version": "string", "region": "string", "metastore_id":
+                  "string", "created_at": 0, "created_by": "string", "updated_at":
+                  0, "updated_by": "string", "storage_root_credential_name": "string",
+                  "cloud": "string", "global_metastore_id": "string", "external_access_enabled":
+                  true}, ...}'
                 properties:
                   metastore_info:
                     type: object
@@ -112,6 +127,15 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"metastores": [{"name": "string", "storage_root":
+                  "string", "default_data_access_config_id": "string", "storage_root_credential_id":
+                  "string", "delta_sharing_scope": "INTERNAL", "delta_sharing_recipient_token_lifetime_in_seconds":
+                  0, "delta_sharing_organization_name": "string", "owner": "string",
+                  "privilege_model_version": "string", "region": "string", "metastore_id":
+                  "string", "created_at": 0, "created_by": "string", "updated_at":
+                  0, "updated_by": "string", "storage_root_credential_name": "string",
+                  "cloud": "string", "global_metastore_id": "string", "external_access_enabled":
+                  true}], ...}'
                 properties:
                   metastores:
                     type: array
@@ -188,6 +212,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -223,6 +248,15 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"metastore_info": {"name": "string", "storage_root":
+                  "string", "default_data_access_config_id": "string", "storage_root_credential_id":
+                  "string", "delta_sharing_scope": "INTERNAL", "delta_sharing_recipient_token_lifetime_in_seconds":
+                  0, "delta_sharing_organization_name": "string", "owner": "string",
+                  "privilege_model_version": "string", "region": "string", "metastore_id":
+                  "string", "created_at": 0, "created_by": "string", "updated_at":
+                  0, "updated_by": "string", "storage_root_credential_name": "string",
+                  "cloud": "string", "global_metastore_id": "string", "external_access_enabled":
+                  true}, ...}'
                 properties:
                   metastore_info:
                     type: object
@@ -299,6 +333,15 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"metastore_info": {"name": "string", "storage_root":
+                  "string", "default_data_access_config_id": "string", "storage_root_credential_id":
+                  "string", "delta_sharing_scope": "INTERNAL", "delta_sharing_recipient_token_lifetime_in_seconds":
+                  0, "delta_sharing_organization_name": "string", "owner": "string",
+                  "privilege_model_version": "string", "region": "string", "metastore_id":
+                  "string", "created_at": 0, "created_by": "string", "updated_at":
+                  0, "updated_by": "string", "storage_root_credential_name": "string",
+                  "cloud": "string", "global_metastore_id": "string", "external_access_enabled":
+                  true}, ...}'
                 properties:
                   metastore_info:
                     type: object
@@ -449,6 +492,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -490,6 +534,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -542,6 +587,8 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"metastore_assignment": {"metastore_id": "string",
+                  "workspace_id": 0, "default_catalog_name": "string"}, ...}'
                 properties:
                   metastore_assignment:
                     type: object
@@ -591,6 +638,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"workspace_ids": [0]}'
                 properties:
                   workspace_ids:
                     type: array
@@ -633,6 +681,13 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"credential_info": {"name": "string", "aws_iam_role":
+                  {"role_arn": "string", "unity_catalog_iam_arn": "string", "external_id":
+                  "string"}, "comment": "string", "read_only": true, "owner": "string",
+                  "full_name": "string", "id": "string", "metastore_id": "string",
+                  "created_at": 0, "created_by": "string", "updated_at": 0, "updated_by":
+                  "string", "used_for_managed_storage": true, "isolation_mode": "ISOLATION_MODE_OPEN"},
+                  ...}'
                 properties:
                   credential_info:
                     type: object
@@ -723,6 +778,13 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"storage_credentials": [{"name": "string",
+                  "aws_iam_role": {"role_arn": "string", "unity_catalog_iam_arn":
+                  "string", "external_id": "string"}, "comment": "string", "read_only":
+                  true, "owner": "string", "full_name": "string", "id": "string",
+                  "metastore_id": "string", "created_at": 0, "created_by": "string",
+                  "updated_at": 0, "updated_by": "string", "used_for_managed_storage":
+                  true, "isolation_mode": "ISOLATION_MODE_OPEN"}], ...}'
                 properties:
                   storage_credentials:
                     type: array
@@ -800,6 +862,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -839,6 +902,13 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"credential_info": {"name": "string", "aws_iam_role":
+                  {"role_arn": "string", "unity_catalog_iam_arn": "string", "external_id":
+                  "string"}, "comment": "string", "read_only": true, "owner": "string",
+                  "full_name": "string", "id": "string", "metastore_id": "string",
+                  "created_at": 0, "created_by": "string", "updated_at": 0, "updated_by":
+                  "string", "used_for_managed_storage": true, "isolation_mode": "ISOLATION_MODE_OPEN"},
+                  ...}'
                 properties:
                   credential_info:
                     type: object
@@ -917,6 +987,13 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"credential_info": {"name": "string", "aws_iam_role":
+                  {"role_arn": "string", "unity_catalog_iam_arn": "string", "external_id":
+                  "string"}, "comment": "string", "read_only": true, "owner": "string",
+                  "full_name": "string", "id": "string", "metastore_id": "string",
+                  "created_at": 0, "created_by": "string", "updated_at": 0, "updated_by":
+                  "string", "used_for_managed_storage": true, "isolation_mode": "ISOLATION_MODE_OPEN"},
+                  ...}'
                 properties:
                   credential_info:
                     type: object

@@ -23,6 +23,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"client_id\": \"0oa6ahowk1AUgLWxL1d8\", ...}",
         "properties": {
          "client_id": {
           "type": "string"

@@ -24,6 +24,7 @@
       "application/json": {
        "schema": {
         "type": "array",
+        "description": "example: [{\"private_access_settings_id\": \"3b3bbcb5-46bd-4b03-944e-97eb44ed7991\", \"private_access_settings_name\": \"string\", \"public_access_enabled\": true, \"region\": \"string\", \"account_id\": \"449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65\", \"private_access_level\": \"ENDPOINT\", \"allowed_vpc_endpoint_ids\": [\"497f6eca-6276-4993-bfeb-53cbbbba6f08\"]}, ...]",
         "items": {
          "type": "object",
          "properties": {

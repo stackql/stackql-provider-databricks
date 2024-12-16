@@ -23,6 +23,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"ip_access_lists\": [{\"address_count\": 2, \"created_at\": 1668721146261, \"created_by\": 5145712326753123, \"enabled\": true, \"ip_addresses\": [\"32.19.112.0\", \"192.168.100.0/22\"], \"label\": \"Office VPN\", \"list_id\": \"4da50de0-fa72-4959-a76f-ca434c61e79a\", \"list_type\": \"ALLOW\", \"updated_at\": 1679462174641, \"updated_by\": 5145712326753123}, {\"address_count\": 3, \"created_at\": 1679681892421, \"created_by\": 5145712326753123, \"enabled\": true, \"ip_addresses\": [\"198.54.117.59\", \"3.46.85.235/24\", \"251.3.208.1\"], \"label\": \"Public Lobby\", \"list_id\": \"103e0ef1-a04b-4dda-8dcb-9c4369cb655d\", \"list_type\": \"BLOCK\", \"updated_at\": 1679681892421, \"updated_by\": 5145712326753123}], ...}",
         "properties": {
          "ip_access_lists": {
           "type": "array",

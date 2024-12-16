@@ -30,6 +30,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"network_connectivity_config_id\": \"d6df3889-eefc-4ddb-bbb4-613efcb30035\", ...}",
         "properties": {
          "network_connectivity_config_id": {
           "type": "string"

@@ -30,6 +30,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"storage_configuration_id\": \"04aae505-1b1e-4cb9-997d-e1c49282675d\", ...}",
         "properties": {
          "storage_configuration_id": {
           "type": "string"

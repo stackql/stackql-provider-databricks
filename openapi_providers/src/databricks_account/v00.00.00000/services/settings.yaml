@@ -1,8 +1,14 @@
 openapi: 3.0.0
 info:
+  version: 2024-12-16-stackql-generated
+  contact:
+    name: StackQL Studios
+    url: https://stackql.io/
+    email: info@stackql.io
   title: Databricks Settings API
-  version: v00.00.00000
   description: Account Settings
+servers:
+- url: https://accounts.cloud.databricks.com
 paths:
   /api/2.0/accounts/{account_id}/settings/types/shield_csp_enablement_ac/names/default:
     get:
@@ -33,6 +39,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"etag": "string", ...}'
                 properties:
                   etag:
                     type: string
@@ -79,6 +86,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"etag": "string", ...}'
                 properties:
                   etag:
                     type: string
@@ -172,6 +180,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"etag": "string", ...}'
                 properties:
                   etag:
                     type: string
@@ -214,6 +223,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"etag": "string", ...}'
                 properties:
                   etag:
                     type: string
@@ -292,6 +302,11 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"ip_access_list": {"list_id": "430bbdbc-9d7f-4d06-a273-67ca4ba4ae4b",
+                  "label": "Office VPN", "ip_addresses": ["192.168.100.0/22"], "address_count":
+                  2, "list_type": "ALLOW", "created_at": 1580265020299, "created_by":
+                  202480738464078, "updated_at": 1580265020299, "updated_by": 202480738464089,
+                  "enabled": true}, ...}'
                 properties:
                   ip_access_list:
                     type: object
@@ -369,6 +384,16 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"ip_access_lists": [{"address_count": 2, "created_at":
+                  1668721146261, "created_by": 5145712326753123, "enabled": true,
+                  "ip_addresses": ["32.19.112.0", "192.168.100.0/22"], "label": "Office
+                  VPN", "list_id": "4da50de0-fa72-4959-a76f-ca434c61e79a", "list_type":
+                  "ALLOW", "updated_at": 1679462174641, "updated_by": 5145712326753123},
+                  {"address_count": 3, "created_at": 1679681892421, "created_by":
+                  5145712326753123, "enabled": true, "ip_addresses": ["198.54.117.59",
+                  "3.46.85.235/24", "251.3.208.1"], "label": "Public Lobby", "list_id":
+                  "103e0ef1-a04b-4dda-8dcb-9c4369cb655d", "list_type": "BLOCK", "updated_at":
+                  1679681892421, "updated_by": 5145712326753123}], ...}'
                 properties:
                   ip_access_lists:
                     type: array
@@ -429,6 +454,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -463,6 +489,11 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"ip_access_list": {"list_id": "430bbdbc-9d7f-4d06-a273-67ca4ba4ae4b",
+                  "label": "Office VPN", "ip_addresses": ["192.168.100.0/22"], "address_count":
+                  2, "list_type": "ALLOW", "created_at": 1580265020299, "created_by":
+                  202480738464078, "updated_at": 1580265020299, "updated_by": 202480738464089,
+                  "enabled": true}, ...}'
                 properties:
                   ip_access_list:
                     type: object
@@ -522,6 +553,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -585,6 +617,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '400':
           description: Request is invalid or malformed.
@@ -647,6 +680,8 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"network_connectivity_config_id": "d6df3889-eefc-4ddb-bbb4-613efcb30035",
+                  ...}'
                 properties:
                   network_connectivity_config_id:
                     type: string
@@ -735,6 +770,11 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"items": [{"network_connectivity_config_id":
+                  "d6df3889-eefc-4ddb-bbb4-613efcb30035", "account_id": "449e7a5c-69d3-4b8a-aaaf-5c9b713ebc65",
+                  "name": "my-example-ncc", "region": "string", "egress_config": {"default_rules":
+                  {"aws_stable_ip_rule": {"cidr_blocks": ["10.0.0.0/24"]}}}, "creation_time":
+                  1691436121706, "updated_time": 1691436121777}], ...}'
                 properties:
                   items:
                     type: array
@@ -795,6 +835,7 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {}'
                 properties: {}
         '401':
           description: The request does not have valid authentication credentials
@@ -831,6 +872,8 @@ paths:
             application/json:
               schema:
                 type: object
+                description: 'example: {"network_connectivity_config_id": "d6df3889-eefc-4ddb-bbb4-613efcb30035",
+                  ...}'
                 properties:
                   network_connectivity_config_id:
                     type: string

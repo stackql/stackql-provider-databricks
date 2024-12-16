@@ -23,6 +23,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"integration_id\": \"c1b137c2-b832-1abc-ad12-995a0209e213\", ...}",
         "properties": {
          "integration_id": {
           "type": "string"

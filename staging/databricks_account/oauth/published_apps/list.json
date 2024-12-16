@@ -33,6 +33,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"apps\": [{\"app_id\": \"01234567-1234-5678-90ab-76543210\", \"client_id\": \"databricks-cli\", \"name\": \"Databricks CLI\", \"description\": \"string\", \"is_confidential_client\": false, \"redirect_urls\": [\"http://localhost:8020\"], \"scopes\": [\"sql\", \"offline_access\"]}], ...}",
         "properties": {
          "apps": {
           "type": "array",

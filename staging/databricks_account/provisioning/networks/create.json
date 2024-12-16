@@ -24,6 +24,7 @@
       "application/json": {
        "schema": {
         "type": "object",
+        "description": "example: {\"network_id\": \"d6797cf4-42b9-4cad-8591-9dd91c3f0fc3\", ...}",
         "properties": {
          "network_id": {
           "type": "string"
