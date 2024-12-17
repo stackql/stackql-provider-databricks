@@ -1565,6 +1565,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/servingendpoints/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/servingendpoints/get
         verb: select
@@ -1572,6 +1573,7 @@ services:
         docPath: https://docs.databricks.com/api/workspace/servingendpoints/list
         verb: select
         objectKey: $.endpoints
+        hasParams: false
       - name: patch
         docPath: https://docs.databricks.com/api/workspace/servingendpoints/patch
         verb: update
@@ -1612,6 +1614,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/gitcredentials/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/gitcredentials/get
         verb: select
@@ -1619,6 +1622,7 @@ services:
         docPath: https://docs.databricks.com/api/workspace/gitcredentials/list
         verb: select
         objectKey: $.credentials
+        hasParams: false
       - name: update
         docPath: https://docs.databricks.com/api/workspace/gitcredentials/update
         verb: update
@@ -1647,6 +1651,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/repos/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/repos/get
         verb: select
@@ -1665,6 +1670,7 @@ services:
       - name: deleteacl
         docPath: https://docs.databricks.com/api/workspace/secrets/deleteacl
         verb: delete
+        hasParams: false
       - name: getacl
         docPath: https://docs.databricks.com/api/workspace/secrets/getacl
         verb: select
@@ -1675,23 +1681,28 @@ services:
       - name: putacl
         docPath: https://docs.databricks.com/api/workspace/secrets/putacl
         verb: replace
+        hasParams: false
     - name: scopes
       methods:
       - name: deletescope
         docPath: https://docs.databricks.com/api/workspace/secrets/deletescope
         verb: delete
+        hasParams: false
       - name: createscope
         docPath: https://docs.databricks.com/api/workspace/secrets/createscope
         verb: insert
+        hasParams: false
       - name: listscopes
         docPath: https://docs.databricks.com/api/workspace/secrets/listscopes
         verb: select
         objectKey: $.scopes
+        hasParams: false
     - name: secrets
       methods:
       - name: deletesecret
         docPath: https://docs.databricks.com/api/workspace/secrets/deletesecret
         verb: delete
+        hasParams: false
       - name: getsecret
         docPath: https://docs.databricks.com/api/workspace/secrets/getsecret
         verb: select
@@ -1702,6 +1713,7 @@ services:
       - name: putsecret
         docPath: https://docs.databricks.com/api/workspace/secrets/putsecret
         verb: replace
+        hasParams: false
   unitycatalog:
     description: Unitycatalog
     resources:
@@ -1721,6 +1733,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/catalogs/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/catalogs/get
         verb: select
@@ -1739,6 +1752,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/connections/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/connections/get
         verb: select
@@ -1754,6 +1768,7 @@ services:
       - name: validatecredential
         docPath: https://docs.databricks.com/api/workspace/credentials/validatecredential
         verb: select
+        hasParams: false
     - name: credentials
       methods:
       - name: deletecredential
@@ -1762,9 +1777,11 @@ services:
       - name: createcredential
         docPath: https://docs.databricks.com/api/workspace/credentials/createcredential
         verb: insert
+        hasParams: false
       - name: generatetemporaryservicecredential
         docPath: https://docs.databricks.com/api/workspace/credentials/generatetemporaryservicecredential
         verb: select
+        hasParams: false
       - name: getcredential
         docPath: https://docs.databricks.com/api/workspace/credentials/getcredential
         verb: select
@@ -1789,6 +1806,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/externallocations/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/externallocations/get
         verb: select
@@ -1807,6 +1825,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/functions/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/functions/get
         verb: select
@@ -1831,6 +1850,7 @@ services:
       - name: current
         docPath: https://docs.databricks.com/api/workspace/metastores/current
         verb: select
+        hasParams: false
       - name: updateassignment
         docPath: https://docs.databricks.com/api/workspace/metastores/updateassignment
         verb: update
@@ -1845,6 +1865,7 @@ services:
       - name: summary
         docPath: https://docs.databricks.com/api/workspace/metastores/summary
         verb: select
+        hasParams: false
     - name: metastores
       methods:
       - name: delete
@@ -1853,6 +1874,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/metastores/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/metastores/get
         verb: select
@@ -1860,6 +1882,7 @@ services:
         docPath: https://docs.databricks.com/api/workspace/metastores/list
         verb: select
         objectKey: $.metastores
+        hasParams: false
       - name: update
         docPath: https://docs.databricks.com/api/workspace/metastores/update
         verb: update
@@ -1890,6 +1913,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/onlinetables/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/onlinetables/get
         verb: select
@@ -1910,6 +1934,7 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/qualitymonitors/delete
         verb: delete
+        hasRespData: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/qualitymonitors/create
         verb: insert
@@ -1924,6 +1949,7 @@ services:
       - name: deletealias
         docPath: https://docs.databricks.com/api/workspace/registeredmodels/deletealias
         verb: delete
+        hasRespData: false
       - name: setalias
         docPath: https://docs.databricks.com/api/workspace/registeredmodels/setalias
         verb: replace
@@ -1932,9 +1958,11 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/registeredmodels/delete
         verb: delete
+        hasRespData: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/registeredmodels/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/registeredmodels/get
         verb: select
@@ -1963,6 +1991,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/schemas/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/schemas/get
         verb: select
@@ -1978,6 +2007,7 @@ services:
       - name: validate
         docPath: https://docs.databricks.com/api/workspace/storagecredentials/validate
         verb: select
+        hasParams: false
     - name: storage_credentials
       methods:
       - name: delete
@@ -1986,6 +2016,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/storagecredentials/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/storagecredentials/get
         verb: select
@@ -2001,9 +2032,11 @@ services:
       - name: disable
         docPath: https://docs.databricks.com/api/workspace/systemschemas/disable
         verb: exec
+        hasRespData: false
       - name: enable
         docPath: https://docs.databricks.com/api/workspace/systemschemas/enable
         verb: exec
+        hasRespData: false
       - name: list
         docPath: https://docs.databricks.com/api/workspace/systemschemas/list
         verb: select
@@ -2016,6 +2049,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/tableconstraints/create
         verb: insert
+        hasParams: false
     - name: table_exists
       methods:
       - name: exists
@@ -2044,14 +2078,17 @@ services:
       - name: generatetemporarytablecredentials
         docPath: https://docs.databricks.com/api/workspace/temporarytablecredentials/generatetemporarytablecredentials
         verb: select
+        hasParams: false
     - name: volumes
       methods:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/volumes/delete
         verb: delete
+        hasRespData: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/volumes/create
         verb: insert
+        hasParams: false
       - name: list
         docPath: https://docs.databricks.com/api/workspace/volumes/list
         verb: select
@@ -2090,6 +2127,7 @@ services:
       - name: deleteendpoint
         docPath: https://docs.databricks.com/api/workspace/vectorsearchendpoints/deleteendpoint
         verb: delete
+        hasRespData: false
       - name: createendpoint
         docPath: https://docs.databricks.com/api/workspace/vectorsearchendpoints/createendpoint
         verb: insert
