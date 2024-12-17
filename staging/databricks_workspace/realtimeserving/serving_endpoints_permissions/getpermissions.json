@@ -13,7 +13,7 @@
     {
      "name": "serving_endpoint_id",
      "required": true,
-     "description": "(string) The serving endpoint for which to get or manage permissions.",
+     "description": "string",
      "in": "path"
     }
    ],

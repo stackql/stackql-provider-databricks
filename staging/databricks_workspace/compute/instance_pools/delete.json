@@ -46,8 +46,7 @@
        "type": "object",
        "properties": {
         "instance_pool_id": {
-         "type": "required",
-         "description": "The instance pool to be terminated."
+         "type": "required"
         }
        },
        "example": {

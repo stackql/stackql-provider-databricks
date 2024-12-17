@@ -12,27 +12,22 @@
    "parameters": [
     {
      "name": "catalog_name",
-     "description": "The identifier of the catalog under which to list registered models.             If specified, schema_name must be specified.",
      "in": "query"
     },
     {
      "name": "schema_name",
-     "description": "The identifier of the schema under which to list registered models.             If specified, catalog_name must be specified.",
      "in": "query"
     },
     {
      "name": "max_results",
-     "description": "Max number of registered models to return.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque token to send for the next page of results (pagination).",
      "in": "query"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include registered models in the response for which the principal can only access selective metadata for",
      "in": "query"
     }
    ],

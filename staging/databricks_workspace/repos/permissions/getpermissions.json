@@ -13,7 +13,7 @@
     {
      "name": "repo_id",
      "required": true,
-     "description": "(string) The repo for which to get or manage permissions.",
+     "description": "string",
      "in": "path"
     }
    ],

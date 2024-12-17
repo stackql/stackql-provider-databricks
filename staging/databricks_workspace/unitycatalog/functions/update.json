@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The fully-qualified name of the function (of the form ",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -247,8 +247,7 @@
        "type": "object",
        "properties": {
         "owner": {
-         "type": "string",
-         "description": "Username of current owner of function."
+         "type": "string"
         }
        },
        "example": {

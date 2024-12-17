@@ -136,28 +136,22 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Name of catalog."
+         "type": "required"
         },
         "comment": {
-         "type": "string",
-         "description": "User-provided free-form text description."
+         "type": "string"
         },
         "storage_root": {
-         "type": "string",
-         "description": "Storage root URL for managed tables within catalog."
+         "type": "string"
         },
         "provider_name": {
-         "type": "string",
-         "description": "The name of delta sharing provider."
+         "type": "string"
         },
         "share_name": {
-         "type": "string",
-         "description": "A Delta Sharing catalog is a catalog that is based on a Delta share on a remote sharing server."
+         "type": "string"
         },
         "connection_name": {
-         "type": "string",
-         "description": "The name of the share under the share provider."
+         "type": "string"
         },
         "properties": {
          "type": "object"

@@ -13,28 +13,25 @@
     {
      "name": "catalog_name",
      "required": true,
-     "description": "(string) The identifier of the catalog",
+     "description": "string",
      "in": "query"
     },
     {
      "name": "schema_name",
      "required": true,
-     "description": "(string) The identifier of the schema",
+     "description": "string",
      "in": "query"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of volumes to return (page length).",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque token returned by a previous request. It must be included in the request to retrieve the next page of results (pagination).",
      "in": "query"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include volumes in the response for which the principal can only access selective metadata for",
      "in": "query"
     }
    ],

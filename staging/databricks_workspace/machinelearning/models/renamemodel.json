@@ -124,12 +124,10 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Registered model unique name identifier."
+         "type": "required"
         },
         "new_name": {
-         "type": "string",
-         "description": "If provided, updates the name for this "
+         "type": "string"
         }
        },
        "example": {

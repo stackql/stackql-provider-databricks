@@ -70,12 +70,10 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Name of endpoint"
+         "type": "required"
         },
         "endpoint_type": {
-         "type": "string",
-         "description": "Type of endpoint."
+         "type": "string"
         }
        },
        "example": {

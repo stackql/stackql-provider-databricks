@@ -13,7 +13,7 @@
     {
      "name": "experiment_id",
      "required": true,
-     "description": "(string) ID of the associated experiment.",
+     "description": "string",
      "in": "query"
     }
    ],

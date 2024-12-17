@@ -58,12 +58,10 @@
        "type": "object",
        "properties": {
         "id": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "event": {
-         "type": "string",
-         "description": "Webhook ID"
+         "type": "string"
         }
        },
        "example": {

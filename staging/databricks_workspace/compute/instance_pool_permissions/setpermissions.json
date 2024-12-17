@@ -13,7 +13,7 @@
     {
      "name": "instance_pool_id",
      "required": true,
-     "description": "(string) The instance pool for which to get or manage permissions.",
+     "description": "string",
      "in": "path"
     }
    ],

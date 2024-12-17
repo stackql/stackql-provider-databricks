@@ -13,7 +13,7 @@
     {
      "name": "id",
      "required": true,
-     "description": "(string) Required. Id of the warehouse to configure.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -38,48 +38,37 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "string",
-         "description": "Logical name for the cluster."
+         "type": "string"
         },
         "cluster_size": {
-         "type": "string",
-         "description": "Supported values:"
+         "type": "string"
         },
         "min_num_clusters": {
-         "type": "int32",
-         "description": "Size of the clusters allocated for this warehouse.\nIncreasing the size of a spark cluster allows you to run larger queries on it.\nIf you want to increase the number of concurrent queries, please tune max_num_clusters."
+         "type": "int32"
         },
         "max_num_clusters": {
-         "type": "int32",
-         "description": "Supported values:"
+         "type": "int32"
         },
         "auto_stop_mins": {
-         "type": "int32",
-         "description": " "
+         "type": "int32"
         },
         "creator_name": {
-         "type": "string",
-         "description": "Minimum number of available clusters that will be maintained for this SQL warehouse.\nIncreasing this will ensure that a larger number of clusters are always running and therefore may reduce\nthe cold start time for new queries. This is similar to reserved vs. revocable cores in a resource manager."
+         "type": "string"
         },
         "instance_profile_arn": {
-         "type": "string",
-         "description": "Supported values:"
+         "type": "string"
         },
         "spot_instance_policy": {
-         "type": "string",
-         "description": "Defaults to 1"
+         "type": "string"
         },
         "enable_photon": {
-         "type": "boolean",
-         "description": "Maximum number of clusters that the autoscaler will create to handle concurrent queries."
+         "type": "boolean"
         },
         "enable_serverless_compute": {
-         "type": "boolean",
-         "description": "Supported values:"
+         "type": "boolean"
         },
         "warehouse_type": {
-         "type": "string",
-         "description": "Defaults to min_clusters if unset."
+         "type": "string"
         },
         "tags": {
          "type": "object"

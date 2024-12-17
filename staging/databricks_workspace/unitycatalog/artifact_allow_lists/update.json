@@ -13,7 +13,7 @@
     {
      "name": "artifact_type",
      "required": true,
-     "description": "(string) The artifact type of the allowlist.",
+     "description": "string",
      "in": "path"
     }
    ],

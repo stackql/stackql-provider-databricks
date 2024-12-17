@@ -13,11 +13,13 @@
     {
      "name": "name",
      "required": true,
+     "description": "string",
      "in": "query"
     },
     {
      "name": "version",
      "required": true,
+     "description": "string",
      "in": "query"
     }
    ],

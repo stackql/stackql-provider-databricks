@@ -53,60 +53,46 @@
        "type": "object",
        "properties": {
         "id": {
-         "type": "string",
-         "description": "Unique identifier for this pipeline."
+         "type": "string"
         },
         "name": {
-         "type": "string",
-         "description": "Friendly identifier for this pipeline."
+         "type": "string"
         },
         "storage": {
-         "type": "string",
-         "description": "DBFS root directory for storing checkpoints and tables."
+         "type": "string"
         },
         "target": {
-         "type": "string",
-         "description": "Target schema (database) to add tables in this pipeline to. If not specified, no data is published to the Hive metastore or Unity Catalog. To publish to Unity Catalog, also specify "
+         "type": "string"
         },
         "schema": {
-         "type": "string",
-         "description": "."
+         "type": "string"
         },
         "continuous": {
-         "type": "boolean",
-         "description": "The default schema (database) where tables are read from or published to. The presence of this field implies that the pipeline is in direct publishing mode."
+         "type": "boolean"
         },
         "development": {
-         "type": "boolean",
-         "description": "Whether the pipeline is continuous or triggered. This replaces "
+         "type": "boolean"
         },
         "photon": {
-         "type": "boolean",
-         "description": "."
+         "type": "boolean"
         },
         "edition": {
-         "type": "string",
-         "description": "Whether the pipeline is in Development mode. Defaults to false."
+         "type": "string"
         },
         "channel": {
-         "type": "string",
-         "description": "Whether Photon is enabled for this pipeline."
+         "type": "string"
         },
         "catalog": {
-         "type": "string",
-         "description": "Pipeline product edition."
+         "type": "string"
         },
         "serverless": {
-         "type": "boolean",
-         "description": "DLT Release Channel that specifies which version to use."
+         "type": "boolean"
         },
         "allow_duplicate_names": {
-         "type": "boolean",
-         "description": "A catalog in Unity Catalog to publish data from this pipeline to. If "
+         "type": "boolean"
         },
         "dry_run": {
-         "type": "boolean",
-         "description": " is specified, tables in this pipeline are published to a "
+         "type": "boolean"
         },
         "configuration": {
          "type": "object"

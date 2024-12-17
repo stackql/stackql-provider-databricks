@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Name of the connection.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -117,12 +117,10 @@
        "type": "object",
        "properties": {
         "owner": {
-         "type": "string",
-         "description": "Username of current owner of the connection."
+         "type": "string"
         },
         "new_name": {
-         "type": "string",
-         "description": "New name for the connection."
+         "type": "string"
         },
         "options": {
          "type": "required"

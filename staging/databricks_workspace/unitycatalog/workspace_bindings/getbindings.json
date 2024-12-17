@@ -13,23 +13,21 @@
     {
      "name": "securable_type",
      "required": true,
-     "description": "(string) The type of the securable to bind to a workspace.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "securable_name",
      "required": true,
-     "description": "(string) The name of the securable.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of workspace bindings to return.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

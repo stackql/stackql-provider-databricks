@@ -1,0 +1,95 @@
+{
+ "/api/2.0/settings/types/restrict_workspace_admins/names/default": {
+  "patch": {
+   "operationId": "restrict-admins-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/restrictworkspaceadmins/update"
+   },
+   "x-stackQL-resource": "restrict_admins",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "etag": {
+          "type": "string"
+         },
+         "setting_name": {
+          "type": "string"
+         },
+         "restrict_workspace_admins": {
+          "type": "object",
+          "properties": {
+           "status": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "allow_missing": {
+         "type": "required"
+        },
+        "field_mask": {
+         "type": "boolean"
+        },
+        "setting": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "allow_missing": true,
+        "setting": {
+         "etag": "string",
+         "setting_name": "string",
+         "restrict_workspace_admins": {
+          "status": "ALLOW_ALL"
+         }
+        },
+        "field_mask": "string"
+       }
+      }
+     }
+    },
+    "description": "Details required to update a setting."
+   },
+   "description": "Updates the restrict workspace admins setting for the workspace. A fresh etag needs to be provided in"
+  }
+ }
+}

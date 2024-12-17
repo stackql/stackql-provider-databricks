@@ -209,20 +209,16 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "query_id": {
-         "type": "string",
-         "description": "Name of the alert."
+         "type": "string"
         },
         "rearm": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "parent": {
-         "type": "UUID",
-         "description": "Query ID."
+         "type": "UUID"
         },
         "options": {
          "type": "object"

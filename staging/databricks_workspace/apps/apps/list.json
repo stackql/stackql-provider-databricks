@@ -12,12 +12,10 @@
    "parameters": [
     {
      "name": "page_token",
-     "description": "Pagination token to go to the next page of apps. Requests first page if absent.",
      "in": "query"
     },
     {
      "name": "page_size",
-     "description": "Upper bound for items returned.",
      "in": "query"
     }
    ],

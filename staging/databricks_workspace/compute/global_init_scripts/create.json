@@ -47,20 +47,16 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "script": {
-         "type": "string",
-         "description": "The name of the script"
+         "type": "string"
         },
         "position": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "enabled": {
-         "type": "byte",
-         "description": "The Base64-encoded content of the script."
+         "type": "byte"
         }
        },
        "example": {

@@ -13,17 +13,15 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) The three-level (fully qualified) name of the registered model",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include registered models in the response for which the principal can only access selective metadata for",
      "in": "query"
     },
     {
      "name": "include_aliases",
-     "description": "Whether to include registered model aliases in the response",
      "in": "query"
     }
    ],

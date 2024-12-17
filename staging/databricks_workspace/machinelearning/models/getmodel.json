@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Registered model unique name identifier.",
+     "description": "string",
      "in": "query"
     }
    ],

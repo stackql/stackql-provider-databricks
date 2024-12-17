@@ -13,13 +13,13 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string)  ",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "served_model_name",
      "required": true,
-     "description": "(string)  ",
+     "description": "string",
      "in": "path"
     }
    ],

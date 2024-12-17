@@ -46,12 +46,10 @@
        "type": "object",
        "properties": {
         "cluster_id": {
-         "type": "required",
-         "description": "ID of the cluster."
+         "type": "required"
         },
         "update_mask": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "cluster": {
          "type": "object"

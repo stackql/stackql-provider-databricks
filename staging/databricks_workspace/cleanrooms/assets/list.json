@@ -13,12 +13,11 @@
     {
      "name": "clean_room_name",
      "required": true,
-     "description": "(string) Name of the clean room.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

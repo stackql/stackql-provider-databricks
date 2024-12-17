@@ -13,19 +13,19 @@
     {
      "name": "clean_room_name",
      "required": true,
-     "description": "(string) Name of the clean room.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "asset_type",
      "required": true,
-     "description": "(string) The type of the asset.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "name",
      "required": true,
-     "description": "(string)  ",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -317,12 +317,10 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "asset_type": {
-         "type": "string",
-         "description": "A fully qualified name that uniquely identifies the asset within the clean room.\nThis is also the name displayed in the clean room UI."
+         "type": "string"
         },
         "table_local_details": {
          "type": "object"

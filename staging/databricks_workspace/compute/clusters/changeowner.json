@@ -46,8 +46,7 @@
        "type": "object",
        "properties": {
         "cluster_id": {
-         "type": "required",
-         "description": "New owner of the cluster_id after this RPC."
+         "type": "required"
         },
         "owner_username": {
          "type": "string"

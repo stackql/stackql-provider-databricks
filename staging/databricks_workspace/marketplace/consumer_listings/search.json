@@ -13,7 +13,7 @@
     {
      "name": "query",
      "required": true,
-     "description": "(string) Fuzzy matches query",
+     "description": "string",
      "in": "query"
     },
     {
@@ -26,17 +26,14 @@
     },
     {
      "name": "provider_ids",
-     "description": "Matches any of the following provider ids",
      "in": "query"
     },
     {
      "name": "categories",
-     "description": "Matches any of the following categories",
      "in": "query"
     },
     {
      "name": "assets",
-     "description": "Matches any of the following asset types",
      "in": "query"
     },
     {

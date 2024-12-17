@@ -1,0 +1,110 @@
+{
+ "/api/2.0/vector-search/indexes/{index_name}/query-next-page": {
+  "post": {
+   "operationId": "indexes-querynextpage",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchindexes/querynextpage"
+   },
+   "x-stackQL-resource": "indexes",
+   "x-stackQL-method": "querynextpage",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "index_name",
+     "required": true,
+     "description": "string",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Successful response with query results.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "manifest": {
+          "type": "object",
+          "properties": {
+           "column_count": {
+            "type": "integer"
+           },
+           "columns": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "result": {
+          "type": "object",
+          "properties": {
+           "row_count": {
+            "type": "integer"
+           },
+           "data_array": {
+            "type": "array",
+            "items": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "endpoint_name": {
+         "type": "string"
+        },
+        "page_token": {
+         "type": "string"
+        }
+       },
+       "example": {
+        "endpoint_name": "demo-endpoint",
+        "page_token": "dummy-page-token"
+       }
+      }
+     }
+    }
+   },
+   "description": "Use"
+  }
+ }
+}

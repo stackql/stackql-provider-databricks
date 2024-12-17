@@ -12,17 +12,14 @@
    "parameters": [
     {
      "name": "data_recipient_global_metastore_id",
-     "description": "If not provided, all recipients will be returned. If no recipients exist with this ID, no results will be returned.",
      "in": "query"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of recipients to return.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

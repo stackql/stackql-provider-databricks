@@ -77,8 +77,7 @@
        "type": "object",
        "properties": {
         "full_name_arg": {
-         "type": "required",
-         "description": "The full name of the table referenced by the constraint."
+         "type": "required"
         },
         "constraint": {
          "type": "required"

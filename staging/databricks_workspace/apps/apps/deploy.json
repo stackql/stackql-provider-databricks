@@ -13,7 +13,7 @@
     {
      "name": "app_name",
      "required": true,
-     "description": "(string) The name of the app.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -91,16 +91,13 @@
        "type": "object",
        "properties": {
         "deployment_id": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "source_code_path": {
-         "type": "string",
-         "description": "The unique id of the deployment."
+         "type": "string"
         },
         "mode": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         }
        },
        "example": {

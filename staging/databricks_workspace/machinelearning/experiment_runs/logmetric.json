@@ -43,28 +43,22 @@
        "type": "object",
        "properties": {
         "run_id": {
-         "type": "string",
-         "description": "ID of the run under which to log the metric. Must be provided."
+         "type": "string"
         },
         "run_uuid": {
-         "type": "string",
-         "description": "[Deprecated, use run_id instead] ID of the run under which to log the metric. This field will\nbe removed in a future MLflow version."
+         "type": "string"
         },
         "key": {
-         "type": "required",
-         "description": "Name of the metric."
+         "type": "required"
         },
         "value": {
-         "type": "string",
-         "description": "Double value of the metric being logged."
+         "type": "string"
         },
         "timestamp": {
-         "type": "required",
-         "description": "Unix timestamp in milliseconds at the time metric was logged."
+         "type": "required"
         },
         "step": {
-         "type": "double",
-         "description": " "
+         "type": "double"
         }
        },
        "example": {

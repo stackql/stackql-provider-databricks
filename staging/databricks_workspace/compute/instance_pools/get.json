@@ -13,6 +13,7 @@
     {
      "name": "instance_pool_id",
      "required": true,
+     "description": "string",
      "in": "query"
     }
    ],

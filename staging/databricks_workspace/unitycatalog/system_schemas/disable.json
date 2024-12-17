@@ -13,13 +13,13 @@
     {
      "name": "metastore_id",
      "required": true,
-     "description": "(string) The metastore ID under which the system schema lives.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "schema_name",
      "required": true,
-     "description": "(string) Full name of the system schema.",
+     "description": "string",
      "in": "path"
     }
    ],

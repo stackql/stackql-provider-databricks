@@ -77,20 +77,16 @@
        "type": "object",
        "properties": {
         "source_dashboard_id": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "display_name": {
-         "type": "string",
-         "description": "UUID of the dashboard to be migrated."
+         "type": "string"
         },
         "parent_path": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "update_parameter_syntax": {
-         "type": "string",
-         "description": "Display name for the new Lakeview dashboard."
+         "type": "string"
         }
        },
        "example": {

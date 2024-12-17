@@ -46,16 +46,13 @@
        "type": "object",
        "properties": {
         "instance_profile_arn": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "iam_role_arn": {
-         "type": "string",
-         "description": "The AWS ARN of the instance profile to register with Databricks. This field is required."
+         "type": "string"
         },
         "is_meta_instance_profile": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         }
        },
        "example": {

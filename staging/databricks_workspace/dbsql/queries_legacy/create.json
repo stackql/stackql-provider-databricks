@@ -360,36 +360,28 @@
        "type": "object",
        "properties": {
         "data_source_id": {
-         "type": "UUID",
-         "description": " "
+         "type": "UUID"
         },
         "query": {
-         "type": "string",
-         "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. "
+         "type": "string"
         },
         "name": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "parent": {
-         "type": "string",
-         "description": "The text of the query to be run."
+         "type": "string"
         },
         "description": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "options": {
-         "type": "object",
-         "description": "The title of this query that appears in list views, widget headings, and on the query page."
+         "type": "object"
         },
         "run_as_role": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "tags": {
-         "type": "Array of string",
-         "description": " "
+         "type": "Array of string"
         }
        },
        "example": {

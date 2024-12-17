@@ -1,0 +1,84 @@
+{
+ "/api/2.0/token-management/tokens": {
+  "get": {
+   "operationId": "tokens-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/tokenmanagement/list"
+   },
+   "x-stackQL-resource": "tokens",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "created_by_id",
+     "in": "query"
+    },
+    {
+     "name": "created_by_username",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "token_infos": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "token_id": {
+             "type": "string"
+            },
+            "creation_time": {
+             "type": "integer"
+            },
+            "expiry_time": {
+             "type": "integer"
+            },
+            "comment": {
+             "type": "string"
+            },
+            "created_by_id": {
+             "type": "integer"
+            },
+            "created_by_username": {
+             "type": "string"
+            },
+            "owner_id": {
+             "type": "integer"
+            },
+            "workspace_id": {
+             "type": "integer"
+            },
+            "last_used_day": {
+             "type": "integer"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.token_infos",
+   "description": "Lists all tokens associated with the specified workspace or user."
+  }
+ }
+}

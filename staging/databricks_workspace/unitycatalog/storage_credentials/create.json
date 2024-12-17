@@ -85,20 +85,16 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "The credential name. The name must be unique within the metastore."
+         "type": "required"
         },
         "comment": {
-         "type": "string",
-         "description": "Comment associated with the credential."
+         "type": "string"
         },
         "read_only": {
-         "type": "string",
-         "description": "Whether the storage credential is only usable for read operations."
+         "type": "string"
         },
         "skip_validation": {
-         "type": "boolean",
-         "description": " "
+         "type": "boolean"
         },
         "aws_iam_role": {
          "type": "object"

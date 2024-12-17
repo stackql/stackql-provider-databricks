@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The name of the recipient.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -140,8 +140,7 @@
        "type": "object",
        "properties": {
         "existing_token_expire_in_seconds": {
-         "type": "required",
-         "description": "The expiration time of the bearer token in ISO 8601 format. This will set the expiration_time of existing token only to a smaller timestamp, it cannot extend the expiration_time. Use 0 to expire the existing token immediately, negative number will return an error."
+         "type": "required"
         }
        },
        "example": {

@@ -31,12 +31,10 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Registered model unique name identifier."
+         "type": "required"
         },
         "description": {
-         "type": "string",
-         "description": "If provided, updates the description for this "
+         "type": "string"
         }
        },
        "example": {

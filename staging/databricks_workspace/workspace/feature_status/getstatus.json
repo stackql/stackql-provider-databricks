@@ -1,0 +1,58 @@
+{
+ "/api/2.0/workspace-conf": {
+  "get": {
+   "operationId": "feature-status-getstatus",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/workspaceconf/getstatus"
+   },
+   "x-stackQL-resource": "feature_status",
+   "x-stackQL-method": "getstatus",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "keys",
+     "required": true,
+     "description": "string",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Status was returned successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "property1": {
+          "type": "string"
+         },
+         "property2": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Enables or disables a specified feature for a workspace."
+  }
+ }
+}

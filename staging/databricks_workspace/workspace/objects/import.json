@@ -1,0 +1,75 @@
+{
+ "/api/2.0/workspace/import": {
+  "post": {
+   "operationId": "objects-import",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/workspace/import"
+   },
+   "x-stackQL-resource": "objects",
+   "x-stackQL-method": "import",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "path": {
+         "type": "required"
+        },
+        "format": {
+         "type": "string"
+        },
+        "language": {
+         "type": "string"
+        },
+        "content": {
+         "type": "string"
+        },
+        "overwrite": {
+         "type": "string"
+        }
+       },
+       "example": {
+        "format": "SOURCE",
+        "path": "/Users/user@example.com/project/ScalaExampleNotebook",
+        "language": "SCALA",
+        "content": "MSsx",
+        "overwrite": true
+       }
+      }
+     }
+    }
+   },
+   "description": "Imports a workspace object (for example, a notebook or file) or the contents of an entire directory. If"
+  }
+ }
+}

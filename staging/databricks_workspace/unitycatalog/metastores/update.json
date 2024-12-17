@@ -13,7 +13,7 @@
     {
      "name": "id",
      "required": true,
-     "description": "(string) Unique ID of the metastore.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -96,33 +96,26 @@
        "type": "object",
        "properties": {
         "storage_root_credential_id": {
-         "type": "string",
-         "description": "UUID of storage credential to access the metastore storage_root."
+         "type": "string"
         },
         "delta_sharing_recipient_token_lifetime_in_seconds": {
          "type": "integer",
-         "format": "int64",
-         "description": "The lifetime of delta sharing recipient token in seconds."
+         "format": "int64"
         },
         "delta_sharing_organization_name": {
-         "type": "string",
-         "description": "The organization name of a Delta Sharing entity, to be used in Databricks-to-Databricks Delta Sharing as the official name."
+         "type": "string"
         },
         "owner": {
-         "type": "string",
-         "description": "The owner of the metastore."
+         "type": "string"
         },
         "privilege_model_version": {
-         "type": "string",
-         "description": "Privilege model version of the metastore, of the form "
+         "type": "string"
         },
         "new_name": {
-         "type": "string",
-         "description": " (e.g., "
+         "type": "string"
         },
         "delta_sharing_scope": {
-         "type": "string",
-         "description": ")."
+         "type": "string"
         }
        },
        "example": {

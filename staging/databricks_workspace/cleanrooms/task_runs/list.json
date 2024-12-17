@@ -13,22 +13,19 @@
     {
      "name": "clean_room_name",
      "required": true,
-     "description": "(string) Name of the clean room.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "notebook_name",
-     "description": "Notebook name",
      "in": "query"
     },
     {
      "name": "page_size",
-     "description": "The maximum number of task runs to return",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

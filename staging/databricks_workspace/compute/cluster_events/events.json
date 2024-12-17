@@ -92,35 +92,28 @@
        "type": "object",
        "properties": {
         "cluster_id": {
-         "type": "required",
-         "description": "The ID of the cluster to retrieve events about."
+         "type": "required"
         },
         "start_time": {
-         "type": "string",
-         "description": "The start time in epoch milliseconds.\nIf empty, returns events starting from the beginning of time."
+         "type": "string"
         },
         "end_time": {
          "type": "integer",
-         "format": "int64",
-         "description": "The end time in epoch milliseconds.\nIf empty, returns events up to the current time."
+         "format": "int64"
         },
         "order": {
          "type": "integer",
-         "format": "int64",
-         "description": " "
+         "format": "int64"
         },
         "event_types": {
-         "type": "string",
-         "description": "The order to list events in; either \"ASC\" or \"DESC\". Defaults to \"DESC\"."
+         "type": "string"
         },
         "offset": {
-         "type": "Array of string",
-         "description": "An optional set of event types to filter on.\nIf empty, all event types are returned."
+         "type": "Array of string"
         },
         "limit": {
          "type": "integer",
-         "format": "int64",
-         "description": "The offset in the result set. Defaults to 0 (no offset). When an offset is specified\nand the results are requested in descending order, the end_time field is required."
+         "format": "int64"
         }
        },
        "example": {

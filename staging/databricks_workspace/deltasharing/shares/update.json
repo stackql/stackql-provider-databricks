@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The name of the share.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -138,20 +138,16 @@
        "type": "object",
        "properties": {
         "owner": {
-         "type": "string",
-         "description": "Username of current owner of share."
+         "type": "string"
         },
         "comment": {
-         "type": "string",
-         "description": "User-provided free-form text description."
+         "type": "string"
         },
         "storage_root": {
-         "type": "string",
-         "description": "Storage root URL for the share."
+         "type": "string"
         },
         "new_name": {
-         "type": "string",
-         "description": "New name for the share."
+         "type": "string"
         },
         "updates": {
          "type": "Array of object"

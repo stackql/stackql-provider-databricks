@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Name of the storage credential.",
+     "description": "string",
      "in": "path"
     }
    ],

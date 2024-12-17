@@ -154,17 +154,14 @@
        "type": "object",
        "properties": {
         "schemas": {
-         "type": "Array of string",
-         "description": "The schema of the group."
+         "type": "Array of string"
         },
         "id": {
          "type": "integer",
-         "format": "int64",
-         "description": "Databricks group ID"
+         "format": "int64"
         },
         "displayName": {
-         "type": "string",
-         "description": "String that represents a human-readable group name"
+         "type": "string"
         },
         "externalId": {
          "type": "string"

@@ -91,12 +91,10 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Registered model unique name identifier."
+         "type": "required"
         },
         "stages": {
-         "type": "string",
-         "description": "List of stages."
+         "type": "string"
         }
        },
        "example": {

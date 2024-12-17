@@ -13,7 +13,7 @@
     {
      "name": "credential_id",
      "required": true,
-     "description": "(int64)  ",
+     "description": "int64",
      "in": "path"
     }
    ],

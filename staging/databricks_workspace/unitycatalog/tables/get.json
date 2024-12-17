@@ -13,22 +13,19 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) Full name of the table.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "include_delta_metadata",
-     "description": "Whether delta metadata should be included in the response.",
      "in": "query"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include tables in the response for which the principal can only access selective metadata for",
      "in": "query"
     },
     {
      "name": "include_manifest_capabilities",
-     "description": "Whether to include a manifest containing capabilities the table has.",
      "in": "query"
     }
    ],

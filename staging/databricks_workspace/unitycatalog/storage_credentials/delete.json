@@ -13,12 +13,11 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Name of the storage credential.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "force",
-     "description": "Force deletion even if there are dependent external locations or external tables.",
      "in": "query"
     }
    ],

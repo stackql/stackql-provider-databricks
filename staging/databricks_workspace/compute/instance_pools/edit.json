@@ -46,28 +46,22 @@
        "type": "object",
        "properties": {
         "instance_pool_name": {
-         "type": "required",
-         "description": "Pool name requested by the user. Pool name must be unique. Length must be between 1 and 100\ncharacters."
+         "type": "required"
         },
         "min_idle_instances": {
-         "type": "string",
-         "description": "Minimum number of idle instances to keep in the instance pool"
+         "type": "string"
         },
         "max_capacity": {
-         "type": "int32",
-         "description": "Maximum number of outstanding instances to keep in the pool, including both instances used by\nclusters and idle instances. Clusters that require further instance provisioning will fail during\nupsize requests."
+         "type": "int32"
         },
         "idle_instance_autotermination_minutes": {
-         "type": "int32",
-         "description": "Automatically terminates the extra instances in the pool cache after they are inactive for this\ntime in minutes if min_idle_instances requirement is already met. If not set, the extra pool\ninstances will be automatically terminated after a default timeout. If specified, the\nthreshold must be between 0 and 10000 minutes.\nUsers can also set this value to 0 to instantly remove idle instances from the cache if\nmin cache size could still hold."
+         "type": "int32"
         },
         "instance_pool_id": {
-         "type": "int32",
-         "description": "Instance pool ID"
+         "type": "int32"
         },
         "node_type_id": {
-         "type": "required",
-         "description": "This field encodes, through a single value, the resources available to each of\nthe Spark nodes in this cluster. For example, the Spark nodes can be provisioned\nand optimized for memory or compute intensive workloads. A list of available node\ntypes can be retrieved by using the "
+         "type": "required"
         },
         "custom_tags": {
          "type": "object"

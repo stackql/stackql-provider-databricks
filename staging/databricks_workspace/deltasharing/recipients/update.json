@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Name of the recipient.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -38,21 +38,17 @@
        "type": "object",
        "properties": {
         "owner": {
-         "type": "string",
-         "description": "Username of the recipient owner."
+         "type": "string"
         },
         "comment": {
-         "type": "string",
-         "description": "Description about the recipient."
+         "type": "string"
         },
         "new_name": {
-         "type": "string",
-         "description": "New name for the recipient."
+         "type": "string"
         },
         "expiration_time": {
          "type": "integer",
-         "format": "int64",
-         "description": "Expiration timestamp of the token, in epoch milliseconds."
+         "format": "int64"
         },
         "ip_access_list": {
          "type": "object"

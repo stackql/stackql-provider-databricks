@@ -1,0 +1,98 @@
+{
+ "/api/2.0/permissions/jobs/{job_id}": {
+  "get": {
+   "operationId": "job-permissions-getpermissions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/jobs/getpermissions"
+   },
+   "x-stackQL-resource": "job_permissions",
+   "x-stackQL-method": "getpermissions",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "job_id",
+     "required": true,
+     "description": "string",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "object_id": {
+          "type": "string"
+         },
+         "object_type": {
+          "type": "string"
+         },
+         "access_control_list": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "user_name": {
+             "type": "string"
+            },
+            "group_name": {
+             "type": "string"
+            },
+            "service_principal_name": {
+             "type": "string"
+            },
+            "display_name": {
+             "type": "string"
+            },
+            "all_permissions": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "permission_level": {
+                "type": "string"
+               },
+               "inherited": {
+                "type": "boolean"
+               },
+               "inherited_from_object": {
+                "type": "array",
+                "items": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the permissions of a job. Jobs can inherit permissions from their root object."
+  }
+ }
+}

@@ -13,32 +13,27 @@
     {
      "name": "catalog_name",
      "required": true,
-     "description": "(string) Name of parent catalog for tables of interest.",
+     "description": "string",
      "in": "query"
     },
     {
      "name": "schema_name_pattern",
-     "description": "A sql LIKE pattern (% and _) for schema names. All schemas will be returned if not set or empty.",
      "in": "query"
     },
     {
      "name": "table_name_pattern",
-     "description": "A sql LIKE pattern (% and _) for table names. All tables will be returned if not set or empty.",
      "in": "query"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of summaries for tables to return. If not set, the page length is set to a server configured value (10000, as of 1/5/2024).",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     },
     {
      "name": "include_manifest_capabilities",
-     "description": "Whether to include a manifest containing capabilities the table has.",
      "in": "query"
     }
    ],

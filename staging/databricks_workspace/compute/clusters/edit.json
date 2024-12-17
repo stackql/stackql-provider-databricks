@@ -46,84 +46,64 @@
        "type": "object",
        "properties": {
         "cluster_id": {
-         "type": "required",
-         "description": "ID of the cluster"
+         "type": "required"
         },
         "num_workers": {
-         "type": "string",
-         "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver\nand "
+         "type": "string"
         },
         "kind": {
-         "type": "int32",
-         "description": " Executors for a total of "
+         "type": "int32"
         },
         "cluster_name": {
-         "type": "string",
-         "description": " + 1 Spark nodes."
+         "type": "string"
         },
         "spark_version": {
-         "type": "string",
-         "description": "Note: When reading the properties of a cluster, this field reflects the desired number\nof workers rather than the actual current number of workers. For instance, if a cluster\nis resized from 5 to 10 workers, this field will immediately be updated to reflect\nthe target size of 10 workers, whereas the workers listed in "
+         "type": "string"
         },
         "use_ml_runtime": {
-         "type": "required",
-         "description": " will gradually\nincrease from 5 to 10 as the new nodes are provisioned."
+         "type": "required"
         },
         "is_single_node": {
-         "type": "string",
-         "description": "The kind of compute described by this compute specification."
+         "type": "string"
         },
         "node_type_id": {
-         "type": "boolean",
-         "description": "Depending on "
+         "type": "boolean"
         },
         "driver_node_type_id": {
-         "type": "boolean",
-         "description": ", different validations and default values will be applied. "
+         "type": "boolean"
         },
         "ssh_public_keys": {
-         "type": "string",
-         "description": "The first usage of this value is for the simple cluster form where it sets "
+         "type": "string"
         },
         "autotermination_minutes": {
-         "type": "string",
-         "description": "."
+         "type": "string"
         },
         "enable_elastic_disk": {
-         "type": "Array of string",
-         "description": "Cluster name requested by the user. This doesn't have to be unique.\nIf not specified at creation, the cluster name will be an empty string."
+         "type": "Array of string"
         },
         "instance_pool_id": {
-         "type": "int32",
-         "description": "The Spark version of the cluster, e.g. "
+         "type": "int32"
         },
         "policy_id": {
-         "type": "boolean",
-         "description": ".\nA list of available Spark versions can be retrieved by using\nthe "
+         "type": "boolean"
         },
         "enable_local_disk_encryption": {
-         "type": "string",
-         "description": " API call."
+         "type": "string"
         },
         "driver_instance_pool_id": {
-         "type": "string",
-         "description": "This field can only be used with "
+         "type": "string"
         },
         "runtime_engine": {
-         "type": "boolean",
-         "description": "."
+         "type": "boolean"
         },
         "data_security_mode": {
-         "type": "string",
-         "description": " is determined by "
+         "type": "string"
         },
         "single_user_name": {
-         "type": "string",
-         "description": " (DBR release), this field "
+         "type": "string"
         },
         "apply_policy_default_values": {
-         "type": "string",
-         "description": ", and whether "
+         "type": "string"
         },
         "autoscale": {
          "type": "object"

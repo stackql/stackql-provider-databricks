@@ -12,12 +12,10 @@
    "parameters": [
     {
      "name": "max_results",
-     "description": "Maximum number of policy families to return.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "A token that can be used to get the next page of results.",
      "in": "query"
     }
    ],

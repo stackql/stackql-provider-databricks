@@ -1,0 +1,144 @@
+{
+ "/api/2.1/jobs/run-now": {
+  "post": {
+   "operationId": "jobs-runnow",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/jobs/runnow"
+   },
+   "x-stackQL-resource": "jobs",
+   "x-stackQL-method": "runnow",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "run_id": {
+          "type": "integer"
+         },
+         "number_in_job": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "job_id": {
+         "type": "required"
+        },
+        "jar_params": {
+         "type": "integer",
+         "format": "int64"
+        },
+        "python_params": {
+         "type": "Array of string"
+        },
+        "spark_submit_params": {
+         "type": "Array of string"
+        },
+        "dbt_commands": {
+         "type": "Array of string"
+        },
+        "idempotency_token": {
+         "type": "Array of string"
+        },
+        "job_parameters": {
+         "type": "object"
+        },
+        "pipeline_params": {
+         "type": "object"
+        },
+        "notebook_params": {
+         "type": "object"
+        },
+        "python_named_params": {
+         "type": "object"
+        },
+        "sql_params": {
+         "type": "object"
+        },
+        "queue": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "job_id": 11223344,
+        "job_parameters": {
+         "property1": "string",
+         "property2": "string"
+        },
+        "pipeline_params": {
+         "full_refresh": false
+        },
+        "jar_params": [
+         "john",
+         "doe",
+         "35"
+        ],
+        "notebook_params": {
+         "age": "35",
+         "name": "john doe"
+        },
+        "python_params": [
+         "john doe",
+         "35"
+        ],
+        "spark_submit_params": [
+         "--class",
+         "org.apache.spark.examples.SparkPi"
+        ],
+        "python_named_params": {
+         "data": "dbfs:/path/to/data.json",
+         "name": "task"
+        },
+        "sql_params": {
+         "age": "35",
+         "name": "john doe"
+        },
+        "dbt_commands": [
+         "dbt deps",
+         "dbt seed",
+         "dbt run"
+        ],
+        "idempotency_token": "8f018174-4792-40d5-bcbc-3e6a527352c8",
+        "queue": {
+         "enabled": true
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Run a job and return the"
+  }
+ }
+}

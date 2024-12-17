@@ -13,13 +13,13 @@
     {
      "name": "workspace_id",
      "required": true,
-     "description": "(int64) A workspace ID.",
+     "description": "int64",
      "in": "path"
     },
     {
      "name": "metastore_id",
      "required": true,
-     "description": "(string) Query for the ID of the metastore to delete.",
+     "description": "string",
      "in": "query"
     }
    ],

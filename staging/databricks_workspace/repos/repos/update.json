@@ -13,7 +13,7 @@
     {
      "name": "repo_id",
      "required": true,
-     "description": "(int64)  ",
+     "description": "int64",
      "in": "path"
     }
    ],
@@ -53,12 +53,10 @@
        "type": "object",
        "properties": {
         "branch": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "tag": {
-         "type": "string",
-         "description": "Branch that the local version of the repo is checked out to."
+         "type": "string"
         },
         "sparse_checkout": {
          "type": "object"

@@ -13,6 +13,7 @@
     {
      "name": "dashboard_id",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],
@@ -367,16 +368,13 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "run_as_role": {
-         "type": "string",
-         "description": "The title of this dashboard that appears in list views and at the top of the dashboard page."
+         "type": "string"
         },
         "tags": {
-         "type": "Array of string",
-         "description": "Sets the "
+         "type": "Array of string"
         }
        },
        "example": {

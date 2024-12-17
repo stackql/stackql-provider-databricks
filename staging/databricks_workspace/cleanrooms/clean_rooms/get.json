@@ -13,6 +13,7 @@
     {
      "name": "name",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],

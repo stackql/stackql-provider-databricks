@@ -110,20 +110,16 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Name of the connection."
+         "type": "required"
         },
         "connection_type": {
-         "type": "string",
-         "description": "The type of connection."
+         "type": "string"
         },
         "read_only": {
-         "type": "required",
-         "description": "If the connection is read only."
+         "type": "required"
         },
         "comment": {
-         "type": "string",
-         "description": "User-provided free-form text description."
+         "type": "string"
         },
         "options": {
          "type": "required"

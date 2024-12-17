@@ -13,6 +13,7 @@
     {
      "name": "alert_id",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],
@@ -52,16 +53,13 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "query_id": {
-         "type": "string",
-         "description": "Name of the alert."
+         "type": "string"
         },
         "rearm": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "options": {
          "type": "object"

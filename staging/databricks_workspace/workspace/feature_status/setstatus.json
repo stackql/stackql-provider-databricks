@@ -1,0 +1,36 @@
+{
+ "/api/2.0/workspace-conf": {
+  "patch": {
+   "operationId": "feature-status-setstatus",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/workspaceconf/setstatus"
+   },
+   "x-stackQL-resource": "feature_status",
+   "x-stackQL-method": "setstatus",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "204": {
+     "description": "Enabling or disabling feature was successful."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Enables or disables a specified feature for a workspace."
+  }
+ }
+}

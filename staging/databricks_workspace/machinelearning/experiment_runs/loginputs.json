@@ -43,8 +43,7 @@
        "type": "object",
        "properties": {
         "run_id": {
-         "type": "string",
-         "description": "ID of the run to log under"
+         "type": "string"
         },
         "datasets": {
          "type": "Array of object"

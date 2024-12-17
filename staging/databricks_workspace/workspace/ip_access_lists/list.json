@@ -1,0 +1,81 @@
+{
+ "/api/2.0/ip-access-lists": {
+  "get": {
+   "operationId": "ip-access-lists-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/ipaccesslists/list"
+   },
+   "x-stackQL-resource": "ip_access_lists",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "ip_access_lists": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "list_id": {
+             "type": "string"
+            },
+            "label": {
+             "type": "string"
+            },
+            "ip_addresses": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "address_count": {
+             "type": "integer"
+            },
+            "list_type": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "integer"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "integer"
+            },
+            "enabled": {
+             "type": "boolean"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.ip_access_lists",
+   "description": "Gets all IP access lists for the specified workspace."
+  }
+ }
+}

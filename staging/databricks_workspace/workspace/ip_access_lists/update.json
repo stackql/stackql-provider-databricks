@@ -1,0 +1,84 @@
+{
+ "/api/2.0/ip-access-lists/{ip_access_list_id}": {
+  "patch": {
+   "operationId": "ip-access-lists-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/ipaccesslists/update"
+   },
+   "x-stackQL-resource": "ip_access_lists",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "ip_access_list_id",
+     "required": true,
+     "description": "string",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "label": {
+         "type": "string"
+        },
+        "list_type": {
+         "type": "string"
+        },
+        "ip_addresses": {
+         "type": "Array of string"
+        },
+        "enabled": {
+         "type": "boolean"
+        }
+       },
+       "example": {
+        "label": "Office VPN",
+        "list_type": "ALLOW",
+        "ip_addresses": [
+         "192.168.100.0/22"
+        ],
+        "enabled": true
+       }
+      }
+     }
+    },
+    "description": "Details required to update an IP access list."
+   },
+   "description": "Updates an existing IP access list, specified by its ID."
+  }
+ }
+}

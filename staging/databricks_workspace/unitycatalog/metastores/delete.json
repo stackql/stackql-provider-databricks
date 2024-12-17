@@ -13,12 +13,11 @@
     {
      "name": "id",
      "required": true,
-     "description": "(string) Unique ID of the metastore.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "force",
-     "description": "Force deletion even if the metastore is not empty. Default is false.",
      "in": "query"
     }
    ],

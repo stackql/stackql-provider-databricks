@@ -12,7 +12,6 @@
    "parameters": [
     {
      "name": "page_token",
-     "description": "Token for pagination",
      "in": "query"
     }
    ],

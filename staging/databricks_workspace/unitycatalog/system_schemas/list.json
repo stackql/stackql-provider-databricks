@@ -13,17 +13,15 @@
     {
      "name": "metastore_id",
      "required": true,
-     "description": "(string) The ID for the metastore in which the system schema resides.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of schemas to return.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

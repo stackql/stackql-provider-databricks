@@ -12,12 +12,10 @@
    "parameters": [
     {
      "name": "page_size",
-     "description": "Maximum number of clean rooms to return (i.e., the page length). Defaults to 100.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

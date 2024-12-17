@@ -13,12 +13,11 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The fully-qualified name of the function (of the form ",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include functions in the response for which the principal can only access selective metadata for",
      "in": "query"
     }
    ],

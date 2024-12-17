@@ -49,8 +49,7 @@
        "type": "object",
        "properties": {
         "policy_id": {
-         "type": "required",
-         "description": "The ID of the policy to delete."
+         "type": "required"
         }
        },
        "example": {

@@ -13,13 +13,13 @@
     {
      "name": "table_name",
      "required": true,
-     "description": "(string) Full name of the table.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "refresh_id",
      "required": true,
-     "description": "(string) ID of the refresh.",
+     "description": "string",
      "in": "path"
     }
    ],

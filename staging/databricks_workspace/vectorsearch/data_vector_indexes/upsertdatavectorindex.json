@@ -13,7 +13,7 @@
     {
      "name": "index_name",
      "required": true,
-     "description": "(string) Name of the vector index where data is to be upserted. Must be a Direct Vector Access Index.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -66,8 +66,7 @@
        "type": "object",
        "properties": {
         "inputs_json": {
-         "type": "required",
-         "description": "JSON string representing the data to be upserted."
+         "type": "required"
         }
        },
        "example": {

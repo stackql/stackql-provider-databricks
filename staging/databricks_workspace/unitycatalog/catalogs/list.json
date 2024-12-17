@@ -12,17 +12,14 @@
    "parameters": [
     {
      "name": "include_browse",
-     "description": "Whether to include catalogs in the response for which the principal can only access selective metadata for",
      "in": "query"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of catalogs to return.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

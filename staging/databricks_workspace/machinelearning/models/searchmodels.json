@@ -12,7 +12,6 @@
    "parameters": [
     {
      "name": "filter",
-     "description": "String filter condition, like \"name LIKE 'my-model-name'\". Interpreted in the backend automatically as \"name LIKE '%my-model-name%'\". Single boolean condition, with string values wrapped in single quotes.",
      "in": "query"
     },
     {
@@ -21,12 +20,10 @@
     },
     {
      "name": "order_by",
-     "description": "List of columns for ordering search results, which can include model name and last updated timestamp with an optional \"DESC\" or \"ASC\" annotation, where \"ASC\" is the default. Tiebreaks are done by model name ASC.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Pagination token to go to the next page based on a previous search query.",
      "in": "query"
     }
    ],

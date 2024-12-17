@@ -1,0 +1,51 @@
+{
+ "/api/2.0/token/list": {
+  "get": {
+   "operationId": "user-tokens-listtokens",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/tokens/listtokens"
+   },
+   "x-stackQL-resource": "user_tokens",
+   "x-stackQL-method": "listtokens",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "token_infos": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "token_id": {
+             "type": "string"
+            },
+            "creation_time": {
+             "type": "integer"
+            },
+            "expiry_time": {
+             "type": "integer"
+            },
+            "comment": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.token_infos",
+   "description": "Lists all the valid tokens for a user-workspace pair."
+  }
+ }
+}

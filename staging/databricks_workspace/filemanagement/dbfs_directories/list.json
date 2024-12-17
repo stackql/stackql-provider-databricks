@@ -13,6 +13,7 @@
     {
      "name": "path",
      "required": true,
+     "description": "string",
      "in": "query"
     }
    ],

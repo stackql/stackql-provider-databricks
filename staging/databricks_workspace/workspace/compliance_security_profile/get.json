@@ -1,0 +1,70 @@
+{
+ "/api/2.0/settings/types/shield_csp_enablement_ws_db/names/default": {
+  "get": {
+   "operationId": "compliance-security-profile-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/compliancesecurityprofile/get"
+   },
+   "x-stackQL-resource": "compliance_security_profile",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "etag",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "etag": {
+          "type": "string"
+         },
+         "setting_name": {
+          "type": "string"
+         },
+         "compliance_security_profile_workspace": {
+          "type": "object",
+          "properties": {
+           "is_enabled": {
+            "type": "boolean"
+           },
+           "compliance_standards": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the compliance security profile setting."
+  }
+ }
+}

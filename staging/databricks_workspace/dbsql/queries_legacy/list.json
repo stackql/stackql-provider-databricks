@@ -20,7 +20,6 @@
     },
     {
      "name": "order",
-     "description": "Name of query attribute to order by. Default sort order is ascending. Append a dash (",
      "in": "query"
     },
     {

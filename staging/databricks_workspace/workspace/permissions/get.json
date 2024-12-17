@@ -1,0 +1,64 @@
+{
+ "/api/2.0/settings/types/default_namespace_ws/names/default": {
+  "get": {
+   "operationId": "permissions-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/defaultnamespace/get"
+   },
+   "x-stackQL-resource": "permissions",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "etag",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "etag": {
+          "type": "string"
+         },
+         "setting_name": {
+          "type": "string"
+         },
+         "namespace": {
+          "type": "object",
+          "properties": {
+           "value": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the default namespace setting."
+  }
+ }
+}

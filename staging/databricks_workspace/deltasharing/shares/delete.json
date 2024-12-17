@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The name of the share.",
+     "description": "string",
      "in": "path"
     }
    ],

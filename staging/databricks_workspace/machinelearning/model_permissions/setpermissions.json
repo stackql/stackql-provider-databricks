@@ -13,7 +13,7 @@
     {
      "name": "registered_model_id",
      "required": true,
-     "description": "(string) The registered model for which to get or manage permissions.",
+     "description": "string",
      "in": "path"
     }
    ],

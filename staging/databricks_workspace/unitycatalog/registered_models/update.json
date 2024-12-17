@@ -13,7 +13,7 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) The three-level (fully qualified) name of the registered model",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -99,16 +99,13 @@
        "type": "object",
        "properties": {
         "owner": {
-         "type": "string",
-         "description": "The identifier of the user who owns the registered model"
+         "type": "string"
         },
         "comment": {
-         "type": "string",
-         "description": "The comment attached to the registered model"
+         "type": "string"
         },
         "new_name": {
-         "type": "string",
-         "description": "New name for the registered model."
+         "type": "string"
         }
        },
        "example": {

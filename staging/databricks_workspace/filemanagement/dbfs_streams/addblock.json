@@ -43,13 +43,11 @@
        "type": "object",
        "properties": {
         "handle": {
-         "type": "required",
-         "description": "The handle on an open stream."
+         "type": "required"
         },
         "data": {
          "type": "integer",
-         "format": "int64",
-         "description": "The base64-encoded data to append to the stream. This has a limit of 1 MB."
+         "format": "int64"
         }
        },
        "example": {

@@ -13,7 +13,7 @@
     {
      "name": "index_name",
      "required": true,
-     "description": "(string) Name of the vector index to query.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -90,32 +90,25 @@
        "type": "object",
        "properties": {
         "num_results": {
-         "type": "integer",
-         "description": "Number of results to return. Defaults to 10."
+         "type": "integer"
         },
         "columns": {
-         "type": "required",
-         "description": "List of column names to include in the response."
+         "type": "required"
         },
         "filters_json": {
-         "type": "Array of string",
-         "description": "JSON string representing query filters."
+         "type": "Array of string"
         },
         "query_vector": {
-         "type": "string",
-         "description": "Example filters:"
+         "type": "string"
         },
         "query_text": {
-         "type": "Array of double",
-         "description": "Query vector. Required for Direct Vector Access Index and Delta Sync Index using self-managed vectors."
+         "type": "Array of double"
         },
         "score_threshold": {
-         "type": "string",
-         "description": "Query text. Required for Delta Sync Index using model endpoint."
+         "type": "string"
         },
         "query_type": {
-         "type": "double",
-         "description": "Threshold for the approximate nearest neighbor search. Defaults to 0.0."
+         "type": "double"
         }
        },
        "example": {

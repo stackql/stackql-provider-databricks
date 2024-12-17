@@ -13,22 +13,25 @@
     {
      "name": "statement_id",
      "required": true,
-     "description": "(string) The statement ID is returned upon successfully submitting a SQL statement, and is a required reference for all\nsubsequent calls.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "chunk_index",
      "required": true,
+     "description": "int32",
      "in": "path"
     },
     {
      "name": "statement_id",
      "required": true,
+     "description": "string",
      "in": "path"
     },
     {
      "name": "chunk_index",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],

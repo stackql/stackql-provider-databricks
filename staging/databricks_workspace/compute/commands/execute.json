@@ -35,16 +35,13 @@
        "type": "object",
        "properties": {
         "clusterId": {
-         "type": "string",
-         "description": "Running cluster id"
+         "type": "string"
         },
         "contextId": {
-         "type": "string",
-         "description": "Running context id"
+         "type": "string"
         },
         "language": {
-         "type": "string",
-         "description": "Executable code"
+         "type": "string"
         },
         "command": {
          "type": "string"

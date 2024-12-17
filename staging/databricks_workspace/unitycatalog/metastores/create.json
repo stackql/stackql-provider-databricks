@@ -89,16 +89,13 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "The user-specified name of the metastore."
+         "type": "required"
         },
         "storage_root": {
-         "type": "string",
-         "description": "The storage root URL for metastore"
+         "type": "string"
         },
         "region": {
-         "type": "string",
-         "description": "Cloud region which the metastore serves (e.g., "
+         "type": "string"
         }
        },
        "example": {

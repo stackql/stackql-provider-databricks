@@ -92,24 +92,19 @@
        "type": "object",
        "properties": {
         "catalog_name": {
-         "type": "required",
-         "description": "The name of the catalog where the schema and the registered model reside"
+         "type": "required"
         },
         "schema_name": {
-         "type": "string",
-         "description": "The name of the schema where the registered model resides"
+         "type": "string"
         },
         "name": {
-         "type": "required",
-         "description": "The name of the registered model"
+         "type": "required"
         },
         "storage_location": {
-         "type": "string",
-         "description": "The storage location on the cloud under which model version data files are stored"
+         "type": "string"
         },
         "comment": {
-         "type": "required",
-         "description": "The comment attached to the registered model"
+         "type": "required"
         }
        },
        "example": {

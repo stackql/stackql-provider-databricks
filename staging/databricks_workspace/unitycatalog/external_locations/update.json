@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Name of the external location.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -84,40 +84,31 @@
        "type": "object",
        "properties": {
         "url": {
-         "type": "string",
-         "description": "Path URL of the external location."
+         "type": "string"
         },
         "credential_name": {
-         "type": "string",
-         "description": "Name of the storage credential used with this location."
+         "type": "string"
         },
         "read_only": {
-         "type": "boolean",
-         "description": "Indicates whether the external location is read-only."
+         "type": "boolean"
         },
         "comment": {
-         "type": "string",
-         "description": "User-provided free-form text description."
+         "type": "string"
         },
         "owner": {
-         "type": "string",
-         "description": "The owner of the external location."
+         "type": "string"
         },
         "access_point": {
-         "type": "string",
-         "description": "The AWS access point to use when accesing s3 for this external location."
+         "type": "string"
         },
         "isolation_mode": {
-         "type": "string",
-         "description": "New name for the external location."
+         "type": "string"
         },
         "new_name": {
-         "type": "string",
-         "description": "Force update even if changing url invalidates dependent external tables or mounts."
+         "type": "string"
         },
         "force": {
-         "type": "boolean",
-         "description": "Skips validation of the storage credential associated with the external location."
+         "type": "boolean"
         },
         "skip_validation": {
          "type": "boolean"

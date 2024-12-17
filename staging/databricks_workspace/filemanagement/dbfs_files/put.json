@@ -43,16 +43,13 @@
        "type": "object",
        "properties": {
         "path": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "contents": {
-         "type": "string",
-         "description": "The path of the new file. The path should be the absolute DBFS path."
+         "type": "string"
         },
         "overwrite": {
-         "type": "string",
-         "description": "This parameter might be absent, and instead a posted file will be used."
+         "type": "string"
         }
        },
        "example": {

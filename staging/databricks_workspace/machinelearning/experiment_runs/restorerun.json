@@ -43,8 +43,7 @@
        "type": "object",
        "properties": {
         "run_id": {
-         "type": "required",
-         "description": "ID of the run to restore."
+         "type": "required"
         }
        },
        "example": {

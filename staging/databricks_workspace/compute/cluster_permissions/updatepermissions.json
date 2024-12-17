@@ -13,7 +13,7 @@
     {
      "name": "cluster_id",
      "required": true,
-     "description": "(string) The cluster for which to get or manage permissions.",
+     "description": "string",
      "in": "path"
     }
    ],

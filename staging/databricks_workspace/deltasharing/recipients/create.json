@@ -133,32 +133,25 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Name of Recipient."
+         "type": "required"
         },
         "authentication_type": {
-         "type": "string",
-         "description": "The delta sharing authentication type."
+         "type": "string"
         },
         "owner": {
-         "type": "required",
-         "description": "Username of the recipient owner."
+         "type": "required"
         },
         "comment": {
-         "type": "string",
-         "description": "Description about the recipient."
+         "type": "string"
         },
         "data_recipient_global_metastore_id": {
-         "type": "string",
-         "description": "The global Unity Catalog metastore id provided by the data recipient.\nThis field is required when the "
+         "type": "string"
         },
         "sharing_code": {
-         "type": "string",
-         "description": " is "
+         "type": "string"
         },
         "expiration_time": {
-         "type": "string",
-         "description": ".\nThe identifier is of format "
+         "type": "string"
         },
         "ip_access_list": {
          "type": "object"

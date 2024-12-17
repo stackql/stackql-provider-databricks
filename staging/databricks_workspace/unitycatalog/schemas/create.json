@@ -105,20 +105,16 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Name of schema, relative to parent catalog."
+         "type": "required"
         },
         "catalog_name": {
-         "type": "string",
-         "description": "Name of parent catalog."
+         "type": "string"
         },
         "comment": {
-         "type": "required",
-         "description": "User-provided free-form text description."
+         "type": "required"
         },
         "storage_root": {
-         "type": "string",
-         "description": "Storage root URL for managed tables within schema."
+         "type": "string"
         },
         "properties": {
          "type": "object"

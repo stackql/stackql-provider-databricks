@@ -2322,6 +2322,8 @@ services:
       - name: setstatus
         docPath: https://docs.databricks.com/api/workspace/workspaceconf/setstatus
         verb: replace
+        hasRespData: false
+        hasParams: false
       - name: getstatus
         docPath: https://docs.databricks.com/api/workspace/workspaceconf/getstatus
         verb: select

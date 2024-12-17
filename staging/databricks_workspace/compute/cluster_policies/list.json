@@ -16,7 +16,6 @@
     },
     {
      "name": "sort_column",
-     "description": "The cluster policy attribute to sort by.",
      "in": "query"
     }
    ],

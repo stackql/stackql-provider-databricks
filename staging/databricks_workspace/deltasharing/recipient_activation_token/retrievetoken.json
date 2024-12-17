@@ -13,7 +13,7 @@
     {
      "name": "activation_url",
      "required": true,
-     "description": "(string) The one time activation url.\nIt also accepts activation token.",
+     "description": "string",
      "in": "path"
     }
    ],

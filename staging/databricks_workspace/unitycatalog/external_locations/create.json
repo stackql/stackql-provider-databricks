@@ -77,32 +77,25 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Name of the external location."
+         "type": "required"
         },
         "url": {
-         "type": "string",
-         "description": "Path URL of the external location."
+         "type": "string"
         },
         "credential_name": {
-         "type": "required",
-         "description": "Name of the storage credential used with this location."
+         "type": "required"
         },
         "read_only": {
-         "type": "string",
-         "description": "Indicates whether the external location is read-only."
+         "type": "string"
         },
         "comment": {
-         "type": "required",
-         "description": "User-provided free-form text description."
+         "type": "required"
         },
         "access_point": {
-         "type": "string",
-         "description": "The AWS access point to use when accesing s3 for this external location."
+         "type": "string"
         },
         "skip_validation": {
-         "type": "boolean",
-         "description": "Skips validation of the storage credential associated with the external location."
+         "type": "boolean"
         }
        },
        "example": {

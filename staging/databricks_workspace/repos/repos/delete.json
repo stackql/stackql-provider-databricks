@@ -13,7 +13,7 @@
     {
      "name": "repo_id",
      "required": true,
-     "description": "(int64) The ID for the corresponding repo to delete.",
+     "description": "int64",
      "in": "path"
     }
    ],

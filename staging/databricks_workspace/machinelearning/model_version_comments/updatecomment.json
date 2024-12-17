@@ -73,12 +73,10 @@
        "type": "object",
        "properties": {
         "id": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "comment": {
-         "type": "uuid",
-         "description": "Unique identifier of an activity"
+         "type": "uuid"
         }
        },
        "example": {

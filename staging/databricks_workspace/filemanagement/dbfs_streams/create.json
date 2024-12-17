@@ -47,12 +47,10 @@
        "type": "object",
        "properties": {
         "path": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "overwrite": {
-         "type": "string",
-         "description": "The path of the new file. The path should be the absolute DBFS path."
+         "type": "string"
         }
        },
        "example": {

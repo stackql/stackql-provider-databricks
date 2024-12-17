@@ -13,12 +13,11 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The name of the catalog.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "force",
-     "description": "Force deletion even if the catalog is not empty.",
      "in": "query"
     }
    ],

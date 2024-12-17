@@ -13,7 +13,7 @@
     {
      "name": "file_path",
      "required": true,
-     "description": "(string) The absolute path of the file.",
+     "description": "string",
      "in": "path"
     }
    ],

@@ -43,8 +43,7 @@
        "type": "object",
        "properties": {
         "handle": {
-         "type": "required",
-         "description": "The handle on an open stream."
+         "type": "required"
         }
        },
        "example": {

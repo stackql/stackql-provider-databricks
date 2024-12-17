@@ -13,28 +13,25 @@
     {
      "name": "catalog_name",
      "required": true,
-     "description": "(string) Name of parent catalog for functions of interest.",
+     "description": "string",
      "in": "query"
     },
     {
      "name": "schema_name",
      "required": true,
-     "description": "(string) Parent schema of functions.",
+     "description": "string",
      "in": "query"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of functions to return. If not set, all the functions are returned (not recommended).",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include functions in the response for which the principal can only access selective metadata for",
      "in": "query"
     }
    ],

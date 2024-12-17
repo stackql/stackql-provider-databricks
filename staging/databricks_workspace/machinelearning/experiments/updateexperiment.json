@@ -43,12 +43,10 @@
        "type": "object",
        "properties": {
         "experiment_id": {
-         "type": "required",
-         "description": "ID of the associated experiment."
+         "type": "required"
         },
         "new_name": {
-         "type": "string",
-         "description": "If provided, the experiment's name is changed to the new name. The new name must be unique."
+         "type": "string"
         }
        },
        "example": {

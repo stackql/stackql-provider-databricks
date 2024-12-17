@@ -43,16 +43,13 @@
        "type": "object",
        "properties": {
         "experiment_id": {
-         "type": "required",
-         "description": "ID of the experiment under which to log the tag. Must be provided."
+         "type": "required"
         },
         "key": {
-         "type": "string",
-         "description": "Name of the tag. Maximum size depends on storage backend.\nAll storage backends are guaranteed to support key values up to 250 bytes in size."
+         "type": "string"
         },
         "value": {
-         "type": "required",
-         "description": "String value of the tag being logged. Maximum size depends on storage backend.\nAll storage backends are guaranteed to support key values up to 5000 bytes in size."
+         "type": "required"
         }
        },
        "example": {

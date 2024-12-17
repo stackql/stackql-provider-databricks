@@ -124,12 +124,10 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Register models under this name"
+         "type": "required"
         },
         "description": {
-         "type": "string",
-         "description": "Optional description for registered model."
+         "type": "string"
         },
         "tags": {
          "type": "Array of object"

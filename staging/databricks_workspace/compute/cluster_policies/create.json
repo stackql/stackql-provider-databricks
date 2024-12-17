@@ -50,29 +50,23 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "string",
-         "description": "Cluster Policy name requested by the user. This has to be unique. Length must be between 1 and 100\ncharacters."
+         "type": "string"
         },
         "definition": {
-         "type": "JSON",
-         "description": "Policy definition document expressed in "
+         "type": "JSON"
         },
         "description": {
-         "type": "string",
-         "description": "."
+         "type": "string"
         },
         "policy_family_id": {
-         "type": "string",
-         "description": "Additional human-readable description of the cluster policy."
+         "type": "string"
         },
         "policy_family_definition_overrides": {
-         "type": "JSON",
-         "description": "ID of the policy family. The cluster policy's policy definition inherits the policy\nfamily's policy definition."
+         "type": "JSON"
         },
         "max_clusters_per_user": {
          "type": "integer",
-         "format": "int64",
-         "description": "Cannot be used with "
+         "format": "int64"
         },
         "libraries": {
          "type": "Array of object"

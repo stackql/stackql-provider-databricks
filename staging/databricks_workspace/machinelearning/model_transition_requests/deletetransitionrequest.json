@@ -13,21 +13,25 @@
     {
      "name": "name",
      "required": true,
+     "description": "string",
      "in": "query"
     },
     {
      "name": "version",
      "required": true,
+     "description": "string",
      "in": "query"
     },
     {
      "name": "stage",
      "required": true,
+     "description": "string",
      "in": "query"
     },
     {
      "name": "creator",
      "required": true,
+     "description": "email",
      "in": "query"
     },
     {

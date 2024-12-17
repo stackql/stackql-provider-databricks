@@ -1,0 +1,481 @@
+{
+ "/api/2.1/jobs/get": {
+  "get": {
+   "operationId": "jobs-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/jobs/get"
+   },
+   "x-stackQL-resource": "jobs",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "job_id",
+     "required": true,
+     "description": "int64",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "job_id": {
+          "type": "integer"
+         },
+         "creator_user_name": {
+          "type": "string"
+         },
+         "run_as_user_name": {
+          "type": "string"
+         },
+         "settings": {
+          "type": "object",
+          "properties": {
+           "name": {
+            "type": "string"
+           },
+           "description": {
+            "type": "string"
+           },
+           "email_notifications": {
+            "type": "object",
+            "properties": {
+             "on_start": {
+              "type": "array",
+              "items": {
+               "type": "string"
+              }
+             },
+             "on_success": {
+              "type": "array",
+              "items": {
+               "type": "string"
+              }
+             },
+             "on_failure": {
+              "type": "array",
+              "items": {
+               "type": "string"
+              }
+             },
+             "on_duration_warning_threshold_exceeded": {
+              "type": "array",
+              "items": {
+               "type": "string"
+              }
+             },
+             "on_streaming_backlog_exceeded": {
+              "type": "array",
+              "items": {
+               "type": "string"
+              }
+             },
+             "no_alert_for_skipped_runs": {
+              "type": "boolean"
+             }
+            }
+           },
+           "webhook_notifications": {
+            "type": "object",
+            "properties": {
+             "on_start": {
+              "type": "array",
+              "items": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "id": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             },
+             "on_success": {
+              "type": "array",
+              "items": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "id": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             },
+             "on_failure": {
+              "type": "array",
+              "items": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "id": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             },
+             "on_duration_warning_threshold_exceeded": {
+              "type": "array",
+              "items": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "id": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             },
+             "on_streaming_backlog_exceeded": {
+              "type": "array",
+              "items": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "id": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            }
+           },
+           "notification_settings": {
+            "type": "object",
+            "properties": {
+             "no_alert_for_skipped_runs": {
+              "type": "boolean"
+             },
+             "no_alert_for_canceled_runs": {
+              "type": "boolean"
+             }
+            }
+           },
+           "timeout_seconds": {
+            "type": "integer"
+           },
+           "health": {
+            "type": "object",
+            "properties": {
+             "rules": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "metric": {
+                 "type": "string"
+                },
+                "op": {
+                 "type": "string"
+                },
+                "value": {
+                 "type": "integer"
+                }
+               }
+              }
+             }
+            }
+           },
+           "schedule": {
+            "type": "object",
+            "properties": {
+             "quartz_cron_expression": {
+              "type": "string"
+             },
+             "timezone_id": {
+              "type": "string"
+             },
+             "pause_status": {
+              "type": "string"
+             }
+            }
+           },
+           "trigger": {
+            "type": "object",
+            "properties": {
+             "pause_status": {
+              "type": "string"
+             },
+             "file_arrival": {
+              "type": "object",
+              "properties": {
+               "url": {
+                "type": "string"
+               },
+               "min_time_between_triggers_seconds": {
+                "type": "integer"
+               },
+               "wait_after_last_change_seconds": {
+                "type": "integer"
+               }
+              }
+             },
+             "periodic": {
+              "type": "object",
+              "properties": {
+               "interval": {
+                "type": "integer"
+               },
+               "unit": {
+                "type": "string"
+               }
+              }
+             }
+            }
+           },
+           "continuous": {
+            "type": "object",
+            "properties": {
+             "pause_status": {
+              "type": "string"
+             }
+            }
+           },
+           "max_concurrent_runs": {
+            "type": "integer"
+           },
+           "tasks": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "max_retries": {
+               "type": "integer"
+              },
+              "task_key": {
+               "type": "string"
+              },
+              "description": {
+               "type": "string"
+              },
+              "min_retry_interval_millis": {
+               "type": "integer"
+              },
+              "depends_on": {
+               "type": "array",
+               "items": {}
+              },
+              "timeout_seconds": {
+               "type": "integer"
+              },
+              "spark_jar_task": {
+               "type": "object",
+               "properties": {
+                "main_class_name": {
+                 "type": "string"
+                },
+                "parameters": {
+                 "type": "array",
+                 "items": {
+                  "type": "string"
+                 }
+                }
+               }
+              },
+              "libraries": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "jar": {
+                  "type": "string"
+                 }
+                }
+               }
+              },
+              "retry_on_timeout": {
+               "type": "boolean"
+              },
+              "existing_cluster_id": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "job_clusters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "job_cluster_key": {
+               "type": "string"
+              },
+              "new_cluster": {
+               "type": "object",
+               "properties": {
+                "autoscale": {
+                 "type": "object",
+                 "properties": {
+                  "max_workers": {
+                   "type": "integer"
+                  },
+                  "min_workers": {
+                   "type": "integer"
+                  }
+                 }
+                },
+                "node_type_id": {
+                 "type": "null"
+                },
+                "spark_conf": {
+                 "type": "object",
+                 "properties": {
+                  "spark.speculation": {
+                   "type": "boolean"
+                  }
+                 }
+                },
+                "spark_version": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           },
+           "git_source": {
+            "type": "object",
+            "properties": {
+             "git_branch": {
+              "type": "string"
+             },
+             "git_provider": {
+              "type": "string"
+             },
+             "git_url": {
+              "type": "string"
+             }
+            }
+           },
+           "tags": {
+            "type": "object",
+            "properties": {
+             "cost-center": {
+              "type": "string"
+             },
+             "team": {
+              "type": "string"
+             }
+            }
+           },
+           "format": {
+            "type": "string"
+           },
+           "queue": {
+            "type": "object",
+            "properties": {
+             "enabled": {
+              "type": "boolean"
+             }
+            }
+           },
+           "parameters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "default": {
+               "type": "string"
+              },
+              "name": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "run_as": {
+            "type": "object",
+            "properties": {
+             "user_name": {
+              "type": "string"
+             },
+             "service_principal_name": {
+              "type": "string"
+             }
+            }
+           },
+           "edit_mode": {
+            "type": "string"
+           },
+           "deployment": {
+            "type": "object",
+            "properties": {
+             "kind": {
+              "type": "string"
+             },
+             "metadata_file_path": {
+              "type": "string"
+             }
+            }
+           },
+           "environments": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "environment_key": {
+               "type": "string"
+              },
+              "spec": {
+               "type": "object",
+               "properties": {
+                "client": {
+                 "type": "string"
+                },
+                "dependencies": {
+                 "type": "array",
+                 "items": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "created_time": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Retrieves the details for a single job."
+  }
+ }
+}

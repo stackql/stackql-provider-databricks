@@ -1,0 +1,109 @@
+{
+ "/api/2.0/vector-search/indexes/{index_name}": {
+  "get": {
+   "operationId": "indexes-getindex",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchindexes/getindex"
+   },
+   "x-stackQL-resource": "indexes",
+   "x-stackQL-method": "getindex",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "index_name",
+     "required": true,
+     "description": "string",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Successful response with details of the index",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "endpoint_name": {
+          "type": "string"
+         },
+         "primary_key": {
+          "type": "string"
+         },
+         "index_type": {
+          "type": "string"
+         },
+         "delta_sync_index_spec": {
+          "type": "object",
+          "properties": {
+           "source_table": {
+            "type": "string"
+           },
+           "embedding_source_columns": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "embedding_model_endpoint_name": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "pipeline_type": {
+            "type": "string"
+           },
+           "pipeline_id": {
+            "type": "string"
+           }
+          }
+         },
+         "status": {
+          "type": "object",
+          "properties": {
+           "message": {
+            "type": "string"
+           },
+           "indexed_row_count": {
+            "type": "integer"
+           },
+           "ready": {
+            "type": "boolean"
+           },
+           "index_url": {
+            "type": "string"
+           }
+          }
+         },
+         "creator": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get an index."
+  }
+ }
+}

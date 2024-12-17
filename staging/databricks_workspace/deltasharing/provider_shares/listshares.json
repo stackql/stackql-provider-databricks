@@ -13,17 +13,15 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Name of the provider in which to list shares.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of shares to return.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

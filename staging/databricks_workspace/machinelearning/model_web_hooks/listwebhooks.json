@@ -16,12 +16,10 @@
     },
     {
      "name": "events",
-     "description": "If",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Token indicating the page of artifact results to fetch",
      "in": "query"
     }
    ],

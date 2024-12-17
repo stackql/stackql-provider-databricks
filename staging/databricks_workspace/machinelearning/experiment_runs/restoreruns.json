@@ -47,16 +47,13 @@
        "type": "object",
        "properties": {
         "experiment_id": {
-         "type": "required",
-         "description": "The ID of the experiment containing the runs to restore."
+         "type": "required"
         },
         "min_timestamp_millis": {
-         "type": "string",
-         "description": "The minimum deletion timestamp in milliseconds\nsince the UNIX epoch for restoring runs. Only runs\ndeleted no earlier than this timestamp are restored."
+         "type": "string"
         },
         "max_runs": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         }
        },
        "example": {

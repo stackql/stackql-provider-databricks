@@ -46,8 +46,7 @@
        "type": "object",
        "properties": {
         "cluster_id": {
-         "type": "required",
-         "description": "The cluster to be started."
+         "type": "required"
         },
         "restart_user": {
          "type": "string"

@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The name of the catalog.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -143,24 +143,19 @@
        "type": "object",
        "properties": {
         "owner": {
-         "type": "string",
-         "description": "Username of current owner of catalog."
+         "type": "string"
         },
         "comment": {
-         "type": "string",
-         "description": "User-provided free-form text description."
+         "type": "string"
         },
         "isolation_mode": {
-         "type": "string",
-         "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces."
+         "type": "string"
         },
         "enable_predictive_optimization": {
-         "type": "string",
-         "description": "Whether predictive optimization should be enabled for this object and objects under it."
+         "type": "string"
         },
         "new_name": {
-         "type": "string",
-         "description": "New name for the catalog."
+         "type": "string"
         },
         "properties": {
          "type": "object"

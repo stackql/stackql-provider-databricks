@@ -1,0 +1,101 @@
+{
+ "/api/2.0/notification-destinations/{id}": {
+  "patch": {
+   "operationId": "notification-destinations-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/notificationdestinations/update"
+   },
+   "x-stackQL-resource": "notification_destinations",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "string",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "config": {
+          "type": "object",
+          "properties": {
+           "slack": {
+            "type": "object",
+            "properties": {
+             "url_set": {
+              "type": "boolean"
+             }
+            }
+           }
+          }
+         },
+         "destination_type": {
+          "type": "string"
+         },
+         "display_name": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "display_name": {
+         "type": "string"
+        },
+        "config": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "config": {
+         "slack": {
+          "url": "https://hooks.slack.com/services/T00000000/B00000000/AAAAAAAAAAAAAAAA"
+         }
+        },
+        "display_name": "My slack destination updated",
+        "id": "fe25e731-92f2-4838-9fb2-1ca364320a3d"
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates a notification destination. Requires workspace admin permissions. At least one field is required in the request body."
+  }
+ }
+}

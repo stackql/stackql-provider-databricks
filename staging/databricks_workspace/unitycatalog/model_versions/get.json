@@ -13,23 +13,21 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) The three-level (fully qualified) name of the model version",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "version",
      "required": true,
-     "description": "(integer) The integer version number of the model version",
+     "description": "integer",
      "in": "path"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include model versions in the response for which the principal can only access selective metadata for",
      "in": "query"
     },
     {
      "name": "include_aliases",
-     "description": "Whether to include aliases associated with the model version in the response",
      "in": "query"
     }
    ],

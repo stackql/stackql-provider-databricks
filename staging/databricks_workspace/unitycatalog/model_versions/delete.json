@@ -13,13 +13,13 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) The three-level (fully qualified) name of the model version",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "version",
      "required": true,
-     "description": "(integer) The integer version number of the model version",
+     "description": "integer",
      "in": "path"
     }
    ],

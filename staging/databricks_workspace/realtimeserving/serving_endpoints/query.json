@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string)  ",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -94,44 +94,34 @@
        "type": "object",
        "properties": {
         "prompt": {
-         "type": "object",
-         "description": " "
+         "type": "object"
         },
         "input": {
-         "type": "object",
-         "description": "The prompt string (or array of strings) field used ONLY for "
+         "type": "object"
         },
         "temperature": {
-         "type": "double",
-         "description": "\nserving endpoints and should only be used with other completions query fields."
+         "type": "double"
         },
         "stop": {
-         "type": "Array of string",
-         "description": " "
+         "type": "Array of string"
         },
         "max_tokens": {
-         "type": "integer",
-         "description": "The input string (or array of strings) field used ONLY for "
+         "type": "integer"
         },
         "n": {
-         "type": "integer",
-         "description": "\nserving endpoints and is the only field (along with extra_params if needed) used by embeddings queries."
+         "type": "integer"
         },
         "stream": {
-         "type": "boolean",
-         "description": " "
+         "type": "boolean"
         },
         "dataframe_records": {
-         "type": "Array of object",
-         "description": "The temperature field used ONLY for "
+         "type": "Array of object"
         },
         "instances": {
-         "type": "Array of object",
-         "description": " and "
+         "type": "Array of object"
         },
         "inputs": {
-         "type": "object",
-         "description": " serving\nendpoints. This is a float between 0.0 and 2.0 with a default of 1.0 and should only be used with other\nchat/completions query fields."
+         "type": "object"
         },
         "messages": {
          "type": "Array of object"

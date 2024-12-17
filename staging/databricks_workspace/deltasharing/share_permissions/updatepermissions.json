@@ -13,17 +13,15 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The name of the share.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of permissions to return.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

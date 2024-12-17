@@ -13,7 +13,7 @@
     {
      "name": "table_name",
      "required": true,
-     "description": "(string) Full name of the table.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -178,32 +178,25 @@
        "type": "object",
        "properties": {
         "skip_builtin_dashboard": {
-         "type": "boolean",
-         "description": "Whether to skip creating a default dashboard summarizing data quality metrics."
+         "type": "boolean"
         },
         "warehouse_id": {
-         "type": "string",
-         "description": "Optional argument to specify the warehouse for dashboard creation. If not specified, the first running\nwarehouse will be used."
+         "type": "string"
         },
         "assets_dir": {
-         "type": "required",
-         "description": "The directory to store monitoring assets (e.g. dashboard, metric tables)."
+         "type": "required"
         },
         "output_schema_name": {
-         "type": "string",
-         "description": "Schema where output metric tables are created."
+         "type": "string"
         },
         "snapshot": {
-         "type": "required",
-         "description": "Configuration for monitoring snapshot tables."
+         "type": "required"
         },
         "slicing_exprs": {
-         "type": "string",
-         "description": "List of column expressions to slice data with for targeted analysis. The data is grouped by\neach expression independently, resulting in a separate slice for each predicate and its\ncomplements. For high-cardinality columns, only the top 100 unique values by frequency will\ngenerate slices."
+         "type": "string"
         },
         "baseline_table_name": {
-         "type": "object",
-         "description": "Name of the baseline table from which drift metrics are computed from.\nColumns in the monitored table should also be present in the baseline table."
+         "type": "object"
         },
         "inference_log": {
          "type": "object"

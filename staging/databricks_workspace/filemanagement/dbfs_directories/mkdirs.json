@@ -43,8 +43,7 @@
        "type": "object",
        "properties": {
         "path": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         }
        },
        "example": {

@@ -13,12 +13,11 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) Full name of the schema.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "force",
-     "description": "Force deletion even if the schema is not empty.",
      "in": "query"
     }
    ],

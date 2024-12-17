@@ -13,12 +13,11 @@
     {
      "name": "run_id",
      "required": true,
-     "description": "(string) ID of the run to fetch. Must be provided.",
+     "description": "string",
      "in": "query"
     },
     {
      "name": "run_uuid",
-     "description": "[Deprecated, use run_id instead] ID of the run to fetch. This field will be removed in a future MLflow version.",
      "in": "query"
     }
    ],

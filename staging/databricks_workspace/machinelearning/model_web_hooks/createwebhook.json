@@ -87,20 +87,16 @@
        "type": "object",
        "properties": {
         "events": {
-         "type": "required",
-         "description": "Events that can trigger a registry webhook:"
+         "type": "required"
         },
         "model_name": {
-         "type": "Array of string",
-         "description": " "
+         "type": "Array of string"
         },
         "description": {
-         "type": "string",
-         "description": "Name of the model whose events would trigger this webhook."
+         "type": "string"
         },
         "status": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "job_spec": {
          "type": "object"

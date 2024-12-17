@@ -80,24 +80,19 @@
        "type": "object",
        "properties": {
         "display_name": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "warehouse_id": {
-         "type": "string",
-         "description": "The display name of the dashboard."
+         "type": "string"
         },
         "etag": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "serialized_dashboard": {
-         "type": "string",
-         "description": "The warehouse ID used to run the dashboard."
+         "type": "string"
         },
         "parent_path": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         }
        },
        "example": {

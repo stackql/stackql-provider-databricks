@@ -1,0 +1,95 @@
+{
+ "/api/2.0/settings/types/aibi_dash_embed_ws_acc_policy/names/default": {
+  "patch": {
+   "operationId": "dashboard-embedding-access-policy-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/aibidashboardembeddingaccesspolicy/update"
+   },
+   "x-stackQL-resource": "dashboard_embedding_access_policy",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "etag": {
+          "type": "string"
+         },
+         "setting_name": {
+          "type": "string"
+         },
+         "aibi_dashboard_embedding_access_policy": {
+          "type": "object",
+          "properties": {
+           "access_policy_type": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "allow_missing": {
+         "type": "required"
+        },
+        "field_mask": {
+         "type": "boolean"
+        },
+        "setting": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "allow_missing": true,
+        "setting": {
+         "etag": "string",
+         "setting_name": "string",
+         "aibi_dashboard_embedding_access_policy": {
+          "access_policy_type": "ALLOW_ALL_DOMAINS"
+         }
+        },
+        "field_mask": "string"
+       }
+      }
+     }
+    },
+    "description": "Details required to update a setting."
+   },
+   "description": "Updates the AI/BI dashboard embedding access policy at the workspace level."
+  }
+ }
+}

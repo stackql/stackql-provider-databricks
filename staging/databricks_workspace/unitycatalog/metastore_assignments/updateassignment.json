@@ -13,7 +13,7 @@
     {
      "name": "workspace_id",
      "required": true,
-     "description": "(int64) A workspace ID.",
+     "description": "int64",
      "in": "path"
     }
    ],
@@ -38,12 +38,10 @@
        "type": "object",
        "properties": {
         "metastore_id": {
-         "type": "string",
-         "description": "The unique ID of the metastore."
+         "type": "string"
         },
         "default_catalog_name": {
-         "type": "string",
-         "description": "The name of the default catalog in the metastore.\nThis field is depracted. Please use \"Default Namespace API\" to\nconfigure the default catalog for a Databricks workspace."
+         "type": "string"
         }
        },
        "example": {

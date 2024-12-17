@@ -13,7 +13,7 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) Full name of the table.",
+     "description": "string",
      "in": "path"
     }
    ],

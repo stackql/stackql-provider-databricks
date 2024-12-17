@@ -52,20 +52,16 @@
        "type": "object",
        "properties": {
         "storage_credential_name": {
-         "type": "string",
-         "description": "The name of the storage credential to validate."
+         "type": "string"
         },
         "external_location_name": {
-         "type": "string",
-         "description": "The name of an existing external location to validate."
+         "type": "string"
         },
         "url": {
-         "type": "string",
-         "description": "The external location url to validate."
+         "type": "string"
         },
         "read_only": {
-         "type": "boolean",
-         "description": "Whether the storage credential is only usable for read operations."
+         "type": "boolean"
         },
         "aws_iam_role": {
          "type": "object"

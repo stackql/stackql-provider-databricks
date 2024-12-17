@@ -13,7 +13,7 @@
     {
      "name": "objectType",
      "required": true,
-     "description": "(string)  ",
+     "description": "string",
      "in": "path"
     },
     {
@@ -61,8 +61,7 @@
        "type": "object",
        "properties": {
         "new_owner": {
-         "type": "email",
-         "description": " "
+         "type": "email"
         }
        },
        "example": {

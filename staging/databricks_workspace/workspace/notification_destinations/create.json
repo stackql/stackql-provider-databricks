@@ -1,0 +1,98 @@
+{
+ "/api/2.0/notification-destinations": {
+  "post": {
+   "operationId": "notification-destinations-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/notificationdestinations/create"
+   },
+   "x-stackQL-resource": "notification_destinations",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "config": {
+          "type": "object",
+          "properties": {
+           "generic_webhook": {
+            "type": "object",
+            "properties": {
+             "password_set": {
+              "type": "boolean"
+             },
+             "url_set": {
+              "type": "boolean"
+             },
+             "username_set": {
+              "type": "boolean"
+             }
+            }
+           }
+          }
+         },
+         "destination_type": {
+          "type": "string"
+         },
+         "display_name": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "display_name": {
+         "type": "string"
+        },
+        "config": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "config": {
+         "generic_webhook": {
+          "password": "my-password",
+          "url": "https://my-webhook.com",
+          "username": "my-username"
+         }
+        },
+        "display_name": "My webhook destination"
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates a notification destination. Requires workspace admin permissions."
+  }
+ }
+}

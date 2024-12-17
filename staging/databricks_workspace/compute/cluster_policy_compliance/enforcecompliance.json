@@ -70,12 +70,10 @@
        "type": "object",
        "properties": {
         "cluster_id": {
-         "type": "required",
-         "description": "The ID of the cluster you want to enforce policy compliance on."
+         "type": "required"
         },
         "validate_only": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         }
        },
        "example": {

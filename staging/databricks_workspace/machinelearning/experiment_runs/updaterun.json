@@ -76,21 +76,17 @@
        "type": "object",
        "properties": {
         "run_id": {
-         "type": "string",
-         "description": "ID of the run to update. Must be provided."
+         "type": "string"
         },
         "run_uuid": {
-         "type": "string",
-         "description": "[Deprecated, use run_id instead] ID of the run to update.. This field will\nbe removed in a future MLflow version."
+         "type": "string"
         },
         "status": {
-         "type": "string",
-         "description": "Updated status of the run."
+         "type": "string"
         },
         "end_time": {
          "type": "integer",
-         "format": "int64",
-         "description": "Unix timestamp in milliseconds of when the run ended."
+         "format": "int64"
         }
        },
        "example": {

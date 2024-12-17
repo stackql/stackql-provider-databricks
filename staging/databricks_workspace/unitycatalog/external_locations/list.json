@@ -12,17 +12,14 @@
    "parameters": [
     {
      "name": "max_results",
-     "description": "Maximum number of external locations to return. If not set, all the external locations are returned (not recommended).",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include external locations in the response for which the principal can only access selective metadata for",
      "in": "query"
     }
    ],

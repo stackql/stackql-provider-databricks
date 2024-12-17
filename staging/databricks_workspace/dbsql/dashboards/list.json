@@ -20,7 +20,6 @@
     },
     {
      "name": "order",
-     "description": "Name of dashboard attribute to order by.",
      "in": "query"
     },
     {

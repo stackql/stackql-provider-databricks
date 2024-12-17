@@ -13,13 +13,13 @@
     {
      "name": "securable_type",
      "required": true,
-     "description": "(string) Type of securable.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) Full name of securable.",
+     "description": "string",
      "in": "path"
     }
    ],

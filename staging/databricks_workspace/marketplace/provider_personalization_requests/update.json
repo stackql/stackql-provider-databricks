@@ -13,11 +13,13 @@
     {
      "name": "listing_id",
      "required": true,
+     "description": "string",
      "in": "path"
     },
     {
      "name": "request_id",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],

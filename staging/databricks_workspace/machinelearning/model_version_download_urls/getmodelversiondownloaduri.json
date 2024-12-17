@@ -13,13 +13,13 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Name of the registered model",
+     "description": "string",
      "in": "query"
     },
     {
      "name": "version",
      "required": true,
-     "description": "(string) Model version number",
+     "description": "string",
      "in": "query"
     }
    ],

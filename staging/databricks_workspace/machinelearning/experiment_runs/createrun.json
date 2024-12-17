@@ -184,17 +184,14 @@
        "type": "object",
        "properties": {
         "experiment_id": {
-         "type": "string",
-         "description": "ID of the associated experiment."
+         "type": "string"
         },
         "user_id": {
-         "type": "string",
-         "description": "ID of the user executing the run.\nThis field is deprecated as of MLflow 1.0, and will be removed in a future\nMLflow release. Use 'mlflow.user' tag instead."
+         "type": "string"
         },
         "start_time": {
          "type": "integer",
-         "format": "int64",
-         "description": "Unix timestamp in milliseconds of when the run started."
+         "format": "int64"
         },
         "tags": {
          "type": "Array of object"

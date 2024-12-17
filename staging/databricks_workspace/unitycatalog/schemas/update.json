@@ -13,7 +13,7 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) Full name of the schema.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -112,20 +112,16 @@
        "type": "object",
        "properties": {
         "owner": {
-         "type": "string",
-         "description": "Username of current owner of schema."
+         "type": "string"
         },
         "comment": {
-         "type": "string",
-         "description": "User-provided free-form text description."
+         "type": "string"
         },
         "enable_predictive_optimization": {
-         "type": "string",
-         "description": "Whether predictive optimization should be enabled for this object and objects under it."
+         "type": "string"
         },
         "new_name": {
-         "type": "string",
-         "description": "New name for the schema."
+         "type": "string"
         },
         "properties": {
          "type": "object"

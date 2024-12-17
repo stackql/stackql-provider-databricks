@@ -85,20 +85,16 @@
        "type": "object",
        "properties": {
         "pause_status": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "display_name": {
-         "type": "string",
-         "description": "The status indicates whether this schedule is paused or not."
+         "type": "string"
         },
         "etag": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "warehouse_id": {
-         "type": "string",
-         "description": "The display name for schedule."
+         "type": "string"
         },
         "cron_schedule": {
          "type": "object"

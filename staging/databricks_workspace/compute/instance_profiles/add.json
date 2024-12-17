@@ -43,20 +43,16 @@
        "type": "object",
        "properties": {
         "skip_validation": {
-         "type": "boolean",
-         "description": "By default, Databricks validates that it has sufficient permissions to launch\ninstances with the instance profile. This validation uses AWS dry-run mode for\nthe RunInstances API. If validation fails with an error message that does not\nindicate an IAM related permission issue,\n(e.g. \u201cYour requested instance type is not supported in your requested availability zone\u201d),\nyou can pass this flag to skip the validation and forcibly add the instance profile."
+         "type": "boolean"
         },
         "instance_profile_arn": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "iam_role_arn": {
-         "type": "string",
-         "description": "The AWS ARN of the instance profile to register with Databricks. This field is required."
+         "type": "string"
         },
         "is_meta_instance_profile": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         }
        },
        "example": {

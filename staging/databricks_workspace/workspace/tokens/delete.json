@@ -1,0 +1,48 @@
+{
+ "/api/2.0/token-management/tokens/{token_id}": {
+  "delete": {
+   "operationId": "tokens-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/tokenmanagement/delete"
+   },
+   "x-stackQL-resource": "tokens",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "token_id",
+     "required": true,
+     "description": "string",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Deletes a token, specified by its ID."
+  }
+ }
+}

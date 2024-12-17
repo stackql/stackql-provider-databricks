@@ -47,16 +47,13 @@
        "type": "object",
        "properties": {
         "experiment_id": {
-         "type": "required",
-         "description": "The ID of the experiment containing the runs to delete."
+         "type": "required"
         },
         "max_timestamp_millis": {
-         "type": "string",
-         "description": "The maximum creation timestamp in milliseconds\nsince the UNIX epoch for deleting runs. Only runs\ncreated prior to or at this timestamp are deleted."
+         "type": "string"
         },
         "max_runs": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         }
        },
        "example": {

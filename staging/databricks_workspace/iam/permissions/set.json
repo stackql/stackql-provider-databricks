@@ -13,13 +13,13 @@
     {
      "name": "request_object_type",
      "required": true,
-     "description": "(string) The type of the request object. Can be one of the following: alerts, authorization, clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "request_object_id",
      "required": true,
-     "description": "(string) The id of the request object.",
+     "description": "string",
      "in": "path"
     }
    ],

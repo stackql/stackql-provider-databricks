@@ -13,7 +13,7 @@
     {
      "name": "id",
      "required": true,
-     "description": "(int64) Unique ID for a group in the Databricks workspace.",
+     "description": "int64",
      "in": "path"
     }
    ],

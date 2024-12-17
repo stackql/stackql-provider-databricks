@@ -84,8 +84,7 @@
        "type": "object",
        "properties": {
         "etag": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "subscriber": {
          "type": "required"

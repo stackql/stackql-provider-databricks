@@ -47,12 +47,10 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Experiment name."
+         "type": "required"
         },
         "artifact_location": {
-         "type": "string",
-         "description": "Location where all artifacts for the experiment are stored.\nIf not provided, the remote server will select an appropriate default."
+         "type": "string"
         },
         "tags": {
          "type": "Array of object"

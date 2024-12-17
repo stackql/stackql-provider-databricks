@@ -223,16 +223,13 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "owner": {
-         "type": "string",
-         "description": "The name of the clean room.\nIt should follow "
+         "type": "string"
         },
         "comment": {
-         "type": "string",
-         "description": "."
+         "type": "string"
         },
         "remote_detailed_info": {
          "type": "object"

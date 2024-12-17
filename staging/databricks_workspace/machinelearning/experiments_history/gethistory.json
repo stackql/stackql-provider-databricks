@@ -12,23 +12,20 @@
    "parameters": [
     {
      "name": "run_id",
-     "description": "ID of the run from which to fetch metric values. Must be provided.",
      "in": "query"
     },
     {
      "name": "run_uuid",
-     "description": "[Deprecated, use run_id instead] ID of the run from which to fetch metric values. This field will be removed in a future MLflow version.",
      "in": "query"
     },
     {
      "name": "metric_key",
      "required": true,
-     "description": "(string) Name of the metric.",
+     "description": "string",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Token indicating the page of metric histories to fetch.",
      "in": "query"
     },
     {

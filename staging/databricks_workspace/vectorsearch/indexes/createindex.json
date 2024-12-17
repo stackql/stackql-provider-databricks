@@ -1,0 +1,157 @@
+{
+ "/api/2.0/vector-search/indexes": {
+  "post": {
+   "operationId": "indexes-createindex",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchindexes/createindex"
+   },
+   "x-stackQL-resource": "indexes",
+   "x-stackQL-method": "createindex",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Successful response with details of the created index",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "endpoint_name": {
+          "type": "string"
+         },
+         "primary_key": {
+          "type": "string"
+         },
+         "index_type": {
+          "type": "string"
+         },
+         "delta_sync_index_spec": {
+          "type": "object",
+          "properties": {
+           "source_table": {
+            "type": "string"
+           },
+           "embedding_source_columns": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "embedding_model_endpoint_name": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "columns_to_sync": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           },
+           "pipeline_type": {
+            "type": "string"
+           },
+           "pipeline_id": {
+            "type": "string"
+           }
+          }
+         },
+         "status": {
+          "type": "object",
+          "properties": {
+           "message": {
+            "type": "string"
+           },
+           "indexed_row_count": {
+            "type": "integer"
+           },
+           "ready": {
+            "type": "boolean"
+           },
+           "index_url": {
+            "type": "string"
+           }
+          }
+         },
+         "creator": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required"
+        },
+        "endpoint_name": {
+         "type": "string"
+        },
+        "primary_key": {
+         "type": "required"
+        },
+        "index_type": {
+         "type": "string"
+        },
+        "delta_sync_index_spec": {
+         "type": "object"
+        },
+        "direct_access_index_spec": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "main_catalog.docs.en_wiki_index",
+        "primary_key": "id",
+        "index_type": "DELTA_SYNC",
+        "delta_sync_index_spec": {
+         "source_table": "main_catalog.docs.en_wiki",
+         "pipeline_type": "TRIGGERED",
+         "embedding_source_columns": [
+          {
+           "name": "text",
+           "embedding_model_endpoint_name": "e5-small-v2"
+          }
+         ],
+         "columns_to_sync": [
+          "id",
+          "text"
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Create a new index."
+  }
+ }
+}

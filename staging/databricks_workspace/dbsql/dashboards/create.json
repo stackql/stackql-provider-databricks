@@ -361,28 +361,22 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "parent": {
-         "type": "string",
-         "description": "The title of this dashboard that appears in list views and at the top of the dashboard page."
+         "type": "string"
         },
         "tags": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "is_favorite": {
-         "type": "Array of string",
-         "description": " "
+         "type": "Array of string"
         },
         "run_as_role": {
-         "type": "boolean",
-         "description": "The identifier of the workspace folder containing the object."
+         "type": "boolean"
         },
         "dashboard_filters_enabled": {
-         "type": "string",
-         "description": "Indicates whether this dashboard object should appear in the current user's favorites list."
+         "type": "string"
         }
        },
        "example": {

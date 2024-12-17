@@ -43,8 +43,7 @@
        "type": "object",
        "properties": {
         "experiment_id": {
-         "type": "required",
-         "description": "ID of the associated experiment."
+         "type": "required"
         }
        },
        "example": {

@@ -13,22 +13,19 @@
     {
      "name": "catalog_name",
      "required": true,
-     "description": "(string) Parent catalog for schemas of interest.",
+     "description": "string",
      "in": "query"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of schemas to return. If not set, all the schemas are returned (not recommended).",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include schemas in the response for which the principal can only access selective metadata for",
      "in": "query"
     }
    ],

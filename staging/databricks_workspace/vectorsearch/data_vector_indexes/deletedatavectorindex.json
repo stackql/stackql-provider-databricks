@@ -13,7 +13,7 @@
     {
      "name": "index_name",
      "required": true,
-     "description": "(string) Name of the vector index where data is to be deleted. Must be a Direct Vector Access Index.",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -66,8 +66,7 @@
        "type": "object",
        "properties": {
         "primary_keys": {
-         "type": "required",
-         "description": "List of primary keys for the data to be deleted."
+         "type": "required"
         }
        },
        "example": {

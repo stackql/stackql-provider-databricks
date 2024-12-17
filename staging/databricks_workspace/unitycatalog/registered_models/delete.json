@@ -13,7 +13,7 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) The three-level (fully qualified) name of the registered model",
+     "description": "string",
      "in": "path"
     }
    ],

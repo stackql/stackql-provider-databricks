@@ -12,12 +12,10 @@
    "parameters": [
     {
      "name": "max_results",
-     "description": "Maximum number of shares to return.",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

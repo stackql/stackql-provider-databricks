@@ -1,0 +1,64 @@
+{
+ "/api/2.0/settings/types/aibi_dash_embed_ws_acc_policy/names/default": {
+  "get": {
+   "operationId": "dashboard-embedding-access-policy-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/aibidashboardembeddingaccesspolicy/get"
+   },
+   "x-stackQL-resource": "dashboard_embedding_access_policy",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "etag",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "etag": {
+          "type": "string"
+         },
+         "setting_name": {
+          "type": "string"
+         },
+         "aibi_dashboard_embedding_access_policy": {
+          "type": "object",
+          "properties": {
+           "access_policy_type": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Retrieves the AI/BI dashboard embedding access policy. The default setting is ALLOW_APPROVED_DOMAINS, permitting AI/BI dashboards to be embedded on approved domains."
+  }
+ }
+}

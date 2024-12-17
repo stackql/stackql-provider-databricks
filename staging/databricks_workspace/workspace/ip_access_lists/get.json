@@ -1,0 +1,88 @@
+{
+ "/api/2.0/ip-access-lists/{ip_access_list_id}": {
+  "get": {
+   "operationId": "ip-access-lists-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/ipaccesslists/get"
+   },
+   "x-stackQL-resource": "ip_access_lists",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "ip_access_list_id",
+     "required": true,
+     "description": "string",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "ip_access_list": {
+          "type": "object",
+          "properties": {
+           "list_id": {
+            "type": "string"
+           },
+           "label": {
+            "type": "string"
+           },
+           "ip_addresses": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           },
+           "address_count": {
+            "type": "integer"
+           },
+           "list_type": {
+            "type": "string"
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "created_by": {
+            "type": "integer"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "updated_by": {
+            "type": "integer"
+           },
+           "enabled": {
+            "type": "boolean"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.ip_access_list",
+   "description": "Gets an IP access list, specified by its list ID."
+  }
+ }
+}

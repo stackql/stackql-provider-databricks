@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The name of the connection to be deleted.",
+     "description": "string",
      "in": "path"
     }
    ],

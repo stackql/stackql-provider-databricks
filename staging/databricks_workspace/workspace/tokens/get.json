@@ -1,0 +1,82 @@
+{
+ "/api/2.0/token-management/tokens/{token_id}": {
+  "get": {
+   "operationId": "tokens-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/tokenmanagement/get"
+   },
+   "x-stackQL-resource": "tokens",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "token_id",
+     "required": true,
+     "description": "string",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "token_info": {
+          "type": "object",
+          "properties": {
+           "token_id": {
+            "type": "string"
+           },
+           "creation_time": {
+            "type": "integer"
+           },
+           "expiry_time": {
+            "type": "integer"
+           },
+           "comment": {
+            "type": "string"
+           },
+           "created_by_id": {
+            "type": "integer"
+           },
+           "created_by_username": {
+            "type": "string"
+           },
+           "owner_id": {
+            "type": "integer"
+           },
+           "workspace_id": {
+            "type": "integer"
+           },
+           "last_used_day": {
+            "type": "integer"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.token_info",
+   "description": "Gets information about a token, specified by its ID."
+  }
+ }
+}

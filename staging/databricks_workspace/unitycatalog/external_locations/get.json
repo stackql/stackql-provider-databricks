@@ -13,12 +13,11 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Name of the external location.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include external locations in the response for which the principal can only access selective metadata for",
      "in": "query"
     }
    ],

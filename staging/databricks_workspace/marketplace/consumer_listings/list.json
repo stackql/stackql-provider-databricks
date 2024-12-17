@@ -20,12 +20,10 @@
     },
     {
      "name": "assets",
-     "description": "Matches any of the following asset types",
      "in": "query"
     },
     {
      "name": "categories",
-     "description": "Matches any of the following categories",
      "in": "query"
     },
     {
@@ -34,22 +32,18 @@
     },
     {
      "name": "is_free",
-     "description": "Filters each listing based on if it is free.",
      "in": "query"
     },
     {
      "name": "is_private_exchange",
-     "description": "Filters each listing based on if it is a private exchange.",
      "in": "query"
     },
     {
      "name": "is_staff_pick",
-     "description": "Filters each listing based on whether it is a staff pick.",
      "in": "query"
     },
     {
      "name": "provider_ids",
-     "description": "Matches any of the following provider ids",
      "in": "query"
     }
    ],

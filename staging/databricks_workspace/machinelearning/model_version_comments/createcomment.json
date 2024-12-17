@@ -76,16 +76,13 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "version": {
-         "type": "string",
-         "description": "Name of the model."
+         "type": "string"
         },
         "comment": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         }
        },
        "example": {

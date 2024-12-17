@@ -13,13 +13,13 @@
     {
      "name": "app_name",
      "required": true,
-     "description": "(string) The name of the app.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "deployment_id",
      "required": true,
-     "description": "(string) The unique id of the deployment.",
+     "description": "string",
      "in": "path"
     }
    ],

@@ -46,8 +46,7 @@
        "type": "object",
        "properties": {
         "instance_profile_arn": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         }
        },
        "example": {

@@ -1,0 +1,61 @@
+{
+ "/api/2.0/workspace/get-status": {
+  "get": {
+   "operationId": "object-status-getstatus",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/workspace/getstatus"
+   },
+   "x-stackQL-resource": "object_status",
+   "x-stackQL-method": "getstatus",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "path",
+     "required": true,
+     "description": "string",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "path": {
+          "type": "string"
+         },
+         "language": {
+          "type": "string"
+         },
+         "object_type": {
+          "type": "string"
+         },
+         "object_id": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the status of an object or a directory. If"
+  }
+ }
+}

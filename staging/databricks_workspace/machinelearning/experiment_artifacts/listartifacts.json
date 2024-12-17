@@ -12,22 +12,18 @@
    "parameters": [
     {
      "name": "run_id",
-     "description": "ID of the run whose artifacts to list. Must be provided.",
      "in": "query"
     },
     {
      "name": "run_uuid",
-     "description": "[Deprecated, use run_id instead] ID of the run whose artifacts to list. This field will be removed in a future MLflow version.",
      "in": "query"
     },
     {
      "name": "path",
-     "description": "Filter artifacts matching this path (a relative path from the root artifact directory).",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Token indicating the page of artifact results to fetch.",
      "in": "query"
     }
    ],

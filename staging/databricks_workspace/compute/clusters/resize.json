@@ -46,12 +46,10 @@
        "type": "object",
        "properties": {
         "num_workers": {
-         "type": "int32",
-         "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver\nand "
+         "type": "int32"
         },
         "cluster_id": {
-         "type": "required",
-         "description": " Executors for a total of "
+         "type": "required"
         },
         "autoscale": {
          "type": "object"

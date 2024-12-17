@@ -50,16 +50,13 @@
        "type": "object",
        "properties": {
         "git_provider": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "git_username": {
-         "type": "string",
-         "description": "Git provider. This field is case-insensitive. The available Git providers are "
+         "type": "string"
         },
         "personal_access_token": {
-         "type": "string",
-         "description": ",\n"
+         "type": "string"
         }
        },
        "example": {

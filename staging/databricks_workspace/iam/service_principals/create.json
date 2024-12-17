@@ -137,29 +137,23 @@
        "type": "object",
        "properties": {
         "schemas": {
-         "type": "Array of string",
-         "description": "The schema of the List response."
+         "type": "Array of string"
         },
         "id": {
          "type": "integer",
-         "format": "int64",
-         "description": "Databricks service principal ID."
+         "format": "int64"
         },
         "applicationId": {
-         "type": "uuid",
-         "description": "UUID relating to the service principal"
+         "type": "uuid"
         },
         "displayName": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "externalId": {
-         "type": "string",
-         "description": "String that represents a concatenation of given and family names."
+         "type": "string"
         },
         "active": {
-         "type": "boolean",
-         "description": "If this user is active"
+         "type": "boolean"
         },
         "groups": {
          "type": "Array of object"

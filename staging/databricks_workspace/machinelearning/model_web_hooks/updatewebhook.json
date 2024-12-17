@@ -87,20 +87,16 @@
        "type": "object",
        "properties": {
         "id": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "events": {
-         "type": "string",
-         "description": "Webhook ID"
+         "type": "string"
         },
         "description": {
-         "type": "Array of string",
-         "description": "Events that can trigger a registry webhook:"
+         "type": "Array of string"
         },
         "status": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "http_url_spec": {
          "type": "object"

@@ -13,12 +13,11 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) The three-level (fully qualified) name of the volume",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include volumes in the response for which the principal can only access selective metadata for",
      "in": "query"
     }
    ],

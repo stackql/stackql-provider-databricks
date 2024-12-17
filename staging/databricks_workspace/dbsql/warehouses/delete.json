@@ -13,7 +13,7 @@
     {
      "name": "id",
      "required": true,
-     "description": "(string) Required. Id of the SQL warehouse.",
+     "description": "string",
      "in": "path"
     }
    ],

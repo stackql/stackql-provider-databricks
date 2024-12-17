@@ -13,11 +13,13 @@
     {
      "name": "clusterId",
      "required": true,
+     "description": "string",
      "in": "query"
     },
     {
      "name": "contextId",
      "required": true,
+     "description": "string",
      "in": "query"
     }
    ],

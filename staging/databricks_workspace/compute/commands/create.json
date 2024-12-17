@@ -35,8 +35,7 @@
        "type": "object",
        "properties": {
         "clusterId": {
-         "type": "string",
-         "description": "Running cluster id"
+         "type": "string"
         },
         "language": {
          "type": "string"

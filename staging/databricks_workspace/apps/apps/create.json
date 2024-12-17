@@ -247,12 +247,10 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "description": {
-         "type": "string",
-         "description": "The name of the app. The name must contain only lowercase alphanumeric characters and hyphens.\nIt must be unique within the workspace."
+         "type": "string"
         },
         "resources": {
          "type": "Array of object"

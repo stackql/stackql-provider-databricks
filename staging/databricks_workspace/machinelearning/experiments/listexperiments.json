@@ -12,17 +12,14 @@
    "parameters": [
     {
      "name": "view_type",
-     "description": "Qualifier for type of experiments to be returned. If unspecified, return only active experiments.",
      "in": "query"
     },
     {
      "name": "max_results",
-     "description": "Maximum number of experiments desired. If",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Token indicating the page of experiments to fetch",
      "in": "query"
     }
    ],

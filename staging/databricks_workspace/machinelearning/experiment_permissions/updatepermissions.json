@@ -13,7 +13,7 @@
     {
      "name": "experiment_id",
      "required": true,
-     "description": "(string) The experiment for which to get or manage permissions.",
+     "description": "string",
      "in": "path"
     }
    ],

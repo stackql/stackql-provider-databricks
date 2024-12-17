@@ -13,12 +13,11 @@
     {
      "name": "directory_path",
      "required": true,
-     "description": "(string) The absolute path of a directory.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "page_token",
-     "description": "An opaque page token which was the",
      "in": "query"
     },
     {

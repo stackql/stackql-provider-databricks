@@ -13,7 +13,7 @@
     {
      "name": "name",
      "required": true,
-     "description": "(string) Full three-part (catalog, schema, table) name of the table.",
+     "description": "string",
      "in": "path"
     }
    ],

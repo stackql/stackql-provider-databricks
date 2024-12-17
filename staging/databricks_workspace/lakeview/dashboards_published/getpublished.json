@@ -13,7 +13,7 @@
     {
      "name": "dashboard_id",
      "required": true,
-     "description": "(string) UUID identifying the published dashboard.",
+     "description": "string",
      "in": "path"
     }
    ],

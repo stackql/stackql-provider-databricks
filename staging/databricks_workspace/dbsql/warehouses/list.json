@@ -12,7 +12,6 @@
    "parameters": [
     {
      "name": "run_as_user_id",
-     "description": "Service Principal which will be used to fetch the list of warehouses. If not specified, the user from the session header is used.",
      "in": "query"
     }
    ],

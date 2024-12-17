@@ -43,12 +43,10 @@
        "type": "object",
        "properties": {
         "run_id": {
-         "type": "required",
-         "description": "ID of the run that the tag was logged under. Must be provided."
+         "type": "required"
         },
         "key": {
-         "type": "string",
-         "description": "Name of the tag. Maximum size is 255 bytes. Must be provided."
+         "type": "string"
         }
        },
        "example": {

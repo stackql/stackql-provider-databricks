@@ -13,6 +13,7 @@
     {
      "name": "id",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],
@@ -117,8 +118,7 @@
        "type": "object",
        "properties": {
         "update_mask": {
-         "type": "required",
-         "description": "Field mask is required to be passed into the PATCH request. Field mask specifies which fields\nof the setting payload will be updated.\nThe field mask needs to be supplied as single string. To specify multiple fields in the field mask,\nuse comma as the separator (no space)."
+         "type": "required"
         },
         "alert": {
          "type": "object"

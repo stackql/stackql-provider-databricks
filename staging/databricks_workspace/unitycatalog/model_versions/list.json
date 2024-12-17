@@ -13,7 +13,7 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) The full three-level name of the registered model under which to list model versions",
+     "description": "string",
      "in": "path"
     },
     {
@@ -22,12 +22,10 @@
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     },
     {
      "name": "include_browse",
-     "description": "Whether to include model versions in the response for which the principal can only access selective metadata for",
      "in": "query"
     }
    ],

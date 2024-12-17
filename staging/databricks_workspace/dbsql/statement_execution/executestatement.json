@@ -123,46 +123,36 @@
        "type": "object",
        "properties": {
         "statement": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "warehouse_id": {
-         "type": "string",
-         "description": "The SQL statement to execute. The statement can optionally be parameterized, see "
+         "type": "string"
         },
         "catalog": {
-         "type": "required",
-         "description": "."
+         "type": "required"
         },
         "schema": {
-         "type": "string",
-         "description": "Warehouse upon which to execute a statement. See also "
+         "type": "string"
         },
         "row_limit": {
-         "type": "string",
-         "description": "Sets default catalog for statement execution, similar to "
+         "type": "string"
         },
         "byte_limit": {
-         "type": "string",
-         "description": " in SQL."
+         "type": "string"
         },
         "disposition": {
          "type": "integer",
-         "format": "int64",
-         "description": "Sets default schema for statement execution, similar to "
+         "format": "int64"
         },
         "format": {
          "type": "integer",
-         "format": "int64",
-         "description": " in SQL."
+         "format": "int64"
         },
         "wait_timeout": {
-         "type": "string",
-         "description": "Applies the given row limit to the statement's result set, but unlike the "
+         "type": "string"
         },
         "on_wait_timeout": {
-         "type": "string",
-         "description": " clause in SQL,\nit also sets the "
+         "type": "string"
         },
         "parameters": {
          "type": "Array of object"

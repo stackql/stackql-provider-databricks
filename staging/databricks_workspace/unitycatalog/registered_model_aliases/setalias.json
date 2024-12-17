@@ -13,13 +13,13 @@
     {
      "name": "full_name",
      "required": true,
-     "description": "(string) The three-level (fully qualified) name of the registered model",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "alias",
      "required": true,
-     "description": "(string) The name of the alias",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -66,16 +66,13 @@
        "type": "object",
        "properties": {
         "full_name": {
-         "type": "required",
-         "description": "Full name of the registered model"
+         "type": "required"
         },
         "alias": {
-         "type": "string",
-         "description": "The name of the alias"
+         "type": "string"
         },
         "version_num": {
-         "type": "required",
-         "description": "The version number of the model version to which the alias points"
+         "type": "required"
         }
        },
        "example": {

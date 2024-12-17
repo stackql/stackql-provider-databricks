@@ -79,24 +79,19 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "version": {
-         "type": "string",
-         "description": "Name of the model."
+         "type": "string"
         },
         "stage": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "archive_existing_versions": {
-         "type": "string",
-         "description": "Version of the model."
+         "type": "string"
         },
         "comment": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         }
        },
        "example": {

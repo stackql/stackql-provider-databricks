@@ -43,12 +43,10 @@
        "type": "object",
        "properties": {
         "source_path": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "destination_path": {
-         "type": "string",
-         "description": "The source path of the file or directory. The path should be the absolute DBFS path."
+         "type": "string"
         }
        },
        "example": {

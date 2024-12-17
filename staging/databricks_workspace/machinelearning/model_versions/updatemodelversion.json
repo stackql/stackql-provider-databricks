@@ -31,16 +31,13 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Name of the registered model"
+         "type": "required"
         },
         "version": {
-         "type": "string",
-         "description": "Model version number"
+         "type": "string"
         },
         "description": {
-         "type": "required",
-         "description": "If provided, updates the description for this "
+         "type": "required"
         }
        },
        "example": {

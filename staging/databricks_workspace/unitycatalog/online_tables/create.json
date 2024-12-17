@@ -181,8 +181,7 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "string",
-         "description": "Full three-part (catalog, schema, table) name of the table."
+         "type": "string"
         },
         "spec": {
          "type": "object"

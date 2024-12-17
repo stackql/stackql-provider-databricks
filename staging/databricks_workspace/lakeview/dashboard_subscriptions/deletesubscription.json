@@ -13,19 +13,19 @@
     {
      "name": "dashboard_id",
      "required": true,
-     "description": "(string)  ",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "schedule_id",
      "required": true,
-     "description": "(string)  ",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "subscription_id",
      "required": true,
-     "description": "(string)  ",
+     "description": "string",
      "in": "path"
     },
     {

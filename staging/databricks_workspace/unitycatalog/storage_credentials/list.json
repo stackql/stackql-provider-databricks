@@ -12,12 +12,10 @@
    "parameters": [
     {
      "name": "max_results",
-     "description": "Maximum number of storage credentials to return. If not set, all the storage credentials are returned (not recommended).",
      "in": "query"
     },
     {
      "name": "page_token",
-     "description": "Opaque pagination token to go to next page based on previous query.",
      "in": "query"
     }
    ],

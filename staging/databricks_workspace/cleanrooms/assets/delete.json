@@ -13,19 +13,19 @@
     {
      "name": "clean_room_name",
      "required": true,
-     "description": "(string) Name of the clean room.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "asset_type",
      "required": true,
-     "description": "(string) The type of the asset.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "asset_full_name",
      "required": true,
-     "description": "(string) The fully qualified name of the asset, it is same as the name field in CleanRoomAsset.",
+     "description": "string",
      "in": "path"
     }
    ],

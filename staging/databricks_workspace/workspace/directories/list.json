@@ -1,0 +1,71 @@
+{
+ "/api/2.0/workspace/list": {
+  "get": {
+   "operationId": "directories-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/workspace/list"
+   },
+   "x-stackQL-resource": "directories",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "path",
+     "required": true,
+     "description": "string",
+     "in": "query"
+    },
+    {
+     "name": "notebooks_modified_after",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "objects": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "path": {
+             "type": "string"
+            },
+            "object_type": {
+             "type": "string"
+            },
+            "object_id": {
+             "type": "integer"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.objects",
+   "description": "Lists the contents of a directory, or the object if it is not a directory. If the input path does not exist, this call returns an error"
+  }
+ }
+}

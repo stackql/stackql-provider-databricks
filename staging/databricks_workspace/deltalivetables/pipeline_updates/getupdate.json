@@ -13,13 +13,13 @@
     {
      "name": "pipeline_id",
      "required": true,
-     "description": "(string) The ID of the pipeline.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "update_id",
      "required": true,
-     "description": "(string) The ID of the update.",
+     "description": "string",
      "in": "path"
     }
    ],

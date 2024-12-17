@@ -13,19 +13,19 @@
     {
      "name": "parent_securable_type",
      "required": true,
-     "description": "(string) Securable type of the quota parent.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "parent_full_name",
      "required": true,
-     "description": "(string) Full name of the parent resource. Provide the metastore ID if the parent is a metastore.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "quota_name",
      "required": true,
-     "description": "(string) Name of the quota. Follows the pattern of the quota type, with \"-quota\" added as a suffix.",
+     "description": "string",
      "in": "path"
     }
    ],

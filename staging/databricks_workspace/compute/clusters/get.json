@@ -13,7 +13,7 @@
     {
      "name": "cluster_id",
      "required": true,
-     "description": "(string) The cluster about which to retrieve information.",
+     "description": "string",
      "in": "query"
     }
    ],

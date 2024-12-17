@@ -13,7 +13,7 @@
     {
      "name": "query_id",
      "required": true,
-     "description": "(UUID)  ",
+     "description": "UUID",
      "in": "path"
     }
    ],

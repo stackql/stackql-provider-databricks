@@ -13,7 +13,7 @@
     {
      "name": "resource",
      "required": true,
-     "description": "(string) The resource name for which assignable roles will be listed.",
+     "description": "string",
      "in": "query"
     }
    ],

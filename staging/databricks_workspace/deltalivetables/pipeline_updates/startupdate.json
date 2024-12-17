@@ -13,6 +13,7 @@
     {
      "name": "pipeline_id",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],
@@ -59,20 +60,16 @@
        "type": "object",
        "properties": {
         "full_refresh": {
-         "type": "boolean",
-         "description": "If true, this update will reset all tables before running."
+         "type": "boolean"
         },
         "validate_only": {
-         "type": "boolean",
-         "description": "If true, this update only validates the correctness of pipeline source code but does not materialize or publish any datasets."
+         "type": "boolean"
         },
         "cause": {
-         "type": "string",
-         "description": "A list of tables to update without fullRefresh. If both refresh_selection and\nfull_refresh_selection are empty, this is a full graph update. Full Refresh on a table means\nthat the states of the table will be reset before the refresh."
+         "type": "string"
         },
         "refresh_selection": {
-         "type": "Array of string",
-         "description": "A list of tables to update with fullRefresh. If both refresh_selection and\nfull_refresh_selection are empty, this is a full graph update. Full Refresh on a table means\nthat the states of the table will be reset before the refresh."
+         "type": "Array of string"
         },
         "full_refresh_selection": {
          "type": "Array of string"

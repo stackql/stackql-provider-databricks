@@ -1,0 +1,77 @@
+{
+ "/api/2.0/vector-search/indexes": {
+  "get": {
+   "operationId": "indexes-listindexes",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchindexes/listindexes"
+   },
+   "x-stackQL-resource": "indexes",
+   "x-stackQL-method": "listindexes",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "endpoint_name",
+     "required": true,
+     "description": "string",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Successful response with list of endpoints.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "vector_indexes": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "endpoint_name": {
+             "type": "string"
+            },
+            "primary_key": {
+             "type": "string"
+            },
+            "index_type": {
+             "type": "string"
+            },
+            "creator": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.vector_indexes",
+   "description": "List all indexes in the given endpoint."
+  }
+ }
+}

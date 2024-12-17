@@ -13,7 +13,7 @@
     {
      "name": "policy_id",
      "required": true,
-     "description": "(string) Canonical unique identifier for the Cluster Policy.",
+     "description": "string",
      "in": "query"
     }
    ],

@@ -46,8 +46,7 @@
        "type": "object",
        "properties": {
         "cluster_id": {
-         "type": "required",
-         "description": "The cluster to be deleted."
+         "type": "required"
         }
        },
        "example": {

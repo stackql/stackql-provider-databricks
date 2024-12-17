@@ -43,20 +43,16 @@
        "type": "object",
        "properties": {
         "run_id": {
-         "type": "string",
-         "description": "ID of the run under which to log the param. Must be provided."
+         "type": "string"
         },
         "run_uuid": {
-         "type": "string",
-         "description": "[Deprecated, use run_id instead] ID of the run under which to log the param. This field will\nbe removed in a future MLflow version."
+         "type": "string"
         },
         "key": {
-         "type": "required",
-         "description": "Name of the param. Maximum size is 255 bytes."
+         "type": "required"
         },
         "value": {
-         "type": "string",
-         "description": "String value of the param being logged. Maximum size is 500 bytes."
+         "type": "string"
         }
        },
        "example": {
