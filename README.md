@@ -52,5 +52,10 @@ REG_STR='{"url": "file://'${PROVIDER_REGISTRY_ROOT_DIR}'", "localDocRoot": "'${P
 ./stackql shell --registry="${REG_STR}"
 ```
 
+# check for new routes
 
-
+```powershell
+python .\find_new_routes.py workspace
+# or
+python3 .\find_new_routes.py account
+```

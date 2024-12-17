@@ -265,6 +265,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/globalinitscripts/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/globalinitscripts/get
         verb: select
@@ -272,6 +273,7 @@ services:
         docPath: https://docs.databricks.com/api/workspace/globalinitscripts/list
         verb: select
         objectKey: $.scripts
+        hasParams: false
       - name: update
         docPath: https://docs.databricks.com/api/workspace/globalinitscripts/update
         verb: update
@@ -298,12 +300,15 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/instancepools/delete
         verb: delete
+        hasParams: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/instancepools/create
         verb: insert
+        hasParams: false
       - name: edit
         docPath: https://docs.databricks.com/api/workspace/instancepools/edit
         verb: replace
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/instancepools/get
         verb: select
@@ -311,33 +316,41 @@ services:
         docPath: https://docs.databricks.com/api/workspace/instancepools/list
         verb: select
         objectKey: $.instance_pools
+        hasParams: false
     - name: instance_profiles
       methods:
       - name: remove
         docPath: https://docs.databricks.com/api/workspace/instanceprofiles/remove
         verb: delete
+        hasParams: false
       - name: add
         docPath: https://docs.databricks.com/api/workspace/instanceprofiles/add
         verb: insert
+        hasParams: false
       - name: edit
         docPath: https://docs.databricks.com/api/workspace/instanceprofiles/edit
         verb: replace
+        hasParams: false
       - name: list
         docPath: https://docs.databricks.com/api/workspace/instanceprofiles/list
         verb: select
         objectKey: $.instance_profiles
+        hasParams: false
     - name: libraries
       methods:
       - name: uninstall
         docPath: https://docs.databricks.com/api/workspace/libraries/uninstall
         verb: delete
+        hasParams: false
       - name: install
         docPath: https://docs.databricks.com/api/workspace/libraries/install
         verb: insert
+        hasParams: false
       - name: allclusterlibrarystatuses
         docPath: https://docs.databricks.com/api/workspace/libraries/allclusterlibrarystatuses
         verb: select
         objectKey: $.statuses
+        hasParams: false
       - name: clusterstatus
         docPath: https://docs.databricks.com/api/workspace/libraries/clusterstatus
         verb: select
@@ -387,6 +400,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/alerts/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/alerts/get
         verb: select
@@ -405,12 +419,14 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/alertslegacy/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/alertslegacy/get
         verb: select
       - name: list
         docPath: https://docs.databricks.com/api/workspace/alertslegacy/list
         verb: select
+        hasParams: false
       - name: update
         docPath: https://docs.databricks.com/api/workspace/alertslegacy/update
         verb: update
@@ -425,6 +441,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/dashboards/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/dashboards/get
         verb: select
@@ -454,6 +471,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/queries/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/queries/get
         verb: select
@@ -475,6 +493,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/querieslegacy/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/querieslegacy/get
         verb: select
@@ -500,6 +519,7 @@ services:
       - name: executestatement
         docPath: https://docs.databricks.com/api/workspace/statementexecution/executestatement
         verb: exec
+        hasParams: false
       - name: getstatement
         docPath: https://docs.databricks.com/api/workspace/statementexecution/getstatement
         verb: select
@@ -513,9 +533,11 @@ services:
       - name: setworkspacewarehouseconfig
         docPath: https://docs.databricks.com/api/workspace/warehouses/setworkspacewarehouseconfig
         verb: replace
+        hasParams: false
       - name: getworkspacewarehouseconfig
         docPath: https://docs.databricks.com/api/workspace/warehouses/getworkspacewarehouseconfig
         verb: select
+        hasParams: false
     - name: warehouse_permission_levels
       methods:
       - name: getpermissionlevels
@@ -547,6 +569,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/warehouses/create
         verb: insert
+        hasParams: false
       - name: edit
         docPath: https://docs.databricks.com/api/workspace/warehouses/edit
         verb: replace
@@ -607,6 +630,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/pipelines/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/pipelines/get
         verb: select
@@ -634,6 +658,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/providers/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providers/get
         verb: select
@@ -671,6 +696,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/recipients/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/recipients/get
         verb: select
@@ -698,6 +724,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/shares/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/shares/get
         verb: select
@@ -716,15 +743,18 @@ services:
       - name: put
         docPath: https://docs.databricks.com/api/workspace/dbfs/put
         verb: exec
+        hasParams: false
       - name: read
         docPath: https://docs.databricks.com/api/workspace/dbfs/read
         verb: select
       - name: move
         docPath: https://docs.databricks.com/api/workspace/dbfs/move
         verb: exec
+        hasParams: false
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/dbfs/delete
         verb: delete
+        hasParams: false
     - name: dbfs_objects
       methods:
       - name: getstatus
@@ -742,17 +772,21 @@ services:
       - name: mkdirs
         docPath: https://docs.databricks.com/api/workspace/dbfs/mkdirs
         verb: insert
+        hasParams: false
     - name: dbfs_streams
       methods:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/dbfs/create
         verb: insert
+        hasParams: false
       - name: close
         docPath: https://docs.databricks.com/api/workspace/dbfs/close
         verb: delete
+        hasParams: false
       - name: addblock
         docPath: https://docs.databricks.com/api/workspace/dbfs/addblock
         verb: exec
+        hasParams: false
     - name: directories
       methods:
       - name: deletedirectory
@@ -797,6 +831,7 @@ services:
       - name: me
         docPath: https://docs.databricks.com/api/workspace/currentuser/me
         verb: select
+        hasParams: false
     - name: groups
       methods:
       - name: delete
@@ -805,6 +840,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/groups/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/groups/get
         verb: select
@@ -843,6 +879,7 @@ services:
       - name: updateruleset
         docPath: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy/updateruleset
         verb: update
+        hasParams: false
     - name: service_principals
       methods:
       - name: delete
@@ -851,6 +888,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/serviceprincipals/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/serviceprincipals/get
         verb: select
@@ -870,17 +908,21 @@ services:
         docPath: https://docs.databricks.com/api/workspace/users/getpermissionlevels
         verb: select
         objectKey: $.permission_levels
+        hasParams: false
     - name: user_permissions
       methods:
       - name: getpermissions
         docPath: https://docs.databricks.com/api/workspace/users/getpermissions
         verb: select
+        hasParams: false
       - name: setpermissions
         docPath: https://docs.databricks.com/api/workspace/users/setpermissions
         verb: replace
+        hasParams: false
       - name: updatepermissions
         docPath: https://docs.databricks.com/api/workspace/users/updatepermissions
         verb: update
+        hasParams: false
     - name: users
       methods:
       - name: delete
@@ -889,6 +931,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/users/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/users/get
         verb: select
@@ -913,6 +956,7 @@ services:
       - name: createschedule
         docPath: https://docs.databricks.com/api/workspace/lakeview/createschedule
         verb: insert
+        hasParams: false
       - name: getschedule
         docPath: https://docs.databricks.com/api/workspace/lakeview/getschedule
         verb: select
@@ -923,6 +967,7 @@ services:
       - name: updateschedule
         docPath: https://docs.databricks.com/api/workspace/lakeview/updateschedule
         verb: update
+        hasParams: false
     - name: dashboard_subscriptions
       methods:
       - name: deletesubscription
@@ -931,6 +976,7 @@ services:
       - name: createsubscription
         docPath: https://docs.databricks.com/api/workspace/lakeview/createsubscription
         verb: insert
+        hasParams: false
       - name: getsubscription
         docPath: https://docs.databricks.com/api/workspace/lakeview/getsubscription
         verb: select
@@ -946,6 +992,7 @@ services:
       - name: migrate
         docPath: https://docs.databricks.com/api/workspace/lakeview/migrate
         verb: exec
+        hasParams: false
       - name: publish
         docPath: https://docs.databricks.com/api/workspace/lakeview/publish
         verb: exec
@@ -955,6 +1002,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/lakeview/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/lakeview/get
         verb: select
@@ -965,6 +1013,7 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/lakeview/update
         verb: update
+        hasParams: false
     - name: dashboards_published
       methods:
       - name: getpublished
@@ -1000,38 +1049,49 @@ services:
       - name: settag
         docPath: https://docs.databricks.com/api/workspace/experiments/settag
         verb: replace
+        hasParams: false
     - name: experiment_runs
       methods:
       - name: deleterun
         docPath: https://docs.databricks.com/api/workspace/experiments/deleterun
         verb: delete
+        hasParams: false
       - name: deleteruns
         docPath: https://docs.databricks.com/api/workspace/experiments/deleteruns
         verb: delete
+        hasParams: false
       - name: logbatch
         docPath: https://docs.databricks.com/api/workspace/experiments/logbatch
         verb: exec
+        hasParams: false
       - name: loginputs
         docPath: https://docs.databricks.com/api/workspace/experiments/loginputs
         verb: exec
+        hasParams: false
       - name: logmetric
         docPath: https://docs.databricks.com/api/workspace/experiments/logmetric
         verb: exec
+        hasParams: false
       - name: logmodel
         docPath: https://docs.databricks.com/api/workspace/experiments/logmodel
         verb: exec
+        hasParams: false
       - name: logparam
         docPath: https://docs.databricks.com/api/workspace/experiments/logparam
         verb: exec
+        hasParams: false
       - name: restorerun
         docPath: https://docs.databricks.com/api/workspace/experiments/restorerun
         verb: exec
+        hasParams: false
       - name: restoreruns
         docPath: https://docs.databricks.com/api/workspace/experiments/restoreruns
         verb: exec
+        hasParams: false
       - name: createrun
         docPath: https://docs.databricks.com/api/workspace/experiments/createrun
         verb: insert
+        hasParams: false
       - name: getrun
         docPath: https://docs.databricks.com/api/workspace/experiments/getrun
         verb: select
@@ -1040,28 +1100,35 @@ services:
         docPath: https://docs.databricks.com/api/workspace/experiments/searchruns
         verb: select
         objectKey: $.runs
+        hasParams: false
       - name: updaterun
         docPath: https://docs.databricks.com/api/workspace/experiments/updaterun
         verb: update
+        hasParams: false
     - name: experiment_tags
       methods:
       - name: deletetag
         docPath: https://docs.databricks.com/api/workspace/experiments/deletetag
         verb: delete
+        hasParams: false
       - name: setexperimenttag
         docPath: https://docs.databricks.com/api/workspace/experiments/setexperimenttag
         verb: replace
+        hasParams: false
     - name: experiments
       methods:
       - name: deleteexperiment
         docPath: https://docs.databricks.com/api/workspace/experiments/deleteexperiment
         verb: delete
+        hasParams: false
       - name: restoreexperiment
         docPath: https://docs.databricks.com/api/workspace/experiments/restoreexperiment
         verb: exec
+        hasParams: false
       - name: createexperiment
         docPath: https://docs.databricks.com/api/workspace/experiments/createexperiment
         verb: insert
+        hasParams: false
       - name: getbyname
         docPath: https://docs.databricks.com/api/workspace/experiments/getbyname
         verb: select
@@ -1078,9 +1145,11 @@ services:
         docPath: https://docs.databricks.com/api/workspace/experiments/searchexperiments
         verb: select
         objectKey: $.experiments
+        hasParams: false
       - name: updateexperiment
         docPath: https://docs.databricks.com/api/workspace/experiments/updateexperiment
         verb: update
+        hasParams: false
     - name: experiments_history
       methods:
       - name: gethistory
@@ -1093,6 +1162,7 @@ services:
         docPath: https://docs.databricks.com/api/workspace/modelregistry/getlatestversions
         verb: select
         objectKey: $.model_versions
+        hasParams: false
     - name: model_permission_levels
       methods:
       - name: getpermissionlevels
@@ -1118,6 +1188,7 @@ services:
       - name: setmodeltag
         docPath: https://docs.databricks.com/api/workspace/modelregistry/setmodeltag
         verb: replace
+        hasParams: false
     - name: model_transition_requests
       methods:
       - name: deletetransitionrequest
@@ -1126,12 +1197,15 @@ services:
       - name: approvetransitionrequest
         docPath: https://docs.databricks.com/api/workspace/modelregistry/approvetransitionrequest
         verb: exec
+        hasParams: false
       - name: transitionstage
         docPath: https://docs.databricks.com/api/workspace/modelregistry/transitionstage
         verb: exec
+        hasParams: false
       - name: createtransitionrequest
         docPath: https://docs.databricks.com/api/workspace/modelregistry/createtransitionrequest
         verb: insert
+        hasParams: false
       - name: listtransitionrequests
         docPath: https://docs.databricks.com/api/workspace/modelregistry/listtransitionrequests
         verb: select
@@ -1139,6 +1213,7 @@ services:
       - name: rejecttransitionrequest
         docPath: https://docs.databricks.com/api/workspace/modelregistry/rejecttransitionrequest
         verb: exec
+        hasParams: false
     - name: model_version_comments
       methods:
       - name: deletecomment
@@ -1147,9 +1222,11 @@ services:
       - name: createcomment
         docPath: https://docs.databricks.com/api/workspace/modelregistry/createcomment
         verb: insert
+        hasParams: false
       - name: updatecomment
         docPath: https://docs.databricks.com/api/workspace/modelregistry/updatecomment
         verb: update
+        hasParams: false
     - name: model_version_download_urls
       methods:
       - name: getmodelversiondownloaduri
@@ -1163,6 +1240,7 @@ services:
       - name: setmodelversiontag
         docPath: https://docs.databricks.com/api/workspace/modelregistry/setmodelversiontag
         verb: replace
+        hasParams: false
     - name: model_versions
       methods:
       - name: deletemodelversion
@@ -1171,6 +1249,7 @@ services:
       - name: createmodelversion
         docPath: https://docs.databricks.com/api/workspace/modelregistry/createmodelversion
         verb: insert
+        hasParams: false
       - name: getmodelversion
         docPath: https://docs.databricks.com/api/workspace/modelregistry/getmodelversion
         verb: select
@@ -1182,6 +1261,7 @@ services:
       - name: updatemodelversion
         docPath: https://docs.databricks.com/api/workspace/modelregistry/updatemodelversion
         verb: update
+        hasParams: false
     - name: model_web_hooks
       methods:
       - name: deletewebhook
@@ -1190,9 +1270,11 @@ services:
       - name: testregistrywebhook
         docPath: https://docs.databricks.com/api/workspace/modelregistry/testregistrywebhook
         verb: exec
+        hasParams: false
       - name: createwebhook
         docPath: https://docs.databricks.com/api/workspace/modelregistry/createwebhook
         verb: insert
+        hasParams: false
       - name: listwebhooks
         docPath: https://docs.databricks.com/api/workspace/modelregistry/listwebhooks
         verb: select
@@ -1200,6 +1282,7 @@ services:
       - name: updatewebhook
         docPath: https://docs.databricks.com/api/workspace/modelregistry/updatewebhook
         verb: update
+        hasParams: false
     - name: models
       methods:
       - name: deletemodel
@@ -1208,9 +1291,11 @@ services:
       - name: renamemodel
         docPath: https://docs.databricks.com/api/workspace/modelregistry/renamemodel
         verb: exec
+        hasParams: false
       - name: createmodel
         docPath: https://docs.databricks.com/api/workspace/modelregistry/createmodel
         verb: insert
+        hasParams: false
       - name: getmodel
         docPath: https://docs.databricks.com/api/workspace/modelregistry/getmodel
         verb: select
@@ -1225,6 +1310,7 @@ services:
       - name: updatemodel
         docPath: https://docs.databricks.com/api/workspace/modelregistry/updatemodel
         verb: update
+        hasParams: false
   marketplace:
     description: Marketplace
     resources:
@@ -1309,9 +1395,11 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/get
         verb: select
+        hasParams: false
       - name: update
         docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/update
         verb: update
@@ -1320,6 +1408,7 @@ services:
       - name: getlatestversion
         docPath: https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/getlatestversion
         verb: select
+        hasParams: false
     - name: provider_exchange_filters
       methods:
       - name: delete
@@ -1328,6 +1417,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/create
         verb: insert
+        hasParams: false
       - name: list
         docPath: https://docs.databricks.com/api/workspace/providerexchangefilters/list
         verb: select
@@ -1343,6 +1433,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/providerexchanges/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providerexchanges/get
         verb: select
@@ -1370,6 +1461,7 @@ services:
       - name: addlistingtoexchange
         docPath: https://docs.databricks.com/api/workspace/providerexchanges/addlistingtoexchange
         verb: insert
+        hasParams: false
     - name: provider_files
       methods:
       - name: delete
@@ -1378,6 +1470,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/providerfiles/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providerfiles/get
         verb: select
@@ -1394,6 +1487,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/providerlistings/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providerlistings/get
         verb: select
@@ -1422,6 +1516,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/providerproviders/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/providerproviders/get
         verb: select
@@ -1456,6 +1551,7 @@ services:
       - name: exportmetrics
         docPath: https://docs.databricks.com/api/workspace/servingendpoints/exportmetrics
         verb: exec
+        hasRespData: false
     - name: schemas
       methods:
       - name: getopenapi
@@ -1772,6 +1868,7 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/modelversions/delete
         verb: delete
+        hasRespData: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/modelversions/get
         verb: select
