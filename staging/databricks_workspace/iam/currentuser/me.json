@@ -1,0 +1,166 @@
+{
+ "/api/2.0/preview/scim/v2/Me": {
+  "get": {
+   "operationId": "currentuser-me",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/currentuser/me"
+   },
+   "x-stackQL-resource": "currentuser",
+   "x-stackQL-method": "me",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "User information was returned successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "schemas": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "id": {
+          "type": "string"
+         },
+         "userName": {
+          "type": "string"
+         },
+         "emails": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "$ref": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            },
+            "display": {
+             "type": "string"
+            },
+            "primary": {
+             "type": "boolean"
+            },
+            "type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "name": {
+          "type": "object",
+          "properties": {
+           "givenName": {
+            "type": "string"
+           },
+           "familyName": {
+            "type": "string"
+           }
+          }
+         },
+         "displayName": {
+          "type": "string"
+         },
+         "groups": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "$ref": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            },
+            "display": {
+             "type": "string"
+            },
+            "primary": {
+             "type": "boolean"
+            },
+            "type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "roles": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "$ref": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            },
+            "display": {
+             "type": "string"
+            },
+            "primary": {
+             "type": "boolean"
+            },
+            "type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "entitlements": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "$ref": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            },
+            "display": {
+             "type": "string"
+            },
+            "primary": {
+             "type": "boolean"
+            },
+            "type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "externalId": {
+          "type": "string"
+         },
+         "active": {
+          "type": "boolean"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get details about the current method caller's identity."
+  }
+ }
+}

@@ -1,0 +1,146 @@
+{
+ "/api/2.0/mlflow/databricks/model-versions/transition-stage": {
+  "post": {
+   "operationId": "model-transition-requests-transitionstage",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/transitionstage"
+   },
+   "x-stackQL-resource": "model_transition_requests",
+   "x-stackQL-method": "transitionstage",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Model version's stage was updated successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "model_version": {
+          "type": "object",
+          "properties": {
+           "name": {
+            "type": "string"
+           },
+           "version": {
+            "type": "string"
+           },
+           "creation_timestamp": {
+            "type": "integer"
+           },
+           "last_updated_timestamp": {
+            "type": "integer"
+           },
+           "user_id": {
+            "type": "string"
+           },
+           "current_stage": {
+            "type": "string"
+           },
+           "description": {
+            "type": "string"
+           },
+           "source": {
+            "type": "string"
+           },
+           "run_id": {
+            "type": "string"
+           },
+           "status": {
+            "type": "string"
+           },
+           "status_message": {
+            "type": "string"
+           },
+           "permission_level": {
+            "type": "string"
+           },
+           "tags": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "run_link": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": " "
+        },
+        "version": {
+         "type": "string",
+         "description": "Name of the model."
+        },
+        "stage": {
+         "type": "required",
+         "description": " "
+        },
+        "archive_existing_versions": {
+         "type": "string",
+         "description": "Version of the model."
+        },
+        "comment": {
+         "type": "required",
+         "description": " "
+        }
+       },
+       "example": {
+        "name": "search_ads_model",
+        "version": "1",
+        "stage": "Staging",
+        "archive_existing_versions": true,
+        "comment": "This version is great!"
+       }
+      }
+     }
+    },
+    "description": "Details required to transition a model version's stage."
+   },
+   "description": "Transition a model version's stage. This is a Databricks workspace version of the"
+  }
+ }
+}

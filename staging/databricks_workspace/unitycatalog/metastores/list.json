@@ -1,0 +1,96 @@
+{
+ "/api/2.1/unity-catalog/metastores": {
+  "get": {
+   "operationId": "metastores-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/metastores/list"
+   },
+   "x-stackQL-resource": "metastores",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "The metastore list was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "metastores": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "storage_root": {
+             "type": "string"
+            },
+            "default_data_access_config_id": {
+             "type": "string"
+            },
+            "storage_root_credential_id": {
+             "type": "string"
+            },
+            "delta_sharing_scope": {
+             "type": "string"
+            },
+            "delta_sharing_recipient_token_lifetime_in_seconds": {
+             "type": "integer"
+            },
+            "delta_sharing_organization_name": {
+             "type": "string"
+            },
+            "owner": {
+             "type": "string"
+            },
+            "privilege_model_version": {
+             "type": "string"
+            },
+            "region": {
+             "type": "string"
+            },
+            "metastore_id": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "storage_root_credential_name": {
+             "type": "string"
+            },
+            "cloud": {
+             "type": "string"
+            },
+            "global_metastore_id": {
+             "type": "string"
+            },
+            "external_access_enabled": {
+             "type": "boolean"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.metastores",
+   "description": "Gets an array of the available metastores (as"
+  }
+ }
+}

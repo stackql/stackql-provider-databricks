@@ -1,0 +1,78 @@
+{
+ "/api/2.0/mlflow/experiments/create": {
+  "post": {
+   "operationId": "experiments-createexperiment",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/createexperiment"
+   },
+   "x-stackQL-resource": "experiments",
+   "x-stackQL-method": "createexperiment",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "experiment_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Experiment name."
+        },
+        "artifact_location": {
+         "type": "string",
+         "description": "Location where all artifacts for the experiment are stored.\nIf not provided, the remote server will select an appropriate default."
+        },
+        "tags": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "name": "string",
+        "artifact_location": "string",
+        "tags": [
+         {
+          "key": "string",
+          "value": "string"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates an experiment with a name. Returns the ID of the newly created experiment. Validates that another experiment with the same name does not already exist and fails if another experiment with the same name already exists."
+  }
+ }
+}

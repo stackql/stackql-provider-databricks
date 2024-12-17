@@ -1,0 +1,60 @@
+{
+ "/api/2.0/dbfs/get-status": {
+  "get": {
+   "operationId": "dbfs-objects-getstatus",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dbfs/getstatus"
+   },
+   "x-stackQL-resource": "dbfs_objects",
+   "x-stackQL-method": "getstatus",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "path",
+     "required": true,
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "path": {
+          "type": "string"
+         },
+         "is_dir": {
+          "type": "boolean"
+         },
+         "file_size": {
+          "type": "integer"
+         },
+         "modification_time": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the file information for a file or directory. If the file or directory does not exist, this call throws an exception with"
+  }
+ }
+}

@@ -1,0 +1,74 @@
+{
+ "/api/2.1/unity-catalog/shares/{name}/permissions": {
+  "patch": {
+   "operationId": "share-permissions-updatepermissions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/shares/updatepermissions"
+   },
+   "x-stackQL-resource": "share_permissions",
+   "x-stackQL-method": "updatepermissions",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The name of the share.",
+     "in": "path"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of permissions to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The share permissions were successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "changes": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "changes": [
+         {
+          "principal": "string",
+          "add": [
+           "SELECT"
+          ],
+          "remove": [
+           "SELECT"
+          ]
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates the permissions for a data share in the metastore. The caller must be a metastore admin or an owner of the share."
+  }
+ }
+}

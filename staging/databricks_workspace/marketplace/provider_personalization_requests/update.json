@@ -1,0 +1,153 @@
+{
+ "/api/2.0/marketplace-provider/listings/{listing_id}/personalization-requests/{request_id}/request-status": {
+  "put": {
+   "operationId": "provider-personalization-requests-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerpersonalizationrequests/update"
+   },
+   "x-stackQL-resource": "provider_personalization_requests",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "listing_id",
+     "required": true,
+     "in": "path"
+    },
+    {
+     "name": "request_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "request": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "consumer_region": {
+            "type": "object",
+            "properties": {
+             "cloud": {
+              "type": "string"
+             },
+             "region": {
+              "type": "string"
+             }
+            }
+           },
+           "contact_info": {
+            "type": "object",
+            "properties": {
+             "first_name": {
+              "type": "string"
+             },
+             "last_name": {
+              "type": "string"
+             },
+             "email": {
+              "type": "string"
+             },
+             "company": {
+              "type": "string"
+             }
+            }
+           },
+           "comment": {
+            "type": "string"
+           },
+           "intended_use": {
+            "type": "string"
+           },
+           "status": {
+            "type": "string"
+           },
+           "status_message": {
+            "type": "string"
+           },
+           "share": {
+            "type": "object",
+            "properties": {
+             "name": {
+              "type": "string"
+             },
+             "type": {
+              "type": "string"
+             }
+            }
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "listing_id": {
+            "type": "string"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "metastore_id": {
+            "type": "string"
+           },
+           "listing_name": {
+            "type": "string"
+           },
+           "is_from_lighthouse": {
+            "type": "boolean"
+           },
+           "provider_id": {
+            "type": "string"
+           },
+           "recipient_type": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "status": {
+         "type": "required"
+        },
+        "reason": {
+         "type": "string"
+        },
+        "share": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "status": "NEW",
+        "reason": "string",
+        "share": {
+         "name": "string",
+         "type": "SAMPLE"
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Update personalization request. This method only permits updating the status of the request."
+  }
+ }
+}

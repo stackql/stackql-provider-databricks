@@ -230,6 +230,11 @@ def generate_provider_yaml(provider):
     # Read the manifest to get service descriptions
     manifest = read_manifest(provider)
     
+    token_url = "https://accounts.cloud.databricks.com/oidc/accounts/{{ .__env__DATABRICKS_ACCOUNT_ID }}/v1/token"
+
+    if provider == "account":
+        token_url = "https://accounts.cloud.databricks.com/oidc/accounts/{{ .__env__DATABRICKS_ACCOUNT_ID }}/v1/token"
+
     # Create base provider structure
     provider_spec = {
         "id": f"databricks_{provider}",
@@ -242,8 +247,7 @@ def generate_provider_yaml(provider):
                 "client_id_env_var": "DATABRICKS_CLIENT_ID",
                 "client_secret_env_var": "DATABRICKS_CLIENT_SECRET",
                 "grant_type": "client_credentials",
-                # "token_url": "https://accounts.cloud.databricks.com/oidc/accounts/{DATABRICKS_ACCOUNT_ID}/v1/token",
-                "token_url": "https://accounts.cloud.databricks.com/oidc/accounts/21ea1c76-f4b7-4b24-b6cc-5fb13ef9321a/v1/token",
+                "token_url": token_url,
                 "scopes": ["all-apis"]
             }
         }

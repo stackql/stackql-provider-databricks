@@ -1,0 +1,40 @@
+{
+ "/api/2.1/unity-catalog/tables/{full_name}/exists": {
+  "get": {
+   "operationId": "table-exists-exists",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/tables/exists"
+   },
+   "x-stackQL-resource": "table_exists",
+   "x-stackQL-method": "exists",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) Full name of the table.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The boolean reflecting if the table exists was successfully returned.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "table_exists": {
+          "type": "boolean"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Gets if a table exists in the metastore for a specific catalog and schema. The caller must satisfy one of the following requirements:"
+  }
+ }
+}

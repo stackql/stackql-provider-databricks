@@ -1,0 +1,123 @@
+{
+ "/api/2.1/unity-catalog/storage-credentials": {
+  "post": {
+   "operationId": "storage-credentials-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/storagecredentials/create"
+   },
+   "x-stackQL-resource": "storage_credentials",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "The new storage credential was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "aws_iam_role": {
+          "type": "object",
+          "properties": {
+           "role_arn": {
+            "type": "string"
+           },
+           "unity_catalog_iam_arn": {
+            "type": "string"
+           },
+           "external_id": {
+            "type": "string"
+           }
+          }
+         },
+         "comment": {
+          "type": "string"
+         },
+         "read_only": {
+          "type": "boolean"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "full_name": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "used_for_managed_storage": {
+          "type": "boolean"
+         },
+         "isolation_mode": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "The credential name. The name must be unique within the metastore."
+        },
+        "comment": {
+         "type": "string",
+         "description": "Comment associated with the credential."
+        },
+        "read_only": {
+         "type": "string",
+         "description": "Whether the storage credential is only usable for read operations."
+        },
+        "skip_validation": {
+         "type": "boolean",
+         "description": " "
+        },
+        "aws_iam_role": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "string",
+        "comment": "string",
+        "read_only": true,
+        "aws_iam_role": {
+         "role_arn": "string"
+        },
+        "skip_validation": false
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates a new storage credential."
+  }
+ }
+}

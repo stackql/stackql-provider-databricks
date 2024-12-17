@@ -1,0 +1,128 @@
+{
+ "/api/2.0/mlflow/experiments/search": {
+  "post": {
+   "operationId": "experiments-searchexperiments",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/searchexperiments"
+   },
+   "x-stackQL-resource": "experiments",
+   "x-stackQL-method": "searchexperiments",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "experiments": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "experiment_id": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "artifact_location": {
+             "type": "string"
+            },
+            "lifecycle_stage": {
+             "type": "string"
+            },
+            "last_update_time": {
+             "type": "integer"
+            },
+            "creation_time": {
+             "type": "integer"
+            },
+            "tags": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "key": {
+                "type": "string"
+               },
+               "value": {
+                "type": "string"
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.experiments",
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "max_results": {
+         "type": "integer",
+         "format": "int64",
+         "description": "Maximum number of experiments desired. Max threshold is 3000."
+        },
+        "page_token": {
+         "type": "string",
+         "description": "Token indicating the page of experiments to fetch"
+        },
+        "filter": {
+         "type": "string",
+         "description": "String representing a SQL filter condition (e.g. \"name ILIKE 'my-experiment%'\")"
+        },
+        "order_by": {
+         "type": "Array of string",
+         "description": "List of columns for ordering search results, which can include experiment name and last updated\ntimestamp with an optional \"DESC\" or \"ASC\" annotation, where \"ASC\" is the default.\nTiebreaks are done by experiment id DESC."
+        },
+        "view_type": {
+         "type": "string",
+         "description": "Qualifier for type of experiments to be returned.\nIf unspecified, return only active experiments."
+        }
+       },
+       "example": {
+        "max_results": 0,
+        "page_token": "string",
+        "filter": "string",
+        "order_by": [
+         "string"
+        ],
+        "view_type": "ACTIVE_ONLY"
+       }
+      }
+     }
+    }
+   },
+   "description": "Searches for experiments that satisfy specified search criteria."
+  }
+ }
+}

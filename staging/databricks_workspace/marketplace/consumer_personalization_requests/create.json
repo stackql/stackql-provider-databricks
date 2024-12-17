@@ -1,0 +1,88 @@
+{
+ "/api/2.1/marketplace-consumer/listings/{listing_id}/personalization-requests": {
+  "post": {
+   "operationId": "consumer-personalization-requests-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerpersonalizationrequests/create"
+   },
+   "x-stackQL-resource": "consumer_personalization_requests",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "listing_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "comment": {
+         "type": "string"
+        },
+        "intended_use": {
+         "type": "required"
+        },
+        "first_name": {
+         "type": "string"
+        },
+        "last_name": {
+         "type": "string"
+        },
+        "company": {
+         "type": "string"
+        },
+        "is_from_lighthouse": {
+         "type": "string"
+        },
+        "recipient_type": {
+         "type": "boolean"
+        },
+        "accepted_consumer_terms": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "comment": "string",
+        "intended_use": "string",
+        "first_name": "string",
+        "last_name": "string",
+        "company": "string",
+        "is_from_lighthouse": true,
+        "recipient_type": "DELTA_SHARING_RECIPIENT_TYPE_DATABRICKS",
+        "accepted_consumer_terms": {
+         "version": "string"
+        }
+       }
+      }
+     }
+    },
+    "description": "Data request messages also creates a lead (maybe)"
+   },
+   "description": "Create a personalization request for a listing."
+  }
+ }
+}

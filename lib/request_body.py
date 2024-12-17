@@ -67,8 +67,8 @@ def process_request_body(selector, doc_base_path, examples_doc_path, debug=False
                 "type": type_ if type_ != "int64" else "integer",  # OpenAPI uses integer, not int64
                 "format": "int64" if type_ == "int64" else None,
             }
-            if description:
-                prop["description"] = description
+            # if description:
+            #     prop["description"] = description
             
             # Remove None values
             prop = {k: v for k, v in prop.items() if v is not None}

@@ -1,0 +1,76 @@
+{
+ "/api/2.0/global-init-scripts/{script_id}": {
+  "get": {
+   "operationId": "global-init-scripts-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/globalinitscripts/get"
+   },
+   "x-stackQL-resource": "global_init_scripts",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "script_id",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Response indicating that the script was retrieved successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "script_id": {
+          "type": "string"
+         },
+         "name": {
+          "type": "string"
+         },
+         "position": {
+          "type": "integer"
+         },
+         "enabled": {
+          "type": "boolean"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "script": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Manage a specific global init script with ID"
+  }
+ }
+}

@@ -1,0 +1,42 @@
+{
+ "/api/2.0/mlflow/model-versions/delete": {
+  "delete": {
+   "operationId": "model-versions-deletemodelversion",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/deletemodelversion"
+   },
+   "x-stackQL-resource": "model_versions",
+   "x-stackQL-method": "deletemodelversion",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the registered model",
+     "in": "query"
+    },
+    {
+     "name": "version",
+     "required": true,
+     "description": "(string) Model version number",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "description": "Deletes a model version."
+  }
+ }
+}

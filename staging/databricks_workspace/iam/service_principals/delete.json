@@ -1,0 +1,48 @@
+{
+ "/api/2.0/preview/scim/v2/ServicePrincipals/{id}": {
+  "delete": {
+   "operationId": "service-principals-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/serviceprincipals/delete"
+   },
+   "x-stackQL-resource": "service_principals",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(int64) Unique ID for a service principal in the Databricks workspace.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "204": {
+     "description": "Service principal was deleted successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Delete a single service principal in the Databricks workspace."
+  }
+ }
+}

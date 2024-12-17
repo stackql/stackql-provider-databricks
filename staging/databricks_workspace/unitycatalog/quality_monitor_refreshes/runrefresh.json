@@ -1,0 +1,55 @@
+{
+ "/api/2.1/unity-catalog/tables/{table_name}/monitor/refreshes": {
+  "post": {
+   "operationId": "quality-monitor-refreshes-runrefresh",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/qualitymonitors/runrefresh"
+   },
+   "x-stackQL-resource": "quality_monitor_refreshes",
+   "x-stackQL-method": "runrefresh",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "table_name",
+     "required": true,
+     "description": "(string) Full name of the table.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The metric refresh was successfully queued.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "refresh_id": {
+          "type": "integer"
+         },
+         "state": {
+          "type": "string"
+         },
+         "message": {
+          "type": "string"
+         },
+         "start_time_ms": {
+          "type": "integer"
+         },
+         "end_time_ms": {
+          "type": "integer"
+         },
+         "trigger": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Queues a metric refresh on the monitor for the specified table. The refresh will execute in the background."
+  }
+ }
+}

@@ -1,0 +1,424 @@
+{
+ "/api/2.0/preview/sql/queries": {
+  "post": {
+   "operationId": "queries-legacy-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/querieslegacy/create"
+   },
+   "x-stackQL-resource": "queries_legacy",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Query created successfully",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         },
+         "parent": {
+          "type": "string"
+         },
+         "latest_query_data_id": {
+          "type": "string"
+         },
+         "name": {
+          "type": "string"
+         },
+         "description": {
+          "type": "string"
+         },
+         "query": {
+          "type": "string"
+         },
+         "query_hash": {
+          "type": "string"
+         },
+         "is_archived": {
+          "type": "boolean"
+         },
+         "is_draft": {
+          "type": "boolean"
+         },
+         "updated_at": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "string"
+         },
+         "data_source_id": {
+          "type": "string"
+         },
+         "options": {
+          "type": "object",
+          "properties": {
+           "moved_to_trash_at": {
+            "type": "string"
+           },
+           "catalog": {
+            "type": "string"
+           },
+           "schema": {
+            "type": "string"
+           },
+           "parameters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "title": {
+               "type": "string"
+              },
+              "name": {
+               "type": "string"
+              },
+              "type": {
+               "type": "string"
+              },
+              "enumOptions": {
+               "type": "string"
+              },
+              "queryId": {
+               "type": "string"
+              },
+              "multiValuesOptions": {
+               "type": "object",
+               "properties": {
+                "prefix": {
+                 "type": "string"
+                },
+                "separator": {
+                 "type": "string"
+                },
+                "suffix": {
+                 "type": "string"
+                }
+               }
+              },
+              "value": {
+               "type": "null"
+              }
+             }
+            }
+           }
+          }
+         },
+         "tags": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "is_safe": {
+          "type": "boolean"
+         },
+         "user_id": {
+          "type": "integer"
+         },
+         "last_modified_by_id": {
+          "type": "integer"
+         },
+         "visualizations": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "type": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "description": {
+             "type": "string"
+            },
+            "options": {
+             "type": "null"
+            },
+            "updated_at": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "string"
+            },
+            "query": {
+             "type": "object",
+             "properties": {
+              "id": {
+               "type": "string"
+              },
+              "parent": {
+               "type": "string"
+              },
+              "latest_query_data_id": {
+               "type": "string"
+              },
+              "name": {
+               "type": "string"
+              },
+              "description": {
+               "type": "string"
+              },
+              "query": {
+               "type": "string"
+              },
+              "query_hash": {
+               "type": "string"
+              },
+              "is_archived": {
+               "type": "boolean"
+              },
+              "is_draft": {
+               "type": "boolean"
+              },
+              "updated_at": {
+               "type": "string"
+              },
+              "created_at": {
+               "type": "string"
+              },
+              "data_source_id": {
+               "type": "string"
+              },
+              "options": {
+               "type": "object",
+               "properties": {
+                "moved_to_trash_at": {
+                 "type": "string"
+                },
+                "catalog": {
+                 "type": "string"
+                },
+                "schema": {
+                 "type": "string"
+                },
+                "parameters": {
+                 "type": "array",
+                 "items": {
+                  "type": "object",
+                  "properties": {
+                   "title": {
+                    "type": "string"
+                   },
+                   "name": {
+                    "type": "string"
+                   },
+                   "type": {
+                    "type": "string"
+                   },
+                   "enumOptions": {
+                    "type": "string"
+                   },
+                   "queryId": {
+                    "type": "string"
+                   },
+                   "multiValuesOptions": {
+                    "type": "object",
+                    "properties": {
+                     "prefix": {
+                      "type": "string"
+                     },
+                     "separator": {
+                      "type": "string"
+                     },
+                     "suffix": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "value": {
+                    "type": "null"
+                   }
+                  }
+                 }
+                }
+               }
+              },
+              "tags": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               }
+              },
+              "is_safe": {
+               "type": "boolean"
+              },
+              "user_id": {
+               "type": "integer"
+              },
+              "last_modified_by_id": {
+               "type": "integer"
+              },
+              "visualizations": {
+               "type": "array",
+               "items": {}
+              },
+              "is_favorite": {
+               "type": "boolean"
+              },
+              "user": {
+               "type": "object",
+               "properties": {
+                "id": {
+                 "type": "integer"
+                },
+                "name": {
+                 "type": "string"
+                },
+                "email": {
+                 "type": "string"
+                }
+               }
+              },
+              "last_modified_by": {
+               "type": "object",
+               "properties": {
+                "id": {
+                 "type": "integer"
+                },
+                "name": {
+                 "type": "string"
+                },
+                "email": {
+                 "type": "string"
+                }
+               }
+              },
+              "can_edit": {
+               "type": "boolean"
+              },
+              "permission_tier": {
+               "type": "string"
+              },
+              "run_as_role": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "is_favorite": {
+          "type": "boolean"
+         },
+         "user": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "integer"
+           },
+           "name": {
+            "type": "string"
+           },
+           "email": {
+            "type": "string"
+           }
+          }
+         },
+         "last_modified_by": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "integer"
+           },
+           "name": {
+            "type": "string"
+           },
+           "email": {
+            "type": "string"
+           }
+          }
+         },
+         "can_edit": {
+          "type": "boolean"
+         },
+         "permission_tier": {
+          "type": "string"
+         },
+         "run_as_role": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "data_source_id": {
+         "type": "UUID",
+         "description": " "
+        },
+        "query": {
+         "type": "string",
+         "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. "
+        },
+        "name": {
+         "type": "string",
+         "description": " "
+        },
+        "parent": {
+         "type": "string",
+         "description": "The text of the query to be run."
+        },
+        "description": {
+         "type": "string",
+         "description": " "
+        },
+        "options": {
+         "type": "object",
+         "description": "The title of this query that appears in list views, widget headings, and on the query page."
+        },
+        "run_as_role": {
+         "type": "string",
+         "description": " "
+        },
+        "tags": {
+         "type": "Array of string",
+         "description": " "
+        }
+       },
+       "example": {
+        "data_source_id": "0c205e24-5db2-4940-adb1-fb13c7ce960b",
+        "query": "SELECT field FROM table WHERE field = {{ param }}",
+        "name": "Orders by month by customer",
+        "parent": "folders/2025532471912059",
+        "description": "Summarizes total order dollars for customers in the Europe/Asia region.",
+        "options": {
+         "parameters": [
+          {
+           "title": "customer",
+           "name": "param",
+           "type": "text",
+           "value": "acme"
+          }
+         ]
+        },
+        "run_as_role": "viewer",
+        "tags": [
+         "Payroll"
+        ]
+       }
+      }
+     }
+    },
+    "description": "A query object to be created."
+   },
+   "description": "Creates a new query definition. Queries created with this endpoint belong to the authenticated user making the request."
+  }
+ }
+}

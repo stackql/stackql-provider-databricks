@@ -1,0 +1,106 @@
+{
+ "/api/2.0/preview/sql/permissions/{objectType}/{objectId}": {
+  "post": {
+   "operationId": "permissions-set",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dbsqlpermissions/set"
+   },
+   "x-stackQL-resource": "permissions",
+   "x-stackQL-method": "set",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "objectType",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    },
+    {
+     "name": "objectId",
+     "required": true,
+     "description": "(uuid)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "object_id": {
+          "type": "string"
+         },
+         "object_type": {
+          "type": "string"
+         },
+         "access_control_list": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "user_name": {
+             "type": "string"
+            },
+            "group_name": {
+             "type": "string"
+            },
+            "permission_level": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "access_control_list": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "access_control_list": [
+         {
+          "user_name": "user@example.com",
+          "group_name": "admins",
+          "permission_level": "CAN_VIEW"
+         }
+        ]
+       }
+      }
+     }
+    },
+    "description": "An ACL list to be applied to the object specified in the URL."
+   },
+   "description": "Sets the access control list (ACL) for a specified object. This operation will complete rewrite the ACL."
+  }
+ }
+}

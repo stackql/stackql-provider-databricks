@@ -1,0 +1,204 @@
+{
+ "/api/2.1/unity-catalog/shares/{name}": {
+  "patch": {
+   "operationId": "shares-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/shares/update"
+   },
+   "x-stackQL-resource": "shares",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The name of the share.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The share was successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "storage_root": {
+          "type": "string"
+         },
+         "objects": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "comment": {
+             "type": "string"
+            },
+            "shared_as": {
+             "type": "string"
+            },
+            "string_shared_as": {
+             "type": "string"
+            },
+            "content": {
+             "type": "string"
+            },
+            "history_data_sharing_status": {
+             "type": "string"
+            },
+            "partitions": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "values": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "name": {
+                   "type": "string"
+                  },
+                  "value": {
+                   "type": "string"
+                  },
+                  "recipient_property_key": {
+                   "type": "string"
+                  },
+                  "op": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            },
+            "cdf_enabled": {
+             "type": "boolean"
+            },
+            "start_version": {
+             "type": "integer"
+            },
+            "data_object_type": {
+             "type": "string"
+            },
+            "added_at": {
+             "type": "integer"
+            },
+            "added_by": {
+             "type": "string"
+            },
+            "status": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "storage_location": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "owner": {
+         "type": "string",
+         "description": "Username of current owner of share."
+        },
+        "comment": {
+         "type": "string",
+         "description": "User-provided free-form text description."
+        },
+        "storage_root": {
+         "type": "string",
+         "description": "Storage root URL for the share."
+        },
+        "new_name": {
+         "type": "string",
+         "description": "New name for the share."
+        },
+        "updates": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "owner": "string",
+        "comment": "string",
+        "storage_root": "string",
+        "new_name": "string",
+        "updates": [
+         {
+          "action": "ADD",
+          "data_object": {
+           "name": "string",
+           "comment": "string",
+           "shared_as": "string",
+           "string_shared_as": "string",
+           "content": "string",
+           "history_data_sharing_status": "ENABLED",
+           "partitions": [
+            {
+             "values": [
+              {
+               "name": "string",
+               "value": "string",
+               "recipient_property_key": "string",
+               "op": "EQUAL"
+              }
+             ]
+            }
+           ],
+           "cdf_enabled": true,
+           "start_version": 0,
+           "data_object_type": "TABLE",
+           "added_at": 0,
+           "added_by": "string",
+           "status": "ACTIVE"
+          }
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates the share with the changes and data objects in the request. The caller must be the owner of the share or a metastore admin."
+  }
+ }
+}

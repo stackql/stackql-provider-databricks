@@ -1,0 +1,143 @@
+{
+ "/api/2.0/sql/queries/{id}": {
+  "patch": {
+   "operationId": "queries-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/queries/update"
+   },
+   "x-stackQL-resource": "queries",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "description": {
+          "type": "string"
+         },
+         "owner_user_name": {
+          "type": "string"
+         },
+         "tags": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "display_name": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         },
+         "parent_path": {
+          "type": "string"
+         },
+         "lifecycle_state": {
+          "type": "string"
+         },
+         "last_modifier_user_name": {
+          "type": "string"
+         },
+         "query_text": {
+          "type": "string"
+         },
+         "parameters": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "text_value": {
+             "type": "object",
+             "properties": {
+              "value": {
+               "type": "string"
+              }
+             }
+            },
+            "title": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "update_time": {
+          "type": "string"
+         },
+         "warehouse_id": {
+          "type": "string"
+         },
+         "run_as_mode": {
+          "type": "string"
+         },
+         "create_time": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "update_mask": {
+         "type": "required",
+         "description": "Field mask is required to be passed into the PATCH request. Field mask specifies which fields\nof the setting payload will be updated.\nThe field mask needs to be supplied as single string. To specify multiple fields in the field mask,\nuse comma as the separator (no space)."
+        },
+        "query": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "id": "fe25e731-92f2-4838-9fb2-1ca364320a3d",
+        "query": {
+         "description": "Example description updated",
+         "display_name": "Example query updated",
+         "query_text": "SELECT 2"
+        },
+        "update_mask": "display_name,description,query_text"
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates a query."
+  }
+ }
+}

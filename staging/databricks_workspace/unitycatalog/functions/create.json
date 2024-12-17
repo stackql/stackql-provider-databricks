@@ -1,0 +1,322 @@
+{
+ "/api/2.1/unity-catalog/functions": {
+  "post": {
+   "operationId": "functions-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/functions/create"
+   },
+   "x-stackQL-resource": "functions",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "The new function was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "catalog_name": {
+          "type": "string"
+         },
+         "schema_name": {
+          "type": "string"
+         },
+         "input_params": {
+          "type": "object",
+          "properties": {
+           "parameters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "type_text": {
+               "type": "string"
+              },
+              "type_json": {
+               "type": "string"
+              },
+              "type_name": {
+               "type": "string"
+              },
+              "type_precision": {
+               "type": "integer"
+              },
+              "type_scale": {
+               "type": "integer"
+              },
+              "type_interval_type": {
+               "type": "string"
+              },
+              "position": {
+               "type": "integer"
+              },
+              "parameter_mode": {
+               "type": "string"
+              },
+              "parameter_type": {
+               "type": "string"
+              },
+              "parameter_default": {
+               "type": "string"
+              },
+              "comment": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "data_type": {
+          "type": "string"
+         },
+         "full_data_type": {
+          "type": "string"
+         },
+         "return_params": {
+          "type": "object",
+          "properties": {
+           "parameters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "type_text": {
+               "type": "string"
+              },
+              "type_json": {
+               "type": "string"
+              },
+              "type_name": {
+               "type": "string"
+              },
+              "type_precision": {
+               "type": "integer"
+              },
+              "type_scale": {
+               "type": "integer"
+              },
+              "type_interval_type": {
+               "type": "string"
+              },
+              "position": {
+               "type": "integer"
+              },
+              "parameter_mode": {
+               "type": "string"
+              },
+              "parameter_type": {
+               "type": "string"
+              },
+              "parameter_default": {
+               "type": "string"
+              },
+              "comment": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "routine_body": {
+          "type": "string"
+         },
+         "routine_definition": {
+          "type": "string"
+         },
+         "routine_dependencies": {
+          "type": "object",
+          "properties": {
+           "dependencies": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "table": {
+               "type": "object",
+               "properties": {
+                "table_full_name": {
+                 "type": "string"
+                }
+               }
+              },
+              "function": {
+               "type": "object",
+               "properties": {
+                "function_full_name": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "parameter_style": {
+          "type": "string"
+         },
+         "is_deterministic": {
+          "type": "boolean"
+         },
+         "sql_data_access": {
+          "type": "string"
+         },
+         "is_null_call": {
+          "type": "boolean"
+         },
+         "security_type": {
+          "type": "string"
+         },
+         "specific_name": {
+          "type": "string"
+         },
+         "external_name": {
+          "type": "string"
+         },
+         "external_language": {
+          "type": "string"
+         },
+         "sql_path": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "properties": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "full_name": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "function_id": {
+          "type": "string"
+         },
+         "browse_only": {
+          "type": "boolean"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "function_info": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "function_info": {
+         "name": "string",
+         "catalog_name": "string",
+         "schema_name": "string",
+         "input_params": {
+          "parameters": [
+           {
+            "name": "string",
+            "type_text": "string",
+            "type_json": "string",
+            "type_name": "BOOLEAN",
+            "type_precision": 0,
+            "type_scale": 0,
+            "type_interval_type": "string",
+            "position": 0,
+            "parameter_mode": "IN",
+            "parameter_type": "PARAM",
+            "parameter_default": "string",
+            "comment": "string"
+           }
+          ]
+         },
+         "data_type": "BOOLEAN",
+         "full_data_type": "string",
+         "return_params": {
+          "parameters": [
+           {
+            "name": "string",
+            "type_text": "string",
+            "type_json": "string",
+            "type_name": "BOOLEAN",
+            "type_precision": 0,
+            "type_scale": 0,
+            "type_interval_type": "string",
+            "position": 0,
+            "parameter_mode": "IN",
+            "parameter_type": "PARAM",
+            "parameter_default": "string",
+            "comment": "string"
+           }
+          ]
+         },
+         "routine_definition": "string",
+         "routine_dependencies": {
+          "dependencies": [
+           {
+            "table": {
+             "table_full_name": "string"
+            },
+            "function": {
+             "function_full_name": "string"
+            }
+           }
+          ]
+         },
+         "is_deterministic": true,
+         "is_null_call": true,
+         "specific_name": "string",
+         "external_name": "string",
+         "external_language": "string",
+         "sql_path": "string",
+         "comment": "string",
+         "properties": "string",
+         "routine_body": "SQL",
+         "security_type": "DEFINER",
+         "sql_data_access": "CONTAINS_SQL",
+         "parameter_style": "S"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,79 @@
+{
+ "/api/2.0/preview/sql/permissions/{objectType}/{objectId}/transfer": {
+  "post": {
+   "operationId": "permissions-transferownership",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/dbsqlpermissions/transferownership"
+   },
+   "x-stackQL-resource": "permissions",
+   "x-stackQL-method": "transferownership",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "objectType",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    },
+    {
+     "name": null,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "message": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "new_owner": {
+         "type": "email",
+         "description": " "
+        }
+       },
+       "example": {
+        "new_owner": "user@example.com"
+       }
+      }
+     }
+    },
+    "description": "Email address for the new owner, who must exist in the workspace."
+   },
+   "description": "Transfer ownership of a single object."
+  }
+ }
+}

@@ -1,0 +1,73 @@
+{
+ "/api/2.1/unity-catalog/resource-quotas/{parent_securable_type}/{parent_full_name}/{quota_name}": {
+  "get": {
+   "operationId": "resource-quotas-getquota",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/resourcequotas/getquota"
+   },
+   "x-stackQL-resource": "resource_quotas",
+   "x-stackQL-method": "getquota",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 3,
+   "parameters": [
+    {
+     "name": "parent_securable_type",
+     "required": true,
+     "description": "(string) Securable type of the quota parent.",
+     "in": "path"
+    },
+    {
+     "name": "parent_full_name",
+     "required": true,
+     "description": "(string) Full name of the parent resource. Provide the metastore ID if the parent is a metastore.",
+     "in": "path"
+    },
+    {
+     "name": "quota_name",
+     "required": true,
+     "description": "(string) Name of the quota. Follows the pattern of the quota type, with \"-quota\" added as a suffix.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "quota_info": {
+          "type": "object",
+          "properties": {
+           "parent_securable_type": {
+            "type": "string"
+           },
+           "parent_full_name": {
+            "type": "string"
+           },
+           "quota_name": {
+            "type": "string"
+           },
+           "quota_count": {
+            "type": "integer"
+           },
+           "quota_limit": {
+            "type": "integer"
+           },
+           "last_refreshed_at": {
+            "type": "integer"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.quota_info",
+   "description": "The GetQuota API returns usage information for a single resource quota, defined as a child-parent pair. This API also refreshes the quota count if it is out of date. Refreshes are triggered asynchronously. The updated count might not be returned in the first call."
+  }
+ }
+}

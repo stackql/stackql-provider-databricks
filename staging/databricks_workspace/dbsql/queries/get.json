@@ -1,0 +1,115 @@
+{
+ "/api/2.0/sql/queries/{id}": {
+  "get": {
+   "operationId": "queries-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/queries/get"
+   },
+   "x-stackQL-resource": "queries",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "description": {
+          "type": "string"
+         },
+         "owner_user_name": {
+          "type": "string"
+         },
+         "tags": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "display_name": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         },
+         "parent_path": {
+          "type": "string"
+         },
+         "lifecycle_state": {
+          "type": "string"
+         },
+         "last_modifier_user_name": {
+          "type": "string"
+         },
+         "query_text": {
+          "type": "string"
+         },
+         "parameters": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "text_value": {
+             "type": "object",
+             "properties": {
+              "value": {
+               "type": "string"
+              }
+             }
+            },
+            "title": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "update_time": {
+          "type": "string"
+         },
+         "warehouse_id": {
+          "type": "string"
+         },
+         "run_as_mode": {
+          "type": "string"
+         },
+         "create_time": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets a query."
+  }
+ }
+}

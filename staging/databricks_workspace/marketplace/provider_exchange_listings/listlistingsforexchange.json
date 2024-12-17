@@ -1,0 +1,77 @@
+{
+ "/api/2.0/marketplace-exchange/listings-for-exchange": {
+  "get": {
+   "operationId": "provider-exchange-listings-listlistingsforexchange",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchanges/listlistingsforexchange"
+   },
+   "x-stackQL-resource": "provider_exchange_listings",
+   "x-stackQL-method": "listlistingsforexchange",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "exchange_id",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "exchange_listings": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "exchange_id": {
+             "type": "string"
+            },
+            "exchange_name": {
+             "type": "string"
+            },
+            "listing_id": {
+             "type": "string"
+            },
+            "listing_name": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.exchange_listings",
+   "description": "List listings associated with an exchange"
+  }
+ }
+}

@@ -1,0 +1,62 @@
+{
+ "/api/2.1/unity-catalog/providers/{name}/shares": {
+  "get": {
+   "operationId": "provider-shares-listshares",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providers/listshares"
+   },
+   "x-stackQL-resource": "provider_shares",
+   "x-stackQL-method": "listshares",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the provider in which to list shares.",
+     "in": "path"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of shares to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The provider shares list was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "shares": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.shares",
+   "description": "Gets an array of a specified provider's shares within the metastore where:"
+  }
+ }
+}

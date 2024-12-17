@@ -1,0 +1,370 @@
+{
+ "/api/2.0/serving-endpoints": {
+  "post": {
+   "operationId": "serving-endpoints-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/create"
+   },
+   "x-stackQL-resource": "serving_endpoints",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Serving endpoint was created successfully",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "creator": {
+          "type": "string"
+         },
+         "creation_timestamp": {
+          "type": "integer"
+         },
+         "last_updated_timestamp": {
+          "type": "integer"
+         },
+         "state": {
+          "type": "object",
+          "properties": {
+           "ready": {
+            "type": "string"
+           }
+          }
+         },
+         "config": {
+          "type": "object",
+          "properties": {
+           "served_entities": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "external_model": {
+               "type": "object",
+               "properties": {
+                "provider": {
+                 "type": "string"
+                },
+                "name": {
+                 "type": "string"
+                },
+                "task": {
+                 "type": "string"
+                },
+                "openai_config": {
+                 "type": "object",
+                 "properties": {
+                  "openai_api_key": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              },
+              "state": {
+               "type": "object",
+               "properties": {
+                "deployment": {
+                 "type": "string"
+                },
+                "deployment_state_message": {
+                 "type": "string"
+                }
+               }
+              },
+              "creator": {
+               "type": "string"
+              },
+              "creation_timestamp": {
+               "type": "integer"
+              }
+             }
+            }
+           },
+           "traffic_config": {
+            "type": "object",
+            "properties": {
+             "routes": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "served_model_name": {
+                 "type": "string"
+                },
+                "traffic_percentage": {
+                 "type": "integer"
+                }
+               }
+              }
+             }
+            }
+           },
+           "config_version": {
+            "type": "integer"
+           }
+          }
+         },
+         "ai_gateway": {
+          "type": "object",
+          "properties": {
+           "usage_tracking_config": {
+            "type": "object",
+            "properties": {
+             "enabled": {
+              "type": "boolean"
+             }
+            }
+           },
+           "inference_table_config": {
+            "type": "object",
+            "properties": {
+             "catalog_name": {
+              "type": "string"
+             },
+             "schema_name": {
+              "type": "string"
+             },
+             "table_name_prefix": {
+              "type": "string"
+             },
+             "enabled": {
+              "type": "boolean"
+             }
+            }
+           },
+           "rate_limits": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "calls": {
+               "type": "integer"
+              },
+              "key": {
+               "type": "string"
+              },
+              "renewal_period": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "guardrails": {
+            "type": "object",
+            "properties": {
+             "input": {
+              "type": "object",
+              "properties": {
+               "safety": {
+                "type": "boolean"
+               },
+               "pii": {
+                "type": "object",
+                "properties": {
+                 "behavior": {
+                  "type": "string"
+                 }
+                }
+               },
+               "valid_topics": {
+                "type": "array",
+                "items": {
+                 "type": "string"
+                }
+               },
+               "invalid_keywords": {
+                "type": "array",
+                "items": {
+                 "type": "string"
+                }
+               }
+              }
+             },
+             "output": {
+              "type": "object",
+              "properties": {
+               "safety": {
+                "type": "boolean"
+               },
+               "pii": {
+                "type": "object",
+                "properties": {
+                 "behavior": {
+                  "type": "string"
+                 }
+                }
+               },
+               "valid_topics": {
+                "type": "array",
+                "items": {
+                 "type": "string"
+                }
+               },
+               "invalid_keywords": {
+                "type": "array",
+                "items": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "tags": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "key": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "id": {
+          "type": "string"
+         },
+         "permission_level": {
+          "type": "string"
+         },
+         "route_optimized": {
+          "type": "boolean"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": " "
+        },
+        "route_optimized": {
+         "type": "string",
+         "description": "The name of the serving endpoint. This field is required and must be unique across a Databricks workspace.\nAn endpoint name can consist of alphanumeric characters, dashes, and underscores."
+        },
+        "config": {
+         "type": "required"
+        },
+        "tags": {
+         "type": "object"
+        },
+        "rate_limits": {
+         "type": "Array of object"
+        },
+        "ai_gateway": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "name": "openai_endpoint",
+        "config": {
+         "served_entities": [
+          {
+           "name": "openai_embeddings",
+           "external_model": {
+            "name": "text-embedding-ada-002",
+            "provider": "openai",
+            "task": "llm/v1/embeddings",
+            "openai_config": {
+             "openai_api_key": "{{secrets/my_scope/my_openai_api_key}}"
+            }
+           }
+          }
+         ]
+        },
+        "ai_gateway": {
+         "usage_tracking_config": {
+          "enabled": true
+         },
+         "inference_table_config": {
+          "catalog_name": "my-catalog",
+          "schema_name": "my-schema",
+          "table_name_prefix": "my-prefix",
+          "enabled": true
+         },
+         "rate_limits": [
+          {
+           "calls": 100,
+           "key": "user",
+           "renewal_period": "minute"
+          }
+         ],
+         "guardrails": {
+          "input": {
+           "safety": true,
+           "pii": {
+            "behavior": "BLOCK"
+           },
+           "valid_topics": [
+            "topic1",
+            "topic2"
+           ],
+           "invalid_keywords": [
+            "keyword1",
+            "keyword2"
+           ]
+          },
+          "output": {
+           "safety": true,
+           "pii": {
+            "behavior": "BLOCK"
+           },
+           "valid_topics": [
+            "topic1",
+            "topic2"
+           ],
+           "invalid_keywords": [
+            "keyword1",
+            "keyword2"
+           ]
+          }
+         }
+        },
+        "tags": [
+         {
+          "key": "team",
+          "value": "gen-ai"
+         }
+        ]
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,159 @@
+{
+ "/api/2.0/serving-endpoints/{name}": {
+  "get": {
+   "operationId": "serving-endpoints-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/get"
+   },
+   "x-stackQL-resource": "serving_endpoints",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Serving endpoint was retrieved successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "creator": {
+          "type": "string"
+         },
+         "creation_timestamp": {
+          "type": "integer"
+         },
+         "last_updated_timestamp": {
+          "type": "integer"
+         },
+         "state": {
+          "type": "object",
+          "properties": {
+           "ready": {
+            "type": "string"
+           },
+           "config_update": {
+            "type": "string"
+           }
+          }
+         },
+         "config": {
+          "type": "object",
+          "properties": {
+           "served_entities": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "entity_name": {
+               "type": "string"
+              },
+              "workload_size": {
+               "type": "string"
+              },
+              "scale_to_zero_enabled": {
+               "type": "boolean"
+              },
+              "workload_type": {
+               "type": "string"
+              },
+              "state": {
+               "type": "object",
+               "properties": {
+                "deployment": {
+                 "type": "string"
+                },
+                "deployment_state_message": {
+                 "type": "string"
+                }
+               }
+              },
+              "creator": {
+               "type": "string"
+              },
+              "creation_timestamp": {
+               "type": "integer"
+              }
+             }
+            }
+           },
+           "traffic_config": {
+            "type": "object",
+            "properties": {
+             "routes": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "traffic_percentage": {
+                 "type": "integer"
+                },
+                "served_model_name": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           },
+           "config_version": {
+            "type": "integer"
+           }
+          }
+         },
+         "tags": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "key": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "id": {
+          "type": "string"
+         },
+         "permission_level": {
+          "type": "string"
+         },
+         "route_optimized": {
+          "type": "boolean"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Retrieves the details for a single serving endpoint."
+  }
+ }
+}

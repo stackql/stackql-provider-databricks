@@ -1,0 +1,78 @@
+{
+ "/api/2.0/marketplace-exchange/exchanges-for-listing": {
+  "post": {
+   "operationId": "provider-exchange-listings-addlistingtoexchange",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchanges/addlistingtoexchange"
+   },
+   "x-stackQL-resource": "provider_exchange_listings",
+   "x-stackQL-method": "addlistingtoexchange",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "exchange_for_listing": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "exchange_id": {
+            "type": "string"
+           },
+           "exchange_name": {
+            "type": "string"
+           },
+           "listing_id": {
+            "type": "string"
+           },
+           "listing_name": {
+            "type": "string"
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "created_by": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "listing_id": {
+         "type": "required"
+        },
+        "exchange_id": {
+         "type": "string"
+        }
+       },
+       "example": {
+        "listing_id": "string",
+        "exchange_id": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Associate an exchange with a listing"
+  }
+ }
+}

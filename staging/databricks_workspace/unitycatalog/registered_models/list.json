@@ -1,0 +1,128 @@
+{
+ "/api/2.1/unity-catalog/models": {
+  "get": {
+   "operationId": "registered-models-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/registeredmodels/list"
+   },
+   "x-stackQL-resource": "registered_models",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "catalog_name",
+     "description": "The identifier of the catalog under which to list registered models.             If specified, schema_name must be specified.",
+     "in": "query"
+    },
+    {
+     "name": "schema_name",
+     "description": "The identifier of the schema under which to list registered models.             If specified, catalog_name must be specified.",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "description": "Max number of registered models to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque token to send for the next page of results (pagination).",
+     "in": "query"
+    },
+    {
+     "name": "include_browse",
+     "description": "Whether to include registered models in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The registered model list was successfully retrieved",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "registered_models": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "catalog_name": {
+             "type": "string"
+            },
+            "schema_name": {
+             "type": "string"
+            },
+            "full_name": {
+             "type": "string"
+            },
+            "owner": {
+             "type": "string"
+            },
+            "id": {
+             "type": "string"
+            },
+            "metastore_id": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "storage_location": {
+             "type": "string"
+            },
+            "securable_type": {
+             "type": "string"
+            },
+            "securable_kind": {
+             "type": "string"
+            },
+            "comment": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.registered_models",
+   "description": "List registered models. You can list registered models under a particular schema, or list all registered models in the current metastore."
+  }
+ }
+}

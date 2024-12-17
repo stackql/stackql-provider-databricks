@@ -25,13 +25,15 @@ def process_parameters(selector, doc_base_path, debug=False):
             if selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[1]/text()").get() == "required":
                 param["required"] = True
             type_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
-            param_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
-            if param_desc:
-                param_desc.replace("\n", " ").strip()
-            if param_desc and type_desc:
-                param["description"] = f"({type_desc}) {param_desc}" 
-            elif param_desc:
-                param["description"] = param_desc
+            # param_desc = selector.xpath(f"{doc_base_path}/div[{path_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
+            # if param_desc:
+            #     param_desc.replace("\n", " ").strip()
+            # if param_desc and type_desc:
+            #     param["description"] = f"({type_desc}) {param_desc}" 
+            # elif param_desc:
+            #     param["description"] = param_desc
+            if type_desc:
+                param["description"] = f"{type_desc}"
             param["in"] = "path"
             params.append(param)
 
@@ -53,13 +55,15 @@ def process_parameters(selector, doc_base_path, debug=False):
             if selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[1]/span[1]/text()").get() == "required":
                 param["required"] = True
             type_desc = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[1]/span[2]/text()").get()
-            param_desc = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
-            if param_desc:
-                param_desc = param_desc.replace("\n", " ").strip()
-            if param_desc and type_desc:
-                param["description"] = f"({type_desc}) {param_desc}"
-            elif param_desc:
-                param["description"] = param_desc
+            # param_desc = selector.xpath(f"{doc_base_path}/div[{query_params_ix}]/div/div[{idx+1}]/div[3]/div/text()").get()
+            # if param_desc:
+            #     param_desc = param_desc.replace("\n", " ").strip()
+            # if param_desc and type_desc:
+            #     param["description"] = f"({type_desc}) {param_desc}"
+            # elif param_desc:
+            #     param["description"] = param_desc
+            if type_desc:
+                param["description"] = f"{type_desc}"
             param["in"] = "query"
             params.append(param)  
 

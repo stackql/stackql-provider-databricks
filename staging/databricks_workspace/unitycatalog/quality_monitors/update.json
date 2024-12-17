@@ -1,0 +1,272 @@
+{
+ "/api/2.1/unity-catalog/tables/{table_name}/monitor": {
+  "put": {
+   "operationId": "quality-monitors-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/qualitymonitors/update"
+   },
+   "x-stackQL-resource": "quality_monitors",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "table_name",
+     "required": true,
+     "description": "(string) Full name of the table.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The monitor was successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "assets_dir": {
+          "type": "string"
+         },
+         "output_schema_name": {
+          "type": "string"
+         },
+         "inference_log": {
+          "type": "object",
+          "properties": {
+           "problem_type": {
+            "type": "string"
+           },
+           "timestamp_col": {
+            "type": "string"
+           },
+           "granularities": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           },
+           "prediction_col": {
+            "type": "string"
+           },
+           "label_col": {
+            "type": "string"
+           },
+           "model_id_col": {
+            "type": "string"
+           },
+           "prediction_proba_col": {
+            "type": "string"
+           }
+          }
+         },
+         "time_series": {
+          "type": "object",
+          "properties": {
+           "timestamp_col": {
+            "type": "string"
+           },
+           "granularities": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "snapshot": {
+          "type": "object",
+          "properties": {}
+         },
+         "slicing_exprs": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "custom_metrics": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "definition": {
+             "type": "string"
+            },
+            "input_columns": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "output_data_type": {
+             "type": "string"
+            },
+            "type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "baseline_table_name": {
+          "type": "string"
+         },
+         "schedule": {
+          "type": "object",
+          "properties": {
+           "quartz_cron_expression": {
+            "type": "string"
+           },
+           "timezone_id": {
+            "type": "string"
+           },
+           "pause_status": {
+            "type": "string"
+           }
+          }
+         },
+         "notifications": {
+          "type": "object",
+          "properties": {
+           "on_failure": {
+            "type": "object",
+            "properties": {
+             "email_addresses": {
+              "type": "array",
+              "items": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "table_name": {
+          "type": "string"
+         },
+         "status": {
+          "type": "string"
+         },
+         "latest_monitor_failure_msg": {
+          "type": "string"
+         },
+         "profile_metrics_table_name": {
+          "type": "string"
+         },
+         "drift_metrics_table_name": {
+          "type": "string"
+         },
+         "dashboard_id": {
+          "type": "string"
+         },
+         "monitor_version": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "output_schema_name": {
+         "type": "required",
+         "description": "Schema where output metric tables are created."
+        },
+        "snapshot": {
+         "type": "string",
+         "description": "Configuration for monitoring snapshot tables."
+        },
+        "slicing_exprs": {
+         "type": "object",
+         "description": "List of column expressions to slice data with for targeted analysis. The data is grouped by\neach expression independently, resulting in a separate slice for each predicate and its\ncomplements. For high-cardinality columns, only the top 100 unique values by frequency will\ngenerate slices."
+        },
+        "baseline_table_name": {
+         "type": "Array of string",
+         "description": "Name of the baseline table from which drift metrics are computed from.\nColumns in the monitored table should also be present in the baseline table."
+        },
+        "dashboard_id": {
+         "type": "string",
+         "description": "Id of dashboard that visualizes the computed metrics.\nThis can be empty if the monitor is in PENDING state."
+        },
+        "inference_log": {
+         "type": "object"
+        },
+        "time_series": {
+         "type": "object"
+        },
+        "custom_metrics": {
+         "type": "Array of object"
+        },
+        "schedule": {
+         "type": "object"
+        },
+        "notifications": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "output_schema_name": "string",
+        "inference_log": {
+         "problem_type": "PROBLEM_TYPE_CLASSIFICATION",
+         "timestamp_col": "string",
+         "granularities": [
+          "string"
+         ],
+         "prediction_col": "string",
+         "label_col": "string",
+         "model_id_col": "string",
+         "prediction_proba_col": "string"
+        },
+        "time_series": {
+         "timestamp_col": "string",
+         "granularities": [
+          "string"
+         ]
+        },
+        "snapshot": {},
+        "slicing_exprs": [
+         "string"
+        ],
+        "custom_metrics": [
+         {
+          "name": "string",
+          "definition": "string",
+          "input_columns": [
+           "string"
+          ],
+          "output_data_type": "string",
+          "type": "CUSTOM_METRIC_TYPE_AGGREGATE"
+         }
+        ],
+        "baseline_table_name": "string",
+        "schedule": {
+         "quartz_cron_expression": "string",
+         "timezone_id": "string",
+         "pause_status": "UNPAUSED"
+        },
+        "notifications": {
+         "on_failure": {
+          "email_addresses": [
+           "string"
+          ]
+         }
+        },
+        "dashboard_id": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates a monitor for the specified table."
+  }
+ }
+}

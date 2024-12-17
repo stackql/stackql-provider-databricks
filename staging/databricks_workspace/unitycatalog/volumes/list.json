@@ -1,0 +1,109 @@
+{
+ "/api/2.1/unity-catalog/volumes": {
+  "get": {
+   "operationId": "volumes-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/volumes/list"
+   },
+   "x-stackQL-resource": "volumes",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "catalog_name",
+     "required": true,
+     "description": "(string) The identifier of the catalog",
+     "in": "query"
+    },
+    {
+     "name": "schema_name",
+     "required": true,
+     "description": "(string) The identifier of the schema",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of volumes to return (page length).",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque token returned by a previous request. It must be included in the request to retrieve the next page of results (pagination).",
+     "in": "query"
+    },
+    {
+     "name": "include_browse",
+     "description": "Whether to include volumes in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The volume list was successfully retrieved",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "volumes": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "catalog_name": {
+             "type": "string"
+            },
+            "schema_name": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "full_name": {
+             "type": "string"
+            },
+            "volume_type": {
+             "type": "string"
+            },
+            "owner": {
+             "type": "string"
+            },
+            "volume_id": {
+             "type": "string"
+            },
+            "metastore_id": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "storage_location": {
+             "type": "string"
+            },
+            "comment": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.volumes",
+   "description": "Gets an array of volumes for the current metastore under the parent catalog and schema."
+  }
+ }
+}

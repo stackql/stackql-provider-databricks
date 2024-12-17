@@ -1,0 +1,176 @@
+{
+ "/api/2.0/marketplace-exchange/exchanges/{id}": {
+  "put": {
+   "operationId": "provider-exchanges-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchanges/update"
+   },
+   "x-stackQL-resource": "provider_exchanges",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "exchange": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "name": {
+            "type": "string"
+           },
+           "comment": {
+            "type": "string"
+           },
+           "filters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "id": {
+               "type": "string"
+              },
+              "exchange_id": {
+               "type": "string"
+              },
+              "filter_value": {
+               "type": "string"
+              },
+              "name": {
+               "type": "string"
+              },
+              "created_at": {
+               "type": "integer"
+              },
+              "created_by": {
+               "type": "string"
+              },
+              "updated_at": {
+               "type": "integer"
+              },
+              "updated_by": {
+               "type": "string"
+              },
+              "filter_type": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "created_by": {
+            "type": "string"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "updated_by": {
+            "type": "string"
+           },
+           "linked_listings": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "id": {
+               "type": "string"
+              },
+              "exchange_id": {
+               "type": "string"
+              },
+              "exchange_name": {
+               "type": "string"
+              },
+              "listing_id": {
+               "type": "string"
+              },
+              "listing_name": {
+               "type": "string"
+              },
+              "created_at": {
+               "type": "integer"
+              },
+              "created_by": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "exchange": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "exchange": {
+         "id": "string",
+         "name": "string",
+         "comment": "string",
+         "filters": [
+          {
+           "id": "string",
+           "exchange_id": "string",
+           "filter_value": "string",
+           "name": "string",
+           "created_at": 0,
+           "created_by": "string",
+           "updated_at": 0,
+           "updated_by": "string",
+           "filter_type": "GLOBAL_METASTORE_ID"
+          }
+         ],
+         "created_at": 0,
+         "created_by": "string",
+         "updated_at": 0,
+         "updated_by": "string",
+         "linked_listings": [
+          {
+           "id": "string",
+           "exchange_id": "string",
+           "exchange_name": "string",
+           "listing_id": "string",
+           "listing_name": "string",
+           "created_at": 0,
+           "created_by": "string"
+          }
+         ]
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Update an exchange"
+  }
+ }
+}

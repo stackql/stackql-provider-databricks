@@ -1,0 +1,84 @@
+{
+ "/api/2.0/marketplace-provider/providers/{id}": {
+  "get": {
+   "operationId": "providers-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerproviders/get"
+   },
+   "x-stackQL-resource": "providers",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "provider": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "name": {
+            "type": "string"
+           },
+           "description": {
+            "type": "string"
+           },
+           "icon_file_path": {
+            "type": "string"
+           },
+           "business_contact_email": {
+            "type": "string"
+           },
+           "support_contact_email": {
+            "type": "string"
+           },
+           "is_featured": {
+            "type": "boolean"
+           },
+           "published_by": {
+            "type": "string"
+           },
+           "company_website_link": {
+            "type": "string"
+           },
+           "icon_file_id": {
+            "type": "string"
+           },
+           "term_of_service_link": {
+            "type": "string"
+           },
+           "privacy_policy_link": {
+            "type": "string"
+           },
+           "dark_mode_icon_file_id": {
+            "type": "string"
+           },
+           "dark_mode_icon_file_path": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.provider",
+   "description": "Get provider profile"
+  }
+ }
+}

@@ -1,0 +1,81 @@
+{
+ "/api/2.0/mlflow/runs/log-inputs": {
+  "post": {
+   "operationId": "experiment-runs-loginputs",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/loginputs"
+   },
+   "x-stackQL-resource": "experiment_runs",
+   "x-stackQL-method": "loginputs",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "run_id": {
+         "type": "string",
+         "description": "ID of the run to log under"
+        },
+        "datasets": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "run_id": "string",
+        "datasets": [
+         {
+          "tags": [
+           {
+            "key": "string",
+            "value": "string"
+           }
+          ],
+          "dataset": {
+           "name": "string",
+           "digest": "string",
+           "source_type": "string",
+           "source": "string",
+           "schema": "string",
+           "profile": "string"
+          }
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "description": "Experimental: This API may change or be removed in a future release without warning."
+  }
+ }
+}

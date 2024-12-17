@@ -1,0 +1,83 @@
+{
+ "/api/2.0/marketplace-exchange/filters": {
+  "get": {
+   "operationId": "provider-exchange-filters-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchangefilters/list"
+   },
+   "x-stackQL-resource": "provider_exchange_filters",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "exchange_id",
+     "required": true,
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "filters": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "exchange_id": {
+             "type": "string"
+            },
+            "filter_value": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "filter_type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.filters",
+   "description": "List exchange filter"
+  }
+ }
+}

@@ -1,0 +1,33 @@
+{
+ "/api/2.0/marketplace-provider/analytics_dashboard/latest": {
+  "get": {
+   "operationId": "provider-analytics-dashboards-latest-getlatestversion",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/getlatestversion"
+   },
+   "x-stackQL-resource": "provider_analytics_dashboards_latest",
+   "x-stackQL-method": "getlatestversion",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "version": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Get latest version of provider analytics dashboard."
+  }
+ }
+}

@@ -1,0 +1,84 @@
+{
+ "/api/2.1/marketplace-consumer/listings/{listing_id}/fulfillments": {
+  "get": {
+   "operationId": "consumer-fulfillments-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerfulfillments/list"
+   },
+   "x-stackQL-resource": "consumer_fulfillments",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "listing_id",
+     "required": true,
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "fulfillments": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "listing_id": {
+             "type": "string"
+            },
+            "fulfillment_type": {
+             "type": "string"
+            },
+            "share_info": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "type": {
+               "type": "string"
+              }
+             }
+            },
+            "repo_info": {
+             "type": "object",
+             "properties": {
+              "git_repo_url": {
+               "type": "string"
+              }
+             }
+            },
+            "recipient_type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.fulfillments",
+   "description": "Get all listings fulfillments associated with a listing. A"
+  }
+ }
+}

@@ -1,0 +1,106 @@
+{
+ "/api/2.1/unity-catalog/volumes/{name}": {
+  "patch": {
+   "operationId": "volumes-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/volumes/update"
+   },
+   "x-stackQL-resource": "volumes",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The three-level (fully qualified) name of the volume",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Successfully updated the properties of the volume",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "catalog_name": {
+          "type": "string"
+         },
+         "schema_name": {
+          "type": "string"
+         },
+         "name": {
+          "type": "string"
+         },
+         "full_name": {
+          "type": "string"
+         },
+         "volume_type": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "volume_id": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "storage_location": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "owner": {
+         "type": "string",
+         "description": "The identifier of the user who owns the volume"
+        },
+        "comment": {
+         "type": "string",
+         "description": "The comment attached to the volume"
+        },
+        "new_name": {
+         "type": "string",
+         "description": "New name for the volume."
+        }
+       },
+       "example": {
+        "new_name": "my_new_volume"
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates the specified volume under the specified parent catalog and schema."
+  }
+ }
+}

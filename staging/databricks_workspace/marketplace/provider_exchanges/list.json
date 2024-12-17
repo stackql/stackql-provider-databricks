@@ -1,0 +1,136 @@
+{
+ "/api/2.0/marketplace-exchange/exchanges": {
+  "get": {
+   "operationId": "provider-exchanges-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchanges/list"
+   },
+   "x-stackQL-resource": "provider_exchanges",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "exchanges": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            },
+            "comment": {
+             "type": "string"
+            },
+            "filters": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "id": {
+                "type": "string"
+               },
+               "exchange_id": {
+                "type": "string"
+               },
+               "filter_value": {
+                "type": "string"
+               },
+               "name": {
+                "type": "string"
+               },
+               "created_at": {
+                "type": "integer"
+               },
+               "created_by": {
+                "type": "string"
+               },
+               "updated_at": {
+                "type": "integer"
+               },
+               "updated_by": {
+                "type": "string"
+               },
+               "filter_type": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "linked_listings": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "id": {
+                "type": "string"
+               },
+               "exchange_id": {
+                "type": "string"
+               },
+               "exchange_name": {
+                "type": "string"
+               },
+               "listing_id": {
+                "type": "string"
+               },
+               "listing_name": {
+                "type": "string"
+               },
+               "created_at": {
+                "type": "integer"
+               },
+               "created_by": {
+                "type": "string"
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.exchanges",
+   "description": "List exchanges visible to provider"
+  }
+ }
+}

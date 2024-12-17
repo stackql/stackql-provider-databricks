@@ -1,0 +1,85 @@
+{
+ "/api/2.0/serving-endpoints/{name}/tags": {
+  "patch": {
+   "operationId": "serving-endpoints-patch",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/patch"
+   },
+   "x-stackQL-resource": "serving_endpoints",
+   "x-stackQL-method": "patch",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Serving endpoint tags were patched successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "array",
+        "items": {
+         "type": "object",
+         "properties": {
+          "key": {
+           "type": "string"
+          },
+          "value": {
+           "type": "string"
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "delete_tags": {
+         "type": "Array of string",
+         "description": "List of tag keys to delete"
+        },
+        "add_tags": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "add_tags": [
+         {
+          "key": "team",
+          "value": "data science"
+         }
+        ],
+        "delete_tags": [
+         "string"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "description": "Used to batch add and delete tags from a serving endpoint with a single API call."
+  }
+ }
+}

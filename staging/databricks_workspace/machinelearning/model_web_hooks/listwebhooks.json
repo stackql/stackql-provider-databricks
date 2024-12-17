@@ -1,0 +1,104 @@
+{
+ "/api/2.0/mlflow/registry-webhooks/list": {
+  "get": {
+   "operationId": "model-web-hooks-listwebhooks",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/listwebhooks"
+   },
+   "x-stackQL-resource": "model_web_hooks",
+   "x-stackQL-method": "listwebhooks",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "model_name",
+     "in": "query"
+    },
+    {
+     "name": "events",
+     "description": "If",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Token indicating the page of artifact results to fetch",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Registry webhooks listed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "webhooks": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "events": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "creation_timestamp": {
+             "type": "integer"
+            },
+            "last_updated_timestamp": {
+             "type": "integer"
+            },
+            "description": {
+             "type": "string"
+            },
+            "status": {
+             "type": "string"
+            },
+            "http_url_spec": {
+             "type": "object",
+             "properties": {
+              "url": {
+               "type": "string"
+              },
+              "enable_ssl_verification": {
+               "type": "boolean"
+              }
+             }
+            },
+            "model_name": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.webhooks",
+   "description": "This endpoint is in Public Preview."
+  }
+ }
+}

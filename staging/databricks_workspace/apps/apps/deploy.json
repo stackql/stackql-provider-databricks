@@ -1,0 +1,118 @@
+{
+ "/api/2.0/apps/{app_name}/deployments": {
+  "post": {
+   "operationId": "apps-deploy",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/apps/deploy"
+   },
+   "x-stackQL-resource": "apps",
+   "x-stackQL-method": "deploy",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "app_name",
+     "required": true,
+     "description": "(string) The name of the app.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "deployment_id": {
+          "type": "string"
+         },
+         "source_code_path": {
+          "type": "string"
+         },
+         "mode": {
+          "type": "string"
+         },
+         "deployment_artifacts": {
+          "type": "object",
+          "properties": {
+           "source_code_path": {
+            "type": "string"
+           }
+          }
+         },
+         "status": {
+          "type": "object",
+          "properties": {
+           "state": {
+            "type": "string"
+           },
+           "message": {
+            "type": "string"
+           }
+          }
+         },
+         "create_time": {
+          "type": "string"
+         },
+         "creator": {
+          "type": "string"
+         },
+         "update_time": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "deployment_id": {
+         "type": "string",
+         "description": " "
+        },
+        "source_code_path": {
+         "type": "string",
+         "description": "The unique id of the deployment."
+        },
+        "mode": {
+         "type": "string",
+         "description": " "
+        }
+       },
+       "example": {
+        "deployment_id": "01ef0bda89f21f08a8351f41e4a9b948",
+        "source_code_path": "/Workspace/user@test.com/my_custom_app",
+        "mode": "SNAPSHOT"
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates an app deployment for the app with the supplied name."
+  }
+ }
+}

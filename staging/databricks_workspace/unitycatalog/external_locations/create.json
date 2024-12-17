@@ -1,0 +1,124 @@
+{
+ "/api/2.1/unity-catalog/external-locations": {
+  "post": {
+   "operationId": "external-locations-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/externallocations/create"
+   },
+   "x-stackQL-resource": "external_locations",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "The new external location was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "url": {
+          "type": "string"
+         },
+         "credential_name": {
+          "type": "string"
+         },
+         "read_only": {
+          "type": "boolean"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "access_point": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "credential_id": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "browse_only": {
+          "type": "boolean"
+         },
+         "isolation_mode": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Name of the external location."
+        },
+        "url": {
+         "type": "string",
+         "description": "Path URL of the external location."
+        },
+        "credential_name": {
+         "type": "required",
+         "description": "Name of the storage credential used with this location."
+        },
+        "read_only": {
+         "type": "string",
+         "description": "Indicates whether the external location is read-only."
+        },
+        "comment": {
+         "type": "required",
+         "description": "User-provided free-form text description."
+        },
+        "access_point": {
+         "type": "string",
+         "description": "The AWS access point to use when accesing s3 for this external location."
+        },
+        "skip_validation": {
+         "type": "boolean",
+         "description": "Skips validation of the storage credential associated with the external location."
+        }
+       },
+       "example": {
+        "name": "string",
+        "url": "string",
+        "credential_name": "string",
+        "read_only": true,
+        "comment": "string",
+        "access_point": "string",
+        "skip_validation": true
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates a new external location entry in the metastore. The caller must be a metastore admin or have the"
+  }
+ }
+}

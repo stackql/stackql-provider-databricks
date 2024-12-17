@@ -1,0 +1,109 @@
+{
+ "/api/2.0/lakeview/dashboards/migrate": {
+  "post": {
+   "operationId": "dashboards-migrate",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/lakeview/migrate"
+   },
+   "x-stackQL-resource": "dashboards",
+   "x-stackQL-method": "migrate",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "dashboard_id": {
+          "type": "string"
+         },
+         "display_name": {
+          "type": "string"
+         },
+         "path": {
+          "type": "string"
+         },
+         "create_time": {
+          "type": "string"
+         },
+         "update_time": {
+          "type": "string"
+         },
+         "warehouse_id": {
+          "type": "string"
+         },
+         "etag": {
+          "type": "string"
+         },
+         "serialized_dashboard": {
+          "type": "string"
+         },
+         "lifecycle_state": {
+          "type": "string"
+         },
+         "parent_path": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "source_dashboard_id": {
+         "type": "required",
+         "description": " "
+        },
+        "display_name": {
+         "type": "string",
+         "description": "UUID of the dashboard to be migrated."
+        },
+        "parent_path": {
+         "type": "string",
+         "description": " "
+        },
+        "update_parameter_syntax": {
+         "type": "string",
+         "description": "Display name for the new Lakeview dashboard."
+        }
+       },
+       "example": {
+        "source_dashboard_id": "4e443c27-9f61-4f2e-a12d-ea5668460bf1",
+        "display_name": "Monthly Traffic Report",
+        "parent_path": "/path/to/dir",
+        "update_parameter_syntax": true
+       }
+      }
+     }
+    }
+   },
+   "description": "Migrates a classic SQL dashboard to Lakeview."
+  }
+ }
+}

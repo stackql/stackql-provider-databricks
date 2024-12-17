@@ -1,0 +1,116 @@
+{
+ "/api/2.1/clusters/list-node-types": {
+  "get": {
+   "operationId": "node-types-listnodetypes",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/listnodetypes"
+   },
+   "x-stackQL-resource": "node_types",
+   "x-stackQL-method": "listnodetypes",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "node_types": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "node_type_id": {
+             "type": "string"
+            },
+            "memory_mb": {
+             "type": "integer"
+            },
+            "num_cores": {
+             "type": "integer"
+            },
+            "description": {
+             "type": "string"
+            },
+            "instance_type_id": {
+             "type": "string"
+            },
+            "is_deprecated": {
+             "type": "boolean"
+            },
+            "category": {
+             "type": "string"
+            },
+            "support_ebs_volumes": {
+             "type": "boolean"
+            },
+            "support_cluster_tags": {
+             "type": "boolean"
+            },
+            "num_gpus": {
+             "type": "integer"
+            },
+            "node_instance_type": {
+             "type": "object",
+             "properties": {
+              "instance_type_id": {
+               "type": "string"
+              },
+              "local_disks": {
+               "type": "integer"
+              },
+              "local_disk_size_gb": {
+               "type": "integer"
+              },
+              "instance_family": {
+               "type": "string"
+              },
+              "swap_size": {
+               "type": "string"
+              }
+             }
+            },
+            "is_hidden": {
+             "type": "boolean"
+            },
+            "support_port_forwarding": {
+             "type": "boolean"
+            },
+            "supports_elastic_disk": {
+             "type": "boolean"
+            },
+            "display_order": {
+             "type": "integer"
+            },
+            "is_io_cache_enabled": {
+             "type": "boolean"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.node_types",
+   "description": "Returns a list of supported Spark node types. These node types can be used to launch a cluster."
+  }
+ }
+}

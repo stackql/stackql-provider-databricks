@@ -1,0 +1,65 @@
+{
+ "/api/2.1/unity-catalog/shares/{name}/permissions": {
+  "get": {
+   "operationId": "share-permissions-sharepermissions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/shares/sharepermissions"
+   },
+   "x-stackQL-resource": "share_permissions",
+   "x-stackQL-method": "sharepermissions",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The name of the share.",
+     "in": "path"
+    },
+    {
+     "name": "max_results",
+     "description": "Maximum number of permissions to return.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The share permissions list was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "privilege_assignments": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "principal": {
+             "type": "string"
+            },
+            "privileges": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.privilege_assignments",
+   "description": "Gets the permissions for a data share from the metastore. The caller must be a metastore admin or the owner of the share."
+  }
+ }
+}

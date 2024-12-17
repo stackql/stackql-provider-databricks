@@ -1,0 +1,28 @@
+{
+ "/api/2.0/fs/files{file_path}": {
+  "get": {
+   "operationId": "files-download",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/files/download"
+   },
+   "x-stackQL-resource": "files",
+   "x-stackQL-method": "download",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "file_path",
+     "required": true,
+     "description": "(string) The absolute path of the file.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": ""
+    }
+   },
+   "description": "Downloads a file. The file contents are the response body. This is a standard HTTP file download, not a JSON RPC. It supports the Range and If-Unmodified-Since HTTP headers."
+  }
+ }
+}

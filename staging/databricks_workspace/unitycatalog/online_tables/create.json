@@ -1,0 +1,213 @@
+{
+ "/api/2.0/online-tables": {
+  "post": {
+   "operationId": "online-tables-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/onlinetables/create"
+   },
+   "x-stackQL-resource": "online_tables",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "spec": {
+          "type": "object",
+          "properties": {
+           "run_continuously": {
+            "type": "object",
+            "properties": {}
+           },
+           "run_triggered": {
+            "type": "object",
+            "properties": {}
+           },
+           "source_table_full_name": {
+            "type": "string"
+           },
+           "primary_key_columns": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           },
+           "timeseries_key": {
+            "type": "string"
+           },
+           "perform_full_copy": {
+            "type": "boolean"
+           },
+           "pipeline_id": {
+            "type": "string"
+           }
+          }
+         },
+         "status": {
+          "type": "object",
+          "properties": {
+           "detailed_state": {
+            "type": "string"
+           },
+           "message": {
+            "type": "string"
+           },
+           "provisioning_status": {
+            "type": "object",
+            "properties": {
+             "initial_pipeline_sync_progress": {
+              "type": "object",
+              "properties": {
+               "latest_version_currently_processing": {
+                "type": "integer"
+               },
+               "synced_row_count": {
+                "type": "integer"
+               },
+               "total_row_count": {
+                "type": "integer"
+               },
+               "sync_progress_completion": {
+                "type": "number"
+               },
+               "estimated_completion_time_seconds": {
+                "type": "number"
+               }
+              }
+             }
+            }
+           },
+           "continuous_update_status": {
+            "type": "object",
+            "properties": {
+             "last_processed_commit_version": {
+              "type": "integer"
+             },
+             "timestamp": {
+              "type": "string"
+             },
+             "initial_pipeline_sync_progress": {
+              "type": "object",
+              "properties": {
+               "latest_version_currently_processing": {
+                "type": "integer"
+               },
+               "synced_row_count": {
+                "type": "integer"
+               },
+               "total_row_count": {
+                "type": "integer"
+               },
+               "sync_progress_completion": {
+                "type": "number"
+               },
+               "estimated_completion_time_seconds": {
+                "type": "number"
+               }
+              }
+             }
+            }
+           },
+           "triggered_update_status": {
+            "type": "object",
+            "properties": {
+             "last_processed_commit_version": {
+              "type": "integer"
+             },
+             "timestamp": {
+              "type": "string"
+             },
+             "triggered_update_progress": {
+              "type": "object",
+              "properties": {
+               "latest_version_currently_processing": {
+                "type": "integer"
+               },
+               "synced_row_count": {
+                "type": "integer"
+               },
+               "total_row_count": {
+                "type": "integer"
+               },
+               "sync_progress_completion": {
+                "type": "number"
+               },
+               "estimated_completion_time_seconds": {
+                "type": "number"
+               }
+              }
+             }
+            }
+           },
+           "failed_status": {
+            "type": "object",
+            "properties": {
+             "last_processed_commit_version": {
+              "type": "integer"
+             },
+             "timestamp": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         },
+         "table_serving_url": {
+          "type": "string"
+         },
+         "unity_catalog_provisioning_state": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string",
+         "description": "Full three-part (catalog, schema, table) name of the table."
+        },
+        "spec": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "string",
+        "spec": {
+         "run_continuously": {},
+         "run_triggered": {},
+         "source_table_full_name": "string",
+         "primary_key_columns": [
+          "string"
+         ],
+         "timeseries_key": "string",
+         "perform_full_copy": false,
+         "pipeline_id": "string"
+        }
+       }
+      }
+     }
+    },
+    "description": "Online Table information."
+   },
+   "description": "Create a new Online Table."
+  }
+ }
+}

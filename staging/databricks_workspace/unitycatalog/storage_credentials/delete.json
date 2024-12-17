@@ -1,0 +1,41 @@
+{
+ "/api/2.1/unity-catalog/storage-credentials/{name}": {
+  "delete": {
+   "operationId": "storage-credentials-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/storagecredentials/delete"
+   },
+   "x-stackQL-resource": "storage_credentials",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the storage credential.",
+     "in": "path"
+    },
+    {
+     "name": "force",
+     "description": "Force deletion even if there are dependent external locations or external tables.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The storage credential was successfully deleted.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "description": "Deletes a storage credential from the metastore. The caller must be an owner of the storage credential."
+  }
+ }
+}

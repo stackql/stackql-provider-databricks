@@ -1,0 +1,58 @@
+{
+ "/api/2.0/preview/accounts/access-control/assignable-roles": {
+  "get": {
+   "operationId": "assignable-roles-getassignablerolesforresource",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/accountaccesscontrolproxy/getassignablerolesforresource"
+   },
+   "x-stackQL-resource": "assignable_roles",
+   "x-stackQL-method": "getassignablerolesforresource",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "resource",
+     "required": true,
+     "description": "(string) The resource name for which assignable roles will be listed.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Assignable roles were returned successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "roles": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.roles",
+   "description": "Gets all the roles that can be granted on an account-level resource. A role is grantable if the rule set on the resource can contain an access rule of the role."
+  }
+ }
+}

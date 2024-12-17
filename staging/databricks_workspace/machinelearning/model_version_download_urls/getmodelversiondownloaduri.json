@@ -1,0 +1,46 @@
+{
+ "/api/2.0/mlflow/model-versions/get-download-uri": {
+  "get": {
+   "operationId": "model-version-download-urls-getmodelversiondownloaduri",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/getmodelversiondownloaduri"
+   },
+   "x-stackQL-resource": "model_version_download_urls",
+   "x-stackQL-method": "getmodelversiondownloaduri",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the registered model",
+     "in": "query"
+    },
+    {
+     "name": "version",
+     "required": true,
+     "description": "(string) Model version number",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "artifact_uri": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Gets a URI to download the model version."
+  }
+ }
+}

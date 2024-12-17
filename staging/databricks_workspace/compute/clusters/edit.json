@@ -1,0 +1,169 @@
+{
+ "/api/2.1/clusters/edit": {
+  "post": {
+   "operationId": "clusters-edit",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/edit"
+   },
+   "x-stackQL-resource": "clusters",
+   "x-stackQL-method": "edit",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "cluster_id": {
+         "type": "required",
+         "description": "ID of the cluster"
+        },
+        "num_workers": {
+         "type": "string",
+         "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver\nand "
+        },
+        "kind": {
+         "type": "int32",
+         "description": " Executors for a total of "
+        },
+        "cluster_name": {
+         "type": "string",
+         "description": " + 1 Spark nodes."
+        },
+        "spark_version": {
+         "type": "string",
+         "description": "Note: When reading the properties of a cluster, this field reflects the desired number\nof workers rather than the actual current number of workers. For instance, if a cluster\nis resized from 5 to 10 workers, this field will immediately be updated to reflect\nthe target size of 10 workers, whereas the workers listed in "
+        },
+        "use_ml_runtime": {
+         "type": "required",
+         "description": " will gradually\nincrease from 5 to 10 as the new nodes are provisioned."
+        },
+        "is_single_node": {
+         "type": "string",
+         "description": "The kind of compute described by this compute specification."
+        },
+        "node_type_id": {
+         "type": "boolean",
+         "description": "Depending on "
+        },
+        "driver_node_type_id": {
+         "type": "boolean",
+         "description": ", different validations and default values will be applied. "
+        },
+        "ssh_public_keys": {
+         "type": "string",
+         "description": "The first usage of this value is for the simple cluster form where it sets "
+        },
+        "autotermination_minutes": {
+         "type": "string",
+         "description": "."
+        },
+        "enable_elastic_disk": {
+         "type": "Array of string",
+         "description": "Cluster name requested by the user. This doesn't have to be unique.\nIf not specified at creation, the cluster name will be an empty string."
+        },
+        "instance_pool_id": {
+         "type": "int32",
+         "description": "The Spark version of the cluster, e.g. "
+        },
+        "policy_id": {
+         "type": "boolean",
+         "description": ".\nA list of available Spark versions can be retrieved by using\nthe "
+        },
+        "enable_local_disk_encryption": {
+         "type": "string",
+         "description": " API call."
+        },
+        "driver_instance_pool_id": {
+         "type": "string",
+         "description": "This field can only be used with "
+        },
+        "runtime_engine": {
+         "type": "boolean",
+         "description": "."
+        },
+        "data_security_mode": {
+         "type": "string",
+         "description": " is determined by "
+        },
+        "single_user_name": {
+         "type": "string",
+         "description": " (DBR release), this field "
+        },
+        "apply_policy_default_values": {
+         "type": "string",
+         "description": ", and whether "
+        },
+        "autoscale": {
+         "type": "object"
+        },
+        "spark_conf": {
+         "type": "object"
+        },
+        "aws_attributes": {
+         "type": "object"
+        },
+        "custom_tags": {
+         "type": "object"
+        },
+        "cluster_log_conf": {
+         "type": "object"
+        },
+        "init_scripts": {
+         "type": "Array of object"
+        },
+        "spark_env_vars": {
+         "type": "object"
+        },
+        "workload_type": {
+         "type": "object"
+        },
+        "docker_image": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "cluster_id": "1202-211320-brick1",
+        "num_workers": 10,
+        "spark_version": "3.3.x-scala2.11",
+        "node_type_id": "i3.2xlarge"
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates the configuration of a cluster to match the provided attributes and size. A cluster can be updated if it is in a"
+  }
+ }
+}

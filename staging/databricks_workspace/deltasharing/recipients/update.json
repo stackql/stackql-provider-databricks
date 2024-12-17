@@ -1,0 +1,88 @@
+{
+ "/api/2.1/unity-catalog/recipients/{name}": {
+  "patch": {
+   "operationId": "recipients-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/recipients/update"
+   },
+   "x-stackQL-resource": "recipients",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the recipient.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The recipient was successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "owner": {
+         "type": "string",
+         "description": "Username of the recipient owner."
+        },
+        "comment": {
+         "type": "string",
+         "description": "Description about the recipient."
+        },
+        "new_name": {
+         "type": "string",
+         "description": "New name for the recipient."
+        },
+        "expiration_time": {
+         "type": "integer",
+         "format": "int64",
+         "description": "Expiration timestamp of the token, in epoch milliseconds."
+        },
+        "ip_access_list": {
+         "type": "object"
+        },
+        "properties_kvpairs": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "owner": "string",
+        "comment": "string",
+        "ip_access_list": {
+         "allowed_ip_addresses": [
+          "string"
+         ]
+        },
+        "new_name": "string",
+        "properties_kvpairs": {
+         "properties": {
+          "property1": "string",
+          "property2": "string"
+         }
+        },
+        "expiration_time": 0
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates an existing recipient in the metastore. The caller must be a metastore admin or the owner of the recipient. If the recipient name will be updated, the user must be both a metastore admin and the owner of the recipient."
+  }
+ }
+}

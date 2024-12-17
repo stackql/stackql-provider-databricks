@@ -1,0 +1,60 @@
+{
+ "/api/2.1/unity-catalog/workspaces/{workspace_id}/metastore": {
+  "put": {
+   "operationId": "metastore-assignments-assign",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/metastores/assign"
+   },
+   "x-stackQL-resource": "metastore_assignments",
+   "x-stackQL-method": "assign",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "workspace_id",
+     "required": true,
+     "description": "(int64) A workspace ID.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The metastore was successfully assigned.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "metastore_id": {
+         "type": "required",
+         "description": "The unique ID of the metastore."
+        },
+        "default_catalog_name": {
+         "type": "string",
+         "description": "The name of the default catalog in the metastore.\nThis field is depracted. Please use \"Default Namespace API\" to\nconfigure the default catalog for a Databricks workspace."
+        }
+       },
+       "example": {
+        "metastore_id": "string",
+        "default_catalog_name": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates a new metastore assignment. If an assignment for the same"
+  }
+ }
+}

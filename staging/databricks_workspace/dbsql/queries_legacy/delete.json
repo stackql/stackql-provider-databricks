@@ -1,0 +1,36 @@
+{
+ "/api/2.0/preview/sql/queries/{query_id}": {
+  "delete": {
+   "operationId": "queries-legacy-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/querieslegacy/delete"
+   },
+   "x-stackQL-resource": "queries_legacy",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "query_id",
+     "required": true,
+     "description": "(UUID)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Query moved to trash.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "description": "Moves a query to the trash. Trashed queries immediately disappear from searches and list views, and they cannot be used for alerts. The trash is deleted after 30 days."
+  }
+ }
+}

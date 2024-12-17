@@ -1,0 +1,102 @@
+{
+ "/api/2.0/vector-search/indexes/{index_name}/scan": {
+  "post": {
+   "operationId": "index-scan-scanindex",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchindexes/scanindex"
+   },
+   "x-stackQL-resource": "index_scan",
+   "x-stackQL-method": "scanindex",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "index_name",
+     "required": true,
+     "description": "(string) Name of the vector index to scan.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Successful response with scan results.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "last_primary_key": {
+          "type": "string"
+         },
+         "data": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "fields": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "key": {
+                "type": "string"
+               },
+               "value": {
+                "type": "object",
+                "properties": {
+                 "number_value": {
+                  "type": "integer"
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "num_results": {
+         "type": "integer",
+         "description": "Number of results to return. Defaults to 10."
+        },
+        "last_primary_key": {
+         "type": "string",
+         "description": "Primary key of the last entry returned in the previous scan."
+        }
+       },
+       "example": {
+        "num_results": 2
+       }
+      }
+     }
+    }
+   },
+   "description": "Scan the specified vector index and return the first"
+  }
+ }
+}

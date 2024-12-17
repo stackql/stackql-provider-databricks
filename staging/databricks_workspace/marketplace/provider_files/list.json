@@ -1,0 +1,93 @@
+{
+ "/api/2.0/marketplace-provider/files": {
+  "get": {
+   "operationId": "provider-files-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerfiles/list"
+   },
+   "x-stackQL-resource": "provider_files",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": null,
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "file_infos": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "marketplace_file_type": {
+             "type": "string"
+            },
+            "file_parent": {
+             "type": "object",
+             "properties": {
+              "parent_id": {
+               "type": "string"
+              },
+              "file_parent_type": {
+               "type": "string"
+              }
+             }
+            },
+            "mime_type": {
+             "type": "string"
+            },
+            "download_link": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "display_name": {
+             "type": "string"
+            },
+            "status": {
+             "type": "string"
+            },
+            "status_message": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.file_infos",
+   "description": "List files attached to a parent entity."
+  }
+ }
+}

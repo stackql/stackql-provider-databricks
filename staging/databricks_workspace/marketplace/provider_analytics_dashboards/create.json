@@ -1,0 +1,33 @@
+{
+ "/api/2.0/marketplace-provider/analytics_dashboard": {
+  "post": {
+   "operationId": "provider-analytics-dashboards-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerprovideranalyticsdashboards/create"
+   },
+   "x-stackQL-resource": "provider_analytics_dashboards",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Create provider analytics dashboard. Returns Marketplace specific"
+  }
+ }
+}

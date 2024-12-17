@@ -1,0 +1,66 @@
+{
+ "/api/2.1/unity-catalog/permissions/{securable_type}/{full_name}": {
+  "get": {
+   "operationId": "grants-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/grants/get"
+   },
+   "x-stackQL-resource": "grants",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "securable_type",
+     "required": true,
+     "description": "(string) Type of securable.",
+     "in": "path"
+    },
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) Full name of securable.",
+     "in": "path"
+    },
+    {
+     "name": "principal",
+     "description": "If provided, only the permissions for the specified principal (user or group) are returned.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The permissions list for securable was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "privilege_assignments": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "principal": {
+             "type": "string"
+            },
+            "privileges": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.privilege_assignments",
+   "description": "Gets the permissions for a securable."
+  }
+ }
+}

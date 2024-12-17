@@ -1,0 +1,91 @@
+{
+ "/api/2.0/pipelines/{pipeline_id}/updates": {
+  "post": {
+   "operationId": "pipeline-updates-startupdate",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/pipelines/startupdate"
+   },
+   "x-stackQL-resource": "pipeline_updates",
+   "x-stackQL-method": "startupdate",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "pipeline_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "update_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "full_refresh": {
+         "type": "boolean",
+         "description": "If true, this update will reset all tables before running."
+        },
+        "validate_only": {
+         "type": "boolean",
+         "description": "If true, this update only validates the correctness of pipeline source code but does not materialize or publish any datasets."
+        },
+        "cause": {
+         "type": "string",
+         "description": "A list of tables to update without fullRefresh. If both refresh_selection and\nfull_refresh_selection are empty, this is a full graph update. Full Refresh on a table means\nthat the states of the table will be reset before the refresh."
+        },
+        "refresh_selection": {
+         "type": "Array of string",
+         "description": "A list of tables to update with fullRefresh. If both refresh_selection and\nfull_refresh_selection are empty, this is a full graph update. Full Refresh on a table means\nthat the states of the table will be reset before the refresh."
+        },
+        "full_refresh_selection": {
+         "type": "Array of string"
+        }
+       },
+       "example": {
+        "full_refresh": true
+       }
+      }
+     }
+    }
+   },
+   "description": "Starts a new update for the pipeline. If there is already an active update for the pipeline, the request will fail and the active update will remain running."
+  }
+ }
+}

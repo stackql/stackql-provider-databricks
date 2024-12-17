@@ -1,0 +1,116 @@
+{
+ "/api/2.0/marketplace-provider/providers/{id}": {
+  "put": {
+   "operationId": "providers-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerproviders/update"
+   },
+   "x-stackQL-resource": "providers",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "provider": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "name": {
+            "type": "string"
+           },
+           "description": {
+            "type": "string"
+           },
+           "icon_file_path": {
+            "type": "string"
+           },
+           "business_contact_email": {
+            "type": "string"
+           },
+           "support_contact_email": {
+            "type": "string"
+           },
+           "is_featured": {
+            "type": "boolean"
+           },
+           "published_by": {
+            "type": "string"
+           },
+           "company_website_link": {
+            "type": "string"
+           },
+           "icon_file_id": {
+            "type": "string"
+           },
+           "term_of_service_link": {
+            "type": "string"
+           },
+           "privacy_policy_link": {
+            "type": "string"
+           },
+           "dark_mode_icon_file_id": {
+            "type": "string"
+           },
+           "dark_mode_icon_file_path": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "provider": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "provider": {
+         "id": "string",
+         "name": "string",
+         "description": "string",
+         "icon_file_path": "string",
+         "business_contact_email": "string",
+         "support_contact_email": "string",
+         "is_featured": true,
+         "published_by": "string",
+         "company_website_link": "string",
+         "icon_file_id": "string",
+         "term_of_service_link": "string",
+         "privacy_policy_link": "string",
+         "dark_mode_icon_file_id": "string",
+         "dark_mode_icon_file_path": "string"
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Update provider profile"
+  }
+ }
+}

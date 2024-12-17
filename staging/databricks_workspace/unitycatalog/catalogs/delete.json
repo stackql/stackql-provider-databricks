@@ -1,0 +1,41 @@
+{
+ "/api/2.1/unity-catalog/catalogs/{name}": {
+  "delete": {
+   "operationId": "catalogs-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/catalogs/delete"
+   },
+   "x-stackQL-resource": "catalogs",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The name of the catalog.",
+     "in": "path"
+    },
+    {
+     "name": "force",
+     "description": "Force deletion even if the catalog is not empty.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The catalog was successfully deleted.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "description": "Deletes the catalog that matches the supplied name. The caller must be a metastore admin or the owner of the catalog."
+  }
+ }
+}

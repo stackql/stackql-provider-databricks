@@ -1,0 +1,149 @@
+{
+ "/api/2.0/mlflow/registered-models/search": {
+  "get": {
+   "operationId": "models-searchmodels",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/searchmodels"
+   },
+   "x-stackQL-resource": "models",
+   "x-stackQL-method": "searchmodels",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "filter",
+     "description": "String filter condition, like \"name LIKE 'my-model-name'\". Interpreted in the backend automatically as \"name LIKE '%my-model-name%'\". Single boolean condition, with string values wrapped in single quotes.",
+     "in": "query"
+    },
+    {
+     "name": "max_results",
+     "in": "query"
+    },
+    {
+     "name": "order_by",
+     "description": "List of columns for ordering search results, which can include model name and last updated timestamp with an optional \"DESC\" or \"ASC\" annotation, where \"ASC\" is the default. Tiebreaks are done by model name ASC.",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Pagination token to go to the next page based on a previous search query.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "registered_models": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "creation_timestamp": {
+             "type": "integer"
+            },
+            "last_updated_timestamp": {
+             "type": "integer"
+            },
+            "user_id": {
+             "type": "string"
+            },
+            "description": {
+             "type": "string"
+            },
+            "latest_versions": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "name": {
+                "type": "string"
+               },
+               "version": {
+                "type": "string"
+               },
+               "creation_timestamp": {
+                "type": "integer"
+               },
+               "last_updated_timestamp": {
+                "type": "integer"
+               },
+               "user_id": {
+                "type": "string"
+               },
+               "current_stage": {
+                "type": "string"
+               },
+               "description": {
+                "type": "string"
+               },
+               "source": {
+                "type": "string"
+               },
+               "run_id": {
+                "type": "string"
+               },
+               "status": {
+                "type": "string"
+               },
+               "status_message": {
+                "type": "string"
+               },
+               "tags": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "key": {
+                   "type": "string"
+                  },
+                  "value": {
+                   "type": "string"
+                  }
+                 }
+                }
+               },
+               "run_link": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "tags": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "key": {
+                "type": "string"
+               },
+               "value": {
+                "type": "string"
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.registered_models",
+   "description": "Search for registered models based on the specified"
+  }
+ }
+}

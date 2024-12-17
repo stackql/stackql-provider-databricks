@@ -1,0 +1,36 @@
+{
+ "/api/2.0/preview/sql/queries/trash/{query_id}": {
+  "post": {
+   "operationId": "queries-legacy-restore",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/querieslegacy/restore"
+   },
+   "x-stackQL-resource": "queries_legacy",
+   "x-stackQL-method": "restore",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "query_id",
+     "required": true,
+     "description": "(UUID)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Query restored successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "description": "Restore a query that has been moved to the trash. A restored query appears in list views and searches. You can use restored queries for alerts."
+  }
+ }
+}

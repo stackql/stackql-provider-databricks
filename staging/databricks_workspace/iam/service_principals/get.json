@@ -1,0 +1,139 @@
+{
+ "/api/2.0/preview/scim/v2/ServicePrincipals/{id}": {
+  "get": {
+   "operationId": "service-principals-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/serviceprincipals/get"
+   },
+   "x-stackQL-resource": "service_principals",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "description": "(int64) Unique ID for a service principal in the Databricks workspace.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Service principal information was returned successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "schemas": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "id": {
+          "type": "string"
+         },
+         "applicationId": {
+          "type": "string"
+         },
+         "displayName": {
+          "type": "string"
+         },
+         "groups": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "$ref": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            },
+            "display": {
+             "type": "string"
+            },
+            "primary": {
+             "type": "boolean"
+            },
+            "type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "roles": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "$ref": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            },
+            "display": {
+             "type": "string"
+            },
+            "primary": {
+             "type": "boolean"
+            },
+            "type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "entitlements": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "$ref": {
+             "type": "string"
+            },
+            "value": {
+             "type": "string"
+            },
+            "display": {
+             "type": "string"
+            },
+            "primary": {
+             "type": "boolean"
+            },
+            "type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "externalId": {
+          "type": "string"
+         },
+         "active": {
+          "type": "boolean"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets the details for a single service principal define in the Databricks workspace."
+  }
+ }
+}

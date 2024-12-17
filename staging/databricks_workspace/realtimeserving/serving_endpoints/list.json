@@ -1,0 +1,404 @@
+{
+ "/api/2.0/serving-endpoints": {
+  "get": {
+   "operationId": "serving-endpoints-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/list"
+   },
+   "x-stackQL-resource": "serving_endpoints",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "List of serving endpoints was retrieved successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "endpoints": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "creator": {
+             "type": "string"
+            },
+            "creation_timestamp": {
+             "type": "integer"
+            },
+            "last_updated_timestamp": {
+             "type": "integer"
+            },
+            "state": {
+             "type": "object",
+             "properties": {
+              "ready": {
+               "type": "string"
+              },
+              "config_update": {
+               "type": "string"
+              }
+             }
+            },
+            "config": {
+             "type": "object",
+             "properties": {
+              "served_entities": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "name": {
+                  "type": "string"
+                 },
+                 "external_model": {
+                  "type": "object",
+                  "properties": {
+                   "provider": {
+                    "type": "string"
+                   },
+                   "name": {
+                    "type": "string"
+                   },
+                   "task": {
+                    "type": "string"
+                   },
+                   "ai21labs_config": {
+                    "type": "object",
+                    "properties": {
+                     "ai21labs_api_key": {
+                      "type": "string"
+                     },
+                     "ai21labs_api_key_plaintext": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "anthropic_config": {
+                    "type": "object",
+                    "properties": {
+                     "anthropic_api_key": {
+                      "type": "string"
+                     },
+                     "anthropic_api_key_plaintext": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "amazon_bedrock_config": {
+                    "type": "object",
+                    "properties": {
+                     "aws_region": {
+                      "type": "string"
+                     },
+                     "aws_access_key_id": {
+                      "type": "string"
+                     },
+                     "aws_access_key_id_plaintext": {
+                      "type": "string"
+                     },
+                     "aws_secret_access_key": {
+                      "type": "string"
+                     },
+                     "aws_secret_access_key_plaintext": {
+                      "type": "string"
+                     },
+                     "bedrock_provider": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "cohere_config": {
+                    "type": "object",
+                    "properties": {
+                     "cohere_api_key": {
+                      "type": "string"
+                     },
+                     "cohere_api_key_plaintext": {
+                      "type": "string"
+                     },
+                     "cohere_api_base": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "google_cloud_vertex_ai_config": {
+                    "type": "object",
+                    "properties": {
+                     "private_key": {
+                      "type": "string"
+                     },
+                     "private_key_plaintext": {
+                      "type": "string"
+                     },
+                     "region": {
+                      "type": "string"
+                     },
+                     "project_id": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "databricks_model_serving_config": {
+                    "type": "object",
+                    "properties": {
+                     "databricks_api_token": {
+                      "type": "string"
+                     },
+                     "databricks_api_token_plaintext": {
+                      "type": "string"
+                     },
+                     "databricks_workspace_url": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "openai_config": {
+                    "type": "object",
+                    "properties": {
+                     "openai_api_key": {
+                      "type": "string"
+                     },
+                     "openai_api_key_plaintext": {
+                      "type": "string"
+                     },
+                     "openai_api_type": {
+                      "type": "string"
+                     },
+                     "openai_api_base": {
+                      "type": "string"
+                     },
+                     "openai_api_version": {
+                      "type": "string"
+                     },
+                     "openai_organization": {
+                      "type": "string"
+                     },
+                     "openai_deployment_name": {
+                      "type": "string"
+                     },
+                     "microsoft_entra_tenant_id": {
+                      "type": "string"
+                     },
+                     "microsoft_entra_client_id": {
+                      "type": "string"
+                     },
+                     "microsoft_entra_client_secret": {
+                      "type": "string"
+                     },
+                     "microsoft_entra_client_secret_plaintext": {
+                      "type": "string"
+                     }
+                    }
+                   },
+                   "palm_config": {
+                    "type": "object",
+                    "properties": {
+                     "palm_api_key": {
+                      "type": "string"
+                     },
+                     "palm_api_key_plaintext": {
+                      "type": "string"
+                     }
+                    }
+                   }
+                  }
+                 },
+                 "foundation_model": {
+                  "type": "object",
+                  "properties": {
+                   "name": {
+                    "type": "string"
+                   },
+                   "display_name": {
+                    "type": "string"
+                   },
+                   "docs": {
+                    "type": "string"
+                   },
+                   "description": {
+                    "type": "string"
+                   }
+                  }
+                 },
+                 "entity_name": {
+                  "type": "string"
+                 },
+                 "entity_version": {
+                  "type": "string"
+                 }
+                }
+               }
+              },
+              "served_models": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "name": {
+                  "type": "string"
+                 },
+                 "model_name": {
+                  "type": "string"
+                 },
+                 "model_version": {
+                  "type": "string"
+                 }
+                }
+               }
+              }
+             }
+            },
+            "tags": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "key": {
+                "type": "string"
+               },
+               "value": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "id": {
+             "type": "string"
+            },
+            "task": {
+             "type": "string"
+            },
+            "ai_gateway": {
+             "type": "object",
+             "properties": {
+              "usage_tracking_config": {
+               "type": "object",
+               "properties": {
+                "enabled": {
+                 "type": "boolean"
+                }
+               }
+              },
+              "inference_table_config": {
+               "type": "object",
+               "properties": {
+                "catalog_name": {
+                 "type": "string"
+                },
+                "schema_name": {
+                 "type": "string"
+                },
+                "table_name_prefix": {
+                 "type": "string"
+                },
+                "enabled": {
+                 "type": "boolean"
+                }
+               }
+              },
+              "rate_limits": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "calls": {
+                  "type": "integer"
+                 },
+                 "key": {
+                  "type": "string"
+                 },
+                 "renewal_period": {
+                  "type": "string"
+                 }
+                }
+               }
+              },
+              "guardrails": {
+               "type": "object",
+               "properties": {
+                "input": {
+                 "type": "object",
+                 "properties": {
+                  "safety": {
+                   "type": "boolean"
+                  },
+                  "pii": {
+                   "type": "object",
+                   "properties": {
+                    "behavior": {
+                     "type": "string"
+                    }
+                   }
+                  },
+                  "valid_topics": {
+                   "type": "array",
+                   "items": {
+                    "type": "string"
+                   }
+                  },
+                  "invalid_keywords": {
+                   "type": "array",
+                   "items": {
+                    "type": "string"
+                   }
+                  }
+                 }
+                },
+                "output": {
+                 "type": "object",
+                 "properties": {
+                  "safety": {
+                   "type": "boolean"
+                  },
+                  "pii": {
+                   "type": "object",
+                   "properties": {
+                    "behavior": {
+                     "type": "string"
+                    }
+                   }
+                  },
+                  "valid_topics": {
+                   "type": "array",
+                   "items": {
+                    "type": "string"
+                   }
+                  },
+                  "invalid_keywords": {
+                   "type": "array",
+                   "items": {
+                    "type": "string"
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.endpoints"
+  }
+ }
+}

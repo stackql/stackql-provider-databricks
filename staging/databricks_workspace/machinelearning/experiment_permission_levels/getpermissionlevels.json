@@ -1,0 +1,67 @@
+{
+ "/api/2.0/permissions/experiments/{experiment_id}/permissionLevels": {
+  "get": {
+   "operationId": "experiment-permission-levels-getpermissionlevels",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/getpermissionlevels"
+   },
+   "x-stackQL-resource": "experiment_permission_levels",
+   "x-stackQL-method": "getpermissionlevels",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "experiment_id",
+     "required": true,
+     "description": "(string) The experiment for which to get or manage permissions.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "permission_levels": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "permission_level": {
+             "type": "string"
+            },
+            "description": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.permission_levels",
+   "description": "Gets the permission levels that a user can have on an object."
+  }
+ }
+}

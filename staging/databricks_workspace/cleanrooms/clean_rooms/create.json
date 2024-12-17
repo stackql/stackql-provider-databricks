@@ -1,0 +1,314 @@
+{
+ "/api/2.0/clean-rooms": {
+  "post": {
+   "operationId": "clean-rooms-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/cleanrooms/create"
+   },
+   "x-stackQL-resource": "clean_rooms",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "remote_detailed_info": {
+          "type": "object",
+          "properties": {
+           "central_clean_room_id": {
+            "type": "string"
+           },
+           "cloud_vendor": {
+            "type": "string"
+           },
+           "region": {
+            "type": "string"
+           },
+           "collaborators": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "global_metastore_id": {
+               "type": "string"
+              },
+              "organization_name": {
+               "type": "string"
+              },
+              "invite_recipient_workspace_id": {
+               "type": "integer"
+              },
+              "invite_recipient_email": {
+               "type": "string"
+              },
+              "collaborator_alias": {
+               "type": "string"
+              },
+              "display_name": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "creator": {
+            "type": "object",
+            "properties": {
+             "global_metastore_id": {
+              "type": "string"
+             },
+             "organization_name": {
+              "type": "string"
+             },
+             "invite_recipient_workspace_id": {
+              "type": "integer"
+             },
+             "invite_recipient_email": {
+              "type": "string"
+             },
+             "collaborator_alias": {
+              "type": "string"
+             },
+             "display_name": {
+              "type": "string"
+             }
+            }
+           },
+           "egress_network_policy": {
+            "type": "object",
+            "properties": {
+             "internet_access": {
+              "type": "object",
+              "properties": {
+               "restriction_mode": {
+                "type": "string"
+               },
+               "allowed_internet_destinations": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "destination": {
+                   "type": "string"
+                  },
+                  "type": {
+                   "type": "string"
+                  },
+                  "protocol": {
+                   "type": "string"
+                  }
+                 }
+                }
+               },
+               "allowed_storage_destinations": {
+                "type": "array",
+                "items": {
+                 "type": "object",
+                 "properties": {
+                  "bucket_name": {
+                   "type": "string"
+                  },
+                  "region": {
+                   "type": "string"
+                  },
+                  "type": {
+                   "type": "string"
+                  },
+                  "azure_storage_account": {
+                   "type": "string"
+                  },
+                  "allowed_paths": {
+                   "type": "array",
+                   "items": {
+                    "type": "string"
+                   }
+                  },
+                  "azure_storage_service": {
+                   "type": "string"
+                  },
+                  "azure_dns_zone": {
+                   "type": "string"
+                  },
+                  "azure_container": {
+                   "type": "string"
+                  }
+                 }
+                }
+               },
+               "log_only_mode": {
+                "type": "object",
+                "properties": {
+                 "log_only_mode_type": {
+                  "type": "string"
+                 },
+                 "workloads": {
+                  "type": "array",
+                  "items": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           },
+           "compliance_security_profile": {
+            "type": "object",
+            "properties": {
+             "is_enabled": {
+              "type": "boolean"
+             },
+             "compliance_standards": {
+              "type": "array",
+              "items": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "owner": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "status": {
+          "type": "string"
+         },
+         "local_collaborator_alias": {
+          "type": "string"
+         },
+         "output_catalog": {
+          "type": "object",
+          "properties": {
+           "status": {
+            "type": "string"
+           },
+           "catalog_name": {
+            "type": "string"
+           }
+          }
+         },
+         "access_restricted": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "string",
+         "description": " "
+        },
+        "owner": {
+         "type": "string",
+         "description": "The name of the clean room.\nIt should follow "
+        },
+        "comment": {
+         "type": "string",
+         "description": "."
+        },
+        "remote_detailed_info": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "test-clean-room1",
+        "remote_detailed_info": {
+         "central_clean_room_id": "b5c8d856-ff41-4c5f-8ccd-2b13b44fec27",
+         "cloud_vendor": "aws",
+         "region": "us-west-2",
+         "collaborators": [
+          {
+           "global_metastore_id": "aws:us-west-2:aff56c64-a34e-4c1f-a24c-c2dd2889517a",
+           "organization_name": "acme corporation",
+           "invite_recipient_workspace_id": 6822898386300992,
+           "invite_recipient_email": "john.doe@databricks.com",
+           "collaborator_alias": "creator",
+           "display_name": "acme corporation"
+          }
+         ],
+         "creator": {
+          "global_metastore_id": "aws:us-west-2:aff56c64-a34e-4c1f-a24c-c2dd2889517a",
+          "organization_name": "acme corporation",
+          "invite_recipient_workspace_id": 6822898386300992,
+          "invite_recipient_email": "john.doe@databricks.com",
+          "collaborator_alias": "creator",
+          "display_name": "acme corporation"
+         },
+         "egress_network_policy": {
+          "internet_access": {
+           "restriction_mode": "FULL_ACCESS",
+           "allowed_internet_destinations": [
+            {
+             "destination": "string",
+             "type": "FQDN",
+             "protocol": "TCP"
+            }
+           ],
+           "allowed_storage_destinations": [
+            {
+             "bucket_name": "string",
+             "region": "string",
+             "type": "AWS_S3",
+             "azure_storage_account": "string",
+             "allowed_paths": [
+              "string"
+             ],
+             "azure_storage_service": "string",
+             "azure_dns_zone": "string",
+             "azure_container": "string"
+            }
+           ],
+           "log_only_mode": {
+            "log_only_mode_type": "ALL_SERVICES",
+            "workloads": [
+             "DBSQL"
+            ]
+           }
+          }
+         },
+         "compliance_security_profile": {
+          "is_enabled": true,
+          "compliance_standards": [
+           "NONE"
+          ]
+         }
+        },
+        "owner": "alice@example.com",
+        "comment": "This is a clean room for demo"
+       }
+      }
+     }
+    }
+   },
+   "description": "Create a new clean room with the specified collaborators. This method is asynchronous; the returned name field inside the clean_room field can be used to poll the clean room status, using the"
+  }
+ }
+}

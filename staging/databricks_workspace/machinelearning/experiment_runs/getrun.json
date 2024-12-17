@@ -1,0 +1,195 @@
+{
+ "/api/2.0/mlflow/runs/get": {
+  "get": {
+   "operationId": "experiment-runs-getrun",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/getrun"
+   },
+   "x-stackQL-resource": "experiment_runs",
+   "x-stackQL-method": "getrun",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "run_id",
+     "required": true,
+     "description": "(string) ID of the run to fetch. Must be provided.",
+     "in": "query"
+    },
+    {
+     "name": "run_uuid",
+     "description": "[Deprecated, use run_id instead] ID of the run to fetch. This field will be removed in a future MLflow version.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "run": {
+          "type": "object",
+          "properties": {
+           "info": {
+            "type": "object",
+            "properties": {
+             "run_id": {
+              "type": "string"
+             },
+             "run_uuid": {
+              "type": "string"
+             },
+             "experiment_id": {
+              "type": "string"
+             },
+             "user_id": {
+              "type": "string"
+             },
+             "status": {
+              "type": "string"
+             },
+             "start_time": {
+              "type": "integer"
+             },
+             "end_time": {
+              "type": "integer"
+             },
+             "artifact_uri": {
+              "type": "string"
+             },
+             "lifecycle_stage": {
+              "type": "string"
+             }
+            }
+           },
+           "data": {
+            "type": "object",
+            "properties": {
+             "metrics": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "key": {
+                 "type": "string"
+                },
+                "value": {
+                 "type": "number"
+                },
+                "timestamp": {
+                 "type": "integer"
+                },
+                "step": {
+                 "type": "string"
+                }
+               }
+              }
+             },
+             "params": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "key": {
+                 "type": "string"
+                },
+                "value": {
+                 "type": "string"
+                }
+               }
+              }
+             },
+             "tags": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "key": {
+                 "type": "string"
+                },
+                "value": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           },
+           "inputs": {
+            "type": "object",
+            "properties": {
+             "dataset_inputs": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "tags": {
+                 "type": "array",
+                 "items": {
+                  "type": "object",
+                  "properties": {
+                   "key": {
+                    "type": "string"
+                   },
+                   "value": {
+                    "type": "string"
+                   }
+                  }
+                 }
+                },
+                "dataset": {
+                 "type": "object",
+                 "properties": {
+                  "name": {
+                   "type": "string"
+                  },
+                  "digest": {
+                   "type": "string"
+                  },
+                  "source_type": {
+                   "type": "string"
+                  },
+                  "source": {
+                   "type": "string"
+                  },
+                  "schema": {
+                   "type": "string"
+                  },
+                  "profile": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.run",
+   "description": "Gets the metadata, metrics, params, and tags for a run. In the case where multiple metrics with the same key are logged for a run, return only the value with the latest timestamp."
+  }
+ }
+}

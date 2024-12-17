@@ -1,0 +1,127 @@
+{
+ "/api/2.0/marketplace-exchange/exchanges/{id}": {
+  "get": {
+   "operationId": "provider-exchanges-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchanges/get"
+   },
+   "x-stackQL-resource": "provider_exchanges",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "exchange": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "name": {
+            "type": "string"
+           },
+           "comment": {
+            "type": "string"
+           },
+           "filters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "id": {
+               "type": "string"
+              },
+              "exchange_id": {
+               "type": "string"
+              },
+              "filter_value": {
+               "type": "string"
+              },
+              "name": {
+               "type": "string"
+              },
+              "created_at": {
+               "type": "integer"
+              },
+              "created_by": {
+               "type": "string"
+              },
+              "updated_at": {
+               "type": "integer"
+              },
+              "updated_by": {
+               "type": "string"
+              },
+              "filter_type": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "created_by": {
+            "type": "string"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "updated_by": {
+            "type": "string"
+           },
+           "linked_listings": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "id": {
+               "type": "string"
+              },
+              "exchange_id": {
+               "type": "string"
+              },
+              "exchange_name": {
+               "type": "string"
+              },
+              "listing_id": {
+               "type": "string"
+              },
+              "listing_name": {
+               "type": "string"
+              },
+              "created_at": {
+               "type": "integer"
+              },
+              "created_by": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.exchange",
+   "description": "Get an exchange."
+  }
+ }
+}

@@ -1,0 +1,40 @@
+{
+ "/api/2.0/global-init-scripts/{script_id}": {
+  "delete": {
+   "operationId": "global-init-scripts-delete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/globalinitscripts/delete"
+   },
+   "x-stackQL-resource": "global_init_scripts",
+   "x-stackQL-method": "delete",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "script_id",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The script was deleted successfully."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Manage a specific global init script with ID"
+  }
+ }
+}

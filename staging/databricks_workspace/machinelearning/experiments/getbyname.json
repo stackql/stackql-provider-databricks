@@ -1,0 +1,87 @@
+{
+ "/api/2.0/mlflow/experiments/get-by-name": {
+  "get": {
+   "operationId": "experiments-getbyname",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/getbyname"
+   },
+   "x-stackQL-resource": "experiments",
+   "x-stackQL-method": "getbyname",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "experiment_name",
+     "required": true,
+     "description": "(string) Name of the associated experiment.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "experiment": {
+          "type": "object",
+          "properties": {
+           "experiment_id": {
+            "type": "string"
+           },
+           "name": {
+            "type": "string"
+           },
+           "artifact_location": {
+            "type": "string"
+           },
+           "lifecycle_stage": {
+            "type": "string"
+           },
+           "last_update_time": {
+            "type": "integer"
+           },
+           "creation_time": {
+            "type": "integer"
+           },
+           "tags": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.experiment",
+   "description": "Gets metadata for an experiment."
+  }
+ }
+}

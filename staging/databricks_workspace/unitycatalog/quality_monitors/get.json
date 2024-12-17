@@ -1,0 +1,176 @@
+{
+ "/api/2.1/unity-catalog/tables/{table_name}/monitor": {
+  "get": {
+   "operationId": "quality-monitors-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/qualitymonitors/get"
+   },
+   "x-stackQL-resource": "quality_monitors",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "table_name",
+     "required": true,
+     "description": "(string) Full name of the table.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The monitor was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "assets_dir": {
+          "type": "string"
+         },
+         "output_schema_name": {
+          "type": "string"
+         },
+         "inference_log": {
+          "type": "object",
+          "properties": {
+           "problem_type": {
+            "type": "string"
+           },
+           "timestamp_col": {
+            "type": "string"
+           },
+           "granularities": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           },
+           "prediction_col": {
+            "type": "string"
+           },
+           "label_col": {
+            "type": "string"
+           },
+           "model_id_col": {
+            "type": "string"
+           },
+           "prediction_proba_col": {
+            "type": "string"
+           }
+          }
+         },
+         "time_series": {
+          "type": "object",
+          "properties": {
+           "timestamp_col": {
+            "type": "string"
+           },
+           "granularities": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "snapshot": {
+          "type": "object",
+          "properties": {}
+         },
+         "slicing_exprs": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "custom_metrics": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "definition": {
+             "type": "string"
+            },
+            "input_columns": {
+             "type": "array",
+             "items": {
+              "type": "string"
+             }
+            },
+            "output_data_type": {
+             "type": "string"
+            },
+            "type": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "baseline_table_name": {
+          "type": "string"
+         },
+         "schedule": {
+          "type": "object",
+          "properties": {
+           "quartz_cron_expression": {
+            "type": "string"
+           },
+           "timezone_id": {
+            "type": "string"
+           },
+           "pause_status": {
+            "type": "string"
+           }
+          }
+         },
+         "notifications": {
+          "type": "object",
+          "properties": {
+           "on_failure": {
+            "type": "object",
+            "properties": {
+             "email_addresses": {
+              "type": "array",
+              "items": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "table_name": {
+          "type": "string"
+         },
+         "status": {
+          "type": "string"
+         },
+         "latest_monitor_failure_msg": {
+          "type": "string"
+         },
+         "profile_metrics_table_name": {
+          "type": "string"
+         },
+         "drift_metrics_table_name": {
+          "type": "string"
+         },
+         "dashboard_id": {
+          "type": "string"
+         },
+         "monitor_version": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Gets a monitor for the specified table."
+  }
+ }
+}

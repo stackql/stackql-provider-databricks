@@ -1,0 +1,115 @@
+{
+ "/api/2.0/mlflow/registered-models/get-latest-versions": {
+  "post": {
+   "operationId": "model-latest-versions-getlatestversions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/getlatestversions"
+   },
+   "x-stackQL-resource": "model_latest_versions",
+   "x-stackQL-method": "getlatestversions",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "model_versions": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "version": {
+             "type": "string"
+            },
+            "creation_timestamp": {
+             "type": "integer"
+            },
+            "last_updated_timestamp": {
+             "type": "integer"
+            },
+            "user_id": {
+             "type": "string"
+            },
+            "current_stage": {
+             "type": "string"
+            },
+            "description": {
+             "type": "string"
+            },
+            "source": {
+             "type": "string"
+            },
+            "run_id": {
+             "type": "string"
+            },
+            "status": {
+             "type": "string"
+            },
+            "status_message": {
+             "type": "string"
+            },
+            "tags": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "key": {
+                "type": "string"
+               },
+               "value": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "run_link": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.model_versions",
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Registered model unique name identifier."
+        },
+        "stages": {
+         "type": "string",
+         "description": "List of stages."
+        }
+       },
+       "example": {
+        "name": "string",
+        "stages": [
+         "string"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "description": "Gets the latest version of a registered model."
+  }
+ }
+}

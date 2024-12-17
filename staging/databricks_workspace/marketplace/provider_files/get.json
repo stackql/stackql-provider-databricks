@@ -1,0 +1,80 @@
+{
+ "/api/2.0/marketplace-provider/files/{file_id}": {
+  "get": {
+   "operationId": "provider-files-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerfiles/get"
+   },
+   "x-stackQL-resource": "provider_files",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "file_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "file_info": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "marketplace_file_type": {
+            "type": "string"
+           },
+           "file_parent": {
+            "type": "object",
+            "properties": {
+             "parent_id": {
+              "type": "string"
+             },
+             "file_parent_type": {
+              "type": "string"
+             }
+            }
+           },
+           "mime_type": {
+            "type": "string"
+           },
+           "download_link": {
+            "type": "string"
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "display_name": {
+            "type": "string"
+           },
+           "status": {
+            "type": "string"
+           },
+           "status_message": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.file_info",
+   "description": "Get a file"
+  }
+ }
+}

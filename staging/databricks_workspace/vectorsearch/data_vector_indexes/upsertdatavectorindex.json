@@ -1,0 +1,84 @@
+{
+ "/api/2.0/vector-search/indexes/{index_name}/upsert-data": {
+  "post": {
+   "operationId": "data-vector-indexes-upsertdatavectorindex",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchindexes/upsertdatavectorindex"
+   },
+   "x-stackQL-resource": "data_vector_indexes",
+   "x-stackQL-method": "upsertdatavectorindex",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "index_name",
+     "required": true,
+     "description": "(string) Name of the vector index where data is to be upserted. Must be a Direct Vector Access Index.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Response indicating the result of the upsert operation.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "status": {
+          "type": "string"
+         },
+         "result": {
+          "type": "object",
+          "properties": {
+           "success_row_count": {
+            "type": "integer"
+           },
+           "failed_primary_keys": {
+            "type": "array",
+            "items": {}
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "inputs_json": {
+         "type": "required",
+         "description": "JSON string representing the data to be upserted."
+        }
+       },
+       "example": {
+        "inputs_json": "[{\"id\": \"1\", \"text\": \"hello world\", \"text_vector\": [1.0, 2.0, 3.0]}]"
+       }
+      }
+     }
+    },
+    "description": "Data to be upserted into the vector index."
+   },
+   "description": "Handles the upserting of data into a specified vector index."
+  }
+ }
+}

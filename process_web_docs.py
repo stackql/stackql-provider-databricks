@@ -96,7 +96,9 @@ def scrape_dynamic_content(url, max_retries=5, retry_delay=5):
         except Exception as e:
             # Unknown or unexpected error, fail immediately
             print(f"Unexpected error: {e}")
-            raise
+            # raise
+            print(f"Retrying in {retry_delay} seconds...")
+            time.sleep(retry_delay)
 
         finally:
             if driver:

@@ -1,0 +1,63 @@
+{
+ "/api/2.1/clusters/permanent-delete": {
+  "post": {
+   "operationId": "clusters-permanentdelete",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/permanentdelete"
+   },
+   "x-stackQL-resource": "clusters",
+   "x-stackQL-method": "permanentdelete",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "cluster_id": {
+         "type": "required",
+         "description": "The cluster to be deleted."
+        }
+       },
+       "example": {
+        "cluster_id": "1202-211320-brick1"
+       }
+      }
+     }
+    }
+   },
+   "description": "Permanently deletes a Spark cluster. This cluster is terminated and resources are asynchronously removed."
+  }
+ }
+}

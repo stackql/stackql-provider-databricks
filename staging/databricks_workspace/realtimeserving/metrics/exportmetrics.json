@@ -1,0 +1,40 @@
+{
+ "/api/2.0/serving-endpoints/{name}/metrics": {
+  "get": {
+   "operationId": "metrics-exportmetrics",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/exportmetrics"
+   },
+   "x-stackQL-resource": "metrics",
+   "x-stackQL-method": "exportmetrics",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Metrics for the serving endpoint in Prometheus exposition or OpenMetrics exposition format were fetched successfully."
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Retrieves the metrics associated with the provided serving endpoint in either Prometheus or OpenMetrics exposition format."
+  }
+ }
+}

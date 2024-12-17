@@ -1,0 +1,82 @@
+{
+ "/api/2.0/lakeview/dashboards/{dashboard_id}": {
+  "get": {
+   "operationId": "dashboards-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/lakeview/get"
+   },
+   "x-stackQL-resource": "dashboards",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "dashboard_id",
+     "required": true,
+     "description": "(string) UUID identifying the dashboard.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "dashboard_id": {
+          "type": "string"
+         },
+         "display_name": {
+          "type": "string"
+         },
+         "path": {
+          "type": "string"
+         },
+         "create_time": {
+          "type": "string"
+         },
+         "update_time": {
+          "type": "string"
+         },
+         "warehouse_id": {
+          "type": "string"
+         },
+         "etag": {
+          "type": "string"
+         },
+         "serialized_dashboard": {
+          "type": "string"
+         },
+         "lifecycle_state": {
+          "type": "string"
+         },
+         "parent_path": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get a draft dashboard."
+  }
+ }
+}

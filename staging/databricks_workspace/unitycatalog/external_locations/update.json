@@ -1,0 +1,145 @@
+{
+ "/api/2.1/unity-catalog/external-locations/{name}": {
+  "patch": {
+   "operationId": "external-locations-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/externallocations/update"
+   },
+   "x-stackQL-resource": "external_locations",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the external location.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The external location was successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "url": {
+          "type": "string"
+         },
+         "credential_name": {
+          "type": "string"
+         },
+         "read_only": {
+          "type": "boolean"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "access_point": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "credential_id": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "browse_only": {
+          "type": "boolean"
+         },
+         "isolation_mode": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "url": {
+         "type": "string",
+         "description": "Path URL of the external location."
+        },
+        "credential_name": {
+         "type": "string",
+         "description": "Name of the storage credential used with this location."
+        },
+        "read_only": {
+         "type": "boolean",
+         "description": "Indicates whether the external location is read-only."
+        },
+        "comment": {
+         "type": "string",
+         "description": "User-provided free-form text description."
+        },
+        "owner": {
+         "type": "string",
+         "description": "The owner of the external location."
+        },
+        "access_point": {
+         "type": "string",
+         "description": "The AWS access point to use when accesing s3 for this external location."
+        },
+        "isolation_mode": {
+         "type": "string",
+         "description": "New name for the external location."
+        },
+        "new_name": {
+         "type": "string",
+         "description": "Force update even if changing url invalidates dependent external tables or mounts."
+        },
+        "force": {
+         "type": "boolean",
+         "description": "Skips validation of the storage credential associated with the external location."
+        },
+        "skip_validation": {
+         "type": "boolean"
+        }
+       },
+       "example": {
+        "url": "string",
+        "credential_name": "string",
+        "read_only": true,
+        "comment": "string",
+        "owner": "string",
+        "access_point": "string",
+        "isolation_mode": "ISOLATION_MODE_OPEN",
+        "new_name": "string",
+        "force": true,
+        "skip_validation": true
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates an external location in the metastore. The caller must be the owner of the external location, or be a metastore admin. In the second case, the admin can only update the name of the external location."
+  }
+ }
+}

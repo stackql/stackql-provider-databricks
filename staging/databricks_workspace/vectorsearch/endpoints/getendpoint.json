@@ -1,0 +1,80 @@
+{
+ "/api/2.0/vector-search/endpoints/{endpoint_name}": {
+  "get": {
+   "operationId": "endpoints-getendpoint",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchendpoints/getendpoint"
+   },
+   "x-stackQL-resource": "endpoints",
+   "x-stackQL-method": "getendpoint",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "endpoint_name",
+     "required": true,
+     "description": "(string) Name of the endpoint",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Details of the endpoint.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "creator": {
+          "type": "string"
+         },
+         "creation_timestamp": {
+          "type": "integer"
+         },
+         "last_updated_timestamp": {
+          "type": "integer"
+         },
+         "endpoint_type": {
+          "type": "string"
+         },
+         "last_updated_user": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         },
+         "endpoint_status": {
+          "type": "object",
+          "properties": {
+           "state": {
+            "type": "string"
+           },
+           "message": {
+            "type": "string"
+           }
+          }
+         },
+         "num_indexes": {
+          "type": "integer"
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

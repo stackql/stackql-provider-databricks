@@ -1,0 +1,146 @@
+{
+ "/api/2.0/mlflow/registered-models/rename": {
+  "post": {
+   "operationId": "models-renamemodel",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/renamemodel"
+   },
+   "x-stackQL-resource": "models",
+   "x-stackQL-method": "renamemodel",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "registered_model": {
+          "type": "object",
+          "properties": {
+           "name": {
+            "type": "string"
+           },
+           "creation_timestamp": {
+            "type": "integer"
+           },
+           "last_updated_timestamp": {
+            "type": "integer"
+           },
+           "user_id": {
+            "type": "string"
+           },
+           "description": {
+            "type": "string"
+           },
+           "latest_versions": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "version": {
+               "type": "string"
+              },
+              "creation_timestamp": {
+               "type": "integer"
+              },
+              "last_updated_timestamp": {
+               "type": "integer"
+              },
+              "user_id": {
+               "type": "string"
+              },
+              "current_stage": {
+               "type": "string"
+              },
+              "description": {
+               "type": "string"
+              },
+              "source": {
+               "type": "string"
+              },
+              "run_id": {
+               "type": "string"
+              },
+              "status": {
+               "type": "string"
+              },
+              "status_message": {
+               "type": "string"
+              },
+              "tags": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "key": {
+                  "type": "string"
+                 },
+                 "value": {
+                  "type": "string"
+                 }
+                }
+               }
+              },
+              "run_link": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "tags": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Registered model unique name identifier."
+        },
+        "new_name": {
+         "type": "string",
+         "description": "If provided, updates the name for this "
+        }
+       },
+       "example": {
+        "name": "string",
+        "new_name": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Renames a registered model."
+  }
+ }
+}

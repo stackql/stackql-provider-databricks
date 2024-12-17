@@ -1,0 +1,68 @@
+{
+ "/api/2.0/mlflow/runs/log-model": {
+  "post": {
+   "operationId": "experiment-runs-logmodel",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/logmodel"
+   },
+   "x-stackQL-resource": "experiment_runs",
+   "x-stackQL-method": "logmodel",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "429": {
+     "description": "Operation is rejected due to throttling, e.g. some resource has been exhausted, per-user quota."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "run_id": {
+         "type": "string",
+         "description": "ID of the run to log under"
+        },
+        "model_json": {
+         "type": "string",
+         "description": "MLmodel file in json format."
+        }
+       },
+       "example": {
+        "run_id": "string",
+        "model_json": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Experimental: This API may change or be removed in a future release without warning."
+  }
+ }
+}

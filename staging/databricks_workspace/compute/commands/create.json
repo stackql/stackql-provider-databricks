@@ -1,0 +1,56 @@
+{
+ "/api/1.2/contexts/create": {
+  "post": {
+   "operationId": "commands-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/commandexecution/create"
+   },
+   "x-stackQL-resource": "commands",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Status was returned successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "clusterId": {
+         "type": "string",
+         "description": "Running cluster id"
+        },
+        "language": {
+         "type": "string"
+        }
+       },
+       "example": {
+        "clusterId": "string",
+        "language": "python"
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates an execution context for running cluster commands."
+  }
+ }
+}

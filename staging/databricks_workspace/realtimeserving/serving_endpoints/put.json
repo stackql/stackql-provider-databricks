@@ -1,0 +1,90 @@
+{
+ "/api/2.0/serving-endpoints/{name}/rate-limits": {
+  "put": {
+   "operationId": "serving-endpoints-put",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/put"
+   },
+   "x-stackQL-resource": "serving_endpoints",
+   "x-stackQL-method": "put",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Serving endpoint rate limits were updated successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "rate_limits": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "calls": {
+             "type": "integer"
+            },
+            "key": {
+             "type": "string"
+            },
+            "renewal_period": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "rate_limits": {
+         "type": "Array of object"
+        }
+       },
+       "example": {
+        "rate_limits": [
+         {
+          "calls": 15,
+          "key": "user",
+          "renewal_period": "minute"
+         }
+        ]
+       }
+      }
+     }
+    }
+   },
+   "description": "Used to update the rate limits of a serving endpoint. NOTE: Only foundation model endpoints are currently supported. For external models, use AI Gateway to manage rate limits."
+  }
+ }
+}

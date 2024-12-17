@@ -1,0 +1,213 @@
+{
+ "/api/2.0/preview/sql/alerts/{alert_id}": {
+  "get": {
+   "operationId": "alerts-legacy-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/alertslegacy/get"
+   },
+   "x-stackQL-resource": "alerts_legacy",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "alert_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Alert was successfully fetched.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "created_at": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         },
+         "parent": {
+          "type": "string"
+         },
+         "last_triggered_at": {
+          "type": "string"
+         },
+         "name": {
+          "type": "string"
+         },
+         "options": {
+          "type": "object",
+          "properties": {
+           "column": {
+            "type": "string"
+           },
+           "custom_body": {
+            "type": "string"
+           },
+           "custom_subject": {
+            "type": "string"
+           },
+           "muted": {
+            "type": "boolean"
+           },
+           "op": {
+            "type": "string"
+           },
+           "value": {
+            "type": "null"
+           },
+           "empty_result_state": {
+            "type": "string"
+           }
+          }
+         },
+         "query": {
+          "type": "object",
+          "properties": {
+           "created_at": {
+            "type": "string"
+           },
+           "data_source_id": {
+            "type": "string"
+           },
+           "description": {
+            "type": "string"
+           },
+           "id": {
+            "type": "string"
+           },
+           "is_archived": {
+            "type": "boolean"
+           },
+           "is_draft": {
+            "type": "boolean"
+           },
+           "is_safe": {
+            "type": "boolean"
+           },
+           "name": {
+            "type": "string"
+           },
+           "options": {
+            "type": "object",
+            "properties": {
+             "moved_to_trash_at": {
+              "type": "string"
+             },
+             "catalog": {
+              "type": "string"
+             },
+             "schema": {
+              "type": "string"
+             },
+             "parameters": {
+              "type": "array",
+              "items": {
+               "type": "object",
+               "properties": {
+                "title": {
+                 "type": "string"
+                },
+                "name": {
+                 "type": "string"
+                },
+                "type": {
+                 "type": "string"
+                },
+                "enumOptions": {
+                 "type": "string"
+                },
+                "queryId": {
+                 "type": "string"
+                },
+                "multiValuesOptions": {
+                 "type": "object",
+                 "properties": {
+                  "prefix": {
+                   "type": "string"
+                  },
+                  "separator": {
+                   "type": "string"
+                  },
+                  "suffix": {
+                   "type": "string"
+                  }
+                 }
+                },
+                "value": {
+                 "type": "null"
+                }
+               }
+              }
+             }
+            }
+           },
+           "query": {
+            "type": "string"
+           },
+           "updated_at": {
+            "type": "string"
+           },
+           "tags": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           },
+           "user_id": {
+            "type": "integer"
+           }
+          }
+         },
+         "rearm": {
+          "type": "integer"
+         },
+         "state": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "string"
+         },
+         "user": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "integer"
+           },
+           "name": {
+            "type": "string"
+           },
+           "email": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Gets an alert."
+  }
+ }
+}

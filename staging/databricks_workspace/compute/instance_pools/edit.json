@@ -1,0 +1,90 @@
+{
+ "/api/2.0/instance-pools/edit": {
+  "post": {
+   "operationId": "instance-pools-edit",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/instancepools/edit"
+   },
+   "x-stackQL-resource": "instance_pools",
+   "x-stackQL-method": "edit",
+   "x-stackQL-verb": "replace",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "instance_pool_name": {
+         "type": "required",
+         "description": "Pool name requested by the user. Pool name must be unique. Length must be between 1 and 100\ncharacters."
+        },
+        "min_idle_instances": {
+         "type": "string",
+         "description": "Minimum number of idle instances to keep in the instance pool"
+        },
+        "max_capacity": {
+         "type": "int32",
+         "description": "Maximum number of outstanding instances to keep in the pool, including both instances used by\nclusters and idle instances. Clusters that require further instance provisioning will fail during\nupsize requests."
+        },
+        "idle_instance_autotermination_minutes": {
+         "type": "int32",
+         "description": "Automatically terminates the extra instances in the pool cache after they are inactive for this\ntime in minutes if min_idle_instances requirement is already met. If not set, the extra pool\ninstances will be automatically terminated after a default timeout. If specified, the\nthreshold must be between 0 and 10000 minutes.\nUsers can also set this value to 0 to instantly remove idle instances from the cache if\nmin cache size could still hold."
+        },
+        "instance_pool_id": {
+         "type": "int32",
+         "description": "Instance pool ID"
+        },
+        "node_type_id": {
+         "type": "required",
+         "description": "This field encodes, through a single value, the resources available to each of\nthe Spark nodes in this cluster. For example, the Spark nodes can be provisioned\nand optimized for memory or compute intensive workloads. A list of available node\ntypes can be retrieved by using the "
+        },
+        "custom_tags": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "max_capacity": 200,
+        "idle_instance_autotermination_minutes": 30,
+        "min_idle_instances": 5,
+        "instance_pool_id": "1234-567890-fetch12-pool-A3BcdEFg",
+        "instance_pool_name": "my-edited-pool"
+       }
+      }
+     }
+    }
+   },
+   "description": "Modifies the configuration of an existing instance pool."
+  }
+ }
+}

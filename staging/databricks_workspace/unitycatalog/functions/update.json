@@ -1,0 +1,264 @@
+{
+ "/api/2.1/unity-catalog/functions/{name}": {
+  "patch": {
+   "operationId": "functions-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/functions/update"
+   },
+   "x-stackQL-resource": "functions",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) The fully-qualified name of the function (of the form ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The function was successfully updated.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "catalog_name": {
+          "type": "string"
+         },
+         "schema_name": {
+          "type": "string"
+         },
+         "input_params": {
+          "type": "object",
+          "properties": {
+           "parameters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "type_text": {
+               "type": "string"
+              },
+              "type_json": {
+               "type": "string"
+              },
+              "type_name": {
+               "type": "string"
+              },
+              "type_precision": {
+               "type": "integer"
+              },
+              "type_scale": {
+               "type": "integer"
+              },
+              "type_interval_type": {
+               "type": "string"
+              },
+              "position": {
+               "type": "integer"
+              },
+              "parameter_mode": {
+               "type": "string"
+              },
+              "parameter_type": {
+               "type": "string"
+              },
+              "parameter_default": {
+               "type": "string"
+              },
+              "comment": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "data_type": {
+          "type": "string"
+         },
+         "full_data_type": {
+          "type": "string"
+         },
+         "return_params": {
+          "type": "object",
+          "properties": {
+           "parameters": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "type_text": {
+               "type": "string"
+              },
+              "type_json": {
+               "type": "string"
+              },
+              "type_name": {
+               "type": "string"
+              },
+              "type_precision": {
+               "type": "integer"
+              },
+              "type_scale": {
+               "type": "integer"
+              },
+              "type_interval_type": {
+               "type": "string"
+              },
+              "position": {
+               "type": "integer"
+              },
+              "parameter_mode": {
+               "type": "string"
+              },
+              "parameter_type": {
+               "type": "string"
+              },
+              "parameter_default": {
+               "type": "string"
+              },
+              "comment": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "routine_body": {
+          "type": "string"
+         },
+         "routine_definition": {
+          "type": "string"
+         },
+         "routine_dependencies": {
+          "type": "object",
+          "properties": {
+           "dependencies": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "table": {
+               "type": "object",
+               "properties": {
+                "table_full_name": {
+                 "type": "string"
+                }
+               }
+              },
+              "function": {
+               "type": "object",
+               "properties": {
+                "function_full_name": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "parameter_style": {
+          "type": "string"
+         },
+         "is_deterministic": {
+          "type": "boolean"
+         },
+         "sql_data_access": {
+          "type": "string"
+         },
+         "is_null_call": {
+          "type": "boolean"
+         },
+         "security_type": {
+          "type": "string"
+         },
+         "specific_name": {
+          "type": "string"
+         },
+         "external_name": {
+          "type": "string"
+         },
+         "external_language": {
+          "type": "string"
+         },
+         "sql_path": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "properties": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "full_name": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "function_id": {
+          "type": "string"
+         },
+         "browse_only": {
+          "type": "boolean"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "owner": {
+         "type": "string",
+         "description": "Username of current owner of function."
+        }
+       },
+       "example": {
+        "owner": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates the function that matches the supplied name. Only the owner of the function can be updated. If the user is not a metastore admin, the user must be a member of the group that is the new function owner."
+  }
+ }
+}

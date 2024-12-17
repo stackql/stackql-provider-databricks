@@ -1,0 +1,79 @@
+{
+ "/api/2.1/clusters/update": {
+  "post": {
+   "operationId": "clusters-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/update"
+   },
+   "x-stackQL-resource": "clusters",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "cluster_id": {
+         "type": "required",
+         "description": "ID of the cluster."
+        },
+        "update_mask": {
+         "type": "string",
+         "description": " "
+        },
+        "cluster": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "cluster_id": "1202-211320-brick1",
+        "cluster": {
+         "num_workers": 10,
+         "spark_version": "14.3.x-scala2.12",
+         "spark_conf": {
+          "spark.databricks.cluster.profile": "singleNode",
+          "spark.master": "[*, 4]"
+         }
+        },
+        "update_mask": "num_workers,spark_version,spark_conf"
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates the configuration of a cluster to match the partial set of attributes and size. Denote which fields to update using the"
+  }
+ }
+}

@@ -1,0 +1,236 @@
+{
+ "/api/2.0/serving-endpoints/{name}/openapi": {
+  "get": {
+   "operationId": "schemas-getopenapi",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/servingendpoints/getopenapi"
+   },
+   "x-stackQL-resource": "schemas",
+   "x-stackQL-method": "getopenapi",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The OpenAPI spec for the invocation schema was fetched successfully",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "openapi": {
+          "type": "string"
+         },
+         "info": {
+          "type": "object",
+          "properties": {
+           "title": {
+            "type": "string"
+           },
+           "version": {
+            "type": "string"
+           }
+          }
+         },
+         "servers": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "url": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "paths": {
+          "type": "object",
+          "properties": {
+           "/served-models/model1/invocations": {
+            "type": "object",
+            "properties": {
+             "post": {
+              "type": "object",
+              "properties": {
+               "requestBody": {
+                "type": "object",
+                "properties": {
+                 "content": {
+                  "type": "object",
+                  "properties": {
+                   "application/json": {
+                    "type": "object",
+                    "properties": {
+                     "schema": {
+                      "type": "object",
+                      "properties": {
+                       "oneOf": {
+                        "type": "array",
+                        "items": {
+                         "type": "object",
+                         "properties": {
+                          "properties": {
+                           "type": "object",
+                           "properties": {
+                            "dataframe_split": {
+                             "type": "object",
+                             "properties": {
+                              "properties": {
+                               "type": "object",
+                               "properties": {
+                                "columns": {
+                                 "type": "object",
+                                 "properties": {
+                                  "type": {
+                                   "type": "string"
+                                  },
+                                  "description": {
+                                   "type": "string"
+                                  },
+                                  "items": {
+                                   "type": "object",
+                                   "properties": {
+                                    "type": {
+                                     "type": "string"
+                                    }
+                                   }
+                                  },
+                                  "enum": {
+                                   "type": "array",
+                                   "items": {
+                                    "type": "string"
+                                   }
+                                  }
+                                 }
+                                },
+                                "data": {
+                                 "type": "object",
+                                 "properties": {
+                                  "type": {
+                                   "type": "string"
+                                  },
+                                  "items": {
+                                   "type": "object",
+                                   "properties": {
+                                    "type": {
+                                     "type": "string"
+                                    },
+                                    "prefixItems": {
+                                     "type": "array",
+                                     "items": {
+                                      "type": "object",
+                                      "properties": {
+                                       "type": {
+                                        "type": "string"
+                                       },
+                                       "format": {
+                                        "type": "string"
+                                       }
+                                      }
+                                     }
+                                    }
+                                   }
+                                  }
+                                 }
+                                }
+                               }
+                              }
+                             }
+                            }
+                           }
+                          }
+                         }
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               },
+               "responses": {
+                "type": "object",
+                "properties": {
+                 "200": {
+                  "type": "object",
+                  "properties": {
+                   "description": {
+                    "type": "string"
+                   },
+                   "content": {
+                    "type": "object",
+                    "properties": {
+                     "application/json": {
+                      "type": "object",
+                      "properties": {
+                       "schema": {
+                        "type": "object",
+                        "properties": {
+                         "properties": {
+                          "type": "object",
+                          "properties": {
+                           "predictions": {
+                            "type": "object",
+                            "properties": {
+                             "type": {
+                              "type": "string"
+                             },
+                             "items": {
+                              "type": "object",
+                              "properties": {
+                               "type": {
+                                "type": "string"
+                               },
+                               "format": {
+                                "type": "string"
+                               }
+                              }
+                             }
+                            }
+                           }
+                          }
+                         }
+                        }
+                       }
+                      }
+                     }
+                    }
+                   }
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Get the query schema of the serving endpoint in OpenAPI format. The schema contains information for the supported paths, input and output format and datatypes."
+  }
+ }
+}

@@ -1,0 +1,176 @@
+{
+ "/api/2.1/marketplace-consumer/listings/{listing_id}/installations/{installation_id}": {
+  "put": {
+   "operationId": "consumer-installations-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerinstallations/update"
+   },
+   "x-stackQL-resource": "consumer_installations",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "listing_id",
+     "required": true,
+     "in": "path"
+    },
+    {
+     "name": "installation_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "installation": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "listing_id": {
+            "type": "string"
+           },
+           "share_name": {
+            "type": "string"
+           },
+           "catalog_name": {
+            "type": "string"
+           },
+           "installed_on": {
+            "type": "integer"
+           },
+           "status": {
+            "type": "string"
+           },
+           "error_message": {
+            "type": "string"
+           },
+           "listing_name": {
+            "type": "string"
+           },
+           "repo_name": {
+            "type": "string"
+           },
+           "repo_path": {
+            "type": "string"
+           },
+           "recipient_type": {
+            "type": "string"
+           },
+           "tokens": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "id": {
+               "type": "string"
+              },
+              "created_at": {
+               "type": "integer"
+              },
+              "created_by": {
+               "type": "string"
+              },
+              "activation_url": {
+               "type": "string"
+              },
+              "expiration_time": {
+               "type": "integer"
+              },
+              "updated_at": {
+               "type": "integer"
+              },
+              "updated_by": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "token_detail": {
+            "type": "object",
+            "properties": {
+             "shareCredentialsVersion": {
+              "type": "integer"
+             },
+             "bearerToken": {
+              "type": "string"
+             },
+             "endpoint": {
+              "type": "string"
+             },
+             "expirationTime": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "rotate_token": {
+         "type": "boolean"
+        },
+        "installation": {
+         "type": "required"
+        }
+       },
+       "example": {
+        "installation": {
+         "id": "string",
+         "listing_id": "string",
+         "share_name": "string",
+         "catalog_name": "string",
+         "installed_on": 0,
+         "status": "INSTALLED",
+         "error_message": "string",
+         "listing_name": "string",
+         "repo_name": "string",
+         "repo_path": "string",
+         "recipient_type": "DELTA_SHARING_RECIPIENT_TYPE_DATABRICKS",
+         "tokens": [
+          {
+           "id": "string",
+           "created_at": 0,
+           "created_by": "string",
+           "activation_url": "string",
+           "expiration_time": 0,
+           "updated_at": 0,
+           "updated_by": "string"
+          }
+         ],
+         "token_detail": {
+          "shareCredentialsVersion": 0,
+          "bearerToken": "string",
+          "endpoint": "string",
+          "expirationTime": "string"
+         }
+        },
+        "rotate_token": true
+       }
+      }
+     }
+    }
+   },
+   "description": "This is a update API that will update the part of the fields defined in the installation table as well as interact with external services according to the fields not included in the installation table"
+  }
+ }
+}

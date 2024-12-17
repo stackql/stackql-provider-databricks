@@ -1,0 +1,108 @@
+{
+ "/api/2.0/apps/{app_name}/deployments": {
+  "get": {
+   "operationId": "deployments-listdeployments",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/apps/listdeployments"
+   },
+   "x-stackQL-resource": "deployments",
+   "x-stackQL-method": "listdeployments",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "app_name",
+     "required": true,
+     "description": "(string) The name of the app.",
+     "in": "path"
+    },
+    {
+     "name": "page_token",
+     "description": "Pagination token to go to the next page of apps. Requests first page if absent.",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "description": "Upper bound for items returned.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "app_deployments": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "deployment_id": {
+             "type": "string"
+            },
+            "source_code_path": {
+             "type": "string"
+            },
+            "mode": {
+             "type": "string"
+            },
+            "deployment_artifacts": {
+             "type": "object",
+             "properties": {
+              "source_code_path": {
+               "type": "string"
+              }
+             }
+            },
+            "status": {
+             "type": "object",
+             "properties": {
+              "state": {
+               "type": "string"
+              },
+              "message": {
+               "type": "string"
+              }
+             }
+            },
+            "create_time": {
+             "type": "string"
+            },
+            "creator": {
+             "type": "string"
+            },
+            "update_time": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.app_deployments",
+   "description": "Lists all app deployments for the app with the supplied name."
+  }
+ }
+}

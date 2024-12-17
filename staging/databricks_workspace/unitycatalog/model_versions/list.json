@@ -1,0 +1,126 @@
+{
+ "/api/2.1/unity-catalog/models/{full_name}/versions": {
+  "get": {
+   "operationId": "model-versions-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelversions/list"
+   },
+   "x-stackQL-resource": "model_versions",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) The full three-level name of the registered model under which to list model versions",
+     "in": "path"
+    },
+    {
+     "name": "max_results",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    },
+    {
+     "name": "include_browse",
+     "description": "Whether to include model versions in the response for which the principal can only access selective metadata for",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The model version list was successfully retrieved",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "model_versions": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "model_name": {
+             "type": "string"
+            },
+            "catalog_name": {
+             "type": "string"
+            },
+            "schema_name": {
+             "type": "string"
+            },
+            "comment": {
+             "type": "string"
+            },
+            "source": {
+             "type": "string"
+            },
+            "run_id": {
+             "type": "string"
+            },
+            "run_workspace_id": {
+             "type": "string"
+            },
+            "version": {
+             "type": "integer"
+            },
+            "status": {
+             "type": "string"
+            },
+            "id": {
+             "type": "string"
+            },
+            "metastore_id": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "storage_location": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.model_versions",
+   "description": "List model versions. You can list model versions under a particular schema, or list all model versions in the current metastore."
+  }
+ }
+}

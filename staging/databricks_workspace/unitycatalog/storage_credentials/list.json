@@ -1,0 +1,106 @@
+{
+ "/api/2.1/unity-catalog/storage-credentials": {
+  "get": {
+   "operationId": "storage-credentials-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/storagecredentials/list"
+   },
+   "x-stackQL-resource": "storage_credentials",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "max_results",
+     "description": "Maximum number of storage credentials to return. If not set, all the storage credentials are returned (not recommended).",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "description": "Opaque pagination token to go to next page based on previous query.",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "The storage credentials list was successfully retrieved.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "storage_credentials": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "aws_iam_role": {
+             "type": "object",
+             "properties": {
+              "role_arn": {
+               "type": "string"
+              },
+              "unity_catalog_iam_arn": {
+               "type": "string"
+              },
+              "external_id": {
+               "type": "string"
+              }
+             }
+            },
+            "comment": {
+             "type": "string"
+            },
+            "read_only": {
+             "type": "boolean"
+            },
+            "owner": {
+             "type": "string"
+            },
+            "full_name": {
+             "type": "string"
+            },
+            "id": {
+             "type": "string"
+            },
+            "metastore_id": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            },
+            "used_for_managed_storage": {
+             "type": "boolean"
+            },
+            "isolation_mode": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.storage_credentials",
+   "description": "Gets an array of storage credentials (as"
+  }
+ }
+}

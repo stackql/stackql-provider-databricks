@@ -1,0 +1,99 @@
+{
+ "/api/2.0/mlflow/model-versions/get": {
+  "get": {
+   "operationId": "model-versions-getmodelversion",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/getmodelversion"
+   },
+   "x-stackQL-resource": "model_versions",
+   "x-stackQL-method": "getmodelversion",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Name of the registered model",
+     "in": "query"
+    },
+    {
+     "name": "version",
+     "required": true,
+     "description": "(string) Model version number",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "model_version": {
+          "type": "object",
+          "properties": {
+           "name": {
+            "type": "string"
+           },
+           "version": {
+            "type": "string"
+           },
+           "creation_timestamp": {
+            "type": "integer"
+           },
+           "last_updated_timestamp": {
+            "type": "integer"
+           },
+           "user_id": {
+            "type": "string"
+           },
+           "current_stage": {
+            "type": "string"
+           },
+           "description": {
+            "type": "string"
+           },
+           "source": {
+            "type": "string"
+           },
+           "run_id": {
+            "type": "string"
+           },
+           "status": {
+            "type": "string"
+           },
+           "status_message": {
+            "type": "string"
+           },
+           "tags": {
+            "type": "array",
+            "items": {
+             "type": "object",
+             "properties": {
+              "key": {
+               "type": "string"
+              },
+              "value": {
+               "type": "string"
+              }
+             }
+            }
+           },
+           "run_link": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.model_version",
+   "description": "Get a model version."
+  }
+ }
+}

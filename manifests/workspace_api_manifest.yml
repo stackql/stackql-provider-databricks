@@ -2153,12 +2153,14 @@ services:
       - name: deleteindex
         docPath: https://docs.databricks.com/api/workspace/vectorsearchindexes/deleteindex
         verb: delete
+        hasRespData: false
       - name: querynextpage
         docPath: https://docs.databricks.com/api/workspace/vectorsearchindexes/querynextpage
         verb: exec
       - name: syncindex
         docPath: https://docs.databricks.com/api/workspace/vectorsearchindexes/syncindex
         verb: exec
+        hasRespData: false
       - name: createindex
         docPath: https://docs.databricks.com/api/workspace/vectorsearchindexes/createindex
         verb: insert

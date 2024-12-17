@@ -1,0 +1,144 @@
+{
+ "/api/2.1/unity-catalog/schemas": {
+  "post": {
+   "operationId": "schemas-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/schemas/create"
+   },
+   "x-stackQL-resource": "schemas",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "The new schema was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "catalog_name": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "properties": {
+          "type": "object",
+          "properties": {
+           "property1": {
+            "type": "string"
+           },
+           "property2": {
+            "type": "string"
+           }
+          }
+         },
+         "storage_root": {
+          "type": "string"
+         },
+         "enable_predictive_optimization": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "full_name": {
+          "type": "string"
+         },
+         "storage_location": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "catalog_type": {
+          "type": "string"
+         },
+         "effective_predictive_optimization_flag": {
+          "type": "object",
+          "properties": {
+           "value": {
+            "type": "string"
+           },
+           "inherited_from_type": {
+            "type": "string"
+           },
+           "inherited_from_name": {
+            "type": "string"
+           }
+          }
+         },
+         "browse_only": {
+          "type": "boolean"
+         },
+         "schema_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Name of schema, relative to parent catalog."
+        },
+        "catalog_name": {
+         "type": "string",
+         "description": "Name of parent catalog."
+        },
+        "comment": {
+         "type": "required",
+         "description": "User-provided free-form text description."
+        },
+        "storage_root": {
+         "type": "string",
+         "description": "Storage root URL for managed tables within schema."
+        },
+        "properties": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "string",
+        "catalog_name": "string",
+        "comment": "string",
+        "properties": {
+         "property1": "string",
+         "property2": "string"
+        },
+        "storage_root": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates a new schema for catalog in the Metatastore. The caller must be a metastore admin, or have the"
+  }
+ }
+}

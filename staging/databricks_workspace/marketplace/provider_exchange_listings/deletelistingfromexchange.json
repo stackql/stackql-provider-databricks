@@ -1,0 +1,35 @@
+{
+ "/api/2.0/marketplace-exchange/exchanges-for-listing/{id}": {
+  "delete": {
+   "operationId": "provider-exchange-listings-deletelistingfromexchange",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchanges/deletelistingfromexchange"
+   },
+   "x-stackQL-resource": "provider_exchange_listings",
+   "x-stackQL-method": "deletelistingfromexchange",
+   "x-stackQL-verb": "delete",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "description": "Disassociate an exchange with a listing"
+  }
+ }
+}

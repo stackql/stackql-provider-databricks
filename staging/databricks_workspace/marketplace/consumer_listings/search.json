@@ -1,0 +1,318 @@
+{
+ "/api/2.1/marketplace-consumer/search-listings": {
+  "get": {
+   "operationId": "consumer-listings-search",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerlistings/search"
+   },
+   "x-stackQL-resource": "consumer_listings",
+   "x-stackQL-method": "search",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "query",
+     "required": true,
+     "description": "(string) Fuzzy matches query",
+     "in": "query"
+    },
+    {
+     "name": "is_free",
+     "in": "query"
+    },
+    {
+     "name": "is_private_exchange",
+     "in": "query"
+    },
+    {
+     "name": "provider_ids",
+     "description": "Matches any of the following provider ids",
+     "in": "query"
+    },
+    {
+     "name": "categories",
+     "description": "Matches any of the following categories",
+     "in": "query"
+    },
+    {
+     "name": "assets",
+     "description": "Matches any of the following asset types",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "listings": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "summary": {
+             "type": "object",
+             "properties": {
+              "name": {
+               "type": "string"
+              },
+              "subtitle": {
+               "type": "string"
+              },
+              "status": {
+               "type": "string"
+              },
+              "share": {
+               "type": "object",
+               "properties": {
+                "name": {
+                 "type": "string"
+                },
+                "type": {
+                 "type": "string"
+                }
+               }
+              },
+              "provider_region": {
+               "type": "object",
+               "properties": {
+                "cloud": {
+                 "type": "string"
+                },
+                "region": {
+                 "type": "string"
+                }
+               }
+              },
+              "setting": {
+               "type": "object",
+               "properties": {
+                "visibility": {
+                 "type": "string"
+                }
+               }
+              },
+              "created_at": {
+               "type": "integer"
+              },
+              "created_by": {
+               "type": "string"
+              },
+              "updated_at": {
+               "type": "integer"
+              },
+              "updated_by": {
+               "type": "string"
+              },
+              "published_at": {
+               "type": "integer"
+              },
+              "published_by": {
+               "type": "string"
+              },
+              "categories": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               }
+              },
+              "listingType": {
+               "type": "string"
+              },
+              "created_by_id": {
+               "type": "integer"
+              },
+              "updated_by_id": {
+               "type": "integer"
+              },
+              "provider_id": {
+               "type": "string"
+              },
+              "exchange_ids": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               }
+              },
+              "git_repo": {
+               "type": "object",
+               "properties": {
+                "git_repo_url": {
+                 "type": "string"
+                }
+               }
+              }
+             }
+            },
+            "detail": {
+             "type": "object",
+             "properties": {
+              "description": {
+               "type": "string"
+              },
+              "terms_of_service": {
+               "type": "string"
+              },
+              "documentation_link": {
+               "type": "string"
+              },
+              "support_link": {
+               "type": "string"
+              },
+              "file_ids": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               }
+              },
+              "privacy_policy_link": {
+               "type": "string"
+              },
+              "embedded_notebook_file_infos": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "id": {
+                  "type": "string"
+                 },
+                 "marketplace_file_type": {
+                  "type": "string"
+                 },
+                 "file_parent": {
+                  "type": "object",
+                  "properties": {
+                   "parent_id": {
+                    "type": "string"
+                   },
+                   "file_parent_type": {
+                    "type": "string"
+                   }
+                  }
+                 },
+                 "mime_type": {
+                  "type": "string"
+                 },
+                 "download_link": {
+                  "type": "string"
+                 },
+                 "created_at": {
+                  "type": "integer"
+                 },
+                 "updated_at": {
+                  "type": "integer"
+                 },
+                 "display_name": {
+                  "type": "string"
+                 },
+                 "status": {
+                  "type": "string"
+                 },
+                 "status_message": {
+                  "type": "string"
+                 }
+                }
+               }
+              },
+              "geographical_coverage": {
+               "type": "string"
+              },
+              "cost": {
+               "type": "string"
+              },
+              "pricing_model": {
+               "type": "string"
+              },
+              "update_frequency": {
+               "type": "object",
+               "properties": {
+                "interval": {
+                 "type": "integer"
+                },
+                "unit": {
+                 "type": "string"
+                }
+               }
+              },
+              "collection_granularity": {
+               "type": "object",
+               "properties": {
+                "interval": {
+                 "type": "integer"
+                },
+                "unit": {
+                 "type": "string"
+                }
+               }
+              },
+              "collection_date_start": {
+               "type": "integer"
+              },
+              "collection_date_end": {
+               "type": "integer"
+              },
+              "data_source": {
+               "type": "string"
+              },
+              "size": {
+               "type": "number"
+              },
+              "assets": {
+               "type": "array",
+               "items": {
+                "type": "string"
+               }
+              },
+              "license": {
+               "type": "string"
+              },
+              "tags": {
+               "type": "array",
+               "items": {
+                "type": "object",
+                "properties": {
+                 "tag_name": {
+                  "type": "string"
+                 },
+                 "tag_values": {
+                  "type": "array",
+                  "items": {
+                   "type": "string"
+                  }
+                 }
+                }
+               }
+              }
+             }
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.listings",
+   "description": "Search published listings in the Databricks Marketplace that the consumer has access to. This query supports a variety of different search parameters and performs fuzzy matching."
+  }
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "/api/2.0/mlflow/comments/create": {
+  "post": {
+   "operationId": "model-version-comments-createcomment",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/createcomment"
+   },
+   "x-stackQL-resource": "model_version_comments",
+   "x-stackQL-method": "createcomment",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Comment was made successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "comment": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "creation_timestamp": {
+            "type": "integer"
+           },
+           "last_updated_timestamp": {
+            "type": "integer"
+           },
+           "user_id": {
+            "type": "string"
+           },
+           "comment": {
+            "type": "string"
+           },
+           "available_actions": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": " "
+        },
+        "version": {
+         "type": "string",
+         "description": "Name of the model."
+        },
+        "comment": {
+         "type": "required",
+         "description": " "
+        }
+       },
+       "example": {
+        "name": "search_ads_model",
+        "version": "1",
+        "comment": "This version is great!"
+       }
+      }
+     }
+    },
+    "description": "Details required to create a comment on a model version."
+   },
+   "description": "Posts a comment on a model version. A comment can be submitted either by a user or programmatically to display relevant information about the model. For example, test results or deployment errors."
+  }
+ }
+}

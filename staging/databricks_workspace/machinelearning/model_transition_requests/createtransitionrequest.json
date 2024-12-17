@@ -1,0 +1,106 @@
+{
+ "/api/2.0/mlflow/transition-requests/create": {
+  "post": {
+   "operationId": "model-transition-requests-createtransitionrequest",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/createtransitionrequest"
+   },
+   "x-stackQL-resource": "model_transition_requests",
+   "x-stackQL-method": "createtransitionrequest",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Transition request was made successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "request": {
+          "type": "object",
+          "properties": {
+           "creation_timestamp": {
+            "type": "integer"
+           },
+           "to_stage": {
+            "type": "string"
+           },
+           "user_id": {
+            "type": "string"
+           },
+           "comment": {
+            "type": "string"
+           },
+           "available_actions": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": " "
+        },
+        "version": {
+         "type": "string",
+         "description": "Name of the model."
+        },
+        "stage": {
+         "type": "required",
+         "description": " "
+        },
+        "comment": {
+         "type": "string",
+         "description": "Version of the model."
+        }
+       },
+       "example": {
+        "name": "search_ads_model",
+        "version": "1",
+        "stage": "Staging",
+        "comment": "This version is great!"
+       }
+      }
+     }
+    },
+    "description": "Details required to create a model version stage transition request."
+   },
+   "description": "Creates a model version stage transition request."
+  }
+ }
+}

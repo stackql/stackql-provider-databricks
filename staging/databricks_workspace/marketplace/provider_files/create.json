@@ -1,0 +1,109 @@
+{
+ "/api/2.0/marketplace-provider/files": {
+  "post": {
+   "operationId": "provider-files-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerfiles/create"
+   },
+   "x-stackQL-resource": "provider_files",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "upload_url": {
+          "type": "string"
+         },
+         "file_info": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "marketplace_file_type": {
+            "type": "string"
+           },
+           "file_parent": {
+            "type": "object",
+            "properties": {
+             "parent_id": {
+              "type": "string"
+             },
+             "file_parent_type": {
+              "type": "string"
+             }
+            }
+           },
+           "mime_type": {
+            "type": "string"
+           },
+           "download_link": {
+            "type": "string"
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "display_name": {
+            "type": "string"
+           },
+           "status": {
+            "type": "string"
+           },
+           "status_message": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "marketplace_file_type": {
+         "type": "required"
+        },
+        "mime_type": {
+         "type": "string"
+        },
+        "display_name": {
+         "type": "required"
+        },
+        "file_parent": {
+         "type": "required"
+        }
+       },
+       "example": {
+        "file_parent": {
+         "parent_id": "string",
+         "file_parent_type": "PROVIDER"
+        },
+        "marketplace_file_type": "PROVIDER_ICON",
+        "mime_type": "string",
+        "display_name": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Create a file. Currently, only provider icons and attached notebooks are supported."
+  }
+ }
+}

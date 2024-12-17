@@ -1,0 +1,97 @@
+{
+ "/api/2.0/lakeview/dashboards/{dashboard_id}/schedules/{schedule_id}/subscriptions/{subscription_id}": {
+  "get": {
+   "operationId": "dashboard-subscriptions-getsubscription",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/lakeview/getsubscription"
+   },
+   "x-stackQL-resource": "dashboard_subscriptions",
+   "x-stackQL-method": "getsubscription",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 3,
+   "parameters": [
+    {
+     "name": "dashboard_id",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    },
+    {
+     "name": "schedule_id",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    },
+    {
+     "name": "subscription_id",
+     "required": true,
+     "description": "(string)  ",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "subscription_id": {
+          "type": "string"
+         },
+         "schedule_id": {
+          "type": "string"
+         },
+         "dashboard_id": {
+          "type": "string"
+         },
+         "subscriber": {
+          "type": "object",
+          "properties": {
+           "user_subscriber": {
+            "type": "object",
+            "properties": {
+             "user_id": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         },
+         "created_by_user_id": {
+          "type": "string"
+         },
+         "etag": {
+          "type": "string"
+         },
+         "create_time": {
+          "type": "string"
+         },
+         "update_time": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   }
+  }
+ }
+}

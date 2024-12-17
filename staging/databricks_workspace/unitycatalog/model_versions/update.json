@@ -1,0 +1,125 @@
+{
+ "/api/2.1/unity-catalog/models/{full_name}/versions/{version}": {
+  "patch": {
+   "operationId": "model-versions-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelversions/update"
+   },
+   "x-stackQL-resource": "model_versions",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 2,
+   "parameters": [
+    {
+     "name": "full_name",
+     "required": true,
+     "description": "(string) The three-level (fully qualified) name of the model version",
+     "in": "path"
+    },
+    {
+     "name": "version",
+     "required": true,
+     "description": "(integer) The integer version number of the model version",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Successfully updated the properties of the model version",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "model_name": {
+          "type": "string"
+         },
+         "catalog_name": {
+          "type": "string"
+         },
+         "schema_name": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "source": {
+          "type": "string"
+         },
+         "run_id": {
+          "type": "string"
+         },
+         "run_workspace_id": {
+          "type": "string"
+         },
+         "version": {
+          "type": "integer"
+         },
+         "status": {
+          "type": "string"
+         },
+         "id": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "storage_location": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "comment": {
+         "type": "string",
+         "description": "The comment attached to the model version"
+        }
+       },
+       "example": {
+        "comment": "This is my new model version comment"
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates the specified model version."
+  }
+ }
+}

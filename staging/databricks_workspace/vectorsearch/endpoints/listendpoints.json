@@ -1,0 +1,82 @@
+{
+ "/api/2.0/vector-search/endpoints": {
+  "get": {
+   "operationId": "endpoints-listendpoints",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/vectorsearchendpoints/listendpoints"
+   },
+   "x-stackQL-resource": "endpoints",
+   "x-stackQL-method": "listendpoints",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_token",
+     "description": "Token for pagination",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "List of all endpoints",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "endpoints": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "name": {
+             "type": "string"
+            },
+            "creator": {
+             "type": "string"
+            },
+            "creation_timestamp": {
+             "type": "integer"
+            },
+            "last_updated_timestamp": {
+             "type": "integer"
+            },
+            "endpoint_type": {
+             "type": "string"
+            },
+            "last_updated_user": {
+             "type": "string"
+            },
+            "id": {
+             "type": "string"
+            },
+            "endpoint_status": {
+             "type": "object",
+             "properties": {
+              "state": {
+               "type": "string"
+              },
+              "message": {
+               "type": "string"
+              }
+             }
+            },
+            "num_indexes": {
+             "type": "integer"
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.endpoints"
+  }
+ }
+}

@@ -1,0 +1,60 @@
+{
+ "/api/2.0/mlflow/experiments/restore": {
+  "post": {
+   "operationId": "experiments-restoreexperiment",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/experiments/restoreexperiment"
+   },
+   "x-stackQL-resource": "experiments",
+   "x-stackQL-method": "restoreexperiment",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "experiment_id": {
+         "type": "required",
+         "description": "ID of the associated experiment."
+        }
+       },
+       "example": {
+        "experiment_id": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Restore an experiment marked for deletion. This also restores associated metadata, runs, metrics, params, and tags. If experiment uses FileStore, underlying artifacts associated with experiment are also restored."
+  }
+ }
+}

@@ -1,0 +1,197 @@
+{
+ "/api/2.1/unity-catalog/recipients": {
+  "post": {
+   "operationId": "recipients-create",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/recipients/create"
+   },
+   "x-stackQL-resource": "recipients",
+   "x-stackQL-method": "create",
+   "x-stackQL-verb": "insert",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "The new recipient was successfully created.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "authentication_type": {
+          "type": "string"
+         },
+         "sharing_code": {
+          "type": "string"
+         },
+         "data_recipient_global_metastore_id": {
+          "type": "string"
+         },
+         "owner": {
+          "type": "string"
+         },
+         "comment": {
+          "type": "string"
+         },
+         "ip_access_list": {
+          "type": "object",
+          "properties": {
+           "allowed_ip_addresses": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "properties_kvpairs": {
+          "type": "object",
+          "properties": {
+           "properties": {
+            "type": "object",
+            "properties": {
+             "property1": {
+              "type": "string"
+             },
+             "property2": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         },
+         "activation_url": {
+          "type": "string"
+         },
+         "activated": {
+          "type": "boolean"
+         },
+         "created_at": {
+          "type": "integer"
+         },
+         "created_by": {
+          "type": "string"
+         },
+         "tokens": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "created_at": {
+             "type": "integer"
+            },
+            "created_by": {
+             "type": "string"
+            },
+            "activation_url": {
+             "type": "string"
+            },
+            "expiration_time": {
+             "type": "integer"
+            },
+            "updated_at": {
+             "type": "integer"
+            },
+            "updated_by": {
+             "type": "string"
+            }
+           }
+          }
+         },
+         "updated_at": {
+          "type": "integer"
+         },
+         "updated_by": {
+          "type": "string"
+         },
+         "cloud": {
+          "type": "string"
+         },
+         "region": {
+          "type": "string"
+         },
+         "metastore_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Name of Recipient."
+        },
+        "authentication_type": {
+         "type": "string",
+         "description": "The delta sharing authentication type."
+        },
+        "owner": {
+         "type": "required",
+         "description": "Username of the recipient owner."
+        },
+        "comment": {
+         "type": "string",
+         "description": "Description about the recipient."
+        },
+        "data_recipient_global_metastore_id": {
+         "type": "string",
+         "description": "The global Unity Catalog metastore id provided by the data recipient.\nThis field is required when the "
+        },
+        "sharing_code": {
+         "type": "string",
+         "description": " is "
+        },
+        "expiration_time": {
+         "type": "string",
+         "description": ".\nThe identifier is of format "
+        },
+        "ip_access_list": {
+         "type": "object"
+        },
+        "properties_kvpairs": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "name": "string",
+        "authentication_type": "TOKEN",
+        "owner": "string",
+        "comment": "string",
+        "ip_access_list": {
+         "allowed_ip_addresses": [
+          "string"
+         ]
+        },
+        "properties_kvpairs": {
+         "properties": {
+          "property1": "string",
+          "property2": "string"
+         }
+        },
+        "data_recipient_global_metastore_id": "string",
+        "sharing_code": "string",
+        "expiration_time": 0
+       }
+      }
+     }
+    }
+   },
+   "description": "Creates a new recipient with the delta sharing authentication type in the metastore. The caller must be a metastore admin or has the"
+  }
+ }
+}

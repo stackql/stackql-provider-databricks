@@ -1,0 +1,123 @@
+{
+ "/api/2.0/lakeview/dashboards/{dashboard_id}/schedules/{schedule_id}": {
+  "put": {
+   "operationId": "dashboard-schedules-updateschedule",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/lakeview/updateschedule"
+   },
+   "x-stackQL-resource": "dashboard_schedules",
+   "x-stackQL-method": "updateschedule",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "schedule_id": {
+          "type": "string"
+         },
+         "dashboard_id": {
+          "type": "string"
+         },
+         "cron_schedule": {
+          "type": "object",
+          "properties": {
+           "quartz_cron_expression": {
+            "type": "string"
+           },
+           "timezone_id": {
+            "type": "string"
+           }
+          }
+         },
+         "pause_status": {
+          "type": "string"
+         },
+         "display_name": {
+          "type": "string"
+         },
+         "etag": {
+          "type": "string"
+         },
+         "create_time": {
+          "type": "string"
+         },
+         "update_time": {
+          "type": "string"
+         },
+         "warehouse_id": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "409": {
+     "description": "Request was rejected due a conflict with an existing resource."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "pause_status": {
+         "type": "string",
+         "description": " "
+        },
+        "display_name": {
+         "type": "string",
+         "description": "The status indicates whether this schedule is paused or not."
+        },
+        "etag": {
+         "type": "string",
+         "description": " "
+        },
+        "warehouse_id": {
+         "type": "string",
+         "description": "The display name for schedule."
+        },
+        "cron_schedule": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "cron_schedule": {
+         "quartz_cron_expression": "0 0 8 * * ?",
+         "timezone_id": "Europe/London"
+        },
+        "pause_status": "UNPAUSED",
+        "display_name": "Monthly Traffic Report Snapshot",
+        "etag": "80611980",
+        "warehouse_id": "47bb1c472649e711"
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

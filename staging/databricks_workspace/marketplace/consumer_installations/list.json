@@ -1,0 +1,130 @@
+{
+ "/api/2.1/marketplace-consumer/installations": {
+  "get": {
+   "operationId": "consumer-installations-list",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/consumerinstallations/list"
+   },
+   "x-stackQL-resource": "consumer_installations",
+   "x-stackQL-method": "list",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [
+    {
+     "name": "page_token",
+     "in": "query"
+    },
+    {
+     "name": "page_size",
+     "in": "query"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "installations": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string"
+            },
+            "listing_id": {
+             "type": "string"
+            },
+            "share_name": {
+             "type": "string"
+            },
+            "catalog_name": {
+             "type": "string"
+            },
+            "installed_on": {
+             "type": "integer"
+            },
+            "status": {
+             "type": "string"
+            },
+            "error_message": {
+             "type": "string"
+            },
+            "listing_name": {
+             "type": "string"
+            },
+            "repo_name": {
+             "type": "string"
+            },
+            "repo_path": {
+             "type": "string"
+            },
+            "recipient_type": {
+             "type": "string"
+            },
+            "tokens": {
+             "type": "array",
+             "items": {
+              "type": "object",
+              "properties": {
+               "id": {
+                "type": "string"
+               },
+               "created_at": {
+                "type": "integer"
+               },
+               "created_by": {
+                "type": "string"
+               },
+               "activation_url": {
+                "type": "string"
+               },
+               "expiration_time": {
+                "type": "integer"
+               },
+               "updated_at": {
+                "type": "integer"
+               },
+               "updated_by": {
+                "type": "string"
+               }
+              }
+             }
+            },
+            "token_detail": {
+             "type": "object",
+             "properties": {
+              "shareCredentialsVersion": {
+               "type": "integer"
+              },
+              "bearerToken": {
+               "type": "string"
+              },
+              "endpoint": {
+               "type": "string"
+              },
+              "expirationTime": {
+               "type": "string"
+              }
+             }
+            }
+           }
+          }
+         },
+         "next_page_token": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "x-stackQL-objectKey": "$.installations",
+   "description": "List all installations across all listings."
+  }
+ }
+}

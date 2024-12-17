@@ -1,0 +1,96 @@
+{
+ "/api/2.0/marketplace-exchange/filters/{id}": {
+  "put": {
+   "operationId": "provider-exchange-filters-update",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/providerexchangefilters/update"
+   },
+   "x-stackQL-resource": "provider_exchange_filters",
+   "x-stackQL-method": "update",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "filter": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "exchange_id": {
+            "type": "string"
+           },
+           "filter_value": {
+            "type": "string"
+           },
+           "name": {
+            "type": "string"
+           },
+           "created_at": {
+            "type": "integer"
+           },
+           "created_by": {
+            "type": "string"
+           },
+           "updated_at": {
+            "type": "integer"
+           },
+           "updated_by": {
+            "type": "string"
+           },
+           "filter_type": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "filter": {
+         "type": "object"
+        }
+       },
+       "example": {
+        "filter": {
+         "id": "string",
+         "exchange_id": "string",
+         "filter_value": "string",
+         "name": "string",
+         "created_at": 0,
+         "created_by": "string",
+         "updated_at": 0,
+         "updated_by": "string",
+         "filter_type": "GLOBAL_METASTORE_ID"
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Update an exchange filter."
+  }
+ }
+}

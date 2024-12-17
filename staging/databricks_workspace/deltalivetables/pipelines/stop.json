@@ -1,0 +1,50 @@
+{
+ "/api/2.0/pipelines/{pipeline_id}/stop": {
+  "post": {
+   "operationId": "pipelines-stop",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/pipelines/stop"
+   },
+   "x-stackQL-resource": "pipelines",
+   "x-stackQL-method": "stop",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "pipeline_id",
+     "required": true,
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "description": "Stops the pipeline by canceling the active update. If there is no active update for the pipeline, this request is a no-op."
+  }
+ }
+}

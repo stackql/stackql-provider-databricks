@@ -1,0 +1,117 @@
+{
+ "/api/2.0/mlflow/transition-requests/approve": {
+  "post": {
+   "operationId": "model-transition-requests-approvetransitionrequest",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/approvetransitionrequest"
+   },
+   "x-stackQL-resource": "model_transition_requests",
+   "x-stackQL-method": "approvetransitionrequest",
+   "x-stackQL-verb": "exec",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "Model version's stage was updated successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "activity": {
+          "type": "object",
+          "properties": {
+           "id": {
+            "type": "string"
+           },
+           "creation_timestamp": {
+            "type": "integer"
+           },
+           "last_updated_timestamp": {
+            "type": "integer"
+           },
+           "user_id": {
+            "type": "string"
+           },
+           "activity_type": {
+            "type": "string"
+           },
+           "from_stage": {
+            "type": "string"
+           },
+           "to_stage": {
+            "type": "string"
+           },
+           "comment": {
+            "type": "string"
+           },
+           "system_comment": {
+            "type": "string"
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "404": {
+     "description": "Operation was performed on a resource that does not exist."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": " "
+        },
+        "version": {
+         "type": "string",
+         "description": "Name of the model."
+        },
+        "stage": {
+         "type": "required",
+         "description": " "
+        },
+        "archive_existing_versions": {
+         "type": "string",
+         "description": "Version of the model."
+        },
+        "comment": {
+         "type": "required",
+         "description": " "
+        }
+       },
+       "example": {
+        "name": "search_ads_model",
+        "version": "1",
+        "stage": "Staging",
+        "archive_existing_versions": true,
+        "comment": "This version is great!"
+       }
+      }
+     }
+    },
+    "description": "Details required to identify and approve a model version stage transition request."
+   },
+   "description": "Approves a model version stage transition request."
+  }
+ }
+}

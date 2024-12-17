@@ -1,0 +1,58 @@
+{
+ "/api/2.0/mlflow/model-versions/update": {
+  "patch": {
+   "operationId": "model-versions-updatemodelversion",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/modelregistry/updatemodelversion"
+   },
+   "x-stackQL-resource": "model_versions",
+   "x-stackQL-method": "updatemodelversion",
+   "x-stackQL-verb": "update",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {}
+       }
+      }
+     }
+    }
+   },
+   "requestBody": {
+    "required": true,
+    "content": {
+     "application/json": {
+      "schema": {
+       "type": "object",
+       "properties": {
+        "name": {
+         "type": "required",
+         "description": "Name of the registered model"
+        },
+        "version": {
+         "type": "string",
+         "description": "Model version number"
+        },
+        "description": {
+         "type": "required",
+         "description": "If provided, updates the description for this "
+        }
+       },
+       "example": {
+        "name": "string",
+        "version": "string",
+        "description": "string"
+       }
+      }
+     }
+    }
+   },
+   "description": "Updates the model version."
+  }
+ }
+}

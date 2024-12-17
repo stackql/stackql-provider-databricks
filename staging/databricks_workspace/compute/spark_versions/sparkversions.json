@@ -1,0 +1,57 @@
+{
+ "/api/2.1/clusters/spark-versions": {
+  "get": {
+   "operationId": "spark-versions-sparkversions",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/clusters/sparkversions"
+   },
+   "x-stackQL-resource": "spark_versions",
+   "x-stackQL-method": "sparkversions",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 0,
+   "parameters": [],
+   "responses": {
+    "200": {
+     "description": "",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "versions": {
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "key": {
+             "type": "string"
+            },
+            "name": {
+             "type": "string"
+            }
+           }
+          }
+         }
+        }
+       }
+      }
+     }
+    },
+    "400": {
+     "description": "Request is invalid or malformed."
+    },
+    "401": {
+     "description": "The request does not have valid authentication credentials for the operation."
+    },
+    "403": {
+     "description": "Caller does not have permission to execute the specified operation."
+    },
+    "500": {
+     "description": "Internal error."
+    }
+   },
+   "x-stackQL-objectKey": "$.versions",
+   "description": "Returns the list of available Spark versions. These versions can be used to launch a cluster."
+  }
+ }
+}

@@ -1,0 +1,186 @@
+{
+ "/api/2.0/online-tables/{name}": {
+  "get": {
+   "operationId": "online-tables-get",
+   "externalDocs": {
+    "url": "https://docs.databricks.com/api/workspace/onlinetables/get"
+   },
+   "x-stackQL-resource": "online_tables",
+   "x-stackQL-method": "get",
+   "x-stackQL-verb": "select",
+   "x-numReqParams": 1,
+   "parameters": [
+    {
+     "name": "name",
+     "required": true,
+     "description": "(string) Full three-part (catalog, schema, table) name of the table.",
+     "in": "path"
+    }
+   ],
+   "responses": {
+    "200": {
+     "description": "Request completed successfully.",
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "spec": {
+          "type": "object",
+          "properties": {
+           "run_continuously": {
+            "type": "object",
+            "properties": {}
+           },
+           "run_triggered": {
+            "type": "object",
+            "properties": {}
+           },
+           "source_table_full_name": {
+            "type": "string"
+           },
+           "primary_key_columns": {
+            "type": "array",
+            "items": {
+             "type": "string"
+            }
+           },
+           "timeseries_key": {
+            "type": "string"
+           },
+           "perform_full_copy": {
+            "type": "boolean"
+           },
+           "pipeline_id": {
+            "type": "string"
+           }
+          }
+         },
+         "status": {
+          "type": "object",
+          "properties": {
+           "detailed_state": {
+            "type": "string"
+           },
+           "message": {
+            "type": "string"
+           },
+           "provisioning_status": {
+            "type": "object",
+            "properties": {
+             "initial_pipeline_sync_progress": {
+              "type": "object",
+              "properties": {
+               "latest_version_currently_processing": {
+                "type": "integer"
+               },
+               "synced_row_count": {
+                "type": "integer"
+               },
+               "total_row_count": {
+                "type": "integer"
+               },
+               "sync_progress_completion": {
+                "type": "number"
+               },
+               "estimated_completion_time_seconds": {
+                "type": "number"
+               }
+              }
+             }
+            }
+           },
+           "continuous_update_status": {
+            "type": "object",
+            "properties": {
+             "last_processed_commit_version": {
+              "type": "integer"
+             },
+             "timestamp": {
+              "type": "string"
+             },
+             "initial_pipeline_sync_progress": {
+              "type": "object",
+              "properties": {
+               "latest_version_currently_processing": {
+                "type": "integer"
+               },
+               "synced_row_count": {
+                "type": "integer"
+               },
+               "total_row_count": {
+                "type": "integer"
+               },
+               "sync_progress_completion": {
+                "type": "number"
+               },
+               "estimated_completion_time_seconds": {
+                "type": "number"
+               }
+              }
+             }
+            }
+           },
+           "triggered_update_status": {
+            "type": "object",
+            "properties": {
+             "last_processed_commit_version": {
+              "type": "integer"
+             },
+             "timestamp": {
+              "type": "string"
+             },
+             "triggered_update_progress": {
+              "type": "object",
+              "properties": {
+               "latest_version_currently_processing": {
+                "type": "integer"
+               },
+               "synced_row_count": {
+                "type": "integer"
+               },
+               "total_row_count": {
+                "type": "integer"
+               },
+               "sync_progress_completion": {
+                "type": "number"
+               },
+               "estimated_completion_time_seconds": {
+                "type": "number"
+               }
+              }
+             }
+            }
+           },
+           "failed_status": {
+            "type": "object",
+            "properties": {
+             "last_processed_commit_version": {
+              "type": "integer"
+             },
+             "timestamp": {
+              "type": "string"
+             }
+            }
+           }
+          }
+         },
+         "table_serving_url": {
+          "type": "string"
+         },
+         "unity_catalog_provisioning_state": {
+          "type": "string"
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "description": "Get information about an existing online table and its status."
+  }
+ }
+}
