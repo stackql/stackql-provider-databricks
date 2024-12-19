@@ -13,7 +13,7 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID",
+     "description": "uuid",
      "in": "path"
     }
    ],
@@ -93,24 +93,19 @@
        "properties": {
         "id": {
          "type": "integer",
-         "format": "int64",
-         "description": "Databricks service principal ID."
+         "format": "int64"
         },
         "applicationId": {
-         "type": "uuid",
-         "description": "UUID relating to the service principal"
+         "type": "uuid"
         },
         "displayName": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "externalId": {
-         "type": "string",
-         "description": "String that represents a concatenation of given and family names."
+         "type": "string"
         },
         "active": {
-         "type": "boolean",
-         "description": "If this user is active"
+         "type": "boolean"
         },
         "roles": {
          "type": "Array of object"

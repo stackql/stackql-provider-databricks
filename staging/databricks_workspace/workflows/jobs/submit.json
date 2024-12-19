@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/runs/submit": {
+ "/api/2.2/jobs/runs/submit": {
   "post": {
    "operationId": "jobs-submit",
    "externalDocs": {

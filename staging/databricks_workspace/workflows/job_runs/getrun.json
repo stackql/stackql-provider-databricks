@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/runs/get": {
+ "/api/2.2/jobs/runs/get": {
   "get": {
    "operationId": "job-runs-getrun",
    "externalDocs": {
@@ -494,63 +494,6 @@
               "type": "boolean"
              }
             }
-           },
-           "jar_params": {
-            "type": "array",
-            "items": {
-             "type": "string"
-            }
-           },
-           "notebook_params": {
-            "type": "object",
-            "properties": {
-             "age": {
-              "type": "string"
-             },
-             "name": {
-              "type": "string"
-             }
-            }
-           },
-           "python_params": {
-            "type": "array",
-            "items": {
-             "type": "string"
-            }
-           },
-           "spark_submit_params": {
-            "type": "array",
-            "items": {
-             "type": "string"
-            }
-           },
-           "python_named_params": {
-            "type": "object",
-            "properties": {
-             "data": {
-              "type": "string"
-             },
-             "name": {
-              "type": "string"
-             }
-            }
-           },
-           "sql_params": {
-            "type": "object",
-            "properties": {
-             "age": {
-              "type": "string"
-             },
-             "name": {
-              "type": "string"
-             }
-            }
-           },
-           "dbt_commands": {
-            "type": "array",
-            "items": {
-             "type": "string"
-            }
            }
           }
          },
@@ -861,6 +804,12 @@
          },
          "job_run_id": {
           "type": "integer"
+         },
+         "has_more": {
+          "type": "boolean"
+         },
+         "next_page_token": {
+          "type": "string"
          }
         }
        }
@@ -883,7 +832,7 @@
      "description": "Internal error."
     }
    },
-   "description": "Retrieve the metadata of a run."
+   "description": "Retrieves the metadata of a run."
   }
  }
 }

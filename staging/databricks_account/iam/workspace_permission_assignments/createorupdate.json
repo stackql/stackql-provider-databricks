@@ -13,19 +13,19 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(string) The account ID.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "workspace_id",
      "required": true,
-     "description": "(int64) The workspace ID.",
+     "description": "int64",
      "in": "path"
     },
     {
      "name": "principal_id",
      "required": true,
-     "description": "(int64) The ID of the user, service principal, or group.",
+     "description": "int64",
      "in": "path"
     }
    ],
@@ -95,8 +95,7 @@
        "type": "object",
        "properties": {
         "permissions": {
-         "type": "Array of string",
-         "description": "Array of permissions assignments to update on the workspace.\nValid values are \"USER\" and \"ADMIN\" (case-sensitive).\nIf both \"USER\" and \"ADMIN\" are provided, \"ADMIN\" takes precedence.\nOther values will be ignored.\nNote that excluding this field, or providing unsupported values, will have the same effect as providing an empty list, which will result in the deletion of all permissions for the principal."
+         "type": "Array of string"
         }
        },
        "example": {

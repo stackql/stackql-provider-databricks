@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/runs/cancel": {
+ "/api/2.2/jobs/runs/cancel": {
   "post": {
    "operationId": "job-runs-cancelrun",
    "externalDocs": {

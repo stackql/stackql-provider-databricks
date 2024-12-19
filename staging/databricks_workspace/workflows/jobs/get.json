@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/get": {
+ "/api/2.2/jobs/get": {
   "get": {
    "operationId": "jobs-get",
    "externalDocs": {
@@ -14,6 +14,10 @@
      "name": "job_id",
      "required": true,
      "description": "int64",
+     "in": "query"
+    },
+    {
+     "name": "page_token",
      "in": "query"
     }
    ],
@@ -453,6 +457,12 @@
          },
          "created_time": {
           "type": "integer"
+         },
+         "has_more": {
+          "type": "boolean"
+         },
+         "next_page_token": {
+          "type": "string"
          }
         }
        }

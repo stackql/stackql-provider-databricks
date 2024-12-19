@@ -22,6 +22,7 @@ python .\process_web_docs.py workspace --clean --debug
 python .\generate_openapi_specs.py workspace --clean --debug
 
 deactivate
+Remove-Item -Recurse -Force ./venv
 ```
 
 ## tests
@@ -31,8 +32,15 @@ To run tests locally, clone [stackql-provider-tests](https://github.com/stackql/
 ```bash
 # run from the directory you cloned into
 cd /mnt/c/LocalGitRepos/stackql/core/stackql-provider-tests
+# test account
 bash test-provider.sh \
 databricks_account \
+false \
+/mnt/c/LocalGitRepos/stackql/openapi-conversion/stackql-databricks-openapi/openapi_providers \
+true
+# test workspace
+bash test-provider.sh \
+databricks_workspace \
 false \
 /mnt/c/LocalGitRepos/stackql/openapi-conversion/stackql-databricks-openapi/openapi_providers \
 true
@@ -51,6 +59,67 @@ PROVIDER_REGISTRY_ROOT_DIR="$(pwd)/openapi_providers"
 REG_STR='{"url": "file://'${PROVIDER_REGISTRY_ROOT_DIR}'", "localDocRoot": "'${PROVIDER_REGISTRY_ROOT_DIR}'", "verifyConfig": {"nopVerify": true}}'
 ./stackql shell --registry="${REG_STR}"
 ```
+
+
+some test queries...
+
+```sql
+SELECT displayName, userName, active 
+FROM databricks_account.iam.users, JSON_EACH(roles)
+WHERE account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce'
+AND JSON_EXTRACT(json_each.value, '$.value') = 'account_admin';
+```
+
+```sql
+SELECT applicationId,  displayName
+FROM databricks_account.iam.service_principals, JSON_EACH(roles)
+WHERE account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce'
+AND JSON_EXTRACT(json_each.value, '$.value') = 'account_admin';
+```
+
+```sql
+select 
+workspace_id,
+workspace_name,
+deployment_name,
+workspace_status,
+pricing_tier, 
+aws_region, 
+credentials_id, 
+storage_configuration_id
+from
+databricks_account.provisioning.workspaces where account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce';
+```
+
+
+dbc-ddbc0f51-c9cf
+
+```sql
+select 
+workspace_id,
+workspace_name,
+deployment_name,
+workspace_status,
+pricing_tier, 
+aws_region, 
+credentials_id, 
+storage_configuration_id
+from
+databricks_account.provisioning.workspaces where account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce';
+```
+
+```sql
+select 
+cluster_id,
+aws_attributes,
+node_type_id,
+state
+from  
+databricks_workspace.compute.clusters 
+where deployment_name = 'dbc-ddbc0f51-c9cf';
+```
+
+
 
 # check for new routes
 

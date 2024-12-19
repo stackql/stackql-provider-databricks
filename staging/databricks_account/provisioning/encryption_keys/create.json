@@ -13,7 +13,7 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "description": "uuid",
      "in": "path"
     }
    ],
@@ -86,8 +86,7 @@
        "type": "object",
        "properties": {
         "use_cases": {
-         "type": "required",
-         "description": "The cases that the key can be used for."
+         "type": "required"
         },
         "aws_key_info": {
          "type": "object"

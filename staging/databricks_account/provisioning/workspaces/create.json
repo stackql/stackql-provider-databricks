@@ -13,7 +13,7 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "description": "uuid",
      "in": "path"
     }
    ],
@@ -110,44 +110,34 @@
        "type": "object",
        "properties": {
         "workspace_name": {
-         "type": "required",
-         "description": "The workspace's human-readable name."
+         "type": "required"
         },
         "network_id": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "deployment_name": {
-         "type": "uuid",
-         "description": "The ID of the workspace's network configuration object. To use "
+         "type": "uuid"
         },
         "aws_region": {
-         "type": "string",
-         "description": ", this field is required."
+         "type": "string"
         },
         "credentials_id": {
-         "type": "string",
-         "description": " "
+         "type": "string"
         },
         "storage_configuration_id": {
-         "type": "uuid",
-         "description": "The deployment name defines part of the subdomain for the workspace. The workspace URL for the web application and REST APIs is "
+         "type": "uuid"
         },
         "managed_services_customer_managed_key_id": {
-         "type": "uuid",
-         "description": ". For example, if the deployment name is "
+         "type": "uuid"
         },
         "private_access_settings_id": {
-         "type": "uuid",
-         "description": ", your workspace URL will be "
+         "type": "uuid"
         },
         "pricing_tier": {
-         "type": "uuid",
-         "description": ". Hyphens are allowed. This property supports only the set of characters that are allowed in a subdomain."
+         "type": "uuid"
         },
         "storage_customer_managed_key_id": {
-         "type": "string",
-         "description": "To set this value, you must have a deployment name prefix. Contact your Databricks account team to add an account deployment name prefix to your account."
+         "type": "string"
         },
         "custom_tags": {
          "type": "object"

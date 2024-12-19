@@ -13,12 +13,11 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(string) The account ID.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "page_token",
-     "description": "A token that can be used to get the next page of results.",
      "in": "query"
     },
     {

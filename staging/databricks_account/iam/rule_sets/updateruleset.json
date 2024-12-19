@@ -13,7 +13,7 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID of any type.",
+     "description": "uuid",
      "in": "path"
     }
    ],
@@ -71,8 +71,7 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "Name of the rule set."
+         "type": "required"
         },
         "rule_set": {
          "type": "object"

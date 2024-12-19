@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/list": {
+ "/api/2.2/jobs/list": {
   "get": {
    "operationId": "jobs-list",
    "externalDocs": {
@@ -469,12 +469,12 @@
             },
             "created_time": {
              "type": "integer"
+            },
+            "has_more": {
+             "type": "boolean"
             }
            }
           }
-         },
-         "has_more": {
-          "type": "boolean"
          },
          "next_page_token": {
           "type": "string"

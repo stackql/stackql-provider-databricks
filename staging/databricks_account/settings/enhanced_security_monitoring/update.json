@@ -13,7 +13,7 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID of the account being managed.",
+     "description": "uuid",
      "in": "path"
     }
    ],
@@ -71,12 +71,10 @@
        "type": "object",
        "properties": {
         "allow_missing": {
-         "type": "required",
-         "description": "This should always be set to true for Settings API. Added for AIP compliance."
+         "type": "required"
         },
         "field_mask": {
-         "type": "boolean",
-         "description": "Field mask is required to be passed into the PATCH request. Field mask specifies which fields\nof the setting payload will be updated.\nThe field mask needs to be supplied as single string. To specify multiple fields in the field mask,\nuse comma as the separator (no space)."
+         "type": "boolean"
         },
         "setting": {
          "type": "object"

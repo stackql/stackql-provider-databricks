@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 2024-12-16-stackql-generated
+  version: 2024-12-19-stackql-generated
   contact:
     name: StackQL Studios
     url: https://stackql.io/
@@ -22,8 +22,7 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       responses:
         '201':
@@ -108,8 +107,7 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       responses:
         '200':
@@ -177,16 +175,13 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       - name: force
-        description: Force deletion even if the metastore is not empty. Default is
-          false.
         in: query
       responses:
         '200':
@@ -216,12 +211,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       responses:
         '200':
@@ -293,12 +287,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       responses:
         '201':
@@ -390,16 +383,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: workspace_id
         required: true
-        description: (int64) Workspace ID.
+        description: int64
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       responses:
         '201':
@@ -439,16 +431,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: workspace_id
         required: true
-        description: (int64) Workspace ID.
+        description: int64
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       responses:
         '200':
@@ -480,16 +471,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: workspace_id
         required: true
-        description: (int64) Workspace ID.
+        description: int64
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       responses:
         '201':
@@ -536,12 +526,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: workspace_id
         required: true
-        description: (int64) Workspace ID.
+        description: int64
         in: path
       responses:
         '200':
@@ -586,12 +575,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       responses:
         '200':
@@ -676,12 +664,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       responses:
         '200':
@@ -746,20 +733,17 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       - name: storage_credential_name
         required: true
-        description: (string) Name of the storage credential.
+        description: string
         in: path
       - name: force
-        description: Force deletion even if the Storage Credential is not empty. Default
-          is false.
         in: query
       responses:
         '200':
@@ -789,16 +773,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       - name: storage_credential_name
         required: true
-        description: (string) Name of the storage credential.
+        description: string
         in: path
       responses:
         '200':
@@ -868,16 +851,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       - name: storage_credential_name
         required: true
-        description: (string) Name of the storage credential.
+        description: string
         in: path
       responses:
         '201':
@@ -970,12 +952,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: metastore_id
         required: true
-        description: (uuid) Unity Catalog metastore ID
+        description: uuid
         in: path
       responses:
         '200':
@@ -1012,12 +993,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.metastores
         delete:
@@ -1025,12 +1008,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores~1{metastore_id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores~1{metastore_id}/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.metastore_info
         update:
@@ -1038,6 +1023,7 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores~1{metastore_id}/put'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:
@@ -1061,24 +1047,28 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1metastores~1{metastore_id}/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1metastores~1{metastore_id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1metastores~1{metastore_id}/put'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1metastore/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.metastore_assignment
       sqlVerbs:
@@ -1102,12 +1092,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores~1{metastore_id}~1storage-credentials/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores~1{metastore_id}~1storage-credentials/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.storage_credentials
         delete:
@@ -1115,12 +1107,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores~1{metastore_id}~1storage-credentials~1{storage_credential_name}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores~1{metastore_id}~1storage-credentials~1{storage_credential_name}/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.credential_info
         update:
@@ -1128,6 +1122,7 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores~1{metastore_id}~1storage-credentials~1{storage_credential_name}/put'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:
@@ -1151,6 +1146,7 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1metastores~1{metastore_id}~1workspaces/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:

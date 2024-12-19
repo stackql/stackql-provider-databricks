@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 2024-12-16-stackql-generated
+  version: 2024-12-19-stackql-generated
   contact:
     name: StackQL Studios
     url: https://stackql.io/
@@ -22,12 +22,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID of any type.
+        description: uuid
         in: path
       - name: resource
         required: true
-        description: (string) The resource name for which assignable roles will be
-          listed.
+        description: string
         in: query
       responses:
         '200':
@@ -67,7 +66,7 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       responses:
         '201':
@@ -134,10 +133,8 @@ paths:
                 id:
                   type: integer
                   format: int64
-                  description: Databricks group ID
                 displayName:
                   type: string
-                  description: String that represents a human-readable group name
                 externalId:
                   type: string
                 members:
@@ -174,30 +171,21 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: filter
-        description: Query by which the results have to be filtered. Supported operators
-          are equals(
         in: query
       - name: attributes
-        description: Comma-separated list of attributes to return in response.
         in: query
       - name: excludedAttributes
-        description: Comma-separated list of attributes to exclude in response.
         in: query
       - name: startIndex
-        description: Specifies the index of the first result. First item is number
-          1.
         in: query
       - name: count
-        description: Desired number of results per page. Default is 10000.
         in: query
       - name: sortBy
-        description: Attribute to sort the results.
         in: query
       - name: sortOrder
-        description: The order to sort the results.
         in: query
       responses:
         '200':
@@ -279,11 +267,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a group in the Databricks account.
+        description: int64
         in: path
       responses:
         '204':
@@ -314,11 +302,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a group in the Databricks account.
+        description: int64
         in: path
       responses:
         '200':
@@ -385,11 +373,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a group in the Databricks account.
+        description: int64
         in: path
       responses:
         '200':
@@ -419,7 +407,6 @@ paths:
               properties:
                 schemas:
                   type: Array of string
-                  description: The schema of the patch request. Must be ["urn:ietf:params:scim:api:messages:2.0:PatchOp"].
                 Operations:
                   type: Array of object
               example:
@@ -442,11 +429,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a group in the Databricks account.
+        description: int64
         in: path
       responses:
         '200':
@@ -477,10 +464,8 @@ paths:
                 id:
                   type: integer
                   format: int64
-                  description: Databricks group ID
                 displayName:
                   type: string
-                  description: String that represents a human-readable group name
                 externalId:
                   type: string
                 members:
@@ -517,22 +502,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID of any type.
+        description: uuid
         in: path
       - name: name
         required: true
-        description: (string) The ruleset name associated with the request.
+        description: string
         in: query
       - name: etag
         required: true
-        description: (string) Etag used for versioning. The response is at least as
-          fresh as the eTag provided. Etag is used for optimistic concurrency control
-          as a way to help prevent simultaneous updates of a rule set from overwriting
-          each other. It is strongly suggested that systems make use of the etag in
-          the read -> modify -> write pattern to perform rule set updates in order
-          to avoid race conditions that is get an etag from a GET rule set request,
-          and pass it with the PUT update request to identify the rule set version
-          you are updating.
+        description: string
         in: query
       responses:
         '200':
@@ -578,7 +556,7 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID of any type.
+        description: uuid
         in: path
       responses:
         '200':
@@ -619,7 +597,6 @@ paths:
               properties:
                 name:
                   type: required
-                  description: Name of the rule set.
                 rule_set:
                   type: object
               example:
@@ -647,7 +624,7 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       responses:
         '201':
@@ -703,20 +680,14 @@ paths:
                 id:
                   type: integer
                   format: int64
-                  description: Databricks service principal ID.
                 applicationId:
                   type: uuid
-                  description: UUID relating to the service principal
                 displayName:
                   type: string
-                  description: ' '
                 externalId:
                   type: string
-                  description: String that represents a concatenation of given and
-                    family names.
                 active:
                   type: boolean
-                  description: If this user is active
                 roles:
                   type: Array of object
               example:
@@ -744,30 +715,21 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: filter
-        description: Query by which the results have to be filtered. Supported operators
-          are equals(
         in: query
       - name: attributes
-        description: Comma-separated list of attributes to return in response.
         in: query
       - name: excludedAttributes
-        description: Comma-separated list of attributes to exclude in response.
         in: query
       - name: startIndex
-        description: Specifies the index of the first result. First item is number
-          1.
         in: query
       - name: count
-        description: Desired number of results per page. Default is 10000.
         in: query
       - name: sortBy
-        description: Attribute to sort the results.
         in: query
       - name: sortOrder
-        description: The order to sort the results.
         in: query
       responses:
         '200':
@@ -839,11 +801,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a service principal in the Databricks account.
+        description: int64
         in: path
       responses:
         '204':
@@ -874,11 +836,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a service principal in the Databricks account.
+        description: int64
         in: path
       responses:
         '200':
@@ -935,11 +897,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a service principal in the Databricks account.
+        description: int64
         in: path
       responses:
         '200':
@@ -969,7 +931,6 @@ paths:
               properties:
                 schemas:
                   type: Array of string
-                  description: The schema of the patch request. Must be ["urn:ietf:params:scim:api:messages:2.0:PatchOp"].
                 Operations:
                   type: Array of object
               example:
@@ -993,11 +954,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a service principal in the Databricks account.
+        description: int64
         in: path
       responses:
         '200':
@@ -1028,20 +989,14 @@ paths:
                 id:
                   type: integer
                   format: int64
-                  description: Databricks service principal ID.
                 applicationId:
                   type: uuid
-                  description: UUID relating to the service principal
                 displayName:
                   type: string
-                  description: ' '
                 externalId:
                   type: string
-                  description: String that represents a concatenation of given and
-                    family names.
                 active:
                   type: boolean
-                  description: If this user is active
                 roles:
                   type: Array of object
               example:
@@ -1069,7 +1024,7 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       responses:
         '201':
@@ -1147,22 +1102,14 @@ paths:
                 id:
                   type: integer
                   format: int64
-                  description: Databricks user ID. This is automatically set by Databricks.
-                    Any value provided by the client will be ignored.
                 userName:
                   type: email
-                  description: Email address of the Databricks user.
                 displayName:
                   type: string
-                  description: 'String that represents a concatenation of given and
-                    family names. For example '
                 externalId:
                   type: string
-                  description: .
                 active:
                   type: boolean
-                  description: External ID is not currently supported. It is reserved
-                    for future use.
                 emails:
                   type: Array of object
                 name:
@@ -1204,31 +1151,21 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: filter
-        description: Query by which the results have to be filtered. Supported operators
-          are equals(
         in: query
       - name: attributes
-        description: Comma-separated list of attributes to return in response.
         in: query
       - name: excludedAttributes
-        description: Comma-separated list of attributes to exclude in response.
         in: query
       - name: startIndex
-        description: Specifies the index of the first result. First item is number
-          1.
         in: query
       - name: count
-        description: Desired number of results per page. Default is 10000.
         in: query
       - name: sortBy
-        description: Attribute to sort the results. Multi-part paths are supported.
-          For example,
         in: query
       - name: sortOrder
-        description: The order to sort the results.
         in: query
       responses:
         '200':
@@ -1321,11 +1258,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a user in the Databricks account.
+        description: int64
         in: path
       responses:
         '204':
@@ -1357,35 +1294,25 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a user in the Databricks account.
+        description: int64
         in: path
       - name: filter
-        description: Query by which the results have to be filtered. Supported operators
-          are equals(
         in: query
       - name: attributes
-        description: Comma-separated list of attributes to return in response.
         in: query
       - name: excludedAttributes
-        description: Comma-separated list of attributes to exclude in response.
         in: query
       - name: startIndex
-        description: Specifies the index of the first result. First item is number
-          1.
         in: query
       - name: count
-        description: Desired number of results per page. Default is 10000.
         in: query
       - name: sortBy
-        description: Attribute to sort the results. Multi-part paths are supported.
-          For example,
         in: query
       - name: sortOrder
-        description: The order to sort the results.
         in: query
       responses:
         '200':
@@ -1463,11 +1390,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a user in the Databricks account.
+        description: int64
         in: path
       responses:
         '200':
@@ -1497,7 +1424,6 @@ paths:
               properties:
                 schemas:
                   type: Array of string
-                  description: The schema of the patch request. Must be ["urn:ietf:params:scim:api:messages:2.0:PatchOp"].
                 Operations:
                   type: Array of object
               example:
@@ -1521,11 +1447,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (uuid) Databricks account ID
+        description: uuid
         in: path
       - name: id
         required: true
-        description: (int64) Unique ID for a user in the Databricks account.
+        description: int64
         in: path
       responses:
         '200':
@@ -1556,22 +1482,14 @@ paths:
                 id:
                   type: integer
                   format: int64
-                  description: Databricks user ID. This is automatically set by Databricks.
-                    Any value provided by the client will be ignored.
                 userName:
                   type: email
-                  description: Email address of the Databricks user.
                 displayName:
                   type: string
-                  description: 'String that represents a concatenation of given and
-                    family names. For example '
                 externalId:
                   type: string
-                  description: .
                 active:
                   type: boolean
-                  description: External ID is not currently supported. It is reserved
-                    for future use.
                 emails:
                   type: Array of object
                 name:
@@ -1612,11 +1530,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (string) The account ID.
+        description: string
         in: path
       - name: workspace_id
         required: true
-        description: (int64) The workspace ID.
+        description: int64
         in: path
       responses:
         '200':
@@ -1661,15 +1579,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (string) The account ID.
+        description: string
         in: path
       - name: workspace_id
         required: true
-        description: (int64) The workspace ID.
+        description: int64
         in: path
       - name: principal_id
         required: true
-        description: (int64) The ID of the user, service principal, or group.
+        description: int64
         in: path
       responses:
         '200':
@@ -1718,18 +1636,6 @@ paths:
               properties:
                 permissions:
                   type: Array of string
-                  description: 'Array of permissions assignments to update on the
-                    workspace.
-
-                    Valid values are "USER" and "ADMIN" (case-sensitive).
-
-                    If both "USER" and "ADMIN" are provided, "ADMIN" takes precedence.
-
-                    Other values will be ignored.
-
-                    Note that excluding this field, or providing unsupported values,
-                    will have the same effect as providing an empty list, which will
-                    result in the deletion of all permissions for the principal.'
               example:
                 permissions:
                 - UNKNOWN
@@ -1746,15 +1652,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (string) The account ID.
+        description: string
         in: path
       - name: workspace_id
         required: true
-        description: (int64) The workspace ID for the account.
+        description: int64
         in: path
       - name: principal_id
         required: true
-        description: (int64) The ID of the user, service principal, or group.
+        description: int64
         in: path
       responses:
         '200':
@@ -1785,11 +1691,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (string) The account ID.
+        description: string
         in: path
       - name: workspace_id
         required: true
-        description: (int64) The workspace ID for the account.
+        description: int64
         in: path
       responses:
         '200':
@@ -1849,6 +1755,7 @@ components:
             $ref: '#/paths/~1api~12.0~1preview~1accounts~1{account_id}~1access-control~1assignable-roles/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.roles
       sqlVerbs:
@@ -1869,12 +1776,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Groups/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Groups/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.Resources
         delete:
@@ -1882,24 +1791,28 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Groups~1{id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Groups~1{id}/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Groups~1{id}/patch'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Groups~1{id}/put'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:
@@ -1924,12 +1837,14 @@ components:
             $ref: '#/paths/~1api~12.0~1preview~1accounts~1{account_id}~1access-control~1rule-sets/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         updateruleset:
           operation:
             $ref: '#/paths/~1api~12.0~1preview~1accounts~1{account_id}~1access-control~1rule-sets/put'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:
@@ -1950,12 +1865,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1ServicePrincipals/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1ServicePrincipals/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.Resources
         delete:
@@ -1963,24 +1880,28 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1ServicePrincipals~1{id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1ServicePrincipals~1{id}/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1ServicePrincipals~1{id}/patch'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1ServicePrincipals~1{id}/put'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:
@@ -2005,12 +1926,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Users/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Users/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.Resources
         delete:
@@ -2018,24 +1941,28 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Users~1{id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Users~1{id}/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         patch:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Users~1{id}/patch'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1scim~1v2~1Users~1{id}/put'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:
@@ -2060,6 +1987,7 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1permissionassignments~1permissions/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.permissions
       sqlVerbs:
@@ -2080,18 +2008,21 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1permissionassignments~1principals~1{principal_id}/put'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         delete:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1permissionassignments~1principals~1{principal_id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1workspaces~1{workspace_id}~1permissionassignments/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.permission_assignments
       sqlVerbs:

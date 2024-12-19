@@ -13,12 +13,13 @@
     {
      "name": "account_id",
      "required": true,
+     "description": "string",
      "in": "path"
     },
     {
      "name": "ip_access_list_id",
      "required": true,
-     "description": "(string) The ID for the corresponding IP access list",
+     "description": "string",
      "in": "path"
     }
    ],

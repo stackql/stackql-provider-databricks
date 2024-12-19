@@ -13,18 +13,17 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "description": "uuid",
      "in": "path"
     },
     {
      "name": "metastore_id",
      "required": true,
-     "description": "(uuid) Unity Catalog metastore ID",
+     "description": "uuid",
      "in": "path"
     },
     {
      "name": "force",
-     "description": "Force deletion even if the metastore is not empty. Default is false.",
      "in": "query"
     }
    ],

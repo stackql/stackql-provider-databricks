@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/reset": {
+ "/api/2.2/jobs/reset": {
   "post": {
    "operationId": "jobs-reset",
    "externalDocs": {

@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/update": {
+ "/api/2.2/jobs/update": {
   "post": {
    "operationId": "jobs-update",
    "externalDocs": {

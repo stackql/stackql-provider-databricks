@@ -160,8 +160,7 @@ hasParams: {hasParams}""")
         print(f"params: {params}") if debug else None
     else:
         if hasParams:
-            print(f"No params found in {docPath}")
-            # raise ValueError(f"No params found in {docPath}")
+            raise ValueError(f"No params found in {docPath}")
 
     request_body = process_request_body(selector, doc_base_path, examples_doc_path, False)
     print("request_body:", json.dumps(request_body, indent=2)) if debug else None

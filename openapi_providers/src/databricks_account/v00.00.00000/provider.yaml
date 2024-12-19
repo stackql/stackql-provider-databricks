@@ -71,6 +71,7 @@ config:
     client_id_env_var: DATABRICKS_CLIENT_ID
     client_secret_env_var: DATABRICKS_CLIENT_SECRET
     grant_type: client_credentials
-    token_url: "https://accounts.cloud.databricks.com/oidc/accounts/ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce/v1/token"
+    token_url: https://accounts.cloud.databricks.com/oidc/accounts/{{ .__env__DATABRICKS_ACCOUNT_ID
+      }}/v1/token
     scopes:
     - all-apis

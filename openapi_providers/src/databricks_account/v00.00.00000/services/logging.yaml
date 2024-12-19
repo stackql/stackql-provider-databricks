@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 2024-12-16-stackql-generated
+  version: 2024-12-19-stackql-generated
   contact:
     name: StackQL Studios
     url: https://stackql.io/
@@ -22,8 +22,7 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       responses:
         '200':
@@ -120,17 +119,13 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: status
-        description: Filter by status
         in: query
       - name: credentials_id
-        description: Filter by credential configuration ID.
         in: query
       - name: storage_configuration_id
-        description: Filter by storage configuration ID.
         in: query
       responses:
         '200':
@@ -208,12 +203,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: log_delivery_configuration_id
         required: true
-        description: (uuid) Databricks log delivery configuration ID
+        description: uuid
         in: path
       responses:
         '200':
@@ -288,12 +282,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: log_delivery_configuration_id
         required: true
-        description: (uuid) Databricks log delivery configuration ID
+        description: uuid
         in: path
       responses:
         '200':
@@ -321,7 +314,6 @@ paths:
               properties:
                 status:
                   type: required
-                  description: 'Status of log delivery configuration. Set to '
               example:
                 status: ENABLED
         description: The new status for this log delivery configuration object.
@@ -341,12 +333,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1log-delivery/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1log-delivery/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.log_delivery_configurations
         get:
@@ -354,6 +348,7 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1log-delivery~1{log_delivery_configuration_id}/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.log_delivery_configuration
         patchstatus:
@@ -361,6 +356,7 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1log-delivery~1{log_delivery_configuration_id}/patch'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:

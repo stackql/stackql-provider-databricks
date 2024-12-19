@@ -763,6 +763,7 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/dbfs/delete
         verb: delete
+        hasParams: false
     - name: dbfs_directories
       methods:
       - name: list
@@ -2131,6 +2132,7 @@ services:
       - name: createendpoint
         docPath: https://docs.databricks.com/api/workspace/vectorsearchendpoints/createendpoint
         verb: insert
+        hasParams: false
       - name: getendpoint
         docPath: https://docs.databricks.com/api/workspace/vectorsearchendpoints/getendpoint
         verb: select
@@ -2164,6 +2166,7 @@ services:
       - name: createindex
         docPath: https://docs.databricks.com/api/workspace/vectorsearchindexes/createindex
         verb: insert
+        hasParams: false
       - name: getindex
         docPath: https://docs.databricks.com/api/workspace/vectorsearchindexes/getindex
         verb: select
@@ -2179,6 +2182,7 @@ services:
       - name: enforcecompliance
         docPath: https://docs.databricks.com/api/workspace/policycomplianceforjobs/enforcecompliance
         verb: replace
+        hasParams: false
       - name: getcompliance
         docPath: https://docs.databricks.com/api/workspace/policycomplianceforjobs/getcompliance
         verb: select
@@ -2213,18 +2217,22 @@ services:
       - name: deleterun
         docPath: https://docs.databricks.com/api/workspace/jobs/deleterun
         verb: delete
+        hasParams: false
       - name: cancelallruns
         docPath: https://docs.databricks.com/api/workspace/jobs/cancelallruns
         verb: exec
+        hasParams: false
       - name: cancelrun
         docPath: https://docs.databricks.com/api/workspace/jobs/cancelrun
         verb: exec
+        hasParams: false
       - name: exportrun
         docPath: https://docs.databricks.com/api/workspace/jobs/exportrun
         verb: exec
       - name: repairrun
         docPath: https://docs.databricks.com/api/workspace/jobs/repairrun
         verb: exec
+        hasParams: false
       - name: getrun
         docPath: https://docs.databricks.com/api/workspace/jobs/getrun
         verb: select
@@ -2237,18 +2245,23 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/jobs/delete
         verb: delete
+        hasParams: false
       - name: runnow
         docPath: https://docs.databricks.com/api/workspace/jobs/runnow
         verb: exec
+        hasParams: false
       - name: submit
         docPath: https://docs.databricks.com/api/workspace/jobs/submit
         verb: exec
+        hasParams: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/jobs/create
         verb: insert
+        hasParams: false
       - name: reset
         docPath: https://docs.databricks.com/api/workspace/jobs/reset
         verb: replace
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/jobs/get
         verb: select
@@ -2259,6 +2272,7 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/jobs/update
         verb: update
+        hasParams: false
   workspace:
     description: Workspace
     resources:
@@ -2270,6 +2284,7 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/automaticclusterupdate/update
         verb: update
+        hasParams: false
     - name: compliance_security_profile
       methods:
       - name: get
@@ -2278,6 +2293,7 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/compliancesecurityprofile/update
         verb: update
+        hasParams: false
     - name: dashboard_embedding_access_policy
       methods:
       - name: delete
@@ -2289,6 +2305,7 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/aibidashboardembeddingaccesspolicy/update
         verb: update
+        hasParams: false
     - name: dashboard_embedding_approved_domains
       methods:
       - name: delete
@@ -2300,11 +2317,13 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/aibidashboardembeddingapproveddomains/update
         verb: update
+        hasParams: false
     - name: directories
       methods:
       - name: mkdirs
         docPath: https://docs.databricks.com/api/workspace/workspace/mkdirs
         verb: insert
+        hasParams: false
       - name: list
         docPath: https://docs.databricks.com/api/workspace/workspace/list
         verb: select
@@ -2317,6 +2336,7 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/enhancedsecuritymonitoring/update
         verb: update
+        hasParams: false
     - name: feature_status
       methods:
       - name: setstatus
@@ -2335,6 +2355,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/ipaccesslists/create
         verb: insert
+        hasParams: false
       - name: replace
         docPath: https://docs.databricks.com/api/workspace/ipaccesslists/replace
         verb: replace
@@ -2346,6 +2367,7 @@ services:
         docPath: https://docs.databricks.com/api/workspace/ipaccesslists/list
         verb: select
         objectKey: $.ip_access_lists
+        hasParams: false
       - name: update
         docPath: https://docs.databricks.com/api/workspace/ipaccesslists/update
         verb: update
@@ -2357,6 +2379,7 @@ services:
       - name: create
         docPath: https://docs.databricks.com/api/workspace/notificationdestinations/create
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/notificationdestinations/get
         verb: select
@@ -2394,12 +2417,14 @@ services:
       - name: delete
         docPath: https://docs.databricks.com/api/workspace/workspace/delete
         verb: delete
+        hasParams: false
       - name: export
         docPath: https://docs.databricks.com/api/workspace/workspace/export
         verb: exec
       - name: import
         docPath: https://docs.databricks.com/api/workspace/workspace/import
         verb: exec
+        hasParams: false
     - name: permissions
       methods:
       - name: delete
@@ -2411,6 +2436,7 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/defaultnamespace/update
         verb: update
+        hasParams: false
     - name: restrict_admins
       methods:
       - name: delete
@@ -2422,23 +2448,28 @@ services:
       - name: update
         docPath: https://docs.databricks.com/api/workspace/restrictworkspaceadmins/update
         verb: update
+        hasParams: false
     - name: token_permission_levels
       methods:
       - name: getpermissionlevels
         docPath: https://docs.databricks.com/api/workspace/tokenmanagement/getpermissionlevels
         verb: select
         objectKey: $.permission_levels
+        hasParams: false
     - name: token_permissions
       methods:
       - name: setpermissions
         docPath: https://docs.databricks.com/api/workspace/tokenmanagement/setpermissions
         verb: replace
+        hasParams: false
       - name: getpermissions
         docPath: https://docs.databricks.com/api/workspace/tokenmanagement/getpermissions
         verb: select
+        hasParams: false
       - name: updatepermissions
         docPath: https://docs.databricks.com/api/workspace/tokenmanagement/updatepermissions
         verb: update
+        hasParams: false
     - name: tokens
       methods:
       - name: delete
@@ -2447,6 +2478,7 @@ services:
       - name: createobotoken
         docPath: https://docs.databricks.com/api/workspace/tokenmanagement/createobotoken
         verb: insert
+        hasParams: false
       - name: get
         docPath: https://docs.databricks.com/api/workspace/tokenmanagement/get
         verb: select
@@ -2460,10 +2492,13 @@ services:
       - name: revoketoken
         docPath: https://docs.databricks.com/api/workspace/tokens/revoketoken
         verb: exec
+        hasParams: false
       - name: create
         docPath: https://docs.databricks.com/api/workspace/tokens/create
         verb: insert
+        hasParams: false
       - name: listtokens
         docPath: https://docs.databricks.com/api/workspace/tokens/listtokens
         verb: select
         objectKey: $.token_infos
+        hasParams: false

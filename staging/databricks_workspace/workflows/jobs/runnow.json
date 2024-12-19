@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/run-now": {
+ "/api/2.2/jobs/run-now": {
   "post": {
    "operationId": "jobs-runnow",
    "externalDocs": {
@@ -55,35 +55,14 @@
         "job_id": {
          "type": "required"
         },
-        "jar_params": {
+        "idempotency_token": {
          "type": "integer",
          "format": "int64"
-        },
-        "python_params": {
-         "type": "Array of string"
-        },
-        "spark_submit_params": {
-         "type": "Array of string"
-        },
-        "dbt_commands": {
-         "type": "Array of string"
-        },
-        "idempotency_token": {
-         "type": "Array of string"
         },
         "job_parameters": {
          "type": "object"
         },
         "pipeline_params": {
-         "type": "object"
-        },
-        "notebook_params": {
-         "type": "object"
-        },
-        "python_named_params": {
-         "type": "object"
-        },
-        "sql_params": {
          "type": "object"
         },
         "queue": {
@@ -99,36 +78,6 @@
         "pipeline_params": {
          "full_refresh": false
         },
-        "jar_params": [
-         "john",
-         "doe",
-         "35"
-        ],
-        "notebook_params": {
-         "age": "35",
-         "name": "john doe"
-        },
-        "python_params": [
-         "john doe",
-         "35"
-        ],
-        "spark_submit_params": [
-         "--class",
-         "org.apache.spark.examples.SparkPi"
-        ],
-        "python_named_params": {
-         "data": "dbfs:/path/to/data.json",
-         "name": "task"
-        },
-        "sql_params": {
-         "age": "35",
-         "name": "john doe"
-        },
-        "dbt_commands": [
-         "dbt deps",
-         "dbt seed",
-         "dbt run"
-        ],
         "idempotency_token": "8f018174-4792-40d5-bcbc-3e6a527352c8",
         "queue": {
          "enabled": true

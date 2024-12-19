@@ -13,7 +13,7 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "description": "uuid",
      "in": "path"
     }
    ],
@@ -90,12 +90,10 @@
        "type": "object",
        "properties": {
         "name": {
-         "type": "required",
-         "description": "The name of the network connectivity configuration.\nThe name can contain alphanumeric characters, hyphens, and underscores.\nThe length must be between 3 and 30 characters.\nThe name must match the regular expression "
+         "type": "required"
         },
         "region": {
-         "type": "uuid",
-         "description": "."
+         "type": "uuid"
         }
        },
        "example": {

@@ -13,12 +13,13 @@
     {
      "name": "account_id",
      "required": true,
+     "description": "string",
      "in": "path"
     },
     {
      "name": "ip_access_list_id",
      "required": true,
-     "description": "(string) The ID for the corresponding IP access list",
+     "description": "string",
      "in": "path"
     }
    ],
@@ -58,20 +59,16 @@
        "type": "object",
        "properties": {
         "label": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "list_type": {
-         "type": "string",
-         "description": "Label for the IP access list. This "
+         "type": "string"
         },
         "ip_addresses": {
-         "type": "required",
-         "description": " be empty."
+         "type": "required"
         },
         "enabled": {
-         "type": "string",
-         "description": "Type of IP access list. Valid values are as follows and are case-sensitive:"
+         "type": "string"
         }
        },
        "example": {

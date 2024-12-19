@@ -13,6 +13,7 @@
     {
      "name": "account_id",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],
@@ -53,8 +54,7 @@
        "type": "object",
        "properties": {
         "app_id": {
-         "type": "string",
-         "description": "App id of the OAuth published app integration.\nFor example power-bi, tableau-deskop"
+         "type": "string"
         },
         "token_access_policy": {
          "type": "object"

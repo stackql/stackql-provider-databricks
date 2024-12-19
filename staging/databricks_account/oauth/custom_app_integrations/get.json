@@ -13,13 +13,13 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(string) The account ID.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "integration_id",
      "required": true,
-     "description": "(string) The OAuth app integration ID.",
+     "description": "string",
      "in": "path"
     }
    ],

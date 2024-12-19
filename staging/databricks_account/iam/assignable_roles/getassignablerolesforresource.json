@@ -13,13 +13,13 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID of any type.",
+     "description": "uuid",
      "in": "path"
     },
     {
      "name": "resource",
      "required": true,
-     "description": "(string) The resource name for which assignable roles will be listed.",
+     "description": "string",
      "in": "query"
     }
    ],

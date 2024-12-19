@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/runs/delete": {
+ "/api/2.2/jobs/runs/delete": {
   "post": {
    "operationId": "job-runs-deleterun",
    "externalDocs": {

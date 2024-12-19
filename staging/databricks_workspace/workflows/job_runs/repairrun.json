@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/runs/repair": {
+ "/api/2.2/jobs/runs/repair": {
   "post": {
    "operationId": "job-runs-repairrun",
    "externalDocs": {
@@ -57,18 +57,6 @@
          "type": "integer",
          "format": "int64"
         },
-        "jar_params": {
-         "type": "Array of string"
-        },
-        "python_params": {
-         "type": "Array of string"
-        },
-        "spark_submit_params": {
-         "type": "Array of string"
-        },
-        "dbt_commands": {
-         "type": "Array of string"
-        },
         "rerun_all_failed_tasks": {
          "type": "Array of string"
         },
@@ -79,15 +67,6 @@
          "type": "object"
         },
         "pipeline_params": {
-         "type": "object"
-        },
-        "notebook_params": {
-         "type": "object"
-        },
-        "python_named_params": {
-         "type": "object"
-        },
-        "sql_params": {
          "type": "object"
         }
        },
@@ -105,36 +84,6 @@
         "pipeline_params": {
          "full_refresh": false
         },
-        "jar_params": [
-         "john",
-         "doe",
-         "35"
-        ],
-        "notebook_params": {
-         "age": "35",
-         "name": "john doe"
-        },
-        "python_params": [
-         "john doe",
-         "35"
-        ],
-        "spark_submit_params": [
-         "--class",
-         "org.apache.spark.examples.SparkPi"
-        ],
-        "python_named_params": {
-         "data": "dbfs:/path/to/data.json",
-         "name": "task"
-        },
-        "sql_params": {
-         "age": "35",
-         "name": "john doe"
-        },
-        "dbt_commands": [
-         "dbt deps",
-         "dbt seed",
-         "dbt run"
-        ],
         "rerun_all_failed_tasks": false,
         "rerun_dependent_tasks": false
        }

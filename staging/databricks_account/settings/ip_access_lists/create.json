@@ -13,6 +13,7 @@
     {
      "name": "account_id",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],
@@ -88,12 +89,10 @@
        "type": "object",
        "properties": {
         "label": {
-         "type": "required",
-         "description": " "
+         "type": "required"
         },
         "list_type": {
-         "type": "string",
-         "description": "Type of IP access list. Valid values are as follows and are case-sensitive:"
+         "type": "string"
         },
         "ip_addresses": {
          "type": "required"

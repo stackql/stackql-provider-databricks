@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 2024-12-16-stackql-generated
+  version: 2024-12-19-stackql-generated
   contact:
     name: StackQL Studios
     url: https://stackql.io/
@@ -22,6 +22,7 @@ paths:
       parameters:
       - name: account_id
         required: true
+        description: string
         in: path
       responses:
         '200':
@@ -56,17 +57,12 @@ paths:
               properties:
                 redirect_urls:
                   type: Array of string
-                  description: List of OAuth redirect urls
                 name:
                   type: string
-                  description: Name of the custom OAuth app
                 confidential:
                   type: boolean
-                  description: ' '
                 scopes:
                   type: Array of string
-                  description: This field indicates whether an OAuth client secret
-                    is required to authenticate this client.
                 token_access_policy:
                   type: object
               example:
@@ -94,6 +90,7 @@ paths:
       parameters:
       - name: account_id
         required: true
+        description: string
         in: path
       - name: page_token
         in: query
@@ -168,9 +165,11 @@ paths:
       parameters:
       - name: account_id
         required: true
+        description: string
         in: path
       - name: integration_id
         required: true
+        description: string
         in: path
       responses:
         '200':
@@ -203,11 +202,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (string) The account ID.
+        description: string
         in: path
       - name: integration_id
         required: true
-        description: (string) The OAuth app integration ID.
+        description: string
         in: path
       responses:
         '200':
@@ -269,9 +268,11 @@ paths:
       parameters:
       - name: account_id
         required: true
+        description: string
         in: path
       - name: integration_id
         required: true
+        description: string
         in: path
       responses:
         '200':
@@ -302,8 +303,6 @@ paths:
               properties:
                 redirect_urls:
                   type: Array of string
-                  description: List of OAuth redirect urls to be updated in the custom
-                    OAuth app integration
                 token_access_policy:
                   type: object
               example:
@@ -325,10 +324,9 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (string) The account ID.
+        description: string
         in: path
       - name: page_token
-        description: A token that can be used to get the next page of results.
         in: query
       - name: page_size
         in: query
@@ -387,6 +385,7 @@ paths:
       parameters:
       - name: account_id
         required: true
+        description: string
         in: path
       responses:
         '200':
@@ -417,9 +416,6 @@ paths:
               properties:
                 app_id:
                   type: string
-                  description: 'App id of the OAuth published app integration.
-
-                    For example power-bi, tableau-deskop'
                 token_access_policy:
                   type: object
               example:
@@ -443,6 +439,7 @@ paths:
       parameters:
       - name: account_id
         required: true
+        description: string
         in: path
       - name: page_token
         in: query
@@ -503,9 +500,11 @@ paths:
       parameters:
       - name: account_id
         required: true
+        description: string
         in: path
       - name: integration_id
         required: true
+        description: string
         in: path
       responses:
         '200':
@@ -538,9 +537,11 @@ paths:
       parameters:
       - name: account_id
         required: true
+        description: string
         in: path
       - name: integration_id
         required: true
+        description: string
         in: path
       responses:
         '200':
@@ -590,9 +591,11 @@ paths:
       parameters:
       - name: account_id
         required: true
+        description: string
         in: path
       - name: integration_id
         required: true
+        description: string
         in: path
       responses:
         '200':
@@ -642,11 +645,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (string) The account ID.
+        description: string
         in: path
       - name: service_principal_id
         required: true
-        description: (int64) The service principal ID.
+        description: int64
         in: path
       responses:
         '200':
@@ -687,14 +690,13 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (string) The account ID.
+        description: string
         in: path
       - name: service_principal_id
         required: true
-        description: (int64) The service principal ID.
+        description: int64
         in: path
       - name: page_token
-        description: An opaque page token which was the
         in: query
       responses:
         '200':
@@ -744,15 +746,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: (string) The account ID.
+        description: string
         in: path
       - name: service_principal_id
         required: true
-        description: (int64) The service principal ID.
+        description: int64
         in: path
       - name: secret_id
         required: true
-        description: (string) The secret ID.
+        description: string
         in: path
       responses:
         '200':
@@ -777,12 +779,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1custom-app-integrations/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1custom-app-integrations/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.apps
         delete:
@@ -790,18 +794,21 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1custom-app-integrations~1{integration_id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1custom-app-integrations~1{integration_id}/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1custom-app-integrations~1{integration_id}/patch'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:
@@ -825,6 +832,7 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1published-apps/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.apps
       sqlVerbs:
@@ -845,12 +853,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1published-app-integrations/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1published-app-integrations/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.apps
         delete:
@@ -858,18 +868,21 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1published-app-integrations~1{integration_id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1published-app-integrations~1{integration_id}/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         update:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1oauth2~1published-app-integrations~1{integration_id}/patch'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:
@@ -893,12 +906,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1servicePrincipals~1{service_principal_id}~1credentials~1secrets/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1servicePrincipals~1{service_principal_id}~1credentials~1secrets/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.secrets
         delete:
@@ -906,6 +921,7 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1servicePrincipals~1{service_principal_id}~1credentials~1secrets~1{secret_id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:

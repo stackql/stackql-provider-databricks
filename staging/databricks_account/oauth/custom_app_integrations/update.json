@@ -13,11 +13,13 @@
     {
      "name": "account_id",
      "required": true,
+     "description": "string",
      "in": "path"
     },
     {
      "name": "integration_id",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],
@@ -57,8 +59,7 @@
        "type": "object",
        "properties": {
         "redirect_urls": {
-         "type": "Array of string",
-         "description": "List of OAuth redirect urls to be updated in the custom OAuth app integration"
+         "type": "Array of string"
         },
         "token_access_policy": {
          "type": "object"

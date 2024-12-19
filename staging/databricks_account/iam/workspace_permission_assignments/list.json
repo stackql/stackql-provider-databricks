@@ -13,13 +13,13 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(string) The account ID.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "workspace_id",
      "required": true,
-     "description": "(int64) The workspace ID for the account.",
+     "description": "int64",
      "in": "path"
     }
    ],

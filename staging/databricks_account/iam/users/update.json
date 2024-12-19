@@ -13,13 +13,13 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID",
+     "description": "uuid",
      "in": "path"
     },
     {
      "name": "id",
      "required": true,
-     "description": "(int64) Unique ID for a user in the Databricks account.",
+     "description": "int64",
      "in": "path"
     }
    ],
@@ -60,24 +60,19 @@
        "properties": {
         "id": {
          "type": "integer",
-         "format": "int64",
-         "description": "Databricks user ID. This is automatically set by Databricks. Any value provided by the client will be ignored."
+         "format": "int64"
         },
         "userName": {
-         "type": "email",
-         "description": "Email address of the Databricks user."
+         "type": "email"
         },
         "displayName": {
-         "type": "string",
-         "description": "String that represents a concatenation of given and family names. For example "
+         "type": "string"
         },
         "externalId": {
-         "type": "string",
-         "description": "."
+         "type": "string"
         },
         "active": {
-         "type": "boolean",
-         "description": "External ID is not currently supported. It is reserved for future use."
+         "type": "boolean"
         },
         "emails": {
          "type": "Array of object"

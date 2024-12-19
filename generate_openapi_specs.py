@@ -20,11 +20,11 @@ def read_manifest(provider):
         print(f"Error parsing {manifest_file}: {e}")
         sys.exit(1)
 
-def create_base_openapi_spec():
+def create_base_openapi_spec(provider):
     """Create the base OpenAPI specification structure"""
     current_date = datetime.now().strftime("%Y-%m-%d")
 
-    return {
+    openapi_stanza = {
         "openapi": "3.0.0",
         "info": {
             "version": f"{current_date}-stackql-generated",
@@ -34,12 +34,17 @@ def create_base_openapi_spec():
                 "email": "info@stackql.io"
             }        
         },
-        "servers": [
-            { "url": "https://accounts.cloud.databricks.com" }
-        ],
+        "servers": [],
         "paths": {},
         "components": {}
     }
+
+    if provider == "account":
+        openapi_stanza["servers"].append({ "url": "https://accounts.cloud.databricks.com" }) 
+    elif provider == "workspace":
+        openapi_stanza["servers"].append({ "url": "https://{deployment_name}.cloud.databricks.com", "variables": { "deployment_name": { "description": "The Databricks Workspace Deployment Name", "default": "dbc-abcd0123-a1bc" } } })
+
+    return openapi_stanza
 
 def merge_operation_into_paths(paths, operation_spec):
     """Merge an operation spec into the paths dict, handling shared paths"""
@@ -90,7 +95,7 @@ def generate_openapi_docs(provider, debug):
                 print(f"\nProcessing service: {service_name}")
             
             # Create base OpenAPI spec for this service
-            openapi_spec = create_base_openapi_spec()
+            openapi_spec = create_base_openapi_spec(provider)
             openapi_spec["info"]["title"] = f"Databricks {service_name.capitalize()} API"
             openapi_spec["info"]["description"] = read_manifest(provider)["services"][service_name]["description"]
             
@@ -146,6 +151,7 @@ def add_method_to_resource(resource, method_name, path, verb, object_key, respon
         },
         "response": {
             "mediaType": "application/json",
+            "overrideMediaType": "application/json",
             "openAPIDocKey": response_code
         }
     }
@@ -231,9 +237,6 @@ def generate_provider_yaml(provider):
     manifest = read_manifest(provider)
     
     token_url = "https://accounts.cloud.databricks.com/oidc/accounts/{{ .__env__DATABRICKS_ACCOUNT_ID }}/v1/token"
-
-    if provider == "account":
-        token_url = "https://accounts.cloud.databricks.com/oidc/accounts/{{ .__env__DATABRICKS_ACCOUNT_ID }}/v1/token"
 
     # Create base provider structure
     provider_spec = {

@@ -13,17 +13,15 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(string) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "workspace_id",
-     "description": "The workspace ID of the workspace in which the usage dashboard is created.",
      "in": "query"
     },
     {
      "name": "dashboard_type",
-     "description": "Workspace level usage dashboard shows usage data for the specified workspace ID. Global level usage dashboard shows usage data for all workspaces in the account.",
      "in": "query"
     }
    ],

@@ -13,18 +13,17 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(string) The account ID.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "service_principal_id",
      "required": true,
-     "description": "(int64) The service principal ID.",
+     "description": "int64",
      "in": "path"
     },
     {
      "name": "page_token",
-     "description": "An opaque page token which was the",
      "in": "query"
     }
    ],

@@ -13,7 +13,7 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID of any type. For non-E2 account types, get your account ID from the ",
+     "description": "uuid",
      "in": "path"
     }
    ],
@@ -129,20 +129,16 @@
        "type": "object",
        "properties": {
         "network_name": {
-         "type": "required",
-         "description": "The human-readable name of the network configuration."
+         "type": "required"
         },
         "vpc_id": {
-         "type": "string",
-         "description": "The ID of the VPC associated with this network. VPC IDs can be used in multiple network configurations."
+         "type": "string"
         },
         "subnet_ids": {
-         "type": "string",
-         "description": "IDs of at least two subnets associated with this network. Subnet IDs "
+         "type": "string"
         },
         "security_group_ids": {
-         "type": "Array of string",
-         "description": " be used in multiple network configurations."
+         "type": "Array of string"
         },
         "vpc_endpoints": {
          "type": "object"

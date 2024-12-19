@@ -13,19 +13,19 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(string) The account ID.",
+     "description": "string",
      "in": "path"
     },
     {
      "name": "workspace_id",
      "required": true,
-     "description": "(int64) The workspace ID for the account.",
+     "description": "int64",
      "in": "path"
     },
     {
      "name": "principal_id",
      "required": true,
-     "description": "(int64) The ID of the user, service principal, or group.",
+     "description": "int64",
      "in": "path"
     }
    ],

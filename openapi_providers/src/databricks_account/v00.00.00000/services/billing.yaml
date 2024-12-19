@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 2024-12-16-stackql-generated
+  version: 2024-12-19-stackql-generated
   contact:
     name: StackQL Studios
     url: https://stackql.io/
@@ -22,16 +22,15 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: start_month
         required: true
-        description: '(string) Format:'
+        description: string
         in: query
       - name: end_month
         required: true
-        description: '(string) Format:'
+        description: string
         in: query
       - name: personal_data
         in: query
@@ -61,8 +60,7 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       responses:
         '200':
@@ -194,13 +192,9 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: page_token
-        description: A page token received from a previous get all budget configurations
-          call. This token can be used to retrieve the subsequent page. Requests first
-          page if absent.
         in: query
       responses:
         '200':
@@ -302,12 +296,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: budget_id
         required: true
-        description: (uuid) The Databricks budget configuration ID.
+        description: uuid
         in: path
       responses:
         '200':
@@ -337,12 +330,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: budget_id
         required: true
-        description: (uuid) The budget configuration ID
+        description: uuid
         in: path
       responses:
         '200':
@@ -440,12 +432,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(uuid) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: uuid
         in: path
       - name: budget_id
         required: true
-        description: (string) The Databricks budget configuration ID.
+        description: string
         in: path
       responses:
         '200':
@@ -583,8 +574,7 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(string) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: string
         in: path
       responses:
         '200':
@@ -615,13 +605,8 @@ paths:
                 workspace_id:
                   type: integer
                   format: int64
-                  description: The workspace ID of the workspace in which the usage
-                    dashboard is created.
                 dashboard_type:
                   type: string
-                  description: Workspace level usage dashboard shows usage data for
-                    the specified workspace ID. Global level usage dashboard shows
-                    usage data for all workspaces in the account.
               example:
                 workspace_id: 0
                 dashboard_type: USAGE_DASHBOARD_TYPE_WORKSPACE
@@ -638,17 +623,11 @@ paths:
       parameters:
       - name: account_id
         required: true
-        description: '(string) Databricks account ID of any type. For non-E2 account
-          types, get your account ID from the '
+        description: string
         in: path
       - name: workspace_id
-        description: The workspace ID of the workspace in which the usage dashboard
-          is created.
         in: query
       - name: dashboard_type
-        description: Workspace level usage dashboard shows usage data for the specified
-          workspace ID. Global level usage dashboard shows usage data for all workspaces
-          in the account.
         in: query
       responses:
         '200':
@@ -685,6 +664,7 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1usage~1download/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select: []
@@ -704,12 +684,14 @@ components:
             $ref: '#/paths/~1api~12.1~1accounts~1{account_id}~1budgets/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         list:
           operation:
             $ref: '#/paths/~1api~12.1~1accounts~1{account_id}~1budgets/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.budgets
         delete:
@@ -717,12 +699,14 @@ components:
             $ref: '#/paths/~1api~12.1~1accounts~1{account_id}~1budgets~1{budget_id}/delete'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.1~1accounts~1{account_id}~1budgets~1{budget_id}/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
             objectKey: $.budget
         update:
@@ -730,6 +714,7 @@ components:
             $ref: '#/paths/~1api~12.1~1accounts~1{account_id}~1budgets~1{budget_id}/put'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:
@@ -753,12 +738,14 @@ components:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1dashboard/post'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
         get:
           operation:
             $ref: '#/paths/~1api~12.0~1accounts~1{account_id}~1dashboard/get'
           response:
             mediaType: application/json
+            overrideMediaType: application/json
             openAPIDocKey: '200'
       sqlVerbs:
         select:

@@ -13,6 +13,7 @@
     {
      "name": "account_id",
      "required": true,
+     "description": "string",
      "in": "path"
     }
    ],
@@ -59,20 +60,16 @@
        "type": "object",
        "properties": {
         "redirect_urls": {
-         "type": "Array of string",
-         "description": "List of OAuth redirect urls"
+         "type": "Array of string"
         },
         "name": {
-         "type": "string",
-         "description": "Name of the custom OAuth app"
+         "type": "string"
         },
         "confidential": {
-         "type": "boolean",
-         "description": " "
+         "type": "boolean"
         },
         "scopes": {
-         "type": "Array of string",
-         "description": "This field indicates whether an OAuth client secret is required to authenticate this client."
+         "type": "Array of string"
         },
         "token_access_policy": {
          "type": "object"

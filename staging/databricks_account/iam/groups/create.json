@@ -13,7 +13,7 @@
     {
      "name": "account_id",
      "required": true,
-     "description": "(uuid) Databricks account ID",
+     "description": "uuid",
      "in": "path"
     }
    ],
@@ -110,12 +110,10 @@
        "properties": {
         "id": {
          "type": "integer",
-         "format": "int64",
-         "description": "Databricks group ID"
+         "format": "int64"
         },
         "displayName": {
-         "type": "string",
-         "description": "String that represents a human-readable group name"
+         "type": "string"
         },
         "externalId": {
          "type": "string"

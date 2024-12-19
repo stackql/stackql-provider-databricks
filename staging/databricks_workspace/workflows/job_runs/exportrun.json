@@ -1,5 +1,5 @@
 {
- "/api/2.1/jobs/runs/export": {
+ "/api/2.2/jobs/runs/export": {
   "get": {
    "operationId": "job-runs-exportrun",
    "externalDocs": {
