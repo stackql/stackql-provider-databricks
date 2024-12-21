@@ -5,7 +5,7 @@ Build `databricks_account` and `databricks_workspace` providers for `stackql` us
 - [api/workspace](https://docs.databricks.com/api/workspace/introduction)
 - [api/account](https://docs.databricks.com/api/account/introduction)
 
-# usage
+## usage
 
 The program requires `selenium` and the `chromedriver` for windows, use PowerShell to run the following code to extract web doc data into machine readable staging documents, the staging documents are then converted into tagged OpenAPI specification documents organized by service:
 
@@ -48,7 +48,7 @@ true
 cd /mnt/c/LocalGitRepos/stackql/openapi-conversion/stackql-databricks-openapi
 ```
 
-# inspect
+## inspect
 
 ```bash
 curl -L https://bit.ly/stackql-zip -O && unzip stackql-zip
@@ -59,7 +59,6 @@ PROVIDER_REGISTRY_ROOT_DIR="$(pwd)/openapi_providers"
 REG_STR='{"url": "file://'${PROVIDER_REGISTRY_ROOT_DIR}'", "localDocRoot": "'${PROVIDER_REGISTRY_ROOT_DIR}'", "verifyConfig": {"nopVerify": true}}'
 ./stackql shell --registry="${REG_STR}"
 ```
-
 
 some test queries...
 
@@ -109,7 +108,7 @@ from databricks_account.provisioning.vw_workspaces
 where account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce' 
 ```
 
-# check for new routes
+## check for new routes
 
 ```powershell
 python .\find_new_routes.py workspace
@@ -117,9 +116,24 @@ python .\find_new_routes.py workspace
 python3 .\find_new_routes.py account
 ```
 
-# dev reg
+## debugging with `curl`
 
 ```bash
-export DEV_REG="{ \"url\": \"https://registry-dev.stackql.app/providers\" }"
-./stackql --registry="${DEV_REG}" shell
+DATABRICKS_TOKEN=$(curl --request POST "https://accounts.cloud.databricks.com/oidc/accounts/${DATABRICKS_ACCOUNT_ID}/v1/token" \
+  --header "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=client_credentials" \
+  --data-urlencode "client_id=${DATABRICKS_CLIENT_ID}" \
+  --data-urlencode "client_secret=${DATABRICKS_CLIENT_SECRET}" \
+  --data-urlencode "scope=all-apis" | jq -r .access_token)
+
+curl --request GET "https://accounts.cloud.databricks.com/api/2.0/accounts/${DATABRICKS_ACCOUNT_ID}/workspaces" \
+  --header "Authorization: Bearer ${DATABRICKS_TOKEN}" \
+  -vvv \
+  --header "Accept: application/json"
+  ```
+
+  ## generate user (web) docs
+
+```bash
+bash generate_user_docs.sh account
 ```

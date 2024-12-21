@@ -1,4 +1,5 @@
 import sys, datetime
+from lib.documentation import generate_resource_doc, generate_service_doc, generate_provider_doc, generate_fields_section, generate_methods_section
 
 provider = sys.argv[1]
 
@@ -37,7 +38,6 @@ if services is None:
 num_services = len(services)
 
 total_resources = 0
-total_selectable_resources = 0
 total_methods = 0
 
 # SHOW RESOURCES
@@ -53,6 +53,7 @@ for serviceIx, serviceRow in services.iterrows():
       total_resources = total_resources + num_resources
       for resIx, resRow in resources.iterrows():
             resource = resRow['name']
+            fields = None 
             fqrn_len = len("%s.%s.%s" % (provider, service, resource))
 
             print("-------------------------------------------------")
@@ -71,27 +72,27 @@ for serviceIx, serviceRow in services.iterrows():
                         print("ERROR [no methods found for %s.%s.%s]" % (provider, service, resource))
                         sys.exit(1)
                   else:
-                        print(fields)
-            # else:
-            #       num_methods = len(methods)
-            #       total_methods = total_methods + num_methods
-            #       print("%s methods in %s.%s.%s" % (num_methods, provider, service, resource))
-           
-
-            # test selectability
-            # is_selectable = True
-            # iql_desc_query = "DESCRIBE EXTENDED %s.%s.%s" % (provider, service, resource)
-            # desc = run_query(iql_desc_query)
-
-            # if desc is None:
-            #       print("[WARN] SELECT not supported for %s.%s.%s" % (provider, service, resource))
-            #       is_selectable = False
-
+                        total_methods += 1                        
+            else:
+                  num_methods = len(methods)
+                  total_methods = total_methods + num_methods
+                  print("%s methods in %s.%s.%s" % (num_methods, provider, service, resource))
+                  print(methods)
+                  # get fields
+                  if 'SELECT' in methods['SQLVerb'].values:
+                        # Get fields for the resource
+                        iql_desc_query = "DESCRIBE EXTENDED %s.%s.%s" % (provider, service, resource)
+                        fields = run_query(iql_desc_query)
+                        
+            if fields is not None and not fields.empty:
+                  print("Fields in %s.%s.%s:" % (provider, service, resource))
+                  print(fields)
+            else:
+                  print("No fields found for %s.%s.%s" % (provider, service, resource))
 
 print("%s services processed" % (num_services))
 print("%s total resources processed" % (total_resources))
 print("%s total methods available" % (total_methods))
-print("%s total selectable resources" % (total_selectable_resources))
 
 print(datetime.datetime.now() - start_time)
 
