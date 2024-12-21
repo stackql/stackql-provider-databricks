@@ -18,7 +18,7 @@ pip freeze
 python .\process_web_docs.py account --clean --debug 
 python .\process_web_docs.py workspace --clean --debug
 # generate openapi specs
- python .\generate_openapi_specs.py account --clean --debug
+python .\generate_openapi_specs.py account --clean --debug
 python .\generate_openapi_specs.py workspace --clean --debug
 
 deactivate
@@ -91,23 +91,6 @@ from
 databricks_account.provisioning.workspaces where account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce';
 ```
 
-
-dbc-ddbc0f51-c9cf
-
-```sql
-select 
-workspace_id,
-workspace_name,
-deployment_name,
-workspace_status,
-pricing_tier, 
-aws_region, 
-credentials_id, 
-storage_configuration_id
-from
-databricks_account.provisioning.workspaces where account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce';
-```
-
 ```sql
 select 
 cluster_id,
@@ -119,7 +102,12 @@ databricks_workspace.compute.clusters
 where deployment_name = 'dbc-ddbc0f51-c9cf';
 ```
 
-
+```sql
+select
+*
+from databricks_account.provisioning.vw_workspaces 
+where account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce' 
+```
 
 # check for new routes
 
@@ -127,4 +115,11 @@ where deployment_name = 'dbc-ddbc0f51-c9cf';
 python .\find_new_routes.py workspace
 # or
 python3 .\find_new_routes.py account
+```
+
+# dev reg
+
+```bash
+export DEV_REG="{ \"url\": \"https://registry-dev.stackql.app/providers\" }"
+./stackql --registry="${DEV_REG}" shell
 ```

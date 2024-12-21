@@ -9,3 +9,4 @@ stackql
 /.stackql
 .env
 output.log
+stackql.log

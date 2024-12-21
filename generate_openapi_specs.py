@@ -102,6 +102,9 @@ def generate_openapi_docs(provider, debug):
             # Load and merge all operations for this service
             paths = load_operation_specs(service_dir.path, debug)
             openapi_spec["paths"] = paths
+
+            # fix web doc errata
+            paths = post_process_updates(provider, service_name, paths)
             
             # Write the OpenAPI spec to a YAML file
             output_path = os.path.join(target_dir, f"{service_name}.yaml")
@@ -158,10 +161,10 @@ def add_method_to_resource(resource, method_name, path, verb, object_key, respon
     if object_key:
         resource["methods"][method_name]["response"]["objectKey"] = object_key
 
-
 def generate_stackql_resources(provider, debug):
     """Generate x-stackQL-resources components for each service"""
     services_dir = f"openapi_providers/src/databricks_{provider}/v00.00.00000/services"
+    views_dir = f"views/databricks_{provider}"
     
     # Process each service YAML file
     for service_file in os.scandir(services_dir):
@@ -215,15 +218,32 @@ def generate_stackql_resources(provider, debug):
                         insert_index = i + 1
                     
                     sql_verb_list.insert(insert_index, {"$ref": method_ref})
-            
+
             # Add resources to spec and write back
-            if not 'components' in spec:
+            if 'components' not in spec:
                 spec['components'] = {}
-            spec['components']['x-stackQL-resources'] = resources
-            
+            if 'x-stackQL-resources' not in spec['components']:
+                spec['components']['x-stackQL-resources'] = {}
+
+            spec['components']['x-stackQL-resources'].update(resources)
+
+            # Write the updated spec back to the file
             with open(service_file.path, 'w') as f:
-                yaml.dump(spec, f, sort_keys=False)
-            
+                yaml.dump(spec, f, 
+                          sort_keys=False, 
+                          default_flow_style=False,
+                          )
+
+            views_path = os.path.join(views_dir, service_name, "views.yaml")
+            if os.path.exists(views_path):
+                if debug:
+                    print(f"Appending views from: {views_path}")
+                with open(views_path, 'r') as vf:
+                    views_content = vf.read()
+                with open(service_file.path, 'a') as sf:
+                    sf.write(views_content)
+                    if debug:
+                        print(f"Appended views to {service_file.name}")
             if debug:
                 print(f"Updated {service_file.name} with x-stackQL-resources")
 
@@ -278,6 +298,15 @@ def generate_provider_yaml(provider):
     output_path = os.path.join(provider_dir, "provider.yaml")
     with open(output_path, 'w') as f:
         yaml.dump(provider_spec, f, sort_keys=False)
+
+def post_process_updates(provider, service_name, paths_obj):
+    # this is designed to make updates where the web documentation does not match the data returned by the API
+    if provider == "account":
+        if service_name == "provisioning":
+            paths_obj["/api/2.0/accounts/{account_id}/workspaces"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]["items"]["properties"]["is_no_public_ip_enabled"] = { "type": "boolean" }
+            paths_obj["/api/2.0/accounts/{account_id}/workspaces/{workspace_id}"]["get"]["responses"]["200"]["content"]["application/json"]["schema"]["properties"]["is_no_public_ip_enabled"] = { "type": "boolean" }
+    return paths_obj
+
 
 def main():
     start_time = time.time()

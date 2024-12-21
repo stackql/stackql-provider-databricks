@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 2024-12-19-stackql-generated
+  version: 2024-12-21-stackql-generated
   contact:
     name: StackQL Studios
     url: https://stackql.io/
