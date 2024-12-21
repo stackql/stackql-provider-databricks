@@ -23,6 +23,8 @@ def run_query(query):
             data = r.fetchall()
             return pd.DataFrame([i.copy() for i in data])
       except Exception as e:
+            if str(e) == "the last operation didn't produce a result":
+                  return None
             print("ERROR [%s]" % str(e))
             sys.exit(1)
 
@@ -60,13 +62,20 @@ for serviceIx, serviceRow in services.iterrows():
             # test methods
             iql_methods_query = "SHOW EXTENDED METHODS IN %s.%s.%s" % (provider, service, resource)
             methods = run_query(iql_methods_query)
+            print(methods)
             if methods is None:
-                print("ERROR [no methods found for %s.%s.%s]" % (provider, service, resource))
-                sys.exit(1)
-            else:
-                  num_methods = len(methods)
-                  total_methods = total_methods + num_methods
-                  print("%s methods in %s.%s.%s" % (num_methods, provider, service, resource))
+                  # check if its a view
+                  iql_desc_query = "DESCRIBE EXTENDED %s.%s.%s" % (provider, service, resource)
+                  fields = run_query(iql_desc_query)
+                  if fields is None:
+                        print("ERROR [no methods found for %s.%s.%s]" % (provider, service, resource))
+                        sys.exit(1)
+                  else:
+                        print(fields)
+            # else:
+            #       num_methods = len(methods)
+            #       total_methods = total_methods + num_methods
+            #       print("%s methods in %s.%s.%s" % (num_methods, provider, service, resource))
            
 
             # test selectability
