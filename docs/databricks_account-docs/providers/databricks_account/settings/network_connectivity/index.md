@@ -30,15 +30,15 @@ Operations on a <code>network_connectivity</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="name" /> | `string` |  |
-| <CopyableCode code="account_id" /> | `string` |  |
-| <CopyableCode code="creation_time" /> | `integer` |  |
-| <CopyableCode code="egress_config" /> | `object` |  |
-| <CopyableCode code="network_connectivity_config_id" /> | `string` |  |
-| <CopyableCode code="region" /> | `string` |  |
-| <CopyableCode code="updated_time" /> | `integer` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="name" /> | `string` |
+| <CopyableCode code="account_id" /> | `string` |
+| <CopyableCode code="creation_time" /> | `integer` |
+| <CopyableCode code="egress_config" /> | `object` |
+| <CopyableCode code="network_connectivity_config_id" /> | `string` |
+| <CopyableCode code="region" /> | `string` |
+| <CopyableCode code="updated_time" /> | `integer` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
@@ -47,3 +47,96 @@ Operations on a <code>network_connectivity</code> resource.
 | <CopyableCode code="listnetworkconnectivityconfigurations" /> | `SELECT` | <CopyableCode code="account_id" /> | Gets an array of network connectivity configurations. |
 | <CopyableCode code="createnetworkconnectivityconfiguration" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a network connectivity configuration (NCC), which provides stable IP CIDR blocks that are associated with your workspace. You can assign an NCC to one or more workspaces in the same region. Once assigned, the workspace serverless compute resources use the same set of stable IP CIDR blocks to access your resources. |
 | <CopyableCode code="deletenetworkconnectivityconfiguration" /> | `DELETE` | <CopyableCode code="account_id, network_connectivity_config_id" /> | Deletes a network connectivity configuration. |
+
+## SELECT examples
+
+<Tabs
+    defaultValue="listnetworkconnectivityconfigurations"
+    values={[
+        { label: 'network_connectivity (listnetworkconnectivityconfigurations)', value: 'listnetworkconnectivityconfigurations' },
+        { label: 'network_connectivity (getnetworkconnectivityconfiguration)', value: 'getnetworkconnectivityconfiguration' }
+    ]
+}>
+<TabItem value="listnetworkconnectivityconfigurations">
+
+```sql
+SELECT
+name,
+account_id,
+creation_time,
+egress_config,
+network_connectivity_config_id,
+region,
+updated_time
+FROM databricks_account.settings.network_connectivity
+WHERE account_id = '{{ account_id }}';
+```
+
+</TabItem>
+<TabItem value="getnetworkconnectivityconfiguration">
+
+```sql
+SELECT
+name,
+account_id,
+creation_time,
+egress_config,
+network_connectivity_config_id,
+region,
+updated_time
+FROM databricks_account.settings.network_connectivity
+WHERE account_id = '{{ account_id }}' AND
+network_connectivity_config_id = '{{ network_connectivity_config_id }}';
+```
+
+</TabItem>
+</Tabs>
+
+## INSERT example
+
+Use the following StackQL query and manifest file to create a new <code>network_connectivity</code> resource.
+
+<Tabs
+    defaultValue="create"
+    values={[
+        {{ label: 'network_connectivity', value: 'create', }},
+        {{ label: 'Manifest', value: 'manifest', }},
+    ]}
+>
+<TabItem value="create">
+```sql
+/*+ create */
+INSERT INTO databricks_account.settings.network_connectivity (
+account_id,\ndata__name,\ndata__region
+)
+SELECT 
+'{{ account_id }}',\n'{{ name }}',\n'{{ region }}'
+;
+```
+
+</TabItem>
+<TabItem value="manifest">
+
+```yaml
+- name: your_resource_model_name
+  props:
+  - name: name
+    value: 9ffa9185-7453-4fb2-aa6a-3105a6ae83a8
+  - name: region
+    value: string
+
+```
+
+</TabItem>
+</Tabs>
+
+## DELETE example
+
+Deletes a <code>network_connectivity</code> resource.
+
+```sql
+/*+ delete */
+DELETE FROM databricks_account.settings.network_connectivity
+WHERE account_id = '{{ account_id }}' AND
+network_connectivity_config_id = '{{ network_connectivity_config_id }}';
+```

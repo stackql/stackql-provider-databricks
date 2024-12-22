@@ -1,15 +1,15 @@
-import shutil
-import sys, datetime
+import sys, datetime, shutil, psycopg
 from pathlib import Path
-from lib.documentation import generate_resource_doc, generate_service_doc, generate_provider_doc
+from psycopg.rows import dict_row
+import pandas as pd
+
+from lib.documentation.provider import generate_provider_doc
+from lib.documentation.service import generate_service_doc
+from lib.documentation.resource import generate_resource_doc
 
 provider = sys.argv[1]
 
 start_time = datetime.datetime.now()
-
-import psycopg
-from psycopg.rows import dict_row
-import pandas as pd
 
 pd.set_option('display.max_columns', None)
 

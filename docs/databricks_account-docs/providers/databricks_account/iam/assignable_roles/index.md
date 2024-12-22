@@ -30,11 +30,21 @@ Operations on a <code>assignable_roles</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="name" /> | `string` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="name" /> | `string` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
 |:-----|:--------------|:----------------|:------------|
 | <CopyableCode code="getassignablerolesforresource" /> | `SELECT` | <CopyableCode code="account_id, resource" /> | Gets all the roles that can be granted on an account level resource. A role is grantable if the rule set on the resource can contain an access rule of the role. |
+
+## SELECT examples
+
+```sql
+SELECT
+name
+FROM databricks_account.iam.assignable_roles
+WHERE account_id = '{{ account_id }}' AND
+resource = '{{ resource }}';
+```

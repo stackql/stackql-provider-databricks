@@ -30,13 +30,13 @@ Operations on a <code>groups</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="id" /> | `string` |  |
-| <CopyableCode code="displayName" /> | `string` |  |
-| <CopyableCode code="externalId" /> | `string` |  |
-| <CopyableCode code="members" /> | `array` |  |
-| <CopyableCode code="roles" /> | `array` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="id" /> | `string` |
+| <CopyableCode code="displayName" /> | `string` |
+| <CopyableCode code="externalId" /> | `string` |
+| <CopyableCode code="members" /> | `array` |
+| <CopyableCode code="roles" /> | `array` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
@@ -47,3 +47,130 @@ Operations on a <code>groups</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, id" /> | Deletes a group from the Databricks account. |
 | <CopyableCode code="patch" /> | `UPDATE` | <CopyableCode code="account_id, id" /> | Partially updates the details of a group. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, id" /> | Updates the details of a group by replacing the entire group entity. |
+
+## SELECT examples
+
+<Tabs
+    defaultValue="list"
+    values={[
+        { label: 'groups (list)', value: 'list' },
+        { label: 'groups (get)', value: 'get' }
+    ]
+}>
+<TabItem value="list">
+
+```sql
+SELECT
+id,
+displayName,
+externalId,
+members,
+roles
+FROM databricks_account.iam.groups
+WHERE account_id = '{{ account_id }}';
+```
+
+</TabItem>
+<TabItem value="get">
+
+```sql
+SELECT
+id,
+displayName,
+externalId,
+members,
+roles
+FROM databricks_account.iam.groups
+WHERE account_id = '{{ account_id }}' AND
+id = '{{ id }}';
+```
+
+</TabItem>
+</Tabs>
+
+## INSERT example
+
+Use the following StackQL query and manifest file to create a new <code>groups</code> resource.
+
+<Tabs
+    defaultValue="create"
+    values={[
+        {{ label: 'groups', value: 'create', }},
+        {{ label: 'Manifest', value: 'manifest', }},
+    ]}
+>
+<TabItem value="create">
+```sql
+/*+ create */
+INSERT INTO databricks_account.iam.groups (
+account_id,\ndata__displayName,\ndata__members,\ndata__roles,\ndata__externalId
+)
+SELECT 
+'{{ account_id }}',\n'{{ displayName }}',\n'{{ members }}',\n'{{ roles }}',\n'{{ externalId }}'
+;
+```
+
+</TabItem>
+<TabItem value="manifest">
+
+```yaml
+- name: your_resource_model_name
+  props:
+  - name: displayName
+    value: string
+  - name: members
+    value:
+    - $ref: string
+      value: string
+      display: string
+      primary: true
+      type: string
+  - name: roles
+    value:
+    - $ref: string
+      value: string
+      display: string
+      primary: true
+      type: string
+  - name: externalId
+    value: string
+
+```
+
+</TabItem>
+</Tabs>
+
+## UPDATE example
+
+Updates a <code>groups</code> resource.
+
+```sql
+/*+ update */
+UPDATE databricks_account.iam.groups
+SET { field = value }
+WHERE account_id = '{{ account_id }}' AND
+id = '{{ id }}';
+```
+
+## REPLACE example
+
+Replaces a <code>groups</code> resource.
+
+```sql
+/*+ update */
+REPLACE databricks_account.iam.groups
+SET { field = value }
+WHERE account_id = '{{ account_id }}' AND
+id = '{{ id }}';
+```
+
+## DELETE example
+
+Deletes a <code>groups</code> resource.
+
+```sql
+/*+ delete */
+DELETE FROM databricks_account.iam.groups
+WHERE account_id = '{{ account_id }}' AND
+id = '{{ id }}';
+```

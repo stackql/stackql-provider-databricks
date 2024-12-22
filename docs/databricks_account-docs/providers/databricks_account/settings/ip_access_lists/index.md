@@ -30,18 +30,18 @@ Operations on a <code>ip_access_lists</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="address_count" /> | `integer` |  |
-| <CopyableCode code="created_at" /> | `integer` |  |
-| <CopyableCode code="created_by" /> | `integer` |  |
-| <CopyableCode code="enabled" /> | `boolean` |  |
-| <CopyableCode code="ip_addresses" /> | `array` |  |
-| <CopyableCode code="label" /> | `string` |  |
-| <CopyableCode code="list_id" /> | `string` |  |
-| <CopyableCode code="list_type" /> | `string` |  |
-| <CopyableCode code="updated_at" /> | `integer` |  |
-| <CopyableCode code="updated_by" /> | `integer` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="address_count" /> | `integer` |
+| <CopyableCode code="created_at" /> | `integer` |
+| <CopyableCode code="created_by" /> | `integer` |
+| <CopyableCode code="enabled" /> | `boolean` |
+| <CopyableCode code="ip_addresses" /> | `array` |
+| <CopyableCode code="label" /> | `string` |
+| <CopyableCode code="list_id" /> | `string` |
+| <CopyableCode code="list_type" /> | `string` |
+| <CopyableCode code="updated_at" /> | `integer` |
+| <CopyableCode code="updated_by" /> | `integer` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
@@ -52,3 +52,129 @@ Operations on a <code>ip_access_lists</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, ip_access_list_id" /> | Deletes an IP access list, specified by its list ID. |
 | <CopyableCode code="update" /> | `UPDATE` | <CopyableCode code="account_id, ip_access_list_id" /> | Updates an existing IP access list, specified by its ID. |
 | <CopyableCode code="replace" /> | `REPLACE` | <CopyableCode code="account_id, ip_access_list_id" /> | Replaces an IP access list, specified by its ID. |
+
+## SELECT examples
+
+<Tabs
+    defaultValue="list"
+    values={[
+        { label: 'ip_access_lists (list)', value: 'list' },
+        { label: 'ip_access_lists (get)', value: 'get' }
+    ]
+}>
+<TabItem value="list">
+
+```sql
+SELECT
+address_count,
+created_at,
+created_by,
+enabled,
+ip_addresses,
+label,
+list_id,
+list_type,
+updated_at,
+updated_by
+FROM databricks_account.settings.ip_access_lists
+WHERE account_id = '{{ account_id }}';
+```
+
+</TabItem>
+<TabItem value="get">
+
+```sql
+SELECT
+address_count,
+created_at,
+created_by,
+enabled,
+ip_addresses,
+label,
+list_id,
+list_type,
+updated_at,
+updated_by
+FROM databricks_account.settings.ip_access_lists
+WHERE account_id = '{{ account_id }}' AND
+ip_access_list_id = '{{ ip_access_list_id }}';
+```
+
+</TabItem>
+</Tabs>
+
+## INSERT example
+
+Use the following StackQL query and manifest file to create a new <code>ip_access_lists</code> resource.
+
+<Tabs
+    defaultValue="create"
+    values={[
+        {{ label: 'ip_access_lists', value: 'create', }},
+        {{ label: 'Manifest', value: 'manifest', }},
+    ]}
+>
+<TabItem value="create">
+```sql
+/*+ create */
+INSERT INTO databricks_account.settings.ip_access_lists (
+account_id,\ndata__label,\ndata__list_type,\ndata__ip_addresses
+)
+SELECT 
+'{{ account_id }}',\n'{{ label }}',\n'{{ list_type }}',\n'{{ ip_addresses }}'
+;
+```
+
+</TabItem>
+<TabItem value="manifest">
+
+```yaml
+- name: your_resource_model_name
+  props:
+  - name: label
+    value: Office VPN
+  - name: list_type
+    value: ALLOW
+  - name: ip_addresses
+    value:
+    - 192.168.100.0/22
+
+```
+
+</TabItem>
+</Tabs>
+
+## UPDATE example
+
+Updates a <code>ip_access_lists</code> resource.
+
+```sql
+/*+ update */
+UPDATE databricks_account.settings.ip_access_lists
+SET { field = value }
+WHERE account_id = '{{ account_id }}' AND
+ip_access_list_id = '{{ ip_access_list_id }}';
+```
+
+## REPLACE example
+
+Replaces a <code>ip_access_lists</code> resource.
+
+```sql
+/*+ update */
+REPLACE databricks_account.settings.ip_access_lists
+SET { field = value }
+WHERE account_id = '{{ account_id }}' AND
+ip_access_list_id = '{{ ip_access_list_id }}';
+```
+
+## DELETE example
+
+Deletes a <code>ip_access_lists</code> resource.
+
+```sql
+/*+ delete */
+DELETE FROM databricks_account.settings.ip_access_lists
+WHERE account_id = '{{ account_id }}' AND
+ip_access_list_id = '{{ ip_access_list_id }}';
+```

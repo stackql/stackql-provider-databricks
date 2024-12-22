@@ -30,17 +30,17 @@ Operations on a <code>vpc_endpoints</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="account_id" /> | `string` |  |
-| <CopyableCode code="aws_account_id" /> | `string` |  |
-| <CopyableCode code="aws_endpoint_service_id" /> | `string` |  |
-| <CopyableCode code="aws_vpc_endpoint_id" /> | `string` |  |
-| <CopyableCode code="region" /> | `string` |  |
-| <CopyableCode code="state" /> | `string` |  |
-| <CopyableCode code="use_case" /> | `string` |  |
-| <CopyableCode code="vpc_endpoint_id" /> | `string` |  |
-| <CopyableCode code="vpc_endpoint_name" /> | `string` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="account_id" /> | `string` |
+| <CopyableCode code="aws_account_id" /> | `string` |
+| <CopyableCode code="aws_endpoint_service_id" /> | `string` |
+| <CopyableCode code="aws_vpc_endpoint_id" /> | `string` |
+| <CopyableCode code="region" /> | `string` |
+| <CopyableCode code="state" /> | `string` |
+| <CopyableCode code="use_case" /> | `string` |
+| <CopyableCode code="vpc_endpoint_id" /> | `string` |
+| <CopyableCode code="vpc_endpoint_name" /> | `string` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
@@ -49,3 +49,102 @@ Operations on a <code>vpc_endpoints</code> resource.
 | <CopyableCode code="list" /> | `SELECT` | <CopyableCode code="account_id" /> | Gets a list of all VPC endpoints for an account, specified by ID. |
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a VPC endpoint configuration, which represents a |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, vpc_endpoint_id" /> | Deletes a VPC endpoint configuration, which represents an |
+
+## SELECT examples
+
+<Tabs
+    defaultValue="list"
+    values={[
+        { label: 'vpc_endpoints (list)', value: 'list' },
+        { label: 'vpc_endpoints (get)', value: 'get' }
+    ]
+}>
+<TabItem value="list">
+
+```sql
+SELECT
+account_id,
+aws_account_id,
+aws_endpoint_service_id,
+aws_vpc_endpoint_id,
+region,
+state,
+use_case,
+vpc_endpoint_id,
+vpc_endpoint_name
+FROM databricks_account.provisioning.vpc_endpoints
+WHERE account_id = '{{ account_id }}';
+```
+
+</TabItem>
+<TabItem value="get">
+
+```sql
+SELECT
+account_id,
+aws_account_id,
+aws_endpoint_service_id,
+aws_vpc_endpoint_id,
+region,
+state,
+use_case,
+vpc_endpoint_id,
+vpc_endpoint_name
+FROM databricks_account.provisioning.vpc_endpoints
+WHERE account_id = '{{ account_id }}' AND
+vpc_endpoint_id = '{{ vpc_endpoint_id }}';
+```
+
+</TabItem>
+</Tabs>
+
+## INSERT example
+
+Use the following StackQL query and manifest file to create a new <code>vpc_endpoints</code> resource.
+
+<Tabs
+    defaultValue="create"
+    values={[
+        {{ label: 'vpc_endpoints', value: 'create', }},
+        {{ label: 'Manifest', value: 'manifest', }},
+    ]}
+>
+<TabItem value="create">
+```sql
+/*+ create */
+INSERT INTO databricks_account.provisioning.vpc_endpoints (
+account_id,\ndata__vpc_endpoint_name,\ndata__aws_vpc_endpoint_id,\ndata__region
+)
+SELECT 
+'{{ account_id }}',\n'{{ vpc_endpoint_name }}',\n'{{ aws_vpc_endpoint_id }}',\n'{{ region }}'
+;
+```
+
+</TabItem>
+<TabItem value="manifest">
+
+```yaml
+- name: your_resource_model_name
+  props:
+  - name: vpc_endpoint_name
+    value: string
+  - name: aws_vpc_endpoint_id
+    value: string
+  - name: region
+    value: string
+
+```
+
+</TabItem>
+</Tabs>
+
+## DELETE example
+
+Deletes a <code>vpc_endpoints</code> resource.
+
+```sql
+/*+ delete */
+DELETE FROM databricks_account.provisioning.vpc_endpoints
+WHERE account_id = '{{ account_id }}' AND
+vpc_endpoint_id = '{{ vpc_endpoint_id }}';
+```

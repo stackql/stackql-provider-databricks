@@ -30,11 +30,21 @@ Operations on a <code>workspace_assignments</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="workspace_ids" /> | `array` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="workspace_ids" /> | `array` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
 |:-----|:--------------|:----------------|:------------|
 | <CopyableCode code="list" /> | `SELECT` | <CopyableCode code="account_id, metastore_id" /> | Gets a list of all Databricks workspace IDs that have been assigned to given metastore. |
+
+## SELECT examples
+
+```sql
+SELECT
+workspace_ids
+FROM databricks_account.unity_catalog.workspace_assignments
+WHERE account_id = '{{ account_id }}' AND
+metastore_id = '{{ metastore_id }}';
+```

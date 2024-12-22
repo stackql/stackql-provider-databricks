@@ -30,15 +30,15 @@ Operations on a <code>private_access</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="account_id" /> | `string` |  |
-| <CopyableCode code="allowed_vpc_endpoint_ids" /> | `array` |  |
-| <CopyableCode code="private_access_level" /> | `string` |  |
-| <CopyableCode code="private_access_settings_id" /> | `string` |  |
-| <CopyableCode code="private_access_settings_name" /> | `string` |  |
-| <CopyableCode code="public_access_enabled" /> | `boolean` |  |
-| <CopyableCode code="region" /> | `string` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="account_id" /> | `string` |
+| <CopyableCode code="allowed_vpc_endpoint_ids" /> | `array` |
+| <CopyableCode code="private_access_level" /> | `string` |
+| <CopyableCode code="private_access_settings_id" /> | `string` |
+| <CopyableCode code="private_access_settings_name" /> | `string` |
+| <CopyableCode code="public_access_enabled" /> | `boolean` |
+| <CopyableCode code="region" /> | `string` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
@@ -48,3 +48,115 @@ Operations on a <code>private_access</code> resource.
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a private access settings object, which specifies how your workspace is accessed over |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, private_access_settings_id" /> | Deletes a private access settings object, which determines how your workspace is accessed over |
 | <CopyableCode code="replace" /> | `REPLACE` | <CopyableCode code="account_id, private_access_settings_id" /> | Updates an existing private access settings object, which specifies how your workspace is accessed over |
+
+## SELECT examples
+
+<Tabs
+    defaultValue="list"
+    values={[
+        { label: 'private_access (list)', value: 'list' },
+        { label: 'private_access (get)', value: 'get' }
+    ]
+}>
+<TabItem value="list">
+
+```sql
+SELECT
+account_id,
+allowed_vpc_endpoint_ids,
+private_access_level,
+private_access_settings_id,
+private_access_settings_name,
+public_access_enabled,
+region
+FROM databricks_account.provisioning.private_access
+WHERE account_id = '{{ account_id }}';
+```
+
+</TabItem>
+<TabItem value="get">
+
+```sql
+SELECT
+account_id,
+allowed_vpc_endpoint_ids,
+private_access_level,
+private_access_settings_id,
+private_access_settings_name,
+public_access_enabled,
+region
+FROM databricks_account.provisioning.private_access
+WHERE account_id = '{{ account_id }}' AND
+private_access_settings_id = '{{ private_access_settings_id }}';
+```
+
+</TabItem>
+</Tabs>
+
+## INSERT example
+
+Use the following StackQL query and manifest file to create a new <code>private_access</code> resource.
+
+<Tabs
+    defaultValue="create"
+    values={[
+        {{ label: 'private_access', value: 'create', }},
+        {{ label: 'Manifest', value: 'manifest', }},
+    ]}
+>
+<TabItem value="create">
+```sql
+/*+ create */
+INSERT INTO databricks_account.provisioning.private_access (
+account_id,\ndata__private_access_settings_name,\ndata__region,\ndata__public_access_enabled,\ndata__private_access_level,\ndata__allowed_vpc_endpoint_ids
+)
+SELECT 
+'{{ account_id }}',\n'{{ private_access_settings_name }}',\n'{{ region }}',\n'{{ public_access_enabled }}',\n'{{ private_access_level }}',\n'{{ allowed_vpc_endpoint_ids }}'
+;
+```
+
+</TabItem>
+<TabItem value="manifest">
+
+```yaml
+- name: your_resource_model_name
+  props:
+  - name: private_access_settings_name
+    value: string
+  - name: region
+    value: string
+  - name: public_access_enabled
+    value: false
+  - name: private_access_level
+    value: ENDPOINT
+  - name: allowed_vpc_endpoint_ids
+    value:
+    - 497f6eca-6276-4993-bfeb-53cbbbba6f08
+
+```
+
+</TabItem>
+</Tabs>
+
+## REPLACE example
+
+Replaces a <code>private_access</code> resource.
+
+```sql
+/*+ update */
+REPLACE databricks_account.provisioning.private_access
+SET { field = value }
+WHERE account_id = '{{ account_id }}' AND
+private_access_settings_id = '{{ private_access_settings_id }}';
+```
+
+## DELETE example
+
+Deletes a <code>private_access</code> resource.
+
+```sql
+/*+ delete */
+DELETE FROM databricks_account.provisioning.private_access
+WHERE account_id = '{{ account_id }}' AND
+private_access_settings_id = '{{ private_access_settings_id }}';
+```

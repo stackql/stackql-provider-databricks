@@ -30,12 +30,23 @@ Operations on a <code>workspace_permissions</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="description" /> | `string` |  |
-| <CopyableCode code="permission_level" /> | `string` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="description" /> | `string` |
+| <CopyableCode code="permission_level" /> | `string` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
 |:-----|:--------------|:----------------|:------------|
 | <CopyableCode code="get" /> | `SELECT` | <CopyableCode code="account_id, workspace_id" /> | Get an array of workspace permissions for the specified account and workspace. |
+
+## SELECT examples
+
+```sql
+SELECT
+description,
+permission_level
+FROM databricks_account.iam.workspace_permissions
+WHERE account_id = '{{ account_id }}' AND
+workspace_id = '{{ workspace_id }}';
+```

@@ -30,17 +30,32 @@ Operations on a <code>published_apps</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="name" /> | `string` |  |
-| <CopyableCode code="description" /> | `string` |  |
-| <CopyableCode code="app_id" /> | `string` |  |
-| <CopyableCode code="client_id" /> | `string` |  |
-| <CopyableCode code="is_confidential_client" /> | `boolean` |  |
-| <CopyableCode code="redirect_urls" /> | `array` |  |
-| <CopyableCode code="scopes" /> | `array` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="name" /> | `string` |
+| <CopyableCode code="description" /> | `string` |
+| <CopyableCode code="app_id" /> | `string` |
+| <CopyableCode code="client_id" /> | `string` |
+| <CopyableCode code="is_confidential_client" /> | `boolean` |
+| <CopyableCode code="redirect_urls" /> | `array` |
+| <CopyableCode code="scopes" /> | `array` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
 |:-----|:--------------|:----------------|:------------|
 | <CopyableCode code="list" /> | `SELECT` | <CopyableCode code="account_id" /> | Get all the available published OAuth apps in Databricks. |
+
+## SELECT examples
+
+```sql
+SELECT
+name,
+description,
+app_id,
+client_id,
+is_confidential_client,
+redirect_urls,
+scopes
+FROM databricks_account.oauth.published_apps
+WHERE account_id = '{{ account_id }}';
+```

@@ -30,11 +30,11 @@ Operations on a <code>metastore_assignments</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="default_catalog_name" /> | `string` |  |
-| <CopyableCode code="metastore_id" /> | `string` |  |
-| <CopyableCode code="workspace_id" /> | `integer` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="default_catalog_name" /> | `string` |
+| <CopyableCode code="metastore_id" /> | `string` |
+| <CopyableCode code="workspace_id" /> | `integer` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
@@ -43,3 +43,78 @@ Operations on a <code>metastore_assignments</code> resource.
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id, metastore_id, workspace_id" /> | Creates an assignment to a metastore for a workspace |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, metastore_id, workspace_id" /> | Deletes a metastore assignment to a workspace, leaving the workspace with no metastore. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, metastore_id, workspace_id" /> | Updates an assignment to a metastore for a workspace. Currently, only the default catalog may be updated. |
+
+## SELECT examples
+
+```sql
+SELECT
+default_catalog_name,
+metastore_id,
+workspace_id
+FROM databricks_account.unity_catalog.metastore_assignments
+WHERE account_id = '{{ account_id }}' AND
+workspace_id = '{{ workspace_id }}';
+```
+
+## INSERT example
+
+Use the following StackQL query and manifest file to create a new <code>metastore_assignments</code> resource.
+
+<Tabs
+    defaultValue="create"
+    values={[
+        {{ label: 'metastore_assignments', value: 'create', }},
+        {{ label: 'Manifest', value: 'manifest', }},
+    ]}
+>
+<TabItem value="create">
+```sql
+/*+ create */
+INSERT INTO databricks_account.unity_catalog.metastore_assignments (
+account_id,\nmetastore_id,\nworkspace_id,\ndata__metastore_assignment
+)
+SELECT 
+'{{ account_id }}',\n'{{ metastore_id }}',\n'{{ workspace_id }}',\n'{{ metastore_assignment }}'
+;
+```
+
+</TabItem>
+<TabItem value="manifest">
+
+```yaml
+- name: your_resource_model_name
+  props:
+  - name: metastore_assignment
+    value:
+      metastore_id: string
+      default_catalog_name: string
+
+```
+
+</TabItem>
+</Tabs>
+
+## REPLACE example
+
+Replaces a <code>metastore_assignments</code> resource.
+
+```sql
+/*+ update */
+REPLACE databricks_account.unity_catalog.metastore_assignments
+SET { field = value }
+WHERE account_id = '{{ account_id }}' AND
+metastore_id = '{{ metastore_id }}' AND
+workspace_id = '{{ workspace_id }}';
+```
+
+## DELETE example
+
+Deletes a <code>metastore_assignments</code> resource.
+
+```sql
+/*+ delete */
+DELETE FROM databricks_account.unity_catalog.metastore_assignments
+WHERE account_id = '{{ account_id }}' AND
+metastore_id = '{{ metastore_id }}' AND
+workspace_id = '{{ workspace_id }}';
+```

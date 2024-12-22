@@ -30,14 +30,51 @@ Operations on a <code>rule_sets</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="name" /> | `string` |  |
-| <CopyableCode code="etag" /> | `string` |  |
-| <CopyableCode code="grant_rules" /> | `array` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="name" /> | `string` |
+| <CopyableCode code="etag" /> | `string` |
+| <CopyableCode code="grant_rules" /> | `array` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
 |:-----|:--------------|:----------------|:------------|
 | <CopyableCode code="getruleset" /> | `SELECT` | <CopyableCode code="account_id, etag, name" /> | Get a rule set by its name. A rule set is always attached to a resource and contains a list of access rules on the said resource. Currently only a default rule set for each resource is supported. |
 | <CopyableCode code="updateruleset" /> | `SELECT` | <CopyableCode code="account_id" /> | Replace the rules of a rule set. First, use  get to read the current version of the rule set before modifying it. This pattern helps prevent conflicts between concurrent updates. |
+
+## SELECT examples
+
+<Tabs
+    defaultValue="updateruleset"
+    values={[
+        { label: 'rule_sets (updateruleset)', value: 'updateruleset' },
+        { label: 'rule_sets (getruleset)', value: 'getruleset' }
+    ]
+}>
+<TabItem value="updateruleset">
+
+```sql
+SELECT
+name,
+etag,
+grant_rules
+FROM databricks_account.iam.rule_sets
+WHERE account_id = '{{ account_id }}';
+```
+
+</TabItem>
+<TabItem value="getruleset">
+
+```sql
+SELECT
+name,
+etag,
+grant_rules
+FROM databricks_account.iam.rule_sets
+WHERE account_id = '{{ account_id }}' AND
+etag = '{{ etag }}' AND
+name = '{{ name }}';
+```
+
+</TabItem>
+</Tabs>

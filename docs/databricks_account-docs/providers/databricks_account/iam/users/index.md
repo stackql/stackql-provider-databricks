@@ -30,16 +30,16 @@ Operations on a <code>users</code> resource.
 </tbody></table>
 
 ## Fields
-| Name | Datatype | Description |
-|:-----|:---------|:------------|
-| <CopyableCode code="id" /> | `string` |  |
-| <CopyableCode code="name" /> | `object` |  |
-| <CopyableCode code="active" /> | `boolean` |  |
-| <CopyableCode code="displayName" /> | `string` |  |
-| <CopyableCode code="emails" /> | `array` |  |
-| <CopyableCode code="externalId" /> | `string` |  |
-| <CopyableCode code="roles" /> | `array` |  |
-| <CopyableCode code="userName" /> | `string` |  |
+| Name | Datatype |
+|:-----|:---------|
+| <CopyableCode code="id" /> | `string` |
+| <CopyableCode code="name" /> | `object` |
+| <CopyableCode code="active" /> | `boolean` |
+| <CopyableCode code="displayName" /> | `string` |
+| <CopyableCode code="emails" /> | `array` |
+| <CopyableCode code="externalId" /> | `string` |
+| <CopyableCode code="roles" /> | `array` |
+| <CopyableCode code="userName" /> | `string` |
 
 ## Methods
 | Name | Accessible by | Required Params | Description |
@@ -50,3 +50,144 @@ Operations on a <code>users</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, id" /> | Deletes a user. Deleting a user from a Databricks account also removes objects associated with the user. |
 | <CopyableCode code="patch" /> | `UPDATE` | <CopyableCode code="account_id, id" /> | Partially updates a user resource by applying the supplied operations on specific user attributes. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, id" /> | Replaces a user's information with the data supplied in request. |
+
+## SELECT examples
+
+<Tabs
+    defaultValue="list"
+    values={[
+        { label: 'users (list)', value: 'list' },
+        { label: 'users (get)', value: 'get' }
+    ]
+}>
+<TabItem value="list">
+
+```sql
+SELECT
+id,
+name,
+active,
+displayName,
+emails,
+externalId,
+roles,
+userName
+FROM databricks_account.iam.users
+WHERE account_id = '{{ account_id }}';
+```
+
+</TabItem>
+<TabItem value="get">
+
+```sql
+SELECT
+id,
+name,
+active,
+displayName,
+emails,
+externalId,
+roles,
+userName
+FROM databricks_account.iam.users
+WHERE account_id = '{{ account_id }}' AND
+id = '{{ id }}';
+```
+
+</TabItem>
+</Tabs>
+
+## INSERT example
+
+Use the following StackQL query and manifest file to create a new <code>users</code> resource.
+
+<Tabs
+    defaultValue="create"
+    values={[
+        {{ label: 'users', value: 'create', }},
+        {{ label: 'Manifest', value: 'manifest', }},
+    ]}
+>
+<TabItem value="create">
+```sql
+/*+ create */
+INSERT INTO databricks_account.iam.users (
+account_id,\ndata__userName,\ndata__emails,\ndata__name,\ndata__displayName,\ndata__roles,\ndata__externalId,\ndata__active
+)
+SELECT 
+'{{ account_id }}',\n'{{ userName }}',\n'{{ emails }}',\n'{{ name }}',\n'{{ displayName }}',\n'{{ roles }}',\n'{{ externalId }}',\n'{{ active }}'
+;
+```
+
+</TabItem>
+<TabItem value="manifest">
+
+```yaml
+- name: your_resource_model_name
+  props:
+  - name: userName
+    value: user@example.com
+  - name: emails
+    value:
+    - $ref: string
+      value: string
+      display: string
+      primary: true
+      type: string
+  - name: name
+    value:
+      givenName: string
+      familyName: string
+  - name: displayName
+    value: string
+  - name: roles
+    value:
+    - $ref: string
+      value: string
+      display: string
+      primary: true
+      type: string
+  - name: externalId
+    value: string
+  - name: active
+    value: true
+
+```
+
+</TabItem>
+</Tabs>
+
+## UPDATE example
+
+Updates a <code>users</code> resource.
+
+```sql
+/*+ update */
+UPDATE databricks_account.iam.users
+SET { field = value }
+WHERE account_id = '{{ account_id }}' AND
+id = '{{ id }}';
+```
+
+## REPLACE example
+
+Replaces a <code>users</code> resource.
+
+```sql
+/*+ update */
+REPLACE databricks_account.iam.users
+SET { field = value }
+WHERE account_id = '{{ account_id }}' AND
+id = '{{ id }}';
+```
+
+## DELETE example
+
+Deletes a <code>users</code> resource.
+
+```sql
+/*+ delete */
+DELETE FROM databricks_account.iam.users
+WHERE account_id = '{{ account_id }}' AND
+id = '{{ id }}';
+```

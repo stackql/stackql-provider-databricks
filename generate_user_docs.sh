@@ -30,6 +30,7 @@ source .venv/bin/activate
 
 pip install pandas
 pip install psycopg[binary]
+pip install PyYAML
 
 chmod +x stackql
 
