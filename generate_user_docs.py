@@ -1,5 +1,7 @@
+import shutil
 import sys, datetime
-from lib.documentation import generate_resource_doc, generate_service_doc, generate_provider_doc, generate_fields_section, generate_methods_section
+from pathlib import Path
+from lib.documentation import generate_resource_doc, generate_service_doc, generate_provider_doc
 
 provider = sys.argv[1]
 
@@ -10,6 +12,17 @@ from psycopg.rows import dict_row
 import pandas as pd
 
 pd.set_option('display.max_columns', None)
+
+# Setup and cleanup documentation directories
+docs_dir = Path("docs")
+base_path = docs_dir / f"{provider}-docs" # provider index and mdx file goes here
+if (base_path / "index.md").exists():
+    (base_path / "index.md").unlink()
+providers_path = base_path / f"providers/{provider}" # service dirs go here
+if providers_path.exists():
+    shutil.rmtree(providers_path)
+
+providers_path.mkdir(parents=True, exist_ok=True)
 
 conn = psycopg.connect(
       host="localhost", port=5444,
@@ -51,6 +64,10 @@ for serviceIx, serviceRow in services.iterrows():
       num_resources = len(resources)
       print("processing %s resources in %s" % (num_resources, service))
       total_resources = total_resources + num_resources
+
+      # Generate service documentation after getting resources
+      generate_service_doc(provider, service, resources, providers_path)
+      
       for resIx, resRow in resources.iterrows():
             resource = resRow['name']
             fields = None 
@@ -90,9 +107,14 @@ for serviceIx, serviceRow in services.iterrows():
             else:
                   print("No fields found for %s.%s.%s" % (provider, service, resource))
 
+            # Generate resource documentation
+            generate_resource_doc(provider, service, resource, methods, fields, providers_path, resources)
+
 print("%s services processed" % (num_services))
 print("%s total resources processed" % (total_resources))
 print("%s total methods available" % (total_methods))
 
-print(datetime.datetime.now() - start_time)
+# Generate provider documentation at the end
+generate_provider_doc(provider, services, total_resources, total_methods, base_path)
 
+print(datetime.datetime.now() - start_time)

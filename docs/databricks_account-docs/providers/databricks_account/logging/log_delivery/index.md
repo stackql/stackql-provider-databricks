@@ -1,0 +1,56 @@
+---
+title: log_delivery
+hide_title: false
+hide_table_of_contents: false
+keywords:
+  - Databricks
+  - log_delivery
+  - logging
+  - databricks_account
+  - stackql
+  - infrastructure-as-code
+  - configuration-as-data
+  - cloud inventory
+description: Query, deploy and manage Databricks resources using SQL
+custom_edit_url: null
+image: /img/providers/databricks_account/stackql-databricks-provider-featured-image.png
+---
+
+import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Operations on a <code>log_delivery</code> resource.  
+
+## Overview
+<table><tbody>
+<tr><td><b>Name</b></td><td><code>log_delivery</code></td></tr>
+<tr><td><b>Type</b></td><td>Resource</td></tr>
+<tr><td><b>Id</b></td><td><CopyableCode code="databricks_account.logging.log_delivery" /></td></tr>
+</tbody></table>
+
+## Fields
+| Name | Datatype | Description |
+|:-----|:---------|:------------|
+| <CopyableCode code="account_id" /> | `string` |  |
+| <CopyableCode code="config_id" /> | `string` |  |
+| <CopyableCode code="config_name" /> | `string` |  |
+| <CopyableCode code="creation_time" /> | `integer` |  |
+| <CopyableCode code="credentials_id" /> | `string` |  |
+| <CopyableCode code="delivery_path_prefix" /> | `string` |  |
+| <CopyableCode code="delivery_start_time" /> | `string` |  |
+| <CopyableCode code="log_delivery_status" /> | `object` |  |
+| <CopyableCode code="log_type" /> | `string` |  |
+| <CopyableCode code="output_format" /> | `string` |  |
+| <CopyableCode code="status" /> | `string` |  |
+| <CopyableCode code="storage_configuration_id" /> | `string` |  |
+| <CopyableCode code="update_time" /> | `integer` |  |
+| <CopyableCode code="workspace_ids_filter" /> | `array` |  |
+
+## Methods
+| Name | Accessible by | Required Params | Description |
+|:-----|:--------------|:----------------|:------------|
+| <CopyableCode code="get" /> | `SELECT` | <CopyableCode code="account_id, log_delivery_configuration_id" /> | Gets a Databricks log delivery configuration object for an account, both specified by ID. |
+| <CopyableCode code="list" /> | `SELECT` | <CopyableCode code="account_id" /> | Gets all Databricks log delivery configurations associated with an account specified by ID. |
+| <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a new Databricks log delivery configuration to enable delivery of the specified type of logs to your storage location. This requires that you already created a |
+| <CopyableCode code="patchstatus" /> | `EXEC` | <CopyableCode code="account_id, log_delivery_configuration_id" /> | Enables or disables a log delivery configuration. Deletion of delivery configurations is not supported, so disable log delivery configurations that are no longer needed. Note that you can't re-enable a delivery configuration if this would violate the delivery configuration limits described under |

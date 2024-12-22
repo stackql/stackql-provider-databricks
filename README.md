@@ -63,15 +63,33 @@ REG_STR='{"url": "file://'${PROVIDER_REGISTRY_ROOT_DIR}'", "localDocRoot": "'${P
 some test queries...
 
 ```sql
-SELECT displayName, userName, active 
-FROM databricks_account.iam.users, JSON_EACH(roles)
+SELECT 
+u.id,
+displayName, 
+userName, 
+active 
+FROM databricks_account.iam.users u, JSON_EACH(roles)
 WHERE account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce'
 AND JSON_EXTRACT(json_each.value, '$.value') = 'account_admin';
 ```
 
 ```sql
-SELECT applicationId,  displayName
-FROM databricks_account.iam.service_principals, JSON_EACH(roles)
+select 
+gr.id, 
+displayName, 
+json_extract(json_each.value, '$.value') as entitlement 
+from databricks_workspace.iam.groups gr, JSON_EACH(entitlements) 
+where deployment_name = 'dbc-ddbc0f51-c9cf';
+```
+
+```sql
+SELECT 
+sp.id,
+active,
+applicationId,
+displayName,
+externalId
+FROM databricks_account.iam.service_principals sp, JSON_EACH(roles)
 WHERE account_id = 'ebfcc5a9-9d49-4c93-b651-b3ee6cf1c9ce'
 AND JSON_EXTRACT(json_each.value, '$.value') = 'account_admin';
 ```
