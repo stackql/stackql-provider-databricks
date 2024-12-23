@@ -2,6 +2,11 @@
 def generate_provider_doc(provider, services_df, total_resources, total_methods, base_path):
     """Generate documentation for the provider."""
     
+    if provider == 'databricks_account':
+        provider_desc = "Account-level features, identity and provisioning for Databricks."
+    elif provider == 'databricks_workspace':
+        provider_desc = "Manage clusters, jobs, notebooks, MLflow and other Databricks workspace resources."
+
     # Split services into two columns
     services_list = services_df['name'].tolist()
     mid_point = (len(services_list) + 1) // 2
@@ -28,7 +33,7 @@ slug: /providers/{provider}
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
 
-Services from Databricks.
+{provider_desc}
 
 :::info Provider Summary
 
