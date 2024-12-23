@@ -1,6 +1,6 @@
 import pandas as pd
 
-def generate_select_example(provider, service, resource, methods_df, fields_df, has_view=False):
+def generate_select_example(provider, service, resource, methods_df, fields_df, has_view=False, view_fields_df=None):
     """Generate SELECT example documentation."""
     # Get all SELECT operations
     select_methods = methods_df[methods_df['SQLVerb'] == 'SELECT'].copy()
@@ -13,17 +13,30 @@ def generate_select_example(provider, service, resource, methods_df, fields_df, 
     )
     # Sort by parameter count
     select_methods = select_methods.sort_values('param_count')
+
+    # NEW: Get least specific required params for view
+    least_specific_params = []
+    if not select_methods.empty:
+        least_specific_method = select_methods.iloc[0]
+        least_specific_params = least_specific_method['RequiredParams'].split(', ') if pd.notna(least_specific_method['RequiredParams']) else []    
     
     # Generate field list (same for all SELECT operations)
     fields = []
     for _, row in fields_df.iterrows():
         fields.append(row['name'])
     field_list = ',\n'.join(fields)
+
+    # Generate field list (same for all SELECT operations)
+    view_fields = []
+    if has_view:
+        for _, row in view_fields_df.iterrows():
+            view_fields.append(row['name'])
+        view_field_list = ',\n'.join(view_fields)    
     
-    def create_query(resource_name, required_params):
+    def create_query(resource_name, this_field_list, required_params):
         """Creates a SELECT query with the given params"""
         query = f"""SELECT
-{field_list}
+{this_field_list}
 FROM {provider}.{service}.{resource_name}"""
         if required_params:
             where_clause = []
@@ -42,7 +55,7 @@ FROM {provider}.{service}.{resource_name}"""
 ## `SELECT` examples
 
 ```sql
-{create_query(resource, required_params)}
+{create_query(resource, field_list, required_params)}
 ```
 """
     
@@ -76,7 +89,7 @@ FROM {provider}.{service}.{resource_name}"""
         content += f"""<TabItem value="view">
 
 ```sql
-{create_query(f"vw_{resource}", [])}
+{create_query(f"vw_{resource}", view_field_list, least_specific_params)}
 ```
 
 </TabItem>
@@ -88,7 +101,7 @@ FROM {provider}.{service}.{resource_name}"""
         content += f"""<TabItem value="{method['MethodName']}">
 
 ```sql
-{create_query(resource, required_params)}
+{create_query(resource, field_list, required_params)}
 ```
 
 </TabItem>

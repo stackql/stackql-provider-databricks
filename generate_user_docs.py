@@ -108,7 +108,7 @@ for serviceIx, serviceRow in services.iterrows():
                   print("No fields found for %s.%s.%s" % (provider, service, resource))
 
             # Generate resource documentation
-            generate_resource_doc(provider, service, resource, methods, fields, providers_path, resources)
+            generate_resource_doc(provider, service, resource, methods, fields, providers_path, resources, conn)
 
 print("%s services processed" % (num_services))
 print("%s total resources processed" % (total_resources))

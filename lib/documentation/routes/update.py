@@ -23,10 +23,12 @@ def generate_update_example(provider, service, resource, methods_df, fields_df):
             where_clause.append(f"{param} = '{{{{ {template_param} }}}}'")
         where_str = ' AND\n'.join(where_clause)
         
-        return f"""/*+ update */
-UPDATE {provider}.{service}.{resource}
-SET {{ field = value }}
-WHERE {where_str};"""
+        return """/*+ update */
+-- replace field1, field2, etc. with the fields you want to update        
+UPDATE %s.%s.%s
+SET field1 = '{{ value1 }}',
+field2 = '{{ value2 }}', ...
+WHERE %s;""" % (provider, service, resource, where_str)
 
     # If only one UPDATE method, don't use tabs
     if len(update_methods) == 1:
@@ -68,6 +70,7 @@ Updates a <code>%s</code> resource.
         # Add tab for each UPDATE method
         for _, method in update_methods.iterrows():
             content += f"""<TabItem value="{method['MethodName']}">
+
 ```sql
 {create_update_statement(method)}
 ```

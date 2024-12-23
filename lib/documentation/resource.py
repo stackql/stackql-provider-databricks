@@ -1,4 +1,5 @@
 from pathlib import Path
+import sys
 import pandas as pd
 
 from lib.documentation.routes.delete import generate_delete_example
@@ -13,18 +14,27 @@ spec_root_path = ".stackql"
 # main routine
 #
 
-def generate_resource_doc(provider, service, resource, methods_df, fields_df, providers_path, resources_df):
+def generate_resource_doc(provider, service, resource, methods_df, fields_df, providers_path, resources_df,conn):
     """Generate documentation for a specific resource."""
     # Skip if this is a view
     if resource.startswith('vw_'):
         return
         
     # Check if a corresponding view exists by looking in resources_df
-    view_name = f"vw_{resource}"
-    has_view = view_name in resources_df['name'].values
+    has_view = f"vw_{resource}" in resources_df['name'].values
+    view_name = f"vw_{resource}" if has_view else None
     
     # Get view fields if the view exists
-    view_fields = fields_df if has_view else None
+    view_fields = None
+    if has_view:
+        view_desc_query = f"DESCRIBE EXTENDED {provider}.{service}.{view_name}"
+        try:
+            r = conn.execute(view_desc_query)
+            data = r.fetchall()
+            view_fields = pd.DataFrame([i.copy() for i in data])
+        except Exception as e:
+            print(f"ERROR [failed to get fields for view {view_name}: {str(e)}]")
+            sys.exit(1)
     
     # Create directory structure
     resource_path = Path(providers_path) / service / resource
@@ -65,7 +75,7 @@ Operations on a <code>{resource}</code> resource.
 """
     # Add fields section
     if fields_df is not None and not fields_df.empty:
-        doc_content += generate_fields_section(fields_df, view_fields)
+        doc_content += generate_fields_section(resource, fields_df, view_name, view_fields)
     else:
         doc_content += """
 `SELECT` not supported for this resource, see the methods section for supported operations.
@@ -73,7 +83,7 @@ Operations on a <code>{resource}</code> resource.
     # Add methods section
     if methods_df is not None and not methods_df.empty:
         doc_content += generate_methods_section(methods_df)
-        doc_content += generate_select_example(provider, service, resource, methods_df, fields_df, has_view)
+        doc_content += generate_select_example(provider, service, resource, methods_df, fields_df, has_view, view_fields)
         doc_content += generate_insert_example(provider, service, resource, methods_df, fields_df, spec_root_path)
         doc_content += generate_update_example(provider, service, resource, methods_df, fields_df)
         doc_content += generate_replace_example(provider, service, resource, methods_df, fields_df)
@@ -106,7 +116,7 @@ def generate_methods_section(methods_df):
 # fields section
 #
 
-def generate_fields_section(resource_fields_df, view_fields_df=None):
+def generate_fields_section(resource_name, resource_fields_df, view_name=None, view_fields_df=None):
     """Generate the fields section of the documentation."""
     fields_content = "## Fields\n"
     
@@ -139,7 +149,7 @@ def generate_fields_section(resource_fields_df, view_fields_df=None):
 }>
 <TabItem value="view">
 
-%s""" % (view_fields_df['name'].iloc[0], resource_fields_df['name'].iloc[0], generate_table_header(view_has_descriptions))
+%s""" % (view_name, resource_name, generate_table_header(view_has_descriptions))
         
         # Add view fields
         for _, row in view_fields_df.iterrows():
