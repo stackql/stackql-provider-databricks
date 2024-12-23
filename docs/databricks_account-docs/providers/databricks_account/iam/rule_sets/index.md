@@ -42,7 +42,7 @@ Operations on a <code>rule_sets</code> resource.
 | <CopyableCode code="getruleset" /> | `SELECT` | <CopyableCode code="account_id, etag, name" /> | Get a rule set by its name. A rule set is always attached to a resource and contains a list of access rules on the said resource. Currently only a default rule set for each resource is supported. |
 | <CopyableCode code="updateruleset" /> | `SELECT` | <CopyableCode code="account_id" /> | Replace the rules of a rule set. First, use  get to read the current version of the rule set before modifying it. This pattern helps prevent conflicts between concurrent updates. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="updateruleset"

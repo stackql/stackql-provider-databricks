@@ -39,7 +39,7 @@ Operations on a <code>workspace_assignments</code> resource.
 |:-----|:--------------|:----------------|:------------|
 | <CopyableCode code="list" /> | `SELECT` | <CopyableCode code="account_id, metastore_id" /> | Gets a list of all Databricks workspace IDs that have been assigned to given metastore. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT

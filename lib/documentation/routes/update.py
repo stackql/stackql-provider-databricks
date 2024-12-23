@@ -32,7 +32,7 @@ WHERE {where_str};"""
     if len(update_methods) == 1:
         method = update_methods.iloc[0]
         content = f"""
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>{resource}</code> resource.
 
@@ -43,7 +43,7 @@ Updates a <code>{resource}</code> resource.
     else:
         # For multiple UPDATE methods, use tabs
         content = """
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>%s</code> resource.
 
@@ -56,7 +56,7 @@ Updates a <code>%s</code> resource.
         tab_values = []
         for _, method in update_methods.iterrows():
             tab_values.append(
-                f"""        {{ label: '{method["MethodName"]}', value: '{method["MethodName"]}' }}"""
+                """        { label: '%s', value: '%s' }""" % (method["MethodName"], method["MethodName"])
             )
         
         content += ',\n'.join(tab_values)
@@ -64,7 +64,7 @@ Updates a <code>%s</code> resource.
     ]
 }>
 """
-    
+
         # Add tab for each UPDATE method
         for _, method in update_methods.iterrows():
             content += f"""<TabItem value="{method['MethodName']}">

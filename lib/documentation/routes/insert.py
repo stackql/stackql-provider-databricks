@@ -46,7 +46,7 @@ def generate_insert_example(provider, service, resource, methods_df, fields_df, 
                 template_param = param
                 columns.append(param)
                 values.append(f"'{{{{ {template_param} }}}}'")
-        
+
         # Add request body params (with data__ prefix)
         for param in req_body_params:
             if param != 'id':  # Skip id field
@@ -55,10 +55,10 @@ def generate_insert_example(provider, service, resource, methods_df, fields_df, 
         
         query = f"""/*+ create */
 INSERT INTO {provider}.{service}.{resource} (
-{',\\n'.join(columns)}
+{',\n'.join(columns)}
 )
 SELECT 
-{',\\n'.join(values)}
+{',\n'.join(values)}
 ;"""
         return query
 
@@ -66,20 +66,21 @@ SELECT
     if len(insert_methods) == 1:
         method = insert_methods.iloc[0]
         manifest = get_manifest_fields(provider, service, resource, method['MethodName'], spec_root_path)
-        
+
         return """
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>%s</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: '%s', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: '%s', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 """ % (resource, resource) + f"""```sql
 {create_insert_statement(method)}
 ```
@@ -97,7 +98,7 @@ Use the following StackQL query and manifest file to create a new <code>%s</code
     
     # For multiple INSERT methods, use additional tabs
     content = """
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>%s</code> resource.
 
@@ -110,7 +111,7 @@ Use the following StackQL query and manifest file to create a new <code>%s</code
     tab_values = []
     for _, method in insert_methods.iterrows():
         tab_values.append(
-            f"""        {{ label: '{resource} ({method["MethodName"]})', value: '{method["MethodName"]}' }}"""
+            """        { label: '%s (%s)', value: '%s' }""" % (resource, method["MethodName"],method["MethodName"])
         )
     tab_values.append("""        { label: 'Manifest', value: 'manifest' }""")
     
@@ -119,7 +120,7 @@ Use the following StackQL query and manifest file to create a new <code>%s</code
     ]
 }>
 """
-    
+   
     # Add tab for each INSERT method
     for _, method in insert_methods.iterrows():
         content += f"""<TabItem value="{method['MethodName']}">

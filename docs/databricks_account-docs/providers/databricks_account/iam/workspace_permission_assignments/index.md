@@ -43,7 +43,7 @@ Operations on a <code>workspace_permission_assignments</code> resource.
 | <CopyableCode code="createorupdate" /> | `INSERT` | <CopyableCode code="account_id, principal_id, workspace_id" /> | Creates or updates the workspace permissions assignment in a given account and workspace for the specified principal. |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, principal_id, workspace_id" /> | Deletes the workspace permissions assignment in a given account and workspace for the specified principal. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT
@@ -55,25 +55,32 @@ WHERE account_id = '{{ account_id }}' AND
 workspace_id = '{{ workspace_id }}';
 ```
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>workspace_permission_assignments</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'workspace_permission_assignments', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'workspace_permission_assignments', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.iam.workspace_permission_assignments (
-account_id,\nprincipal_id,\nworkspace_id,\ndata__permissions
+account_id,
+principal_id,
+workspace_id,
+data__permissions
 )
 SELECT 
-'{{ account_id }}',\n'{{ principal_id }}',\n'{{ workspace_id }}',\n'{{ permissions }}'
+'{{ account_id }}',
+'{{ principal_id }}',
+'{{ workspace_id }}',
+'{{ permissions }}'
 ;
 ```
 
@@ -92,7 +99,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>workspace_permission_assignments</code> resource.
 

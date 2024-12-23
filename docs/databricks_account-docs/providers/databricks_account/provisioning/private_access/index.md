@@ -49,7 +49,7 @@ Operations on a <code>private_access</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, private_access_settings_id" /> | Deletes a private access settings object, which determines how your workspace is accessed over |
 | <CopyableCode code="replace" /> | `REPLACE` | <CopyableCode code="account_id, private_access_settings_id" /> | Updates an existing private access settings object, which specifies how your workspace is accessed over |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -93,25 +93,36 @@ private_access_settings_id = '{{ private_access_settings_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>private_access</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'private_access', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'private_access', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.provisioning.private_access (
-account_id,\ndata__private_access_settings_name,\ndata__region,\ndata__public_access_enabled,\ndata__private_access_level,\ndata__allowed_vpc_endpoint_ids
+account_id,
+data__private_access_settings_name,
+data__region,
+data__public_access_enabled,
+data__private_access_level,
+data__allowed_vpc_endpoint_ids
 )
 SELECT 
-'{{ account_id }}',\n'{{ private_access_settings_name }}',\n'{{ region }}',\n'{{ public_access_enabled }}',\n'{{ private_access_level }}',\n'{{ allowed_vpc_endpoint_ids }}'
+'{{ account_id }}',
+'{{ private_access_settings_name }}',
+'{{ region }}',
+'{{ public_access_enabled }}',
+'{{ private_access_level }}',
+'{{ allowed_vpc_endpoint_ids }}'
 ;
 ```
 
@@ -138,7 +149,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>private_access</code> resource.
 
@@ -150,7 +161,7 @@ WHERE account_id = '{{ account_id }}' AND
 private_access_settings_id = '{{ private_access_settings_id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>private_access</code> resource.
 

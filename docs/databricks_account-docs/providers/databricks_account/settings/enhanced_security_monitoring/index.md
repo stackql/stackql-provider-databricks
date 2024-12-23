@@ -42,7 +42,7 @@ Operations on a <code>enhanced_security_monitoring</code> resource.
 | <CopyableCode code="get" /> | `SELECT` | <CopyableCode code="account_id" /> | Gets the enhanced security monitoring setting for new workspaces. |
 | <CopyableCode code="update" /> | `UPDATE` | <CopyableCode code="account_id" /> | Updates the value of the enhanced security monitoring setting for new workspaces. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT
@@ -53,7 +53,7 @@ FROM databricks_account.settings.enhanced_security_monitoring
 WHERE account_id = '{{ account_id }}';
 ```
 
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>enhanced_security_monitoring</code> resource.
 

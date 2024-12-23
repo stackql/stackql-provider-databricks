@@ -32,7 +32,7 @@ WHERE {where_str};"""
     if len(replace_methods) == 1:
         method = replace_methods.iloc[0]
         content = f"""
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>{resource}</code> resource.
 
@@ -43,7 +43,7 @@ Replaces a <code>{resource}</code> resource.
     else:
         # For multiple REPLACE methods, use tabs
         content = """
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>%s</code> resource.
 
@@ -56,7 +56,7 @@ Replaces a <code>%s</code> resource.
         tab_values = []
         for _, method in replace_methods.iterrows():
             tab_values.append(
-                f"""        {{ label: '{method["MethodName"]}', value: '{method["MethodName"]}' }}"""
+                """        { label: '%s', value: '%s' }""" % (method["MethodName"], method["MethodName"])
             )
         
         content += ',\n'.join(tab_values)
@@ -64,7 +64,7 @@ Replaces a <code>%s</code> resource.
     ]
 }>
 """
-    
+   
         # Add tab for each REPLACE method
         for _, method in replace_methods.iterrows():
             content += f"""<TabItem value="{method['MethodName']}">

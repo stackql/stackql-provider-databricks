@@ -92,7 +92,7 @@ Operations on a <code>workspaces</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, workspace_id" /> | Terminates and deletes a Databricks workspace. From an API perspective, deletion is immediate. However, it might take a few minutes for all workspaces resources to be deleted, depending on the size and number of workspace resources. |
 | <CopyableCode code="update" /> | `UPDATE` | <CopyableCode code="account_id, workspace_id" /> | Updates a workspace configuration for either a running workspace or a failed workspace. The elements that can be updated varies between these two use cases. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="view"
@@ -182,25 +182,48 @@ workspace_id = '{{ workspace_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>workspaces</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'workspaces', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'workspaces', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.provisioning.workspaces (
-account_id,\ndata__workspace_name,\ndata__network_id,\ndata__deployment_name,\ndata__aws_region,\ndata__credentials_id,\ndata__storage_configuration_id,\ndata__managed_services_customer_managed_key_id,\ndata__private_access_settings_id,\ndata__pricing_tier,\ndata__storage_customer_managed_key_id,\ndata__custom_tags
+account_id,
+data__workspace_name,
+data__network_id,
+data__deployment_name,
+data__aws_region,
+data__credentials_id,
+data__storage_configuration_id,
+data__managed_services_customer_managed_key_id,
+data__private_access_settings_id,
+data__pricing_tier,
+data__storage_customer_managed_key_id,
+data__custom_tags
 )
 SELECT 
-'{{ account_id }}',\n'{{ workspace_name }}',\n'{{ network_id }}',\n'{{ deployment_name }}',\n'{{ aws_region }}',\n'{{ credentials_id }}',\n'{{ storage_configuration_id }}',\n'{{ managed_services_customer_managed_key_id }}',\n'{{ private_access_settings_id }}',\n'{{ pricing_tier }}',\n'{{ storage_customer_managed_key_id }}',\n'{{ custom_tags }}'
+'{{ account_id }}',
+'{{ workspace_name }}',
+'{{ network_id }}',
+'{{ deployment_name }}',
+'{{ aws_region }}',
+'{{ credentials_id }}',
+'{{ storage_configuration_id }}',
+'{{ managed_services_customer_managed_key_id }}',
+'{{ private_access_settings_id }}',
+'{{ pricing_tier }}',
+'{{ storage_customer_managed_key_id }}',
+'{{ custom_tags }}'
 ;
 ```
 
@@ -240,7 +263,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>workspaces</code> resource.
 
@@ -252,7 +275,7 @@ WHERE account_id = '{{ account_id }}' AND
 workspace_id = '{{ workspace_id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>workspaces</code> resource.
 

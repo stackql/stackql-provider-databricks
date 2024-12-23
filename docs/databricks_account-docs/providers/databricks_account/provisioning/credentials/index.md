@@ -46,7 +46,7 @@ Operations on a <code>credentials</code> resource.
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a Databricks credential configuration that represents cloud cross-account credentials for a specified account. Databricks uses this to set up network infrastructure properly to host Databricks clusters. For your AWS IAM role, you need to trust the External ID (the Databricks Account API account ID)  in the returned credential object, and configure the required access policy. |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, credentials_id" /> | Deletes a Databricks credential configuration object for an account, both specified by ID. You cannot delete a credential that is associated with any workspace. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -86,25 +86,30 @@ credentials_id = '{{ credentials_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>credentials</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'credentials', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'credentials', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.provisioning.credentials (
-account_id,\ndata__credentials_name,\ndata__aws_credentials
+account_id,
+data__credentials_name,
+data__aws_credentials
 )
 SELECT 
-'{{ account_id }}',\n'{{ credentials_name }}',\n'{{ aws_credentials }}'
+'{{ account_id }}',
+'{{ credentials_name }}',
+'{{ aws_credentials }}'
 ;
 ```
 
@@ -126,7 +131,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>credentials</code> resource.
 

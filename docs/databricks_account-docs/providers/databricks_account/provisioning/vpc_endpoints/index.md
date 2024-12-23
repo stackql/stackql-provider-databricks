@@ -50,7 +50,7 @@ Operations on a <code>vpc_endpoints</code> resource.
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a VPC endpoint configuration, which represents a |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, vpc_endpoint_id" /> | Deletes a VPC endpoint configuration, which represents an |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -98,25 +98,32 @@ vpc_endpoint_id = '{{ vpc_endpoint_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>vpc_endpoints</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'vpc_endpoints', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'vpc_endpoints', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.provisioning.vpc_endpoints (
-account_id,\ndata__vpc_endpoint_name,\ndata__aws_vpc_endpoint_id,\ndata__region
+account_id,
+data__vpc_endpoint_name,
+data__aws_vpc_endpoint_id,
+data__region
 )
 SELECT 
-'{{ account_id }}',\n'{{ vpc_endpoint_name }}',\n'{{ aws_vpc_endpoint_id }}',\n'{{ region }}'
+'{{ account_id }}',
+'{{ vpc_endpoint_name }}',
+'{{ aws_vpc_endpoint_id }}',
+'{{ region }}'
 ;
 ```
 
@@ -138,7 +145,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>vpc_endpoints</code> resource.
 

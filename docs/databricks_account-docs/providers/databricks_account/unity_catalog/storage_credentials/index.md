@@ -56,7 +56,7 @@ Operations on a <code>storage_credentials</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, metastore_id, storage_credential_name" /> | Deletes a storage credential from the metastore. The caller must be an owner of the storage credential. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, metastore_id, storage_credential_name" /> | Updates a storage credential on the metastore. The caller must be the owner of the storage credential. If the caller is a metastore admin, only the |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -116,25 +116,30 @@ storage_credential_name = '{{ storage_credential_name }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>storage_credentials</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'storage_credentials', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'storage_credentials', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.unity_catalog.storage_credentials (
-account_id,\nmetastore_id,\ndata__credential_info
+account_id,
+metastore_id,
+data__credential_info
 )
 SELECT 
-'{{ account_id }}',\n'{{ metastore_id }}',\n'{{ credential_info }}'
+'{{ account_id }}',
+'{{ metastore_id }}',
+'{{ credential_info }}'
 ;
 ```
 
@@ -158,7 +163,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>storage_credentials</code> resource.
 
@@ -171,7 +176,7 @@ metastore_id = '{{ metastore_id }}' AND
 storage_credential_name = '{{ storage_credential_name }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>storage_credentials</code> resource.
 

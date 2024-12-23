@@ -46,7 +46,7 @@ Operations on a <code>encryption_keys</code> resource.
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a customer-managed key configuration object for an account, specified by ID. This operation uploads a reference to a customer-managed key to Databricks. If the key is assigned as a workspace's customer-managed key for managed services, Databricks uses the key to encrypt the workspaces notebooks and secrets in the control plane, in addition to Databricks SQL queries and query history. If it is specified as a workspace's customer-managed key for workspace storage, the key encrypts the workspace's root S3 bucket (which contains the workspace's root DBFS and system data) and, optionally, cluster EBS volume data. |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, customer_managed_key_id" /> | Deletes a customer-managed key configuration object for an account. You cannot delete a configuration that is associated with a running workspace. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -86,25 +86,30 @@ customer_managed_key_id = '{{ customer_managed_key_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>encryption_keys</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'encryption_keys', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'encryption_keys', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.provisioning.encryption_keys (
-account_id,\ndata__aws_key_info,\ndata__use_cases
+account_id,
+data__aws_key_info,
+data__use_cases
 )
 SELECT 
-'{{ account_id }}',\n'{{ aws_key_info }}',\n'{{ use_cases }}'
+'{{ account_id }}',
+'{{ aws_key_info }}',
+'{{ use_cases }}'
 ;
 ```
 
@@ -129,7 +134,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>encryption_keys</code> resource.
 

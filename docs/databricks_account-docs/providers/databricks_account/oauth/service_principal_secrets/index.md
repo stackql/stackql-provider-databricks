@@ -45,7 +45,7 @@ Operations on a <code>service_principal_secrets</code> resource.
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id, service_principal_id" /> | Create a secret for the given service principal. |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, secret_id, service_principal_id" /> | Delete a secret from the given service principal. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT
@@ -59,25 +59,28 @@ WHERE account_id = '{{ account_id }}' AND
 service_principal_id = '{{ service_principal_id }}';
 ```
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>service_principal_secrets</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'service_principal_secrets', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'service_principal_secrets', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.oauth.service_principal_secrets (
-account_id,\nservice_principal_id
+account_id,
+service_principal_id
 )
 SELECT 
-'{{ account_id }}',\n'{{ service_principal_id }}'
+'{{ account_id }}',
+'{{ service_principal_id }}'
 ;
 ```
 
@@ -92,7 +95,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>service_principal_secrets</code> resource.
 

@@ -41,7 +41,7 @@ Operations on a <code>usage_dashboards</code> resource.
 | <CopyableCode code="get" /> | `SELECT` | <CopyableCode code="account_id" /> | Get a usage dashboard specified by workspaceId, accountId, and dashboard type. |
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Create a usage dashboard specified by workspaceId, accountId, and dashboard type. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT
@@ -51,25 +51,30 @@ FROM databricks_account.billing.usage_dashboards
 WHERE account_id = '{{ account_id }}';
 ```
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>usage_dashboards</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'usage_dashboards', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'usage_dashboards', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.billing.usage_dashboards (
-account_id,\ndata__workspace_id,\ndata__dashboard_type
+account_id,
+data__workspace_id,
+data__dashboard_type
 )
 SELECT 
-'{{ account_id }}',\n'{{ workspace_id }}',\n'{{ dashboard_type }}'
+'{{ account_id }}',
+'{{ workspace_id }}',
+'{{ dashboard_type }}'
 ;
 ```
 

@@ -55,7 +55,7 @@ Operations on a <code>log_delivery</code> resource.
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a new Databricks log delivery configuration to enable delivery of the specified type of logs to your storage location. This requires that you already created a |
 | <CopyableCode code="patchstatus" /> | `EXEC` | <CopyableCode code="account_id, log_delivery_configuration_id" /> | Enables or disables a log delivery configuration. Deletion of delivery configurations is not supported, so disable log delivery configurations that are no longer needed. Note that you can't re-enable a delivery configuration if this would violate the delivery configuration limits described under |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -113,25 +113,28 @@ log_delivery_configuration_id = '{{ log_delivery_configuration_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>log_delivery</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'log_delivery', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'log_delivery', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.logging.log_delivery (
-account_id,\ndata__log_delivery_configuration
+account_id,
+data__log_delivery_configuration
 )
 SELECT 
-'{{ account_id }}',\n'{{ log_delivery_configuration }}'
+'{{ account_id }}',
+'{{ log_delivery_configuration }}'
 ;
 ```
 

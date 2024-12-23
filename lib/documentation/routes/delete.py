@@ -31,7 +31,7 @@ WHERE {where_str};"""
     if len(delete_methods) == 1:
         method = delete_methods.iloc[0]
         content = f"""
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>{resource}</code> resource.
 
@@ -42,7 +42,7 @@ Deletes a <code>{resource}</code> resource.
     else:
         # For multiple DELETE methods, use tabs
         content = """
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>%s</code> resource.
 
@@ -55,7 +55,7 @@ Deletes a <code>%s</code> resource.
         tab_values = []
         for _, method in delete_methods.iterrows():
             tab_values.append(
-                f"""        {{ label: '{method["MethodName"]}', value: '{method["MethodName"]}' }}"""
+                """        { label: '%s', value: '%s' }""" % (method["MethodName"], method["MethodName"])
             )
         
         content += ',\n'.join(tab_values)
@@ -63,7 +63,6 @@ Deletes a <code>%s</code> resource.
     ]
 }>
 """
-    
         # Add tab for each DELETE method
         for _, method in delete_methods.iterrows():
             content += f"""<TabItem value="{method['MethodName']}">

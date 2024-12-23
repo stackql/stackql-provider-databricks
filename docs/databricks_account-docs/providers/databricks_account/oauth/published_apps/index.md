@@ -45,7 +45,7 @@ Operations on a <code>published_apps</code> resource.
 |:-----|:--------------|:----------------|:------------|
 | <CopyableCode code="list" /> | `SELECT` | <CopyableCode code="account_id" /> | Get all the available published OAuth apps in Databricks. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT

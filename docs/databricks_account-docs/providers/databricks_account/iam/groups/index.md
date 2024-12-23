@@ -48,7 +48,7 @@ Operations on a <code>groups</code> resource.
 | <CopyableCode code="patch" /> | `UPDATE` | <CopyableCode code="account_id, id" /> | Partially updates the details of a group. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, id" /> | Updates the details of a group by replacing the entire group entity. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -88,25 +88,34 @@ id = '{{ id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>groups</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'groups', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'groups', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.iam.groups (
-account_id,\ndata__displayName,\ndata__members,\ndata__roles,\ndata__externalId
+account_id,
+data__displayName,
+data__members,
+data__roles,
+data__externalId
 )
 SELECT 
-'{{ account_id }}',\n'{{ displayName }}',\n'{{ members }}',\n'{{ roles }}',\n'{{ externalId }}'
+'{{ account_id }}',
+'{{ displayName }}',
+'{{ members }}',
+'{{ roles }}',
+'{{ externalId }}'
 ;
 ```
 
@@ -140,7 +149,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>groups</code> resource.
 
@@ -152,7 +161,7 @@ WHERE account_id = '{{ account_id }}' AND
 id = '{{ id }}';
 ```
 
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>groups</code> resource.
 
@@ -164,7 +173,7 @@ WHERE account_id = '{{ account_id }}' AND
 id = '{{ id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>groups</code> resource.
 

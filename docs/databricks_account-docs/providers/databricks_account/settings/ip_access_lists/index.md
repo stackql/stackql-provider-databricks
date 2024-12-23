@@ -53,7 +53,7 @@ Operations on a <code>ip_access_lists</code> resource.
 | <CopyableCode code="update" /> | `UPDATE` | <CopyableCode code="account_id, ip_access_list_id" /> | Updates an existing IP access list, specified by its ID. |
 | <CopyableCode code="replace" /> | `REPLACE` | <CopyableCode code="account_id, ip_access_list_id" /> | Replaces an IP access list, specified by its ID. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -103,25 +103,32 @@ ip_access_list_id = '{{ ip_access_list_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>ip_access_lists</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'ip_access_lists', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'ip_access_lists', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.settings.ip_access_lists (
-account_id,\ndata__label,\ndata__list_type,\ndata__ip_addresses
+account_id,
+data__label,
+data__list_type,
+data__ip_addresses
 )
 SELECT 
-'{{ account_id }}',\n'{{ label }}',\n'{{ list_type }}',\n'{{ ip_addresses }}'
+'{{ account_id }}',
+'{{ label }}',
+'{{ list_type }}',
+'{{ ip_addresses }}'
 ;
 ```
 
@@ -144,7 +151,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>ip_access_lists</code> resource.
 
@@ -156,7 +163,7 @@ WHERE account_id = '{{ account_id }}' AND
 ip_access_list_id = '{{ ip_access_list_id }}';
 ```
 
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>ip_access_lists</code> resource.
 
@@ -168,7 +175,7 @@ WHERE account_id = '{{ account_id }}' AND
 ip_access_list_id = '{{ ip_access_list_id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>ip_access_lists</code> resource.
 

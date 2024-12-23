@@ -39,7 +39,7 @@ FROM {provider}.{service}.{resource_name}"""
         method = select_methods.iloc[0]
         required_params = method['RequiredParams'].split(', ') if pd.notna(method['RequiredParams']) else []
         return f"""
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 {create_query(resource, required_params)}
@@ -48,7 +48,7 @@ FROM {provider}.{service}.{resource_name}"""
     
     # For multiple methods or when view exists, use tabs
     content = """
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="%s"

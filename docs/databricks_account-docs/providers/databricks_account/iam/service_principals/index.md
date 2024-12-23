@@ -49,7 +49,7 @@ Operations on a <code>service_principals</code> resource.
 | <CopyableCode code="patch" /> | `UPDATE` | <CopyableCode code="account_id, id" /> | Partially updates the details of a single service principal in the Databricks account. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, id" /> | Updates the details of a single service principal. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -91,25 +91,36 @@ id = '{{ id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>service_principals</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'service_principals', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'service_principals', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.iam.service_principals (
-account_id,\ndata__applicationId,\ndata__displayName,\ndata__roles,\ndata__externalId,\ndata__active
+account_id,
+data__applicationId,
+data__displayName,
+data__roles,
+data__externalId,
+data__active
 )
 SELECT 
-'{{ account_id }}',\n'{{ applicationId }}',\n'{{ displayName }}',\n'{{ roles }}',\n'{{ externalId }}',\n'{{ active }}'
+'{{ account_id }}',
+'{{ applicationId }}',
+'{{ displayName }}',
+'{{ roles }}',
+'{{ externalId }}',
+'{{ active }}'
 ;
 ```
 
@@ -140,7 +151,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>service_principals</code> resource.
 
@@ -152,7 +163,7 @@ WHERE account_id = '{{ account_id }}' AND
 id = '{{ id }}';
 ```
 
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>service_principals</code> resource.
 
@@ -164,7 +175,7 @@ WHERE account_id = '{{ account_id }}' AND
 id = '{{ id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>service_principals</code> resource.
 

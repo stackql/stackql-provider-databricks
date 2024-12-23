@@ -42,7 +42,7 @@ Operations on a <code>compliance_security_profile</code> resource.
 | <CopyableCode code="get" /> | `SELECT` | <CopyableCode code="account_id" /> | Gets the compliance security profile setting for new workspaces. |
 | <CopyableCode code="update" /> | `UPDATE` | <CopyableCode code="account_id" /> | Updates the value of the compliance security profile setting for new workspaces. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT
@@ -53,7 +53,7 @@ FROM databricks_account.settings.compliance_security_profile
 WHERE account_id = '{{ account_id }}';
 ```
 
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>compliance_security_profile</code> resource.
 

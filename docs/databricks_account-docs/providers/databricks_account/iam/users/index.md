@@ -51,7 +51,7 @@ Operations on a <code>users</code> resource.
 | <CopyableCode code="patch" /> | `UPDATE` | <CopyableCode code="account_id, id" /> | Partially updates a user resource by applying the supplied operations on specific user attributes. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, id" /> | Replaces a user's information with the data supplied in request. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -97,25 +97,40 @@ id = '{{ id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>users</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'users', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'users', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.iam.users (
-account_id,\ndata__userName,\ndata__emails,\ndata__name,\ndata__displayName,\ndata__roles,\ndata__externalId,\ndata__active
+account_id,
+data__userName,
+data__emails,
+data__name,
+data__displayName,
+data__roles,
+data__externalId,
+data__active
 )
 SELECT 
-'{{ account_id }}',\n'{{ userName }}',\n'{{ emails }}',\n'{{ name }}',\n'{{ displayName }}',\n'{{ roles }}',\n'{{ externalId }}',\n'{{ active }}'
+'{{ account_id }}',
+'{{ userName }}',
+'{{ emails }}',
+'{{ name }}',
+'{{ displayName }}',
+'{{ roles }}',
+'{{ externalId }}',
+'{{ active }}'
 ;
 ```
 
@@ -157,7 +172,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>users</code> resource.
 
@@ -169,7 +184,7 @@ WHERE account_id = '{{ account_id }}' AND
 id = '{{ id }}';
 ```
 
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>users</code> resource.
 
@@ -181,7 +196,7 @@ WHERE account_id = '{{ account_id }}' AND
 id = '{{ id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>users</code> resource.
 

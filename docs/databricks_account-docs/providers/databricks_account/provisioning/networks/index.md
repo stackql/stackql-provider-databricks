@@ -53,7 +53,7 @@ Operations on a <code>networks</code> resource.
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a Databricks network configuration that represents an AWS VPC and its resources. The VPC will be used for new Databricks clusters. This requires a pre-existing VPC and subnets. For VPC requirements, see |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, network_id" /> | Deletes a Databricks network configuration, which represents a cloud VPC and its resources. You cannot delete a network that is associated with a workspace. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -107,25 +107,36 @@ network_id = '{{ network_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>networks</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'networks', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'networks', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.provisioning.networks (
-account_id,\ndata__network_name,\ndata__vpc_id,\ndata__subnet_ids,\ndata__security_group_ids,\ndata__vpc_endpoints
+account_id,
+data__network_name,
+data__vpc_id,
+data__subnet_ids,
+data__security_group_ids,
+data__vpc_endpoints
 )
 SELECT 
-'{{ account_id }}',\n'{{ network_name }}',\n'{{ vpc_id }}',\n'{{ subnet_ids }}',\n'{{ security_group_ids }}',\n'{{ vpc_endpoints }}'
+'{{ account_id }}',
+'{{ network_name }}',
+'{{ vpc_id }}',
+'{{ subnet_ids }}',
+'{{ security_group_ids }}',
+'{{ vpc_endpoints }}'
 ;
 ```
 
@@ -157,7 +168,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>networks</code> resource.
 

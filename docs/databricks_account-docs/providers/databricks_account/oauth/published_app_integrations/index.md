@@ -48,7 +48,7 @@ Operations on a <code>published_app_integrations</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, integration_id" /> | Delete an existing Published OAuth App Integration. You can retrieve the published OAuth app integration via |
 | <CopyableCode code="update" /> | `UPDATE` | <CopyableCode code="account_id, integration_id" /> | Updates an existing published OAuth App Integration. You can retrieve the published OAuth app integration via |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -90,25 +90,30 @@ integration_id = '{{ integration_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>published_app_integrations</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'published_app_integrations', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'published_app_integrations', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.oauth.published_app_integrations (
-account_id,\ndata__PowerBI,\ndata__TableauDesktop
+account_id,
+data__PowerBI,
+data__TableauDesktop
 )
 SELECT 
-'{{ account_id }}',\n'{{ PowerBI }}',\n'{{ TableauDesktop }}'
+'{{ account_id }}',
+'{{ PowerBI }}',
+'{{ TableauDesktop }}'
 ;
 ```
 
@@ -134,7 +139,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>published_app_integrations</code> resource.
 
@@ -146,7 +151,7 @@ WHERE account_id = '{{ account_id }}' AND
 integration_id = '{{ integration_id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>published_app_integrations</code> resource.
 

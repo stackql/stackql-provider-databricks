@@ -48,7 +48,7 @@ Operations on a <code>network_connectivity</code> resource.
 | <CopyableCode code="createnetworkconnectivityconfiguration" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates a network connectivity configuration (NCC), which provides stable IP CIDR blocks that are associated with your workspace. You can assign an NCC to one or more workspaces in the same region. Once assigned, the workspace serverless compute resources use the same set of stable IP CIDR blocks to access your resources. |
 | <CopyableCode code="deletenetworkconnectivityconfiguration" /> | `DELETE` | <CopyableCode code="account_id, network_connectivity_config_id" /> | Deletes a network connectivity configuration. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="listnetworkconnectivityconfigurations"
@@ -92,25 +92,30 @@ network_connectivity_config_id = '{{ network_connectivity_config_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>network_connectivity</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'network_connectivity', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'network_connectivity', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.settings.network_connectivity (
-account_id,\ndata__name,\ndata__region
+account_id,
+data__name,
+data__region
 )
 SELECT 
-'{{ account_id }}',\n'{{ name }}',\n'{{ region }}'
+'{{ account_id }}',
+'{{ name }}',
+'{{ region }}'
 ;
 ```
 
@@ -130,7 +135,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>network_connectivity</code> resource.
 

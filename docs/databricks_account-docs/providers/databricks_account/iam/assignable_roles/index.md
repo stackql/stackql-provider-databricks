@@ -39,7 +39,7 @@ Operations on a <code>assignable_roles</code> resource.
 |:-----|:--------------|:----------------|:------------|
 | <CopyableCode code="getassignablerolesforresource" /> | `SELECT` | <CopyableCode code="account_id, resource" /> | Gets all the roles that can be granted on an account level resource. A role is grantable if the rule set on the resource can contain an access rule of the role. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT

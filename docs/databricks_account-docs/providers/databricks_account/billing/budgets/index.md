@@ -49,7 +49,7 @@ Operations on a <code>budgets</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, budget_id" /> | Deletes a budget configuration for an account. Both account and budget configuration are specified by ID. This cannot be undone. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, budget_id" /> | Updates a budget configuration for an account. Both account and budget configuration are specified by ID. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -93,25 +93,28 @@ budget_id = '{{ budget_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>budgets</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'budgets', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'budgets', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.billing.budgets (
-account_id,\ndata__budget
+account_id,
+data__budget
 )
 SELECT 
-'{{ account_id }}',\n'{{ budget }}'
+'{{ account_id }}',
+'{{ budget }}'
 ;
 ```
 
@@ -150,7 +153,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>budgets</code> resource.
 
@@ -162,7 +165,7 @@ WHERE account_id = '{{ account_id }}' AND
 budget_id = '{{ budget_id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>budgets</code> resource.
 

@@ -52,7 +52,7 @@ Operations on a <code>custom_app_integrations</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, integration_id" /> | Delete an existing Custom OAuth App Integration. You can retrieve the custom OAuth app integration via |
 | <CopyableCode code="update" /> | `UPDATE` | <CopyableCode code="account_id, integration_id" /> | Updates an existing custom OAuth App Integration. You can retrieve the custom OAuth app integration via |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -102,25 +102,30 @@ integration_id = '{{ integration_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>custom_app_integrations</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'custom_app_integrations', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'custom_app_integrations', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.oauth.custom_app_integrations (
-account_id,\ndata__summary,\ndata__value
+account_id,
+data__summary,
+data__value
 )
 SELECT 
-'{{ account_id }}',\n'{{ summary }}',\n'{{ value }}'
+'{{ account_id }}',
+'{{ summary }}',
+'{{ value }}'
 ;
 ```
 
@@ -150,7 +155,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## UPDATE example
+## `UPDATE` example
 
 Updates a <code>custom_app_integrations</code> resource.
 
@@ -162,7 +167,7 @@ WHERE account_id = '{{ account_id }}' AND
 integration_id = '{{ integration_id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>custom_app_integrations</code> resource.
 

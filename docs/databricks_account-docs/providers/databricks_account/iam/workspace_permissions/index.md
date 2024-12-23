@@ -40,7 +40,7 @@ Operations on a <code>workspace_permissions</code> resource.
 |:-----|:--------------|:----------------|:------------|
 | <CopyableCode code="get" /> | `SELECT` | <CopyableCode code="account_id, workspace_id" /> | Get an array of workspace permissions for the specified account and workspace. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT

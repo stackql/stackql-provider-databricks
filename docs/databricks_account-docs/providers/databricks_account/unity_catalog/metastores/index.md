@@ -61,7 +61,7 @@ Operations on a <code>metastores</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, metastore_id" /> | Deletes a Unity Catalog metastore for an account, both specified by ID. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, metastore_id" /> | Updates an existing Unity Catalog metastore. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -129,25 +129,28 @@ metastore_id = '{{ metastore_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>metastores</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'metastores', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'metastores', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.unity_catalog.metastores (
-account_id,\ndata__metastore_info
+account_id,
+data__metastore_info
 )
 SELECT 
-'{{ account_id }}',\n'{{ metastore_info }}'
+'{{ account_id }}',
+'{{ metastore_info }}'
 ;
 ```
 
@@ -168,7 +171,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>metastores</code> resource.
 
@@ -180,7 +183,7 @@ WHERE account_id = '{{ account_id }}' AND
 metastore_id = '{{ metastore_id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>metastores</code> resource.
 

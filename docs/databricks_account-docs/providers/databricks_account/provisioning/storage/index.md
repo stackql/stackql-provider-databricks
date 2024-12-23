@@ -46,7 +46,7 @@ Operations on a <code>storage</code> resource.
 | <CopyableCode code="create" /> | `INSERT` | <CopyableCode code="account_id" /> | Creates new storage configuration for an account, specified by ID. Uploads a storage configuration object that represents the root AWS S3 bucket in your account. Databricks stores related workspace assets including DBFS, cluster logs, and job results. For the AWS S3 bucket, you need to configure the required bucket policy. |
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, storage_configuration_id" /> | Deletes a Databricks storage configuration. You cannot delete a storage configuration that is associated with any workspace. |
 
-## SELECT examples
+## `SELECT` examples
 
 <Tabs
     defaultValue="list"
@@ -86,25 +86,30 @@ storage_configuration_id = '{{ storage_configuration_id }}';
 </TabItem>
 </Tabs>
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>storage</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'storage', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'storage', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.provisioning.storage (
-account_id,\ndata__storage_configuration_name,\ndata__root_bucket_info
+account_id,
+data__storage_configuration_name,
+data__root_bucket_info
 )
 SELECT 
-'{{ account_id }}',\n'{{ storage_configuration_name }}',\n'{{ root_bucket_info }}'
+'{{ account_id }}',
+'{{ storage_configuration_name }}',
+'{{ root_bucket_info }}'
 ;
 ```
 
@@ -125,7 +130,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>storage</code> resource.
 

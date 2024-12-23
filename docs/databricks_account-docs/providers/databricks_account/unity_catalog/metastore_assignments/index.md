@@ -44,7 +44,7 @@ Operations on a <code>metastore_assignments</code> resource.
 | <CopyableCode code="delete" /> | `DELETE` | <CopyableCode code="account_id, metastore_id, workspace_id" /> | Deletes a metastore assignment to a workspace, leaving the workspace with no metastore. |
 | <CopyableCode code="update" /> | `REPLACE` | <CopyableCode code="account_id, metastore_id, workspace_id" /> | Updates an assignment to a metastore for a workspace. Currently, only the default catalog may be updated. |
 
-## SELECT examples
+## `SELECT` examples
 
 ```sql
 SELECT
@@ -56,25 +56,32 @@ WHERE account_id = '{{ account_id }}' AND
 workspace_id = '{{ workspace_id }}';
 ```
 
-## INSERT example
+## `INSERT` example
 
 Use the following StackQL query and manifest file to create a new <code>metastore_assignments</code> resource.
 
 <Tabs
     defaultValue="create"
     values={[
-        {{ label: 'metastore_assignments', value: 'create', }},
-        {{ label: 'Manifest', value: 'manifest', }},
+        { label: 'metastore_assignments', value: 'create', },
+        { label: 'Manifest', value: 'manifest', },
     ]}
 >
 <TabItem value="create">
+
 ```sql
 /*+ create */
 INSERT INTO databricks_account.unity_catalog.metastore_assignments (
-account_id,\nmetastore_id,\nworkspace_id,\ndata__metastore_assignment
+account_id,
+metastore_id,
+workspace_id,
+data__metastore_assignment
 )
 SELECT 
-'{{ account_id }}',\n'{{ metastore_id }}',\n'{{ workspace_id }}',\n'{{ metastore_assignment }}'
+'{{ account_id }}',
+'{{ metastore_id }}',
+'{{ workspace_id }}',
+'{{ metastore_assignment }}'
 ;
 ```
 
@@ -94,7 +101,7 @@ SELECT
 </TabItem>
 </Tabs>
 
-## REPLACE example
+## `REPLACE` example
 
 Replaces a <code>metastore_assignments</code> resource.
 
@@ -107,7 +114,7 @@ metastore_id = '{{ metastore_id }}' AND
 workspace_id = '{{ workspace_id }}';
 ```
 
-## DELETE example
+## `DELETE` example
 
 Deletes a <code>metastore_assignments</code> resource.
 
