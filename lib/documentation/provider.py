@@ -1,4 +1,23 @@
 
+def other_provider_admonition(provider):
+    """Generate an admonition for other providers."""
+    
+    if provider == 'databricks_account':
+        return """:::info
+
+For Databricks workspace operations use the [__`databricks_workspace`__](https://databricks-workspace.stackql.io/providers/databricks_workspace/) provider.
+
+:::
+"""
+    
+    if provider == 'databricks_workspace':
+        return """:::info
+
+For Databricks account operations use the [__`databricks_account`__](https://databricks-account.stackql.io/providers/databricks_account/) provider.
+
+:::
+"""    
+
 def generate_provider_doc(provider, services_df, total_resources, total_methods, base_path):
     """Generate documentation for the provider."""
     
@@ -34,6 +53,8 @@ slug: /providers/{provider}
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
 
 {provider_desc}
+
+{other_provider_admonition(provider)}
 
 :::info Provider Summary
 
