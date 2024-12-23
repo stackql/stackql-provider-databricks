@@ -154,4 +154,5 @@ curl --request GET "https://accounts.cloud.databricks.com/api/2.0/accounts/${DAT
 
 ```bash
 bash generate_user_docs.sh account
+bash generate_user_docs.sh workspace
 ```
