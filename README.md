@@ -38,6 +38,7 @@ databricks_account \
 false \
 /mnt/c/LocalGitRepos/stackql/openapi-conversion/stackql-databricks-openapi/openapi_providers \
 true
+
 # test workspace
 bash test-provider.sh \
 databricks_workspace \
@@ -150,9 +151,38 @@ curl --request GET "https://accounts.cloud.databricks.com/api/2.0/accounts/${DAT
   --header "Accept: application/json"
   ```
 
-  ## generate user (web) docs
+## generate user (web) docs
 
 ```bash
-bash generate_user_docs.sh account
-bash generate_user_docs.sh workspace
+npm i
+
+# databricks_account
+rm -rf ./website/databricks_account/docs/*
+npm run generate-docs -- \
+  --provider-name databricks_account \
+  --provider-dir ./openapi_providers/src/databricks_account/v00.00.00000 \
+  --output-dir ./website/databricks_account \
+  --provider-data-dir ./docgen/provider-data/databricks_account \
+  --dereferenced
+
+# databricks_workspace
+rm -rf ./website/databricks_workspace/docs/*
+npm run generate-docs -- \
+  --provider-name databricks_workspace \
+  --provider-dir ./openapi_providers/src/databricks_workspace/v00.00.00000 \
+  --output-dir ./website/databricks_workspace \
+  --provider-data-dir ./docgen/provider-data/databricks_workspace \
+  --dereferenced  
+```  
+
+### test web docs locally
+
+```bash
+# google
+cd website/databricks_account
+yarn start
+
+# googleadmin
+cd website/databricks_workspace
+yarn start
 ```

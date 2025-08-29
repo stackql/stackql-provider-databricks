@@ -10,3 +10,4 @@ stackql
 .env
 output.log
 stackql.log
+node_modules/
