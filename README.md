@@ -1,5 +1,16 @@
 # stackql-databricks-openapi
 
+<table>
+  <tr>
+    <td>Databricks Account StackQL Provider Docs</td>
+    <td><a href="https://app.netlify.com/projects/stackql-databricks-account-provider/deploys"><img src="https://api.netlify.com/api/v1/badges/49e464eb-ae79-4f8f-8c7a-2e2d20785782/deploy-status" alt="Netlify Status" /></a></td>
+  </tr>
+  <tr>
+    <td>Databricks Workspace StackQL Provider Docs</td>
+    <td><a href="https://app.netlify.com/projects/stackql-databricks-workspace-provider/deploys"><img src="https://api.netlify.com/api/v1/badges/f35f54f5-7325-4288-bf12-eb5c9f1132ad/deploy-status" alt="Netlify Status" /></a></td>
+  </tr>
+</table>
+
 Build `databricks_account` and `databricks_workspace` providers for `stackql` using the databricks web documentation:  
 
 - [api/workspace](https://docs.databricks.com/api/workspace/introduction)
