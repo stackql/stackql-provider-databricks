@@ -48,7 +48,8 @@ function extractCodeFromElements(elements, preferredTab) {
       const panels = el.querySelectorAll('[role="tabpanel"]');
       for (let i = 0; i < tabs.length; i++) {
         const tabLabel = tabs[i].textContent.trim().toLowerCase();
-        if (tabLabel === preferredTab.toLowerCase() && panels[i]) {
+        const preferred = preferredTab.toLowerCase();
+        if ((tabLabel.startsWith(preferred) || tabLabel.endsWith(preferred)) && panels[i]) {
           const codeEl = panels[i].querySelector('pre code');
           if (codeEl) return getCodeText(codeEl);
         }

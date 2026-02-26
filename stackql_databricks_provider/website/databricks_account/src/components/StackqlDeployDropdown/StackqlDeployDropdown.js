@@ -42,19 +42,6 @@ function getCodeText(codeEl) {
  * If preferredTab is provided, looks for a tab with that label first.
  */
 function extractCodeFromElements(elements, preferredTab) {
-  // if (preferredTab) {
-  //   for (const el of elements) {
-  //     const tabs = el.querySelectorAll('[role="tab"]');
-  //     const panels = el.querySelectorAll('[role="tabpanel"]');
-  //     for (let i = 0; i < tabs.length; i++) {
-  //       const tabLabel = tabs[i].textContent.trim().toLowerCase();
-  //       if (tabLabel === preferredTab.toLowerCase() && panels[i]) {
-  //         const codeEl = panels[i].querySelector('pre code');
-  //         if (codeEl) return getCodeText(codeEl);
-  //       }
-  //     }
-  //   }
-  // }
   if (preferredTab) {
     for (const el of elements) {
       const tabs = el.querySelectorAll('[role="tab"]');
