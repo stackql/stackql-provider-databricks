@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -128,7 +129,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "problem_type",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PROBLEM_TYPE_CLASSIFICATION, PROBLEM_TYPE_REGRESSION)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PROBLEM_TYPE_CLASSIFICATION, PROBLEM_TYPE_REGRESSION)"
       },
       {
         "name": "timestamp_col",
@@ -435,7 +436,7 @@ SELECT
 '{{ latest_monitor_failure_msg }}',
 '{{ notifications }}',
 '{{ schedule }}',
-'{{ skip_builtin_dashboard }}',
+{{ skip_builtin_dashboard }},
 '{{ slicing_exprs }}',
 '{{ snapshot }}',
 '{{ time_series }}',
@@ -466,71 +467,98 @@ time_series
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: quality_monitors
   props:
     - name: table_name
-      value: string
+      value: "{{ table_name }}"
       description: Required parameter for the quality_monitors resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the quality_monitors resource.
     - name: output_schema_name
-      value: string
+      value: "{{ output_schema_name }}"
       description: |
         [Create:REQ Update:REQ] Schema where output tables are created. Needs to be in 2-level format {catalog}.{schema}
     - name: assets_dir
-      value: string
+      value: "{{ assets_dir }}"
       description: |
         [Create:REQ Update:IGN] Field for specifying the absolute path to a custom directory to store data-monitoring assets. Normally prepopulated to a default user location via UI and Python APIs.
     - name: baseline_table_name
-      value: string
+      value: "{{ baseline_table_name }}"
       description: |
-        [Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in the monitored `table_name`. The baseline table and the monitored table shall have the same schema.
+        [Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in the monitored \`table_name\`. The baseline table and the monitored table shall have the same schema.
     - name: custom_metrics
-      value: string
       description: |
         [Create:OPT Update:OPT] Custom metrics.
+      value:
+        - name: "{{ name }}"
+          definition: "{{ definition }}"
+          input_columns: "{{ input_columns }}"
+          output_data_type: "{{ output_data_type }}"
+          type: "{{ type }}"
     - name: data_classification_config
-      value: string
       description: |
         [Create:OPT Update:OPT] Data classification related config.
+      value:
+        enabled: {{ enabled }}
     - name: inference_log
-      value: string
       description: |
         :param latest_monitor_failure_msg: str (optional) [Create:ERR Update:IGN] The latest error message for a monitor failure.
+      value:
+        problem_type: "{{ problem_type }}"
+        timestamp_col: "{{ timestamp_col }}"
+        granularities:
+          - "{{ granularities }}"
+        prediction_col: "{{ prediction_col }}"
+        model_id_col: "{{ model_id_col }}"
+        label_col: "{{ label_col }}"
+        prediction_proba_col: "{{ prediction_proba_col }}"
     - name: latest_monitor_failure_msg
-      value: string
+      value: "{{ latest_monitor_failure_msg }}"
     - name: notifications
-      value: string
       description: |
         [Create:OPT Update:OPT] Field for specifying notification settings.
+      value:
+        on_failure:
+          email_addresses:
+            - "{{ email_addresses }}"
+        on_new_classification_tag_detected:
+          email_addresses:
+            - "{{ email_addresses }}"
     - name: schedule
-      value: string
       description: |
         [Create:OPT Update:OPT] The monitor schedule.
+      value:
+        quartz_cron_expression: "{{ quartz_cron_expression }}"
+        timezone_id: "{{ timezone_id }}"
+        pause_status: "{{ pause_status }}"
     - name: skip_builtin_dashboard
-      value: string
+      value: {{ skip_builtin_dashboard }}
       description: |
         Whether to skip creating a default dashboard summarizing data quality metrics.
     - name: slicing_exprs
-      value: string
+      value:
+        - "{{ slicing_exprs }}"
       description: |
-        [Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example `slicing_exprs=[“col_1”, “col_2 > 10”]` will generate the following slices: two slices for `col_2 > 10` (True and False), and one slice per unique value in `col1`. For high-cardinality columns, only the top 100 unique values by frequency will generate slices.
+        [Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example \`slicing_exprs=[“col_1”, “col_2 > 10”]\` will generate the following slices: two slices for \`col_2 > 10\` (True and False), and one slice per unique value in \`col1\`. For high-cardinality columns, only the top 100 unique values by frequency will generate slices.
     - name: snapshot
-      value: string
+      value: "{{ snapshot }}"
       description: |
         Configuration for monitoring snapshot tables.
     - name: time_series
-      value: string
       description: |
         Configuration for monitoring time series tables.
+      value:
+        timestamp_col: "{{ timestamp_col }}"
+        granularities:
+          - "{{ granularities }}"
     - name: warehouse_id
-      value: string
+      value: "{{ warehouse_id }}"
       description: |
         Optional argument to specify the warehouse for dashboard creation. If not specified, the first running warehouse will be used.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

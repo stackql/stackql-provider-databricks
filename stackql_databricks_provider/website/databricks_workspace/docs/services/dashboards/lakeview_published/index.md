@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -176,7 +177,7 @@ EXEC databricks_workspace.dashboards.lakeview_published.publish
 @deployment_name='{{ deployment_name }}' --required 
 @@json=
 '{
-"embed_credentials": "{{ embed_credentials }}", 
+"embed_credentials": {{ embed_credentials }}, 
 "warehouse_id": "{{ warehouse_id }}"
 }'
 ;

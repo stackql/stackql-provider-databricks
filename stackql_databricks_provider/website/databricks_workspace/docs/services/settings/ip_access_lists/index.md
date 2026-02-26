@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -322,24 +323,25 @@ ip_access_list
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: ip_access_lists
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the ip_access_lists resource.
     - name: label
-      value: string
+      value: "{{ label }}"
       description: |
         Label for the IP access list. This **cannot** be empty.
     - name: list_type
-      value: string
+      value: "{{ list_type }}"
       description: |
         :param ip_addresses: List[str] (optional)
     - name: ip_addresses
-      value: string
-```
+      value:
+        - "{{ ip_addresses }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -359,7 +361,7 @@ Updates an existing IP access list, specified by its ID.
 ```sql
 UPDATE databricks_workspace.settings.ip_access_lists
 SET 
-enabled = '{{ enabled }}',
+enabled = {{ enabled }},
 ip_addresses = '{{ ip_addresses }}',
 label = '{{ label }}',
 list_type = '{{ list_type }}'

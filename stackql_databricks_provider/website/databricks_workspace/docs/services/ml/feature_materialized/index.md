@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -304,7 +305,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The maximum number of results to return. Defaults to 100 if not specified. Cannot be greater than 1000.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -404,18 +405,33 @@ pipeline_schedule_state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: feature_materialized
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the feature_materialized resource.
     - name: materialized_feature
-      value: string
       description: |
         The materialized feature to create.
-```
+      value:
+        feature_name: "{{ feature_name }}"
+        cron_schedule: "{{ cron_schedule }}"
+        last_materialization_time: "{{ last_materialization_time }}"
+        materialized_feature_id: "{{ materialized_feature_id }}"
+        offline_store_config:
+          catalog_name: "{{ catalog_name }}"
+          schema_name: "{{ schema_name }}"
+          table_name_prefix: "{{ table_name_prefix }}"
+        online_store_config:
+          catalog_name: "{{ catalog_name }}"
+          schema_name: "{{ schema_name }}"
+          table_name_prefix: "{{ table_name_prefix }}"
+          online_store_name: "{{ online_store_name }}"
+        pipeline_schedule_state: "{{ pipeline_schedule_state }}"
+        table_name: "{{ table_name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

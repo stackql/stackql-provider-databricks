@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -568,12 +569,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of models desired. Default is 100. Max threshold is 1000.</td>
 </tr>
 <tr id="parameter-order_by">
     <td><CopyableCode code="order_by" /></td>
-    <td><code>string</code></td>
+    <td><code>array</code></td>
     <td>List of columns for ordering search results, which can include model name and last updated timestamp with an optional "DESC" or "ASC" annotation, where "ASC" is the default. Tiebreaks are done by model name ASC.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -684,26 +685,28 @@ registered_model
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: model_registry
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the model_registry resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Register models under this name
     - name: description
-      value: string
+      value: "{{ description }}"
       description: |
         Optional description for registered model.
     - name: tags
-      value: string
       description: |
         Additional metadata for registered model.
-```
+      value:
+        - key: "{{ key }}"
+          value: "{{ value }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

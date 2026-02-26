@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -170,35 +171,47 @@ width
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dashboard_widgets
   props:
     - name: id
-      value: string
+      value: "{{ id }}"
       description: Required parameter for the dashboard_widgets resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the dashboard_widgets resource.
     - name: dashboard_id
-      value: string
+      value: "{{ dashboard_id }}"
       description: |
         Dashboard ID returned by :method:dashboards/create.
     - name: options
-      value: string
       description: |
         :param width: int Width of a widget
+      value:
+        created_at: "{{ created_at }}"
+        description: "{{ description }}"
+        isHidden: {{ isHidden }}
+        parameterMappings: "{{ parameterMappings }}"
+        position:
+          autoHeight: {{ autoHeight }}
+          col: {{ col }}
+          row: {{ row }}
+          sizeX: {{ sizeX }}
+          sizeY: {{ sizeY }}
+        title: "{{ title }}"
+        updated_at: "{{ updated_at }}"
     - name: width
-      value: integer
+      value: {{ width }}
     - name: text
-      value: string
+      value: "{{ text }}"
       description: |
-        If this is a textbox widget, the application displays this text. This field is ignored if the widget contains a visualization in the `visualization` field.
+        If this is a textbox widget, the application displays this text. This field is ignored if the widget contains a visualization in the \`visualization\` field.
     - name: visualization_id
-      value: string
+      value: "{{ visualization_id }}"
       description: |
         Query Vizualization ID returned by :method:queryvisualizations/create.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -273,7 +274,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param page_token: str (optional)</td>
 </tr>
 <tr id="parameter-page_token">
@@ -384,20 +385,35 @@ update_time
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: account_federation_policy
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the account_federation_policy resource.
     - name: policy
-      value: string
       description: |
         :param policy_id: str (optional) The identifier for the federation policy. The identifier must contain only lowercase alphanumeric characters, numbers, hyphens, and slashes. If unspecified, the id will be assigned by Databricks.
+      value:
+        create_time: "{{ create_time }}"
+        description: "{{ description }}"
+        name: "{{ name }}"
+        oidc_policy:
+          audiences:
+            - "{{ audiences }}"
+          issuer: "{{ issuer }}"
+          jwks_json: "{{ jwks_json }}"
+          jwks_uri: "{{ jwks_uri }}"
+          subject: "{{ subject }}"
+          subject_claim: "{{ subject_claim }}"
+        policy_id: "{{ policy_id }}"
+        service_principal_id: {{ service_principal_id }}
+        uid: "{{ uid }}"
+        update_time: "{{ update_time }}"
     - name: policy_id
-      value: string
-```
+      value: "{{ policy_id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

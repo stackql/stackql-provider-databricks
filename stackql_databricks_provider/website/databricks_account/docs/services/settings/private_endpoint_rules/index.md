@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -433,21 +434,29 @@ updated_time
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: private_endpoint_rules
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the private_endpoint_rules resource.
     - name: network_connectivity_config_id
-      value: string
+      value: "{{ network_connectivity_config_id }}"
       description: Required parameter for the private_endpoint_rules resource.
     - name: private_endpoint_rule
-      value: string
       description: |
-        :returns: :class:`NccPrivateEndpointRule`
-```
+        :returns: :class:\`NccPrivateEndpointRule\`
+      value:
+        domain_names:
+          - "{{ domain_names }}"
+        endpoint_service: "{{ endpoint_service }}"
+        error_message: "{{ error_message }}"
+        group_id: "{{ group_id }}"
+        resource_id: "{{ resource_id }}"
+        resource_names:
+          - "{{ resource_names }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

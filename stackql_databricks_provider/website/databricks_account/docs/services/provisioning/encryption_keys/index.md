@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -440,24 +441,32 @@ use_cases
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: encryption_keys
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the encryption_keys resource.
     - name: use_cases
-      value: string
+      value:
+        - "{{ use_cases }}"
       description: |
         The cases that the key can be used for.
     - name: aws_key_info
-      value: string
       description: |
-        :param gcp_key_info: :class:`CreateGcpKeyInfo` (optional)
+        :param gcp_key_info: :class:\`CreateGcpKeyInfo\` (optional)
+      value:
+        key_arn: "{{ key_arn }}"
+        key_alias: "{{ key_alias }}"
+        key_region: "{{ key_region }}"
+        reuse_key_for_cluster_volumes: {{ reuse_key_for_cluster_volumes }}
     - name: gcp_key_info
-      value: string
-```
+      value:
+        kms_key_id: "{{ kms_key_id }}"
+        gcp_service_account:
+          service_account_email: "{{ service_account_email }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

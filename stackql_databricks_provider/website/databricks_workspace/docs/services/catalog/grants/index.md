@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -129,7 +130,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Specifies the maximum number of privileges to return (page length). Every PrivilegeAssignment present in a single page response is guaranteed to contain all the privileges granted on the requested Securable for the respective principal. If not set, all the permissions are returned. If set to - lesser than 0: invalid parameter error - 0: page length is set to a server configured value - lesser than 150 but greater than 0: invalid parameter error (this is to ensure that server is able to return at least one complete PrivilegeAssignment in a single page response) - greater than (or equal to) 150: page length is the minimum of this value and a server configured value</td>
 </tr>
 <tr id="parameter-page_token">

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -421,12 +422,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-include_shared_data">
     <td><CopyableCode code="include_shared_data" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Query for data to include in the share.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of shares to return. - when set to 0, the page length is set to a server configured value (recommended); - when set to a value greater than 0, the page length is the minimum of this value and a server configured value; - when set to a value less than 0, an invalid parameter error is returned; - If not set, all valid shares are returned (not recommended). - Note: The number of returned shares might be less than the specified max_results size, even zero. The only definitive indication that no further shares can be fetched is when the next_page_token is unset from the response.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -536,26 +537,26 @@ updated_by
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: shares
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the shares resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Name of the share.
     - name: comment
-      value: string
+      value: "{{ comment }}"
       description: |
         User-provided free-form text description.
     - name: storage_root
-      value: string
+      value: "{{ storage_root }}"
       description: |
         Storage root URL for the share.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

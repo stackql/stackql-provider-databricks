@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -363,12 +364,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-primary_keys">
     <td><CopyableCode code="primary_keys" /></td>
-    <td><code>string</code></td>
+    <td><code>array</code></td>
     <td>List of primary keys for the data to be deleted.</td>
 </tr>
 <tr id="parameter-ensure_reranker_compatible">
     <td><CopyableCode code="ensure_reranker_compatible" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>If true, the URL returned for the index is guaranteed to be compatible with the reranker. Currently this means we return the CP URL regardless of how the index is being accessed. If not set or set to false, the URL may still be compatible with the reranker depending on what URL we return.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -475,36 +476,56 @@ status
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: indexes
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the indexes resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Name of the index
     - name: endpoint_name
-      value: string
+      value: "{{ endpoint_name }}"
       description: |
         Name of the endpoint to be used for serving the index
     - name: primary_key
-      value: string
+      value: "{{ primary_key }}"
       description: |
         Primary key of the index
     - name: index_type
-      value: string
+      value: "{{ index_type }}"
       description: |
-        :param delta_sync_index_spec: :class:`DeltaSyncVectorIndexSpecRequest` (optional) Specification for Delta Sync Index. Required if `index_type` is `DELTA_SYNC`.
+        :param delta_sync_index_spec: :class:\`DeltaSyncVectorIndexSpecRequest\` (optional) Specification for Delta Sync Index. Required if \`index_type\` is \`DELTA_SYNC\`.
     - name: delta_sync_index_spec
-      value: string
+      value:
+        columns_to_sync:
+          - "{{ columns_to_sync }}"
+        embedding_source_columns:
+          - embedding_model_endpoint_name: "{{ embedding_model_endpoint_name }}"
+            model_endpoint_name_for_query: "{{ model_endpoint_name_for_query }}"
+            name: "{{ name }}"
+        embedding_vector_columns:
+          - embedding_dimension: {{ embedding_dimension }}
+            name: "{{ name }}"
+        embedding_writeback_table: "{{ embedding_writeback_table }}"
+        pipeline_type: "{{ pipeline_type }}"
+        source_table: "{{ source_table }}"
     - name: direct_access_index_spec
-      value: string
       description: |
-        Specification for Direct Vector Access Index. Required if `index_type` is `DIRECT_ACCESS`.
-```
+        Specification for Direct Vector Access Index. Required if \`index_type\` is \`DIRECT_ACCESS\`.
+      value:
+        embedding_source_columns:
+          - embedding_model_endpoint_name: "{{ embedding_model_endpoint_name }}"
+            model_endpoint_name_for_query: "{{ model_endpoint_name_for_query }}"
+            name: "{{ name }}"
+        embedding_vector_columns:
+          - embedding_dimension: {{ embedding_dimension }}
+            name: "{{ name }}"
+        schema_json: "{{ schema_json }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -569,12 +590,12 @@ EXEC databricks_workspace.vectorsearch.indexes.query_index
 "columns": "{{ columns }}", 
 "columns_to_rerank": "{{ columns_to_rerank }}", 
 "filters_json": "{{ filters_json }}", 
-"num_results": "{{ num_results }}", 
+"num_results": {{ num_results }}, 
 "query_text": "{{ query_text }}", 
 "query_type": "{{ query_type }}", 
 "query_vector": "{{ query_vector }}", 
 "reranker": "{{ reranker }}", 
-"score_threshold": "{{ score_threshold }}"
+"score_threshold": {{ score_threshold }}
 }'
 ;
 ```
@@ -606,7 +627,7 @@ EXEC databricks_workspace.vectorsearch.indexes.scan_index
 @@json=
 '{
 "last_primary_key": "{{ last_primary_key }}", 
-"num_results": "{{ num_results }}"
+"num_results": {{ num_results }}
 }'
 ;
 ```

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -60,7 +61,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "asset_type",
     "type": "string",
-    "description": "The type of the asset. (FOREIGN_TABLE, NOTEBOOK_FILE, TABLE, VIEW, VOLUME)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FOREIGN_TABLE, NOTEBOOK_FILE, TABLE, VIEW, VOLUME)"
   },
   {
     "name": "foreign_table",
@@ -432,21 +433,54 @@ volume_local_details
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: assets
   props:
     - name: clean_room_name
-      value: string
+      value: "{{ clean_room_name }}"
       description: Required parameter for the assets resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the assets resource.
     - name: asset
-      value: string
       description: |
-        :returns: :class:`CleanRoomAsset`
-```
+        :returns: :class:\`CleanRoomAsset\`
+      value:
+        name: "{{ name }}"
+        asset_type: "{{ asset_type }}"
+        added_at: {{ added_at }}
+        clean_room_name: "{{ clean_room_name }}"
+        foreign_table:
+          columns: "{{ columns }}"
+        foreign_table_local_details:
+          local_name: "{{ local_name }}"
+        notebook:
+          notebook_content: "{{ notebook_content }}"
+          etag: "{{ etag }}"
+          review_state: "{{ review_state }}"
+          reviews:
+            - comment: "{{ comment }}"
+              created_at_millis: {{ created_at_millis }}
+              review_state: "{{ review_state }}"
+              review_sub_reason: "{{ review_sub_reason }}"
+              reviewer_collaborator_alias: "{{ reviewer_collaborator_alias }}"
+          runner_collaborator_aliases:
+            - "{{ runner_collaborator_aliases }}"
+        owner_collaborator_alias: "{{ owner_collaborator_alias }}"
+        status: "{{ status }}"
+        table:
+          columns: "{{ columns }}"
+        table_local_details:
+          local_name: "{{ local_name }}"
+          partitions: "{{ partitions }}"
+        view:
+          columns: "{{ columns }}"
+        view_local_details:
+          local_name: "{{ local_name }}"
+        volume_local_details:
+          local_name: "{{ local_name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

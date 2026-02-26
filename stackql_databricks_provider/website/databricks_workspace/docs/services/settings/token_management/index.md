@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -219,7 +220,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-created_by_id">
     <td><CopyableCode code="created_by_id" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>User ID of the user that created the token.</td>
 </tr>
 <tr id="parameter-created_by_username">
@@ -300,7 +301,7 @@ deployment_name
 SELECT 
 '{{ application_id }}' /* required */,
 '{{ comment }}',
-'{{ lifetime_seconds }}',
+{{ lifetime_seconds }},
 '{{ deployment_name }}'
 RETURNING
 token_info,
@@ -310,26 +311,26 @@ token_value
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: token_management
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the token_management resource.
     - name: application_id
-      value: string
+      value: "{{ application_id }}"
       description: |
         Application ID of the service principal.
     - name: comment
-      value: string
+      value: "{{ comment }}"
       description: |
         Comment that describes the purpose of the token.
     - name: lifetime_seconds
-      value: string
+      value: {{ lifetime_seconds }}
       description: |
         The number of seconds before the token expires.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

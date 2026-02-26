@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -166,7 +167,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td></td>
 </tr>
 <tr id="parameter-page_token">
@@ -255,20 +256,20 @@ exchange_for_listing
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: provider_exchange_listings
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the provider_exchange_listings resource.
     - name: listing_id
-      value: string
+      value: "{{ listing_id }}"
       description: |
         :param exchange_id: str
     - name: exchange_id
-      value: string
-```
+      value: "{{ exchange_id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

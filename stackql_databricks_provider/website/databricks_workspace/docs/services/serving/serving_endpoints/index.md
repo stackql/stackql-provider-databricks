@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -170,7 +171,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "renewal_period",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (minute)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (minute)"
           },
           {
             "name": "calls",
@@ -300,7 +301,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "provider",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ai21labs, amazon-bedrock, anthropic, cohere, custom, databricks-model-serving, google-cloud-vertex-ai, openai, palm)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ai21labs, amazon-bedrock, anthropic, cohere, custom, databricks-model-serving, google-cloud-vertex-ai, openai, palm)"
               },
               {
                 "name": "name",
@@ -434,7 +435,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "deployment",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DEPLOYMENT_ABORTED, DEPLOYMENT_CREATING, DEPLOYMENT_FAILED, DEPLOYMENT_READY, DEPLOYMENT_RECOVERING)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DEPLOYMENT_ABORTED, DEPLOYMENT_CREATING, DEPLOYMENT_FAILED, DEPLOYMENT_READY, DEPLOYMENT_RECOVERING)"
               },
               {
                 "name": "deployment_state_message",
@@ -528,7 +529,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "deployment",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DEPLOYMENT_ABORTED, DEPLOYMENT_CREATING, DEPLOYMENT_FAILED, DEPLOYMENT_READY, DEPLOYMENT_RECOVERING)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DEPLOYMENT_ABORTED, DEPLOYMENT_CREATING, DEPLOYMENT_FAILED, DEPLOYMENT_READY, DEPLOYMENT_RECOVERING)"
               },
               {
                 "name": "deployment_state_message",
@@ -738,7 +739,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "provider",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ai21labs, amazon-bedrock, anthropic, cohere, custom, databricks-model-serving, google-cloud-vertex-ai, openai, palm)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ai21labs, amazon-bedrock, anthropic, cohere, custom, databricks-model-serving, google-cloud-vertex-ai, openai, palm)"
               },
               {
                 "name": "name",
@@ -872,7 +873,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "deployment",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DEPLOYMENT_ABORTED, DEPLOYMENT_CREATING, DEPLOYMENT_FAILED, DEPLOYMENT_READY, DEPLOYMENT_RECOVERING)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DEPLOYMENT_ABORTED, DEPLOYMENT_CREATING, DEPLOYMENT_FAILED, DEPLOYMENT_READY, DEPLOYMENT_RECOVERING)"
               },
               {
                 "name": "deployment_state_message",
@@ -966,7 +967,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "deployment",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DEPLOYMENT_ABORTED, DEPLOYMENT_CREATING, DEPLOYMENT_FAILED, DEPLOYMENT_READY, DEPLOYMENT_RECOVERING)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DEPLOYMENT_ABORTED, DEPLOYMENT_CREATING, DEPLOYMENT_FAILED, DEPLOYMENT_READY, DEPLOYMENT_RECOVERING)"
               },
               {
                 "name": "deployment_state_message",
@@ -1041,7 +1042,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "config_update",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (IN_PROGRESS, NOT_UPDATING, UPDATE_CANCELED, UPDATE_FAILED)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (IN_PROGRESS, NOT_UPDATING, UPDATE_CANCELED, UPDATE_FAILED)"
       },
       {
         "name": "ready",
@@ -1210,7 +1211,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "renewal_period",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (minute)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (minute)"
           },
           {
             "name": "calls",
@@ -1276,7 +1277,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "provider",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ai21labs, amazon-bedrock, anthropic, cohere, custom, databricks-model-serving, google-cloud-vertex-ai, openai, palm)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ai21labs, amazon-bedrock, anthropic, cohere, custom, databricks-model-serving, google-cloud-vertex-ai, openai, palm)"
               },
               {
                 "name": "name",
@@ -1421,7 +1422,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "config_update",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (IN_PROGRESS, NOT_UPDATING, UPDATE_CANCELED, UPDATE_FAILED)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (IN_PROGRESS, NOT_UPDATING, UPDATE_CANCELED, UPDATE_FAILED)"
       },
       {
         "name": "ready",
@@ -1649,7 +1650,7 @@ SELECT
 '{{ description }}',
 '{{ email_notifications }}',
 '{{ rate_limits }}',
-'{{ route_optimized }}',
+{{ route_optimized }},
 '{{ tags }}',
 '{{ deployment_name }}'
 RETURNING
@@ -1676,48 +1677,185 @@ task
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: serving_endpoints
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the serving_endpoints resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The name of the serving endpoint. This field is required and must be unique across a Databricks workspace. An endpoint name can consist of alphanumeric characters, dashes, and underscores.
     - name: ai_gateway
-      value: string
       description: |
         The AI Gateway configuration for the serving endpoint. NOTE: External model, provisioned throughput, and pay-per-token endpoints are fully supported; agent endpoints currently only support inference tables.
+      value:
+        fallback_config:
+          enabled: {{ enabled }}
+        guardrails:
+          input:
+            invalid_keywords:
+              - "{{ invalid_keywords }}"
+            pii:
+              behavior: "{{ behavior }}"
+            safety: {{ safety }}
+            valid_topics:
+              - "{{ valid_topics }}"
+          output:
+            invalid_keywords:
+              - "{{ invalid_keywords }}"
+            pii:
+              behavior: "{{ behavior }}"
+            safety: {{ safety }}
+            valid_topics:
+              - "{{ valid_topics }}"
+        inference_table_config:
+          catalog_name: "{{ catalog_name }}"
+          enabled: {{ enabled }}
+          schema_name: "{{ schema_name }}"
+          table_name_prefix: "{{ table_name_prefix }}"
+        rate_limits:
+          - renewal_period: "{{ renewal_period }}"
+            calls: {{ calls }}
+            key: "{{ key }}"
+            principal: "{{ principal }}"
+            tokens: {{ tokens }}
+        usage_tracking_config:
+          enabled: {{ enabled }}
     - name: budget_policy_id
-      value: string
+      value: "{{ budget_policy_id }}"
       description: |
         The budget policy to be applied to the serving endpoint.
     - name: config
-      value: string
       description: |
         The core config of the serving endpoint.
+      value:
+        name: "{{ name }}"
+        auto_capture_config:
+          catalog_name: "{{ catalog_name }}"
+          enabled: {{ enabled }}
+          schema_name: "{{ schema_name }}"
+          table_name_prefix: "{{ table_name_prefix }}"
+        served_entities:
+          - burst_scaling_enabled: {{ burst_scaling_enabled }}
+            entity_name: "{{ entity_name }}"
+            entity_version: "{{ entity_version }}"
+            environment_vars: "{{ environment_vars }}"
+            external_model:
+              provider: "{{ provider }}"
+              name: "{{ name }}"
+              task: "{{ task }}"
+              ai21labs_config:
+                ai21labs_api_key: "{{ ai21labs_api_key }}"
+                ai21labs_api_key_plaintext: "{{ ai21labs_api_key_plaintext }}"
+              amazon_bedrock_config:
+                aws_region: "{{ aws_region }}"
+                bedrock_provider: "{{ bedrock_provider }}"
+                aws_access_key_id: "{{ aws_access_key_id }}"
+                aws_access_key_id_plaintext: "{{ aws_access_key_id_plaintext }}"
+                aws_secret_access_key: "{{ aws_secret_access_key }}"
+                aws_secret_access_key_plaintext: "{{ aws_secret_access_key_plaintext }}"
+                instance_profile_arn: "{{ instance_profile_arn }}"
+              anthropic_config:
+                anthropic_api_key: "{{ anthropic_api_key }}"
+                anthropic_api_key_plaintext: "{{ anthropic_api_key_plaintext }}"
+              cohere_config:
+                cohere_api_base: "{{ cohere_api_base }}"
+                cohere_api_key: "{{ cohere_api_key }}"
+                cohere_api_key_plaintext: "{{ cohere_api_key_plaintext }}"
+              custom_provider_config:
+                custom_provider_url: "{{ custom_provider_url }}"
+                api_key_auth:
+                  key: "{{ key }}"
+                  value: "{{ value }}"
+                  value_plaintext: "{{ value_plaintext }}"
+                bearer_token_auth:
+                  token: "{{ token }}"
+                  token_plaintext: "{{ token_plaintext }}"
+              databricks_model_serving_config:
+                databricks_workspace_url: "{{ databricks_workspace_url }}"
+                databricks_api_token: "{{ databricks_api_token }}"
+                databricks_api_token_plaintext: "{{ databricks_api_token_plaintext }}"
+              google_cloud_vertex_ai_config:
+                project_id: "{{ project_id }}"
+                region: "{{ region }}"
+                private_key: "{{ private_key }}"
+                private_key_plaintext: "{{ private_key_plaintext }}"
+              openai_config:
+                microsoft_entra_client_id: "{{ microsoft_entra_client_id }}"
+                microsoft_entra_client_secret: "{{ microsoft_entra_client_secret }}"
+                microsoft_entra_client_secret_plaintext: "{{ microsoft_entra_client_secret_plaintext }}"
+                microsoft_entra_tenant_id: "{{ microsoft_entra_tenant_id }}"
+                openai_api_base: "{{ openai_api_base }}"
+                openai_api_key: "{{ openai_api_key }}"
+                openai_api_key_plaintext: "{{ openai_api_key_plaintext }}"
+                openai_api_type: "{{ openai_api_type }}"
+                openai_api_version: "{{ openai_api_version }}"
+                openai_deployment_name: "{{ openai_deployment_name }}"
+                openai_organization: "{{ openai_organization }}"
+              palm_config:
+                palm_api_key: "{{ palm_api_key }}"
+                palm_api_key_plaintext: "{{ palm_api_key_plaintext }}"
+            instance_profile_arn: "{{ instance_profile_arn }}"
+            max_provisioned_concurrency: {{ max_provisioned_concurrency }}
+            max_provisioned_throughput: {{ max_provisioned_throughput }}
+            min_provisioned_concurrency: {{ min_provisioned_concurrency }}
+            min_provisioned_throughput: {{ min_provisioned_throughput }}
+            name: "{{ name }}"
+            provisioned_model_units: {{ provisioned_model_units }}
+            scale_to_zero_enabled: {{ scale_to_zero_enabled }}
+            workload_size: "{{ workload_size }}"
+            workload_type: "{{ workload_type }}"
+        served_models:
+          - scale_to_zero_enabled: {{ scale_to_zero_enabled }}
+            model_name: "{{ model_name }}"
+            model_version: "{{ model_version }}"
+            burst_scaling_enabled: {{ burst_scaling_enabled }}
+            environment_vars: "{{ environment_vars }}"
+            instance_profile_arn: "{{ instance_profile_arn }}"
+            max_provisioned_concurrency: {{ max_provisioned_concurrency }}
+            max_provisioned_throughput: {{ max_provisioned_throughput }}
+            min_provisioned_concurrency: {{ min_provisioned_concurrency }}
+            min_provisioned_throughput: {{ min_provisioned_throughput }}
+            name: "{{ name }}"
+            provisioned_model_units: {{ provisioned_model_units }}
+            workload_size: "{{ workload_size }}"
+            workload_type: "{{ workload_type }}"
+        traffic_config:
+          routes:
+            - traffic_percentage: {{ traffic_percentage }}
+              served_entity_name: "{{ served_entity_name }}"
+              served_model_name: "{{ served_model_name }}"
     - name: description
-      value: string
+      value: "{{ description }}"
       description: |
-        :param email_notifications: :class:`EmailNotifications` (optional) Email notification settings.
+        :param email_notifications: :class:\`EmailNotifications\` (optional) Email notification settings.
     - name: email_notifications
-      value: string
+      value:
+        on_update_failure:
+          - "{{ on_update_failure }}"
+        on_update_success:
+          - "{{ on_update_success }}"
     - name: rate_limits
-      value: string
       description: |
         Rate limits to be applied to the serving endpoint. NOTE: this field is deprecated, please use AI Gateway to manage rate limits.
+      value:
+        - calls: {{ calls }}
+          renewal_period: "{{ renewal_period }}"
+          key: "{{ key }}"
     - name: route_optimized
-      value: string
+      value: {{ route_optimized }}
       description: |
         Enable route optimization for the serving endpoint.
     - name: tags
-      value: string
       description: |
         Tags to be attached to the serving endpoint and automatically propagated to billing logs.
-```
+      value:
+        - key: "{{ key }}"
+          value: "{{ value }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1842,13 +1980,13 @@ EXEC databricks_workspace.serving.serving_endpoints.query
 "input": "{{ input }}", 
 "inputs": "{{ inputs }}", 
 "instances": "{{ instances }}", 
-"max_tokens": "{{ max_tokens }}", 
+"max_tokens": {{ max_tokens }}, 
 "messages": "{{ messages }}", 
-"n": "{{ n }}", 
+"n": {{ n }}, 
 "prompt": "{{ prompt }}", 
 "stop": "{{ stop }}", 
-"stream": "{{ stream }}", 
-"temperature": "{{ temperature }}", 
+"stream": {{ stream }}, 
+"temperature": {{ temperature }}, 
 "usage_context": "{{ usage_context }}"
 }'
 ;

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -781,16 +782,16 @@ SELECT
 '{{ azure_attributes }}',
 '{{ custom_tags }}',
 '{{ disk_spec }}',
-'{{ enable_elastic_disk }}',
+{{ enable_elastic_disk }},
 '{{ gcp_attributes }}',
-'{{ idle_instance_autotermination_minutes }}',
-'{{ max_capacity }}',
-'{{ min_idle_instances }}',
+{{ idle_instance_autotermination_minutes }},
+{{ max_capacity }},
+{{ min_idle_instances }},
 '{{ node_type_flexibility }}',
 '{{ preloaded_docker_images }}',
 '{{ preloaded_spark_versions }}',
-'{{ remote_disk_throughput }}',
-'{{ total_initial_remote_disk_size }}',
+{{ remote_disk_throughput }},
+{{ total_initial_remote_disk_size }},
 '{{ deployment_name }}'
 RETURNING
 instance_pool_id
@@ -799,78 +800,101 @@ instance_pool_id
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: instance_pools
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the instance_pools resource.
     - name: instance_pool_name
-      value: string
+      value: "{{ instance_pool_name }}"
       description: |
         Pool name requested by the user. Pool name must be unique. Length must be between 1 and 100 characters.
     - name: node_type_id
-      value: string
+      value: "{{ node_type_id }}"
       description: |
         This field encodes, through a single value, the resources available to each of the Spark nodes in this cluster. For example, the Spark nodes can be provisioned and optimized for memory or compute intensive workloads. A list of available node types can be retrieved by using the :method:clusters/listNodeTypes API call.
     - name: aws_attributes
-      value: string
       description: |
         Attributes related to instance pools running on Amazon Web Services. If not specified at pool creation, a set of default values will be used.
+      value:
+        availability: "{{ availability }}"
+        instance_profile_arn: "{{ instance_profile_arn }}"
+        spot_bid_price_percent: {{ spot_bid_price_percent }}
+        zone_id: "{{ zone_id }}"
     - name: azure_attributes
-      value: string
       description: |
         Attributes related to instance pools running on Azure. If not specified at pool creation, a set of default values will be used.
+      value:
+        availability: "{{ availability }}"
+        spot_bid_max_price: {{ spot_bid_max_price }}
     - name: custom_tags
-      value: string
+      value: "{{ custom_tags }}"
       description: |
-        Additional tags for pool resources. Databricks will tag all pool resources (e.g., AWS instances and EBS volumes) with these tags in addition to `default_tags`. Notes: - Currently, Databricks allows at most 45 custom tags
+        Additional tags for pool resources. Databricks will tag all pool resources (e.g., AWS instances and EBS volumes) with these tags in addition to \`default_tags\`. Notes: - Currently, Databricks allows at most 45 custom tags
     - name: disk_spec
-      value: string
       description: |
         Defines the specification of the disks that will be attached to all spark containers.
+      value:
+        disk_count: {{ disk_count }}
+        disk_iops: {{ disk_iops }}
+        disk_size: {{ disk_size }}
+        disk_throughput: {{ disk_throughput }}
+        disk_type:
+          azure_disk_volume_type: "{{ azure_disk_volume_type }}"
+          ebs_volume_type: "{{ ebs_volume_type }}"
     - name: enable_elastic_disk
-      value: string
+      value: {{ enable_elastic_disk }}
       description: |
         Autoscaling Local Storage: when enabled, this instances in this pool will dynamically acquire additional disk space when its Spark workers are running low on disk space. In AWS, this feature requires specific AWS permissions to function correctly - refer to the User Guide for more details.
     - name: gcp_attributes
-      value: string
       description: |
         Attributes related to instance pools running on Google Cloud Platform. If not specified at pool creation, a set of default values will be used.
+      value:
+        gcp_availability: "{{ gcp_availability }}"
+        local_ssd_count: {{ local_ssd_count }}
+        zone_id: "{{ zone_id }}"
     - name: idle_instance_autotermination_minutes
-      value: string
+      value: {{ idle_instance_autotermination_minutes }}
       description: |
         Automatically terminates the extra instances in the pool cache after they are inactive for this time in minutes if min_idle_instances requirement is already met. If not set, the extra pool instances will be automatically terminated after a default timeout. If specified, the threshold must be between 0 and 10000 minutes. Users can also set this value to 0 to instantly remove idle instances from the cache if min cache size could still hold.
     - name: max_capacity
-      value: string
+      value: {{ max_capacity }}
       description: |
         Maximum number of outstanding instances to keep in the pool, including both instances used by clusters and idle instances. Clusters that require further instance provisioning will fail during upsize requests.
     - name: min_idle_instances
-      value: string
+      value: {{ min_idle_instances }}
       description: |
         Minimum number of idle instances to keep in the instance pool
     - name: node_type_flexibility
-      value: string
       description: |
         Flexible node type configuration for the pool.
+      value:
+        alternate_node_type_ids:
+          - "{{ alternate_node_type_ids }}"
     - name: preloaded_docker_images
-      value: string
       description: |
         Custom Docker Image BYOC
+      value:
+        - basic_auth:
+            password: "{{ password }}"
+            username: "{{ username }}"
+          url: "{{ url }}"
     - name: preloaded_spark_versions
-      value: string
+      value:
+        - "{{ preloaded_spark_versions }}"
       description: |
         A list containing at most one preloaded Spark image version for the pool. Pool-backed clusters started with the preloaded Spark version will start faster. A list of available Spark versions can be retrieved by using the :method:clusters/sparkVersions API call.
     - name: remote_disk_throughput
-      value: string
+      value: {{ remote_disk_throughput }}
       description: |
         If set, what the configurable throughput (in Mb/s) for the remote disk is. Currently only supported for GCP HYPERDISK_BALANCED types.
     - name: total_initial_remote_disk_size
-      value: string
+      value: {{ total_initial_remote_disk_size }}
       description: |
         If set, what the total initial volume size (in GB) of the remote disks should be. Currently only supported for GCP HYPERDISK_BALANCED types.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -894,12 +918,12 @@ instance_pool_id = '{{ instance_pool_id }}',
 instance_pool_name = '{{ instance_pool_name }}',
 node_type_id = '{{ node_type_id }}',
 custom_tags = '{{ custom_tags }}',
-idle_instance_autotermination_minutes = '{{ idle_instance_autotermination_minutes }}',
-max_capacity = '{{ max_capacity }}',
-min_idle_instances = '{{ min_idle_instances }}',
+idle_instance_autotermination_minutes = {{ idle_instance_autotermination_minutes }},
+max_capacity = {{ max_capacity }},
+min_idle_instances = {{ min_idle_instances }},
 node_type_flexibility = '{{ node_type_flexibility }}',
-remote_disk_throughput = '{{ remote_disk_throughput }}',
-total_initial_remote_disk_size = '{{ total_initial_remote_disk_size }}'
+remote_disk_throughput = {{ remote_disk_throughput }},
+total_initial_remote_disk_size = {{ total_initial_remote_disk_size }}
 WHERE 
 deployment_name = '{{ deployment_name }}' --required
 AND instance_pool_id = '{{ instance_pool_id }}' --required

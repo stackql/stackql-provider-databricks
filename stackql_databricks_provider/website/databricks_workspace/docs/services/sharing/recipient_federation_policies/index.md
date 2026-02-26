@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -231,7 +232,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param page_token: str (optional)</td>
 </tr>
 <tr id="parameter-page_token">
@@ -328,21 +329,32 @@ update_time
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: recipient_federation_policies
   props:
     - name: recipient_name
-      value: string
+      value: "{{ recipient_name }}"
       description: Required parameter for the recipient_federation_policies resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the recipient_federation_policies resource.
     - name: policy
-      value: string
       description: |
         Name of the policy. This is the name of the policy to be created.
-```
+      value:
+        comment: "{{ comment }}"
+        create_time: "{{ create_time }}"
+        id: "{{ id }}"
+        name: "{{ name }}"
+        oidc_policy:
+          issuer: "{{ issuer }}"
+          subject_claim: "{{ subject_claim }}"
+          subject: "{{ subject }}"
+          audiences:
+            - "{{ audiences }}"
+        update_time: "{{ update_time }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

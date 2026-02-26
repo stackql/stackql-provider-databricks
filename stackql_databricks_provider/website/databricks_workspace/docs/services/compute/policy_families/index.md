@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -148,7 +149,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of policy families to return.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -158,7 +159,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-version">
     <td><CopyableCode code="version" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The version number for the family to fetch. Defaults to the latest version.</td>
 </tr>
 </tbody>

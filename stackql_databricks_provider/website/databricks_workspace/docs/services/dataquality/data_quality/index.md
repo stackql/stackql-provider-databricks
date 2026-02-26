@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -601,7 +602,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param page_token: str (optional)</td>
 </tr>
 <tr id="parameter-page_token">
@@ -689,18 +690,66 @@ object_type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: data_quality
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the data_quality resource.
     - name: monitor
-      value: string
       description: |
         The monitor to create.
-```
+      value:
+        object_type: "{{ object_type }}"
+        object_id: "{{ object_id }}"
+        anomaly_detection_config:
+          excluded_table_full_names:
+            - "{{ excluded_table_full_names }}"
+        data_profiling_config:
+          output_schema_id: "{{ output_schema_id }}"
+          assets_dir: "{{ assets_dir }}"
+          baseline_table_name: "{{ baseline_table_name }}"
+          custom_metrics:
+            - name: "{{ name }}"
+              definition: "{{ definition }}"
+              input_columns: "{{ input_columns }}"
+              output_data_type: "{{ output_data_type }}"
+              type: "{{ type }}"
+          dashboard_id: "{{ dashboard_id }}"
+          drift_metrics_table_name: "{{ drift_metrics_table_name }}"
+          effective_warehouse_id: "{{ effective_warehouse_id }}"
+          inference_log:
+            problem_type: "{{ problem_type }}"
+            timestamp_column: "{{ timestamp_column }}"
+            granularities:
+              - "{{ granularities }}"
+            prediction_column: "{{ prediction_column }}"
+            model_id_column: "{{ model_id_column }}"
+            label_column: "{{ label_column }}"
+          latest_monitor_failure_message: "{{ latest_monitor_failure_message }}"
+          monitor_version: {{ monitor_version }}
+          monitored_table_name: "{{ monitored_table_name }}"
+          notification_settings:
+            on_failure:
+              email_addresses:
+                - "{{ email_addresses }}"
+          profile_metrics_table_name: "{{ profile_metrics_table_name }}"
+          schedule:
+            quartz_cron_expression: "{{ quartz_cron_expression }}"
+            timezone_id: "{{ timezone_id }}"
+            pause_status: "{{ pause_status }}"
+          skip_builtin_dashboard: {{ skip_builtin_dashboard }}
+          slicing_exprs:
+            - "{{ slicing_exprs }}"
+          snapshot: "{{ snapshot }}"
+          status: "{{ status }}"
+          time_series:
+            timestamp_column: "{{ timestamp_column }}"
+            granularities:
+              - "{{ granularities }}"
+          warehouse_id: "{{ warehouse_id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

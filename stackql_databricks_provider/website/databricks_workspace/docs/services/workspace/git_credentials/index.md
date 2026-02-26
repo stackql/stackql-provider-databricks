@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -189,7 +190,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-principal_id">
     <td><CopyableCode code="principal_id" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The ID of the service principal whose credentials will be modified. Only service principal managers can perform this action.</td>
 </tr>
 </tbody>
@@ -272,10 +273,10 @@ SELECT
 '{{ git_provider }}' /* required */,
 '{{ git_email }}',
 '{{ git_username }}',
-'{{ is_default_for_provider }}',
+{{ is_default_for_provider }},
 '{{ name }}',
 '{{ personal_access_token }}',
-'{{ principal_id }}',
+{{ principal_id }},
 '{{ deployment_name }}'
 RETURNING
 name,
@@ -289,42 +290,42 @@ is_default_for_provider
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: git_credentials
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the git_credentials resource.
     - name: git_provider
-      value: string
+      value: "{{ git_provider }}"
       description: |
-        Git provider. This field is case-insensitive. The available Git providers are `gitHub`, `bitbucketCloud`, `gitLab`, `azureDevOpsServices`, `gitHubEnterprise`, `bitbucketServer`, `gitLabEnterpriseEdition` and `awsCodeCommit`.
+        Git provider. This field is case-insensitive. The available Git providers are \`gitHub\`, \`bitbucketCloud\`, \`gitLab\`, \`azureDevOpsServices\`, \`gitHubEnterprise\`, \`bitbucketServer\`, \`gitLabEnterpriseEdition\` and \`awsCodeCommit\`.
     - name: git_email
-      value: string
+      value: "{{ git_email }}"
       description: |
         The authenticating email associated with your Git provider user account. Used for authentication with the remote repository and also sets the author & committer identity for commits. Required for most Git providers except AWS CodeCommit. Learn more at https://docs.databricks.com/aws/en/repos/get-access-tokens-from-git-provider
     - name: git_username
-      value: string
+      value: "{{ git_username }}"
       description: |
         The username provided with your Git provider account and associated with the credential. For most Git providers it is only used to set the Git committer & author names for commits, however it may be required for authentication depending on your Git provider / token requirements. Required for AWS CodeCommit.
     - name: is_default_for_provider
-      value: string
+      value: {{ is_default_for_provider }}
       description: |
         if the credential is the default for the given provider
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         the name of the git credential, used for identification and ease of lookup
     - name: personal_access_token
-      value: string
+      value: "{{ personal_access_token }}"
       description: |
         The personal access token used to authenticate to the corresponding Git provider. For certain providers, support may exist for other types of scoped access tokens. [Learn more]. [Learn more]: https://docs.databricks.com/repos/get-access-tokens-from-git-provider.html
     - name: principal_id
-      value: string
+      value: {{ principal_id }}
       description: |
         The ID of the service principal whose credentials will be modified. Only service principal managers can perform this action.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -347,10 +348,10 @@ SET
 git_provider = '{{ git_provider }}',
 git_email = '{{ git_email }}',
 git_username = '{{ git_username }}',
-is_default_for_provider = '{{ is_default_for_provider }}',
+is_default_for_provider = {{ is_default_for_provider }},
 name = '{{ name }}',
 personal_access_token = '{{ personal_access_token }}',
-principal_id = '{{ principal_id }}'
+principal_id = {{ principal_id }}
 WHERE 
 credential_id = '{{ credential_id }}' --required
 AND deployment_name = '{{ deployment_name }}' --required

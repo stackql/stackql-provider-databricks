@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -333,7 +334,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-count">
     <td><CopyableCode code="count" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Desired number of results per page. Default is 10000.</td>
 </tr>
 <tr id="parameter-excluded_attributes">
@@ -358,7 +359,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-start_index">
     <td><CopyableCode code="start_index" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Specifies the index of the first result. First item is number 1.</td>
 </tr>
 </tbody>
@@ -464,34 +465,45 @@ roles
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: account_groups
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the account_groups resource.
     - name: display_name
-      value: string
+      value: "{{ display_name }}"
       description: |
         String that represents a human-readable group name
     - name: external_id
-      value: string
+      value: "{{ external_id }}"
       description: |
         :param id: str (optional) Databricks group ID
     - name: id
-      value: string
+      value: "{{ id }}"
     - name: members
-      value: string
       description: |
-        :param meta: :class:`ResourceMeta` (optional) Container for the group identifier. Workspace local versus account.
+        :param meta: :class:\`ResourceMeta\` (optional) Container for the group identifier. Workspace local versus account.
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: meta
-      value: string
+      value:
+        resourceType: "{{ resourceType }}"
     - name: roles
-      value: string
       description: |
         Indicates if the group has the admin role.
-```
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

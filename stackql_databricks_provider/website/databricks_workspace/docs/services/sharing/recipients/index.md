@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -443,7 +444,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of recipients to return. - when set to 0, the page length is set to a server configured value (recommended); - when set to a value greater than 0, the page length is the minimum of this value and a server configured value; - when set to a value less than 0, an invalid parameter error is returned; - If not set, all valid recipients are returned (not recommended). - Note: The number of returned recipients might be less than the specified max_results size, even zero. The only definitive indication that no further recipients can be fetched is when the next_page_token is unset from the response.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -603,7 +604,7 @@ SELECT
 '{{ authentication_type }}' /* required */,
 '{{ comment }}',
 '{{ data_recipient_global_metastore_id }}',
-'{{ expiration_time }}',
+{{ expiration_time }},
 '{{ id }}',
 '{{ ip_access_list }}',
 '{{ owner }}',
@@ -636,59 +637,62 @@ updated_by
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: recipients
   props:
     - name: name
-      value: string
+      value: "{{ name }}"
       description: Required parameter for the recipients resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the recipients resource.
     - name: existing_token_expire_in_seconds
-      value: integer
+      value: {{ existing_token_expire_in_seconds }}
       description: |
         The expiration time of the bearer token in ISO 8601 format. This will set the expiration_time of existing token only to a smaller timestamp, it cannot extend the expiration_time. Use 0 to expire the existing token immediately, negative number will return an error.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Name of Recipient.
     - name: authentication_type
-      value: string
+      value: "{{ authentication_type }}"
       description: |
         :param comment: str (optional) Description about the recipient.
     - name: comment
-      value: string
+      value: "{{ comment }}"
     - name: data_recipient_global_metastore_id
-      value: string
+      value: "{{ data_recipient_global_metastore_id }}"
       description: |
         The global Unity Catalog metastore id provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**. The identifier is of format __cloud__:__region__:__metastore-uuid__.
     - name: expiration_time
-      value: string
+      value: {{ expiration_time }}
       description: |
         Expiration timestamp of the token, in epoch milliseconds.
     - name: id
-      value: string
+      value: "{{ id }}"
       description: |
         [Create,Update:IGN] common - id of the recipient
     - name: ip_access_list
-      value: string
       description: |
         IP Access List
+      value:
+        allowed_ip_addresses:
+          - "{{ allowed_ip_addresses }}"
     - name: owner
-      value: string
+      value: "{{ owner }}"
       description: |
         Username of the recipient owner.
     - name: properties_kvpairs
-      value: string
       description: |
         Recipient properties as map of string key-value pairs. When provided in update request, the specified properties will override the existing properties. To add and remove properties, one would need to perform a read-modify-write.
+      value:
+        properties: "{{ properties }}"
     - name: sharing_code
-      value: string
+      value: "{{ sharing_code }}"
       description: |
         The one-time sharing code provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -709,7 +713,7 @@ Updates an existing recipient in the metastore. The caller must be a metastore a
 UPDATE databricks_workspace.sharing.recipients
 SET 
 comment = '{{ comment }}',
-expiration_time = '{{ expiration_time }}',
+expiration_time = {{ expiration_time }},
 id = '{{ id }}',
 ip_access_list = '{{ ip_access_list }}',
 new_name = '{{ new_name }}',

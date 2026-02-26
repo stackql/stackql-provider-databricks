@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -829,17 +830,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Force deletion even if the function is notempty.</td>
 </tr>
 <tr id="parameter-include_browse">
     <td><CopyableCode code="include_browse" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include functions in the response for which the principal can only access selective metadata for</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of functions to return. If not set, all the functions are returned (not recommended). - when set to a value greater than 0, the page length is the minimum of this value and a server configured value; - when set to 0, the page length is set to a server configured value (recommended); - when set to a value less than 0, an invalid parameter error is returned;</td>
 </tr>
 <tr id="parameter-page_token">
@@ -1008,18 +1009,74 @@ updated_by
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: functions
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the functions resource.
     - name: function_info
-      value: string
       description: |
         Partial __FunctionInfo__ specifying the function to be created.
-```
+      value:
+        name: "{{ name }}"
+        catalog_name: "{{ catalog_name }}"
+        schema_name: "{{ schema_name }}"
+        input_params:
+          parameters:
+            - name: "{{ name }}"
+              type_text: "{{ type_text }}"
+              type_name: "{{ type_name }}"
+              position: {{ position }}
+              comment: "{{ comment }}"
+              parameter_default: "{{ parameter_default }}"
+              parameter_mode: "{{ parameter_mode }}"
+              parameter_type: "{{ parameter_type }}"
+              type_interval_type: "{{ type_interval_type }}"
+              type_json: "{{ type_json }}"
+              type_precision: {{ type_precision }}
+              type_scale: {{ type_scale }}
+        data_type: "{{ data_type }}"
+        full_data_type: "{{ full_data_type }}"
+        routine_body: "{{ routine_body }}"
+        routine_definition: "{{ routine_definition }}"
+        parameter_style: "{{ parameter_style }}"
+        is_deterministic: {{ is_deterministic }}
+        sql_data_access: "{{ sql_data_access }}"
+        is_null_call: {{ is_null_call }}
+        security_type: "{{ security_type }}"
+        specific_name: "{{ specific_name }}"
+        comment: "{{ comment }}"
+        external_language: "{{ external_language }}"
+        external_name: "{{ external_name }}"
+        properties: "{{ properties }}"
+        return_params:
+          parameters:
+            - name: "{{ name }}"
+              type_text: "{{ type_text }}"
+              type_name: "{{ type_name }}"
+              position: {{ position }}
+              comment: "{{ comment }}"
+              parameter_default: "{{ parameter_default }}"
+              parameter_mode: "{{ parameter_mode }}"
+              parameter_type: "{{ parameter_type }}"
+              type_interval_type: "{{ type_interval_type }}"
+              type_json: "{{ type_json }}"
+              type_precision: {{ type_precision }}
+              type_scale: {{ type_scale }}
+        routine_dependencies:
+          dependencies:
+            - connection:
+                connection_name: "{{ connection_name }}"
+              credential:
+                credential_name: "{{ credential_name }}"
+              function:
+                function_full_name: "{{ function_full_name }}"
+              table:
+                table_full_name: "{{ table_full_name }}"
+        sql_path: "{{ sql_path }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

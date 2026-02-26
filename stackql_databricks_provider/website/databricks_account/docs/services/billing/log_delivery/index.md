@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -422,18 +423,28 @@ log_delivery_configuration
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: log_delivery
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the log_delivery resource.
     - name: log_delivery_configuration
-      value: string
       description: |
-        :returns: :class:`WrappedLogDeliveryConfiguration`
-```
+        :returns: :class:\`WrappedLogDeliveryConfiguration\`
+      value:
+        log_type: "{{ log_type }}"
+        output_format: "{{ output_format }}"
+        credentials_id: "{{ credentials_id }}"
+        storage_configuration_id: "{{ storage_configuration_id }}"
+        config_name: "{{ config_name }}"
+        delivery_path_prefix: "{{ delivery_path_prefix }}"
+        delivery_start_time: "{{ delivery_start_time }}"
+        status: "{{ status }}"
+        workspace_ids_filter:
+          - {{ workspace_ids_filter }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

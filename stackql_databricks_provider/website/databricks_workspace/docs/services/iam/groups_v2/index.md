@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -461,7 +462,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-count">
     <td><CopyableCode code="count" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Desired number of results per page.</td>
 </tr>
 <tr id="parameter-excluded_attributes">
@@ -486,7 +487,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-start_index">
     <td><CopyableCode code="start_index" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Specifies the index of the first result. First item is number 1.</td>
 </tr>
 </tbody>
@@ -604,46 +605,68 @@ schemas
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: groups_v2
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the groups_v2 resource.
     - name: display_name
-      value: string
+      value: "{{ display_name }}"
       description: |
         String that represents a human-readable group name
     - name: entitlements
-      value: string
       description: |
         Entitlements assigned to the group. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: external_id
-      value: string
+      value: "{{ external_id }}"
       description: |
-        :param groups: List[:class:`ComplexValue`] (optional)
+        :param groups: List[:class:\`ComplexValue\`] (optional)
     - name: groups
-      value: string
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: id
-      value: string
+      value: "{{ id }}"
       description: |
         Databricks group ID
     - name: members
-      value: string
       description: |
-        :param meta: :class:`ResourceMeta` (optional) Container for the group identifier. Workspace local versus account.
+        :param meta: :class:\`ResourceMeta\` (optional) Container for the group identifier. Workspace local versus account.
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: meta
-      value: string
+      value:
+        resourceType: "{{ resourceType }}"
     - name: roles
-      value: string
       description: |
         Corresponds to AWS instance profile/arn role.
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: schemas
-      value: string
+      value:
+        - "{{ schemas }}"
       description: |
         The schema of the group.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

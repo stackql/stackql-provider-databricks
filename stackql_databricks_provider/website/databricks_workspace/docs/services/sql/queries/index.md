@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -644,7 +645,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param page_token: str (optional)</td>
 </tr>
 <tr id="parameter-page_token">
@@ -745,7 +746,7 @@ query,
 deployment_name
 )
 SELECT 
-'{{ auto_resolve_display_name }}',
+{{ auto_resolve_display_name }},
 '{{ query }}',
 '{{ deployment_name }}'
 RETURNING
@@ -771,22 +772,67 @@ update_time
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: queries
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the queries resource.
     - name: auto_resolve_display_name
-      value: string
+      value: {{ auto_resolve_display_name }}
       description: |
         If true, automatically resolve query display name conflicts. Otherwise, fail the request if the query's display name conflicts with an existing query's display name.
     - name: query
-      value: string
       description: |
-        :returns: :class:`Query`
-```
+        :returns: :class:\`Query\`
+      value:
+        apply_auto_limit: {{ apply_auto_limit }}
+        catalog: "{{ catalog }}"
+        description: "{{ description }}"
+        display_name: "{{ display_name }}"
+        parameters:
+          - date_range_value:
+              date_range_value:
+                start: "{{ start }}"
+                end: "{{ end }}"
+              dynamic_date_range_value: "{{ dynamic_date_range_value }}"
+              precision: "{{ precision }}"
+              start_day_of_week: {{ start_day_of_week }}
+            date_value:
+              date_value: "{{ date_value }}"
+              dynamic_date_value: "{{ dynamic_date_value }}"
+              precision: "{{ precision }}"
+            enum_value:
+              enum_options: "{{ enum_options }}"
+              multi_values_options:
+                prefix: "{{ prefix }}"
+                separator: "{{ separator }}"
+                suffix: "{{ suffix }}"
+              values:
+                - "{{ values }}"
+            name: "{{ name }}"
+            numeric_value:
+              value: {{ value }}
+            query_backed_value:
+              multi_values_options:
+                prefix: "{{ prefix }}"
+                separator: "{{ separator }}"
+                suffix: "{{ suffix }}"
+              query_id: "{{ query_id }}"
+              values:
+                - "{{ values }}"
+            text_value:
+              value: "{{ value }}"
+            title: "{{ title }}"
+        parent_path: "{{ parent_path }}"
+        query_text: "{{ query_text }}"
+        run_as_mode: "{{ run_as_mode }}"
+        schema: "{{ schema }}"
+        tags:
+          - "{{ tags }}"
+        warehouse_id: "{{ warehouse_id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -807,7 +853,7 @@ Updates a query.
 UPDATE databricks_workspace.sql.queries
 SET 
 update_mask = '{{ update_mask }}',
-auto_resolve_display_name = '{{ auto_resolve_display_name }}',
+auto_resolve_display_name = {{ auto_resolve_display_name }},
 query = '{{ query }}'
 WHERE 
 id = '{{ id }}' --required

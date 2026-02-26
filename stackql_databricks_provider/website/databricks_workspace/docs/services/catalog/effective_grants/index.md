@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -74,7 +75,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "privilege",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ACCESS, ALL_PRIVILEGES, APPLY_TAG, BROWSE, CREATE, CREATE_CATALOG, CREATE_CLEAN_ROOM, CREATE_CONNECTION, CREATE_EXTERNAL_LOCATION, CREATE_EXTERNAL_TABLE, CREATE_EXTERNAL_VOLUME, CREATE_FOREIGN_CATALOG, CREATE_FOREIGN_SECURABLE, CREATE_FUNCTION, CREATE_MANAGED_STORAGE, CREATE_MATERIALIZED_VIEW, CREATE_MODEL, CREATE_PROVIDER, CREATE_RECIPIENT, CREATE_SCHEMA, CREATE_SERVICE_CREDENTIAL, CREATE_SHARE, CREATE_STORAGE_CREDENTIAL, CREATE_TABLE, CREATE_VIEW, CREATE_VOLUME, EXECUTE, EXECUTE_CLEAN_ROOM_TASK, EXTERNAL_USE_SCHEMA, MANAGE, MANAGE_ALLOWLIST, MODIFY, MODIFY_CLEAN_ROOM, READ_FILES, READ_PRIVATE_FILES, READ_VOLUME, REFRESH, SELECT, SET_SHARE_PERMISSION, USAGE, USE_CATALOG, USE_CONNECTION, USE_MARKETPLACE_ASSETS, USE_PROVIDER, USE_RECIPIENT, USE_SCHEMA, USE_SHARE, WRITE_FILES, WRITE_PRIVATE_FILES, WRITE_VOLUME)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ACCESS, ALL_PRIVILEGES, APPLY_TAG, BROWSE, CREATE, CREATE_CATALOG, CREATE_CLEAN_ROOM, CREATE_CONNECTION, CREATE_EXTERNAL_LOCATION, CREATE_EXTERNAL_TABLE, CREATE_EXTERNAL_VOLUME, CREATE_FOREIGN_CATALOG, CREATE_FOREIGN_SECURABLE, CREATE_FUNCTION, CREATE_MANAGED_STORAGE, CREATE_MATERIALIZED_VIEW, CREATE_MODEL, CREATE_PROVIDER, CREATE_RECIPIENT, CREATE_SCHEMA, CREATE_SERVICE_CREDENTIAL, CREATE_SHARE, CREATE_STORAGE_CREDENTIAL, CREATE_TABLE, CREATE_VIEW, CREATE_VOLUME, EXECUTE, EXECUTE_CLEAN_ROOM_TASK, EXTERNAL_USE_SCHEMA, MANAGE, MANAGE_ALLOWLIST, MODIFY, MODIFY_CLEAN_ROOM, READ_FILES, READ_PRIVATE_FILES, READ_VOLUME, REFRESH, SELECT, SET_SHARE_PERMISSION, USAGE, USE_CATALOG, USE_CONNECTION, USE_MARKETPLACE_ASSETS, USE_PROVIDER, USE_RECIPIENT, USE_SCHEMA, USE_SHARE, WRITE_FILES, WRITE_PRIVATE_FILES, WRITE_VOLUME)"
           }
         ]
       }
@@ -139,7 +140,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Specifies the maximum number of privileges to return (page length). Every EffectivePrivilegeAssignment present in a single page response is guaranteed to contain all the effective privileges granted on (or inherited by) the requested Securable for the respective principal. If not set, all the effective permissions are returned. If set to - lesser than 0: invalid parameter error - 0: page length is set to a server configured value - lesser than 150 but greater than 0: invalid parameter error (this is to ensure that server is able to return at least one complete EffectivePrivilegeAssignment in a single page response) - greater than (or equal to) 150: page length is the minimum of this value and a server configured value</td>
 </tr>
 <tr id="parameter-page_token">

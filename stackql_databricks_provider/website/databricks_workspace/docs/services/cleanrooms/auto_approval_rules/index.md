@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -204,7 +205,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td></td>
 </tr>
 <tr id="parameter-page_token">
@@ -304,21 +305,28 @@ runner_collaborator_alias
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: auto_approval_rules
   props:
     - name: clean_room_name
-      value: string
+      value: "{{ clean_room_name }}"
       description: Required parameter for the auto_approval_rules resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the auto_approval_rules resource.
     - name: auto_approval_rule
-      value: string
       description: |
-        :returns: :class:`CleanRoomAutoApprovalRule`
-```
+        :returns: :class:\`CleanRoomAutoApprovalRule\`
+      value:
+        author_collaborator_alias: "{{ author_collaborator_alias }}"
+        author_scope: "{{ author_scope }}"
+        clean_room_name: "{{ clean_room_name }}"
+        created_at: {{ created_at }}
+        rule_id: "{{ rule_id }}"
+        rule_owner_collaborator_alias: "{{ rule_owner_collaborator_alias }}"
+        runner_collaborator_alias: "{{ runner_collaborator_alias }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

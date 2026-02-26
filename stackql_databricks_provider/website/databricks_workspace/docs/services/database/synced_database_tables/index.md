@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -767,7 +768,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Upper bound for items returned.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -777,7 +778,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-purge_data">
     <td><CopyableCode code="purge_data" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td></td>
 </tr>
 </tbody>
@@ -872,18 +873,77 @@ unity_catalog_provisioning_state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: synced_database_tables
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the synced_database_tables resource.
     - name: synced_table
-      value: string
       description: |
-        :returns: :class:`SyncedDatabaseTable`
-```
+        :returns: :class:\`SyncedDatabaseTable\`
+      value:
+        name: "{{ name }}"
+        data_synchronization_status:
+          continuous_update_status:
+            initial_pipeline_sync_progress:
+              estimated_completion_time_seconds: {{ estimated_completion_time_seconds }}
+              latest_version_currently_processing: {{ latest_version_currently_processing }}
+              provisioning_phase: "{{ provisioning_phase }}"
+              sync_progress_completion: {{ sync_progress_completion }}
+              synced_row_count: {{ synced_row_count }}
+              total_row_count: {{ total_row_count }}
+            last_processed_commit_version: {{ last_processed_commit_version }}
+            timestamp: "{{ timestamp }}"
+          detailed_state: "{{ detailed_state }}"
+          failed_status:
+            last_processed_commit_version: {{ last_processed_commit_version }}
+            timestamp: "{{ timestamp }}"
+          last_sync:
+            delta_table_sync_info:
+              delta_commit_timestamp: "{{ delta_commit_timestamp }}"
+              delta_commit_version: {{ delta_commit_version }}
+            sync_end_timestamp: "{{ sync_end_timestamp }}"
+            sync_start_timestamp: "{{ sync_start_timestamp }}"
+          message: "{{ message }}"
+          pipeline_id: "{{ pipeline_id }}"
+          provisioning_status:
+            initial_pipeline_sync_progress:
+              estimated_completion_time_seconds: {{ estimated_completion_time_seconds }}
+              latest_version_currently_processing: {{ latest_version_currently_processing }}
+              provisioning_phase: "{{ provisioning_phase }}"
+              sync_progress_completion: {{ sync_progress_completion }}
+              synced_row_count: {{ synced_row_count }}
+              total_row_count: {{ total_row_count }}
+          triggered_update_status:
+            last_processed_commit_version: {{ last_processed_commit_version }}
+            timestamp: "{{ timestamp }}"
+            triggered_update_progress:
+              estimated_completion_time_seconds: {{ estimated_completion_time_seconds }}
+              latest_version_currently_processing: {{ latest_version_currently_processing }}
+              provisioning_phase: "{{ provisioning_phase }}"
+              sync_progress_completion: {{ sync_progress_completion }}
+              synced_row_count: {{ synced_row_count }}
+              total_row_count: {{ total_row_count }}
+        database_instance_name: "{{ database_instance_name }}"
+        effective_database_instance_name: "{{ effective_database_instance_name }}"
+        effective_logical_database_name: "{{ effective_logical_database_name }}"
+        logical_database_name: "{{ logical_database_name }}"
+        spec:
+          create_database_objects_if_missing: {{ create_database_objects_if_missing }}
+          existing_pipeline_id: "{{ existing_pipeline_id }}"
+          new_pipeline_spec:
+            budget_policy_id: "{{ budget_policy_id }}"
+            storage_catalog: "{{ storage_catalog }}"
+            storage_schema: "{{ storage_schema }}"
+          primary_key_columns:
+            - "{{ primary_key_columns }}"
+          scheduling_policy: "{{ scheduling_policy }}"
+          source_table_full_name: "{{ source_table_full_name }}"
+          timeseries_key: "{{ timeseries_key }}"
+        unity_catalog_provisioning_state: "{{ unity_catalog_provisioning_state }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

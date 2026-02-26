@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -634,7 +635,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param page_token: str (optional)</td>
 </tr>
 <tr id="parameter-page_token">
@@ -644,7 +645,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-purge">
     <td><CopyableCode code="purge" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td></td>
 </tr>
 </tbody>
@@ -762,18 +763,64 @@ update_time
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: alerts_v2
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the alerts_v2 resource.
     - name: alert
-      value: string
       description: |
-        :returns: :class:`AlertV2`
-```
+        :returns: :class:\`AlertV2\`
+      value:
+        display_name: "{{ display_name }}"
+        query_text: "{{ query_text }}"
+        warehouse_id: "{{ warehouse_id }}"
+        evaluation:
+          source:
+            name: "{{ name }}"
+            aggregation: "{{ aggregation }}"
+            display: "{{ display }}"
+          comparison_operator: "{{ comparison_operator }}"
+          empty_result_state: "{{ empty_result_state }}"
+          last_evaluated_at: "{{ last_evaluated_at }}"
+          notification:
+            notify_on_ok: {{ notify_on_ok }}
+            retrigger_seconds: {{ retrigger_seconds }}
+            subscriptions:
+              - destination_id: "{{ destination_id }}"
+                user_email: "{{ user_email }}"
+          state: "{{ state }}"
+          threshold:
+            column:
+              name: "{{ name }}"
+              aggregation: "{{ aggregation }}"
+              display: "{{ display }}"
+            value:
+              bool_value: {{ bool_value }}
+              double_value: {{ double_value }}
+              string_value: "{{ string_value }}"
+        schedule:
+          quartz_cron_schedule: "{{ quartz_cron_schedule }}"
+          timezone_id: "{{ timezone_id }}"
+          pause_status: "{{ pause_status }}"
+        create_time: "{{ create_time }}"
+        custom_description: "{{ custom_description }}"
+        custom_summary: "{{ custom_summary }}"
+        effective_run_as:
+          service_principal_name: "{{ service_principal_name }}"
+          user_name: "{{ user_name }}"
+        id: "{{ id }}"
+        lifecycle_state: "{{ lifecycle_state }}"
+        owner_user_name: "{{ owner_user_name }}"
+        parent_path: "{{ parent_path }}"
+        run_as:
+          service_principal_name: "{{ service_principal_name }}"
+          user_name: "{{ user_name }}"
+        run_as_user_name: "{{ run_as_user_name }}"
+        update_time: "{{ update_time }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

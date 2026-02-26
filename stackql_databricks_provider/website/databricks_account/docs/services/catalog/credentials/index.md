@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -454,17 +455,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Force an update even if there are dependent services (when purpose is **SERVICE**) or dependent external locations and external tables (when purpose is **STORAGE**).</td>
 </tr>
 <tr id="parameter-include_unbound">
     <td><CopyableCode code="include_unbound" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include credentials not bound to the workspace. Effective only if the user has permission to update the credential–workspace binding.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of credentials to return. - If not set, the default max page size is used. - When set to a value greater than 0, the page length is the minimum of this value and a server-configured value. - When set to 0, the page length is set to a server-configured value (recommended). - When set to a value less than 0, an invalid parameter error is returned.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -588,8 +589,8 @@ SELECT
 '{{ comment }}',
 '{{ databricks_gcp_service_account }}',
 '{{ purpose }}',
-'{{ read_only }}',
-'{{ skip_validation }}'
+{{ read_only }},
+{{ skip_validation }}
 RETURNING
 id,
 name,
@@ -656,7 +657,7 @@ SELECT
 '{{ databricks_gcp_service_account }}',
 '{{ external_location_name }}',
 '{{ purpose }}',
-'{{ read_only }}',
+{{ read_only }},
 '{{ url }}'
 RETURNING
 isDir,
@@ -666,61 +667,81 @@ results
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: credentials
   props:
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The credential name. The name must be unique among storage and service credentials within the metastore.
     - name: aws_iam_role
-      value: string
       description: |
-        :param azure_managed_identity: :class:`AzureManagedIdentity` (optional)
+        :param azure_managed_identity: :class:\`AzureManagedIdentity\` (optional)
+      value:
+        external_id: "{{ external_id }}"
+        role_arn: "{{ role_arn }}"
+        unity_catalog_iam_arn: "{{ unity_catalog_iam_arn }}"
     - name: azure_managed_identity
-      value: string
+      description: |
+        The Azure managed identity configuration.
+      value:
+        access_connector_id: "{{ access_connector_id }}"
+        credential_id: "{{ credential_id }}"
+        managed_identity_id: "{{ managed_identity_id }}"
     - name: azure_service_principal
-      value: string
       description: |
         The Azure service principal configuration.
+      value:
+        directory_id: "{{ directory_id }}"
+        application_id: "{{ application_id }}"
+        client_secret: "{{ client_secret }}"
     - name: comment
-      value: string
+      value: "{{ comment }}"
       description: |
         Comment associated with the credential.
     - name: databricks_gcp_service_account
-      value: string
       description: |
         :param external_location_name: str (optional) The name of an existing external location to validate. Only applicable for storage credentials (purpose is **STORAGE**.)
+      value:
+        credential_id: "{{ credential_id }}"
+        email: "{{ email }}"
+        private_key_id: "{{ private_key_id }}"
     - name: purpose
-      value: string
+      value: "{{ purpose }}"
       description: |
         The purpose of the credential. This should only be used when the credential is specified.
     - name: read_only
-      value: string
+      value: {{ read_only }}
       description: |
         Whether the credential is only usable for read operations. Only applicable for storage credentials (purpose is **STORAGE**.)
     - name: skip_validation
-      value: string
+      value: {{ skip_validation }}
       description: |
         Optional. Supplying true to this argument skips validation of the created set of credentials.
     - name: credential_name
-      value: string
+      value: "{{ credential_name }}"
       description: |
         Required. The name of an existing credential or long-lived cloud credential to validate.
     - name: azure_options
-      value: string
       description: |
-        :param gcp_options: :class:`GenerateTemporaryServiceCredentialGcpOptions` (optional)
+        :param gcp_options: :class:\`GenerateTemporaryServiceCredentialGcpOptions\` (optional)
+      value:
+        resources:
+          - "{{ resources }}"
     - name: gcp_options
-      value: string
+      description: |
+        The GCP cloud options to customize the requested temporary credential
+      value:
+        scopes:
+          - "{{ scopes }}"
     - name: external_location_name
-      value: string
+      value: "{{ external_location_name }}"
     - name: url
-      value: string
+      value: "{{ url }}"
       description: |
         The external location url to validate. Only applicable when purpose is **STORAGE**.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -745,12 +766,12 @@ azure_managed_identity = '{{ azure_managed_identity }}',
 azure_service_principal = '{{ azure_service_principal }}',
 comment = '{{ comment }}',
 databricks_gcp_service_account = '{{ databricks_gcp_service_account }}',
-force = '{{ force }}',
+force = {{ force }},
 isolation_mode = '{{ isolation_mode }}',
 new_name = '{{ new_name }}',
 owner = '{{ owner }}',
-read_only = '{{ read_only }}',
-skip_validation = '{{ skip_validation }}'
+read_only = {{ read_only }},
+skip_validation = {{ skip_validation }}
 WHERE 
 name_arg = '{{ name_arg }}' --required
 RETURNING

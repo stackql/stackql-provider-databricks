@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -228,7 +229,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The maximum number of results to return. Defaults to 100 if not specified.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -345,25 +346,35 @@ state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: feature_store
   props:
     - name: source_table_name
-      value: string
+      value: "{{ source_table_name }}"
       description: Required parameter for the feature_store resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the feature_store resource.
     - name: publish_spec
-      value: string
       description: |
         The specification for publishing the online table from the source table.
+      value:
+        online_store: "{{ online_store }}"
+        online_table_name: "{{ online_table_name }}"
+        publish_mode: "{{ publish_mode }}"
     - name: online_store
-      value: string
       description: |
         Online store to create.
-```
+      value:
+        name: "{{ name }}"
+        capacity: "{{ capacity }}"
+        creation_time: "{{ creation_time }}"
+        creator: "{{ creator }}"
+        read_replica_count: {{ read_replica_count }}
+        state: "{{ state }}"
+        usage_policy_id: "{{ usage_policy_id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

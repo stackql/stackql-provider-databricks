@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -182,49 +183,179 @@ updated_at
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: query_visualizations_legacy
   props:
     - name: id
-      value: string
+      value: "{{ id }}"
       description: Required parameter for the query_visualizations_legacy resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the query_visualizations_legacy resource.
     - name: created_at
-      value: string
+      value: "{{ created_at }}"
       description: |
         :param description: str (optional) A short description of this visualization. This is not displayed in the UI.
     - name: description
-      value: string
+      value: "{{ description }}"
       description: |
         A short description of this visualization. This is not displayed in the UI.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The name of the visualization that appears on dashboards and the query screen.
     - name: options
-      value: string
+      value: "{{ options }}"
       description: |
         The options object varies widely from one visualization type to the next and is unsupported. Databricks does not recommend modifying visualization settings in JSON.
     - name: query
-      value: string
       description: |
         :param type: str (optional) The type of visualization: chart, table, pivot table, and so on.
+      value:
+        can_edit: {{ can_edit }}
+        created_at: "{{ created_at }}"
+        data_source_id: "{{ data_source_id }}"
+        description: "{{ description }}"
+        id: "{{ id }}"
+        is_archived: {{ is_archived }}
+        is_draft: {{ is_draft }}
+        is_favorite: {{ is_favorite }}
+        is_safe: {{ is_safe }}
+        last_modified_by:
+          email: "{{ email }}"
+          id: {{ id }}
+          name: "{{ name }}"
+        last_modified_by_id: {{ last_modified_by_id }}
+        latest_query_data_id: "{{ latest_query_data_id }}"
+        name: "{{ name }}"
+        options:
+          catalog: "{{ catalog }}"
+          moved_to_trash_at: "{{ moved_to_trash_at }}"
+          parameters:
+            - enumOptions: "{{ enumOptions }}"
+              multiValuesOptions:
+                prefix: "{{ prefix }}"
+                separator: "{{ separator }}"
+                suffix: "{{ suffix }}"
+              name: "{{ name }}"
+              queryId: "{{ queryId }}"
+              title: "{{ title }}"
+              type: "{{ type }}"
+              value: "{{ value }}"
+          schema: "{{ schema }}"
+        parent: "{{ parent }}"
+        permission_tier: "{{ permission_tier }}"
+        query: "{{ query }}"
+        query_hash: "{{ query_hash }}"
+        run_as_role: "{{ run_as_role }}"
+        tags:
+          - "{{ tags }}"
+        updated_at: "{{ updated_at }}"
+        user:
+          email: "{{ email }}"
+          id: {{ id }}
+          name: "{{ name }}"
+        user_id: {{ user_id }}
+        visualizations:
+          - created_at: "{{ created_at }}"
+            description: "{{ description }}"
+            id: "{{ id }}"
+            name: "{{ name }}"
+            options: "{{ options }}"
+            query:
+              can_edit: {{ can_edit }}
+              created_at: "{{ created_at }}"
+              data_source_id: "{{ data_source_id }}"
+              description: "{{ description }}"
+              id: "{{ id }}"
+              is_archived: {{ is_archived }}
+              is_draft: {{ is_draft }}
+              is_favorite: {{ is_favorite }}
+              is_safe: {{ is_safe }}
+              last_modified_by:
+                email: "{{ email }}"
+                id: {{ id }}
+                name: "{{ name }}"
+              last_modified_by_id: {{ last_modified_by_id }}
+              latest_query_data_id: "{{ latest_query_data_id }}"
+              name: "{{ name }}"
+              options:
+                catalog: "{{ catalog }}"
+                moved_to_trash_at: "{{ moved_to_trash_at }}"
+                parameters:
+                  - enumOptions: "{{ enumOptions }}"
+                    multiValuesOptions:
+                      prefix: "{{ prefix }}"
+                      separator: "{{ separator }}"
+                      suffix: "{{ suffix }}"
+                    name: "{{ name }}"
+                    queryId: "{{ queryId }}"
+                    title: "{{ title }}"
+                    type: "{{ type }}"
+                    value: "{{ value }}"
+                schema: "{{ schema }}"
+              parent: "{{ parent }}"
+              permission_tier: "{{ permission_tier }}"
+              query: "{{ query }}"
+              query_hash: "{{ query_hash }}"
+              run_as_role: "{{ run_as_role }}"
+              tags:
+                - "{{ tags }}"
+              updated_at: "{{ updated_at }}"
+              user:
+                email: "{{ email }}"
+                id: {{ id }}
+                name: "{{ name }}"
+              user_id: {{ user_id }}
+              visualizations:
+                - created_at: "{{ created_at }}"
+                  description: "{{ description }}"
+                  id: "{{ id }}"
+                  name: "{{ name }}"
+                  options: "{{ options }}"
+                  query:
+                    can_edit: {{ can_edit }}
+                    created_at: "{{ created_at }}"
+                    data_source_id: "{{ data_source_id }}"
+                    description: "{{ description }}"
+                    id: "{{ id }}"
+                    is_archived: {{ is_archived }}
+                    is_draft: {{ is_draft }}
+                    is_favorite: {{ is_favorite }}
+                    is_safe: {{ is_safe }}
+                    last_modified_by: "{{ last_modified_by }}"
+                    last_modified_by_id: {{ last_modified_by_id }}
+                    latest_query_data_id: "{{ latest_query_data_id }}"
+                    name: "{{ name }}"
+                    options: "{{ options }}"
+                    parent: "{{ parent }}"
+                    permission_tier: "{{ permission_tier }}"
+                    query: "{{ query }}"
+                    query_hash: "{{ query_hash }}"
+                    run_as_role: "{{ run_as_role }}"
+                    tags: "{{ tags }}"
+                    updated_at: "{{ updated_at }}"
+                    user: "{{ user }}"
+                    user_id: {{ user_id }}
+                    visualizations: "{{ visualizations }}"
+                  type: "{{ type }}"
+                  updated_at: "{{ updated_at }}"
+            type: "{{ type }}"
+            updated_at: "{{ updated_at }}"
     - name: type
-      value: string
+      value: "{{ type }}"
       description: |
         The type of visualization: chart, table, pivot table, and so on.
     - name: updated_at
-      value: string
+      value: "{{ updated_at }}"
       description: |
-        :returns: :class:`LegacyVisualization`
+        :returns: :class:\`LegacyVisualization\`
     - name: query_id
-      value: string
+      value: "{{ query_id }}"
       description: |
         The identifier returned by :method:queries/create
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

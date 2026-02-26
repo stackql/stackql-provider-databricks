@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -369,38 +370,42 @@ model
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: logged_models
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the logged_models resource.
     - name: experiment_id
-      value: string
+      value: "{{ experiment_id }}"
       description: |
         The ID of the experiment that owns the model.
     - name: model_type
-      value: string
+      value: "{{ model_type }}"
       description: |
-        The type of the model, such as ``"Agent"``, ``"Classifier"``, ``"LLM"``.
+        The type of the model, such as \`\`"Agent"\`\`, \`\`"Classifier"\`\`, \`\`"LLM"\`\`.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The name of the model (optional). If not specified one will be generated.
     - name: params
-      value: string
       description: |
         Parameters attached to the model.
+      value:
+        - key: "{{ key }}"
+          value: "{{ value }}"
     - name: source_run_id
-      value: string
+      value: "{{ source_run_id }}"
       description: |
         The ID of the run that created the model.
     - name: tags
-      value: string
       description: |
         Tags attached to the model.
-```
+      value:
+        - key: "{{ key }}"
+          value: "{{ value }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -493,7 +498,7 @@ EXEC databricks_workspace.ml.logged_models.search
 "datasets": "{{ datasets }}", 
 "experiment_ids": "{{ experiment_ids }}", 
 "filter": "{{ filter }}", 
-"max_results": "{{ max_results }}", 
+"max_results": {{ max_results }}, 
 "order_by": "{{ order_by }}", 
 "page_token": "{{ page_token }}"
 }'

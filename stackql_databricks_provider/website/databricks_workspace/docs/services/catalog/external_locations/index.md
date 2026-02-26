@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -248,7 +249,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
   },
   {
     "name": "owner",
@@ -486,7 +487,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
   },
   {
     "name": "owner",
@@ -595,22 +596,22 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Force deletion even if there are dependent external tables or mounts.</td>
 </tr>
 <tr id="parameter-include_browse">
     <td><CopyableCode code="include_browse" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include external locations in the response for which the principal can only access selective metadata for</td>
 </tr>
 <tr id="parameter-include_unbound">
     <td><CopyableCode code="include_unbound" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include external locations not bound to the workspace. Effective only if the user has permission to update the location–workspace binding.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of external locations to return. If not set, all the external locations are returned (not recommended). - when set to a value greater than 0, the page length is the minimum of this value and a server configured value; - when set to 0, the page length is set to a server configured value (recommended); - when set to a value less than 0, an invalid parameter error is returned;</td>
 </tr>
 <tr id="parameter-page_token">
@@ -729,12 +730,12 @@ SELECT
 '{{ url }}' /* required */,
 '{{ credential_name }}' /* required */,
 '{{ comment }}',
-'{{ enable_file_events }}',
+{{ enable_file_events }},
 '{{ encryption_details }}',
-'{{ fallback }}',
+{{ fallback }},
 '{{ file_event_queue }}',
-'{{ read_only }}',
-'{{ skip_validation }}',
+{{ read_only }},
+{{ skip_validation }},
 '{{ deployment_name }}'
 RETURNING
 name,
@@ -760,52 +761,77 @@ url
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: external_locations
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the external_locations resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Name of the external location.
     - name: url
-      value: string
+      value: "{{ url }}"
       description: |
         Path URL of the external location.
     - name: credential_name
-      value: string
+      value: "{{ credential_name }}"
       description: |
         Name of the storage credential used with this location.
     - name: comment
-      value: string
+      value: "{{ comment }}"
       description: |
         User-provided free-form text description.
     - name: enable_file_events
-      value: string
+      value: {{ enable_file_events }}
       description: |
-        Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events.
+        Whether to enable file events on this external location. Default to \`true\`. Set to \`false\` to disable file events.
     - name: encryption_details
-      value: string
       description: |
         :param fallback: bool (optional) Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient.
+      value:
+        sse_encryption_details:
+          algorithm: "{{ algorithm }}"
+          aws_kms_key_arn: "{{ aws_kms_key_arn }}"
     - name: fallback
-      value: string
+      value: {{ fallback }}
     - name: file_event_queue
-      value: string
       description: |
-        File event queue settings. If `enable_file_events` is not `false`, must be defined and have exactly one of the documented properties.
+        File event queue settings. If \`enable_file_events\` is not \`false\`, must be defined and have exactly one of the documented properties.
+      value:
+        managed_aqs:
+          managed_resource_id: "{{ managed_resource_id }}"
+          queue_url: "{{ queue_url }}"
+          resource_group: "{{ resource_group }}"
+          subscription_id: "{{ subscription_id }}"
+        managed_pubsub:
+          managed_resource_id: "{{ managed_resource_id }}"
+          subscription_name: "{{ subscription_name }}"
+        managed_sqs:
+          managed_resource_id: "{{ managed_resource_id }}"
+          queue_url: "{{ queue_url }}"
+        provided_aqs:
+          managed_resource_id: "{{ managed_resource_id }}"
+          queue_url: "{{ queue_url }}"
+          resource_group: "{{ resource_group }}"
+          subscription_id: "{{ subscription_id }}"
+        provided_pubsub:
+          managed_resource_id: "{{ managed_resource_id }}"
+          subscription_name: "{{ subscription_name }}"
+        provided_sqs:
+          managed_resource_id: "{{ managed_resource_id }}"
+          queue_url: "{{ queue_url }}"
     - name: read_only
-      value: string
+      value: {{ read_only }}
       description: |
         Indicates whether the external location is read-only.
     - name: skip_validation
-      value: string
+      value: {{ skip_validation }}
       description: |
         Skips validation of the storage credential associated with the external location.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -827,16 +853,16 @@ UPDATE databricks_workspace.catalog.external_locations
 SET 
 comment = '{{ comment }}',
 credential_name = '{{ credential_name }}',
-enable_file_events = '{{ enable_file_events }}',
+enable_file_events = {{ enable_file_events }},
 encryption_details = '{{ encryption_details }}',
-fallback = '{{ fallback }}',
+fallback = {{ fallback }},
 file_event_queue = '{{ file_event_queue }}',
-force = '{{ force }}',
+force = {{ force }},
 isolation_mode = '{{ isolation_mode }}',
 new_name = '{{ new_name }}',
 owner = '{{ owner }}',
-read_only = '{{ read_only }}',
-skip_validation = '{{ skip_validation }}',
+read_only = {{ read_only }},
+skip_validation = {{ skip_validation }},
 url = '{{ url }}'
 WHERE 
 name = '{{ name }}' --required

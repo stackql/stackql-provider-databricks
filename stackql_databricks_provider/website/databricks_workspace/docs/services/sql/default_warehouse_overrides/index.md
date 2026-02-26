@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -174,17 +175,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>Required. Field mask specifying which fields to update. Only the fields specified in the mask will be updated. Use "*" to update all fields. When allow_missing is true, this field is ignored and all fields are applied.</td>
 </tr>
 <tr id="parameter-allow_missing">
     <td><CopyableCode code="allow_missing" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>If set to true, and the override is not found, a new override will be created. In this situation, `update_mask` is ignored and all fields are applied. Defaults to false.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The maximum number of overrides to return. The service may return fewer than this value. If unspecified, at most 100 overrides will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -273,21 +274,25 @@ type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: default_warehouse_overrides
   props:
     - name: default_warehouse_override_id
-      value: string
+      value: "{{ default_warehouse_override_id }}"
       description: Required parameter for the default_warehouse_overrides resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the default_warehouse_overrides resource.
     - name: default_warehouse_override
-      value: string
       description: |
         Required. The default warehouse override to create.
-```
+      value:
+        type: "{{ type }}"
+        default_warehouse_override_id: "{{ default_warehouse_override_id }}"
+        name: "{{ name }}"
+        warehouse_id: "{{ warehouse_id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -313,7 +318,7 @@ name = '{{ name }}' --required
 AND update_mask = '{{ update_mask }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
 AND default_warehouse_override = '{{ default_warehouse_override }}' --required
-AND allow_missing = '{{ allow_missing}}'
+AND allow_missing = {{ allow_missing}}
 RETURNING
 name,
 default_warehouse_override_id,

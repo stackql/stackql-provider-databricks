@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -276,7 +277,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param page_token: str (optional)</td>
 </tr>
 <tr id="parameter-page_token">
@@ -367,18 +368,32 @@ id
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: provider_providers
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the provider_providers resource.
     - name: provider
-      value: string
       description: |
-        :returns: :class:`CreateProviderResponse`
-```
+        :returns: :class:\`CreateProviderResponse\`
+      value:
+        name: "{{ name }}"
+        business_contact_email: "{{ business_contact_email }}"
+        term_of_service_link: "{{ term_of_service_link }}"
+        privacy_policy_link: "{{ privacy_policy_link }}"
+        company_website_link: "{{ company_website_link }}"
+        dark_mode_icon_file_id: "{{ dark_mode_icon_file_id }}"
+        dark_mode_icon_file_path: "{{ dark_mode_icon_file_path }}"
+        description: "{{ description }}"
+        icon_file_id: "{{ icon_file_id }}"
+        icon_file_path: "{{ icon_file_path }}"
+        id: "{{ id }}"
+        is_featured: {{ is_featured }}
+        published_by: "{{ published_by }}"
+        support_contact_email: "{{ support_contact_email }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

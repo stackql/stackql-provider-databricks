@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -984,7 +985,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "authentication_method",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
               },
               {
                 "name": "model_name",
@@ -2748,7 +2749,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "authentication_method",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
               },
               {
                 "name": "model_name",
@@ -4709,7 +4710,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "authentication_method",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
               },
               {
                 "name": "model_name",
@@ -5473,42 +5474,42 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-active_only">
     <td><CopyableCode code="active_only" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>If active_only is `true`, only active runs are included in the results; otherwise, lists both active and completed runs. An active run is a run in the `QUEUED`, `PENDING`, `RUNNING`, or `TERMINATING`. This field cannot be `true` when completed_only is `true`.</td>
 </tr>
 <tr id="parameter-completed_only">
     <td><CopyableCode code="completed_only" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>If completed_only is `true`, only completed runs are included in the results; otherwise, lists both active and completed runs. This field cannot be `true` when active_only is `true`.</td>
 </tr>
 <tr id="parameter-expand_tasks">
     <td><CopyableCode code="expand_tasks" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include task and cluster details in the response. Note that only the first 100 elements will be shown. Use :method:jobs/getrun to paginate through all tasks and clusters.</td>
 </tr>
 <tr id="parameter-include_history">
     <td><CopyableCode code="include_history" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include the repair history in the response.</td>
 </tr>
 <tr id="parameter-include_resolved_values">
     <td><CopyableCode code="include_resolved_values" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include resolved parameter values in the response.</td>
 </tr>
 <tr id="parameter-job_id">
     <td><CopyableCode code="job_id" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The job for which to list runs. If omitted, the Jobs service lists runs from all jobs.</td>
 </tr>
 <tr id="parameter-limit">
     <td><CopyableCode code="limit" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The number of runs to return. This value must be greater than 0 and less than 25. The default value is 20. If a request specifies a limit of 0, the service instead uses the maximum limit.</td>
 </tr>
 <tr id="parameter-offset">
     <td><CopyableCode code="offset" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The offset of the first run to return, relative to the most recent run. Deprecated since June 2023. Use `page_token` to iterate through the pages instead.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -5523,12 +5524,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-start_time_from">
     <td><CopyableCode code="start_time_from" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Show runs that started _at or after_ this value. The value must be a UTC timestamp in milliseconds. Can be combined with _start_time_to_ to filter by a time range.</td>
 </tr>
 <tr id="parameter-start_time_to">
     <td><CopyableCode code="start_time_to" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Show runs that started _at or before_ this value. The value must be a UTC timestamp in milliseconds. Can be combined with _start_time_from_ to filter by a time range.</td>
 </tr>
 <tr id="parameter-views_to_export">
@@ -5702,7 +5703,7 @@ SELECT
 '{{ run_as }}',
 '{{ run_name }}',
 '{{ tasks }}',
-'{{ timeout_seconds }}',
+{{ timeout_seconds }},
 '{{ usage_policy_id }}',
 '{{ webhook_notifications }}',
 '{{ deployment_name }}'
@@ -5748,70 +5749,503 @@ trigger_info
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: job_runs
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the job_runs resource.
     - name: access_control_list
-      value: string
       description: |
         List of permissions to set on the job.
+      value:
+        - group_name: "{{ group_name }}"
+          permission_level: "{{ permission_level }}"
+          service_principal_name: "{{ service_principal_name }}"
+          user_name: "{{ user_name }}"
     - name: budget_policy_id
-      value: string
+      value: "{{ budget_policy_id }}"
       description: |
         The user specified id of the budget policy to use for this one-time run. If not specified, the run will be not be attributed to any budget policy.
     - name: email_notifications
-      value: string
       description: |
         An optional set of email addresses notified when the run begins or completes.
+      value:
+        no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+        on_duration_warning_threshold_exceeded:
+          - "{{ on_duration_warning_threshold_exceeded }}"
+        on_failure:
+          - "{{ on_failure }}"
+        on_start:
+          - "{{ on_start }}"
+        on_streaming_backlog_exceeded:
+          - "{{ on_streaming_backlog_exceeded }}"
+        on_success:
+          - "{{ on_success }}"
     - name: environments
-      value: string
       description: |
         A list of task execution environment specifications that can be referenced by tasks of this run.
+      value:
+        - environment_key: "{{ environment_key }}"
+          spec: "{{ spec }}"
     - name: git_source
-      value: string
       description: |
-        An optional specification for a remote Git repository containing the source code used by tasks. Version-controlled source code is supported by notebook, dbt, Python script, and SQL File tasks. If `git_source` is set, these tasks retrieve the file from the remote repository by default. However, this behavior can be overridden by setting `source` to `WORKSPACE` on the task. Note: dbt and SQL File tasks support only version-controlled sources. If dbt or SQL File tasks are used, `git_source` must be defined on the job.
+        An optional specification for a remote Git repository containing the source code used by tasks. Version-controlled source code is supported by notebook, dbt, Python script, and SQL File tasks. If \`git_source\` is set, these tasks retrieve the file from the remote repository by default. However, this behavior can be overridden by setting \`source\` to \`WORKSPACE\` on the task. Note: dbt and SQL File tasks support only version-controlled sources. If dbt or SQL File tasks are used, \`git_source\` must be defined on the job.
+      value:
+        git_url: "{{ git_url }}"
+        git_provider: "{{ git_provider }}"
+        git_branch: "{{ git_branch }}"
+        git_commit: "{{ git_commit }}"
+        git_snapshot:
+          used_commit: "{{ used_commit }}"
+        git_tag: "{{ git_tag }}"
+        job_source:
+          job_config_path: "{{ job_config_path }}"
+          import_from_git_branch: "{{ import_from_git_branch }}"
+          dirty_state: "{{ dirty_state }}"
     - name: health
-      value: string
       description: |
         :param idempotency_token: str (optional) An optional token that can be used to guarantee the idempotency of job run requests. If a run with the provided token already exists, the request does not create a new run but returns the ID of the existing run instead. If a run with the provided token is deleted, an error is returned. If you specify the idempotency token, upon failure you can retry until the request succeeds. Databricks guarantees that exactly one run is launched with that idempotency token. This token must have at most 64 characters. For more information, see [How to ensure idempotency for jobs]. [How to ensure idempotency for jobs]: https://kb.databricks.com/jobs/jobs-idempotency.html
+      value:
+        rules:
+          - metric: "{{ metric }}"
+            op: "{{ op }}"
+            value: {{ value }}
     - name: idempotency_token
-      value: string
+      value: "{{ idempotency_token }}"
     - name: notification_settings
-      value: string
       description: |
-        Optional notification settings that are used when sending notifications to each of the `email_notifications` and `webhook_notifications` for this run.
+        Optional notification settings that are used when sending notifications to each of the \`email_notifications\` and \`webhook_notifications\` for this run.
+      value:
+        no_alert_for_canceled_runs: {{ no_alert_for_canceled_runs }}
+        no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
     - name: queue
-      value: string
       description: |
         The queue settings of the one-time run.
+      value:
+        enabled: {{ enabled }}
     - name: run_as
-      value: string
       description: |
         Specifies the user or service principal that the job runs as. If not specified, the job runs as the user who submits the request.
+      value:
+        group_name: "{{ group_name }}"
+        service_principal_name: "{{ service_principal_name }}"
+        user_name: "{{ user_name }}"
     - name: run_name
-      value: string
+      value: "{{ run_name }}"
       description: |
-        An optional name for the run. The default value is `Untitled`.
+        An optional name for the run. The default value is \`Untitled\`.
     - name: tasks
-      value: string
       description: |
-        :param timeout_seconds: int (optional) An optional timeout applied to each run of this job. A value of `0` means no timeout.
+        :param timeout_seconds: int (optional) An optional timeout applied to each run of this job. A value of \`0\` means no timeout.
+      value:
+        - task_key: "{{ task_key }}"
+          clean_rooms_notebook_task:
+            clean_room_name: "{{ clean_room_name }}"
+            notebook_name: "{{ notebook_name }}"
+            etag: "{{ etag }}"
+            notebook_base_parameters: "{{ notebook_base_parameters }}"
+          compute:
+            hardware_accelerator: "{{ hardware_accelerator }}"
+          condition_task:
+            op: "{{ op }}"
+            left: "{{ left }}"
+            right: "{{ right }}"
+          dashboard_task:
+            dashboard_id: "{{ dashboard_id }}"
+            filters: "{{ filters }}"
+            subscription:
+              custom_subject: "{{ custom_subject }}"
+              paused: {{ paused }}
+              subscribers:
+                - destination_id: "{{ destination_id }}"
+                  user_name: "{{ user_name }}"
+            warehouse_id: "{{ warehouse_id }}"
+          dbt_cloud_task:
+            connection_resource_name: "{{ connection_resource_name }}"
+            dbt_cloud_job_id: {{ dbt_cloud_job_id }}
+          dbt_platform_task:
+            connection_resource_name: "{{ connection_resource_name }}"
+            dbt_platform_job_id: "{{ dbt_platform_job_id }}"
+          dbt_task:
+            commands:
+              - "{{ commands }}"
+            catalog: "{{ catalog }}"
+            profiles_directory: "{{ profiles_directory }}"
+            project_directory: "{{ project_directory }}"
+            schema: "{{ schema }}"
+            source: "{{ source }}"
+            warehouse_id: "{{ warehouse_id }}"
+          depends_on: "{{ depends_on }}"
+          description: "{{ description }}"
+          email_notifications:
+            no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+            on_duration_warning_threshold_exceeded:
+              - "{{ on_duration_warning_threshold_exceeded }}"
+            on_failure:
+              - "{{ on_failure }}"
+            on_start:
+              - "{{ on_start }}"
+            on_streaming_backlog_exceeded:
+              - "{{ on_streaming_backlog_exceeded }}"
+            on_success:
+              - "{{ on_success }}"
+          environment_key: "{{ environment_key }}"
+          existing_cluster_id: "{{ existing_cluster_id }}"
+          for_each_task:
+            inputs: "{{ inputs }}"
+            task:
+              task_key: "{{ task_key }}"
+              clean_rooms_notebook_task:
+                clean_room_name: "{{ clean_room_name }}"
+                notebook_name: "{{ notebook_name }}"
+                etag: "{{ etag }}"
+                notebook_base_parameters: "{{ notebook_base_parameters }}"
+              compute:
+                hardware_accelerator: "{{ hardware_accelerator }}"
+              condition_task:
+                op: "{{ op }}"
+                left: "{{ left }}"
+                right: "{{ right }}"
+              dashboard_task:
+                dashboard_id: "{{ dashboard_id }}"
+                filters: "{{ filters }}"
+                subscription:
+                  custom_subject: "{{ custom_subject }}"
+                  paused: {{ paused }}
+                  subscribers: "{{ subscribers }}"
+                warehouse_id: "{{ warehouse_id }}"
+              dbt_cloud_task:
+                connection_resource_name: "{{ connection_resource_name }}"
+                dbt_cloud_job_id: {{ dbt_cloud_job_id }}
+              dbt_platform_task:
+                connection_resource_name: "{{ connection_resource_name }}"
+                dbt_platform_job_id: "{{ dbt_platform_job_id }}"
+              dbt_task:
+                commands:
+                  - "{{ commands }}"
+                catalog: "{{ catalog }}"
+                profiles_directory: "{{ profiles_directory }}"
+                project_directory: "{{ project_directory }}"
+                schema: "{{ schema }}"
+                source: "{{ source }}"
+                warehouse_id: "{{ warehouse_id }}"
+              depends_on:
+                - task_key: "{{ task_key }}"
+                  outcome: "{{ outcome }}"
+              description: "{{ description }}"
+              disable_auto_optimization: {{ disable_auto_optimization }}
+              disabled: {{ disabled }}
+              email_notifications:
+                no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+                on_duration_warning_threshold_exceeded:
+                  - "{{ on_duration_warning_threshold_exceeded }}"
+                on_failure:
+                  - "{{ on_failure }}"
+                on_start:
+                  - "{{ on_start }}"
+                on_streaming_backlog_exceeded:
+                  - "{{ on_streaming_backlog_exceeded }}"
+                on_success:
+                  - "{{ on_success }}"
+              environment_key: "{{ environment_key }}"
+              existing_cluster_id: "{{ existing_cluster_id }}"
+              for_each_task:
+                inputs: "{{ inputs }}"
+                task:
+                  task_key: "{{ task_key }}"
+                  clean_rooms_notebook_task: "{{ clean_rooms_notebook_task }}"
+                  compute: "{{ compute }}"
+                  condition_task: "{{ condition_task }}"
+                  dashboard_task: "{{ dashboard_task }}"
+                  dbt_cloud_task: "{{ dbt_cloud_task }}"
+                  dbt_platform_task: "{{ dbt_platform_task }}"
+                  dbt_task: "{{ dbt_task }}"
+                  depends_on: "{{ depends_on }}"
+                  description: "{{ description }}"
+                  disable_auto_optimization: {{ disable_auto_optimization }}
+                  disabled: {{ disabled }}
+                  email_notifications: "{{ email_notifications }}"
+                  environment_key: "{{ environment_key }}"
+                  existing_cluster_id: "{{ existing_cluster_id }}"
+                  for_each_task: "{{ for_each_task }}"
+                  gen_ai_compute_task: "{{ gen_ai_compute_task }}"
+                  health: "{{ health }}"
+                  job_cluster_key: "{{ job_cluster_key }}"
+                  libraries: "{{ libraries }}"
+                  max_retries: {{ max_retries }}
+                  min_retry_interval_millis: {{ min_retry_interval_millis }}
+                  new_cluster: "{{ new_cluster }}"
+                  notebook_task: "{{ notebook_task }}"
+                  notification_settings: "{{ notification_settings }}"
+                  pipeline_task: "{{ pipeline_task }}"
+                  power_bi_task: "{{ power_bi_task }}"
+                  python_wheel_task: "{{ python_wheel_task }}"
+                  retry_on_timeout: {{ retry_on_timeout }}
+                  run_if: "{{ run_if }}"
+                  run_job_task: "{{ run_job_task }}"
+                  spark_jar_task: "{{ spark_jar_task }}"
+                  spark_python_task: "{{ spark_python_task }}"
+                  spark_submit_task: "{{ spark_submit_task }}"
+                  sql_task: "{{ sql_task }}"
+                  timeout_seconds: {{ timeout_seconds }}
+                  webhook_notifications: "{{ webhook_notifications }}"
+                concurrency: {{ concurrency }}
+              gen_ai_compute_task:
+                dl_runtime_image: "{{ dl_runtime_image }}"
+                command: "{{ command }}"
+                compute:
+                  num_gpus: {{ num_gpus }}
+                  gpu_node_pool_id: "{{ gpu_node_pool_id }}"
+                  gpu_type: "{{ gpu_type }}"
+                mlflow_experiment_name: "{{ mlflow_experiment_name }}"
+                source: "{{ source }}"
+                training_script_path: "{{ training_script_path }}"
+                yaml_parameters: "{{ yaml_parameters }}"
+                yaml_parameters_file_path: "{{ yaml_parameters_file_path }}"
+              health:
+                rules:
+                  - metric: "{{ metric }}"
+                    op: "{{ op }}"
+                    value: {{ value }}
+              job_cluster_key: "{{ job_cluster_key }}"
+              libraries: "{{ libraries }}"
+              max_retries: {{ max_retries }}
+              min_retry_interval_millis: {{ min_retry_interval_millis }}
+              new_cluster: "{{ new_cluster }}"
+              notebook_task:
+                notebook_path: "{{ notebook_path }}"
+                base_parameters: "{{ base_parameters }}"
+                source: "{{ source }}"
+                warehouse_id: "{{ warehouse_id }}"
+              notification_settings:
+                alert_on_last_attempt: {{ alert_on_last_attempt }}
+                no_alert_for_canceled_runs: {{ no_alert_for_canceled_runs }}
+                no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+              pipeline_task:
+                pipeline_id: "{{ pipeline_id }}"
+                full_refresh: {{ full_refresh }}
+              power_bi_task:
+                connection_resource_name: "{{ connection_resource_name }}"
+                power_bi_model:
+                  authentication_method: "{{ authentication_method }}"
+                  model_name: "{{ model_name }}"
+                  overwrite_existing: {{ overwrite_existing }}
+                  storage_mode: "{{ storage_mode }}"
+                  workspace_name: "{{ workspace_name }}"
+                refresh_after_update: {{ refresh_after_update }}
+                tables:
+                  - catalog: "{{ catalog }}"
+                    name: "{{ name }}"
+                    schema: "{{ schema }}"
+                    storage_mode: "{{ storage_mode }}"
+                warehouse_id: "{{ warehouse_id }}"
+              python_wheel_task:
+                package_name: "{{ package_name }}"
+                entry_point: "{{ entry_point }}"
+                named_parameters: "{{ named_parameters }}"
+                parameters:
+                  - "{{ parameters }}"
+              retry_on_timeout: {{ retry_on_timeout }}
+              run_if: "{{ run_if }}"
+              run_job_task:
+                job_id: {{ job_id }}
+                dbt_commands:
+                  - "{{ dbt_commands }}"
+                jar_params:
+                  - "{{ jar_params }}"
+                job_parameters: "{{ job_parameters }}"
+                notebook_params: "{{ notebook_params }}"
+                pipeline_params:
+                  full_refresh: {{ full_refresh }}
+                python_named_params: "{{ python_named_params }}"
+                python_params:
+                  - "{{ python_params }}"
+                spark_submit_params:
+                  - "{{ spark_submit_params }}"
+                sql_params: "{{ sql_params }}"
+              spark_jar_task:
+                jar_uri: "{{ jar_uri }}"
+                main_class_name: "{{ main_class_name }}"
+                parameters:
+                  - "{{ parameters }}"
+                run_as_repl: {{ run_as_repl }}
+              spark_python_task:
+                python_file: "{{ python_file }}"
+                parameters:
+                  - "{{ parameters }}"
+                source: "{{ source }}"
+              spark_submit_task:
+                parameters:
+                  - "{{ parameters }}"
+              sql_task:
+                warehouse_id: "{{ warehouse_id }}"
+                alert:
+                  alert_id: "{{ alert_id }}"
+                  pause_subscriptions: {{ pause_subscriptions }}
+                  subscriptions: "{{ subscriptions }}"
+                dashboard:
+                  dashboard_id: "{{ dashboard_id }}"
+                  custom_subject: "{{ custom_subject }}"
+                  pause_subscriptions: {{ pause_subscriptions }}
+                  subscriptions: "{{ subscriptions }}"
+                file:
+                  path: "{{ path }}"
+                  source: "{{ source }}"
+                parameters: "{{ parameters }}"
+                query:
+                  query_id: "{{ query_id }}"
+              timeout_seconds: {{ timeout_seconds }}
+              webhook_notifications:
+                on_duration_warning_threshold_exceeded:
+                  - id: "{{ id }}"
+                on_failure:
+                  - id: "{{ id }}"
+                on_start:
+                  - id: "{{ id }}"
+                on_streaming_backlog_exceeded:
+                  - id: "{{ id }}"
+                on_success:
+                  - id: "{{ id }}"
+            concurrency: {{ concurrency }}
+          gen_ai_compute_task:
+            dl_runtime_image: "{{ dl_runtime_image }}"
+            command: "{{ command }}"
+            compute:
+              num_gpus: {{ num_gpus }}
+              gpu_node_pool_id: "{{ gpu_node_pool_id }}"
+              gpu_type: "{{ gpu_type }}"
+            mlflow_experiment_name: "{{ mlflow_experiment_name }}"
+            source: "{{ source }}"
+            training_script_path: "{{ training_script_path }}"
+            yaml_parameters: "{{ yaml_parameters }}"
+            yaml_parameters_file_path: "{{ yaml_parameters_file_path }}"
+          health:
+            rules:
+              - metric: "{{ metric }}"
+                op: "{{ op }}"
+                value: {{ value }}
+          libraries: "{{ libraries }}"
+          new_cluster: "{{ new_cluster }}"
+          notebook_task:
+            notebook_path: "{{ notebook_path }}"
+            base_parameters: "{{ base_parameters }}"
+            source: "{{ source }}"
+            warehouse_id: "{{ warehouse_id }}"
+          notification_settings:
+            alert_on_last_attempt: {{ alert_on_last_attempt }}
+            no_alert_for_canceled_runs: {{ no_alert_for_canceled_runs }}
+            no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+          pipeline_task:
+            pipeline_id: "{{ pipeline_id }}"
+            full_refresh: {{ full_refresh }}
+          power_bi_task:
+            connection_resource_name: "{{ connection_resource_name }}"
+            power_bi_model:
+              authentication_method: "{{ authentication_method }}"
+              model_name: "{{ model_name }}"
+              overwrite_existing: {{ overwrite_existing }}
+              storage_mode: "{{ storage_mode }}"
+              workspace_name: "{{ workspace_name }}"
+            refresh_after_update: {{ refresh_after_update }}
+            tables:
+              - catalog: "{{ catalog }}"
+                name: "{{ name }}"
+                schema: "{{ schema }}"
+                storage_mode: "{{ storage_mode }}"
+            warehouse_id: "{{ warehouse_id }}"
+          python_wheel_task:
+            package_name: "{{ package_name }}"
+            entry_point: "{{ entry_point }}"
+            named_parameters: "{{ named_parameters }}"
+            parameters:
+              - "{{ parameters }}"
+          run_if: "{{ run_if }}"
+          run_job_task:
+            job_id: {{ job_id }}
+            dbt_commands:
+              - "{{ dbt_commands }}"
+            jar_params:
+              - "{{ jar_params }}"
+            job_parameters: "{{ job_parameters }}"
+            notebook_params: "{{ notebook_params }}"
+            pipeline_params:
+              full_refresh: {{ full_refresh }}
+            python_named_params: "{{ python_named_params }}"
+            python_params:
+              - "{{ python_params }}"
+            spark_submit_params:
+              - "{{ spark_submit_params }}"
+            sql_params: "{{ sql_params }}"
+          spark_jar_task:
+            jar_uri: "{{ jar_uri }}"
+            main_class_name: "{{ main_class_name }}"
+            parameters:
+              - "{{ parameters }}"
+            run_as_repl: {{ run_as_repl }}
+          spark_python_task:
+            python_file: "{{ python_file }}"
+            parameters:
+              - "{{ parameters }}"
+            source: "{{ source }}"
+          spark_submit_task:
+            parameters:
+              - "{{ parameters }}"
+          sql_task:
+            warehouse_id: "{{ warehouse_id }}"
+            alert:
+              alert_id: "{{ alert_id }}"
+              pause_subscriptions: {{ pause_subscriptions }}
+              subscriptions:
+                - destination_id: "{{ destination_id }}"
+                  user_name: "{{ user_name }}"
+            dashboard:
+              dashboard_id: "{{ dashboard_id }}"
+              custom_subject: "{{ custom_subject }}"
+              pause_subscriptions: {{ pause_subscriptions }}
+              subscriptions:
+                - destination_id: "{{ destination_id }}"
+                  user_name: "{{ user_name }}"
+            file:
+              path: "{{ path }}"
+              source: "{{ source }}"
+            parameters: "{{ parameters }}"
+            query:
+              query_id: "{{ query_id }}"
+          timeout_seconds: {{ timeout_seconds }}
+          webhook_notifications:
+            on_duration_warning_threshold_exceeded:
+              - id: "{{ id }}"
+            on_failure:
+              - id: "{{ id }}"
+            on_start:
+              - id: "{{ id }}"
+            on_streaming_backlog_exceeded:
+              - id: "{{ id }}"
+            on_success:
+              - id: "{{ id }}"
     - name: timeout_seconds
-      value: string
+      value: {{ timeout_seconds }}
     - name: usage_policy_id
-      value: string
+      value: "{{ usage_policy_id }}"
       description: |
         The user specified id of the usage policy to use for this one-time run. If not specified, a default usage policy may be applied when creating or modifying the job.
     - name: webhook_notifications
-      value: string
       description: |
         A collection of system notification IDs to notify when the run begins or completes.
-```
+      value:
+        on_duration_warning_threshold_exceeded:
+          - id: "{{ id }}"
+        on_failure:
+          - id: "{{ id }}"
+        on_start:
+          - id: "{{ id }}"
+        on_streaming_backlog_exceeded:
+          - id: "{{ id }}"
+        on_success:
+          - id: "{{ id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -5857,8 +6291,8 @@ EXEC databricks_workspace.jobs.job_runs.cancel_all
 @deployment_name='{{ deployment_name }}' --required 
 @@json=
 '{
-"all_queued_runs": "{{ all_queued_runs }}", 
-"job_id": "{{ job_id }}"
+"all_queued_runs": {{ all_queued_runs }}, 
+"job_id": {{ job_id }}
 }'
 ;
 ```
@@ -5902,14 +6336,14 @@ EXEC databricks_workspace.jobs.job_runs.repair
 "dbt_commands": "{{ dbt_commands }}", 
 "jar_params": "{{ jar_params }}", 
 "job_parameters": "{{ job_parameters }}", 
-"latest_repair_id": "{{ latest_repair_id }}", 
+"latest_repair_id": {{ latest_repair_id }}, 
 "notebook_params": "{{ notebook_params }}", 
 "performance_target": "{{ performance_target }}", 
 "pipeline_params": "{{ pipeline_params }}", 
 "python_named_params": "{{ python_named_params }}", 
 "python_params": "{{ python_params }}", 
-"rerun_all_failed_tasks": "{{ rerun_all_failed_tasks }}", 
-"rerun_dependent_tasks": "{{ rerun_dependent_tasks }}", 
+"rerun_all_failed_tasks": {{ rerun_all_failed_tasks }}, 
+"rerun_dependent_tasks": {{ rerun_dependent_tasks }}, 
 "rerun_tasks": "{{ rerun_tasks }}", 
 "spark_submit_params": "{{ spark_submit_params }}", 
 "sql_params": "{{ sql_params }}"

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -168,7 +169,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-notebooks_modified_after">
     <td><CopyableCode code="notebooks_modified_after" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>UTC timestamp in milliseconds</td>
 </tr>
 </tbody>
@@ -227,7 +228,7 @@ EXEC databricks_workspace.workspace.workspace.delete
 @@json=
 '{
 "path": "{{ path }}", 
-"recursive": "{{ recursive }}"
+"recursive": {{ recursive }}
 }'
 ;
 ```
@@ -257,7 +258,7 @@ EXEC databricks_workspace.workspace.workspace.import
 "content": "{{ content }}", 
 "format": "{{ format }}", 
 "language": "{{ language }}", 
-"overwrite": "{{ overwrite }}"
+"overwrite": {{ overwrite }}
 }'
 ;
 ```

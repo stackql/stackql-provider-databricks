@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -283,12 +284,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-include_creator_username">
     <td><CopyableCode code="include_creator_username" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>:param page_size: int (optional)</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td></td>
 </tr>
 <tr id="parameter-page_token">
@@ -383,7 +384,7 @@ user_authorized_scopes,
 account_id
 )
 SELECT 
-'{{ confidential }}',
+{{ confidential }},
 '{{ name }}',
 '{{ redirect_urls }}',
 '{{ scopes }}',
@@ -399,38 +400,45 @@ client_secret
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: custom_app_integration
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the custom_app_integration resource.
     - name: confidential
-      value: string
+      value: {{ confidential }}
       description: |
         This field indicates whether an OAuth client secret is required to authenticate this client.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Name of the custom OAuth app
     - name: redirect_urls
-      value: string
+      value:
+        - "{{ redirect_urls }}"
       description: |
         List of OAuth redirect urls
     - name: scopes
-      value: string
+      value:
+        - "{{ scopes }}"
       description: |
         OAuth scopes granted to the application. Supported scopes: all-apis, sql, offline_access, openid, profile, email.
     - name: token_access_policy
-      value: string
       description: |
         Token access policy
+      value:
+        absolute_session_lifetime_in_minutes: {{ absolute_session_lifetime_in_minutes }}
+        access_token_ttl_in_minutes: {{ access_token_ttl_in_minutes }}
+        enable_single_use_refresh_tokens: {{ enable_single_use_refresh_tokens }}
+        refresh_token_ttl_in_minutes: {{ refresh_token_ttl_in_minutes }}
     - name: user_authorized_scopes
-      value: string
+      value:
+        - "{{ user_authorized_scopes }}"
       description: |
         Scopes that will need to be consented by end user to mint the access token. If the user does not authorize the access token will not be minted. Must be a subset of scopes.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

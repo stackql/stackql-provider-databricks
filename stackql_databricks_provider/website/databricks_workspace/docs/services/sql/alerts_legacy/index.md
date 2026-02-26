@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -684,7 +685,7 @@ SELECT
 '{{ options }}' /* required */,
 '{{ query_id }}' /* required */,
 '{{ parent }}',
-'{{ rearm }}',
+{{ rearm }},
 '{{ deployment_name }}'
 RETURNING
 id,
@@ -703,34 +704,41 @@ user
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: alerts_legacy
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the alerts_legacy resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Name of the alert.
     - name: options
-      value: string
       description: |
         Alert configuration options.
+      value:
+        column: "{{ column }}"
+        op: "{{ op }}"
+        value: "{{ value }}"
+        custom_body: "{{ custom_body }}"
+        custom_subject: "{{ custom_subject }}"
+        empty_result_state: "{{ empty_result_state }}"
+        muted: {{ muted }}
     - name: query_id
-      value: string
+      value: "{{ query_id }}"
       description: |
         Query ID.
     - name: parent
-      value: string
+      value: "{{ parent }}"
       description: |
         The identifier of the workspace folder containing the object.
     - name: rearm
-      value: string
+      value: {{ rearm }}
       description: |
-        Number of seconds after being triggered before the alert rearms itself and can be triggered again. If `null`, alert will never be triggered again.
-```
+        Number of seconds after being triggered before the alert rearms itself and can be triggered again. If \`null\`, alert will never be triggered again.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -753,7 +761,7 @@ SET
 name = '{{ name }}',
 options = '{{ options }}',
 query_id = '{{ query_id }}',
-rearm = '{{ rearm }}'
+rearm = {{ rearm }}
 WHERE 
 alert_id = '{{ alert_id }}' --required
 AND deployment_name = '{{ deployment_name }}' --required

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -494,22 +495,22 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-function_max_results">
     <td><CopyableCode code="function_max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of functions to return.</td>
 </tr>
 <tr id="parameter-notebook_max_results">
     <td><CopyableCode code="notebook_max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of notebooks to return.</td>
 </tr>
 <tr id="parameter-table_max_results">
     <td><CopyableCode code="table_max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of tables to return.</td>
 </tr>
 <tr id="parameter-volume_max_results">
     <td><CopyableCode code="volume_max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of volumes to return.</td>
 </tr>
 </tbody>

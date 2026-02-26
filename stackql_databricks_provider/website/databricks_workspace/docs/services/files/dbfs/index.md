@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -178,12 +179,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-length">
     <td><CopyableCode code="length" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The number of bytes to read starting from the offset. This has a limit of 1 MB, and a default value of 0.5 MB.</td>
 </tr>
 <tr id="parameter-offset">
     <td><CopyableCode code="offset" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The offset to read from in bytes.</td>
 </tr>
 </tbody>
@@ -237,7 +238,7 @@ deployment_name
 )
 SELECT 
 '{{ path }}' /* required */,
-'{{ overwrite }}',
+{{ overwrite }},
 '{{ deployment_name }}'
 RETURNING
 handle
@@ -246,22 +247,22 @@ handle
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dbfs
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the dbfs resource.
     - name: path
-      value: string
+      value: "{{ path }}"
       description: |
         The path of the new file. The path should be the absolute DBFS path.
     - name: overwrite
-      value: string
+      value: {{ overwrite }}
       description: |
         The flag that specifies whether to overwrite existing file/files.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -381,7 +382,7 @@ EXEC databricks_workspace.files.dbfs.put
 '{
 "path": "{{ path }}", 
 "contents": "{{ contents }}", 
-"overwrite": "{{ overwrite }}"
+"overwrite": {{ overwrite }}
 }'
 ;
 ```

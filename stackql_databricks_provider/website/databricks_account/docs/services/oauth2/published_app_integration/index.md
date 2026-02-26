@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -233,7 +234,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param page_token: str (optional)</td>
 </tr>
 <tr id="parameter-page_token">
@@ -323,22 +324,26 @@ integration_id
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: published_app_integration
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the published_app_integration resource.
     - name: app_id
-      value: string
+      value: "{{ app_id }}"
       description: |
         App id of the OAuth published app integration. For example power-bi, tableau-deskop
     - name: token_access_policy
-      value: string
       description: |
         Token access policy
-```
+      value:
+        absolute_session_lifetime_in_minutes: {{ absolute_session_lifetime_in_minutes }}
+        access_token_ttl_in_minutes: {{ access_token_ttl_in_minutes }}
+        enable_single_use_refresh_tokens: {{ enable_single_use_refresh_tokens }}
+        refresh_token_ttl_in_minutes: {{ refresh_token_ttl_in_minutes }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -323,7 +324,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of experiments desired. If `max_results` is unspecified, return all experiments. If `max_results` is too large, it'll be automatically capped at 1000. Callers of this endpoint are encouraged to pass max_results explicitly and leverage page_token to iterate through experiments.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -431,26 +432,28 @@ experiment_id
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: experiments
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the experiments resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Experiment name.
     - name: artifact_location
-      value: string
+      value: "{{ artifact_location }}"
       description: |
         Location where all artifacts for the experiment are stored. If not provided, the remote server will select an appropriate default.
     - name: tags
-      value: string
       description: |
         A collection of tags to set on the experiment. Maximum tag size and number of tags per request depends on the storage backend. All storage backends are guaranteed to support tag keys up to 250 bytes in size and tag values up to 5000 bytes in size. All storage backends are also guaranteed to support up to 20 tags per request.
-```
+      value:
+        - key: "{{ key }}"
+          value: "{{ value }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -505,7 +508,7 @@ EXEC databricks_workspace.ml.experiments.search
 @@json=
 '{
 "filter": "{{ filter }}", 
-"max_results": "{{ max_results }}", 
+"max_results": {{ max_results }}, 
 "order_by": "{{ order_by }}", 
 "page_token": "{{ page_token }}", 
 "view_type": "{{ view_type }}"

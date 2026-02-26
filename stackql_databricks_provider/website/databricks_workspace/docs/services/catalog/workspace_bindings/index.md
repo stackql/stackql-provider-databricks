@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -147,7 +148,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of workspace bindings to return. - When set to 0, the page length is set to a server configured value (recommended); - When set to a value greater than 0, the page length is the minimum of this value and a server configured value; - When set to a value less than 0, an invalid parameter error is returned; - If not set, all the workspace bindings are returned (not recommended).</td>
 </tr>
 <tr id="parameter-page_token">

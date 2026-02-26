@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -185,7 +186,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
   },
   {
     "name": "owner",
@@ -360,7 +361,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
   },
   {
     "name": "owner",
@@ -476,17 +477,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Force an update even if there are dependent external locations or external tables (when purpose is **STORAGE**) or dependent services (when purpose is **SERVICE**).</td>
 </tr>
 <tr id="parameter-include_unbound">
     <td><CopyableCode code="include_unbound" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include credentials not bound to the workspace. Effective only if the user has permission to update the credential–workspace binding.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of storage credentials to return. If not set, all the storage credentials are returned (not recommended). - when set to a value greater than 0, the page length is the minimum of this value and a server configured value; - when set to 0, the page length is set to a server configured value (recommended); - when set to a value less than 0, an invalid parameter error is returned;</td>
 </tr>
 <tr id="parameter-page_token">
@@ -605,8 +606,8 @@ SELECT
 '{{ cloudflare_api_token }}',
 '{{ comment }}',
 '{{ databricks_gcp_service_account }}',
-'{{ read_only }}',
-'{{ skip_validation }}',
+{{ read_only }},
+{{ skip_validation }},
 '{{ deployment_name }}'
 RETURNING
 id,
@@ -632,50 +633,59 @@ used_for_managed_storage
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: storage_credentials
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the storage_credentials resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The credential name. The name must be unique among storage and service credentials within the metastore.
     - name: aws_iam_role
-      value: string
       description: |
         The AWS IAM role configuration.
+      value:
+        role_arn: "{{ role_arn }}"
     - name: azure_managed_identity
-      value: string
       description: |
         The Azure managed identity configuration.
+      value:
+        access_connector_id: "{{ access_connector_id }}"
+        managed_identity_id: "{{ managed_identity_id }}"
     - name: azure_service_principal
-      value: string
       description: |
         The Azure service principal configuration.
+      value:
+        directory_id: "{{ directory_id }}"
+        application_id: "{{ application_id }}"
+        client_secret: "{{ client_secret }}"
     - name: cloudflare_api_token
-      value: string
       description: |
         The Cloudflare API token configuration.
+      value:
+        access_key_id: "{{ access_key_id }}"
+        secret_access_key: "{{ secret_access_key }}"
+        account_id: "{{ account_id }}"
     - name: comment
-      value: string
+      value: "{{ comment }}"
       description: |
         Comment associated with the credential.
     - name: databricks_gcp_service_account
-      value: string
+      value: "{{ databricks_gcp_service_account }}"
       description: |
         The Databricks managed GCP service account configuration.
     - name: read_only
-      value: string
+      value: {{ read_only }}
       description: |
         Whether the credential is usable only for read operations. Only applicable when purpose is **STORAGE**.
     - name: skip_validation
-      value: string
+      value: {{ skip_validation }}
       description: |
         Supplying true to this argument skips validation of the created credential.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -701,12 +711,12 @@ azure_service_principal = '{{ azure_service_principal }}',
 cloudflare_api_token = '{{ cloudflare_api_token }}',
 comment = '{{ comment }}',
 databricks_gcp_service_account = '{{ databricks_gcp_service_account }}',
-force = '{{ force }}',
+force = {{ force }},
 isolation_mode = '{{ isolation_mode }}',
 new_name = '{{ new_name }}',
 owner = '{{ owner }}',
-read_only = '{{ read_only }}',
-skip_validation = '{{ skip_validation }}'
+read_only = {{ read_only }},
+skip_validation = {{ skip_validation }}
 WHERE 
 name = '{{ name }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
@@ -780,7 +790,7 @@ EXEC databricks_workspace.catalog.storage_credentials.validate
 "cloudflare_api_token": "{{ cloudflare_api_token }}", 
 "databricks_gcp_service_account": "{{ databricks_gcp_service_account }}", 
 "external_location_name": "{{ external_location_name }}", 
-"read_only": "{{ read_only }}", 
+"read_only": {{ read_only }}, 
 "storage_credential_name": "{{ storage_credential_name }}", 
 "url": "{{ url }}"
 }'

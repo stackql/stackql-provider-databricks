@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -262,17 +263,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-ids">
     <td><CopyableCode code="ids" /></td>
-    <td><code>string</code></td>
+    <td><code>array</code></td>
     <td>:returns: :class:`BatchGetProvidersResponse`</td>
 </tr>
 <tr id="parameter-is_featured">
     <td><CopyableCode code="is_featured" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>:param page_size: int (optional)</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td></td>
 </tr>
 <tr id="parameter-page_token">

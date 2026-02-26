@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -682,17 +683,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-include_aliases">
     <td><CopyableCode code="include_aliases" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include aliases associated with the model version in the response</td>
 </tr>
 <tr id="parameter-include_browse">
     <td><CopyableCode code="include_browse" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include model versions in the response for which the principal can only access selective metadata for</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of model versions to return. If not set, the page length is set to a server configured value (100, as of 1/3/2024). - when set to a value greater than 0, the page length is the minimum of this value and a server configured value(1000, as of 1/3/2024); - when set to 0, the page length is set to a server configured value (100, as of 1/3/2024) (recommended); - when set to a value less than 0, an invalid parameter error is returned;</td>
 </tr>
 <tr id="parameter-page_token">
@@ -832,19 +833,19 @@ SET
 aliases = '{{ aliases }}',
 catalog_name = '{{ catalog_name }}',
 comment = '{{ comment }}',
-created_at = '{{ created_at }}',
+created_at = {{ created_at }},
 created_by = '{{ created_by }}',
 id = '{{ id }}',
 metastore_id = '{{ metastore_id }}',
 model_name = '{{ model_name }}',
 model_version_dependencies = '{{ model_version_dependencies }}',
 run_id = '{{ run_id }}',
-run_workspace_id = '{{ run_workspace_id }}',
+run_workspace_id = {{ run_workspace_id }},
 schema_name = '{{ schema_name }}',
 source = '{{ source }}',
 status = '{{ status }}',
 storage_location = '{{ storage_location }}',
-updated_at = '{{ updated_at }}',
+updated_at = {{ updated_at }},
 updated_by = '{{ updated_by }}'
 WHERE 
 full_name = '{{ full_name }}' --required

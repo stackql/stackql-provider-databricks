@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -398,18 +399,61 @@ unity_catalog_provisioning_state
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: online_tables
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the online_tables resource.
     - name: table
-      value: string
       description: |
         Specification of the online table to be created.
-```
+      value:
+        name: "{{ name }}"
+        spec:
+          perform_full_copy: {{ perform_full_copy }}
+          pipeline_id: "{{ pipeline_id }}"
+          primary_key_columns:
+            - "{{ primary_key_columns }}"
+          run_continuously: "{{ run_continuously }}"
+          run_triggered: "{{ run_triggered }}"
+          source_table_full_name: "{{ source_table_full_name }}"
+          timeseries_key: "{{ timeseries_key }}"
+        status:
+          continuous_update_status:
+            initial_pipeline_sync_progress:
+              estimated_completion_time_seconds: {{ estimated_completion_time_seconds }}
+              latest_version_currently_processing: {{ latest_version_currently_processing }}
+              sync_progress_completion: {{ sync_progress_completion }}
+              synced_row_count: {{ synced_row_count }}
+              total_row_count: {{ total_row_count }}
+            last_processed_commit_version: {{ last_processed_commit_version }}
+            timestamp: "{{ timestamp }}"
+          detailed_state: "{{ detailed_state }}"
+          failed_status:
+            last_processed_commit_version: {{ last_processed_commit_version }}
+            timestamp: "{{ timestamp }}"
+          message: "{{ message }}"
+          provisioning_status:
+            initial_pipeline_sync_progress:
+              estimated_completion_time_seconds: {{ estimated_completion_time_seconds }}
+              latest_version_currently_processing: {{ latest_version_currently_processing }}
+              sync_progress_completion: {{ sync_progress_completion }}
+              synced_row_count: {{ synced_row_count }}
+              total_row_count: {{ total_row_count }}
+          triggered_update_status:
+            last_processed_commit_version: {{ last_processed_commit_version }}
+            timestamp: "{{ timestamp }}"
+            triggered_update_progress:
+              estimated_completion_time_seconds: {{ estimated_completion_time_seconds }}
+              latest_version_currently_processing: {{ latest_version_currently_processing }}
+              sync_progress_completion: {{ sync_progress_completion }}
+              synced_row_count: {{ synced_row_count }}
+              total_row_count: {{ total_row_count }}
+        table_serving_url: "{{ table_serving_url }}"
+        unity_catalog_provisioning_state: "{{ unity_catalog_provisioning_state }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

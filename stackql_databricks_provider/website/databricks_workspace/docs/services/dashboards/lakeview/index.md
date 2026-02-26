@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -253,7 +254,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The number of dashboards to return per page.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -263,7 +264,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-show_trashed">
     <td><CopyableCode code="show_trashed" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>The flag to include dashboards located in the trash. If unspecified, only active dashboards will be returned.</td>
 </tr>
 <tr id="parameter-view">
@@ -374,23 +375,33 @@ update_time
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: lakeview
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the lakeview resource.
     - name: dashboard
-      value: string
       description: |
         :param dataset_catalog: str (optional) Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.
+      value:
+        create_time: "{{ create_time }}"
+        dashboard_id: "{{ dashboard_id }}"
+        display_name: "{{ display_name }}"
+        etag: "{{ etag }}"
+        lifecycle_state: "{{ lifecycle_state }}"
+        parent_path: "{{ parent_path }}"
+        path: "{{ path }}"
+        serialized_dashboard: "{{ serialized_dashboard }}"
+        update_time: "{{ update_time }}"
+        warehouse_id: "{{ warehouse_id }}"
     - name: dataset_catalog
-      value: string
+      value: "{{ dataset_catalog }}"
     - name: dataset_schema
-      value: string
+      value: "{{ dataset_schema }}"
       description: Sets the default schema for all datasets in this dashboard. Does not impact table references that use fully qualified schema names (ex: nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -513,7 +524,7 @@ EXEC databricks_workspace.dashboards.lakeview.migrate
 "source_dashboard_id": "{{ source_dashboard_id }}", 
 "display_name": "{{ display_name }}", 
 "parent_path": "{{ parent_path }}", 
-"update_parameter_syntax": "{{ update_parameter_syntax }}"
+"update_parameter_syntax": {{ update_parameter_syntax }}
 }'
 ;
 ```

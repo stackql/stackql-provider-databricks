@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -308,7 +309,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of providers to return. - when set to 0, the page length is set to a server configured value (recommended); - when set to a value greater than 0, the page length is the minimum of this value and a server configured value; - when set to a value less than 0, an invalid parameter error is returned; - If not set, all valid providers are returned (not recommended). - Note: The number of returned providers might be less than the specified max_results size, even zero. The only definitive indication that no further providers can be fetched is when the next_page_token is unset from the response.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -432,28 +433,28 @@ updated_by
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: providers
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the providers resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The name of the Provider.
     - name: authentication_type
-      value: string
+      value: "{{ authentication_type }}"
       description: |
         :param comment: str (optional) Description about the provider.
     - name: comment
-      value: string
+      value: "{{ comment }}"
     - name: recipient_profile_str
-      value: string
+      value: "{{ recipient_profile_str }}"
       description: |
         This field is required when the __authentication_type__ is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

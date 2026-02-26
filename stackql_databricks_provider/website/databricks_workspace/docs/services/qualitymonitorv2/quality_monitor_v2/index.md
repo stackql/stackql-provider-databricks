@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -324,7 +325,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param page_token: str (optional)</td>
 </tr>
 <tr id="parameter-page_token">
@@ -412,18 +413,39 @@ validity_check_configurations
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: quality_monitor_v2
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the quality_monitor_v2 resource.
     - name: quality_monitor
-      value: string
       description: |
-        :returns: :class:`QualityMonitor`
-```
+        :returns: :class:\`QualityMonitor\`
+      value:
+        object_type: "{{ object_type }}"
+        object_id: "{{ object_id }}"
+        anomaly_detection_config:
+          excluded_table_full_names:
+            - "{{ excluded_table_full_names }}"
+          last_run_id: "{{ last_run_id }}"
+          latest_run_status: "{{ latest_run_status }}"
+        validity_check_configurations:
+          - name: "{{ name }}"
+            percent_null_validity_check:
+              column_names:
+                - "{{ column_names }}"
+              upper_bound: {{ upper_bound }}
+            range_validity_check:
+              column_names:
+                - "{{ column_names }}"
+              lower_bound: {{ lower_bound }}
+              upper_bound: {{ upper_bound }}
+            uniqueness_validity_check:
+              column_names:
+                - "{{ column_names }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -373,7 +374,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-external_lineage_relationship">
     <td><CopyableCode code="external_lineage_relationship" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>:class:`DeleteRequestExternalLineage`</td>
 </tr>
 <tr id="parameter-lineage_direction">
@@ -383,7 +384,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-object_info">
     <td><CopyableCode code="object_info" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>The object to query external lineage relationships for. Since this field is a query parameter, please flatten the nested fields. For example, if the object is a table, the query parameter should look like: `object_info.table.name=main.sales.customers`</td>
 </tr>
 <tr id="parameter-update_mask">
@@ -393,7 +394,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Specifies the maximum number of external lineage relationships to return in a single response. The value must be less than or equal to 1000.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -467,18 +468,43 @@ target
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: external_lineage
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the external_lineage resource.
     - name: external_lineage_relationship
-      value: string
       description: |
-        :returns: :class:`ExternalLineageRelationship`
-```
+        :returns: :class:\`ExternalLineageRelationship\`
+      value:
+        source:
+          external_metadata:
+            name: "{{ name }}"
+          model_version:
+            name: "{{ name }}"
+            version: "{{ version }}"
+          path:
+            url: "{{ url }}"
+          table:
+            name: "{{ name }}"
+        target:
+          external_metadata:
+            name: "{{ name }}"
+          model_version:
+            name: "{{ name }}"
+            version: "{{ version }}"
+          path:
+            url: "{{ url }}"
+          table:
+            name: "{{ name }}"
+        columns:
+          - source: "{{ source }}"
+            target: "{{ target }}"
+        id: "{{ id }}"
+        properties: "{{ properties }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

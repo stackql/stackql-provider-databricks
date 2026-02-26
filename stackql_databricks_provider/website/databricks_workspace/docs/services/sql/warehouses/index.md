@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -75,7 +76,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "name",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (CHANNEL_NAME_CURRENT, CHANNEL_NAME_CUSTOM, CHANNEL_NAME_PREVIEW, CHANNEL_NAME_PREVIOUS)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (CHANNEL_NAME_CURRENT, CHANNEL_NAME_CUSTOM, CHANNEL_NAME_PREVIEW, CHANNEL_NAME_PREVIOUS)"
       }
     ]
   },
@@ -277,7 +278,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "name",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (CHANNEL_NAME_CURRENT, CHANNEL_NAME_CUSTOM, CHANNEL_NAME_PREVIEW, CHANNEL_NAME_PREVIOUS)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (CHANNEL_NAME_CURRENT, CHANNEL_NAME_CUSTOM, CHANNEL_NAME_PREVIEW, CHANNEL_NAME_PREVIOUS)"
       }
     ]
   },
@@ -537,7 +538,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The max number of warehouses to return.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -547,7 +548,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-run_as_user_id">
     <td><CopyableCode code="run_as_user_id" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Service Principal which will be used to fetch the list of endpoints. If not specified, SQL Gateway will use the user from the session header.</td>
 </tr>
 </tbody>
@@ -662,15 +663,15 @@ warehouse_type,
 deployment_name
 )
 SELECT 
-'{{ auto_stop_mins }}',
+{{ auto_stop_mins }},
 '{{ channel }}',
 '{{ cluster_size }}',
 '{{ creator_name }}',
-'{{ enable_photon }}',
-'{{ enable_serverless_compute }}',
+{{ enable_photon }},
+{{ enable_serverless_compute }},
 '{{ instance_profile_arn }}',
-'{{ max_num_clusters }}',
-'{{ min_num_clusters }}',
+{{ max_num_clusters }},
+{{ min_num_clusters }},
 '{{ name }}',
 '{{ spot_instance_policy }}',
 '{{ tags }}',
@@ -702,66 +703,71 @@ warehouse_type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: warehouses
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the warehouses resource.
     - name: auto_stop_mins
-      value: string
+      value: {{ auto_stop_mins }}
       description: |
         The amount of time in minutes that a SQL warehouse must be idle (i.e., no RUNNING queries) before it is automatically stopped. Supported values: - Must be == 0 or >= 10 mins - 0 indicates no autostop. Defaults to 120 mins
     - name: channel
-      value: string
       description: |
         Channel Details
+      value:
+        dbsql_version: "{{ dbsql_version }}"
+        name: "{{ name }}"
     - name: cluster_size
-      value: string
+      value: "{{ cluster_size }}"
       description: |
         Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you to run larger queries on it. If you want to increase the number of concurrent queries, please tune max_num_clusters. Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large - 4X-Large
     - name: creator_name
-      value: string
+      value: "{{ creator_name }}"
       description: |
         warehouse creator name
     - name: enable_photon
-      value: string
+      value: {{ enable_photon }}
       description: |
         Configures whether the warehouse should use Photon optimized clusters. Defaults to false.
     - name: enable_serverless_compute
-      value: string
+      value: {{ enable_serverless_compute }}
       description: |
         Configures whether the warehouse should use serverless compute
     - name: instance_profile_arn
-      value: string
+      value: "{{ instance_profile_arn }}"
       description: |
         Deprecated. Instance profile used to pass IAM role to the cluster
     - name: max_num_clusters
-      value: string
+      value: {{ max_num_clusters }}
       description: |
         Maximum number of clusters that the autoscaler will create to handle concurrent queries. Supported values: - Must be >= min_num_clusters - Must be <= 40. Defaults to min_clusters if unset.
     - name: min_num_clusters
-      value: string
+      value: {{ min_num_clusters }}
       description: |
         Minimum number of available clusters that will be maintained for this SQL warehouse. Increasing this will ensure that a larger number of clusters are always running and therefore may reduce the cold start time for new queries. This is similar to reserved vs. revocable cores in a resource manager. Supported values: - Must be > 0 - Must be <= min(max_num_clusters, 30) Defaults to 1
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Logical name for the cluster. Supported values: - Must be unique within an org. - Must be less than 100 characters.
     - name: spot_instance_policy
-      value: string
+      value: "{{ spot_instance_policy }}"
       description: |
         Configurations whether the endpoint should use spot instances.
     - name: tags
-      value: string
       description: |
         A set of key-value pairs that will be tagged on all resources (e.g., AWS instances and EBS volumes) associated with this SQL warehouse. Supported values: - Number of tags < 45.
+      value:
+        custom_tags:
+          - key: "{{ key }}"
+            value: "{{ value }}"
     - name: warehouse_type
-      value: string
+      value: "{{ warehouse_type }}"
       description: |
-        Warehouse type: `PRO` or `CLASSIC`. If you want to use serverless compute, you must set to `PRO` and also set the field `enable_serverless_compute` to `true`.
-```
+        Warehouse type: \`PRO\` or \`CLASSIC\`. If you want to use serverless compute, you must set to \`PRO\` and also set the field \`enable_serverless_compute\` to \`true\`.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -781,15 +787,15 @@ Updates the configuration for a SQL warehouse.
 ```sql
 REPLACE databricks_workspace.sql.warehouses
 SET 
-auto_stop_mins = '{{ auto_stop_mins }}',
+auto_stop_mins = {{ auto_stop_mins }},
 channel = '{{ channel }}',
 cluster_size = '{{ cluster_size }}',
 creator_name = '{{ creator_name }}',
-enable_photon = '{{ enable_photon }}',
-enable_serverless_compute = '{{ enable_serverless_compute }}',
+enable_photon = {{ enable_photon }},
+enable_serverless_compute = {{ enable_serverless_compute }},
 instance_profile_arn = '{{ instance_profile_arn }}',
-max_num_clusters = '{{ max_num_clusters }}',
-min_num_clusters = '{{ min_num_clusters }}',
+max_num_clusters = {{ max_num_clusters }},
+min_num_clusters = {{ min_num_clusters }},
 name = '{{ name }}',
 spot_instance_policy = '{{ spot_instance_policy }}',
 tags = '{{ tags }}',

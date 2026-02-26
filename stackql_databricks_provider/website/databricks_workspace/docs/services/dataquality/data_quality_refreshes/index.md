@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -231,7 +232,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param page_token: str (optional)</td>
 </tr>
 <tr id="parameter-page_token">
@@ -338,24 +339,32 @@ trigger
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: data_quality_refreshes
   props:
     - name: object_type
-      value: string
+      value: "{{ object_type }}"
       description: Required parameter for the data_quality_refreshes resource.
     - name: object_id
-      value: string
+      value: "{{ object_id }}"
       description: Required parameter for the data_quality_refreshes resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the data_quality_refreshes resource.
     - name: refresh
-      value: string
       description: |
         The refresh to create
-```
+      value:
+        object_type: "{{ object_type }}"
+        object_id: "{{ object_id }}"
+        end_time_ms: {{ end_time_ms }}
+        message: "{{ message }}"
+        refresh_id: {{ refresh_id }}
+        start_time_ms: {{ start_time_ms }}
+        state: "{{ state }}"
+        trigger: "{{ trigger }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

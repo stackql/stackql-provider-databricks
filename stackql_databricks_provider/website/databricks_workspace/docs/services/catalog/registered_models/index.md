@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -357,17 +358,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-include_aliases">
     <td><CopyableCode code="include_aliases" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include registered model aliases in the response</td>
 </tr>
 <tr id="parameter-include_browse">
     <td><CopyableCode code="include_browse" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include registered models in the response for which the principal can only access selective metadata for</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Max number of registered models to return. If both catalog and schema are specified: - when max_results is not specified, the page length is set to a server configured value (10000, as of 4/2/2024). - when set to a value greater than 0, the page length is the minimum of this value and a server configured value (10000, as of 4/2/2024); - when set to 0, the page length is set to a server configured value (10000, as of 4/2/2024); - when set to a value less than 0, an invalid parameter error is returned; If neither schema nor catalog is specified: - when max_results is not specified, the page length is set to a server configured value (100, as of 4/2/2024). - when set to a value greater than 0, the page length is the minimum of this value and a server configured value (1000, as of 4/2/2024); - when set to 0, the page length is set to a server configured value (100, as of 4/2/2024); - when set to a value less than 0, an invalid parameter error is returned;</td>
 </tr>
 <tr id="parameter-page_token">
@@ -486,10 +487,10 @@ deployment_name
 )
 SELECT 
 '{{ aliases }}',
-'{{ browse_only }}',
+{{ browse_only }},
 '{{ catalog_name }}',
 '{{ comment }}',
-'{{ created_at }}',
+{{ created_at }},
 '{{ created_by }}',
 '{{ full_name }}',
 '{{ metastore_id }}',
@@ -497,7 +498,7 @@ SELECT
 '{{ owner }}',
 '{{ schema_name }}',
 '{{ storage_location }}',
-'{{ updated_at }}',
+{{ updated_at }},
 '{{ updated_by }}',
 '{{ deployment_name }}'
 RETURNING
@@ -520,70 +521,76 @@ updated_by
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: registered_models
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the registered_models resource.
     - name: aliases
-      value: string
       description: |
         List of aliases associated with the registered model
+      value:
+        - alias_name: "{{ alias_name }}"
+          catalog_name: "{{ catalog_name }}"
+          id: "{{ id }}"
+          model_name: "{{ model_name }}"
+          schema_name: "{{ schema_name }}"
+          version_num: {{ version_num }}
     - name: browse_only
-      value: string
+      value: {{ browse_only }}
       description: |
         Indicates whether the principal is limited to retrieving metadata for the associated object through the BROWSE privilege when include_browse is enabled in the request.
     - name: catalog_name
-      value: string
+      value: "{{ catalog_name }}"
       description: |
         The name of the catalog where the schema and the registered model reside
     - name: comment
-      value: string
+      value: "{{ comment }}"
       description: |
         The comment attached to the registered model
     - name: created_at
-      value: string
+      value: {{ created_at }}
       description: |
         Creation timestamp of the registered model in milliseconds since the Unix epoch
     - name: created_by
-      value: string
+      value: "{{ created_by }}"
       description: |
         The identifier of the user who created the registered model
     - name: full_name
-      value: string
+      value: "{{ full_name }}"
       description: |
         The three-level (fully qualified) name of the registered model
     - name: metastore_id
-      value: string
+      value: "{{ metastore_id }}"
       description: |
         The unique identifier of the metastore
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The name of the registered model
     - name: owner
-      value: string
+      value: "{{ owner }}"
       description: |
         The identifier of the user who owns the registered model
     - name: schema_name
-      value: string
+      value: "{{ schema_name }}"
       description: |
         The name of the schema where the registered model resides
     - name: storage_location
-      value: string
+      value: "{{ storage_location }}"
       description: |
         The storage location on the cloud under which model version data files are stored
     - name: updated_at
-      value: string
+      value: {{ updated_at }}
       description: |
         Last-update timestamp of the registered model in milliseconds since the Unix epoch
     - name: updated_by
-      value: string
+      value: "{{ updated_by }}"
       description: |
         The identifier of the user who updated the registered model last time
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -604,10 +611,10 @@ Updates the specified registered model.
 UPDATE databricks_workspace.catalog.registered_models
 SET 
 aliases = '{{ aliases }}',
-browse_only = '{{ browse_only }}',
+browse_only = {{ browse_only }},
 catalog_name = '{{ catalog_name }}',
 comment = '{{ comment }}',
-created_at = '{{ created_at }}',
+created_at = {{ created_at }},
 created_by = '{{ created_by }}',
 metastore_id = '{{ metastore_id }}',
 name = '{{ name }}',
@@ -615,7 +622,7 @@ new_name = '{{ new_name }}',
 owner = '{{ owner }}',
 schema_name = '{{ schema_name }}',
 storage_location = '{{ storage_location }}',
-updated_at = '{{ updated_at }}',
+updated_at = {{ updated_at }},
 updated_by = '{{ updated_by }}'
 WHERE 
 full_name = '{{ full_name }}' --required

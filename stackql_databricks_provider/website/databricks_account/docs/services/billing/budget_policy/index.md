@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -169,17 +170,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-filter_by">
     <td><CopyableCode code="filter_by" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>A filter to apply to the list of policies.</td>
 </tr>
 <tr id="parameter-limit_config">
     <td><CopyableCode code="limit_config" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>DEPRECATED. This is redundant field as LimitConfig is part of the BudgetPolicy</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The maximum number of budget policies to return. If unspecified, at most 100 budget policies will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -189,7 +190,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-sort_spec">
     <td><CopyableCode code="sort_spec" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>The sort specification.</td>
 </tr>
 </tbody>
@@ -275,22 +276,27 @@ custom_tags
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: budget_policy
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the budget_policy resource.
     - name: policy
-      value: string
       description: |
-        The policy to create. `policy_id` needs to be empty as it will be generated `policy_name` must be provided, custom_tags may need to be provided depending on the cloud provider. All other fields are optional.
+        The policy to create. \`policy_id\` needs to be empty as it will be generated \`policy_name\` must be provided, custom_tags may need to be provided depending on the cloud provider. All other fields are optional.
+      value:
+        binding_workspace_ids:
+          - {{ binding_workspace_ids }}
+        custom_tags: "{{ custom_tags }}"
+        policy_id: "{{ policy_id }}"
+        policy_name: "{{ policy_name }}"
     - name: request_id
-      value: string
+      value: "{{ request_id }}"
       description: |
-        A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is only idempotent if a `request_id` is provided.
-```
+        A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is only idempotent if a \`request_id\` is provided.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

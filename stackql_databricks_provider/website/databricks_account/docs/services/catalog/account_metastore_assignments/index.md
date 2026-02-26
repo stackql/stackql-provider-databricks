@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -225,24 +226,27 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: account_metastore_assignments
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the account_metastore_assignments resource.
     - name: workspace_id
-      value: integer
+      value: {{ workspace_id }}
       description: Required parameter for the account_metastore_assignments resource.
     - name: metastore_id
-      value: string
+      value: "{{ metastore_id }}"
       description: Required parameter for the account_metastore_assignments resource.
     - name: metastore_assignment
-      value: string
       description: |
-        :returns: :class:`AccountsCreateMetastoreAssignmentResponse`
-```
+        :returns: :class:\`AccountsCreateMetastoreAssignmentResponse\`
+      value:
+        workspace_id: {{ workspace_id }}
+        metastore_id: "{{ metastore_id }}"
+        default_catalog_name: "{{ default_catalog_name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

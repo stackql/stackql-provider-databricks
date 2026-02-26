@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -888,17 +889,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td></td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The maximum number of entries to return in a single page. The system may return fewer than max_results events in a response, even if there are more events available. This field is optional. The default value is 25. The maximum value is 100. An error is returned if the value of max_results is greater than 100.</td>
 </tr>
 <tr id="parameter-order_by">
     <td><CopyableCode code="order_by" /></td>
-    <td><code>string</code></td>
+    <td><code>array</code></td>
     <td>A list of strings specifying the order of results. Supported order_by fields are id and name. The default is id asc. This field is optional.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -1018,16 +1019,16 @@ usage_policy_id,
 deployment_name
 )
 SELECT 
-'{{ allow_duplicate_names }}',
+{{ allow_duplicate_names }},
 '{{ budget_policy_id }}',
 '{{ catalog }}',
 '{{ channel }}',
 '{{ clusters }}',
 '{{ configuration }}',
-'{{ continuous }}',
+{{ continuous }},
 '{{ deployment }}',
-'{{ development }}',
-'{{ dry_run }}',
+{{ development }},
+{{ dry_run }},
 '{{ edition }}',
 '{{ environment }}',
 '{{ event_log }}',
@@ -1038,12 +1039,12 @@ SELECT
 '{{ libraries }}',
 '{{ name }}',
 '{{ notifications }}',
-'{{ photon }}',
+{{ photon }},
 '{{ restart_window }}',
 '{{ root_path }}',
 '{{ run_as }}',
 '{{ schema }}',
-'{{ serverless }}',
+{{ serverless }},
 '{{ storage }}',
 '{{ tags }}',
 '{{ target }}',
@@ -1058,134 +1059,325 @@ effective_settings
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: pipelines
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the pipelines resource.
     - name: allow_duplicate_names
-      value: string
+      value: {{ allow_duplicate_names }}
       description: |
         If false, deployment will fail if name conflicts with that of another pipeline.
     - name: budget_policy_id
-      value: string
+      value: "{{ budget_policy_id }}"
       description: |
         Budget policy of this pipeline.
     - name: catalog
-      value: string
+      value: "{{ catalog }}"
       description: |
-        A catalog in Unity Catalog to publish data from this pipeline to. If `target` is specified, tables in this pipeline are published to a `target` schema inside `catalog` (for example, `catalog`.`target`.`table`). If `target` is not specified, no data is published to Unity Catalog.
+        A catalog in Unity Catalog to publish data from this pipeline to. If \`target\` is specified, tables in this pipeline are published to a \`target\` schema inside \`catalog\` (for example, \`catalog\`.\`target\`.\`table\`). If \`target\` is not specified, no data is published to Unity Catalog.
     - name: channel
-      value: string
+      value: "{{ channel }}"
       description: |
         DLT Release Channel that specifies which version to use.
     - name: clusters
-      value: string
       description: |
         Cluster settings for this pipeline deployment.
+      value:
+        - apply_policy_default_values: {{ apply_policy_default_values }}
+          autoscale:
+            min_workers: {{ min_workers }}
+            max_workers: {{ max_workers }}
+            mode: "{{ mode }}"
+          aws_attributes: "{{ aws_attributes }}"
+          azure_attributes: "{{ azure_attributes }}"
+          cluster_log_conf: "{{ cluster_log_conf }}"
+          custom_tags: "{{ custom_tags }}"
+          driver_instance_pool_id: "{{ driver_instance_pool_id }}"
+          driver_node_type_id: "{{ driver_node_type_id }}"
+          enable_local_disk_encryption: {{ enable_local_disk_encryption }}
+          gcp_attributes: "{{ gcp_attributes }}"
+          init_scripts: "{{ init_scripts }}"
+          instance_pool_id: "{{ instance_pool_id }}"
+          label: "{{ label }}"
+          node_type_id: "{{ node_type_id }}"
+          num_workers: {{ num_workers }}
+          policy_id: "{{ policy_id }}"
+          spark_conf: "{{ spark_conf }}"
+          spark_env_vars: "{{ spark_env_vars }}"
+          ssh_public_keys: "{{ ssh_public_keys }}"
     - name: configuration
-      value: string
+      value: "{{ configuration }}"
       description: |
         String-String configuration for this pipeline execution.
     - name: continuous
-      value: string
+      value: {{ continuous }}
       description: |
-        Whether the pipeline is continuous or triggered. This replaces `trigger`.
+        Whether the pipeline is continuous or triggered. This replaces \`trigger\`.
     - name: deployment
-      value: string
       description: |
         Deployment type of this pipeline.
+      value:
+        kind: "{{ kind }}"
+        metadata_file_path: "{{ metadata_file_path }}"
     - name: development
-      value: string
+      value: {{ development }}
       description: |
         Whether the pipeline is in Development mode. Defaults to false.
     - name: dry_run
-      value: string
+      value: {{ dry_run }}
       description: |
         :param edition: str (optional) Pipeline product edition.
     - name: edition
-      value: string
+      value: "{{ edition }}"
     - name: environment
-      value: string
       description: |
         Environment specification for this pipeline used to install dependencies.
+      value:
+        dependencies:
+          - "{{ dependencies }}"
     - name: event_log
-      value: string
       description: |
         Event log configuration for this pipeline
+      value:
+        catalog: "{{ catalog }}"
+        name: "{{ name }}"
+        schema: "{{ schema }}"
     - name: filters
-      value: string
       description: |
         Filters on which Pipeline packages to include in the deployed graph.
+      value:
+        exclude:
+          - "{{ exclude }}"
+        include:
+          - "{{ include }}"
     - name: gateway_definition
-      value: string
       description: |
         The definition of a gateway pipeline to support change data capture.
+      value:
+        connection_name: "{{ connection_name }}"
+        gateway_storage_catalog: "{{ gateway_storage_catalog }}"
+        gateway_storage_schema: "{{ gateway_storage_schema }}"
+        connection_id: "{{ connection_id }}"
+        connection_parameters:
+          source_catalog: "{{ source_catalog }}"
+        gateway_storage_name: "{{ gateway_storage_name }}"
     - name: id
-      value: string
+      value: "{{ id }}"
       description: |
         Unique identifier for this pipeline.
     - name: ingestion_definition
-      value: string
       description: |
         The configuration for a managed ingestion pipeline. These settings cannot be used with the 'libraries', 'schema', 'target', or 'catalog' settings.
+      value:
+        connection_name: "{{ connection_name }}"
+        full_refresh_window:
+          start_hour: {{ start_hour }}
+          days_of_week:
+            - "{{ days_of_week }}"
+          time_zone_id: "{{ time_zone_id }}"
+        ingest_from_uc_foreign_catalog: {{ ingest_from_uc_foreign_catalog }}
+        ingestion_gateway_id: "{{ ingestion_gateway_id }}"
+        netsuite_jar_path: "{{ netsuite_jar_path }}"
+        objects:
+          - report:
+              source_url: "{{ source_url }}"
+              destination_catalog: "{{ destination_catalog }}"
+              destination_schema: "{{ destination_schema }}"
+              destination_table: "{{ destination_table }}"
+              table_configuration:
+                auto_full_refresh_policy:
+                  enabled: {{ enabled }}
+                  min_interval_hours: {{ min_interval_hours }}
+                exclude_columns:
+                  - "{{ exclude_columns }}"
+                include_columns:
+                  - "{{ include_columns }}"
+                primary_keys:
+                  - "{{ primary_keys }}"
+                query_based_connector_config:
+                  cursor_columns: "{{ cursor_columns }}"
+                  deletion_condition: "{{ deletion_condition }}"
+                  hard_deletion_sync_min_interval_in_seconds: {{ hard_deletion_sync_min_interval_in_seconds }}
+                row_filter: "{{ row_filter }}"
+                salesforce_include_formula_fields: {{ salesforce_include_formula_fields }}
+                scd_type: "{{ scd_type }}"
+                sequence_by:
+                  - "{{ sequence_by }}"
+                workday_report_parameters:
+                  incremental: {{ incremental }}
+                  parameters: "{{ parameters }}"
+                  report_parameters: "{{ report_parameters }}"
+            schema:
+              source_schema: "{{ source_schema }}"
+              destination_catalog: "{{ destination_catalog }}"
+              destination_schema: "{{ destination_schema }}"
+              source_catalog: "{{ source_catalog }}"
+              table_configuration:
+                auto_full_refresh_policy:
+                  enabled: {{ enabled }}
+                  min_interval_hours: {{ min_interval_hours }}
+                exclude_columns:
+                  - "{{ exclude_columns }}"
+                include_columns:
+                  - "{{ include_columns }}"
+                primary_keys:
+                  - "{{ primary_keys }}"
+                query_based_connector_config:
+                  cursor_columns: "{{ cursor_columns }}"
+                  deletion_condition: "{{ deletion_condition }}"
+                  hard_deletion_sync_min_interval_in_seconds: {{ hard_deletion_sync_min_interval_in_seconds }}
+                row_filter: "{{ row_filter }}"
+                salesforce_include_formula_fields: {{ salesforce_include_formula_fields }}
+                scd_type: "{{ scd_type }}"
+                sequence_by:
+                  - "{{ sequence_by }}"
+                workday_report_parameters:
+                  incremental: {{ incremental }}
+                  parameters: "{{ parameters }}"
+                  report_parameters: "{{ report_parameters }}"
+            table:
+              source_table: "{{ source_table }}"
+              destination_catalog: "{{ destination_catalog }}"
+              destination_schema: "{{ destination_schema }}"
+              destination_table: "{{ destination_table }}"
+              source_catalog: "{{ source_catalog }}"
+              source_schema: "{{ source_schema }}"
+              table_configuration:
+                auto_full_refresh_policy:
+                  enabled: {{ enabled }}
+                  min_interval_hours: {{ min_interval_hours }}
+                exclude_columns:
+                  - "{{ exclude_columns }}"
+                include_columns:
+                  - "{{ include_columns }}"
+                primary_keys:
+                  - "{{ primary_keys }}"
+                query_based_connector_config:
+                  cursor_columns: "{{ cursor_columns }}"
+                  deletion_condition: "{{ deletion_condition }}"
+                  hard_deletion_sync_min_interval_in_seconds: {{ hard_deletion_sync_min_interval_in_seconds }}
+                row_filter: "{{ row_filter }}"
+                salesforce_include_formula_fields: {{ salesforce_include_formula_fields }}
+                scd_type: "{{ scd_type }}"
+                sequence_by:
+                  - "{{ sequence_by }}"
+                workday_report_parameters:
+                  incremental: {{ incremental }}
+                  parameters: "{{ parameters }}"
+                  report_parameters: "{{ report_parameters }}"
+        source_configurations:
+          - catalog:
+              postgres:
+                slot_config:
+                  publication_name: "{{ publication_name }}"
+                  slot_name: "{{ slot_name }}"
+              source_catalog: "{{ source_catalog }}"
+        source_type: "{{ source_type }}"
+        table_configuration:
+          auto_full_refresh_policy:
+            enabled: {{ enabled }}
+            min_interval_hours: {{ min_interval_hours }}
+          exclude_columns:
+            - "{{ exclude_columns }}"
+          include_columns:
+            - "{{ include_columns }}"
+          primary_keys:
+            - "{{ primary_keys }}"
+          query_based_connector_config:
+            cursor_columns:
+              - "{{ cursor_columns }}"
+            deletion_condition: "{{ deletion_condition }}"
+            hard_deletion_sync_min_interval_in_seconds: {{ hard_deletion_sync_min_interval_in_seconds }}
+          row_filter: "{{ row_filter }}"
+          salesforce_include_formula_fields: {{ salesforce_include_formula_fields }}
+          scd_type: "{{ scd_type }}"
+          sequence_by:
+            - "{{ sequence_by }}"
+          workday_report_parameters:
+            incremental: {{ incremental }}
+            parameters: "{{ parameters }}"
+            report_parameters:
+              - key: "{{ key }}"
+                value: "{{ value }}"
     - name: libraries
-      value: string
       description: |
         Libraries or code needed by this deployment.
+      value:
+        - file:
+            path: "{{ path }}"
+          glob:
+            include: "{{ include }}"
+          jar: "{{ jar }}"
+          maven: "{{ maven }}"
+          notebook:
+            path: "{{ path }}"
+          whl: "{{ whl }}"
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Friendly identifier for this pipeline.
     - name: notifications
-      value: string
       description: |
         List of notification settings for this pipeline.
+      value:
+        - alerts: "{{ alerts }}"
+          email_recipients: "{{ email_recipients }}"
     - name: photon
-      value: string
+      value: {{ photon }}
       description: |
         Whether Photon is enabled for this pipeline.
     - name: restart_window
-      value: string
       description: |
         Restart window of this pipeline.
+      value:
+        start_hour: {{ start_hour }}
+        days_of_week:
+          - "{{ days_of_week }}"
+        time_zone_id: "{{ time_zone_id }}"
     - name: root_path
-      value: string
+      value: "{{ root_path }}"
       description: |
         Root path for this pipeline. This is used as the root directory when editing the pipeline in the Databricks user interface and it is added to sys.path when executing Python sources during pipeline execution.
     - name: run_as
-      value: string
       description: |
         :param schema: str (optional) The default schema (database) where tables are read from or published to.
+      value:
+        service_principal_name: "{{ service_principal_name }}"
+        user_name: "{{ user_name }}"
     - name: schema
-      value: string
+      value: "{{ schema }}"
     - name: serverless
-      value: string
+      value: {{ serverless }}
       description: |
         Whether serverless compute is enabled for this pipeline.
     - name: storage
-      value: string
+      value: "{{ storage }}"
       description: |
         DBFS root directory for storing checkpoints and tables.
     - name: tags
-      value: string
+      value: "{{ tags }}"
       description: |
         A map of tags associated with the pipeline. These are forwarded to the cluster as cluster tags, and are therefore subject to the same limitations. A maximum of 25 tags can be added to the pipeline.
     - name: target
-      value: string
+      value: "{{ target }}"
       description: |
-        Target schema (database) to add tables in this pipeline to. Exactly one of `schema` or `target` must be specified. To publish to Unity Catalog, also specify `catalog`. This legacy field is deprecated for pipeline creation in favor of the `schema` field.
+        Target schema (database) to add tables in this pipeline to. Exactly one of \`schema\` or \`target\` must be specified. To publish to Unity Catalog, also specify \`catalog\`. This legacy field is deprecated for pipeline creation in favor of the \`schema\` field.
     - name: trigger
-      value: string
       description: |
-        Which pipeline trigger to use. Deprecated: Use `continuous` instead.
+        Which pipeline trigger to use. Deprecated: Use \`continuous\` instead.
+      value:
+        cron:
+          quartz_cron_schedule: "{{ quartz_cron_schedule }}"
+          timezone_id: "{{ timezone_id }}"
+        manual: "{{ manual }}"
     - name: usage_policy_id
-      value: string
+      value: "{{ usage_policy_id }}"
       description: |
         Usage policy of this pipeline.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -1205,19 +1397,19 @@ Updates a pipeline with the supplied configuration.
 ```sql
 REPLACE databricks_workspace.pipelines.pipelines
 SET 
-allow_duplicate_names = '{{ allow_duplicate_names }}',
+allow_duplicate_names = {{ allow_duplicate_names }},
 budget_policy_id = '{{ budget_policy_id }}',
 catalog = '{{ catalog }}',
 channel = '{{ channel }}',
 clusters = '{{ clusters }}',
 configuration = '{{ configuration }}',
-continuous = '{{ continuous }}',
+continuous = {{ continuous }},
 deployment = '{{ deployment }}',
-development = '{{ development }}',
+development = {{ development }},
 edition = '{{ edition }}',
 environment = '{{ environment }}',
 event_log = '{{ event_log }}',
-expected_last_modified = '{{ expected_last_modified }}',
+expected_last_modified = {{ expected_last_modified }},
 filters = '{{ filters }}',
 gateway_definition = '{{ gateway_definition }}',
 id = '{{ id }}',
@@ -1225,12 +1417,12 @@ ingestion_definition = '{{ ingestion_definition }}',
 libraries = '{{ libraries }}',
 name = '{{ name }}',
 notifications = '{{ notifications }}',
-photon = '{{ photon }}',
+photon = {{ photon }},
 restart_window = '{{ restart_window }}',
 root_path = '{{ root_path }}',
 run_as = '{{ run_as }}',
 schema = '{{ schema }}',
-serverless = '{{ serverless }}',
+serverless = {{ serverless }},
 storage = '{{ storage }}',
 tags = '{{ tags }}',
 target = '{{ target }}',
@@ -1286,20 +1478,20 @@ EXEC databricks_workspace.pipelines.pipelines.clone
 @deployment_name='{{ deployment_name }}' --required 
 @@json=
 '{
-"allow_duplicate_names": "{{ allow_duplicate_names }}", 
+"allow_duplicate_names": {{ allow_duplicate_names }}, 
 "budget_policy_id": "{{ budget_policy_id }}", 
 "catalog": "{{ catalog }}", 
 "channel": "{{ channel }}", 
 "clone_mode": "{{ clone_mode }}", 
 "clusters": "{{ clusters }}", 
 "configuration": "{{ configuration }}", 
-"continuous": "{{ continuous }}", 
+"continuous": {{ continuous }}, 
 "deployment": "{{ deployment }}", 
-"development": "{{ development }}", 
+"development": {{ development }}, 
 "edition": "{{ edition }}", 
 "environment": "{{ environment }}", 
 "event_log": "{{ event_log }}", 
-"expected_last_modified": "{{ expected_last_modified }}", 
+"expected_last_modified": {{ expected_last_modified }}, 
 "filters": "{{ filters }}", 
 "gateway_definition": "{{ gateway_definition }}", 
 "id": "{{ id }}", 
@@ -1307,11 +1499,11 @@ EXEC databricks_workspace.pipelines.pipelines.clone
 "libraries": "{{ libraries }}", 
 "name": "{{ name }}", 
 "notifications": "{{ notifications }}", 
-"photon": "{{ photon }}", 
+"photon": {{ photon }}, 
 "restart_window": "{{ restart_window }}", 
 "root_path": "{{ root_path }}", 
 "schema": "{{ schema }}", 
-"serverless": "{{ serverless }}", 
+"serverless": {{ serverless }}, 
 "storage": "{{ storage }}", 
 "tags": "{{ tags }}", 
 "target": "{{ target }}", 

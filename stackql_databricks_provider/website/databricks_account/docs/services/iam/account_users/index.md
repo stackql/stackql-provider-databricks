@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -363,7 +364,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-count">
     <td><CopyableCode code="count" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Desired number of results per page. Default is 10000.</td>
 </tr>
 <tr id="parameter-excluded_attributes">
@@ -388,7 +389,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-start_index">
     <td><CopyableCode code="start_index" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Specifies the index of the first result. First item is number 1.</td>
 </tr>
 </tbody>
@@ -487,7 +488,7 @@ user_name,
 account_id
 )
 SELECT 
-'{{ active }}',
+{{ active }},
 '{{ display_name }}',
 '{{ emails }}',
 '{{ external_id }}',
@@ -511,44 +512,56 @@ userName
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: account_users
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the account_users resource.
     - name: active
-      value: string
+      value: {{ active }}
       description: |
         If this user is active
     - name: display_name
-      value: string
+      value: "{{ display_name }}"
       description: |
-        String that represents a concatenation of given and family names. For example `John Smith`.
+        String that represents a concatenation of given and family names. For example \`John Smith\`.
     - name: emails
-      value: string
       description: |
         All the emails associated with the Databricks user.
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: external_id
-      value: string
+      value: "{{ external_id }}"
       description: |
         External ID is not currently supported. It is reserved for future use.
     - name: id
-      value: string
+      value: "{{ id }}"
       description: |
         Databricks user ID.
     - name: name
-      value: string
       description: |
-        :param roles: List[:class:`ComplexValue`] (optional) Indicates if the group has the admin role.
+        :param roles: List[:class:\`ComplexValue\`] (optional) Indicates if the group has the admin role.
+      value:
+        familyName: "{{ familyName }}"
+        givenName: "{{ givenName }}"
     - name: roles
-      value: string
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: user_name
-      value: string
+      value: "{{ user_name }}"
       description: |
         Email address of the Databricks user.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -593,7 +606,7 @@ Replaces a user's information with the data supplied in request.
 ```sql
 REPLACE databricks_account.iam.account_users
 SET 
-active = '{{ active }}',
+active = {{ active }},
 display_name = '{{ display_name }}',
 emails = '{{ emails }}',
 external_id = '{{ external_id }}',

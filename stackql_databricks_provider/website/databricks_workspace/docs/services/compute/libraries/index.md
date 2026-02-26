@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -263,22 +264,37 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: libraries
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the libraries resource.
     - name: cluster_id
-      value: string
+      value: "{{ cluster_id }}"
       description: |
         Unique identifier for the cluster on which to install these libraries.
     - name: libraries
-      value: string
       description: |
         The libraries to install.
-```
+      value:
+        - cran:
+            package: "{{ package }}"
+            repo: "{{ repo }}"
+          egg: "{{ egg }}"
+          jar: "{{ jar }}"
+          maven:
+            coordinates: "{{ coordinates }}"
+            exclusions:
+              - "{{ exclusions }}"
+            repo: "{{ repo }}"
+          pypi:
+            package: "{{ package }}"
+            repo: "{{ repo }}"
+          requirements: "{{ requirements }}"
+          whl: "{{ whl }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

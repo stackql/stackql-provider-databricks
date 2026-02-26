@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -185,7 +186,7 @@ REPLACE databricks_workspace.catalog.artifact_allowlists
 SET 
 artifact_type = '{{ artifact_type }}',
 artifact_matchers = '{{ artifact_matchers }}',
-created_at = '{{ created_at }}',
+created_at = {{ created_at }},
 created_by = '{{ created_by }}',
 metastore_id = '{{ metastore_id }}'
 WHERE 

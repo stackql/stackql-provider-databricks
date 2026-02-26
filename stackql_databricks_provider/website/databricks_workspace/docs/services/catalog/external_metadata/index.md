@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -274,7 +275,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Specifies the maximum number of external metadata objects to return in a single response. The value must be less than or equal to 1000.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -391,18 +392,33 @@ url
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: external_metadata
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the external_metadata resource.
     - name: external_metadata
-      value: string
       description: |
-        :returns: :class:`ExternalMetadata`
-```
+        :returns: :class:\`ExternalMetadata\`
+      value:
+        name: "{{ name }}"
+        system_type: "{{ system_type }}"
+        entity_type: "{{ entity_type }}"
+        columns:
+          - "{{ columns }}"
+        create_time: "{{ create_time }}"
+        created_by: "{{ created_by }}"
+        description: "{{ description }}"
+        id: "{{ id }}"
+        metastore_id: "{{ metastore_id }}"
+        owner: "{{ owner }}"
+        properties: "{{ properties }}"
+        update_time: "{{ update_time }}"
+        updated_by: "{{ updated_by }}"
+        url: "{{ url }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -208,7 +209,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The maximum number of results to return in this request. Fewer results may be returned than requested. If unspecified or set to 0, this defaults to 1000. The maximum value is 1000; values above 1000 will be coerced down to 1000.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -301,18 +302,25 @@ values
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: tag_policies
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the tag_policies resource.
     - name: tag_policy
-      value: string
       description: |
-        :returns: :class:`TagPolicy`
-```
+        :returns: :class:\`TagPolicy\`
+      value:
+        tag_key: "{{ tag_key }}"
+        create_time: "{{ create_time }}"
+        description: "{{ description }}"
+        id: "{{ id }}"
+        update_time: "{{ update_time }}"
+        values:
+          - name: "{{ name }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

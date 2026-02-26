@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -255,7 +256,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Upper bound for items returned. Cannot be negative.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -356,24 +357,36 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: postgres_roles
   props:
     - name: parent
-      value: string
+      value: "{{ parent }}"
       description: Required parameter for the postgres_roles resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the postgres_roles resource.
     - name: role
-      value: string
       description: |
         The desired specification of a Role.
+      value:
+        create_time: "{{ create_time }}"
+        name: "{{ name }}"
+        parent: "{{ parent }}"
+        spec:
+          auth_method: "{{ auth_method }}"
+          identity_type: "{{ identity_type }}"
+          postgres_role: "{{ postgres_role }}"
+        status:
+          auth_method: "{{ auth_method }}"
+          identity_type: "{{ identity_type }}"
+          postgres_role: "{{ postgres_role }}"
+        update_time: "{{ update_time }}"
     - name: role_id
-      value: string
+      value: "{{ role_id }}"
       description: The ID to use for the Role, which will become the final component of the role's resource name. This ID becomes the role in Postgres. This value should be 4-63 characters, and valid characters are lowercase letters, numbers, and hyphens, as defined by RFC 1123. If role_id is not specified in the request, it is generated automatically.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

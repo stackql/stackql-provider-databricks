@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -259,18 +260,23 @@ responses
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: rfa
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the rfa resource.
     - name: requests
-      value: string
       description: |
         A list of individual access requests, where each request corresponds to a set of permissions being requested on a list of securables for a specified principal. At most 30 requests per API call.
-```
+      value:
+        - behalf_of:
+            id: "{{ id }}"
+            principal_type: "{{ principal_type }}"
+          comment: "{{ comment }}"
+          securable_permissions: "{{ securable_permissions }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

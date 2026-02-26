@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -439,12 +440,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-include_inherited">
     <td><CopyableCode code="include_inherited" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Optional. Whether to include policies defined on parent securables. By default, the inherited policies are not included.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Optional. Maximum number of policies to return on a single page (page length). - When not set or set to 0, the page length is set to a server configured value (recommended); - When set to a value greater than 0, the page length is the minimum of this value and a server configured value;</td>
 </tr>
 <tr id="parameter-page_token">
@@ -580,18 +581,48 @@ when_condition
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: policies
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the policies resource.
     - name: policy_info
-      value: string
       description: |
         Required. The policy to create.
-```
+      value:
+        to_principals:
+          - "{{ to_principals }}"
+        for_securable_type: "{{ for_securable_type }}"
+        policy_type: "{{ policy_type }}"
+        column_mask:
+          function_name: "{{ function_name }}"
+          on_column: "{{ on_column }}"
+          using:
+            - alias: "{{ alias }}"
+              constant: "{{ constant }}"
+        comment: "{{ comment }}"
+        created_at: {{ created_at }}
+        created_by: "{{ created_by }}"
+        except_principals:
+          - "{{ except_principals }}"
+        id: "{{ id }}"
+        match_columns:
+          - alias: "{{ alias }}"
+            condition: "{{ condition }}"
+        name: "{{ name }}"
+        on_securable_fullname: "{{ on_securable_fullname }}"
+        on_securable_type: "{{ on_securable_type }}"
+        row_filter:
+          function_name: "{{ function_name }}"
+          using:
+            - alias: "{{ alias }}"
+              constant: "{{ constant }}"
+        updated_at: {{ updated_at }}
+        updated_by: "{{ updated_by }}"
+        when_condition: "{{ when_condition }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -852,12 +853,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page">
     <td><CopyableCode code="page" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Page number to retrieve.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Number of dashboards to return per page.</td>
 </tr>
 <tr id="parameter-q">
@@ -991,27 +992,28 @@ widgets
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: dashboards
   props:
     - name: dashboard_id
-      value: string
+      value: "{{ dashboard_id }}"
       description: Required parameter for the dashboards resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the dashboards resource.
     - name: name
-      value: string
+      value: "{{ name }}"
     - name: run_as_role
-      value: string
+      value: "{{ run_as_role }}"
       description: |
-        Sets the **Run as** role for the object. Must be set to one of `"viewer"` (signifying "run as viewer" behavior) or `"owner"` (signifying "run as owner" behavior)
+        Sets the **Run as** role for the object. Must be set to one of \`"viewer"\` (signifying "run as viewer" behavior) or \`"owner"\` (signifying "run as owner" behavior)
     - name: tags
-      value: string
+      value:
+        - "{{ tags }}"
       description: |
-        :returns: :class:`Dashboard`
-```
+        :returns: :class:\`Dashboard\`
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

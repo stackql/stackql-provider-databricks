@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -269,7 +270,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The number of subscriptions to return per page.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -376,24 +377,36 @@ update_time
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: lakeview_subscriptions
   props:
     - name: dashboard_id
-      value: string
+      value: "{{ dashboard_id }}"
       description: Required parameter for the lakeview_subscriptions resource.
     - name: schedule_id
-      value: string
+      value: "{{ schedule_id }}"
       description: Required parameter for the lakeview_subscriptions resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the lakeview_subscriptions resource.
     - name: subscription
-      value: string
       description: |
         The subscription to create. A schedule is limited to 100 subscriptions.
-```
+      value:
+        subscriber:
+          destination_subscriber:
+            destination_id: "{{ destination_id }}"
+          user_subscriber:
+            user_id: {{ user_id }}
+        create_time: "{{ create_time }}"
+        created_by_user_id: {{ created_by_user_id }}
+        dashboard_id: "{{ dashboard_id }}"
+        etag: "{{ etag }}"
+        schedule_id: "{{ schedule_id }}"
+        subscription_id: "{{ subscription_id }}"
+        update_time: "{{ update_time }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

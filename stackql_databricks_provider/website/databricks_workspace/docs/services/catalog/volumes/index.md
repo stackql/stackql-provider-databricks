@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -347,12 +348,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-include_browse">
     <td><CopyableCode code="include_browse" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include volumes in the response for which the principal can only access selective metadata for</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of volumes to return (page length). If not set, the page length is set to a server configured value (10000, as of 1/29/2024). - when set to a value greater than 0, the page length is the minimum of this value and a server configured value (10000, as of 1/29/2024); - when set to 0, the page length is set to a server configured value (10000, as of 1/29/2024) (recommended); - when set to a value less than 0, an invalid parameter error is returned; Note: this parameter controls only the maximum number of volumes to return. The actual number of volumes returned in a page may be smaller than this value, including 0, even if there are more pages.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -492,38 +493,38 @@ volume_type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: volumes
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the volumes resource.
     - name: catalog_name
-      value: string
+      value: "{{ catalog_name }}"
       description: |
         The name of the catalog where the schema and the volume are
     - name: schema_name
-      value: string
+      value: "{{ schema_name }}"
       description: |
         The name of the schema where the volume is
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The name of the volume
     - name: volume_type
-      value: string
+      value: "{{ volume_type }}"
       description: |
         The type of the volume. An external volume is located in the specified external location. A managed volume is located in the default location which is specified by the parent schema, or the parent catalog, or the Metastore. [Learn more] [Learn more]: https://docs.databricks.com/aws/en/volumes/managed-vs-external
     - name: comment
-      value: string
+      value: "{{ comment }}"
       description: |
         The comment attached to the volume
     - name: storage_location
-      value: string
+      value: "{{ storage_location }}"
       description: |
         The storage location on the cloud
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

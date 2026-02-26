@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -491,7 +492,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-count">
     <td><CopyableCode code="count" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Desired number of results per page.</td>
 </tr>
 <tr id="parameter-excluded_attributes">
@@ -516,7 +517,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-start_index">
     <td><CopyableCode code="start_index" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Specifies the index of the first result. First item is number 1.</td>
 </tr>
 </tbody>
@@ -622,7 +623,7 @@ user_name,
 deployment_name
 )
 SELECT 
-'{{ active }}',
+{{ active }},
 '{{ display_name }}',
 '{{ emails }}',
 '{{ entitlements }}',
@@ -651,54 +652,77 @@ userName
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: users_v2
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the users_v2 resource.
     - name: active
-      value: string
+      value: {{ active }}
       description: |
         If this user is active
     - name: display_name
-      value: string
+      value: "{{ display_name }}"
       description: |
-        String that represents a concatenation of given and family names. For example `John Smith`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update `displayName`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation
+        String that represents a concatenation of given and family names. For example \`John Smith\`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update \`displayName\`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation
     - name: emails
-      value: string
       description: |
         All the emails associated with the Databricks user.
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: entitlements
-      value: string
       description: |
         Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: external_id
-      value: string
+      value: "{{ external_id }}"
       description: |
         External ID is not currently supported. It is reserved for future use.
     - name: groups
-      value: string
       description: |
         :param id: str (optional) Databricks user ID.
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: id
-      value: string
+      value: "{{ id }}"
     - name: name
-      value: string
       description: |
-        :param roles: List[:class:`ComplexValue`] (optional) Corresponds to AWS instance profile/arn role.
+        :param roles: List[:class:\`ComplexValue\`] (optional) Corresponds to AWS instance profile/arn role.
+      value:
+        familyName: "{{ familyName }}"
+        givenName: "{{ givenName }}"
     - name: roles
-      value: string
+      value:
+        - display: "{{ display }}"
+          primary: {{ primary }}
+          $ref: "{{ $ref }}"
+          type: "{{ type }}"
+          value: "{{ value }}"
     - name: schemas
-      value: string
+      value:
+        - "{{ schemas }}"
       description: |
         The schema of the user.
     - name: user_name
-      value: string
+      value: "{{ user_name }}"
       description: |
         Email address of the Databricks user.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -743,7 +767,7 @@ Replaces a user's information with the data supplied in request.
 ```sql
 REPLACE databricks_workspace.iam.users_v2
 SET 
-active = '{{ active }}',
+active = {{ active }},
 display_name = '{{ display_name }}',
 emails = '{{ emails }}',
 entitlements = '{{ entitlements }}',

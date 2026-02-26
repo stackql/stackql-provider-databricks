@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks iam service (account-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-19",
+    "x-stackql-date-generated": "2026-02-24",
     "x-stackql-sdk-namespace": "databricks.sdk.service.iam"
   },
   "servers": [
@@ -174,7 +174,41 @@
                     "description": "Name of the rule set."
                   },
                   "rule_set": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "etag": {
+                        "type": "string",
+                        "description": "Identifies the version of the rule set returned. Etag used for versioning. The response is at least as fresh as the eTag provided. Etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a rule set from overwriting each other. It is strongly suggested that systems make use of the etag in the read -> modify -> write pattern to perform rule set updates in order to avoid race conditions that is get an etag from a GET rule set request, and pass it with the PUT update request to identify the rule set version you are updating."
+                      },
+                      "grant_rules": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "role": {
+                              "type": "string"
+                            },
+                            "principals": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "description": "Principals this grant rule applies to. A principal can be a user (for end users), a service principal (for applications and compute workloads), or an account group. Each principal has its own identifier format: * users/<USERNAME> * groups/<GROUP_NAME> * servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>"
+                            }
+                          },
+                          "required": [
+                            "role"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "etag"
+                    ],
                     "description": ":returns: :class:`RuleSetResponse`"
                   }
                 },
@@ -256,14 +290,59 @@
                     "type": "string"
                   },
                   "members": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
                     "description": ":param meta: :class:`ResourceMeta` (optional) Container for the group identifier. Workspace local versus account."
                   },
                   "meta": {
-                    "type": "string"
+                    "type": "object",
+                    "properties": {
+                      "resourceType": {
+                        "type": "string"
+                      }
+                    }
                   },
                   "roles": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
                     "description": "Indicates if the group has the admin role."
                   }
                 }
@@ -334,7 +413,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "Desired number of results per page. Default is 10000."
           },
@@ -370,7 +449,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ListSortOrder"
             },
             "description": "The order to sort the results."
           },
@@ -379,7 +458,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "Specifies the index of the first result. First item is number 1."
           }
@@ -563,11 +642,40 @@
                 "type": "object",
                 "properties": {
                   "operations": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "op": {
+                          "type": "string",
+                          "x-enum": [
+                            "add",
+                            "remove",
+                            "replace"
+                          ],
+                          "description": "Type of patch operation."
+                        },
+                        "path": {
+                          "type": "string",
+                          "description": "Selection of patch operation"
+                        },
+                        "value": {
+                          "type": "object",
+                          "description": "Value to modify"
+                        }
+                      }
+                    },
                     "description": ":param schemas: List[:class:`PatchSchema`] (optional) The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
                   },
                   "schemas": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "x-enum": [
+                        "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                      ],
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                    }
                   }
                 }
               }
@@ -641,14 +749,59 @@
                     "description": ":param members: List[:class:`ComplexValue`] (optional)"
                   },
                   "members": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   },
                   "meta": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "resourceType": {
+                        "type": "string"
+                      }
+                    },
                     "description": "Container for the group identifier. Workspace local versus account."
                   },
                   "roles": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
                     "description": "Indicates if the group has the admin role."
                   }
                 }
@@ -708,7 +861,7 @@
                 "type": "object",
                 "properties": {
                   "active": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "If this user is active"
                   },
                   "application_id": {
@@ -727,7 +880,27 @@
                     "type": "string"
                   },
                   "roles": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
                     "description": "Indicates if the group has the admin role."
                   }
                 }
@@ -798,7 +971,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "Desired number of results per page. Default is 10000."
           },
@@ -834,7 +1007,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ListSortOrder"
             },
             "description": "The order to sort the results."
           },
@@ -843,7 +1016,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "Specifies the index of the first result. First item is number 1."
           }
@@ -1027,11 +1200,40 @@
                 "type": "object",
                 "properties": {
                   "operations": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "op": {
+                          "type": "string",
+                          "x-enum": [
+                            "add",
+                            "remove",
+                            "replace"
+                          ],
+                          "description": "Type of patch operation."
+                        },
+                        "path": {
+                          "type": "string",
+                          "description": "Selection of patch operation"
+                        },
+                        "value": {
+                          "type": "object",
+                          "description": "Value to modify"
+                        }
+                      }
+                    },
                     "description": ":param schemas: List[:class:`PatchSchema`] (optional) The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
                   },
                   "schemas": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "x-enum": [
+                        "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                      ],
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                    }
                   }
                 }
               }
@@ -1097,7 +1299,7 @@
                 "type": "object",
                 "properties": {
                   "active": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "If this user is active"
                   },
                   "application_id": {
@@ -1113,7 +1315,27 @@
                     "description": ":param roles: List[:class:`ComplexValue`] (optional) Indicates if the group has the admin role."
                   },
                   "roles": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   }
                 }
               }
@@ -1172,7 +1394,7 @@
                 "type": "object",
                 "properties": {
                   "active": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "If this user is active"
                   },
                   "display_name": {
@@ -1180,7 +1402,27 @@
                     "description": "String that represents a concatenation of given and family names. For example `John Smith`."
                   },
                   "emails": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
                     "description": "All the emails associated with the Databricks user."
                   },
                   "external_id": {
@@ -1192,11 +1434,40 @@
                     "description": "Databricks user ID."
                   },
                   "name": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "familyName": {
+                        "type": "string"
+                      },
+                      "givenName": {
+                        "type": "string",
+                        "description": "Given name of the Databricks user."
+                      }
+                    },
                     "description": ":param roles: List[:class:`ComplexValue`] (optional) Indicates if the group has the admin role."
                   },
                   "roles": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   },
                   "user_name": {
                     "type": "string",
@@ -1270,7 +1541,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "Desired number of results per page. Default is 10000."
           },
@@ -1306,7 +1577,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/ListSortOrder"
             },
             "description": "The order to sort the results."
           },
@@ -1315,7 +1586,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "Specifies the index of the first result. First item is number 1."
           }
@@ -1446,7 +1717,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "Desired number of results per page. Default is 10000."
           },
@@ -1482,7 +1753,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "$ref": "#/components/schemas/GetSortOrder"
             },
             "description": "The order to sort the results."
           },
@@ -1491,7 +1762,7 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
             "description": "Specifies the index of the first result. First item is number 1."
           }
@@ -1562,11 +1833,40 @@
                 "type": "object",
                 "properties": {
                   "operations": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "op": {
+                          "type": "string",
+                          "x-enum": [
+                            "add",
+                            "remove",
+                            "replace"
+                          ],
+                          "description": "Type of patch operation."
+                        },
+                        "path": {
+                          "type": "string",
+                          "description": "Selection of patch operation"
+                        },
+                        "value": {
+                          "type": "object",
+                          "description": "Value to modify"
+                        }
+                      }
+                    },
                     "description": ":param schemas: List[:class:`PatchSchema`] (optional) The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
                   },
                   "schemas": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "x-enum": [
+                        "urn:ietf:params:scim:api:messages:2.0:PatchOp"
+                      ],
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                    }
                   }
                 }
               }
@@ -1632,7 +1932,7 @@
                 "type": "object",
                 "properties": {
                   "active": {
-                    "type": "string",
+                    "type": "boolean",
                     "description": "If this user is active"
                   },
                   "display_name": {
@@ -1640,7 +1940,27 @@
                     "description": "String that represents a concatenation of given and family names. For example `John Smith`."
                   },
                   "emails": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    },
                     "description": "All the emails associated with the Databricks user."
                   },
                   "external_id": {
@@ -1648,11 +1968,40 @@
                     "description": "External ID is not currently supported. It is reserved for future use."
                   },
                   "name": {
-                    "type": "string",
+                    "type": "object",
+                    "properties": {
+                      "familyName": {
+                        "type": "string"
+                      },
+                      "givenName": {
+                        "type": "string",
+                        "description": "Given name of the Databricks user."
+                      }
+                    },
                     "description": ":param roles: List[:class:`ComplexValue`] (optional) Indicates if the group has the admin role."
                   },
                   "roles": {
-                    "type": "string"
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "display": {
+                          "type": "string"
+                        },
+                        "primary": {
+                          "type": "boolean"
+                        },
+                        "$ref": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
                   },
                   "user_name": {
                     "type": "string",
@@ -1794,7 +2143,16 @@
                 "type": "object",
                 "properties": {
                   "permissions": {
-                    "type": "string",
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "x-enum": [
+                        "ADMIN",
+                        "UNKNOWN",
+                        "USER"
+                      ],
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                    },
                     "description": "Array of permissions assignments to update on the workspace. Valid values are \"USER\" and \"ADMIN\" (case-sensitive). If both \"USER\" and \"ADMIN\" are provided, \"ADMIN\" takes precedence. Other values will be ignored. Note that excluding this field, or providing unsupported values, will have the same effect as providing an empty list, which will result in the deletion of all permissions for the principal."
                   }
                 }
@@ -2897,21 +3255,21 @@
           "ascending",
           "descending"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "GroupSchema": {
         "type": "string",
         "x-enum": [
           "urn:ietf:params:scim:schemas:core:2.0:Group"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ListResponseSchema": {
         "type": "string",
         "x-enum": [
           "urn:ietf:params:scim:api:messages:2.0:ListResponse"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ListSortOrder": {
         "type": "string",
@@ -2919,7 +3277,7 @@
           "ascending",
           "descending"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PasswordPermissionLevel": {
         "type": "string",
@@ -2942,7 +3300,7 @@
         "x-enum": [
           "urn:ietf:params:scim:api:messages:2.0:PatchOp"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PermissionLevel": {
         "type": "string",
@@ -2982,7 +3340,7 @@
         "x-enum": [
           "urn:ietf:params:scim:schemas:core:2.0:ServicePrincipal"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "UserSchema": {
         "type": "string",
@@ -2990,7 +3348,7 @@
           "urn:ietf:params:scim:schemas:core:2.0:User",
           "urn:ietf:params:scim:schemas:extension:workspace:2.0:User"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "WorkspacePermission": {
         "type": "string",
@@ -2999,7 +3357,7 @@
           "UNKNOWN",
           "USER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       }
     }
   }

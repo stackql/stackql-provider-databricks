@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -247,7 +248,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Upper bound for items returned. Cannot be negative.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -320,23 +321,49 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: postgres_endpoints
   props:
     - name: parent
-      value: string
+      value: "{{ parent }}"
       description: Required parameter for the postgres_endpoints resource.
     - name: endpoint_id
-      value: string
+      value: "{{ endpoint_id }}"
       description: Required parameter for the postgres_endpoints resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the postgres_endpoints resource.
     - name: endpoint
-      value: string
       description: |
         The Endpoint to create.
-```
+      value:
+        create_time: "{{ create_time }}"
+        name: "{{ name }}"
+        parent: "{{ parent }}"
+        spec:
+          endpoint_type: "{{ endpoint_type }}"
+          autoscaling_limit_max_cu: {{ autoscaling_limit_max_cu }}
+          autoscaling_limit_min_cu: {{ autoscaling_limit_min_cu }}
+          disabled: {{ disabled }}
+          no_suspension: {{ no_suspension }}
+          settings:
+            pg_settings: "{{ pg_settings }}"
+          suspend_timeout_duration: "{{ suspend_timeout_duration }}"
+        status:
+          autoscaling_limit_max_cu: {{ autoscaling_limit_max_cu }}
+          autoscaling_limit_min_cu: {{ autoscaling_limit_min_cu }}
+          current_state: "{{ current_state }}"
+          disabled: {{ disabled }}
+          endpoint_type: "{{ endpoint_type }}"
+          hosts:
+            host: "{{ host }}"
+          pending_state: "{{ pending_state }}"
+          settings:
+            pg_settings: "{{ pg_settings }}"
+          suspend_timeout_duration: "{{ suspend_timeout_duration }}"
+        uid: "{{ uid }}"
+        update_time: "{{ update_time }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -102,7 +103,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tbody>
 <tr id="parameter-actor">
     <td><CopyableCode code="actor" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>:param permission: str</td>
 </tr>
 <tr id="parameter-authz_identity">
@@ -112,7 +113,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-consistency_token">
     <td><CopyableCode code="consistency_token" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>:param authz_identity: :class:`RequestAuthzIdentity`</td>
 </tr>
 <tr id="parameter-deployment_name">
@@ -132,7 +133,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-resource_info">
     <td><CopyableCode code="resource_info" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>:returns: :class:`CheckPolicyResponse`</td>
 </tr>
 </tbody>

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -148,38 +149,87 @@ task
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: serving_endpoints_pt
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the serving_endpoints_pt resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The name of the serving endpoint. This field is required and must be unique across a Databricks workspace. An endpoint name can consist of alphanumeric characters, dashes, and underscores.
     - name: config
-      value: string
       description: |
         The core config of the serving endpoint.
+      value:
+        served_entities:
+          - entity_name: "{{ entity_name }}"
+            provisioned_model_units: {{ provisioned_model_units }}
+            burst_scaling_enabled: {{ burst_scaling_enabled }}
+            entity_version: "{{ entity_version }}"
+            name: "{{ name }}"
+        traffic_config:
+          routes:
+            - traffic_percentage: {{ traffic_percentage }}
+              served_entity_name: "{{ served_entity_name }}"
+              served_model_name: "{{ served_model_name }}"
     - name: ai_gateway
-      value: string
       description: |
         The AI Gateway configuration for the serving endpoint.
+      value:
+        fallback_config:
+          enabled: {{ enabled }}
+        guardrails:
+          input:
+            invalid_keywords:
+              - "{{ invalid_keywords }}"
+            pii:
+              behavior: "{{ behavior }}"
+            safety: {{ safety }}
+            valid_topics:
+              - "{{ valid_topics }}"
+          output:
+            invalid_keywords:
+              - "{{ invalid_keywords }}"
+            pii:
+              behavior: "{{ behavior }}"
+            safety: {{ safety }}
+            valid_topics:
+              - "{{ valid_topics }}"
+        inference_table_config:
+          catalog_name: "{{ catalog_name }}"
+          enabled: {{ enabled }}
+          schema_name: "{{ schema_name }}"
+          table_name_prefix: "{{ table_name_prefix }}"
+        rate_limits:
+          - renewal_period: "{{ renewal_period }}"
+            calls: {{ calls }}
+            key: "{{ key }}"
+            principal: "{{ principal }}"
+            tokens: {{ tokens }}
+        usage_tracking_config:
+          enabled: {{ enabled }}
     - name: budget_policy_id
-      value: string
+      value: "{{ budget_policy_id }}"
       description: |
         The budget policy associated with the endpoint.
     - name: email_notifications
-      value: string
       description: |
         Email notification settings.
+      value:
+        on_update_failure:
+          - "{{ on_update_failure }}"
+        on_update_success:
+          - "{{ on_update_success }}"
     - name: tags
-      value: string
       description: |
         Tags to be attached to the serving endpoint and automatically propagated to billing logs.
-```
+      value:
+        - key: "{{ key }}"
+          value: "{{ value }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

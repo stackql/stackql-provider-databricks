@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -323,7 +324,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of connections to return. - If not set, all connections are returned (not recommended). - when set to a value greater than 0, the page length is the minimum of this value and a server configured value; - when set to 0, the page length is set to a server configured value (recommended); - when set to a value less than 0, an invalid parameter error is returned;</td>
 </tr>
 <tr id="parameter-page_token">
@@ -436,7 +437,7 @@ SELECT
 '{{ options }}' /* required */,
 '{{ comment }}',
 '{{ properties }}',
-'{{ read_only }}',
+{{ read_only }},
 '{{ deployment_name }}'
 RETURNING
 name,
@@ -462,38 +463,38 @@ url
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: connections
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the connections resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Name of the connection.
     - name: connection_type
-      value: string
+      value: "{{ connection_type }}"
       description: |
         The type of connection.
     - name: options
-      value: string
+      value: "{{ options }}"
       description: |
         A map of key-value properties attached to the securable.
     - name: comment
-      value: string
+      value: "{{ comment }}"
       description: |
         User-provided free-form text description.
     - name: properties
-      value: string
+      value: "{{ properties }}"
       description: |
         A map of key-value properties attached to the securable.
     - name: read_only
-      value: string
+      value: {{ read_only }}
       description: |
         If the connection is read only.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

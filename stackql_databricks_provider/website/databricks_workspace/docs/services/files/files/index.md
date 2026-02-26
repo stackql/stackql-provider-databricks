@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -165,12 +166,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-overwrite">
     <td><CopyableCode code="overwrite" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td></td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The maximum number of directory entries to return. The response may contain fewer entries. If the response contains a `next_page_token`, there may be more entries, even if fewer than `page_size` entries are in the response. We recommend not to set this value unless you are intentionally listing less than the complete directory contents. If unspecified, at most 1000 directory entries will be returned. The maximum value is 1000. Values above 1000 will be coerced to 1000.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -259,7 +260,7 @@ WHERE
 file_path = '{{ file_path }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
 AND contents = '{{ contents }}' --required
-AND overwrite = '{{ overwrite}}';
+AND overwrite = {{ overwrite}};
 ```
 </TabItem>
 </Tabs>

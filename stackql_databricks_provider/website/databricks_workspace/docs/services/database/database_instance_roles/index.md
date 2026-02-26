@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -255,7 +256,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-allow_missing">
     <td><CopyableCode code="allow_missing" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>This is the AIP standard name for the equivalent of Postgres' `IF EXISTS` option</td>
 </tr>
 <tr id="parameter-database_instance_name">
@@ -265,7 +266,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td></td>
 </tr>
 <tr id="parameter-page_token">
@@ -369,22 +370,36 @@ membership_role
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: database_instance_roles
   props:
     - name: instance_name
-      value: string
+      value: "{{ instance_name }}"
       description: Required parameter for the database_instance_roles resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the database_instance_roles resource.
     - name: database_instance_role
-      value: string
+      description: |
+        A DatabaseInstanceRole represents a Postgres role in a database instance.
+      value:
+        name: "{{ name }}"
+        attributes:
+          bypassrls: {{ bypassrls }}
+          createdb: {{ createdb }}
+          createrole: {{ createrole }}
+        effective_attributes:
+          bypassrls: {{ bypassrls }}
+          createdb: {{ createdb }}
+          createrole: {{ createrole }}
+        identity_type: "{{ identity_type }}"
+        instance_name: "{{ instance_name }}"
+        membership_role: "{{ membership_role }}"
     - name: database_instance_name
-      value: string
-      description: :returns: :class:`DatabaseInstanceRole`
-```
+      value: "{{ database_instance_name }}"
+      description: :returns: :class:\`DatabaseInstanceRole\`
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

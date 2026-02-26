@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -333,12 +334,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>The list of fields to update.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The maximum number of results to return.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -437,18 +438,37 @@ value_schema
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: feature_kafka_configs
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the feature_kafka_configs resource.
     - name: kafka_config
-      value: string
       description: |
-        :returns: :class:`KafkaConfig`
-```
+        :returns: :class:\`KafkaConfig\`
+      value:
+        name: "{{ name }}"
+        bootstrap_servers: "{{ bootstrap_servers }}"
+        subscription_mode:
+          assign: "{{ assign }}"
+          subscribe: "{{ subscribe }}"
+          subscribe_pattern: "{{ subscribe_pattern }}"
+        auth_config:
+          uc_service_credential_name: "{{ uc_service_credential_name }}"
+        backfill_source:
+          delta_table_source:
+            full_name: "{{ full_name }}"
+            entity_columns:
+              - "{{ entity_columns }}"
+            timeseries_column: "{{ timeseries_column }}"
+        extra_options: "{{ extra_options }}"
+        key_schema:
+          json_schema: "{{ json_schema }}"
+        value_schema:
+          json_schema: "{{ json_schema }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

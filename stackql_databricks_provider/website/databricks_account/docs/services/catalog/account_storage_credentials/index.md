@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -474,7 +475,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Force deletion even if the Storage Credential is not empty. Default is false.</td>
 </tr>
 </tbody>
@@ -575,7 +576,7 @@ metastore_id
 )
 SELECT 
 '{{ credential_info }}',
-'{{ skip_validation }}',
+{{ skip_validation }},
 '{{ account_id }}',
 '{{ metastore_id }}'
 RETURNING
@@ -585,23 +586,40 @@ credential_info
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: account_storage_credentials
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the account_storage_credentials resource.
     - name: metastore_id
-      value: string
+      value: "{{ metastore_id }}"
       description: Required parameter for the account_storage_credentials resource.
     - name: credential_info
-      value: string
       description: |
         :param skip_validation: bool (optional) Optional, default false. Supplying true to this argument skips validation of the created set of credentials.
+      value:
+        name: "{{ name }}"
+        aws_iam_role:
+          role_arn: "{{ role_arn }}"
+        azure_managed_identity:
+          access_connector_id: "{{ access_connector_id }}"
+          managed_identity_id: "{{ managed_identity_id }}"
+        azure_service_principal:
+          directory_id: "{{ directory_id }}"
+          application_id: "{{ application_id }}"
+          client_secret: "{{ client_secret }}"
+        cloudflare_api_token:
+          access_key_id: "{{ access_key_id }}"
+          secret_access_key: "{{ secret_access_key }}"
+          account_id: "{{ account_id }}"
+        comment: "{{ comment }}"
+        databricks_gcp_service_account: "{{ databricks_gcp_service_account }}"
+        read_only: {{ read_only }}
     - name: skip_validation
-      value: string
-```
+      value: {{ skip_validation }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -622,7 +640,7 @@ Updates a storage credential on the metastore. The caller must be the owner of t
 REPLACE databricks_account.catalog.account_storage_credentials
 SET 
 credential_info = '{{ credential_info }}',
-skip_validation = '{{ skip_validation }}'
+skip_validation = {{ skip_validation }}
 WHERE 
 account_id = '{{ account_id }}' --required
 AND metastore_id = '{{ metastore_id }}' --required

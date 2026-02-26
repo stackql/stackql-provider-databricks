@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -189,7 +190,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Upper bound for items returned.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -280,18 +281,23 @@ uid
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: database_catalogs
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the database_catalogs resource.
     - name: catalog
-      value: string
       description: |
-        :returns: :class:`DatabaseCatalog`
-```
+        :returns: :class:\`DatabaseCatalog\`
+      value:
+        name: "{{ name }}"
+        database_instance_name: "{{ database_instance_name }}"
+        database_name: "{{ database_name }}"
+        create_database_if_not_exists: {{ create_database_if_not_exists }}
+        uid: "{{ uid }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

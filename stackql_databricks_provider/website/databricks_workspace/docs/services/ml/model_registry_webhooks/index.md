@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -192,12 +193,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-events">
     <td><CopyableCode code="events" /></td>
-    <td><code>string</code></td>
+    <td><code>array</code></td>
     <td>Events that trigger the webhook. * `MODEL_VERSION_CREATED`: A new model version was created for the associated model. * `MODEL_VERSION_TRANSITIONED_STAGE`: A model version’s stage was changed. * `TRANSITION_REQUEST_CREATED`: A user requested a model version’s stage be transitioned. * `COMMENT_CREATED`: A user wrote a comment on a registered model. * `REGISTERED_MODEL_CREATED`: A new registered model was created. This event type can only be specified for a registry-wide webhook, which can be created by not specifying a model name in the create request. * `MODEL_VERSION_TAG_SET`: A user set a tag on the model version. * `MODEL_VERSION_TRANSITIONED_TO_STAGING`: A model version was transitioned to staging. * `MODEL_VERSION_TRANSITIONED_TO_PRODUCTION`: A model version was transitioned to production. * `MODEL_VERSION_TRANSITIONED_TO_ARCHIVED`: A model version was archived. * `TRANSITION_REQUEST_TO_STAGING_CREATED`: A user requested a model version be transitioned to staging. * `TRANSITION_REQUEST_TO_PRODUCTION_CREATED`: A user requested a model version be transitioned to production. * `TRANSITION_REQUEST_TO_ARCHIVED_CREATED`: A user requested a model version be archived. If `events` is specified, any webhook with one or more of the specified trigger events is included in the output. If `events` is not specified, webhooks of all event types are included in the output.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>:param model_name: str (optional) Registered model name If not specified, all webhooks associated with the specified events are listed, regardless of their associated model.</td>
 </tr>
 <tr id="parameter-model_name">
@@ -286,38 +287,46 @@ webhook
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: model_registry_webhooks
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the model_registry_webhooks resource.
     - name: events
-      value: string
+      value:
+        - "{{ events }}"
       description: |
-        Events that can trigger a registry webhook: * `MODEL_VERSION_CREATED`: A new model version was created for the associated model. * `MODEL_VERSION_TRANSITIONED_STAGE`: A model version’s stage was changed. * `TRANSITION_REQUEST_CREATED`: A user requested a model version’s stage be transitioned. * `COMMENT_CREATED`: A user wrote a comment on a registered model. * `REGISTERED_MODEL_CREATED`: A new registered model was created. This event type can only be specified for a registry-wide webhook, which can be created by not specifying a model name in the create request. * `MODEL_VERSION_TAG_SET`: A user set a tag on the model version. * `MODEL_VERSION_TRANSITIONED_TO_STAGING`: A model version was transitioned to staging. * `MODEL_VERSION_TRANSITIONED_TO_PRODUCTION`: A model version was transitioned to production. * `MODEL_VERSION_TRANSITIONED_TO_ARCHIVED`: A model version was archived. * `TRANSITION_REQUEST_TO_STAGING_CREATED`: A user requested a model version be transitioned to staging. * `TRANSITION_REQUEST_TO_PRODUCTION_CREATED`: A user requested a model version be transitioned to production. * `TRANSITION_REQUEST_TO_ARCHIVED_CREATED`: A user requested a model version be archived.
+        Events that can trigger a registry webhook: * \`MODEL_VERSION_CREATED\`: A new model version was created for the associated model. * \`MODEL_VERSION_TRANSITIONED_STAGE\`: A model version’s stage was changed. * \`TRANSITION_REQUEST_CREATED\`: A user requested a model version’s stage be transitioned. * \`COMMENT_CREATED\`: A user wrote a comment on a registered model. * \`REGISTERED_MODEL_CREATED\`: A new registered model was created. This event type can only be specified for a registry-wide webhook, which can be created by not specifying a model name in the create request. * \`MODEL_VERSION_TAG_SET\`: A user set a tag on the model version. * \`MODEL_VERSION_TRANSITIONED_TO_STAGING\`: A model version was transitioned to staging. * \`MODEL_VERSION_TRANSITIONED_TO_PRODUCTION\`: A model version was transitioned to production. * \`MODEL_VERSION_TRANSITIONED_TO_ARCHIVED\`: A model version was archived. * \`TRANSITION_REQUEST_TO_STAGING_CREATED\`: A user requested a model version be transitioned to staging. * \`TRANSITION_REQUEST_TO_PRODUCTION_CREATED\`: A user requested a model version be transitioned to production. * \`TRANSITION_REQUEST_TO_ARCHIVED_CREATED\`: A user requested a model version be archived.
     - name: description
-      value: string
+      value: "{{ description }}"
       description: |
         User-specified description for the webhook.
     - name: http_url_spec
-      value: string
       description: |
         External HTTPS URL called on event trigger (by using a POST request).
+      value:
+        url: "{{ url }}"
+        authorization: "{{ authorization }}"
+        enable_ssl_verification: {{ enable_ssl_verification }}
+        secret: "{{ secret }}"
     - name: job_spec
-      value: string
       description: |
         ID of the job that the webhook runs.
+      value:
+        job_id: "{{ job_id }}"
+        access_token: "{{ access_token }}"
+        workspace_url: "{{ workspace_url }}"
     - name: model_name
-      value: string
+      value: "{{ model_name }}"
       description: |
         If model name is not specified, a registry-wide webhook is created that listens for the specified events across all versions of all registered models.
     - name: status
-      value: string
+      value: "{{ status }}"
       description: |
-        Enable or disable triggering the webhook, or put the webhook into test mode. The default is `ACTIVE`: * `ACTIVE`: Webhook is triggered when an associated event happens. * `DISABLED`: Webhook is not triggered. * `TEST_MODE`: Webhook can be triggered through the test endpoint, but is not triggered on a real event.
-```
+        Enable or disable triggering the webhook, or put the webhook into test mode. The default is \`ACTIVE\`: * \`ACTIVE\`: Webhook is triggered when an associated event happens. * \`DISABLED\`: Webhook is not triggered. * \`TEST_MODE\`: Webhook can be triggered through the test endpoint, but is not triggered on a real event.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -350,12 +351,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Force deletion even if the metastore is not empty. Default is false.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Maximum number of metastores to return. - when set to a value greater than 0, the page length is the minimum of this value and a server configured value; - when set to 0, the page length is set to a server configured value (recommended); - when set to a value less than 0, an invalid parameter error is returned; - If not set, all the metastores are returned (not recommended). - Note: The number of returned metastores might be less than the specified max_results size, even zero. The only definitive indication that no further metastores can be fetched is when the next_page_token is unset from the response.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -464,7 +465,7 @@ deployment_name
 )
 SELECT 
 '{{ name }}' /* required */,
-'{{ external_access_enabled }}',
+{{ external_access_enabled }},
 '{{ region }}',
 '{{ storage_root }}',
 '{{ deployment_name }}'
@@ -493,30 +494,30 @@ updated_by
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: metastores
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the metastores resource.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         The user-specified name of the metastore.
     - name: external_access_enabled
-      value: string
+      value: {{ external_access_enabled }}
       description: |
         Whether to allow non-DBR clients to directly access entities under the metastore.
     - name: region
-      value: string
+      value: "{{ region }}"
       description: |
-        Cloud region which the metastore serves (e.g., `us-west-2`, `westus`).
+        Cloud region which the metastore serves (e.g., \`us-west-2\`, \`westus\`).
     - name: storage_root
-      value: string
+      value: "{{ storage_root }}"
       description: |
         The storage root URL for metastore
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -552,9 +553,9 @@ Updates information for a specific metastore. The caller must be a metastore adm
 UPDATE databricks_workspace.catalog.metastores
 SET 
 delta_sharing_organization_name = '{{ delta_sharing_organization_name }}',
-delta_sharing_recipient_token_lifetime_in_seconds = '{{ delta_sharing_recipient_token_lifetime_in_seconds }}',
+delta_sharing_recipient_token_lifetime_in_seconds = {{ delta_sharing_recipient_token_lifetime_in_seconds }},
 delta_sharing_scope = '{{ delta_sharing_scope }}',
-external_access_enabled = '{{ external_access_enabled }}',
+external_access_enabled = {{ external_access_enabled }},
 new_name = '{{ new_name }}',
 owner = '{{ owner }}',
 privilege_model_version = '{{ privilege_model_version }}',

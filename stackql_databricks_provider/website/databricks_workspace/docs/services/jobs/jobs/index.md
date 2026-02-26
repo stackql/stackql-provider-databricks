@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -100,7 +101,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "pause_status",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
           },
           {
             "name": "task_retry_mode",
@@ -1145,7 +1146,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "condition",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (MODEL_ALIAS_SET, MODEL_CREATED, MODEL_VERSION_READY)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (MODEL_ALIAS_SET, MODEL_CREATED, MODEL_VERSION_READY)"
               },
               {
                 "name": "aliases",
@@ -1172,7 +1173,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "pause_status",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
           },
           {
             "name": "periodic",
@@ -1395,7 +1396,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "pause_status",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
           },
           {
             "name": "task_retry_mode",
@@ -2440,7 +2441,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "condition",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (MODEL_ALIAS_SET, MODEL_CREATED, MODEL_VERSION_READY)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (MODEL_ALIAS_SET, MODEL_CREATED, MODEL_VERSION_READY)"
               },
               {
                 "name": "aliases",
@@ -2467,7 +2468,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "pause_status",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
           },
           {
             "name": "periodic",
@@ -2733,12 +2734,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-expand_tasks">
     <td><CopyableCode code="expand_tasks" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Whether to include task and cluster details in the response. Note that only the first 100 elements will be shown. Use :method:jobs/get to paginate through all tasks and clusters.</td>
 </tr>
 <tr id="parameter-limit">
     <td><CopyableCode code="limit" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The number of jobs to return. This value must be greater than 0 and less or equal to 100. The default value is 20.</td>
 </tr>
 <tr id="parameter-name">
@@ -2748,7 +2749,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-offset">
     <td><CopyableCode code="offset" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The offset of the first job to return, relative to the most recently created job. Deprecated since June 2023. Use `page_token` to iterate through the pages instead.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -2874,7 +2875,7 @@ SELECT
 '{{ git_source }}',
 '{{ health }}',
 '{{ job_clusters }}',
-'{{ max_concurrent_runs }}',
+{{ max_concurrent_runs }},
 '{{ name }}',
 '{{ notification_settings }}',
 '{{ parameters }}',
@@ -2884,7 +2885,7 @@ SELECT
 '{{ schedule }}',
 '{{ tags }}',
 '{{ tasks }}',
-'{{ timeout_seconds }}',
+{{ timeout_seconds }},
 '{{ trigger }}',
 '{{ usage_policy_id }}',
 '{{ webhook_notifications }}',
@@ -2896,116 +2897,587 @@ job_id
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: jobs
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the jobs resource.
     - name: access_control_list
-      value: string
       description: |
         List of permissions to set on the job.
+      value:
+        - group_name: "{{ group_name }}"
+          permission_level: "{{ permission_level }}"
+          service_principal_name: "{{ service_principal_name }}"
+          user_name: "{{ user_name }}"
     - name: budget_policy_id
-      value: string
+      value: "{{ budget_policy_id }}"
       description: |
-        The id of the user specified budget policy to use for this job. If not specified, a default budget policy may be applied when creating or modifying the job. See `effective_budget_policy_id` for the budget policy used by this workload.
+        The id of the user specified budget policy to use for this job. If not specified, a default budget policy may be applied when creating or modifying the job. See \`effective_budget_policy_id\` for the budget policy used by this workload.
     - name: continuous
-      value: string
       description: |
-        An optional continuous property for this job. The continuous property will ensure that there is always one run executing. Only one of `schedule` and `continuous` can be used.
+        An optional continuous property for this job. The continuous property will ensure that there is always one run executing. Only one of \`schedule\` and \`continuous\` can be used.
+      value:
+        pause_status: "{{ pause_status }}"
+        task_retry_mode: "{{ task_retry_mode }}"
     - name: deployment
-      value: string
       description: |
         Deployment information for jobs managed by external sources.
+      value:
+        kind: "{{ kind }}"
+        metadata_file_path: "{{ metadata_file_path }}"
     - name: description
-      value: string
+      value: "{{ description }}"
       description: |
         An optional description for the job. The maximum length is 27700 characters in UTF-8 encoding.
     - name: edit_mode
-      value: string
+      value: "{{ edit_mode }}"
       description: |
-        Edit mode of the job. * `UI_LOCKED`: The job is in a locked UI state and cannot be modified. * `EDITABLE`: The job is in an editable state and can be modified.
+        Edit mode of the job. * \`UI_LOCKED\`: The job is in a locked UI state and cannot be modified. * \`EDITABLE\`: The job is in an editable state and can be modified.
     - name: email_notifications
-      value: string
       description: |
         An optional set of email addresses that is notified when runs of this job begin or complete as well as when this job is deleted.
+      value:
+        no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+        on_duration_warning_threshold_exceeded:
+          - "{{ on_duration_warning_threshold_exceeded }}"
+        on_failure:
+          - "{{ on_failure }}"
+        on_start:
+          - "{{ on_start }}"
+        on_streaming_backlog_exceeded:
+          - "{{ on_streaming_backlog_exceeded }}"
+        on_success:
+          - "{{ on_success }}"
     - name: environments
-      value: string
       description: |
         A list of task execution environment specifications that can be referenced by serverless tasks of this job. For serverless notebook tasks, if the environment_key is not specified, the notebook environment will be used if present. If a jobs environment is specified, it will override the notebook environment. For other serverless tasks, the task environment is required to be specified using environment_key in the task settings.
+      value:
+        - environment_key: "{{ environment_key }}"
+          spec: "{{ spec }}"
     - name: format
-      value: string
+      value: "{{ format }}"
       description: |
-        Used to tell what is the format of the job. This field is ignored in Create/Update/Reset calls. When using the Jobs API 2.1 this value is always set to `"MULTI_TASK"`.
+        Used to tell what is the format of the job. This field is ignored in Create/Update/Reset calls. When using the Jobs API 2.1 this value is always set to \`"MULTI_TASK"\`.
     - name: git_source
-      value: string
       description: |
-        An optional specification for a remote Git repository containing the source code used by tasks. Version-controlled source code is supported by notebook, dbt, Python script, and SQL File tasks. If `git_source` is set, these tasks retrieve the file from the remote repository by default. However, this behavior can be overridden by setting `source` to `WORKSPACE` on the task. Note: dbt and SQL File tasks support only version-controlled sources. If dbt or SQL File tasks are used, `git_source` must be defined on the job.
+        An optional specification for a remote Git repository containing the source code used by tasks. Version-controlled source code is supported by notebook, dbt, Python script, and SQL File tasks. If \`git_source\` is set, these tasks retrieve the file from the remote repository by default. However, this behavior can be overridden by setting \`source\` to \`WORKSPACE\` on the task. Note: dbt and SQL File tasks support only version-controlled sources. If dbt or SQL File tasks are used, \`git_source\` must be defined on the job.
+      value:
+        git_url: "{{ git_url }}"
+        git_provider: "{{ git_provider }}"
+        git_branch: "{{ git_branch }}"
+        git_commit: "{{ git_commit }}"
+        git_snapshot:
+          used_commit: "{{ used_commit }}"
+        git_tag: "{{ git_tag }}"
+        job_source:
+          job_config_path: "{{ job_config_path }}"
+          import_from_git_branch: "{{ import_from_git_branch }}"
+          dirty_state: "{{ dirty_state }}"
     - name: health
-      value: string
       description: |
-        :param job_clusters: List[:class:`JobCluster`] (optional) A list of job cluster specifications that can be shared and reused by tasks of this job. Libraries cannot be declared in a shared job cluster. You must declare dependent libraries in task settings.
+        :param job_clusters: List[:class:\`JobCluster\`] (optional) A list of job cluster specifications that can be shared and reused by tasks of this job. Libraries cannot be declared in a shared job cluster. You must declare dependent libraries in task settings.
+      value:
+        rules:
+          - metric: "{{ metric }}"
+            op: "{{ op }}"
+            value: {{ value }}
     - name: job_clusters
-      value: string
+      value:
+        - job_cluster_key: "{{ job_cluster_key }}"
+          new_cluster: "{{ new_cluster }}"
     - name: max_concurrent_runs
-      value: string
+      value: {{ max_concurrent_runs }}
       description: |
-        An optional maximum allowed number of concurrent runs of the job. Set this value if you want to be able to execute multiple runs of the same job concurrently. This is useful for example if you trigger your job on a frequent schedule and want to allow consecutive runs to overlap with each other, or if you want to trigger multiple runs which differ by their input parameters. This setting affects only new runs. For example, suppose the job’s concurrency is 4 and there are 4 concurrent active runs. Then setting the concurrency to 3 won’t kill any of the active runs. However, from then on, new runs are skipped unless there are fewer than 3 active runs. This value cannot exceed 1000. Setting this value to `0` causes all new runs to be skipped.
+        An optional maximum allowed number of concurrent runs of the job. Set this value if you want to be able to execute multiple runs of the same job concurrently. This is useful for example if you trigger your job on a frequent schedule and want to allow consecutive runs to overlap with each other, or if you want to trigger multiple runs which differ by their input parameters. This setting affects only new runs. For example, suppose the job’s concurrency is 4 and there are 4 concurrent active runs. Then setting the concurrency to 3 won’t kill any of the active runs. However, from then on, new runs are skipped unless there are fewer than 3 active runs. This value cannot exceed 1000. Setting this value to \`0\` causes all new runs to be skipped.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         An optional name for the job. The maximum length is 4096 bytes in UTF-8 encoding.
     - name: notification_settings
-      value: string
       description: |
-        Optional notification settings that are used when sending notifications to each of the `email_notifications` and `webhook_notifications` for this job.
+        Optional notification settings that are used when sending notifications to each of the \`email_notifications\` and \`webhook_notifications\` for this job.
+      value:
+        no_alert_for_canceled_runs: {{ no_alert_for_canceled_runs }}
+        no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
     - name: parameters
-      value: string
       description: |
         Job-level parameter definitions
+      value:
+        - name: "{{ name }}"
+          default: "{{ default }}"
     - name: performance_target
-      value: string
+      value: "{{ performance_target }}"
       description: |
-        The performance mode on a serverless job. This field determines the level of compute performance or cost-efficiency for the run. The performance target does not apply to tasks that run on Serverless GPU compute. * `STANDARD`: Enables cost-efficient execution of serverless workloads. * `PERFORMANCE_OPTIMIZED`: Prioritizes fast startup and execution times through rapid scaling and optimized cluster performance.
+        The performance mode on a serverless job. This field determines the level of compute performance or cost-efficiency for the run. The performance target does not apply to tasks that run on Serverless GPU compute. * \`STANDARD\`: Enables cost-efficient execution of serverless workloads. * \`PERFORMANCE_OPTIMIZED\`: Prioritizes fast startup and execution times through rapid scaling and optimized cluster performance.
     - name: queue
-      value: string
       description: |
         The queue settings of the job.
+      value:
+        enabled: {{ enabled }}
     - name: run_as
-      value: string
       description: |
-        The user or service principal that the job runs as, if specified in the request. This field indicates the explicit configuration of `run_as` for the job. To find the value in all cases, explicit or implicit, use `run_as_user_name`.
+        The user or service principal that the job runs as, if specified in the request. This field indicates the explicit configuration of \`run_as\` for the job. To find the value in all cases, explicit or implicit, use \`run_as_user_name\`.
+      value:
+        group_name: "{{ group_name }}"
+        service_principal_name: "{{ service_principal_name }}"
+        user_name: "{{ user_name }}"
     - name: schedule
-      value: string
       description: |
-        An optional periodic schedule for this job. The default behavior is that the job only runs when triggered by clicking “Run Now” in the Jobs UI or sending an API request to `runNow`.
+        An optional periodic schedule for this job. The default behavior is that the job only runs when triggered by clicking “Run Now” in the Jobs UI or sending an API request to \`runNow\`.
+      value:
+        quartz_cron_expression: "{{ quartz_cron_expression }}"
+        timezone_id: "{{ timezone_id }}"
+        pause_status: "{{ pause_status }}"
     - name: tags
-      value: string
+      value: "{{ tags }}"
       description: |
         A map of tags associated with the job. These are forwarded to the cluster as cluster tags for jobs clusters, and are subject to the same limitations as cluster tags. A maximum of 25 tags can be added to the job.
     - name: tasks
-      value: string
       description: |
-        A list of task specifications to be executed by this job. It supports up to 1000 elements in write endpoints (:method:jobs/create, :method:jobs/reset, :method:jobs/update, :method:jobs/submit). Read endpoints return only 100 tasks. If more than 100 tasks are available, you can paginate through them using :method:jobs/get. Use the `next_page_token` field at the object root to determine if more results are available.
+        A list of task specifications to be executed by this job. It supports up to 1000 elements in write endpoints (:method:jobs/create, :method:jobs/reset, :method:jobs/update, :method:jobs/submit). Read endpoints return only 100 tasks. If more than 100 tasks are available, you can paginate through them using :method:jobs/get. Use the \`next_page_token\` field at the object root to determine if more results are available.
+      value:
+        - task_key: "{{ task_key }}"
+          clean_rooms_notebook_task:
+            clean_room_name: "{{ clean_room_name }}"
+            notebook_name: "{{ notebook_name }}"
+            etag: "{{ etag }}"
+            notebook_base_parameters: "{{ notebook_base_parameters }}"
+          compute:
+            hardware_accelerator: "{{ hardware_accelerator }}"
+          condition_task:
+            op: "{{ op }}"
+            left: "{{ left }}"
+            right: "{{ right }}"
+          dashboard_task:
+            dashboard_id: "{{ dashboard_id }}"
+            filters: "{{ filters }}"
+            subscription:
+              custom_subject: "{{ custom_subject }}"
+              paused: {{ paused }}
+              subscribers:
+                - destination_id: "{{ destination_id }}"
+                  user_name: "{{ user_name }}"
+            warehouse_id: "{{ warehouse_id }}"
+          dbt_cloud_task:
+            connection_resource_name: "{{ connection_resource_name }}"
+            dbt_cloud_job_id: {{ dbt_cloud_job_id }}
+          dbt_platform_task:
+            connection_resource_name: "{{ connection_resource_name }}"
+            dbt_platform_job_id: "{{ dbt_platform_job_id }}"
+          dbt_task:
+            commands:
+              - "{{ commands }}"
+            catalog: "{{ catalog }}"
+            profiles_directory: "{{ profiles_directory }}"
+            project_directory: "{{ project_directory }}"
+            schema: "{{ schema }}"
+            source: "{{ source }}"
+            warehouse_id: "{{ warehouse_id }}"
+          depends_on: "{{ depends_on }}"
+          description: "{{ description }}"
+          disable_auto_optimization: {{ disable_auto_optimization }}
+          disabled: {{ disabled }}
+          email_notifications:
+            no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+            on_duration_warning_threshold_exceeded:
+              - "{{ on_duration_warning_threshold_exceeded }}"
+            on_failure:
+              - "{{ on_failure }}"
+            on_start:
+              - "{{ on_start }}"
+            on_streaming_backlog_exceeded:
+              - "{{ on_streaming_backlog_exceeded }}"
+            on_success:
+              - "{{ on_success }}"
+          environment_key: "{{ environment_key }}"
+          existing_cluster_id: "{{ existing_cluster_id }}"
+          for_each_task:
+            inputs: "{{ inputs }}"
+            task:
+              task_key: "{{ task_key }}"
+              clean_rooms_notebook_task:
+                clean_room_name: "{{ clean_room_name }}"
+                notebook_name: "{{ notebook_name }}"
+                etag: "{{ etag }}"
+                notebook_base_parameters: "{{ notebook_base_parameters }}"
+              compute:
+                hardware_accelerator: "{{ hardware_accelerator }}"
+              condition_task:
+                op: "{{ op }}"
+                left: "{{ left }}"
+                right: "{{ right }}"
+              dashboard_task:
+                dashboard_id: "{{ dashboard_id }}"
+                filters: "{{ filters }}"
+                subscription:
+                  custom_subject: "{{ custom_subject }}"
+                  paused: {{ paused }}
+                  subscribers: "{{ subscribers }}"
+                warehouse_id: "{{ warehouse_id }}"
+              dbt_cloud_task:
+                connection_resource_name: "{{ connection_resource_name }}"
+                dbt_cloud_job_id: {{ dbt_cloud_job_id }}
+              dbt_platform_task:
+                connection_resource_name: "{{ connection_resource_name }}"
+                dbt_platform_job_id: "{{ dbt_platform_job_id }}"
+              dbt_task:
+                commands:
+                  - "{{ commands }}"
+                catalog: "{{ catalog }}"
+                profiles_directory: "{{ profiles_directory }}"
+                project_directory: "{{ project_directory }}"
+                schema: "{{ schema }}"
+                source: "{{ source }}"
+                warehouse_id: "{{ warehouse_id }}"
+              depends_on:
+                - task_key: "{{ task_key }}"
+                  outcome: "{{ outcome }}"
+              description: "{{ description }}"
+              disable_auto_optimization: {{ disable_auto_optimization }}
+              disabled: {{ disabled }}
+              email_notifications:
+                no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+                on_duration_warning_threshold_exceeded:
+                  - "{{ on_duration_warning_threshold_exceeded }}"
+                on_failure:
+                  - "{{ on_failure }}"
+                on_start:
+                  - "{{ on_start }}"
+                on_streaming_backlog_exceeded:
+                  - "{{ on_streaming_backlog_exceeded }}"
+                on_success:
+                  - "{{ on_success }}"
+              environment_key: "{{ environment_key }}"
+              existing_cluster_id: "{{ existing_cluster_id }}"
+              for_each_task:
+                inputs: "{{ inputs }}"
+                task:
+                  task_key: "{{ task_key }}"
+                  clean_rooms_notebook_task: "{{ clean_rooms_notebook_task }}"
+                  compute: "{{ compute }}"
+                  condition_task: "{{ condition_task }}"
+                  dashboard_task: "{{ dashboard_task }}"
+                  dbt_cloud_task: "{{ dbt_cloud_task }}"
+                  dbt_platform_task: "{{ dbt_platform_task }}"
+                  dbt_task: "{{ dbt_task }}"
+                  depends_on: "{{ depends_on }}"
+                  description: "{{ description }}"
+                  disable_auto_optimization: {{ disable_auto_optimization }}
+                  disabled: {{ disabled }}
+                  email_notifications: "{{ email_notifications }}"
+                  environment_key: "{{ environment_key }}"
+                  existing_cluster_id: "{{ existing_cluster_id }}"
+                  for_each_task: "{{ for_each_task }}"
+                  gen_ai_compute_task: "{{ gen_ai_compute_task }}"
+                  health: "{{ health }}"
+                  job_cluster_key: "{{ job_cluster_key }}"
+                  libraries: "{{ libraries }}"
+                  max_retries: {{ max_retries }}
+                  min_retry_interval_millis: {{ min_retry_interval_millis }}
+                  new_cluster: "{{ new_cluster }}"
+                  notebook_task: "{{ notebook_task }}"
+                  notification_settings: "{{ notification_settings }}"
+                  pipeline_task: "{{ pipeline_task }}"
+                  power_bi_task: "{{ power_bi_task }}"
+                  python_wheel_task: "{{ python_wheel_task }}"
+                  retry_on_timeout: {{ retry_on_timeout }}
+                  run_if: "{{ run_if }}"
+                  run_job_task: "{{ run_job_task }}"
+                  spark_jar_task: "{{ spark_jar_task }}"
+                  spark_python_task: "{{ spark_python_task }}"
+                  spark_submit_task: "{{ spark_submit_task }}"
+                  sql_task: "{{ sql_task }}"
+                  timeout_seconds: {{ timeout_seconds }}
+                  webhook_notifications: "{{ webhook_notifications }}"
+                concurrency: {{ concurrency }}
+              gen_ai_compute_task:
+                dl_runtime_image: "{{ dl_runtime_image }}"
+                command: "{{ command }}"
+                compute:
+                  num_gpus: {{ num_gpus }}
+                  gpu_node_pool_id: "{{ gpu_node_pool_id }}"
+                  gpu_type: "{{ gpu_type }}"
+                mlflow_experiment_name: "{{ mlflow_experiment_name }}"
+                source: "{{ source }}"
+                training_script_path: "{{ training_script_path }}"
+                yaml_parameters: "{{ yaml_parameters }}"
+                yaml_parameters_file_path: "{{ yaml_parameters_file_path }}"
+              health:
+                rules:
+                  - metric: "{{ metric }}"
+                    op: "{{ op }}"
+                    value: {{ value }}
+              job_cluster_key: "{{ job_cluster_key }}"
+              libraries: "{{ libraries }}"
+              max_retries: {{ max_retries }}
+              min_retry_interval_millis: {{ min_retry_interval_millis }}
+              new_cluster: "{{ new_cluster }}"
+              notebook_task:
+                notebook_path: "{{ notebook_path }}"
+                base_parameters: "{{ base_parameters }}"
+                source: "{{ source }}"
+                warehouse_id: "{{ warehouse_id }}"
+              notification_settings:
+                alert_on_last_attempt: {{ alert_on_last_attempt }}
+                no_alert_for_canceled_runs: {{ no_alert_for_canceled_runs }}
+                no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+              pipeline_task:
+                pipeline_id: "{{ pipeline_id }}"
+                full_refresh: {{ full_refresh }}
+              power_bi_task:
+                connection_resource_name: "{{ connection_resource_name }}"
+                power_bi_model:
+                  authentication_method: "{{ authentication_method }}"
+                  model_name: "{{ model_name }}"
+                  overwrite_existing: {{ overwrite_existing }}
+                  storage_mode: "{{ storage_mode }}"
+                  workspace_name: "{{ workspace_name }}"
+                refresh_after_update: {{ refresh_after_update }}
+                tables:
+                  - catalog: "{{ catalog }}"
+                    name: "{{ name }}"
+                    schema: "{{ schema }}"
+                    storage_mode: "{{ storage_mode }}"
+                warehouse_id: "{{ warehouse_id }}"
+              python_wheel_task:
+                package_name: "{{ package_name }}"
+                entry_point: "{{ entry_point }}"
+                named_parameters: "{{ named_parameters }}"
+                parameters:
+                  - "{{ parameters }}"
+              retry_on_timeout: {{ retry_on_timeout }}
+              run_if: "{{ run_if }}"
+              run_job_task:
+                job_id: {{ job_id }}
+                dbt_commands:
+                  - "{{ dbt_commands }}"
+                jar_params:
+                  - "{{ jar_params }}"
+                job_parameters: "{{ job_parameters }}"
+                notebook_params: "{{ notebook_params }}"
+                pipeline_params:
+                  full_refresh: {{ full_refresh }}
+                python_named_params: "{{ python_named_params }}"
+                python_params:
+                  - "{{ python_params }}"
+                spark_submit_params:
+                  - "{{ spark_submit_params }}"
+                sql_params: "{{ sql_params }}"
+              spark_jar_task:
+                jar_uri: "{{ jar_uri }}"
+                main_class_name: "{{ main_class_name }}"
+                parameters:
+                  - "{{ parameters }}"
+                run_as_repl: {{ run_as_repl }}
+              spark_python_task:
+                python_file: "{{ python_file }}"
+                parameters:
+                  - "{{ parameters }}"
+                source: "{{ source }}"
+              spark_submit_task:
+                parameters:
+                  - "{{ parameters }}"
+              sql_task:
+                warehouse_id: "{{ warehouse_id }}"
+                alert:
+                  alert_id: "{{ alert_id }}"
+                  pause_subscriptions: {{ pause_subscriptions }}
+                  subscriptions: "{{ subscriptions }}"
+                dashboard:
+                  dashboard_id: "{{ dashboard_id }}"
+                  custom_subject: "{{ custom_subject }}"
+                  pause_subscriptions: {{ pause_subscriptions }}
+                  subscriptions: "{{ subscriptions }}"
+                file:
+                  path: "{{ path }}"
+                  source: "{{ source }}"
+                parameters: "{{ parameters }}"
+                query:
+                  query_id: "{{ query_id }}"
+              timeout_seconds: {{ timeout_seconds }}
+              webhook_notifications:
+                on_duration_warning_threshold_exceeded:
+                  - id: "{{ id }}"
+                on_failure:
+                  - id: "{{ id }}"
+                on_start:
+                  - id: "{{ id }}"
+                on_streaming_backlog_exceeded:
+                  - id: "{{ id }}"
+                on_success:
+                  - id: "{{ id }}"
+            concurrency: {{ concurrency }}
+          gen_ai_compute_task:
+            dl_runtime_image: "{{ dl_runtime_image }}"
+            command: "{{ command }}"
+            compute:
+              num_gpus: {{ num_gpus }}
+              gpu_node_pool_id: "{{ gpu_node_pool_id }}"
+              gpu_type: "{{ gpu_type }}"
+            mlflow_experiment_name: "{{ mlflow_experiment_name }}"
+            source: "{{ source }}"
+            training_script_path: "{{ training_script_path }}"
+            yaml_parameters: "{{ yaml_parameters }}"
+            yaml_parameters_file_path: "{{ yaml_parameters_file_path }}"
+          health:
+            rules:
+              - metric: "{{ metric }}"
+                op: "{{ op }}"
+                value: {{ value }}
+          job_cluster_key: "{{ job_cluster_key }}"
+          libraries: "{{ libraries }}"
+          max_retries: {{ max_retries }}
+          min_retry_interval_millis: {{ min_retry_interval_millis }}
+          new_cluster: "{{ new_cluster }}"
+          notebook_task:
+            notebook_path: "{{ notebook_path }}"
+            base_parameters: "{{ base_parameters }}"
+            source: "{{ source }}"
+            warehouse_id: "{{ warehouse_id }}"
+          notification_settings:
+            alert_on_last_attempt: {{ alert_on_last_attempt }}
+            no_alert_for_canceled_runs: {{ no_alert_for_canceled_runs }}
+            no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
+          pipeline_task:
+            pipeline_id: "{{ pipeline_id }}"
+            full_refresh: {{ full_refresh }}
+          power_bi_task:
+            connection_resource_name: "{{ connection_resource_name }}"
+            power_bi_model:
+              authentication_method: "{{ authentication_method }}"
+              model_name: "{{ model_name }}"
+              overwrite_existing: {{ overwrite_existing }}
+              storage_mode: "{{ storage_mode }}"
+              workspace_name: "{{ workspace_name }}"
+            refresh_after_update: {{ refresh_after_update }}
+            tables:
+              - catalog: "{{ catalog }}"
+                name: "{{ name }}"
+                schema: "{{ schema }}"
+                storage_mode: "{{ storage_mode }}"
+            warehouse_id: "{{ warehouse_id }}"
+          python_wheel_task:
+            package_name: "{{ package_name }}"
+            entry_point: "{{ entry_point }}"
+            named_parameters: "{{ named_parameters }}"
+            parameters:
+              - "{{ parameters }}"
+          retry_on_timeout: {{ retry_on_timeout }}
+          run_if: "{{ run_if }}"
+          run_job_task:
+            job_id: {{ job_id }}
+            dbt_commands:
+              - "{{ dbt_commands }}"
+            jar_params:
+              - "{{ jar_params }}"
+            job_parameters: "{{ job_parameters }}"
+            notebook_params: "{{ notebook_params }}"
+            pipeline_params:
+              full_refresh: {{ full_refresh }}
+            python_named_params: "{{ python_named_params }}"
+            python_params:
+              - "{{ python_params }}"
+            spark_submit_params:
+              - "{{ spark_submit_params }}"
+            sql_params: "{{ sql_params }}"
+          spark_jar_task:
+            jar_uri: "{{ jar_uri }}"
+            main_class_name: "{{ main_class_name }}"
+            parameters:
+              - "{{ parameters }}"
+            run_as_repl: {{ run_as_repl }}
+          spark_python_task:
+            python_file: "{{ python_file }}"
+            parameters:
+              - "{{ parameters }}"
+            source: "{{ source }}"
+          spark_submit_task:
+            parameters:
+              - "{{ parameters }}"
+          sql_task:
+            warehouse_id: "{{ warehouse_id }}"
+            alert:
+              alert_id: "{{ alert_id }}"
+              pause_subscriptions: {{ pause_subscriptions }}
+              subscriptions:
+                - destination_id: "{{ destination_id }}"
+                  user_name: "{{ user_name }}"
+            dashboard:
+              dashboard_id: "{{ dashboard_id }}"
+              custom_subject: "{{ custom_subject }}"
+              pause_subscriptions: {{ pause_subscriptions }}
+              subscriptions:
+                - destination_id: "{{ destination_id }}"
+                  user_name: "{{ user_name }}"
+            file:
+              path: "{{ path }}"
+              source: "{{ source }}"
+            parameters: "{{ parameters }}"
+            query:
+              query_id: "{{ query_id }}"
+          timeout_seconds: {{ timeout_seconds }}
+          webhook_notifications:
+            on_duration_warning_threshold_exceeded:
+              - id: "{{ id }}"
+            on_failure:
+              - id: "{{ id }}"
+            on_start:
+              - id: "{{ id }}"
+            on_streaming_backlog_exceeded:
+              - id: "{{ id }}"
+            on_success:
+              - id: "{{ id }}"
     - name: timeout_seconds
-      value: string
+      value: {{ timeout_seconds }}
       description: |
-        An optional timeout applied to each run of this job. A value of `0` means no timeout.
+        An optional timeout applied to each run of this job. A value of \`0\` means no timeout.
     - name: trigger
-      value: string
       description: |
-        A configuration to trigger a run when certain conditions are met. The default behavior is that the job runs only when triggered by clicking “Run Now” in the Jobs UI or sending an API request to `runNow`.
+        A configuration to trigger a run when certain conditions are met. The default behavior is that the job runs only when triggered by clicking “Run Now” in the Jobs UI or sending an API request to \`runNow\`.
+      value:
+        file_arrival:
+          url: "{{ url }}"
+          min_time_between_triggers_seconds: {{ min_time_between_triggers_seconds }}
+          wait_after_last_change_seconds: {{ wait_after_last_change_seconds }}
+        model:
+          condition: "{{ condition }}"
+          aliases:
+            - "{{ aliases }}"
+          min_time_between_triggers_seconds: {{ min_time_between_triggers_seconds }}
+          securable_name: "{{ securable_name }}"
+          wait_after_last_change_seconds: {{ wait_after_last_change_seconds }}
+        pause_status: "{{ pause_status }}"
+        periodic:
+          interval: {{ interval }}
+          unit: "{{ unit }}"
+        table_update:
+          table_names:
+            - "{{ table_names }}"
+          condition: "{{ condition }}"
+          min_time_between_triggers_seconds: {{ min_time_between_triggers_seconds }}
+          wait_after_last_change_seconds: {{ wait_after_last_change_seconds }}
     - name: usage_policy_id
-      value: string
+      value: "{{ usage_policy_id }}"
       description: |
-        The id of the user specified usage policy to use for this job. If not specified, a default usage policy may be applied when creating or modifying the job. See `effective_usage_policy_id` for the usage policy used by this workload.
+        The id of the user specified usage policy to use for this job. If not specified, a default usage policy may be applied when creating or modifying the job. See \`effective_usage_policy_id\` for the usage policy used by this workload.
     - name: webhook_notifications
-      value: string
       description: |
         A collection of system notification IDs to notify when runs of this job begin or complete.
-```
+      value:
+        on_duration_warning_threshold_exceeded:
+          - id: "{{ id }}"
+        on_failure:
+          - id: "{{ id }}"
+        on_start:
+          - id: "{{ id }}"
+        on_streaming_backlog_exceeded:
+          - id: "{{ id }}"
+        on_success:
+          - id: "{{ id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

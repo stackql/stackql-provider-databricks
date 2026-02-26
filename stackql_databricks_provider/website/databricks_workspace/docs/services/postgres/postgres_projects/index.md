@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -257,12 +258,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>The list of fields to update. If unspecified, all fields will be updated when possible.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Upper bound for items returned. Cannot be negative.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -331,21 +332,48 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: postgres_projects
   props:
     - name: project_id
-      value: string
+      value: "{{ project_id }}"
       description: Required parameter for the postgres_projects resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the postgres_projects resource.
     - name: project
-      value: string
       description: |
         The Project to create.
-```
+      value:
+        create_time: "{{ create_time }}"
+        name: "{{ name }}"
+        spec:
+          default_endpoint_settings:
+            autoscaling_limit_max_cu: {{ autoscaling_limit_max_cu }}
+            autoscaling_limit_min_cu: {{ autoscaling_limit_min_cu }}
+            no_suspension: {{ no_suspension }}
+            pg_settings: "{{ pg_settings }}"
+            suspend_timeout_duration: "{{ suspend_timeout_duration }}"
+          display_name: "{{ display_name }}"
+          history_retention_duration: "{{ history_retention_duration }}"
+          pg_version: {{ pg_version }}
+        status:
+          branch_logical_size_limit_bytes: {{ branch_logical_size_limit_bytes }}
+          default_endpoint_settings:
+            autoscaling_limit_max_cu: {{ autoscaling_limit_max_cu }}
+            autoscaling_limit_min_cu: {{ autoscaling_limit_min_cu }}
+            no_suspension: {{ no_suspension }}
+            pg_settings: "{{ pg_settings }}"
+            suspend_timeout_duration: "{{ suspend_timeout_duration }}"
+          display_name: "{{ display_name }}"
+          history_retention_duration: "{{ history_retention_duration }}"
+          owner: "{{ owner }}"
+          pg_version: {{ pg_version }}
+          synthetic_storage_size_bytes: {{ synthetic_storage_size_bytes }}
+        uid: "{{ uid }}"
+        update_time: "{{ update_time }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

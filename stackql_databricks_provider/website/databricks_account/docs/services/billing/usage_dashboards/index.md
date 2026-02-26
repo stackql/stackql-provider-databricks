@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -112,7 +113,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-workspace_id">
     <td><CopyableCode code="workspace_id" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>The workspace ID of the workspace in which the usage dashboard is created.</td>
 </tr>
 </tbody>
@@ -167,7 +168,7 @@ account_id
 SELECT 
 '{{ dashboard_type }}',
 '{{ major_version }}',
-'{{ workspace_id }}',
+{{ workspace_id }},
 '{{ account_id }}'
 RETURNING
 dashboard_id
@@ -176,25 +177,25 @@ dashboard_id
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: usage_dashboards
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the usage_dashboards resource.
     - name: dashboard_type
-      value: string
+      value: "{{ dashboard_type }}"
       description: |
         Workspace level usage dashboard shows usage data for the specified workspace ID. Global level usage dashboard shows usage data for all workspaces in the account.
     - name: major_version
-      value: string
+      value: "{{ major_version }}"
       description: |
         The major version of the usage dashboard template to use. Defaults to VERSION_1.
     - name: workspace_id
-      value: string
+      value: {{ workspace_id }}
       description: |
         The workspace ID of the workspace in which the usage dashboard is created.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

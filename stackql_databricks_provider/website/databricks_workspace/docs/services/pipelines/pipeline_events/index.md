@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -326,12 +327,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Max number of entries to return in a single page. The system may return fewer than max_results events in a response, even if there are more events available.</td>
 </tr>
 <tr id="parameter-order_by">
     <td><CopyableCode code="order_by" /></td>
-    <td><code>string</code></td>
+    <td><code>array</code></td>
     <td>A string indicating a sort order by timestamp for the results, for example, ["timestamp asc"]. The sort order can be ascending or descending. By default, events are returned in descending order by timestamp.</td>
 </tr>
 <tr id="parameter-page_token">

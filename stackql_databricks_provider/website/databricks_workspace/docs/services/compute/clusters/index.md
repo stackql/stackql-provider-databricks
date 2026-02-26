@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -2794,12 +2795,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-filter_by">
     <td><CopyableCode code="filter_by" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>Filters to apply to the list of clusters.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Use this field to specify the maximum number of results to be returned by the server. The server may further constrain the maximum number of results returned in a single page.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -2809,7 +2810,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-sort_by">
     <td><CopyableCode code="sort_by" /></td>
-    <td><code>string</code></td>
+    <td><code>object</code></td>
     <td>Sort the list of clusters by a specific criteria.</td>
 </tr>
 </tbody>
@@ -3012,9 +3013,9 @@ deployment_name
 )
 SELECT 
 '{{ spark_version }}' /* required */,
-'{{ apply_policy_default_values }}',
+{{ apply_policy_default_values }},
 '{{ autoscale }}',
-'{{ autotermination_minutes }}',
+{{ autotermination_minutes }},
 '{{ aws_attributes }}',
 '{{ azure_attributes }}',
 '{{ clone_from }}',
@@ -3026,24 +3027,24 @@ SELECT
 '{{ driver_instance_pool_id }}',
 '{{ driver_node_type_flexibility }}',
 '{{ driver_node_type_id }}',
-'{{ enable_elastic_disk }}',
-'{{ enable_local_disk_encryption }}',
+{{ enable_elastic_disk }},
+{{ enable_local_disk_encryption }},
 '{{ gcp_attributes }}',
 '{{ init_scripts }}',
 '{{ instance_pool_id }}',
-'{{ is_single_node }}',
+{{ is_single_node }},
 '{{ kind }}',
 '{{ node_type_id }}',
-'{{ num_workers }}',
+{{ num_workers }},
 '{{ policy_id }}',
-'{{ remote_disk_throughput }}',
+{{ remote_disk_throughput }},
 '{{ runtime_engine }}',
 '{{ single_user_name }}',
 '{{ spark_conf }}',
 '{{ spark_env_vars }}',
 '{{ ssh_public_keys }}',
-'{{ total_initial_remote_disk_size }}',
-'{{ use_ml_runtime }}',
+{{ total_initial_remote_disk_size }},
+{{ use_ml_runtime }},
 '{{ worker_node_type_flexibility }}',
 '{{ workload_type }}',
 '{{ deployment_name }}'
@@ -3105,150 +3106,220 @@ workload_type
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: clusters
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the clusters resource.
     - name: spark_version
-      value: string
+      value: "{{ spark_version }}"
       description: |
-        The Spark version of the cluster, e.g. `3.3.x-scala2.11`. A list of available Spark versions can be retrieved by using the :method:clusters/sparkVersions API call.
+        The Spark version of the cluster, e.g. \`3.3.x-scala2.11\`. A list of available Spark versions can be retrieved by using the :method:clusters/sparkVersions API call.
     - name: apply_policy_default_values
-      value: string
+      value: {{ apply_policy_default_values }}
       description: |
         When set to true, fixed and default values from the policy will be used for fields that are omitted. When set to false, only fixed values from the policy will be applied.
     - name: autoscale
-      value: string
       description: |
         Parameters needed in order to automatically scale clusters up and down based on load. Note: autoscaling works best with DB runtime versions 3.0 or later.
+      value:
+        max_workers: {{ max_workers }}
+        min_workers: {{ min_workers }}
     - name: autotermination_minutes
-      value: string
+      value: {{ autotermination_minutes }}
       description: |
         Automatically terminates the cluster after it is inactive for this time in minutes. If not set, this cluster will not be automatically terminated. If specified, the threshold must be between 10 and 10000 minutes. Users can also set this value to 0 to explicitly disable automatic termination.
     - name: aws_attributes
-      value: string
       description: |
         Attributes related to clusters running on Amazon Web Services. If not specified at cluster creation, a set of default values will be used.
+      value:
+        availability: "{{ availability }}"
+        ebs_volume_count: {{ ebs_volume_count }}
+        ebs_volume_iops: {{ ebs_volume_iops }}
+        ebs_volume_size: {{ ebs_volume_size }}
+        ebs_volume_throughput: {{ ebs_volume_throughput }}
+        ebs_volume_type: "{{ ebs_volume_type }}"
+        first_on_demand: {{ first_on_demand }}
+        instance_profile_arn: "{{ instance_profile_arn }}"
+        spot_bid_price_percent: {{ spot_bid_price_percent }}
+        zone_id: "{{ zone_id }}"
     - name: azure_attributes
-      value: string
       description: |
         Attributes related to clusters running on Microsoft Azure. If not specified at cluster creation, a set of default values will be used.
+      value:
+        availability: "{{ availability }}"
+        first_on_demand: {{ first_on_demand }}
+        log_analytics_info:
+          log_analytics_primary_key: "{{ log_analytics_primary_key }}"
+          log_analytics_workspace_id: "{{ log_analytics_workspace_id }}"
+        spot_bid_max_price: {{ spot_bid_max_price }}
     - name: clone_from
-      value: string
       description: |
         When specified, this clones libraries from a source cluster during the creation of a new cluster.
+      value:
+        source_cluster_id: "{{ source_cluster_id }}"
     - name: cluster_log_conf
-      value: string
       description: |
-        The configuration for delivering spark logs to a long-term storage destination. Three kinds of destinations (DBFS, S3 and Unity Catalog volumes) are supported. Only one destination can be specified for one cluster. If the conf is given, the logs will be delivered to the destination every `5 mins`. The destination of driver logs is `$destination/$clusterId/driver`, while the destination of executor logs is `$destination/$clusterId/executor`.
+        The configuration for delivering spark logs to a long-term storage destination. Three kinds of destinations (DBFS, S3 and Unity Catalog volumes) are supported. Only one destination can be specified for one cluster. If the conf is given, the logs will be delivered to the destination every \`5 mins\`. The destination of driver logs is \`$destination/$clusterId/driver\`, while the destination of executor logs is \`$destination/$clusterId/executor\`.
+      value:
+        dbfs:
+          destination: "{{ destination }}"
+        s3:
+          destination: "{{ destination }}"
+          canned_acl: "{{ canned_acl }}"
+          enable_encryption: {{ enable_encryption }}
+          encryption_type: "{{ encryption_type }}"
+          endpoint: "{{ endpoint }}"
+          kms_key: "{{ kms_key }}"
+          region: "{{ region }}"
+        volumes:
+          destination: "{{ destination }}"
     - name: cluster_name
-      value: string
+      value: "{{ cluster_name }}"
       description: |
         Cluster name requested by the user. This doesn't have to be unique. If not specified at creation, the cluster name will be an empty string. For job clusters, the cluster name is automatically set based on the job and job run IDs.
     - name: custom_tags
-      value: string
+      value: "{{ custom_tags }}"
       description: |
-        Additional tags for cluster resources. Databricks will tag all cluster resources (e.g., AWS instances and EBS volumes) with these tags in addition to `default_tags`. Notes: - Currently, Databricks allows at most 45 custom tags - Clusters can only reuse cloud resources if the resources' tags are a subset of the cluster tags
+        Additional tags for cluster resources. Databricks will tag all cluster resources (e.g., AWS instances and EBS volumes) with these tags in addition to \`default_tags\`. Notes: - Currently, Databricks allows at most 45 custom tags - Clusters can only reuse cloud resources if the resources' tags are a subset of the cluster tags
     - name: data_security_mode
-      value: string
+      value: "{{ data_security_mode }}"
       description: |
-        :param docker_image: :class:`DockerImage` (optional) Custom docker image BYOC
+        :param docker_image: :class:\`DockerImage\` (optional) Custom docker image BYOC
     - name: docker_image
-      value: string
+      value:
+        basic_auth:
+          password: "{{ password }}"
+          username: "{{ username }}"
+        url: "{{ url }}"
     - name: driver_instance_pool_id
-      value: string
+      value: "{{ driver_instance_pool_id }}"
       description: |
         The optional ID of the instance pool for the driver of the cluster belongs. The pool cluster uses the instance pool with id (instance_pool_id) if the driver pool is not assigned.
     - name: driver_node_type_flexibility
-      value: string
       description: |
         Flexible node type configuration for the driver node.
+      value:
+        alternate_node_type_ids:
+          - "{{ alternate_node_type_ids }}"
     - name: driver_node_type_id
-      value: string
+      value: "{{ driver_node_type_id }}"
       description: |
-        The node type of the Spark driver. Note that this field is optional; if unset, the driver node type will be set as the same value as `node_type_id` defined above. This field, along with node_type_id, should not be set if virtual_cluster_size is set. If both driver_node_type_id, node_type_id, and virtual_cluster_size are specified, driver_node_type_id and node_type_id take precedence.
+        The node type of the Spark driver. Note that this field is optional; if unset, the driver node type will be set as the same value as \`node_type_id\` defined above. This field, along with node_type_id, should not be set if virtual_cluster_size is set. If both driver_node_type_id, node_type_id, and virtual_cluster_size are specified, driver_node_type_id and node_type_id take precedence.
     - name: enable_elastic_disk
-      value: string
+      value: {{ enable_elastic_disk }}
       description: |
         Autoscaling Local Storage: when enabled, this cluster will dynamically acquire additional disk space when its Spark workers are running low on disk space.
     - name: enable_local_disk_encryption
-      value: string
+      value: {{ enable_local_disk_encryption }}
       description: |
         Whether to enable LUKS on cluster VMs' local disks
     - name: gcp_attributes
-      value: string
       description: |
         Attributes related to clusters running on Google Cloud Platform. If not specified at cluster creation, a set of default values will be used.
+      value:
+        availability: "{{ availability }}"
+        boot_disk_size: {{ boot_disk_size }}
+        first_on_demand: {{ first_on_demand }}
+        google_service_account: "{{ google_service_account }}"
+        local_ssd_count: {{ local_ssd_count }}
+        use_preemptible_executors: {{ use_preemptible_executors }}
+        zone_id: "{{ zone_id }}"
     - name: init_scripts
-      value: string
       description: |
-        The configuration for storing init scripts. Any number of destinations can be specified. The scripts are executed sequentially in the order provided. If `cluster_log_conf` is specified, init script logs are sent to `<destination>/<cluster-ID>/init_scripts`.
+        The configuration for storing init scripts. Any number of destinations can be specified. The scripts are executed sequentially in the order provided. If \`cluster_log_conf\` is specified, init script logs are sent to \`<destination>/<cluster-ID>/init_scripts\`.
+      value:
+        - abfss:
+            destination: "{{ destination }}"
+          dbfs:
+            destination: "{{ destination }}"
+          file:
+            destination: "{{ destination }}"
+          gcs:
+            destination: "{{ destination }}"
+          s3:
+            destination: "{{ destination }}"
+            canned_acl: "{{ canned_acl }}"
+            enable_encryption: {{ enable_encryption }}
+            encryption_type: "{{ encryption_type }}"
+            endpoint: "{{ endpoint }}"
+            kms_key: "{{ kms_key }}"
+            region: "{{ region }}"
+          volumes:
+            destination: "{{ destination }}"
+          workspace:
+            destination: "{{ destination }}"
     - name: instance_pool_id
-      value: string
+      value: "{{ instance_pool_id }}"
       description: |
         The optional ID of the instance pool to which the cluster belongs.
     - name: is_single_node
-      value: string
+      value: {{ is_single_node }}
       description: |
-        This field can only be used when `kind = CLASSIC_PREVIEW`. When set to true, Databricks will automatically set single node related `custom_tags`, `spark_conf`, and `num_workers`
+        This field can only be used when \`kind = CLASSIC_PREVIEW\`. When set to true, Databricks will automatically set single node related \`custom_tags\`, \`spark_conf\`, and \`num_workers\`
     - name: kind
-      value: string
+      value: "{{ kind }}"
       description: |
         :param node_type_id: str (optional) This field encodes, through a single value, the resources available to each of the Spark nodes in this cluster. For example, the Spark nodes can be provisioned and optimized for memory or compute intensive workloads. A list of available node types can be retrieved by using the :method:clusters/listNodeTypes API call.
     - name: node_type_id
-      value: string
+      value: "{{ node_type_id }}"
     - name: num_workers
-      value: string
+      value: {{ num_workers }}
       description: |
-        Number of worker nodes that this cluster should have. A cluster has one Spark Driver and `num_workers` Executors for a total of `num_workers` + 1 Spark nodes. Note: When reading the properties of a cluster, this field reflects the desired number of workers rather than the actual current number of workers. For instance, if a cluster is resized from 5 to 10 workers, this field will immediately be updated to reflect the target size of 10 workers, whereas the workers listed in `spark_info` will gradually increase from 5 to 10 as the new nodes are provisioned.
+        Number of worker nodes that this cluster should have. A cluster has one Spark Driver and \`num_workers\` Executors for a total of \`num_workers\` + 1 Spark nodes. Note: When reading the properties of a cluster, this field reflects the desired number of workers rather than the actual current number of workers. For instance, if a cluster is resized from 5 to 10 workers, this field will immediately be updated to reflect the target size of 10 workers, whereas the workers listed in \`spark_info\` will gradually increase from 5 to 10 as the new nodes are provisioned.
     - name: policy_id
-      value: string
+      value: "{{ policy_id }}"
       description: |
         The ID of the cluster policy used to create the cluster if applicable.
     - name: remote_disk_throughput
-      value: string
+      value: {{ remote_disk_throughput }}
       description: |
         If set, what the configurable throughput (in Mb/s) for the remote disk is. Currently only supported for GCP HYPERDISK_BALANCED disks.
     - name: runtime_engine
-      value: string
+      value: "{{ runtime_engine }}"
       description: |
-        Determines the cluster's runtime engine, either standard or Photon. This field is not compatible with legacy `spark_version` values that contain `-photon-`. Remove `-photon-` from the `spark_version` and set `runtime_engine` to `PHOTON`. If left unspecified, the runtime engine defaults to standard unless the spark_version contains -photon-, in which case Photon will be used.
+        Determines the cluster's runtime engine, either standard or Photon. This field is not compatible with legacy \`spark_version\` values that contain \`-photon-\`. Remove \`-photon-\` from the \`spark_version\` and set \`runtime_engine\` to \`PHOTON\`. If left unspecified, the runtime engine defaults to standard unless the spark_version contains -photon-, in which case Photon will be used.
     - name: single_user_name
-      value: string
+      value: "{{ single_user_name }}"
       description: |
-        Single user name if data_security_mode is `SINGLE_USER`
+        Single user name if data_security_mode is \`SINGLE_USER\`
     - name: spark_conf
-      value: string
+      value: "{{ spark_conf }}"
       description: |
-        An object containing a set of optional, user-specified Spark configuration key-value pairs. Users can also pass in a string of extra JVM options to the driver and the executors via `spark.driver.extraJavaOptions` and `spark.executor.extraJavaOptions` respectively.
+        An object containing a set of optional, user-specified Spark configuration key-value pairs. Users can also pass in a string of extra JVM options to the driver and the executors via \`spark.driver.extraJavaOptions\` and \`spark.executor.extraJavaOptions\` respectively.
     - name: spark_env_vars
-      value: string
+      value: "{{ spark_env_vars }}"
       description: |
-        An object containing a set of optional, user-specified environment variable key-value pairs. Please note that key-value pair of the form (X,Y) will be exported as is (i.e., `export X='Y'`) while launching the driver and workers. In order to specify an additional set of `SPARK_DAEMON_JAVA_OPTS`, we recommend appending them to `$SPARK_DAEMON_JAVA_OPTS` as shown in the example below. This ensures that all default databricks managed environmental variables are included as well. Example Spark environment variables: `{"SPARK_WORKER_MEMORY": "28000m", "SPARK_LOCAL_DIRS": "/local_disk0"}` or `{"SPARK_DAEMON_JAVA_OPTS": "$SPARK_DAEMON_JAVA_OPTS -Dspark.shuffle.service.enabled=true"}`
+        An object containing a set of optional, user-specified environment variable key-value pairs. Please note that key-value pair of the form (X,Y) will be exported as is (i.e., \`export X='Y'\`) while launching the driver and workers. In order to specify an additional set of \`SPARK_DAEMON_JAVA_OPTS\`, we recommend appending them to \`$SPARK_DAEMON_JAVA_OPTS\` as shown in the example below. This ensures that all default databricks managed environmental variables are included as well. Example Spark environment variables: \`{"SPARK_WORKER_MEMORY": "28000m", "SPARK_LOCAL_DIRS": "/local_disk0"}\` or \`{"SPARK_DAEMON_JAVA_OPTS": "$SPARK_DAEMON_JAVA_OPTS -Dspark.shuffle.service.enabled=true"}\`
     - name: ssh_public_keys
-      value: string
+      value:
+        - "{{ ssh_public_keys }}"
       description: |
-        SSH public key contents that will be added to each Spark node in this cluster. The corresponding private keys can be used to login with the user name `ubuntu` on port `2200`. Up to 10 keys can be specified.
+        SSH public key contents that will be added to each Spark node in this cluster. The corresponding private keys can be used to login with the user name \`ubuntu\` on port \`2200\`. Up to 10 keys can be specified.
     - name: total_initial_remote_disk_size
-      value: string
+      value: {{ total_initial_remote_disk_size }}
       description: |
         If set, what the total initial volume size (in GB) of the remote disks should be. Currently only supported for GCP HYPERDISK_BALANCED disks.
     - name: use_ml_runtime
-      value: string
+      value: {{ use_ml_runtime }}
       description: |
-        This field can only be used when `kind = CLASSIC_PREVIEW`. `effective_spark_version` is determined by `spark_version` (DBR release), this field `use_ml_runtime`, and whether `node_type_id` is gpu node or not.
+        This field can only be used when \`kind = CLASSIC_PREVIEW\`. \`effective_spark_version\` is determined by \`spark_version\` (DBR release), this field \`use_ml_runtime\`, and whether \`node_type_id\` is gpu node or not.
     - name: worker_node_type_flexibility
-      value: string
       description: |
         Flexible node type configuration for worker nodes.
+      value:
+        alternate_node_type_ids:
+          - "{{ alternate_node_type_ids }}"
     - name: workload_type
-      value: string
       description: |
-        :returns: Long-running operation waiter for :class:`ClusterDetails`. See :method:wait_get_cluster_running for more details.
-```
+        :returns: Long-running operation waiter for :class:\`ClusterDetails\`. See :method:wait_get_cluster_running for more details.
+      value:
+        clients:
+          jobs: {{ jobs }}
+          notebooks: {{ notebooks }}
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -3311,9 +3382,9 @@ EXEC databricks_workspace.compute.clusters.edit
 '{
 "cluster_id": "{{ cluster_id }}", 
 "spark_version": "{{ spark_version }}", 
-"apply_policy_default_values": "{{ apply_policy_default_values }}", 
+"apply_policy_default_values": {{ apply_policy_default_values }}, 
 "autoscale": "{{ autoscale }}", 
-"autotermination_minutes": "{{ autotermination_minutes }}", 
+"autotermination_minutes": {{ autotermination_minutes }}, 
 "aws_attributes": "{{ aws_attributes }}", 
 "azure_attributes": "{{ azure_attributes }}", 
 "cluster_log_conf": "{{ cluster_log_conf }}", 
@@ -3324,24 +3395,24 @@ EXEC databricks_workspace.compute.clusters.edit
 "driver_instance_pool_id": "{{ driver_instance_pool_id }}", 
 "driver_node_type_flexibility": "{{ driver_node_type_flexibility }}", 
 "driver_node_type_id": "{{ driver_node_type_id }}", 
-"enable_elastic_disk": "{{ enable_elastic_disk }}", 
-"enable_local_disk_encryption": "{{ enable_local_disk_encryption }}", 
+"enable_elastic_disk": {{ enable_elastic_disk }}, 
+"enable_local_disk_encryption": {{ enable_local_disk_encryption }}, 
 "gcp_attributes": "{{ gcp_attributes }}", 
 "init_scripts": "{{ init_scripts }}", 
 "instance_pool_id": "{{ instance_pool_id }}", 
-"is_single_node": "{{ is_single_node }}", 
+"is_single_node": {{ is_single_node }}, 
 "kind": "{{ kind }}", 
 "node_type_id": "{{ node_type_id }}", 
-"num_workers": "{{ num_workers }}", 
+"num_workers": {{ num_workers }}, 
 "policy_id": "{{ policy_id }}", 
-"remote_disk_throughput": "{{ remote_disk_throughput }}", 
+"remote_disk_throughput": {{ remote_disk_throughput }}, 
 "runtime_engine": "{{ runtime_engine }}", 
 "single_user_name": "{{ single_user_name }}", 
 "spark_conf": "{{ spark_conf }}", 
 "spark_env_vars": "{{ spark_env_vars }}", 
 "ssh_public_keys": "{{ ssh_public_keys }}", 
-"total_initial_remote_disk_size": "{{ total_initial_remote_disk_size }}", 
-"use_ml_runtime": "{{ use_ml_runtime }}", 
+"total_initial_remote_disk_size": {{ total_initial_remote_disk_size }}, 
+"use_ml_runtime": {{ use_ml_runtime }}, 
 "worker_node_type_flexibility": "{{ worker_node_type_flexibility }}", 
 "workload_type": "{{ workload_type }}"
 }'
@@ -3358,14 +3429,14 @@ EXEC databricks_workspace.compute.clusters.events
 @@json=
 '{
 "cluster_id": "{{ cluster_id }}", 
-"end_time": "{{ end_time }}", 
+"end_time": {{ end_time }}, 
 "event_types": "{{ event_types }}", 
-"limit": "{{ limit }}", 
-"offset": "{{ offset }}", 
+"limit": {{ limit }}, 
+"offset": {{ offset }}, 
 "order": "{{ order }}", 
-"page_size": "{{ page_size }}", 
+"page_size": {{ page_size }}, 
 "page_token": "{{ page_token }}", 
-"start_time": "{{ start_time }}"
+"start_time": {{ start_time }}
 }'
 ;
 ```
@@ -3409,7 +3480,7 @@ EXEC databricks_workspace.compute.clusters.resize
 '{
 "cluster_id": "{{ cluster_id }}", 
 "autoscale": "{{ autoscale }}", 
-"num_workers": "{{ num_workers }}"
+"num_workers": {{ num_workers }}
 }'
 ;
 ```

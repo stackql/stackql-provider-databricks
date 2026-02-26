@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -493,7 +494,7 @@ SELECT
 '{{ definition }}',
 '{{ description }}',
 '{{ libraries }}',
-'{{ max_clusters_per_user }}',
+{{ max_clusters_per_user }},
 '{{ name }}',
 '{{ policy_family_definition_overrides }}',
 '{{ policy_family_id }}',
@@ -505,42 +506,57 @@ policy_id
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: cluster_policies
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the cluster_policies resource.
     - name: definition
-      value: string
+      value: "{{ definition }}"
       description: |
         Policy definition document expressed in [Databricks Cluster Policy Definition Language]. [Databricks Cluster Policy Definition Language]: https://docs.databricks.com/administration-guide/clusters/policy-definition.html
     - name: description
-      value: string
+      value: "{{ description }}"
       description: |
         Additional human-readable description of the cluster policy.
     - name: libraries
-      value: string
       description: |
         A list of libraries to be installed on the next cluster restart that uses this policy. The maximum number of libraries is 500.
+      value:
+        - cran:
+            package: "{{ package }}"
+            repo: "{{ repo }}"
+          egg: "{{ egg }}"
+          jar: "{{ jar }}"
+          maven:
+            coordinates: "{{ coordinates }}"
+            exclusions:
+              - "{{ exclusions }}"
+            repo: "{{ repo }}"
+          pypi:
+            package: "{{ package }}"
+            repo: "{{ repo }}"
+          requirements: "{{ requirements }}"
+          whl: "{{ whl }}"
     - name: max_clusters_per_user
-      value: string
+      value: {{ max_clusters_per_user }}
       description: |
         Max number of clusters per user that can be active using this policy. If not present, there is no max limit.
     - name: name
-      value: string
+      value: "{{ name }}"
       description: |
         Cluster Policy name requested by the user. This has to be unique. Length must be between 1 and 100 characters.
     - name: policy_family_definition_overrides
-      value: string
+      value: "{{ policy_family_definition_overrides }}"
       description: |
         Policy definition JSON document expressed in [Databricks Policy Definition Language]. The JSON document must be passed as a string and cannot be embedded in the requests. You can use this to customize the policy definition inherited from the policy family. Policy rules specified here are merged into the inherited policy definition. [Databricks Policy Definition Language]: https://docs.databricks.com/administration-guide/clusters/policy-definition.html
     - name: policy_family_id
-      value: string
+      value: "{{ policy_family_id }}"
       description: |
-        ID of the policy family. The cluster policy's policy definition inherits the policy family's policy definition. Cannot be used with `definition`. Use `policy_family_definition_overrides` instead to customize the policy definition.
-```
+        ID of the policy family. The cluster policy's policy definition inherits the policy family's policy definition. Cannot be used with \`definition\`. Use \`policy_family_definition_overrides\` instead to customize the policy definition.
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -564,7 +580,7 @@ policy_id = '{{ policy_id }}',
 definition = '{{ definition }}',
 description = '{{ description }}',
 libraries = '{{ libraries }}',
-max_clusters_per_user = '{{ max_clusters_per_user }}',
+max_clusters_per_user = {{ max_clusters_per_user }},
 name = '{{ name }}',
 policy_family_definition_overrides = '{{ policy_family_definition_overrides }}',
 policy_family_id = '{{ policy_family_id }}'

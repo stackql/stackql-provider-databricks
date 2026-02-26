@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -390,7 +391,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Upper bound for items returned.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -502,20 +503,46 @@ update_time
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: app_deployments
   props:
     - name: app_name
-      value: string
+      value: "{{ app_name }}"
       description: Required parameter for the app_deployments resource.
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the app_deployments resource.
     - name: app_deployment
-      value: string
       description: |
         The app deployment configuration.
-```
+      value:
+        command:
+          - "{{ command }}"
+        create_time: "{{ create_time }}"
+        creator: "{{ creator }}"
+        deployment_artifacts:
+          source_code_path: "{{ source_code_path }}"
+        deployment_id: "{{ deployment_id }}"
+        env_vars:
+          - name: "{{ name }}"
+            value: "{{ value }}"
+            value_from: "{{ value_from }}"
+        git_source:
+          branch: "{{ branch }}"
+          commit: "{{ commit }}"
+          git_repository:
+            url: "{{ url }}"
+            provider: "{{ provider }}"
+          resolved_commit: "{{ resolved_commit }}"
+          source_code_path: "{{ source_code_path }}"
+          tag: "{{ tag }}"
+        mode: "{{ mode }}"
+        source_code_path: "{{ source_code_path }}"
+        status:
+          message: "{{ message }}"
+          state: "{{ state }}"
+        update_time: "{{ update_time }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>

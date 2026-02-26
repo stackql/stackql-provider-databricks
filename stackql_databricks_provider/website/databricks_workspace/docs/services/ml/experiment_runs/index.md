@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -444,7 +445,7 @@ deployment_name
 SELECT 
 '{{ experiment_id }}',
 '{{ run_name }}',
-'{{ start_time }}',
+{{ start_time }},
 '{{ tags }}',
 '{{ user_id }}',
 '{{ deployment_name }}'
@@ -455,34 +456,36 @@ run
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: experiment_runs
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the experiment_runs resource.
     - name: experiment_id
-      value: string
+      value: "{{ experiment_id }}"
       description: |
         ID of the associated experiment.
     - name: run_name
-      value: string
+      value: "{{ run_name }}"
       description: |
         The name of the run.
     - name: start_time
-      value: string
+      value: {{ start_time }}
       description: |
         Unix timestamp in milliseconds of when the run started.
     - name: tags
-      value: string
       description: |
         Additional metadata for run.
+      value:
+        - key: "{{ key }}"
+          value: "{{ value }}"
     - name: user_id
-      value: string
+      value: "{{ user_id }}"
       description: |
         ID of the user executing the run. This field is deprecated as of MLflow 1.0, and will be removed in a future MLflow release. Use 'mlflow.user' tag instead.
-```
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
@@ -533,7 +536,7 @@ EXEC databricks_workspace.ml.experiment_runs.delete_bulk
 '{
 "experiment_id": "{{ experiment_id }}", 
 "max_timestamp_millis": {{ max_timestamp_millis }}, 
-"max_runs": "{{ max_runs }}"
+"max_runs": {{ max_runs }}
 }'
 ;
 ```
@@ -603,7 +606,7 @@ EXEC databricks_workspace.ml.experiment_runs.log_metric
 "model_id": "{{ model_id }}", 
 "run_id": "{{ run_id }}", 
 "run_uuid": "{{ run_uuid }}", 
-"step": "{{ step }}"
+"step": {{ step }}
 }'
 ;
 ```
@@ -680,7 +683,7 @@ EXEC databricks_workspace.ml.experiment_runs.restore_bulk
 '{
 "experiment_id": "{{ experiment_id }}", 
 "min_timestamp_millis": {{ min_timestamp_millis }}, 
-"max_runs": "{{ max_runs }}"
+"max_runs": {{ max_runs }}
 }'
 ;
 ```
@@ -696,7 +699,7 @@ EXEC databricks_workspace.ml.experiment_runs.search
 '{
 "experiment_ids": "{{ experiment_ids }}", 
 "filter": "{{ filter }}", 
-"max_results": "{{ max_results }}", 
+"max_results": {{ max_results }}, 
 "order_by": "{{ order_by }}", 
 "page_token": "{{ page_token }}", 
 "run_view_type": "{{ run_view_type }}"
@@ -730,7 +733,7 @@ EXEC databricks_workspace.ml.experiment_runs.update
 @deployment_name='{{ deployment_name }}' --required 
 @@json=
 '{
-"end_time": "{{ end_time }}", 
+"end_time": {{ end_time }}, 
 "run_id": "{{ run_id }}", 
 "run_name": "{{ run_name }}", 
 "run_uuid": "{{ run_uuid }}", 

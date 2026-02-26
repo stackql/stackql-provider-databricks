@@ -15,6 +15,7 @@ image: /img/stackql-databricks_account-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -319,7 +320,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Force deletion even if the metastore is not empty. Default is false.</td>
 </tr>
 </tbody>
@@ -426,18 +427,22 @@ metastore_info
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: account_metastores
   props:
     - name: account_id
-      value: string
+      value: "{{ account_id }}"
       description: Required parameter for the account_metastores resource.
     - name: metastore_info
-      value: string
       description: |
-        :returns: :class:`AccountsCreateMetastoreResponse`
-```
+        :returns: :class:\`AccountsCreateMetastoreResponse\`
+      value:
+        name: "{{ name }}"
+        external_access_enabled: {{ external_access_enabled }}
+        region: "{{ region }}"
+        storage_root: "{{ storage_root }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

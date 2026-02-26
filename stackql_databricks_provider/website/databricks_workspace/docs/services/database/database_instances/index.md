@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -776,12 +777,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>By default, a instance cannot be deleted if it has descendant instances created via PITR. If this flag is specified as true, all descendent instances will be deleted as well.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
-    <td><code>string</code></td>
+    <td><code>integer</code></td>
     <td>Upper bound for items returned.</td>
 </tr>
 <tr id="parameter-page_token">
@@ -791,7 +792,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tr>
 <tr id="parameter-purge">
     <td><CopyableCode code="purge" /></td>
-    <td><code>string</code></td>
+    <td><code>boolean</code></td>
     <td>Deprecated. Omitting the field or setting it to true will result in the field being hard deleted. Setting a value of false will throw a bad request.</td>
 </tr>
 </tbody>
@@ -978,18 +979,58 @@ uid
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: database_instances
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the database_instances resource.
     - name: database_instance
-      value: string
       description: |
         Instance to create.
-```
+      value:
+        name: "{{ name }}"
+        capacity: "{{ capacity }}"
+        child_instance_refs:
+          - branch_time: "{{ branch_time }}"
+            effective_lsn: "{{ effective_lsn }}"
+            lsn: "{{ lsn }}"
+            name: "{{ name }}"
+            uid: "{{ uid }}"
+        creation_time: "{{ creation_time }}"
+        creator: "{{ creator }}"
+        custom_tags:
+          - key: "{{ key }}"
+            value: "{{ value }}"
+        effective_capacity: "{{ effective_capacity }}"
+        effective_custom_tags:
+          - key: "{{ key }}"
+            value: "{{ value }}"
+        effective_enable_pg_native_login: {{ effective_enable_pg_native_login }}
+        effective_enable_readable_secondaries: {{ effective_enable_readable_secondaries }}
+        effective_node_count: {{ effective_node_count }}
+        effective_retention_window_in_days: {{ effective_retention_window_in_days }}
+        effective_stopped: {{ effective_stopped }}
+        effective_usage_policy_id: "{{ effective_usage_policy_id }}"
+        enable_pg_native_login: {{ enable_pg_native_login }}
+        enable_readable_secondaries: {{ enable_readable_secondaries }}
+        node_count: {{ node_count }}
+        parent_instance_ref:
+          branch_time: "{{ branch_time }}"
+          effective_lsn: "{{ effective_lsn }}"
+          lsn: "{{ lsn }}"
+          name: "{{ name }}"
+          uid: "{{ uid }}"
+        pg_version: "{{ pg_version }}"
+        read_only_dns: "{{ read_only_dns }}"
+        read_write_dns: "{{ read_write_dns }}"
+        retention_window_in_days: {{ retention_window_in_days }}
+        state: "{{ state }}"
+        stopped: {{ stopped }}
+        uid: "{{ uid }}"
+        usage_policy_id: "{{ usage_policy_id }}"
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 

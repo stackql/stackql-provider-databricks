@@ -15,6 +15,7 @@ image: /img/stackql-databricks_workspace-provider-featured-image.png
 ---
 
 import CopyableCode from '@site/src/components/CopyableCode/CopyableCode';
+import CodeBlock from '@theme/CodeBlock';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
@@ -189,30 +190,32 @@ SELECT
 </TabItem>
 <TabItem value="manifest">
 
-```yaml
-# Description fields are for documentation purposes
+<CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: secret_scopes
   props:
     - name: deployment_name
-      value: string
+      value: "{{ deployment_name }}"
       description: Required parameter for the secret_scopes resource.
     - name: scope
-      value: string
+      value: "{{ scope }}"
       description: |
         Scope name requested by the user. Scope names are unique.
     - name: backend_azure_keyvault
-      value: string
       description: |
-        The metadata for the secret scope if the type is ``AZURE_KEYVAULT``
+        The metadata for the secret scope if the type is \`\`AZURE_KEYVAULT\`\`
+      value:
+        resource_id: "{{ resource_id }}"
+        dns_name: "{{ dns_name }}"
     - name: initial_manage_principal
-      value: string
+      value: "{{ initial_manage_principal }}"
       description: |
-        The principal that is initially granted ``MANAGE`` permission to the created scope.
+        The principal that is initially granted \`\`MANAGE\`\` permission to the created scope.
     - name: scope_backend_type
-      value: string
+      value: "{{ scope_backend_type }}"
       description: |
-        The backend type the scope will be created with. If not specified, will default to ``DATABRICKS``
-```
+        The backend type the scope will be created with. If not specified, will default to \`\`DATABRICKS\`\`
+`}</CodeBlock>
+
 </TabItem>
 </Tabs>
 
