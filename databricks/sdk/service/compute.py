@@ -10,7 +10,6 @@ from datetime import timedelta
 from enum import Enum
 from typing import Any, Callable, Dict, Iterator, List, Optional
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.service._internal import (Wait, _enum, _from_dict,
                                               _repeated_dict, _repeated_enum)
 
@@ -3167,7 +3166,7 @@ class EnforceClusterComplianceResponse:
 class Environment:
     """The environment entity used to preserve serverless environment side panel, jobs' environment for
     non-notebook task, and DLT's environment for classic and serverless pipelines. In this minimal
-    environment spec, only pip dependencies are supported."""
+    environment spec, only pip and java dependencies are supported."""
 
     base_environment: Optional[str] = None
     """The `base_environment` key refers to an `env.yaml` file that specifies an environment version
@@ -3188,8 +3187,9 @@ class Environment:
     Databricks), or a VCS project URL."""
 
     environment_version: Optional[str] = None
-    """Required. Environment version used by the environment. Each version comes with a specific Python
-    version and a set of Python packages. The version is a string, consisting of an integer."""
+    """Either `environment_version` or `base_environment` needs to be provided. Environment version
+    used by the environment. Each version comes with a specific Python version and a set of Python
+    packages. The version is a string, consisting of an integer."""
 
     java_dependencies: Optional[List[str]] = None
     """List of java dependencies. Each dependency is a string representing a java library path. For
@@ -3423,6 +3423,7 @@ class EventDetailsCause(Enum):
     AUTORECOVERY = "AUTORECOVERY"
     AUTOSCALE = "AUTOSCALE"
     AUTOSCALE_V2 = "AUTOSCALE_V2"
+    DBR_AUTOSCALE = "DBR_AUTOSCALE"
     REPLACE_BAD_NODES = "REPLACE_BAD_NODES"
     USER_REQUEST = "USER_REQUEST"
 
@@ -7268,6 +7269,7 @@ class TerminationReasonCode(Enum):
     GCP_TRUSTED_IMAGE_PROJECTS_VIOLATED = "GCP_TRUSTED_IMAGE_PROJECTS_VIOLATED"
     GKE_BASED_CLUSTER_TERMINATION = "GKE_BASED_CLUSTER_TERMINATION"
     GLOBAL_INIT_SCRIPT_FAILURE = "GLOBAL_INIT_SCRIPT_FAILURE"
+    HIVEMETASTORE_CONNECTIVITY_FAILURE = "HIVEMETASTORE_CONNECTIVITY_FAILURE"
     HIVE_METASTORE_PROVISIONING_FAILURE = "HIVE_METASTORE_PROVISIONING_FAILURE"
     IMAGE_PULL_PERMISSION_DENIED = "IMAGE_PULL_PERMISSION_DENIED"
     INACTIVITY = "INACTIVITY"
@@ -7961,7 +7963,7 @@ class ClusterPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/policies/clusters/create", body=body, headers=headers)
@@ -7985,7 +7987,7 @@ class ClusterPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.0/policies/clusters/delete", body=body, headers=headers)
@@ -8063,7 +8065,7 @@ class ClusterPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.0/policies/clusters/edit", body=body, headers=headers)
@@ -8085,7 +8087,7 @@ class ClusterPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/policies/clusters/get", query=query, headers=headers)
@@ -8105,7 +8107,7 @@ class ClusterPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -8128,7 +8130,7 @@ class ClusterPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/cluster-policies/{cluster_policy_id}", headers=headers)
@@ -8159,7 +8161,7 @@ class ClusterPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         json = self._api.do("GET", "/api/2.0/policies/clusters/list", query=query, headers=headers)
@@ -8188,7 +8190,7 @@ class ClusterPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -8218,7 +8220,7 @@ class ClusterPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -8342,7 +8344,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.1/clusters/change-owner", body=body, headers=headers)
@@ -8617,7 +8619,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.1/clusters/create", body=body, headers=headers)
@@ -8727,7 +8729,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.1/clusters/delete", body=body, headers=headers)
@@ -9003,7 +9005,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.1/clusters/edit", body=body, headers=headers)
@@ -9160,7 +9162,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -9190,7 +9192,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.1/clusters/get", query=query, headers=headers)
@@ -9210,7 +9212,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/clusters/{cluster_id}/permissionLevels", headers=headers)
@@ -9230,7 +9232,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/clusters/{cluster_id}", headers=headers)
@@ -9275,7 +9277,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -9299,7 +9301,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.1/clusters/list-node-types", headers=headers)
@@ -9318,7 +9320,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.1/clusters/list-zones", headers=headers)
@@ -9346,7 +9348,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.1/clusters/permanent-delete", body=body, headers=headers)
@@ -9369,7 +9371,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.1/clusters/pin", body=body, headers=headers)
@@ -9413,7 +9415,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.1/clusters/resize", body=body, headers=headers)
@@ -9453,7 +9455,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.1/clusters/restart", body=body, headers=headers)
@@ -9486,7 +9488,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/permissions/clusters/{cluster_id}", body=body, headers=headers)
@@ -9504,7 +9506,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.1/clusters/spark-versions", headers=headers)
@@ -9534,7 +9536,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.1/clusters/start", body=body, headers=headers)
@@ -9562,7 +9564,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.1/clusters/unpin", body=body, headers=headers)
@@ -9615,7 +9617,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.1/clusters/update", body=body, headers=headers)
@@ -9652,7 +9654,7 @@ class ClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/permissions/clusters/{cluster_id}", body=body, headers=headers)
@@ -9804,7 +9806,7 @@ class CommandExecutionAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/1.2/commands/cancel", body=body, headers=headers)
@@ -9849,7 +9851,7 @@ class CommandExecutionAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/1.2/commands/status", query=query, headers=headers)
@@ -9874,7 +9876,7 @@ class CommandExecutionAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/1.2/contexts/status", query=query, headers=headers)
@@ -9907,7 +9909,7 @@ class CommandExecutionAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/1.2/contexts/create", body=body, headers=headers)
@@ -9943,7 +9945,7 @@ class CommandExecutionAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/1.2/contexts/destroy", body=body, headers=headers)
@@ -9988,7 +9990,7 @@ class CommandExecutionAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/1.2/commands/execute", body=body, headers=headers)
@@ -10066,7 +10068,7 @@ class GlobalInitScriptsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/global-init-scripts", body=body, headers=headers)
@@ -10086,7 +10088,7 @@ class GlobalInitScriptsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/global-init-scripts/{script_id}", headers=headers)
@@ -10105,7 +10107,7 @@ class GlobalInitScriptsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/global-init-scripts/{script_id}", headers=headers)
@@ -10125,7 +10127,7 @@ class GlobalInitScriptsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         json = self._api.do("GET", "/api/2.0/global-init-scripts", headers=headers)
@@ -10175,7 +10177,7 @@ class GlobalInitScriptsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/global-init-scripts/{script_id}", body=body, headers=headers)
@@ -10319,7 +10321,7 @@ class InstancePoolsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/instance-pools/create", body=body, headers=headers)
@@ -10343,7 +10345,7 @@ class InstancePoolsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.0/instance-pools/delete", body=body, headers=headers)
@@ -10358,7 +10360,6 @@ class InstancePoolsAPI:
         idle_instance_autotermination_minutes: Optional[int] = None,
         max_capacity: Optional[int] = None,
         min_idle_instances: Optional[int] = None,
-        node_type_flexibility: Optional[NodeTypeFlexibility] = None,
         remote_disk_throughput: Optional[int] = None,
         total_initial_remote_disk_size: Optional[int] = None,
     ):
@@ -10391,8 +10392,6 @@ class InstancePoolsAPI:
           upsize requests.
         :param min_idle_instances: int (optional)
           Minimum number of idle instances to keep in the instance pool
-        :param node_type_flexibility: :class:`NodeTypeFlexibility` (optional)
-          Flexible node type configuration for the pool.
         :param remote_disk_throughput: int (optional)
           If set, what the configurable throughput (in Mb/s) for the remote disk is. Currently only supported
           for GCP HYPERDISK_BALANCED types.
@@ -10416,8 +10415,6 @@ class InstancePoolsAPI:
             body["max_capacity"] = max_capacity
         if min_idle_instances is not None:
             body["min_idle_instances"] = min_idle_instances
-        if node_type_flexibility is not None:
-            body["node_type_flexibility"] = node_type_flexibility.as_dict()
         if node_type_id is not None:
             body["node_type_id"] = node_type_id
         if remote_disk_throughput is not None:
@@ -10430,7 +10427,7 @@ class InstancePoolsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.0/instance-pools/edit", body=body, headers=headers)
@@ -10452,7 +10449,7 @@ class InstancePoolsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/instance-pools/get", query=query, headers=headers)
@@ -10472,7 +10469,7 @@ class InstancePoolsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -10495,7 +10492,7 @@ class InstancePoolsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/instance-pools/{instance_pool_id}", headers=headers)
@@ -10513,7 +10510,7 @@ class InstancePoolsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         json = self._api.do("GET", "/api/2.0/instance-pools/list", headers=headers)
@@ -10542,7 +10539,7 @@ class InstancePoolsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/permissions/instance-pools/{instance_pool_id}", body=body, headers=headers)
@@ -10570,7 +10567,7 @@ class InstancePoolsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -10643,7 +10640,7 @@ class InstanceProfilesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.0/instance-profiles/add", body=body, headers=headers)
@@ -10700,7 +10697,7 @@ class InstanceProfilesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.0/instance-profiles/edit", body=body, headers=headers)
@@ -10719,7 +10716,7 @@ class InstanceProfilesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         json = self._api.do("GET", "/api/2.0/instance-profiles/list", headers=headers)
@@ -10747,7 +10744,7 @@ class InstanceProfilesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.0/instance-profiles/remove", body=body, headers=headers)
@@ -10784,7 +10781,7 @@ class LibrariesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         json = self._api.do("GET", "/api/2.0/libraries/all-cluster-statuses", headers=headers)
@@ -10812,7 +10809,7 @@ class LibrariesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         json = self._api.do("GET", "/api/2.0/libraries/cluster-status", query=query, headers=headers)
@@ -10842,7 +10839,7 @@ class LibrariesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.0/libraries/install", body=body, headers=headers)
@@ -10870,7 +10867,7 @@ class LibrariesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.0/libraries/uninstall", body=body, headers=headers)
@@ -10924,7 +10921,7 @@ class PolicyComplianceForClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/policies/clusters/enforce-compliance", body=body, headers=headers)
@@ -10948,7 +10945,7 @@ class PolicyComplianceForClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/policies/clusters/get-compliance", query=query, headers=headers)
@@ -10984,7 +10981,7 @@ class PolicyComplianceForClustersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -11030,7 +11027,7 @@ class PolicyFamiliesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/policy-families/{policy_family_id}", query=query, headers=headers)
@@ -11058,7 +11055,7 @@ class PolicyFamiliesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:

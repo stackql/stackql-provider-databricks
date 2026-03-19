@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, Iterator, List, Optional
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.service import catalog
 from databricks.sdk.service._internal import (_enum, _from_dict,
                                               _repeated_dict, _repeated_enum)
@@ -2242,9 +2241,6 @@ class Table:
     id: Optional[str] = None
     """The id of the table."""
 
-    internal_attributes: Optional[TableInternalAttributes] = None
-    """Internal information for D2D sharing that should not be disclosed to external users."""
-
     materialization_namespace: Optional[str] = None
     """The catalog and schema of the materialized table"""
 
@@ -2273,8 +2269,6 @@ class Table:
             body["comment"] = self.comment
         if self.id is not None:
             body["id"] = self.id
-        if self.internal_attributes:
-            body["internal_attributes"] = self.internal_attributes.as_dict()
         if self.materialization_namespace is not None:
             body["materialization_namespace"] = self.materialization_namespace
         if self.materialized_table_name is not None:
@@ -2298,8 +2292,6 @@ class Table:
             body["comment"] = self.comment
         if self.id is not None:
             body["id"] = self.id
-        if self.internal_attributes:
-            body["internal_attributes"] = self.internal_attributes
         if self.materialization_namespace is not None:
             body["materialization_namespace"] = self.materialization_namespace
         if self.materialized_table_name is not None:
@@ -2322,7 +2314,6 @@ class Table:
         return cls(
             comment=d.get("comment", None),
             id=d.get("id", None),
-            internal_attributes=_from_dict(d, "internal_attributes", TableInternalAttributes),
             materialization_namespace=d.get("materialization_namespace", None),
             materialized_table_name=d.get("materialized_table_name", None),
             name=d.get("name", None),
@@ -2331,102 +2322,6 @@ class Table:
             share_id=d.get("share_id", None),
             tags=_repeated_dict(d, "tags", catalog.TagKeyValue),
         )
-
-
-@dataclass
-class TableInternalAttributes:
-    """Internal information for D2D sharing that should not be disclosed to external users."""
-
-    auxiliary_managed_location: Optional[str] = None
-    """Managed Delta Metadata location for foreign iceberg tables."""
-
-    dependency_storage_locations: Optional[List[str]] = None
-    """Storage locations of all table dependencies for shared views. Used on the recipient side for SEG
-    (Secure Egress Gateway) whitelisting."""
-
-    has_delta_uniform_iceberg: Optional[bool] = None
-    """Whether the table has uniform enabled."""
-
-    parent_storage_location: Optional[str] = None
-    """Will be populated in the reconciliation response for VIEW and FOREIGN_TABLE, with the value of
-    the parent UC entity's storage_location, following the same logic as getManagedEntityPath in
-    CreateStagingTableHandler, which is used to store the materialized table for a shared
-    VIEW/FOREIGN_TABLE for D2O queries. The value will be used on the recipient side to be
-    whitelisted when SEG is enabled on the workspace of the recipient, to allow the recipient users
-    to query this shared VIEW/FOREIGN_TABLE."""
-
-    storage_location: Optional[str] = None
-    """The cloud storage location of a shard table with DIRECTORY_BASED_TABLE type."""
-
-    type: Optional[TableInternalAttributesSharedTableType] = None
-    """The type of the shared table."""
-
-    view_definition: Optional[str] = None
-    """The view definition of a shared view. DEPRECATED."""
-
-    def as_dict(self) -> dict:
-        """Serializes the TableInternalAttributes into a dictionary suitable for use as a JSON request body."""
-        body = {}
-        if self.auxiliary_managed_location is not None:
-            body["auxiliary_managed_location"] = self.auxiliary_managed_location
-        if self.dependency_storage_locations:
-            body["dependency_storage_locations"] = [v for v in self.dependency_storage_locations]
-        if self.has_delta_uniform_iceberg is not None:
-            body["has_delta_uniform_iceberg"] = self.has_delta_uniform_iceberg
-        if self.parent_storage_location is not None:
-            body["parent_storage_location"] = self.parent_storage_location
-        if self.storage_location is not None:
-            body["storage_location"] = self.storage_location
-        if self.type is not None:
-            body["type"] = self.type.value
-        if self.view_definition is not None:
-            body["view_definition"] = self.view_definition
-        return body
-
-    def as_shallow_dict(self) -> dict:
-        """Serializes the TableInternalAttributes into a shallow dictionary of its immediate attributes."""
-        body = {}
-        if self.auxiliary_managed_location is not None:
-            body["auxiliary_managed_location"] = self.auxiliary_managed_location
-        if self.dependency_storage_locations:
-            body["dependency_storage_locations"] = self.dependency_storage_locations
-        if self.has_delta_uniform_iceberg is not None:
-            body["has_delta_uniform_iceberg"] = self.has_delta_uniform_iceberg
-        if self.parent_storage_location is not None:
-            body["parent_storage_location"] = self.parent_storage_location
-        if self.storage_location is not None:
-            body["storage_location"] = self.storage_location
-        if self.type is not None:
-            body["type"] = self.type
-        if self.view_definition is not None:
-            body["view_definition"] = self.view_definition
-        return body
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]) -> TableInternalAttributes:
-        """Deserializes the TableInternalAttributes from a dictionary."""
-        return cls(
-            auxiliary_managed_location=d.get("auxiliary_managed_location", None),
-            dependency_storage_locations=d.get("dependency_storage_locations", None),
-            has_delta_uniform_iceberg=d.get("has_delta_uniform_iceberg", None),
-            parent_storage_location=d.get("parent_storage_location", None),
-            storage_location=d.get("storage_location", None),
-            type=_enum(d, "type", TableInternalAttributesSharedTableType),
-            view_definition=d.get("view_definition", None),
-        )
-
-
-class TableInternalAttributesSharedTableType(Enum):
-
-    DELTA_ICEBERG_TABLE = "DELTA_ICEBERG_TABLE"
-    DIRECTORY_BASED_TABLE = "DIRECTORY_BASED_TABLE"
-    FILE_BASED_TABLE = "FILE_BASED_TABLE"
-    FOREIGN_ICEBERG_TABLE = "FOREIGN_ICEBERG_TABLE"
-    FOREIGN_TABLE = "FOREIGN_TABLE"
-    MATERIALIZED_VIEW = "MATERIALIZED_VIEW"
-    METRIC_VIEW = "METRIC_VIEW"
-    STREAMING_TABLE = "STREAMING_TABLE"
-    VIEW = "VIEW"
 
 
 @dataclass
@@ -2463,9 +2358,6 @@ class Volume:
     """This id maps to the shared_volume_id in database Recipient needs shared_volume_id for recon to
     check if this volume is already in recipient's DB or not."""
 
-    internal_attributes: Optional[VolumeInternalAttributes] = None
-    """Internal attributes for D2D sharing that should not be disclosed to external users."""
-
     name: Optional[str] = None
     """The name of the volume."""
 
@@ -2488,8 +2380,6 @@ class Volume:
             body["comment"] = self.comment
         if self.id is not None:
             body["id"] = self.id
-        if self.internal_attributes:
-            body["internal_attributes"] = self.internal_attributes.as_dict()
         if self.name is not None:
             body["name"] = self.name
         if self.schema is not None:
@@ -2509,8 +2399,6 @@ class Volume:
             body["comment"] = self.comment
         if self.id is not None:
             body["id"] = self.id
-        if self.internal_attributes:
-            body["internal_attributes"] = self.internal_attributes
         if self.name is not None:
             body["name"] = self.name
         if self.schema is not None:
@@ -2529,47 +2417,12 @@ class Volume:
         return cls(
             comment=d.get("comment", None),
             id=d.get("id", None),
-            internal_attributes=_from_dict(d, "internal_attributes", VolumeInternalAttributes),
             name=d.get("name", None),
             schema=d.get("schema", None),
             share=d.get("share", None),
             share_id=d.get("share_id", None),
             tags=_repeated_dict(d, "tags", catalog.TagKeyValue),
         )
-
-
-@dataclass
-class VolumeInternalAttributes:
-    """Internal information for D2D sharing that should not be disclosed to external users."""
-
-    storage_location: Optional[str] = None
-    """The cloud storage location of the volume"""
-
-    type: Optional[str] = None
-    """The type of the shared volume."""
-
-    def as_dict(self) -> dict:
-        """Serializes the VolumeInternalAttributes into a dictionary suitable for use as a JSON request body."""
-        body = {}
-        if self.storage_location is not None:
-            body["storage_location"] = self.storage_location
-        if self.type is not None:
-            body["type"] = self.type
-        return body
-
-    def as_shallow_dict(self) -> dict:
-        """Serializes the VolumeInternalAttributes into a shallow dictionary of its immediate attributes."""
-        body = {}
-        if self.storage_location is not None:
-            body["storage_location"] = self.storage_location
-        if self.type is not None:
-            body["type"] = self.type
-        return body
-
-    @classmethod
-    def from_dict(cls, d: Dict[str, Any]) -> VolumeInternalAttributes:
-        """Deserializes the VolumeInternalAttributes from a dictionary."""
-        return cls(storage_location=d.get("storage_location", None), type=d.get("type", None))
 
 
 class ProvidersAPI:
@@ -2617,7 +2470,7 @@ class ProvidersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.1/unity-catalog/providers", body=body, headers=headers)
@@ -2636,7 +2489,7 @@ class ProvidersAPI:
         headers = {}
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.1/unity-catalog/providers/{name}", headers=headers)
@@ -2656,7 +2509,7 @@ class ProvidersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.1/unity-catalog/providers/{name}", headers=headers)
@@ -2703,7 +2556,7 @@ class ProvidersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         if "max_results" not in query:
@@ -2760,7 +2613,7 @@ class ProvidersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -2801,7 +2654,7 @@ class ProvidersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         if "max_results" not in query:
@@ -2858,7 +2711,7 @@ class ProvidersAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.1/unity-catalog/providers/{name}", body=body, headers=headers)
@@ -2891,7 +2744,7 @@ class RecipientActivationAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do(
@@ -2912,7 +2765,7 @@ class RecipientActivationAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -2983,7 +2836,7 @@ class RecipientFederationPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -3008,7 +2861,7 @@ class RecipientFederationPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do(
@@ -3032,7 +2885,7 @@ class RecipientFederationPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -3064,7 +2917,7 @@ class RecipientFederationPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -3172,7 +3025,7 @@ class RecipientsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.1/unity-catalog/recipients", body=body, headers=headers)
@@ -3190,7 +3043,7 @@ class RecipientsAPI:
         headers = {}
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.1/unity-catalog/recipients/{name}", headers=headers)
@@ -3210,7 +3063,7 @@ class RecipientsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.1/unity-catalog/recipients/{name}", headers=headers)
@@ -3257,7 +3110,7 @@ class RecipientsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         if "max_results" not in query:
@@ -3294,7 +3147,7 @@ class RecipientsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.1/unity-catalog/recipients/{name}/rotate-token", body=body, headers=headers)
@@ -3332,7 +3185,7 @@ class RecipientsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -3399,7 +3252,7 @@ class RecipientsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.1/unity-catalog/recipients/{name}", body=body, headers=headers)
@@ -3442,7 +3295,7 @@ class SharesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.1/unity-catalog/shares", body=body, headers=headers)
@@ -3460,7 +3313,7 @@ class SharesAPI:
         headers = {}
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.1/unity-catalog/shares/{name}", headers=headers)
@@ -3485,7 +3338,7 @@ class SharesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.1/unity-catalog/shares/{name}", query=query, headers=headers)
@@ -3522,7 +3375,7 @@ class SharesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         if "max_results" not in query:
@@ -3568,7 +3421,7 @@ class SharesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.1/unity-catalog/shares/{name}/permissions", query=query, headers=headers)
@@ -3633,7 +3486,7 @@ class SharesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.1/unity-catalog/shares/{name}", body=body, headers=headers)
@@ -3673,7 +3526,7 @@ class SharesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.1/unity-catalog/shares/{name}/permissions", body=body, headers=headers)

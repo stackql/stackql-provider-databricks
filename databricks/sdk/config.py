@@ -19,9 +19,9 @@ from .credentials_provider import (CredentialsStrategy, DefaultCredentials,
                                    OAuthCredentialsProvider)
 from .environments import (ALL_ENVS, AzureEnvironment, Cloud,
                            DatabricksEnvironment, get_environment_for_hostname)
-from .oauth import (OidcEndpoints, Token, get_account_endpoints,
+from .oauth import (OidcEndpoints, Token,
                     get_azure_entra_id_workspace_endpoints,
-                    get_unified_endpoints, get_workspace_endpoints)
+                    get_endpoints_from_url, get_host_metadata)
 
 logger = logging.getLogger("databricks.sdk")
 
@@ -50,6 +50,15 @@ class ConfigAttribute:
 
     def __repr__(self) -> str:
         return f"<ConfigAttribute '{self.name}' {self.transform.__name__}>"
+
+
+def _parse_cloud(value) -> Optional[Cloud]:
+    """Parse a cloud value from string or Cloud instance; returns None for unknown or empty."""
+    if value is None:
+        return None
+    if isinstance(value, Cloud):
+        return value
+    return Cloud.parse(str(value))
 
 
 def _parse_scopes(value):
@@ -83,12 +92,20 @@ class Config:
     # Experimental flag to indicate if the host is a unified host (supports both workspace and account APIs)
     experimental_is_unified_host: bool = ConfigAttribute(env="DATABRICKS_EXPERIMENTAL_IS_UNIFIED_HOST")
 
+    # [Experimental] Cloud provider. When set, is_aws/is_azure/is_gcp use this value directly
+    # instead of inferring from hostname. Populated automatically from /.well-known/databricks-config.
+    cloud: Cloud = ConfigAttribute(env="DATABRICKS_CLOUD", transform=_parse_cloud)
+
+    # [Experimental] OpenID Connect discovery URL. When set, OIDC endpoints are fetched directly
+    # from this URL instead of the default host-type-based well-known endpoint logic.
+    discovery_url: str = ConfigAttribute(env="DATABRICKS_DISCOVERY_URL")
+
     # PAT token.
     token: str = ConfigAttribute(env="DATABRICKS_TOKEN", auth="pat", sensitive=True)
 
     # Audience for OIDC ID token source accepting an audience as a parameter.
     # For example, the GitHub action ID token source.
-    token_audience: str = ConfigAttribute(env="DATABRICKS_TOKEN_AUDIENCE", auth="github-oidc")
+    token_audience: str = ConfigAttribute(env="DATABRICKS_TOKEN_AUDIENCE")
 
     # Environment variable for OIDC token.
     oidc_token_env: str = ConfigAttribute(env="DATABRICKS_OIDC_TOKEN_ENV", auth="env-oidc")
@@ -233,6 +250,15 @@ class Config:
     # Cap on the number of custom retries during parallel downloads.
     files_ext_parallel_download_max_retries = 3
 
+    # Maximum number of retry attempts for FilesExt cloud API operations.
+    # This works in conjunction with retry_timeout_seconds - whichever limit
+    # is hit first will stop the retry loop.
+    experimental_files_ext_cloud_api_max_retries: int = 3
+
+    # Whether to enable the storage proxy for file operations.
+    # When enabled, the SDK will probe the storage proxy and use it if available.
+    experimental_files_ext_enable_storage_proxy: bool = False
+
     def __init__(
         self,
         *,
@@ -285,6 +311,7 @@ class Config:
             self._load_from_env()
             self._known_file_config_loader()
             self._fix_host_if_needed()
+            self._resolve_host_metadata()
             self._validate()
             self.init_auth()
             self._init_product(product, product_version)
@@ -369,26 +396,32 @@ class Config:
     def is_azure(self) -> bool:
         if self.azure_workspace_resource_id:
             return True
+        if self.cloud:
+            return self.cloud == Cloud.AZURE
         return self.environment.cloud == Cloud.AZURE
 
     @property
     def is_gcp(self) -> bool:
+        if self.cloud:
+            return self.cloud == Cloud.GCP
         return self.environment.cloud == Cloud.GCP
 
     @property
     def is_aws(self) -> bool:
+        if self.cloud:
+            return self.cloud == Cloud.AWS
         return self.environment.cloud == Cloud.AWS
 
     @property
     def host_type(self) -> HostType:
-        """Determine the type of host based on the configuration.
-
-        Returns the HostType which can be ACCOUNTS, WORKSPACE, or UNIFIED.
         """
-        # Check if explicitly marked as unified host
-        if self.experimental_is_unified_host:
-            return HostType.UNIFIED
+        [DEPRECATED]
+        Host type and client type are deprecated. Some hosts can now support both workspace and account APIs.
+        This method returns the HostType based on the host pattern, which is not accurate.
+        For example, a unified host can support both workspace and account APIs, but WORKSPACE is returned.
 
+        This method still returns the correct value for legacy hosts which only support either workspace or account APIs.
+        """
         if not self.host:
             return HostType.WORKSPACE
 
@@ -400,15 +433,13 @@ class Config:
 
     @property
     def client_type(self) -> ClientType:
-        """Determine the type of client configuration.
+        """
+        [DEPRECATED]
+        Host type and client type are deprecated. Some hosts can now support both workspace and account APIs.
+        This method returns the ClientType based on the host pattern, which is not accurate.
+        For example, a unified host can support both workspace and account APIs, but WORKSPACE is returned.
 
-        This is separate from host_type. For example, a unified host can support both
-        workspace and account client types.
-
-        Returns ClientType.ACCOUNT or ClientType.WORKSPACE based on the configuration.
-
-        For unified hosts, account_id must be set. If workspace_id is also set,
-        returns WORKSPACE, otherwise returns ACCOUNT.
+        This method still returns the correct value for legacy hosts which only support either workspace or account APIs.
         """
         host_type = self.host_type
 
@@ -418,26 +449,18 @@ class Config:
         if host_type == HostType.WORKSPACE:
             return ClientType.WORKSPACE
 
-        if host_type == HostType.UNIFIED:
-            if not self.account_id:
-                raise ValueError("Unified host requires account_id to be set")
-            if self.workspace_id:
-                return ClientType.WORKSPACE
-            return ClientType.ACCOUNT
-
         # Default to workspace for backward compatibility
         return ClientType.WORKSPACE
 
     @property
     def is_account_client(self) -> bool:
-        """[Deprecated] Use host_type or client_type instead.
+        """[Deprecated]
+        Host type and client type are deprecated. Some hosts can now support both workspace and account APIs.
+        This method returns True if the host is an accounts host, which is not accurate.
+        For example, a unified host can support both workspace and account APIs, but False is returned.
 
-        Determines if this is an account client based on the host URL.
+        This method still returns the correct value for legacy hosts which only support either workspace or account APIs.
         """
-        if self.experimental_is_unified_host:
-            raise ValueError(
-                "is_account_client cannot be used with unified hosts; use host_type or client_type instead"
-            )
         if not self.host:
             return False
         return self.host.startswith("https://accounts.") or self.host.startswith("https://accounts-dod.")
@@ -486,25 +509,45 @@ class Config:
         return self
 
     @property
+    def databricks_oidc_endpoints(self) -> Optional[OidcEndpoints]:
+        """Get OIDC endpoints for Databricks OAuth.
+
+        If discovery_url is set, OIDC endpoints are fetched directly from it. Otherwise
+        falls back to the host-type-based well-known endpoint logic.
+
+        Note: This method does NOT return Azure Entra ID endpoints. For Azure authentication,
+        use get_azure_entra_id_workspace_endpoints() directly.
+
+        Returns:
+            OidcEndpoints for Databricks OAuth, or None if host is not configured.
+        """
+        self._fix_host_if_needed()
+        if not self.host:
+            return None
+
+        return get_endpoints_from_url(self.discovery_url)
+
+    @property
     def oidc_endpoints(self) -> Optional[OidcEndpoints]:
+        """[DEPRECATED] Get OIDC endpoints with automatic Azure detection (deprecated).
+
+        This method incorrectly returns Azure OIDC endpoints when azure_client_id
+        is set, even for Databricks OAuth flows that don't use Azure authentication. This caused
+        bugs where Databricks M2M OAuth would fail when ARM_CLIENT_ID was set for other purposes.
+
+        Use instead:
+        - databricks_oidc_endpoints: For Databricks OAuth (oauth-m2m, external-browser, etc.)
+        - get_azure_entra_id_workspace_endpoints(): For Azure Entra ID authentication
+
+        Returns:
+            OidcEndpoints (Azure or Databricks depending on config), or None if host is not configured.
+        """
         self._fix_host_if_needed()
         if not self.host:
             return None
         if self.is_azure and self.azure_client_id:
             return get_azure_entra_id_workspace_endpoints(self.host)
-
-        # Handle unified hosts
-        if self.host_type == HostType.UNIFIED:
-            if not self.account_id:
-                raise ValueError("Unified host requires account_id to be set for OAuth endpoints")
-            return get_unified_endpoints(self.host, self.account_id)
-
-        # Handle traditional account hosts
-        if self.host_type == HostType.ACCOUNTS and self.account_id:
-            return get_account_endpoints(self.host, self.account_id)
-
-        # Default to workspace endpoints
-        return get_workspace_endpoints(self.host)
+        return self.databricks_oidc_endpoints
 
     def debug_string(self) -> str:
         """Returns log-friendly representation of configured attributes"""
@@ -579,6 +622,46 @@ class Config:
         cls._attributes = attrs
         return cls._attributes
 
+    def _resolve_host_metadata(self) -> None:
+        """Populate missing config fields from the host's
+        /.well-known/databricks-config discovery endpoint.
+
+        Fills in account_id, workspace_id, and discovery_url (derived from oidc_endpoint,
+        with any {account_id} placeholder substituted) if not already set.
+        """
+        if not self.host:
+            return
+        try:
+            meta = get_host_metadata(self.host)
+        except Exception as e:
+            logger.warning(
+                f"Failed to automatically resolve config from host metadata: {e}. Falling back to explicit user provided configuration."
+            )
+            return
+        if not self.account_id and meta.account_id:
+            logger.debug(f"Resolved account_id from host metadata: {meta.account_id}")
+            self.account_id = meta.account_id
+        if not self.workspace_id and meta.workspace_id:
+            logger.debug(f"Resolved workspace_id from host metadata: {meta.workspace_id}")
+            self.workspace_id = meta.workspace_id
+        if not self.discovery_url and meta.oidc_endpoint:
+            if "{account_id}" in meta.oidc_endpoint and not self.account_id:
+                raise ValueError("account_id is required to resolve discovery_url from host metadata")
+            # Metadata oidc_endpoint is the root for OIDC. Append the well-known path to form the full discovery URL.
+            base = meta.oidc_endpoint.replace("{account_id}", self.account_id or "").rstrip("/")
+            self.discovery_url = f"{base}/.well-known/oauth-authorization-server"
+            logger.debug(f"Resolved discovery_url from host metadata: {self.discovery_url}")
+        if not self.cloud and meta.cloud:
+            logger.debug(f"Resolved cloud from host metadata: {meta.cloud.value}")
+            self.cloud = meta.cloud
+        # Account hosts use account_id as the OIDC token audience instead of the token endpoint.
+        # This is a special case: when the metadata has no workspace_id, the host is acting as an
+        # account-level endpoint and the audience must be scoped to the account.
+        # TODO: Add explicit audience to the metadata discovery endpoint.
+        if not self.token_audience and not meta.workspace_id and self.account_id:
+            logger.debug(f"Setting token_audience to account_id for account host: {self.account_id}")
+            self.token_audience = self.account_id
+
     def _fix_host_if_needed(self):
         updated_host = _fix_host_if_needed(self.host)
         if updated_host:
@@ -588,7 +671,7 @@ class Config:
         """[Internal] Load the Azure tenant ID from the Azure Databricks login page.
 
         If the tenant ID is already set, this method does nothing."""
-        if not self.is_azure or self.azure_tenant_id is not None or self.host is None:
+        if self.azure_tenant_id is not None or self.host is None:
             return
         login_url = f"{self.host}/aad/auth"
         logger.debug(f"Loading tenant ID from {login_url}")
@@ -649,16 +732,26 @@ class Config:
         ini_file.read(config_path)
         profile = self.profile
         has_explicit_profile = self.profile is not None
+        has_default_profile_setting = False
         # In Go SDK, we skip merging the profile with DEFAULT section, though Python's ConfigParser.items()
         # is returning profile key-value pairs _including those from DEFAULT_. This is not what we expect
         # from Unified Auth test suite at the moment. Hence, the private variable access.
         # See: https://docs.python.org/3/library/configparser.html#mapping-protocol-access
-        if not has_explicit_profile and not ini_file.defaults():
-            logger.debug(f"{config_path} has no DEFAULT profile configured")
-            return
         if not has_explicit_profile:
-            profile = "DEFAULT"
-        profiles = ini_file._sections
+            # Check [__settings__].default_profile before falling back to [DEFAULT].
+            settings = ini_file._sections.get("__settings__", {})
+            default_profile = settings.get("default_profile", "").strip()
+            if default_profile:
+                profile = default_profile
+                has_default_profile_setting = True
+            elif ini_file.defaults():
+                profile = "DEFAULT"
+            else:
+                logger.debug(f"{config_path} has no DEFAULT profile configured")
+                return
+        profiles = {name: values for name, values in ini_file._sections.items()}
+        # [__settings__] is not a profile; exclude it from the profile map.
+        profiles.pop("__settings__", None)
         if ini_file.defaults():
             profiles["DEFAULT"] = ini_file.defaults()
         if profile not in profiles:
@@ -670,6 +763,8 @@ class Config:
                 # don't overwrite a value previously set
                 continue
             self.__setattr__(k, v)
+        if has_default_profile_setting:
+            self.profile = profile
 
     def _validate(self):
         auths_used = set()

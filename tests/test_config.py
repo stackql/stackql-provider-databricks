@@ -12,6 +12,8 @@ import pytest
 from databricks.sdk import AccountClient, WorkspaceClient, oauth, useragent
 from databricks.sdk.config import (ClientType, Config, HostType, with_product,
                                    with_user_agent_extra)
+from databricks.sdk.environments import Cloud
+from databricks.sdk.oauth import HostMetadata
 from databricks.sdk.version import __version__
 
 from .conftest import noop_credentials, set_az_path, set_home
@@ -53,10 +55,12 @@ def test_extra_and_upstream_user_agent(monkeypatch):
         def system(self):
             return "TestOS"
 
-    # Clear all environment variables and cached CICD provider.
+    # Clear all environment variables and cached providers.
     for k in os.environ:
         monkeypatch.delenv(k, raising=False)
-    useragent._cicd_provider = None
+    monkeypatch.setattr(useragent, "_extra", [])
+    monkeypatch.setattr(useragent, "_cicd_provider", None)
+    monkeypatch.setattr(useragent, "_agent_provider", None)
 
     monkeypatch.setattr(platform, "python_version", lambda: "3.0.0")
     monkeypatch.setattr(platform, "uname", MockUname)
@@ -283,17 +287,6 @@ def test_host_type_accounts_dod():
     assert config.host_type == HostType.ACCOUNTS
 
 
-def test_host_type_unified():
-    """Test that a unified host is identified when experimental flag is set."""
-    config = Config(
-        host="https://unified.databricks.com",
-        workspace_id="test-workspace",
-        experimental_is_unified_host=True,
-        token="test-token",
-    )
-    assert config.host_type == HostType.UNIFIED
-
-
 def test_client_type_workspace():
     """Test that client type is workspace when workspace_id is set on unified host."""
     config = Config(
@@ -304,17 +297,6 @@ def test_client_type_workspace():
         token="test-token",
     )
     assert config.client_type == ClientType.WORKSPACE
-
-
-def test_client_type_account():
-    """Test that client type is account when account_id is set without workspace_id."""
-    config = Config(
-        host="https://unified.databricks.com",
-        account_id="test-account",
-        experimental_is_unified_host=True,
-        token="test-token",
-    )
-    assert config.client_type == ClientType.ACCOUNT
 
 
 def test_client_type_workspace_default():
@@ -333,17 +315,6 @@ def test_client_type_accounts_host():
     assert config.client_type == ClientType.ACCOUNT
 
 
-def test_client_type_unified_without_account_id():
-    """Test that client type raises error for unified host without account_id."""
-    config = Config(
-        host="https://unified.databricks.com",
-        experimental_is_unified_host=True,
-        token="test-token",
-    )
-    with pytest.raises(ValueError, match="Unified host requires account_id"):
-        _ = config.client_type
-
-
 def test_is_account_client_backward_compatibility():
     """Test that is_account_client property still works for backward compatibility."""
     config_workspace = Config(host="https://test.databricks.com", token="test-token")
@@ -353,7 +324,7 @@ def test_is_account_client_backward_compatibility():
     assert config_account.is_account_client
 
 
-def test_is_account_client_raises_on_unified_host():
+def test_is_account_client_does_not_raise_on_unified_host():
     """Test that is_account_client raises ValueError when used with unified hosts."""
     config = Config(
         host="https://unified.databricks.com",
@@ -361,65 +332,103 @@ def test_is_account_client_raises_on_unified_host():
         workspace_id="test-workspace",
         token="test-token",
     )
-    with pytest.raises(ValueError, match="is_account_client cannot be used with unified hosts"):
-        _ = config.is_account_client
+    config.is_account_client
 
 
-def test_oidc_endpoints_unified_workspace(mocker, requests_mock):
-    """Test that oidc_endpoints returns unified endpoints for workspace on unified host."""
+def test_oidc_endpoints_unified_missing_ids(mocker):
+    """Test that host metadata resolution raises error when oidc_endpoint has {account_id} placeholder but no account_id."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=HostMetadata(
+            oidc_endpoint="https://unified.databricks.com/oidc/accounts/{account_id}",
+        ),
+    )
+
+    with pytest.raises(ValueError, match="account_id is required"):
+        Config(host="https://unified.databricks.com", token="test-token")
+
+
+def test_databricks_oidc_endpoints_ignores_azure_client_id(mocker, requests_mock):
+    """Test that databricks_oidc_endpoints returns Databricks endpoints even when azure_client_id is set."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=HostMetadata(
+            oidc_endpoint="https://adb-123.4.azuredatabricks.net/oidc",
+        ),
+    )
     requests_mock.get(
-        "https://unified.databricks.com/oidc/accounts/test-account/.well-known/oauth-authorization-server",
+        "https://adb-123.4.azuredatabricks.net/oidc/.well-known/oauth-authorization-server",
         json={
-            "authorization_endpoint": "https://unified.databricks.com/oidc/accounts/test-account/v1/authorize",
-            "token_endpoint": "https://unified.databricks.com/oidc/accounts/test-account/v1/token",
+            "authorization_endpoint": "https://adb-123.4.azuredatabricks.net/oidc/v1/authorize",
+            "token_endpoint": "https://adb-123.4.azuredatabricks.net/oidc/v1/token",
+        },
+    )
+
+    # Disable auth validation since we're only testing oidc_endpoints property
+    mocker.patch("databricks.sdk.config.Config.init_auth")
+    config = Config(
+        host="https://adb-123.4.azuredatabricks.net",
+        azure_client_id="test-azure-client-id",  # This should be ignored by databricks_oidc_endpoints
+    )
+
+    endpoints = config.databricks_oidc_endpoints
+    assert endpoints is not None
+    assert "https://adb-123.4.azuredatabricks.net/oidc/v1/authorize" == endpoints.authorization_endpoint
+    assert "https://adb-123.4.azuredatabricks.net/oidc/v1/token" == endpoints.token_endpoint
+
+
+def test_oidc_endpoints_returns_azure_when_azure_client_id_set(mocker):
+    """Test that deprecated oidc_endpoints returns Azure endpoints when azure_client_id is set on Azure.
+
+    This tests the deprecated behavior that is maintained for backward compatibility.
+    """
+    # Mock the Azure endpoint detection
+    mocker.patch(
+        "databricks.sdk.config.get_azure_entra_id_workspace_endpoints",
+        return_value=mocker.Mock(
+            authorization_endpoint="https://login.microsoftonline.com/tenant-id/oauth2/v2.0/authorize",
+            token_endpoint="https://login.microsoftonline.com/tenant-id/oauth2/v2.0/token",
+        ),
+    )
+    # Disable auth validation since we're only testing oidc_endpoints property
+    mocker.patch("databricks.sdk.config.Config.init_auth")
+
+    config = Config(
+        host="https://adb-123.4.azuredatabricks.net",
+        azure_client_id="test-azure-client-id",
+    )
+
+    endpoints = config.oidc_endpoints
+    assert endpoints is not None
+    assert "login.microsoftonline.com" in endpoints.authorization_endpoint
+    assert "login.microsoftonline.com" in endpoints.token_endpoint
+
+
+def test_oidc_endpoints_falls_back_to_databricks_when_no_azure_client_id(mocker, requests_mock):
+    """Test that deprecated oidc_endpoints falls back to Databricks endpoints when azure_client_id is not set."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=HostMetadata(
+            oidc_endpoint="https://adb-123.4.azuredatabricks.net/oidc",
+        ),
+    )
+    requests_mock.get(
+        "https://adb-123.4.azuredatabricks.net/oidc/.well-known/oauth-authorization-server",
+        json={
+            "authorization_endpoint": "https://adb-123.4.azuredatabricks.net/oidc/v1/authorize",
+            "token_endpoint": "https://adb-123.4.azuredatabricks.net/oidc/v1/token",
         },
     )
 
     config = Config(
-        host="https://unified.databricks.com",
-        workspace_id="test-workspace",
-        account_id="test-account",
-        experimental_is_unified_host=True,
+        host="https://adb-123.4.azuredatabricks.net",
         token="test-token",
     )
 
     endpoints = config.oidc_endpoints
     assert endpoints is not None
-    assert "accounts/test-account" in endpoints.authorization_endpoint
-    assert "accounts/test-account" in endpoints.token_endpoint
-
-
-def test_oidc_endpoints_unified_account(mocker, requests_mock):
-    """Test that oidc_endpoints returns account endpoints for account on unified host."""
-    requests_mock.get(
-        "https://unified.databricks.com/oidc/accounts/test-account/.well-known/oauth-authorization-server",
-        json={
-            "authorization_endpoint": "https://unified.databricks.com/oidc/accounts/test-account/v1/authorize",
-            "token_endpoint": "https://unified.databricks.com/oidc/accounts/test-account/v1/token",
-        },
-    )
-
-    config = Config(
-        host="https://unified.databricks.com",
-        account_id="test-account",
-        experimental_is_unified_host=True,
-        token="test-token",
-    )
-
-    endpoints = config.oidc_endpoints
-    assert endpoints is not None
-    assert "accounts/test-account" in endpoints.authorization_endpoint
-    assert "accounts/test-account" in endpoints.token_endpoint
-
-
-def test_oidc_endpoints_unified_missing_ids():
-    """Test that oidc_endpoints raises error when unified host lacks required account_id."""
-    config = Config(host="https://unified.databricks.com", experimental_is_unified_host=True, token="test-token")
-
-    with pytest.raises(ValueError) as exc_info:
-        _ = config.oidc_endpoints
-
-    assert "Unified host requires account_id" in str(exc_info.value)
+    assert "https://adb-123.4.azuredatabricks.net/oidc/v1/authorize" == endpoints.authorization_endpoint
+    assert "https://adb-123.4.azuredatabricks.net/oidc/v1/token" == endpoints.token_endpoint
 
 
 def test_workspace_org_id_header_on_unified_host(requests_mock):
@@ -583,8 +592,14 @@ def _get_scope_from_request(request_text: str) -> Optional[str]:
     ],
     ids=["default_scope", "single_custom_scope", "multiple_scopes_sorted"],
 )
-def test_m2m_scopes_sent_to_token_endpoint(requests_mock, scopes_input, expected_scope):
+def test_m2m_scopes_sent_to_token_endpoint(mocker, requests_mock, scopes_input, expected_scope):
     """Test M2M authentication sends correct scopes to token endpoint."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=HostMetadata(
+            oidc_endpoint="https://test.databricks.com/oidc",
+        ),
+    )
     requests_mock.get(
         "https://test.databricks.com/oidc/.well-known/oauth-authorization-server",
         json={
@@ -618,8 +633,14 @@ def test_m2m_scopes_sent_to_token_endpoint(requests_mock, scopes_input, expected
     ],
     ids=["default_scope", "multiple_scopes", "single_scope"],
 )
-def test_oidc_scopes_sent_to_token_endpoint(requests_mock, tmp_path, scopes_input, expected_scope):
+def test_oidc_scopes_sent_to_token_endpoint(mocker, requests_mock, tmp_path, scopes_input, expected_scope):
     """Test OIDC token exchange sends correct scopes to token endpoint."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=HostMetadata(
+            oidc_endpoint="https://test.databricks.com/oidc",
+        ),
+    )
     oidc_token_file = tmp_path / "oidc_token"
     oidc_token_file.write_text("mock-id-token")
 
@@ -644,3 +665,295 @@ def test_oidc_scopes_sent_to_token_endpoint(requests_mock, tmp_path, scopes_inpu
     config.authenticate()
 
     assert _get_scope_from_request(token_mock.last_request.text) == expected_scope
+
+
+_DUMMY_WS_HOST = "https://dummy-workspace.databricks.com"
+_DUMMY_ACC_HOST = "https://dummy-accounts.databricks.com"
+_DUMMY_ACCOUNT_ID = "00000000-0000-0000-0000-000000000001"
+_DUMMY_WORKSPACE_ID = "111111111111111"
+_DUMMY_AUTH_ENDPOINT = f"{_DUMMY_WS_HOST}/oidc/v1/authorize"
+_DUMMY_TOKEN_ENDPOINT = f"{_DUMMY_WS_HOST}/oidc/v1/token"
+
+
+def test_discovery_url_from_env(monkeypatch):
+    monkeypatch.setenv("DATABRICKS_DISCOVERY_URL", "https://custom.idp.example.com/oidc")
+    config = Config(host=_DUMMY_WS_HOST, token="t")
+    assert config.discovery_url == "https://custom.idp.example.com/oidc"
+
+
+def test_databricks_oidc_endpoints_uses_discovery_url(requests_mock):
+    discovery_url = f"{_DUMMY_WS_HOST}/oidc"
+    requests_mock.get(
+        discovery_url,
+        json={"authorization_endpoint": _DUMMY_AUTH_ENDPOINT, "token_endpoint": _DUMMY_TOKEN_ENDPOINT},
+    )
+    config = Config(host=_DUMMY_WS_HOST, token="t", discovery_url=discovery_url)
+    endpoints = config.databricks_oidc_endpoints
+    assert endpoints.authorization_endpoint == _DUMMY_AUTH_ENDPOINT
+    assert endpoints.token_endpoint == _DUMMY_TOKEN_ENDPOINT
+
+
+@pytest.mark.parametrize(
+    "host,response_json,config_kwargs,expected_fields",
+    [
+        pytest.param(
+            _DUMMY_WS_HOST,
+            {
+                "oidc_endpoint": f"{_DUMMY_WS_HOST}/oidc",
+                "account_id": _DUMMY_ACCOUNT_ID,
+                "workspace_id": _DUMMY_WORKSPACE_ID,
+            },
+            {"experimental_is_unified_host": True},
+            {
+                "account_id": _DUMMY_ACCOUNT_ID,
+                "workspace_id": _DUMMY_WORKSPACE_ID,
+                "discovery_url": f"{_DUMMY_WS_HOST}/oidc/.well-known/oauth-authorization-server",
+            },
+            id="unified-populates-all-fields",
+        ),
+        pytest.param(
+            _DUMMY_ACC_HOST,
+            {"oidc_endpoint": f"{_DUMMY_ACC_HOST}/oidc/accounts/{{account_id}}"},
+            {"account_id": _DUMMY_ACCOUNT_ID, "experimental_is_unified_host": True},
+            {
+                "discovery_url": f"{_DUMMY_ACC_HOST}/oidc/accounts/{_DUMMY_ACCOUNT_ID}/.well-known/oauth-authorization-server"
+            },
+            id="unified-substitutes-account-id",
+        ),
+        pytest.param(
+            _DUMMY_WS_HOST,
+            {"oidc_endpoint": f"{_DUMMY_WS_HOST}/oidc", "account_id": "other-account", "workspace_id": "other-ws"},
+            {
+                "account_id": _DUMMY_ACCOUNT_ID,
+                "workspace_id": _DUMMY_WORKSPACE_ID,
+                "experimental_is_unified_host": True,
+            },
+            {"account_id": _DUMMY_ACCOUNT_ID, "workspace_id": _DUMMY_WORKSPACE_ID},
+            id="unified-does-not-overwrite-existing-fields",
+        ),
+    ],
+)
+def test_resolve_host_metadata(mocker, host, response_json, config_kwargs, expected_fields):
+    mocker.patch("databricks.sdk.config.get_host_metadata", return_value=oauth.HostMetadata.from_dict(response_json))
+    config = Config(host=host, token="t", **config_kwargs)
+    for field, expected in expected_fields.items():
+        assert getattr(config, field) == expected
+
+
+def test_resolve_host_metadata_missing_account_id(mocker):
+    """Raises when the oidc_endpoint template requires account_id but none is configured."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=oauth.HostMetadata.from_dict({"oidc_endpoint": f"{_DUMMY_ACC_HOST}/oidc/accounts/{{account_id}}"}),
+    )
+    with pytest.raises(ValueError, match="account_id is required to resolve discovery_url"):
+        Config(host=_DUMMY_ACC_HOST, token="t", experimental_is_unified_host=True)
+
+
+def test_resolve_host_metadata_no_oidc_endpoint(mocker):
+    """No raise when metadata has no oidc_endpoint; discovery_url stays unset."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=oauth.HostMetadata.from_dict({"account_id": _DUMMY_ACCOUNT_ID}),
+    )
+    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    assert config.account_id == _DUMMY_ACCOUNT_ID
+    assert config.discovery_url is None
+
+
+def test_resolve_host_metadata_http_error(mocker):
+    """HTTP failure is swallowed with a warning; fields remain unset."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        side_effect=ValueError(f"Failed to fetch host metadata from {_DUMMY_WS_HOST}/.well-known/databricks-config"),
+    )
+    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    assert config.account_id is None
+    assert config.discovery_url is None
+
+
+def test_resolve_host_metadata_called_for_non_unified(mocker):
+    """Metadata resolution is skipped entirely for non-unified (workspace/account) hosts."""
+    mock_get = mocker.patch("databricks.sdk.config.get_host_metadata")
+    Config(host=_DUMMY_WS_HOST, token="t")
+    mock_get.assert_called_once()
+
+
+# ---------------------------------------------------------------------------
+# Cloud field tests
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    "cloud_str,expected_cloud",
+    [
+        ("AWS", Cloud.AWS),
+        ("aws", Cloud.AWS),
+        ("Azure", Cloud.AZURE),
+        ("AZURE", Cloud.AZURE),
+        ("GCP", Cloud.GCP),
+        ("gcp", Cloud.GCP),
+    ],
+)
+def test_cloud_parse_case_insensitive(cloud_str, expected_cloud):
+    """Cloud.parse handles any casing."""
+    assert Cloud.parse(cloud_str) == expected_cloud
+
+
+def test_cloud_parse_unknown_returns_none():
+    """Cloud.parse returns None for unrecognized values (forward compatibility)."""
+    assert Cloud.parse("UNKNOWN_FUTURE_CLOUD") is None
+
+
+def test_cloud_parse_empty_returns_none():
+    assert Cloud.parse("") is None
+    assert Cloud.parse(None) is None
+
+
+def test_cloud_field_overrides_dns_detection_aws():
+    """Explicit cloud=AWS wins over hostname-based detection."""
+    config = Config(host="https://myworkspace.azuredatabricks.net", token="t", cloud="AWS")
+    assert config.is_aws
+    assert not config.is_azure
+    assert not config.is_gcp
+
+
+def test_cloud_field_overrides_dns_detection_azure():
+    """Explicit cloud=AZURE wins over hostname-based detection."""
+    config = Config(host="https://myworkspace.cloud.databricks.com", token="t", cloud="AZURE")
+    assert config.is_azure
+    assert not config.is_aws
+    assert not config.is_gcp
+
+
+def test_cloud_field_overrides_dns_detection_gcp():
+    """Explicit cloud=GCP wins over hostname-based detection."""
+    config = Config(host="https://myworkspace.cloud.databricks.com", token="t", cloud="GCP")
+    assert config.is_gcp
+    assert not config.is_aws
+    assert not config.is_azure
+
+
+def test_cloud_field_falls_back_to_dns_when_unset():
+    """When cloud is not set, falls back to DNS-based detection."""
+    config = Config(host="https://myworkspace.azuredatabricks.net", token="t")
+    assert config.is_azure
+    assert not config.is_aws
+
+
+def test_cloud_field_azure_resource_id_still_wins():
+    """azure_workspace_resource_id takes precedence over cloud field for is_azure."""
+    config = Config(
+        host="https://myworkspace.cloud.databricks.com",
+        credentials_strategy=noop_credentials,
+        cloud="AWS",
+        azure_workspace_resource_id="/subscriptions/sub/resourceGroups/rg/providers/Microsoft.Databricks/workspaces/ws",
+    )
+    assert config.is_azure
+
+
+def test_resolve_host_metadata_populates_cloud(mocker):
+    """Cloud is populated from the discovery endpoint."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=oauth.HostMetadata.from_dict(
+            {
+                "oidc_endpoint": f"{_DUMMY_WS_HOST}/oidc",
+                "cloud": "AWS",
+            }
+        ),
+    )
+    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    assert config.cloud == Cloud.AWS
+
+
+def test_resolve_host_metadata_cloud_not_overwritten(mocker):
+    """Explicit cloud config is not overwritten by the discovery endpoint."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=oauth.HostMetadata.from_dict(
+            {
+                "oidc_endpoint": f"{_DUMMY_WS_HOST}/oidc",
+                "cloud": "AZURE",
+            }
+        ),
+    )
+    config = Config(
+        host=_DUMMY_WS_HOST,
+        token="t",
+        experimental_is_unified_host=True,
+        cloud="AWS",
+    )
+    assert config.cloud == Cloud.AWS
+
+
+def test_resolve_host_metadata_cloud_missing_in_response(mocker):
+    """When endpoint omits cloud, the field stays unset (falls back to DNS)."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=oauth.HostMetadata.from_dict({"oidc_endpoint": f"{_DUMMY_WS_HOST}/oidc"}),
+    )
+    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    assert config.cloud is None
+
+
+# ---------------------------------------------------------------------------
+# token_audience resolution from host metadata
+# ---------------------------------------------------------------------------
+
+
+def test_resolve_host_metadata_sets_token_audience_for_account_host(mocker):
+    """When metadata has no workspace_id, token_audience is set to account_id."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=oauth.HostMetadata.from_dict(
+            {
+                "oidc_endpoint": f"{_DUMMY_ACC_HOST}/oidc/accounts/{_DUMMY_ACCOUNT_ID}",
+                "account_id": _DUMMY_ACCOUNT_ID,
+            }
+        ),
+    )
+    config = Config(
+        host=_DUMMY_ACC_HOST,
+        token="t",
+        account_id=_DUMMY_ACCOUNT_ID,
+        experimental_is_unified_host=True,
+    )
+    assert config.token_audience == _DUMMY_ACCOUNT_ID
+
+
+def test_resolve_host_metadata_no_token_audience_for_workspace_host(mocker):
+    """When metadata contains workspace_id, token_audience is not set from metadata."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=oauth.HostMetadata.from_dict(
+            {
+                "oidc_endpoint": f"{_DUMMY_WS_HOST}/oidc",
+                "account_id": _DUMMY_ACCOUNT_ID,
+                "workspace_id": _DUMMY_WORKSPACE_ID,
+            }
+        ),
+    )
+    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    assert config.token_audience is None
+
+
+def test_resolve_host_metadata_does_not_overwrite_token_audience(mocker):
+    """An explicitly set token_audience is never overwritten by metadata resolution."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=oauth.HostMetadata.from_dict(
+            {
+                "oidc_endpoint": f"{_DUMMY_ACC_HOST}/oidc/accounts/{_DUMMY_ACCOUNT_ID}",
+                "account_id": _DUMMY_ACCOUNT_ID,
+            }
+        ),
+    )
+    config = Config(
+        host=_DUMMY_ACC_HOST,
+        token="t",
+        account_id=_DUMMY_ACCOUNT_ID,
+        experimental_is_unified_host=True,
+        token_audience="custom-audience",
+    )
+    assert config.token_audience == "custom-audience"

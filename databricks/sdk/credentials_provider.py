@@ -20,6 +20,8 @@ from google.auth import impersonated_credentials  # type: ignore
 from google.auth.transport.requests import Request  # type: ignore
 from google.oauth2 import service_account  # type: ignore
 
+from databricks.sdk.oauth import get_azure_entra_id_workspace_endpoints
+
 from . import azure, oauth, oidc, oidc_token_supplier
 from .client_types import ClientType
 
@@ -218,7 +220,7 @@ def oauth_service_principal(cfg: "Config") -> Optional[CredentialsProvider]:
     """Adds refreshed Databricks machine-to-machine OAuth Bearer token to every request,
     if /oidc/.well-known/oauth-authorization-server is available on the given host.
     """
-    oidc = cfg.oidc_endpoints
+    oidc = cfg.databricks_oidc_endpoints
     if oidc is None:
         return None
 
@@ -248,14 +250,21 @@ def external_browser(cfg: "Config") -> Optional[CredentialsProvider]:
         return None
 
     client_id, client_secret = None, None
+    oidc_endpoints = None
     if cfg.client_id:
         client_id = cfg.client_id
         client_secret = cfg.client_secret
+        oidc_endpoints = cfg.databricks_oidc_endpoints
     elif cfg.azure_client_id:
-        client_id = cfg.azure_client
+        client_id = cfg.azure_client_id
         client_secret = cfg.azure_client_secret
+        oidc_endpoints = get_azure_entra_id_workspace_endpoints(cfg.host)
     if not client_id:
         client_id = "databricks-cli"
+        oidc_endpoints = cfg.databricks_oidc_endpoints
+
+    if not oidc_endpoints:
+        return None
 
     scopes = cfg.get_scopes()
     if not cfg.disable_oauth_refresh_token:
@@ -264,7 +273,6 @@ def external_browser(cfg: "Config") -> Optional[CredentialsProvider]:
 
     # Load cached credentials from disk if they exist. Note that these are
     # local to the Python SDK and not reused by other SDKs.
-    oidc_endpoints = cfg.oidc_endpoints
     redirect_url = "http://localhost:8020"
     token_cache = oauth.TokenCache(
         host=cfg.host,
@@ -273,6 +281,7 @@ def external_browser(cfg: "Config") -> Optional[CredentialsProvider]:
         client_secret=client_secret,
         redirect_url=redirect_url,
         scopes=scopes,
+        profile=cfg.profile,
     )
     credentials = token_cache.load()
     if credentials:
@@ -321,7 +330,7 @@ def _ensure_host_present(cfg: "Config", token_source_for: Callable[[str], oauth.
 
 @oauth_credentials_strategy(
     "azure-client-secret",
-    ["is_azure", "azure_client_id", "azure_client_secret"],
+    ["azure_client_id", "azure_client_secret"],
 )
 def azure_service_principal(cfg: "Config") -> CredentialsProvider:
     """Adds refreshed Azure Active Directory (AAD) Service Principal OAuth tokens
@@ -390,7 +399,7 @@ def oidc_credentials_provider(cfg, id_token_source: oidc.IdTokenSource) -> Optio
 
     token_source = oidc.DatabricksOidcTokenSource(
         host=cfg.host,
-        token_endpoint=cfg.oidc_endpoints.token_endpoint,
+        token_endpoint=cfg.databricks_oidc_endpoints.token_endpoint,
         client_id=cfg.client_id,
         account_id=cfg.account_id,
         id_token_source=id_token_source,
@@ -431,10 +440,8 @@ def _oidc_credentials_provider(
 
     # Determine the audience for token exchange
     audience = cfg.token_audience
-    if audience is None and cfg.client_type == ClientType.ACCOUNT:
-        audience = cfg.account_id
-    if audience is None and cfg.client_type != ClientType.ACCOUNT:
-        audience = cfg.oidc_endpoints.token_endpoint
+    if audience is None:
+        audience = cfg.databricks_oidc_endpoints.token_endpoint
 
     # Try to get an OIDC token. If no supplier returns a token, we cannot use this authentication mode.
     id_token = supplier.get_oidc_token(audience)
@@ -453,7 +460,7 @@ def _oidc_credentials_provider(
         return oauth.ClientCredentials(
             client_id=cfg.client_id,
             client_secret="",  # we have no (rotatable) secrets in OIDC flow
-            token_url=cfg.oidc_endpoints.token_endpoint,
+            token_url=cfg.databricks_oidc_endpoints.token_endpoint,
             endpoint_params={
                 "subject_token_type": "urn:ietf:params:oauth:token-type:jwt",
                 "subject_token": id_token,
@@ -505,15 +512,12 @@ def azure_devops_oidc(cfg: "Config") -> Optional[CredentialsProvider]:
     )
 
 
+# Azure Client ID is the minimal thing we need, as otherwise we get AADSTS700016: Application with
+# identifier 'https://token.actions.githubusercontent.com' was not found in the directory '...'.
 @oauth_credentials_strategy("github-oidc-azure", ["host", "azure_client_id"])
 def github_oidc_azure(cfg: "Config") -> Optional[CredentialsProvider]:
     if "ACTIONS_ID_TOKEN_REQUEST_TOKEN" not in os.environ:
         # not in GitHub actions
-        return None
-
-    # Client ID is the minimal thing we need, as otherwise we get AADSTS700016: Application with
-    # identifier 'https://token.actions.githubusercontent.com' was not found in the directory '...'.
-    if not cfg.is_azure:
         return None
 
     token = oidc_token_supplier.GitHubOIDCTokenSupplier().get_oidc_token("api://AzureADTokenExchange")
@@ -528,7 +532,7 @@ def github_oidc_azure(cfg: "Config") -> Optional[CredentialsProvider]:
     aad_endpoint = cfg.arm_environment.active_directory_endpoint
     if not cfg.azure_tenant_id:
         # detect Azure AD Tenant ID if it's not specified directly
-        token_endpoint = cfg.oidc_endpoints.token_endpoint
+        token_endpoint = get_azure_entra_id_workspace_endpoints(cfg.host).token_endpoint
         cfg.azure_tenant_id = token_endpoint.replace(aad_endpoint, "").split("/")[0]
 
     inner = oauth.ClientCredentials(
@@ -564,8 +568,6 @@ GcpScopes = [
 
 @oauth_credentials_strategy("google-credentials", ["host", "google_credentials"])
 def google_credentials(cfg: "Config") -> Optional[CredentialsProvider]:
-    if not cfg.is_gcp:
-        return None
     # Reads credentials as JSON. Credentials can be either a path to JSON file, or actual JSON string.
     # Obtain the id token by providing the json file path and target audience.
     if os.path.isfile(cfg.google_credentials):
@@ -590,9 +592,14 @@ def google_credentials(cfg: "Config") -> Optional[CredentialsProvider]:
     def refreshed_headers() -> Dict[str, str]:
         credentials.refresh(request)
         headers = {"Authorization": f"Bearer {credentials.token}"}
-        if cfg.client_type == ClientType.ACCOUNT:
+        # GCP SA Access token is only required for specific account level operations.
+        # It is possible that a user does not have persomissions to mint the GCP SA access token,
+        # but this is not a blocking error at this point.
+        try:
             gcp_credentials.refresh(request)
             headers["X-Databricks-GCP-SA-Access-Token"] = gcp_credentials.token
+        except Exception as e:
+            logger.warning(f"Failed to refresh GCP credentials: {e}")
         return headers
 
     return OAuthCredentialsProvider(refreshed_headers, token)
@@ -600,8 +607,6 @@ def google_credentials(cfg: "Config") -> Optional[CredentialsProvider]:
 
 @oauth_credentials_strategy("google-id", ["host", "google_service_account"])
 def google_id(cfg: "Config") -> Optional[CredentialsProvider]:
-    if not cfg.is_gcp:
-        return None
     credentials, _project_id = google.auth.default()
 
     # Create the impersonated credential.
@@ -631,9 +636,14 @@ def google_id(cfg: "Config") -> Optional[CredentialsProvider]:
     def refreshed_headers() -> Dict[str, str]:
         id_creds.refresh(request)
         headers = {"Authorization": f"Bearer {id_creds.token}"}
-        if cfg.client_type == ClientType.ACCOUNT:
+        # GCP SA Access token is only required for specific account level operations.
+        # It is possible that a user does not have persomissions to mint the GCP SA access token,
+        # but this is not a blocking error at this point.
+        try:
             gcp_impersonated_credentials.refresh(request)
             headers["X-Databricks-GCP-SA-Access-Token"] = gcp_impersonated_credentials.token
+        except Exception as e:
+            logger.warning(f"Failed to refresh GCP impersonated credentials: {e}")
         return headers
 
     return OAuthCredentialsProvider(refreshed_headers, token)
@@ -647,9 +657,15 @@ class CliTokenSource(oauth.Refreshable):
         access_token_field: str,
         expiry_field: str,
         disable_async: bool = True,
+        fallback_cmd: Optional[List[str]] = None,
     ):
         super().__init__(disable_async=disable_async)
         self._cmd = cmd
+        # fallback_cmd is tried when the primary command fails with "unknown flag: --profile",
+        # indicating the CLI is too old to support --profile. Can be removed once support
+        # for CLI versions predating --profile is dropped.
+        # See: https://github.com/databricks/databricks-sdk-go/pull/1497
+        self._fallback_cmd = fallback_cmd
         self._token_type_field = token_type_field
         self._access_token_field = access_token_field
         self._expiry_field = expiry_field
@@ -665,9 +681,9 @@ class CliTokenSource(oauth.Refreshable):
         if last_e:
             raise last_e
 
-    def refresh(self) -> oauth.Token:
+    def _exec_cli_command(self, cmd: List[str]) -> oauth.Token:
         try:
-            out = _run_subprocess(self._cmd, capture_output=True, check=True)
+            out = _run_subprocess(cmd, capture_output=True, check=True)
             it = json.loads(out.stdout.decode())
             expires_on = self._parse_expiry(it[self._expiry_field])
             return oauth.Token(
@@ -680,8 +696,20 @@ class CliTokenSource(oauth.Refreshable):
         except subprocess.CalledProcessError as e:
             stdout = e.stdout.decode().strip()
             stderr = e.stderr.decode().strip()
-            message = stdout or stderr
+            message = "\n".join(filter(None, [stdout, stderr]))
             raise IOError(f"cannot get access token: {message}") from e
+
+    def refresh(self) -> oauth.Token:
+        try:
+            return self._exec_cli_command(self._cmd)
+        except IOError as e:
+            if self._fallback_cmd is not None and "unknown flag: --profile" in str(e):
+                logger.warning(
+                    "Databricks CLI does not support --profile flag. Falling back to --host. "
+                    "Please upgrade your CLI to the latest version."
+                )
+                return self._exec_cli_command(self._fallback_cmd)
+            raise
 
 
 def _run_subprocess(
@@ -806,7 +834,7 @@ class AzureCliTokenSource(CliTokenSource):
         return components[2]
 
 
-@credentials_strategy("azure-cli", ["is_azure"])
+@credentials_strategy("azure-cli", ["effective_azure_login_app_id"])
 def azure_cli(cfg: "Config") -> Optional[CredentialsProvider]:
     """Adds refreshed OAuth token granted by `az login` command to every request."""
     cfg.load_azure_tenant_id()
@@ -852,17 +880,6 @@ class DatabricksCliTokenSource(CliTokenSource):
     """Obtain the token granted by `databricks auth login` CLI command"""
 
     def __init__(self, cfg: "Config"):
-        args = ["auth", "token", "--host", cfg.host]
-        if cfg.experimental_is_unified_host:
-            # For unified hosts, pass account_id, workspace_id, and experimental flag
-            args += ["--experimental-is-unified-host"]
-            if cfg.account_id:
-                args += ["--account-id", cfg.account_id]
-            if cfg.workspace_id:
-                args += ["--workspace-id", str(cfg.workspace_id)]
-        elif cfg.client_type == ClientType.ACCOUNT:
-            args += ["--account-id", cfg.account_id]
-
         cli_path = cfg.databricks_cli_path
 
         # If the path is not specified look for "databricks" / "databricks.exe" in PATH.
@@ -881,13 +898,97 @@ class DatabricksCliTokenSource(CliTokenSource):
         elif cli_path.count("/") == 0:
             cli_path = self.__class__._find_executable(cli_path)
 
+        fallback_cmd = None
+        if cfg.profile:
+            # When profile is set, use --profile as the primary command.
+            # The profile contains the full config (host, account_id, etc.).
+            args = ["auth", "token", "--profile", cfg.profile]
+            # Build a --host fallback for older CLIs that don't support --profile.
+            if cfg.host:
+                fallback_cmd = [cli_path, *self.__class__._build_host_args(cfg)]
+        else:
+            args = self.__class__._build_host_args(cfg)
+
+        # get_scopes() defaults to ["all-apis"] when nothing is configured, which would
+        # cause false-positive mismatches against every token that wasn't issued with
+        # exactly ["all-apis"]. Only validate when scopes are explicitly set (either
+        # directly in code or loaded from a CLI profile).
+        self._requested_scopes = cfg.get_scopes() if cfg.scopes else None
+        self._host = cfg.host
+
         super().__init__(
             cmd=[cli_path, *args],
             token_type_field="token_type",
             access_token_field="access_token",
             expiry_field="expiry",
             disable_async=cfg.disable_async_token_refresh,
+            fallback_cmd=fallback_cmd,
         )
+
+    def refresh(self) -> oauth.Token:
+        # The scope validation lives in refresh() because this is the only method that
+        # produces new tokens (see Refreshable._token assignments). By overriding here,
+        # every token is validated — both at initial auth and on every subsequent refresh
+        # when the cached token expires. This catches cases where a user re-authenticates
+        # mid-session with different scopes.
+        token = super().refresh()
+        if self._requested_scopes:
+            self._validate_token_scopes(token)
+        return token
+
+    # offline_access controls whether the IdP issues a refresh token. It does not
+    # grant any API permissions, so its presence or absence should not cause a
+    # scope mismatch error.
+    _SCOPES_IGNORED_FOR_COMPARISON = {"offline_access"}
+
+    def _validate_token_scopes(self, token: oauth.Token):
+        """Validate that the token's scopes match the requested scopes from the config.
+
+        The `databricks auth token` command does not accept scopes yet. It returns whatever
+        token was cached from the last `databricks auth login`. If a user configures
+        specific scopes in the SDK config but their cached CLI token was issued with
+        different scopes, requests will silently use the wrong scopes. This check
+        surfaces that mismatch early with an actionable error telling the user how to
+        re-authenticate with the correct scopes.
+        """
+        claims = token.jwt_claims()
+        if not claims:
+            logger.debug("Could not decode token as JWT to validate scopes")
+            return
+
+        token_scopes_raw = claims.get("scope")
+        if token_scopes_raw is None:
+            logger.debug("Token does not contain 'scope' claim, skipping scope validation")
+            return
+
+        if isinstance(token_scopes_raw, str):
+            token_scopes = set(token_scopes_raw.split())
+        elif isinstance(token_scopes_raw, list):
+            token_scopes = {str(s) for s in token_scopes_raw}
+        else:
+            logger.debug(f"Unexpected 'scope' claim type: {type(token_scopes_raw)}")
+            return
+
+        token_scopes -= self._SCOPES_IGNORED_FOR_COMPARISON
+        requested_scopes = set(self._requested_scopes) - self._SCOPES_IGNORED_FOR_COMPARISON
+
+        if token_scopes != requested_scopes:
+            raise ValueError(
+                f"Token issued by Databricks CLI has scopes {sorted(token_scopes)} which do not match "
+                f"the configured scopes {sorted(requested_scopes)}. Please re-authenticate "
+                f"with the desired scopes by running `databricks auth login` with the --scopes flag."
+                f"Scopes default to all-apis."
+            )
+
+    @staticmethod
+    def _build_host_args(cfg: "Config") -> List[str]:
+        """Build CLI arguments using --host (legacy path)."""
+        args = ["auth", "token", "--host", cfg.host]
+        # This is here to support older versions of the Databricks CLI, so we need to keep the client type check.
+        # This won't work for unified hosts, but it is not supposed to.
+        if cfg.client_type == ClientType.ACCOUNT:
+            args += ["--account-id", cfg.account_id]
+        return args
 
     @staticmethod
     def _find_executable(name) -> str:
@@ -924,6 +1025,16 @@ def databricks_cli(cfg: "Config") -> Optional[CredentialsProvider]:
             logger.debug(f"OAuth not configured or not available: {e}")
             return None
         raise e
+    except ValueError as e:
+        # Scope validation failed. When the user explicitly selected databricks-cli auth,
+        # surface the mismatch immediately so they get an actionable error. When we're being
+        # tried as part of the default credential chain, step aside so other providers get
+        # a chance (DefaultCredentials filters by auth_type before calling us, so this
+        # condition is only true when the user explicitly set auth_type="databricks-cli").
+        if cfg.auth_type == "databricks-cli":
+            raise
+        logger.warning(f"Databricks CLI token scope mismatch, skipping: {e}")
+        return None
 
     logger.info("Using Databricks CLI authentication")
 

@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, Iterator, List, Optional
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.service._internal import _enum, _from_dict, _repeated_dict
 
 _LOG = logging.getLogger("databricks.sdk")
@@ -306,14 +305,15 @@ class ValidityCheckConfiguration:
 
 
 class QualityMonitorV2API:
-    """[DEPRECATED] This API is deprecated. Please use the Data Quality Monitoring API instead (REST:
-    /api/data-quality/v1/monitors). Manage data quality of UC objects (currently support `schema`)."""
+    """Deprecated: Please use the Data Quality Monitoring API instead (REST: /api/data-quality/v1/monitors).
+    Manage data quality of UC objects (currently support `schema`)."""
 
     def __init__(self, api_client):
         self._api = api_client
 
     def create_quality_monitor(self, quality_monitor: QualityMonitor) -> QualityMonitor:
-        """[DEPRECATED] Create a quality monitor on UC object. Use Data Quality Monitoring API instead.
+        """Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Create a quality
+        monitor on UC object.
 
         :param quality_monitor: :class:`QualityMonitor`
 
@@ -327,14 +327,15 @@ class QualityMonitorV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/quality-monitors", body=body, headers=headers)
         return QualityMonitor.from_dict(res)
 
     def delete_quality_monitor(self, object_type: str, object_id: str):
-        """[DEPRECATED] Delete a quality monitor on UC object. Use Data Quality Monitoring API instead.
+        """Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Delete a quality
+        monitor on UC object.
 
         :param object_type: str
           The type of the monitored object. Can be one of the following: schema.
@@ -349,13 +350,14 @@ class QualityMonitorV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/quality-monitors/{object_type}/{object_id}", headers=headers)
 
     def get_quality_monitor(self, object_type: str, object_id: str) -> QualityMonitor:
-        """[DEPRECATED] Read a quality monitor on UC object. Use Data Quality Monitoring API instead.
+        """Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Read a quality
+        monitor on UC object.
 
         :param object_type: str
           The type of the monitored object. Can be one of the following: schema.
@@ -370,7 +372,7 @@ class QualityMonitorV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/quality-monitors/{object_type}/{object_id}", headers=headers)
@@ -379,7 +381,8 @@ class QualityMonitorV2API:
     def list_quality_monitor(
         self, *, page_size: Optional[int] = None, page_token: Optional[str] = None
     ) -> Iterator[QualityMonitor]:
-        """[DEPRECATED] (Unimplemented) List quality monitors. Use Data Quality Monitoring API instead.
+        """Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)
+        List quality monitors.
 
         :param page_size: int (optional)
         :param page_token: str (optional)
@@ -397,7 +400,7 @@ class QualityMonitorV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -412,8 +415,8 @@ class QualityMonitorV2API:
     def update_quality_monitor(
         self, object_type: str, object_id: str, quality_monitor: QualityMonitor
     ) -> QualityMonitor:
-        """[DEPRECATED] (Unimplemented) Update a quality monitor on UC object. Use Data Quality Monitoring API
-        instead.
+        """Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)
+        Update a quality monitor on UC object.
 
         :param object_type: str
           The type of the monitored object. Can be one of the following: schema.
@@ -431,7 +434,7 @@ class QualityMonitorV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/quality-monitors/{object_type}/{object_id}", body=body, headers=headers)

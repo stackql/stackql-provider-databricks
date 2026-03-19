@@ -51,13 +51,13 @@
           max_num_clusters.
 
           Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large -
-          4X-Large
+          4X-Large - 5X-Large
         :param creator_name: str (optional)
           warehouse creator name
         :param enable_photon: bool (optional)
           Configures whether the warehouse should use Photon optimized clusters.
 
-          Defaults to false.
+          Defaults to true.
         :param enable_serverless_compute: bool (optional)
           Configures whether the warehouse should use serverless compute
         :param instance_profile_arn: str (optional)
@@ -190,13 +190,13 @@
           max_num_clusters.
 
           Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large -
-          4X-Large
+          4X-Large - 5X-Large
         :param creator_name: str (optional)
           warehouse creator name
         :param enable_photon: bool (optional)
           Configures whether the warehouse should use Photon optimized clusters.
 
-          Defaults to false.
+          Defaults to true.
         :param enable_serverless_compute: bool (optional)
           Configures whether the warehouse should use serverless compute
         :param instance_profile_arn: str (optional)
@@ -343,8 +343,8 @@
           When paginating, all other parameters provided to `ListWarehouses` must match the call that provided
           the page token.
         :param run_as_user_id: int (optional)
-          Service Principal which will be used to fetch the list of endpoints. If not specified, SQL Gateway
-          will use the user from the session header.
+          Deprecated: this field is ignored by the server. Service Principal which will be used to fetch the
+          list of endpoints. If not specified, SQL Gateway will use the user from the session header.
 
         :returns: Iterator over :class:`EndpointInfo`
         
@@ -391,7 +391,7 @@
         :param data_access_config: List[:class:`EndpointConfPair`] (optional)
           Spark confs for external hive metastore configuration JSON serialized size must be less than <= 512K
         :param enable_serverless_compute: bool (optional)
-          Enable Serverless compute for SQL warehouses
+          Deprecated: only setting this to true is allowed.
         :param enabled_warehouse_types: List[:class:`WarehouseTypePair`] (optional)
           List of Warehouse Types allowed in this workspace (limits allowed value of the type field in
           CreateWarehouse and EditWarehouse). Note: Some types cannot be disabled, they don't need to be

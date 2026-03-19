@@ -11,7 +11,6 @@ from datetime import timedelta
 from enum import Enum
 from typing import Any, Callable, Dict, Iterator, List, Optional
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.service._internal import (Wait, _enum, _from_dict,
                                               _repeated_dict)
 
@@ -612,8 +611,6 @@ class DatabaseInstanceState(Enum):
 
 @dataclass
 class DatabaseTable:
-    """Next field marker: 13"""
-
     name: str
     """Full three-part (catalog, schema, table) name of the table."""
 
@@ -980,8 +977,6 @@ class RequestedResource:
 
 @dataclass
 class SyncedDatabaseTable:
-    """Next field marker: 18"""
-
     name: str
     """Full three-part (catalog, schema, table) name of the table."""
 
@@ -1613,7 +1608,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/database/catalogs", body=body, headers=headers)
@@ -1637,7 +1632,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.0/database/instances", body=body, headers=headers)
@@ -1678,7 +1673,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -1702,7 +1697,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/database/tables", body=body, headers=headers)
@@ -1723,7 +1718,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/database/synced_tables", body=body, headers=headers)
@@ -1742,7 +1737,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/database/catalogs/{name}", headers=headers)
@@ -1772,7 +1767,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/database/instances/{name}", query=query, headers=headers)
@@ -1806,7 +1801,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do(
@@ -1826,7 +1821,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/database/tables/{name}", headers=headers)
@@ -1849,7 +1844,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/database/synced_tables/{name}", query=query, headers=headers)
@@ -1871,7 +1866,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/database/instances:findByUid", query=query, headers=headers)
@@ -1887,10 +1882,13 @@ class DatabaseAPI:
         """Generates a credential that can be used to access database instances.
 
         :param claims: List[:class:`RequestedClaims`] (optional)
-          The returned token will be scoped to the union of instance_names and instances containing the
-          specified UC tables, so instance_names is allowed to be empty.
+          A set of UC permissions to add to the credential. We verify that the caller has the necessary
+          permissions in UC and include a reference in the token. Postgres uses that token to give the
+          connecting user additional grants to the Postgres resources that correspond to the UC resources. The
+          UC resources need to be something that have a Postgres counterpart. For example, a synced table or a
+          table in a UC database catalog.
         :param instance_names: List[str] (optional)
-          Instances to which the token will be scoped.
+          Instances to request a credential for. At least one of instance_names or claims must be specified.
         :param request_id: str (optional)
 
         :returns: :class:`DatabaseCredential`
@@ -1911,7 +1909,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/database/credentials", body=body, headers=headers)
@@ -1930,7 +1928,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/database/catalogs/{name}", headers=headers)
@@ -1950,7 +1948,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/database/instances/{name}", headers=headers)
@@ -1970,7 +1968,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/database/instances/{instance_name}/roles/{name}", headers=headers)
@@ -1989,7 +1987,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/database/tables/{name}", headers=headers)
@@ -2008,7 +2006,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/database/synced_tables/{name}", headers=headers)
@@ -2039,7 +2037,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -2079,7 +2077,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -2099,7 +2097,7 @@ class DatabaseAPI:
         """List Database Instances.
 
         :param page_size: int (optional)
-          Upper bound for items returned.
+          Upper bound for items returned. The maximum value is 100.
         :param page_token: str (optional)
           Pagination token to go to the next page of Database Instances. Requests first page if absent.
 
@@ -2116,7 +2114,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -2153,7 +2151,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -2192,7 +2190,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/database/catalogs/{name}", query=query, body=body, headers=headers)
@@ -2223,7 +2221,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/database/instances/{name}", query=query, body=body, headers=headers)
@@ -2254,7 +2252,7 @@ class DatabaseAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/database/synced_tables/{name}", query=query, body=body, headers=headers)

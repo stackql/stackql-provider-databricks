@@ -10,7 +10,6 @@ from datetime import timedelta
 from enum import Enum
 from typing import Any, Callable, Dict, Iterator, List, Optional
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.service import compute
 from databricks.sdk.service._internal import (Wait, _enum, _from_dict,
                                               _repeated_dict)
@@ -21,6 +20,127 @@ _LOG = logging.getLogger("databricks.sdk")
 
 
 # all definitions in this file are in alphabetical order
+
+
+class AlertEvaluationState(Enum):
+    """Same alert evaluation state as in redash-v2/api/proto/alertsv2/alerts.proto"""
+
+    ERROR = "ERROR"
+    OK = "OK"
+    TRIGGERED = "TRIGGERED"
+    UNKNOWN = "UNKNOWN"
+
+
+@dataclass
+class AlertTask:
+    alert_id: Optional[str] = None
+    """The alert_id is the canonical identifier of the alert."""
+
+    subscribers: Optional[List[AlertTaskSubscriber]] = None
+    """The subscribers receive alert evaluation result notifications after the alert task is completed.
+    The number of subscriptions is limited to 100."""
+
+    warehouse_id: Optional[str] = None
+    """The warehouse_id identifies the warehouse settings used by the alert task."""
+
+    workspace_path: Optional[str] = None
+    """The workspace_path is the path to the alert file in the workspace. The path: * must start with
+    "/Workspace" * must be a normalized path. User has to select only one of alert_id or
+    workspace_path to identify the alert."""
+
+    def as_dict(self) -> dict:
+        """Serializes the AlertTask into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.alert_id is not None:
+            body["alert_id"] = self.alert_id
+        if self.subscribers:
+            body["subscribers"] = [v.as_dict() for v in self.subscribers]
+        if self.warehouse_id is not None:
+            body["warehouse_id"] = self.warehouse_id
+        if self.workspace_path is not None:
+            body["workspace_path"] = self.workspace_path
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the AlertTask into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.alert_id is not None:
+            body["alert_id"] = self.alert_id
+        if self.subscribers:
+            body["subscribers"] = self.subscribers
+        if self.warehouse_id is not None:
+            body["warehouse_id"] = self.warehouse_id
+        if self.workspace_path is not None:
+            body["workspace_path"] = self.workspace_path
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> AlertTask:
+        """Deserializes the AlertTask from a dictionary."""
+        return cls(
+            alert_id=d.get("alert_id", None),
+            subscribers=_repeated_dict(d, "subscribers", AlertTaskSubscriber),
+            warehouse_id=d.get("warehouse_id", None),
+            workspace_path=d.get("workspace_path", None),
+        )
+
+
+@dataclass
+class AlertTaskOutput:
+    alert_state: Optional[AlertEvaluationState] = None
+
+    def as_dict(self) -> dict:
+        """Serializes the AlertTaskOutput into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.alert_state is not None:
+            body["alert_state"] = self.alert_state.value
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the AlertTaskOutput into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.alert_state is not None:
+            body["alert_state"] = self.alert_state
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> AlertTaskOutput:
+        """Deserializes the AlertTaskOutput from a dictionary."""
+        return cls(alert_state=_enum(d, "alert_state", AlertEvaluationState))
+
+
+@dataclass
+class AlertTaskSubscriber:
+    """Represents a subscriber that will receive alert notifications. A subscriber can be either a user
+    (via email) or a notification destination (via destination_id)."""
+
+    destination_id: Optional[str] = None
+
+    user_name: Optional[str] = None
+    """A valid workspace email address."""
+
+    def as_dict(self) -> dict:
+        """Serializes the AlertTaskSubscriber into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.destination_id is not None:
+            body["destination_id"] = self.destination_id
+        if self.user_name is not None:
+            body["user_name"] = self.user_name
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the AlertTaskSubscriber into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.destination_id is not None:
+            body["destination_id"] = self.destination_id
+        if self.user_name is not None:
+            body["user_name"] = self.user_name
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> AlertTaskSubscriber:
+        """Deserializes the AlertTaskSubscriber from a dictionary."""
+        return cls(destination_id=d.get("destination_id", None), user_name=d.get("user_name", None))
 
 
 class AuthenticationMethod(Enum):
@@ -2140,6 +2260,8 @@ class GitSource:
     job_source: Optional[JobSource] = None
     """The source of the job specification in the remote repository when the job is source controlled."""
 
+    sparse_checkout: Optional[SparseCheckout] = None
+
     def as_dict(self) -> dict:
         """Serializes the GitSource into a dictionary suitable for use as a JSON request body."""
         body = {}
@@ -2157,6 +2279,8 @@ class GitSource:
             body["git_url"] = self.git_url
         if self.job_source:
             body["job_source"] = self.job_source.as_dict()
+        if self.sparse_checkout:
+            body["sparse_checkout"] = self.sparse_checkout.as_dict()
         return body
 
     def as_shallow_dict(self) -> dict:
@@ -2176,6 +2300,8 @@ class GitSource:
             body["git_url"] = self.git_url
         if self.job_source:
             body["job_source"] = self.job_source
+        if self.sparse_checkout:
+            body["sparse_checkout"] = self.sparse_checkout
         return body
 
     @classmethod
@@ -2189,6 +2315,7 @@ class GitSource:
             git_tag=d.get("git_tag", None),
             git_url=d.get("git_url", None),
             job_source=_from_dict(d, "job_source", JobSource),
+            sparse_checkout=_from_dict(d, "sparse_checkout", SparseCheckout),
         )
 
 
@@ -5282,6 +5409,9 @@ class RunNowResponse:
 class RunOutput:
     """Run output was retrieved successfully."""
 
+    alert_output: Optional[AlertTaskOutput] = None
+    """The output of an alert task, if available"""
+
     clean_rooms_notebook_output: Optional[CleanRoomsNotebookTaskCleanRoomsNotebookTaskOutput] = None
     """The output of a clean rooms notebook task, if available"""
 
@@ -5337,6 +5467,8 @@ class RunOutput:
     def as_dict(self) -> dict:
         """Serializes the RunOutput into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.alert_output:
+            body["alert_output"] = self.alert_output.as_dict()
         if self.clean_rooms_notebook_output:
             body["clean_rooms_notebook_output"] = self.clean_rooms_notebook_output.as_dict()
         if self.dashboard_output:
@@ -5370,6 +5502,8 @@ class RunOutput:
     def as_shallow_dict(self) -> dict:
         """Serializes the RunOutput into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.alert_output:
+            body["alert_output"] = self.alert_output
         if self.clean_rooms_notebook_output:
             body["clean_rooms_notebook_output"] = self.clean_rooms_notebook_output
         if self.dashboard_output:
@@ -5404,6 +5538,7 @@ class RunOutput:
     def from_dict(cls, d: Dict[str, Any]) -> RunOutput:
         """Deserializes the RunOutput from a dictionary."""
         return cls(
+            alert_output=_from_dict(d, "alert_output", AlertTaskOutput),
             clean_rooms_notebook_output=_from_dict(
                 d, "clean_rooms_notebook_output", CleanRoomsNotebookTaskCleanRoomsNotebookTaskOutput
             ),
@@ -5706,6 +5841,9 @@ class RunTask:
     field is required and must be unique within its parent job. On Update or Reset, this field is
     used to reference the tasks to be updated or reset."""
 
+    alert_task: Optional[AlertTask] = None
+    """New alert v2 task"""
+
     attempt_number: Optional[int] = None
     """The sequence number of this run attempt for a triggered job run. The initial attempt of a run
     has an attempt_number of 0. If the initial run attempt fails, and the job has a retry policy
@@ -5755,6 +5893,9 @@ class RunTask:
 
     description: Optional[str] = None
     """An optional description for this task."""
+
+    disable_auto_optimization: Optional[bool] = None
+    """An option to disable auto optimization in serverless"""
 
     effective_performance_target: Optional[PerformanceTarget] = None
     """The actual performance target used by the serverless run during execution. This can differ from
@@ -5811,6 +5952,16 @@ class RunTask:
     """An optional list of libraries to be installed on the cluster. The default value is an empty
     list."""
 
+    max_retries: Optional[int] = None
+    """An optional maximum number of times to retry an unsuccessful run. A run is considered to be
+    unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR`
+    `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never
+    retry."""
+
+    min_retry_interval_millis: Optional[int] = None
+    """An optional minimal interval in milliseconds between the start of the failed run and the
+    subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."""
+
     new_cluster: Optional[compute.ClusterSpec] = None
     """If new_cluster, a description of a new cluster that is created for each run."""
 
@@ -5836,6 +5987,10 @@ class RunTask:
 
     resolved_values: Optional[ResolvedValues] = None
     """Parameter values including resolved references"""
+
+    retry_on_timeout: Optional[bool] = None
+    """An optional policy to specify whether to retry a job when it times out. The default behavior is
+    to not retry on timeout."""
 
     run_duration: Optional[int] = None
     """The time in milliseconds it took the job run and all of its repairs to finish."""
@@ -5896,6 +6051,8 @@ class RunTask:
     def as_dict(self) -> dict:
         """Serializes the RunTask into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.alert_task:
+            body["alert_task"] = self.alert_task.as_dict()
         if self.attempt_number is not None:
             body["attempt_number"] = self.attempt_number
         if self.clean_rooms_notebook_task:
@@ -5920,6 +6077,8 @@ class RunTask:
             body["depends_on"] = [v.as_dict() for v in self.depends_on]
         if self.description is not None:
             body["description"] = self.description
+        if self.disable_auto_optimization is not None:
+            body["disable_auto_optimization"] = self.disable_auto_optimization
         if self.effective_performance_target is not None:
             body["effective_performance_target"] = self.effective_performance_target.value
         if self.email_notifications:
@@ -5942,6 +6101,10 @@ class RunTask:
             body["job_cluster_key"] = self.job_cluster_key
         if self.libraries:
             body["libraries"] = [v.as_dict() for v in self.libraries]
+        if self.max_retries is not None:
+            body["max_retries"] = self.max_retries
+        if self.min_retry_interval_millis is not None:
+            body["min_retry_interval_millis"] = self.min_retry_interval_millis
         if self.new_cluster:
             body["new_cluster"] = self.new_cluster.as_dict()
         if self.notebook_task:
@@ -5958,6 +6121,8 @@ class RunTask:
             body["queue_duration"] = self.queue_duration
         if self.resolved_values:
             body["resolved_values"] = self.resolved_values.as_dict()
+        if self.retry_on_timeout is not None:
+            body["retry_on_timeout"] = self.retry_on_timeout
         if self.run_duration is not None:
             body["run_duration"] = self.run_duration
         if self.run_id is not None:
@@ -5995,6 +6160,8 @@ class RunTask:
     def as_shallow_dict(self) -> dict:
         """Serializes the RunTask into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.alert_task:
+            body["alert_task"] = self.alert_task
         if self.attempt_number is not None:
             body["attempt_number"] = self.attempt_number
         if self.clean_rooms_notebook_task:
@@ -6019,6 +6186,8 @@ class RunTask:
             body["depends_on"] = self.depends_on
         if self.description is not None:
             body["description"] = self.description
+        if self.disable_auto_optimization is not None:
+            body["disable_auto_optimization"] = self.disable_auto_optimization
         if self.effective_performance_target is not None:
             body["effective_performance_target"] = self.effective_performance_target
         if self.email_notifications:
@@ -6041,6 +6210,10 @@ class RunTask:
             body["job_cluster_key"] = self.job_cluster_key
         if self.libraries:
             body["libraries"] = self.libraries
+        if self.max_retries is not None:
+            body["max_retries"] = self.max_retries
+        if self.min_retry_interval_millis is not None:
+            body["min_retry_interval_millis"] = self.min_retry_interval_millis
         if self.new_cluster:
             body["new_cluster"] = self.new_cluster
         if self.notebook_task:
@@ -6057,6 +6230,8 @@ class RunTask:
             body["queue_duration"] = self.queue_duration
         if self.resolved_values:
             body["resolved_values"] = self.resolved_values
+        if self.retry_on_timeout is not None:
+            body["retry_on_timeout"] = self.retry_on_timeout
         if self.run_duration is not None:
             body["run_duration"] = self.run_duration
         if self.run_id is not None:
@@ -6095,6 +6270,7 @@ class RunTask:
     def from_dict(cls, d: Dict[str, Any]) -> RunTask:
         """Deserializes the RunTask from a dictionary."""
         return cls(
+            alert_task=_from_dict(d, "alert_task", AlertTask),
             attempt_number=d.get("attempt_number", None),
             clean_rooms_notebook_task=_from_dict(d, "clean_rooms_notebook_task", CleanRoomsNotebookTask),
             cleanup_duration=d.get("cleanup_duration", None),
@@ -6107,6 +6283,7 @@ class RunTask:
             dbt_task=_from_dict(d, "dbt_task", DbtTask),
             depends_on=_repeated_dict(d, "depends_on", TaskDependency),
             description=d.get("description", None),
+            disable_auto_optimization=d.get("disable_auto_optimization", None),
             effective_performance_target=_enum(d, "effective_performance_target", PerformanceTarget),
             email_notifications=_from_dict(d, "email_notifications", JobEmailNotifications),
             end_time=d.get("end_time", None),
@@ -6118,6 +6295,8 @@ class RunTask:
             git_source=_from_dict(d, "git_source", GitSource),
             job_cluster_key=d.get("job_cluster_key", None),
             libraries=_repeated_dict(d, "libraries", compute.Library),
+            max_retries=d.get("max_retries", None),
+            min_retry_interval_millis=d.get("min_retry_interval_millis", None),
             new_cluster=_from_dict(d, "new_cluster", compute.ClusterSpec),
             notebook_task=_from_dict(d, "notebook_task", NotebookTask),
             notification_settings=_from_dict(d, "notification_settings", TaskNotificationSettings),
@@ -6126,6 +6305,7 @@ class RunTask:
             python_wheel_task=_from_dict(d, "python_wheel_task", PythonWheelTask),
             queue_duration=d.get("queue_duration", None),
             resolved_values=_from_dict(d, "resolved_values", ResolvedValues),
+            retry_on_timeout=d.get("retry_on_timeout", None),
             run_duration=d.get("run_duration", None),
             run_id=d.get("run_id", None),
             run_if=_enum(d, "run_if", RunIf),
@@ -6316,6 +6496,31 @@ class SparkSubmitTask:
     def from_dict(cls, d: Dict[str, Any]) -> SparkSubmitTask:
         """Deserializes the SparkSubmitTask from a dictionary."""
         return cls(parameters=d.get("parameters", None))
+
+
+@dataclass
+class SparseCheckout:
+    patterns: Optional[List[str]] = None
+    """List of patterns to include for sparse checkout."""
+
+    def as_dict(self) -> dict:
+        """Serializes the SparseCheckout into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.patterns:
+            body["patterns"] = [v for v in self.patterns]
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the SparseCheckout into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.patterns:
+            body["patterns"] = self.patterns
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> SparseCheckout:
+        """Deserializes the SparseCheckout from a dictionary."""
+        return cls(patterns=d.get("patterns", None))
 
 
 @dataclass
@@ -6961,6 +7166,9 @@ class SubmitTask:
     field is required and must be unique within its parent job. On Update or Reset, this field is
     used to reference the tasks to be updated or reset."""
 
+    alert_task: Optional[AlertTask] = None
+    """New alert v2 task"""
+
     clean_rooms_notebook_task: Optional[CleanRoomsNotebookTask] = None
     """The task runs a [clean rooms] notebook when the `clean_rooms_notebook_task` field is present.
     
@@ -6994,6 +7202,9 @@ class SubmitTask:
     description: Optional[str] = None
     """An optional description for this task."""
 
+    disable_auto_optimization: Optional[bool] = None
+    """An option to disable auto optimization in serverless"""
+
     email_notifications: Optional[JobEmailNotifications] = None
     """An optional set of email addresses notified when the task run begins or completes. The default
     behavior is to not send any emails."""
@@ -7019,6 +7230,16 @@ class SubmitTask:
     """An optional list of libraries to be installed on the cluster. The default value is an empty
     list."""
 
+    max_retries: Optional[int] = None
+    """An optional maximum number of times to retry an unsuccessful run. A run is considered to be
+    unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR`
+    `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never
+    retry."""
+
+    min_retry_interval_millis: Optional[int] = None
+    """An optional minimal interval in milliseconds between the start of the failed run and the
+    subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."""
+
     new_cluster: Optional[compute.ClusterSpec] = None
     """If new_cluster, a description of a new cluster that is created for each run."""
 
@@ -7038,6 +7259,10 @@ class SubmitTask:
 
     python_wheel_task: Optional[PythonWheelTask] = None
     """The task runs a Python wheel when the `python_wheel_task` field is present."""
+
+    retry_on_timeout: Optional[bool] = None
+    """An optional policy to specify whether to retry a job when it times out. The default behavior is
+    to not retry on timeout."""
 
     run_if: Optional[RunIf] = None
     """An optional value indicating the condition that determines whether the task should be run once
@@ -7073,6 +7298,8 @@ class SubmitTask:
     def as_dict(self) -> dict:
         """Serializes the SubmitTask into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.alert_task:
+            body["alert_task"] = self.alert_task.as_dict()
         if self.clean_rooms_notebook_task:
             body["clean_rooms_notebook_task"] = self.clean_rooms_notebook_task.as_dict()
         if self.compute:
@@ -7091,6 +7318,8 @@ class SubmitTask:
             body["depends_on"] = [v.as_dict() for v in self.depends_on]
         if self.description is not None:
             body["description"] = self.description
+        if self.disable_auto_optimization is not None:
+            body["disable_auto_optimization"] = self.disable_auto_optimization
         if self.email_notifications:
             body["email_notifications"] = self.email_notifications.as_dict()
         if self.environment_key is not None:
@@ -7105,6 +7334,10 @@ class SubmitTask:
             body["health"] = self.health.as_dict()
         if self.libraries:
             body["libraries"] = [v.as_dict() for v in self.libraries]
+        if self.max_retries is not None:
+            body["max_retries"] = self.max_retries
+        if self.min_retry_interval_millis is not None:
+            body["min_retry_interval_millis"] = self.min_retry_interval_millis
         if self.new_cluster:
             body["new_cluster"] = self.new_cluster.as_dict()
         if self.notebook_task:
@@ -7117,6 +7350,8 @@ class SubmitTask:
             body["power_bi_task"] = self.power_bi_task.as_dict()
         if self.python_wheel_task:
             body["python_wheel_task"] = self.python_wheel_task.as_dict()
+        if self.retry_on_timeout is not None:
+            body["retry_on_timeout"] = self.retry_on_timeout
         if self.run_if is not None:
             body["run_if"] = self.run_if.value
         if self.run_job_task:
@@ -7140,6 +7375,8 @@ class SubmitTask:
     def as_shallow_dict(self) -> dict:
         """Serializes the SubmitTask into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.alert_task:
+            body["alert_task"] = self.alert_task
         if self.clean_rooms_notebook_task:
             body["clean_rooms_notebook_task"] = self.clean_rooms_notebook_task
         if self.compute:
@@ -7158,6 +7395,8 @@ class SubmitTask:
             body["depends_on"] = self.depends_on
         if self.description is not None:
             body["description"] = self.description
+        if self.disable_auto_optimization is not None:
+            body["disable_auto_optimization"] = self.disable_auto_optimization
         if self.email_notifications:
             body["email_notifications"] = self.email_notifications
         if self.environment_key is not None:
@@ -7172,6 +7411,10 @@ class SubmitTask:
             body["health"] = self.health
         if self.libraries:
             body["libraries"] = self.libraries
+        if self.max_retries is not None:
+            body["max_retries"] = self.max_retries
+        if self.min_retry_interval_millis is not None:
+            body["min_retry_interval_millis"] = self.min_retry_interval_millis
         if self.new_cluster:
             body["new_cluster"] = self.new_cluster
         if self.notebook_task:
@@ -7184,6 +7427,8 @@ class SubmitTask:
             body["power_bi_task"] = self.power_bi_task
         if self.python_wheel_task:
             body["python_wheel_task"] = self.python_wheel_task
+        if self.retry_on_timeout is not None:
+            body["retry_on_timeout"] = self.retry_on_timeout
         if self.run_if is not None:
             body["run_if"] = self.run_if
         if self.run_job_task:
@@ -7208,6 +7453,7 @@ class SubmitTask:
     def from_dict(cls, d: Dict[str, Any]) -> SubmitTask:
         """Deserializes the SubmitTask from a dictionary."""
         return cls(
+            alert_task=_from_dict(d, "alert_task", AlertTask),
             clean_rooms_notebook_task=_from_dict(d, "clean_rooms_notebook_task", CleanRoomsNotebookTask),
             compute=_from_dict(d, "compute", Compute),
             condition_task=_from_dict(d, "condition_task", ConditionTask),
@@ -7217,6 +7463,7 @@ class SubmitTask:
             dbt_task=_from_dict(d, "dbt_task", DbtTask),
             depends_on=_repeated_dict(d, "depends_on", TaskDependency),
             description=d.get("description", None),
+            disable_auto_optimization=d.get("disable_auto_optimization", None),
             email_notifications=_from_dict(d, "email_notifications", JobEmailNotifications),
             environment_key=d.get("environment_key", None),
             existing_cluster_id=d.get("existing_cluster_id", None),
@@ -7224,12 +7471,15 @@ class SubmitTask:
             gen_ai_compute_task=_from_dict(d, "gen_ai_compute_task", GenAiComputeTask),
             health=_from_dict(d, "health", JobsHealthRules),
             libraries=_repeated_dict(d, "libraries", compute.Library),
+            max_retries=d.get("max_retries", None),
+            min_retry_interval_millis=d.get("min_retry_interval_millis", None),
             new_cluster=_from_dict(d, "new_cluster", compute.ClusterSpec),
             notebook_task=_from_dict(d, "notebook_task", NotebookTask),
             notification_settings=_from_dict(d, "notification_settings", TaskNotificationSettings),
             pipeline_task=_from_dict(d, "pipeline_task", PipelineTask),
             power_bi_task=_from_dict(d, "power_bi_task", PowerBiTask),
             python_wheel_task=_from_dict(d, "python_wheel_task", PythonWheelTask),
+            retry_on_timeout=d.get("retry_on_timeout", None),
             run_if=_enum(d, "run_if", RunIf),
             run_job_task=_from_dict(d, "run_job_task", RunJobTask),
             spark_jar_task=_from_dict(d, "spark_jar_task", SparkJarTask),
@@ -7448,6 +7698,9 @@ class Task:
     field is required and must be unique within its parent job. On Update or Reset, this field is
     used to reference the tasks to be updated or reset."""
 
+    alert_task: Optional[AlertTask] = None
+    """New alert v2 task"""
+
     clean_rooms_notebook_task: Optional[CleanRoomsNotebookTask] = None
     """The task runs a [clean rooms] notebook when the `clean_rooms_notebook_task` field is present.
     
@@ -7589,6 +7842,8 @@ class Task:
     def as_dict(self) -> dict:
         """Serializes the Task into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.alert_task:
+            body["alert_task"] = self.alert_task.as_dict()
         if self.clean_rooms_notebook_task:
             body["clean_rooms_notebook_task"] = self.clean_rooms_notebook_task.as_dict()
         if self.compute:
@@ -7668,6 +7923,8 @@ class Task:
     def as_shallow_dict(self) -> dict:
         """Serializes the Task into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.alert_task:
+            body["alert_task"] = self.alert_task
         if self.clean_rooms_notebook_task:
             body["clean_rooms_notebook_task"] = self.clean_rooms_notebook_task
         if self.compute:
@@ -7748,6 +8005,7 @@ class Task:
     def from_dict(cls, d: Dict[str, Any]) -> Task:
         """Deserializes the Task from a dictionary."""
         return cls(
+            alert_task=_from_dict(d, "alert_task", AlertTask),
             clean_rooms_notebook_task=_from_dict(d, "clean_rooms_notebook_task", CleanRoomsNotebookTask),
             compute=_from_dict(d, "compute", Compute),
             condition_task=_from_dict(d, "condition_task", ConditionTask),
@@ -8476,7 +8734,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.2/jobs/runs/cancel-all", body=body, headers=headers)
@@ -8501,7 +8759,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.2/jobs/runs/cancel", body=body, headers=headers)
@@ -8703,7 +8961,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.2/jobs/create", body=body, headers=headers)
@@ -8726,7 +8984,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.2/jobs/delete", body=body, headers=headers)
@@ -8748,7 +9006,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.2/jobs/runs/delete", body=body, headers=headers)
@@ -8774,7 +9032,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.2/jobs/runs/export", query=query, headers=headers)
@@ -8809,7 +9067,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.2/jobs/get", query=query, headers=headers)
@@ -8829,7 +9087,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/jobs/{job_id}/permissionLevels", headers=headers)
@@ -8849,7 +9107,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/jobs/{job_id}", headers=headers)
@@ -8899,7 +9157,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.2/jobs/runs/get", query=query, headers=headers)
@@ -8929,7 +9187,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.2/jobs/runs/get-output", query=query, headers=headers)
@@ -8980,7 +9238,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -9067,7 +9325,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -9240,7 +9498,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.2/jobs/runs/repair", body=body, headers=headers)
@@ -9313,7 +9571,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.2/jobs/reset", body=body, headers=headers)
@@ -9483,7 +9741,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.2/jobs/run-now", body=body, headers=headers)
@@ -9551,7 +9809,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/permissions/jobs/{job_id}", body=body, headers=headers)
@@ -9679,7 +9937,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.2/jobs/runs/submit", body=body, headers=headers)
@@ -9765,7 +10023,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", "/api/2.2/jobs/update", body=body, headers=headers)
@@ -9791,7 +10049,7 @@ class JobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/permissions/jobs/{job_id}", body=body, headers=headers)
@@ -9839,7 +10097,7 @@ class PolicyComplianceForJobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/policies/jobs/enforce-compliance", body=body, headers=headers)
@@ -9864,7 +10122,7 @@ class PolicyComplianceForJobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/policies/jobs/get-compliance", query=query, headers=headers)
@@ -9901,7 +10159,7 @@ class PolicyComplianceForJobsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:

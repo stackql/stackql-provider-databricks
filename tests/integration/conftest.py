@@ -13,6 +13,11 @@ from databricks.sdk.environments import Cloud
 from databricks.sdk.service.catalog import VolumeType
 
 
+@pytest.fixture(autouse=True)
+def stub_host_metadata():
+    """Override root conftest stub — integration tests hit real endpoints."""
+
+
 def pytest_addoption(parser):
     # make logging sensible and readable.
     parser.addini(
@@ -65,8 +70,8 @@ def a(env_or_skip) -> AccountClient:
     _load_debug_env_if_runs_from_ide("account")
     env_or_skip("CLOUD_ENV")
     account_client = AccountClient()
-    if not account_client.config.is_account_client:
-        pytest.skip("not Databricks Account client")
+    if env_or_skip("TEST_ENVIRONMENT_TYPE") not in ["ACCOUNT", "UC_ACCOUNT"]:
+        pytest.skip("not Databricks Account environment")
     return account_client
 
 
@@ -75,8 +80,8 @@ def ucacct(env_or_skip) -> AccountClient:
     _load_debug_env_if_runs_from_ide("ucacct")
     env_or_skip("CLOUD_ENV")
     account_client = AccountClient()
-    if not account_client.config.is_account_client:
-        pytest.skip("not Databricks Account client")
+    if env_or_skip("TEST_ENVIRONMENT_TYPE") not in ["UC_ACCOUNT"]:
+        pytest.skip("not Databricks UC Account environment")
     if "TEST_METASTORE_ID" not in os.environ:
         pytest.skip("not in Unity Catalog Workspace test env")
     return account_client
@@ -96,8 +101,8 @@ def unified_config(env_or_skip) -> Config:
 def w(env_or_skip) -> WorkspaceClient:
     _load_debug_env_if_runs_from_ide("workspace")
     env_or_skip("CLOUD_ENV")
-    if "DATABRICKS_ACCOUNT_ID" in os.environ:
-        pytest.skip("Skipping workspace test on account level")
+    if env_or_skip("TEST_ENVIRONMENT_TYPE") not in ["WORKSPACE", "UC_WORKSPACE"]:
+        pytest.skip("not Databricks Workspace environment")
     return WorkspaceClient()
 
 
@@ -105,10 +110,10 @@ def w(env_or_skip) -> WorkspaceClient:
 def ucws(env_or_skip) -> WorkspaceClient:
     _load_debug_env_if_runs_from_ide("ucws")
     env_or_skip("CLOUD_ENV")
-    if "DATABRICKS_ACCOUNT_ID" in os.environ:
-        pytest.skip("Skipping workspace test on account level")
+    if env_or_skip("TEST_ENVIRONMENT_TYPE") not in ["UC_WORKSPACE"]:
+        pytest.skip("not Databricks UC Workspace environment")
     if "TEST_METASTORE_ID" not in os.environ:
-        pytest.skip("not in Unity Catalog Workspace test env")
+        pytest.skip("not Databricks UC Workspace environment")
     return WorkspaceClient()
 
 

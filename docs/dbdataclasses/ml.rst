@@ -62,11 +62,27 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    .. py:attribute:: SYSTEM_TRANSITION
       :value: "SYSTEM_TRANSITION"
 
+.. autoclass:: AggregationFunction
+   :members:
+   :undoc-members:
+
 .. autoclass:: ApproveTransitionRequestResponse
    :members:
    :undoc-members:
 
+.. autoclass:: ApproxCountDistinctFunction
+   :members:
+   :undoc-members:
+
+.. autoclass:: ApproxPercentileFunction
+   :members:
+   :undoc-members:
+
 .. autoclass:: AuthConfig
+   :members:
+   :undoc-members:
+
+.. autoclass:: AvgFunction
    :members:
    :undoc-members:
 
@@ -111,6 +127,10 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :undoc-members:
 
 .. autoclass:: ContinuousWindow
+   :members:
+   :undoc-members:
+
+.. autoclass:: CountFunction
    :members:
    :undoc-members:
 
@@ -222,6 +242,10 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :members:
    :undoc-members:
 
+.. autoclass:: EntityColumn
+   :members:
+   :undoc-members:
+
 .. autoclass:: Experiment
    :members:
    :undoc-members:
@@ -299,6 +323,10 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :members:
    :undoc-members:
 
+.. autoclass:: FirstFunction
+   :members:
+   :undoc-members:
+
 .. autoclass:: ForecastingExperiment
    :members:
    :undoc-members:
@@ -329,6 +357,8 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :undoc-members:
 
 .. py:class:: FunctionFunctionType
+
+   Deprecated: Use the function-specific messages in AggregationFunction.function_type oneof instead. Kept for backwards compatibility.
 
    .. py:attribute:: APPROX_COUNT_DISTINCT
       :value: "APPROX_COUNT_DISTINCT"
@@ -413,19 +443,6 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :members:
    :undoc-members:
 
-.. py:class:: HostType
-
-   Enum representing the type of Databricks host.
-
-   .. py:attribute:: ACCOUNTS
-      :value: "ACCOUNTS"
-
-   .. py:attribute:: WORKSPACE
-      :value: "WORKSPACE"
-
-   .. py:attribute:: UNIFIED
-      :value: "UNIFIED"
-
 .. autoclass:: HttpUrlSpec
    :members:
    :undoc-members:
@@ -455,6 +472,10 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :undoc-members:
 
 .. autoclass:: KafkaSource
+   :members:
+   :undoc-members:
+
+.. autoclass:: LastFunction
    :members:
    :undoc-members:
 
@@ -582,7 +603,15 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    .. py:attribute:: SNAPSHOT
       :value: "SNAPSHOT"
 
+.. autoclass:: MaxFunction
+   :members:
+   :undoc-members:
+
 .. autoclass:: Metric
+   :members:
+   :undoc-members:
+
+.. autoclass:: MinFunction
    :members:
    :undoc-members:
 
@@ -952,7 +981,19 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    .. py:attribute:: READY
       :value: "READY"
 
+.. autoclass:: StddevPopFunction
+   :members:
+   :undoc-members:
+
+.. autoclass:: StddevSampFunction
+   :members:
+   :undoc-members:
+
 .. autoclass:: SubscriptionMode
+   :members:
+   :undoc-members:
+
+.. autoclass:: SumFunction
    :members:
    :undoc-members:
 
@@ -961,6 +1002,10 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :undoc-members:
 
 .. autoclass:: TimeWindow
+   :members:
+   :undoc-members:
+
+.. autoclass:: TimeseriesColumn
    :members:
    :undoc-members:
 
@@ -1016,6 +1061,14 @@ These dataclasses are used in the SDK to represent API requests and responses fo
       :value: "SCHEDULED"
 
 .. autoclass:: UpdateWebhookResponse
+   :members:
+   :undoc-members:
+
+.. autoclass:: VarPopFunction
+   :members:
+   :undoc-members:
+
+.. autoclass:: VarSampFunction
    :members:
    :undoc-members:
 

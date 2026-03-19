@@ -23,13 +23,18 @@ from databricks.sdk.service import cleanrooms as pkg_cleanrooms
 from databricks.sdk.service import compute as pkg_compute
 from databricks.sdk.service import dashboards as pkg_dashboards
 from databricks.sdk.service import database as pkg_database
+from databricks.sdk.service import dataclassification as pkg_dataclassification
 from databricks.sdk.service import dataquality as pkg_dataquality
+from databricks.sdk.service import environments as pkg_environments
 from databricks.sdk.service import files as pkg_files
 from databricks.sdk.service import iam as pkg_iam
 from databricks.sdk.service import iamv2 as pkg_iamv2
 from databricks.sdk.service import jobs as pkg_jobs
+from databricks.sdk.service import \
+    knowledgeassistants as pkg_knowledgeassistants
 from databricks.sdk.service import marketplace as pkg_marketplace
 from databricks.sdk.service import ml as pkg_ml
+from databricks.sdk.service import networking as pkg_networking
 from databricks.sdk.service import oauth2 as pkg_oauth2
 from databricks.sdk.service import pipelines as pkg_pipelines
 from databricks.sdk.service import postgres as pkg_postgres
@@ -83,7 +88,9 @@ from databricks.sdk.service.compute import (ClusterPoliciesAPI, ClustersAPI,
 from databricks.sdk.service.dashboards import (GenieAPI, LakeviewAPI,
                                                LakeviewEmbeddedAPI)
 from databricks.sdk.service.database import DatabaseAPI
+from databricks.sdk.service.dataclassification import DataClassificationAPI
 from databricks.sdk.service.dataquality import DataQualityAPI
+from databricks.sdk.service.environments import EnvironmentsAPI
 from databricks.sdk.service.files import DbfsAPI, FilesAPI
 from databricks.sdk.service.iam import (AccessControlAPI,
                                         AccountAccessControlAPI,
@@ -99,6 +106,7 @@ from databricks.sdk.service.iam import (AccessControlAPI,
                                         UsersV2API, WorkspaceAssignmentAPI)
 from databricks.sdk.service.iamv2 import AccountIamV2API, WorkspaceIamV2API
 from databricks.sdk.service.jobs import JobsAPI, PolicyComplianceForJobsAPI
+from databricks.sdk.service.knowledgeassistants import KnowledgeAssistantsAPI
 from databricks.sdk.service.marketplace import (
     ConsumerFulfillmentsAPI, ConsumerInstallationsAPI, ConsumerListingsAPI,
     ConsumerPersonalizationRequestsAPI, ConsumerProvidersAPI,
@@ -109,6 +117,7 @@ from databricks.sdk.service.ml import (ExperimentsAPI, FeatureEngineeringAPI,
                                        FeatureStoreAPI, ForecastingAPI,
                                        MaterializedFeaturesAPI,
                                        ModelRegistryAPI)
+from databricks.sdk.service.networking import EndpointsAPI
 from databricks.sdk.service.oauth2 import (AccountFederationPolicyAPI,
                                            CustomAppIntegrationAPI,
                                            OAuthPublishedAppsAPI,
@@ -295,12 +304,14 @@ class WorkspaceClient:
         self._current_user = pkg_iam.CurrentUserAPI(self._api_client)
         self._dashboard_widgets = pkg_sql.DashboardWidgetsAPI(self._api_client)
         self._dashboards = pkg_sql.DashboardsAPI(self._api_client)
+        self._data_classification = pkg_dataclassification.DataClassificationAPI(self._api_client)
         self._data_quality = pkg_dataquality.DataQualityAPI(self._api_client)
         self._data_sources = pkg_sql.DataSourcesAPI(self._api_client)
         self._database = pkg_database.DatabaseAPI(self._api_client)
         self._dbfs = DbfsExt(self._api_client)
         self._dbsql_permissions = pkg_sql.DbsqlPermissionsAPI(self._api_client)
         self._entity_tag_assignments = pkg_catalog.EntityTagAssignmentsAPI(self._api_client)
+        self._environments = pkg_environments.EnvironmentsAPI(self._api_client)
         self._experiments = pkg_ml.ExperimentsAPI(self._api_client)
         self._external_lineage = pkg_catalog.ExternalLineageAPI(self._api_client)
         self._external_locations = pkg_catalog.ExternalLocationsAPI(self._api_client)
@@ -319,6 +330,7 @@ class WorkspaceClient:
         self._instance_profiles = pkg_compute.InstanceProfilesAPI(self._api_client)
         self._ip_access_lists = pkg_settings.IpAccessListsAPI(self._api_client)
         self._jobs = JobsExt(self._api_client)
+        self._knowledge_assistants = pkg_knowledgeassistants.KnowledgeAssistantsAPI(self._api_client)
         self._lakeview = pkg_dashboards.LakeviewAPI(self._api_client)
         self._lakeview_embedded = pkg_dashboards.LakeviewEmbeddedAPI(self._api_client)
         self._libraries = pkg_compute.LibrariesAPI(self._api_client)
@@ -557,6 +569,11 @@ class WorkspaceClient:
         return self._dashboards
 
     @property
+    def data_classification(self) -> pkg_dataclassification.DataClassificationAPI:
+        """Manage data classification for Unity Catalog catalogs."""
+        return self._data_classification
+
+    @property
     def data_quality(self) -> pkg_dataquality.DataQualityAPI:
         """Manage the data quality of Unity Catalog objects (currently support `schema` and `table`)."""
         return self._data_quality
@@ -585,6 +602,11 @@ class WorkspaceClient:
     def entity_tag_assignments(self) -> pkg_catalog.EntityTagAssignmentsAPI:
         """Tags are attributes that include keys and optional values that you can use to organize and categorize entities in Unity Catalog."""
         return self._entity_tag_assignments
+
+    @property
+    def environments(self) -> pkg_environments.EnvironmentsAPI:
+        """APIs to manage environment resources."""
+        return self._environments
 
     @property
     def experiments(self) -> pkg_ml.ExperimentsAPI:
@@ -670,6 +692,11 @@ class WorkspaceClient:
     def jobs(self) -> JobsExt:
         """The Jobs API allows you to create, edit, and delete jobs."""
         return self._jobs
+
+    @property
+    def knowledge_assistants(self) -> pkg_knowledgeassistants.KnowledgeAssistantsAPI:
+        """Manage Knowledge Assistants and related resources."""
+        return self._knowledge_assistants
 
     @property
     def lakeview(self) -> pkg_dashboards.LakeviewAPI:
@@ -798,12 +825,12 @@ class WorkspaceClient:
 
     @property
     def quality_monitor_v2(self) -> pkg_qualitymonitorv2.QualityMonitorV2API:
-        """[DEPRECATED] This API is deprecated."""
+        """Deprecated: Please use the Data Quality Monitoring API instead (REST: /api/data-quality/v1/monitors)."""
         return self._quality_monitor_v2
 
     @property
     def quality_monitors(self) -> pkg_catalog.QualityMonitorsAPI:
-        """[DEPRECATED] This API is deprecated."""
+        """Deprecated: Please use the Data Quality Monitors API instead (REST: /api/data-quality/v1/monitors), which manages both Data Profiling and Anomaly Detection."""
         return self._quality_monitors
 
     @property
@@ -1119,6 +1146,7 @@ class AccountClient:
         self._credentials = pkg_provisioning.CredentialsAPI(self._api_client)
         self._custom_app_integration = pkg_oauth2.CustomAppIntegrationAPI(self._api_client)
         self._encryption_keys = pkg_provisioning.EncryptionKeysAPI(self._api_client)
+        self._endpoints = pkg_networking.EndpointsAPI(self._api_client)
         self._federation_policy = pkg_oauth2.AccountFederationPolicyAPI(self._api_client)
         self._groups_v2 = pkg_iam.AccountGroupsV2API(self._api_client)
         self._iam_v2 = pkg_iamv2.AccountIamV2API(self._api_client)
@@ -1191,6 +1219,11 @@ class AccountClient:
     def encryption_keys(self) -> pkg_provisioning.EncryptionKeysAPI:
         """These APIs manage encryption key configurations for this workspace (optional)."""
         return self._encryption_keys
+
+    @property
+    def endpoints(self) -> pkg_networking.EndpointsAPI:
+        """These APIs manage endpoint configurations for this account."""
+        return self._endpoints
 
     @property
     def federation_policy(self) -> pkg_oauth2.AccountFederationPolicyAPI:

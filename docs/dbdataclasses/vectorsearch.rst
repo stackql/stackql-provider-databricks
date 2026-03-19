@@ -63,6 +63,10 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :members:
    :undoc-members:
 
+.. autoclass:: EndpointScalingInfo
+   :members:
+   :undoc-members:
+
 .. autoclass:: EndpointStatus
    :members:
    :undoc-members:
@@ -95,19 +99,6 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 
    .. py:attribute:: STANDARD
       :value: "STANDARD"
-
-.. py:class:: HostType
-
-   Enum representing the type of Databricks host.
-
-   .. py:attribute:: ACCOUNTS
-      :value: "ACCOUNTS"
-
-   .. py:attribute:: WORKSPACE
-      :value: "WORKSPACE"
-
-   .. py:attribute:: UNIFIED
-      :value: "UNIFIED"
 
 .. autoclass:: ListEndpointResponse
    :members:
@@ -182,6 +173,17 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 .. autoclass:: RetrieveUserVisibleMetricsResponse
    :members:
    :undoc-members:
+
+.. py:class:: ScalingChangeState
+
+   .. py:attribute:: SCALING_CHANGE_APPLIED
+      :value: "SCALING_CHANGE_APPLIED"
+
+   .. py:attribute:: SCALING_CHANGE_IN_PROGRESS
+      :value: "SCALING_CHANGE_IN_PROGRESS"
+
+   .. py:attribute:: SCALING_CHANGE_UNSPECIFIED
+      :value: "SCALING_CHANGE_UNSPECIFIED"
 
 .. autoclass:: ScanVectorIndexResponse
    :members:

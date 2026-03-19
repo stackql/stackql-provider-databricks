@@ -34,6 +34,28 @@
         :returns: :class:`Operation`
         
 
+    .. py:method:: create_database(parent: str, database: Database [, database_id: Optional[str]]) -> CreateDatabaseOperation
+
+        Create a Database.
+
+        Creates a database in the specified branch. A branch can have multiple databases.
+
+        :param parent: str
+          The Branch where this Database will be created. Format: projects/{project_id}/branches/{branch_id}
+        :param database: :class:`Database`
+          The desired specification of a Database.
+        :param database_id: str (optional)
+          The ID to use for the Database, which will become the final component of the database's resource
+          name. This ID becomes the database name in postgres.
+
+          This value should be 4-63 characters, and only use characters available in DNS names, as defined by
+          RFC-1123
+
+          If database_id is not specified in the request, it is generated automatically.
+
+        :returns: :class:`Operation`
+        
+
     .. py:method:: create_endpoint(parent: str, endpoint: Endpoint, endpoint_id: str) -> CreateEndpointOperation
 
         Creates a new compute endpoint in the branch.
@@ -96,6 +118,17 @@
         :returns: :class:`Operation`
         
 
+    .. py:method:: delete_database(name: str) -> DeleteDatabaseOperation
+
+        Delete a Database.
+
+        :param name: str
+          The resource name of the postgres database. Format:
+          projects/{project_id}/branches/{branch_id}/databases/{database_id}
+
+        :returns: :class:`Operation`
+        
+
     .. py:method:: delete_endpoint(name: str) -> DeleteEndpointOperation
 
         Deletes the specified compute endpoint.
@@ -130,9 +163,6 @@
 
           NOTE: setting this requires spinning up a compute to succeed, since it involves running SQL queries.
 
-          TODO: #LKB-7187 implement reassign_owned_to on LBM side. This might end-up being a synchronous query
-          when this parameter is used.
-
         :returns: :class:`Operation`
         
 
@@ -157,6 +187,17 @@
           The full resource path of the branch to retrieve. Format: projects/{project_id}/branches/{branch_id}
 
         :returns: :class:`Branch`
+        
+
+    .. py:method:: get_database(name: str) -> Database
+
+        Get a Database.
+
+        :param name: str
+          The name of the Database to retrieve. Format:
+          projects/{project_id}/branches/{branch_id}/databases/{database_id}
+
+        :returns: :class:`Database`
         
 
     .. py:method:: get_endpoint(name: str) -> Endpoint
@@ -217,6 +258,21 @@
         :returns: Iterator over :class:`Branch`
         
 
+    .. py:method:: list_databases(parent: str [, page_size: Optional[int], page_token: Optional[str]]) -> Iterator[Database]
+
+        List Databases.
+
+        :param parent: str
+          The Branch that owns this collection of databases. Format:
+          projects/{project_id}/branches/{branch_id}
+        :param page_size: int (optional)
+          Upper bound for items returned.
+        :param page_token: str (optional)
+          Pagination token to go to the next page of Databases. Requests first page if absent.
+
+        :returns: Iterator over :class:`Database`
+        
+
     .. py:method:: list_endpoints(parent: str [, page_size: Optional[int], page_token: Optional[str]]) -> Iterator[Endpoint]
 
         Returns a paginated list of compute endpoints in the branch.
@@ -237,7 +293,7 @@
         Returns a paginated list of database projects in the workspace that the user has permission to access.
 
         :param page_size: int (optional)
-          Upper bound for items returned. Cannot be negative.
+          Upper bound for items returned. Cannot be negative. The maximum value is 100.
         :param page_token: str (optional)
           Page token from a previous response. If not provided, returns the first page.
 
@@ -277,6 +333,24 @@
         :returns: :class:`Operation`
         
 
+    .. py:method:: update_database(name: str, database: Database, update_mask: FieldMask) -> UpdateDatabaseOperation
+
+        Update a Database.
+
+        :param name: str
+          The resource name of the database. Format:
+          projects/{project_id}/branches/{branch_id}/databases/{database_id}
+        :param database: :class:`Database`
+          The Database to update.
+
+          The database's `name` field is used to identify the database to update. Format:
+          projects/{project_id}/branches/{branch_id}/databases/{database_id}
+        :param update_mask: FieldMask
+          The list of fields to update. If unspecified, all fields will be updated when possible.
+
+        :returns: :class:`Operation`
+        
+
     .. py:method:: update_endpoint(name: str, endpoint: Endpoint, update_mask: FieldMask) -> UpdateEndpointOperation
 
         Updates the specified compute endpoint. You can update autoscaling limits, suspend timeout, or
@@ -308,6 +382,25 @@
           The project's `name` field is used to identify the project to update. Format: projects/{project_id}
         :param update_mask: FieldMask
           The list of fields to update. If unspecified, all fields will be updated when possible.
+
+        :returns: :class:`Operation`
+        
+
+    .. py:method:: update_role(name: str, role: Role, update_mask: FieldMask) -> UpdateRoleOperation
+
+        Update a role for a branch.
+
+        :param name: str
+          Output only. The full resource path of the role. Format:
+          projects/{project_id}/branches/{branch_id}/roles/{role_id}
+        :param role: :class:`Role`
+          The Postgres Role to update.
+
+          The role's `name` field is used to identify the role to update. Format:
+          projects/{project_id}/branches/{branch_id}/roles/{role_id}
+        :param update_mask: FieldMask
+          The list of fields to update in Postgres Role. If unspecified, all fields will be updated when
+          possible.
 
         :returns: :class:`Operation`
         

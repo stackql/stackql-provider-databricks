@@ -6,7 +6,6 @@ import logging
 from dataclasses import dataclass
 from typing import Any, Dict, Iterator, List, Optional
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.service._internal import _repeated_dict
 
 _LOG = logging.getLogger("databricks.sdk")
@@ -85,10 +84,11 @@ class ListTagPoliciesResponse:
 class TagAssignment:
     entity_type: str
     """The type of entity to which the tag is assigned. Allowed values are apps, dashboards,
-    geniespaces"""
+    geniespaces, notebooks"""
 
     entity_id: str
-    """The identifier of the entity to which the tag is assigned"""
+    """The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app
+    name"""
 
     tag_key: str
     """The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed"""
@@ -252,7 +252,7 @@ class TagPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.1/tag-policies", body=body, headers=headers)
@@ -274,7 +274,7 @@ class TagPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.1/tag-policies/{tag_key}", headers=headers)
@@ -297,7 +297,7 @@ class TagPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.1/tag-policies/{tag_key}", headers=headers)
@@ -333,7 +333,7 @@ class TagPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -379,7 +379,7 @@ class TagPoliciesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.1/tag-policies/{tag_key}", query=query, body=body, headers=headers)
@@ -407,7 +407,7 @@ class WorkspaceEntityTagAssignmentsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/entity-tag-assignments", body=body, headers=headers)
@@ -417,9 +417,10 @@ class WorkspaceEntityTagAssignmentsAPI:
         """Delete a tag assignment
 
         :param entity_type: str
-          The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces
+          The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,
+          notebooks
         :param entity_id: str
-          The identifier of the entity to which the tag is assigned
+          The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name
         :param tag_key: str
           The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed
 
@@ -431,7 +432,7 @@ class WorkspaceEntityTagAssignmentsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do(
@@ -442,9 +443,10 @@ class WorkspaceEntityTagAssignmentsAPI:
         """Get a tag assignment
 
         :param entity_type: str
-          The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces
+          The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,
+          notebooks
         :param entity_id: str
-          The identifier of the entity to which the tag is assigned
+          The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name
         :param tag_key: str
           The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed
 
@@ -456,7 +458,7 @@ class WorkspaceEntityTagAssignmentsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -470,9 +472,10 @@ class WorkspaceEntityTagAssignmentsAPI:
         """List the tag assignments for an entity
 
         :param entity_type: str
-          The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces
+          The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,
+          notebooks
         :param entity_id: str
-          The identifier of the entity to which the tag is assigned
+          The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name
         :param page_size: int (optional)
           Optional. Maximum number of tag assignments to return in a single page
         :param page_token: str (optional)
@@ -491,7 +494,7 @@ class WorkspaceEntityTagAssignmentsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -511,9 +514,10 @@ class WorkspaceEntityTagAssignmentsAPI:
         """Update a tag assignment
 
         :param entity_type: str
-          The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces
+          The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,
+          notebooks
         :param entity_id: str
-          The identifier of the entity to which the tag is assigned
+          The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name
         :param tag_key: str
           The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed
         :param tag_assignment: :class:`TagAssignment`
@@ -541,7 +545,7 @@ class WorkspaceEntityTagAssignmentsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(

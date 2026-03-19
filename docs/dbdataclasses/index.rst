@@ -13,13 +13,17 @@ Dataclasses
    compute
    dashboards
    database
+   dataclassification
    dataquality
+   environments
    files
    iam
    iamv2
    jobs
+   knowledgeassistants
    marketplace
    ml
+   networking
    oauth2
    pipelines
    postgres

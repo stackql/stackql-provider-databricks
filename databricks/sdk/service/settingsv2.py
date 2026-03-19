@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, Iterator, List, Optional
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.service._internal import _enum, _from_dict, _repeated_dict
 
 _LOG = logging.getLogger("databricks.sdk")
@@ -494,9 +493,15 @@ class PersonalComputeMessagePersonalComputeMessageEnum(Enum):
 class RestrictWorkspaceAdminsMessage:
     status: RestrictWorkspaceAdminsMessageStatus
 
+    disable_gov_tag_creation: Optional[bool] = None
+    """When true, workspace admins cannot create governance tags. ALLOW_ALL status does not override
+    this; they are independent."""
+
     def as_dict(self) -> dict:
         """Serializes the RestrictWorkspaceAdminsMessage into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.disable_gov_tag_creation is not None:
+            body["disable_gov_tag_creation"] = self.disable_gov_tag_creation
         if self.status is not None:
             body["status"] = self.status.value
         return body
@@ -504,6 +509,8 @@ class RestrictWorkspaceAdminsMessage:
     def as_shallow_dict(self) -> dict:
         """Serializes the RestrictWorkspaceAdminsMessage into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.disable_gov_tag_creation is not None:
+            body["disable_gov_tag_creation"] = self.disable_gov_tag_creation
         if self.status is not None:
             body["status"] = self.status
         return body
@@ -511,7 +518,10 @@ class RestrictWorkspaceAdminsMessage:
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> RestrictWorkspaceAdminsMessage:
         """Deserializes the RestrictWorkspaceAdminsMessage from a dictionary."""
-        return cls(status=_enum(d, "status", RestrictWorkspaceAdminsMessageStatus))
+        return cls(
+            disable_gov_tag_creation=d.get("disable_gov_tag_creation", None),
+            status=_enum(d, "status", RestrictWorkspaceAdminsMessageStatus),
+        )
 
 
 class RestrictWorkspaceAdminsMessageStatus(Enum):
@@ -1069,7 +1079,7 @@ class WorkspaceSettingsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.1/settings/{name}", headers=headers)
@@ -1106,7 +1116,7 @@ class WorkspaceSettingsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -1140,7 +1150,7 @@ class WorkspaceSettingsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.1/settings/{name}", body=body, headers=headers)

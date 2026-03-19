@@ -534,6 +534,7 @@ class CustomerManagedKey:
 class EndpointUseCase(Enum):
 
     DATAPLANE_RELAY_ACCESS = "DATAPLANE_RELAY_ACCESS"
+    GENERAL_ACCESS = "GENERAL_ACCESS"
     WORKSPACE_ACCESS = "WORKSPACE_ACCESS"
 
 
@@ -1381,8 +1382,8 @@ class VpcEndpoint:
     """This enumeration represents the type of Databricks VPC endpoint service that was used when
     creating this VPC endpoint. If the VPC endpoint connects to the Databricks control plane for
     either the front-end connection or the back-end REST API connection, the value is
-    WORKSPACE_ACCESS. If the VPC endpoint connects to the Databricks workspace for the back-end
-    secure cluster connectivity relay, the value is DATAPLANE_RELAY_ACCESS."""
+    GENERAL_ACCESS. If the VPC endpoint connects to the Databricks workspace for the back-end secure
+    cluster connectivity relay, the value is DATAPLANE_RELAY_ACCESS."""
 
     vpc_endpoint_id: Optional[str] = None
     """Databricks VPC endpoint ID. This is the Databricks-specific name of the VPC endpoint. Do not
@@ -2580,7 +2581,8 @@ class WorkspacesAPI:
 
         :param aws_region: str (optional)
         :param cloud: str (optional)
-          The cloud name. This field always has the value `gcp`.
+          DEPRECATED: This field is being ignored by the server and will be removed in the future. The cloud
+          name. This field always has the value `gcp`.
         :param cloud_resource_container: :class:`CloudResourceContainer` (optional)
         :param compute_mode: :class:`CustomerFacingComputeMode` (optional)
           If the compute mode is `SERVERLESS`, a serverless workspace is created that comes pre-configured

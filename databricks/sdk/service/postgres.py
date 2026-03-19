@@ -10,12 +10,12 @@ from typing import Any, Dict, Iterator, List, Optional
 from google.protobuf.duration_pb2 import Duration
 from google.protobuf.timestamp_pb2 import Timestamp
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.common import lro
 from databricks.sdk.common.types.fieldmask import FieldMask
 from databricks.sdk.retries import RetryError, poll
 from databricks.sdk.service._internal import (_duration, _enum, _from_dict,
-                                              _repeated_dict, _timestamp)
+                                              _repeated_dict, _repeated_enum,
+                                              _timestamp)
 
 _LOG = logging.getLogger("databricks.sdk")
 
@@ -310,6 +310,76 @@ class BranchStatusState(Enum):
 
 
 @dataclass
+class Database:
+    """Database represents a Postgres database within a Branch."""
+
+    create_time: Optional[Timestamp] = None
+    """A timestamp indicating when the database was created."""
+
+    name: Optional[str] = None
+    """The resource name of the database. Format:
+    projects/{project_id}/branches/{branch_id}/databases/{database_id}"""
+
+    parent: Optional[str] = None
+    """The branch containing this database. Format: projects/{project_id}/branches/{branch_id}"""
+
+    spec: Optional[DatabaseDatabaseSpec] = None
+    """The desired state of the Database."""
+
+    status: Optional[DatabaseDatabaseStatus] = None
+    """The observed state of the Database."""
+
+    update_time: Optional[Timestamp] = None
+    """A timestamp indicating when the database was last updated."""
+
+    def as_dict(self) -> dict:
+        """Serializes the Database into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.create_time is not None:
+            body["create_time"] = self.create_time.ToJsonString()
+        if self.name is not None:
+            body["name"] = self.name
+        if self.parent is not None:
+            body["parent"] = self.parent
+        if self.spec:
+            body["spec"] = self.spec.as_dict()
+        if self.status:
+            body["status"] = self.status.as_dict()
+        if self.update_time is not None:
+            body["update_time"] = self.update_time.ToJsonString()
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the Database into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.create_time is not None:
+            body["create_time"] = self.create_time
+        if self.name is not None:
+            body["name"] = self.name
+        if self.parent is not None:
+            body["parent"] = self.parent
+        if self.spec:
+            body["spec"] = self.spec
+        if self.status:
+            body["status"] = self.status
+        if self.update_time is not None:
+            body["update_time"] = self.update_time
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> Database:
+        """Deserializes the Database from a dictionary."""
+        return cls(
+            create_time=_timestamp(d, "create_time"),
+            name=d.get("name", None),
+            parent=d.get("parent", None),
+            spec=_from_dict(d, "spec", DatabaseDatabaseSpec),
+            status=_from_dict(d, "status", DatabaseDatabaseStatus),
+            update_time=_timestamp(d, "update_time"),
+        )
+
+
+@dataclass
 class DatabaseCredential:
     expire_time: Optional[Timestamp] = None
     """Timestamp in UTC of when this credential expires."""
@@ -339,6 +409,100 @@ class DatabaseCredential:
     def from_dict(cls, d: Dict[str, Any]) -> DatabaseCredential:
         """Deserializes the DatabaseCredential from a dictionary."""
         return cls(expire_time=_timestamp(d, "expire_time"), token=d.get("token", None))
+
+
+@dataclass
+class DatabaseDatabaseSpec:
+    postgres_database: Optional[str] = None
+    """The name of the Postgres database.
+    
+    This expects a valid Postgres identifier as specified in the link below.
+    https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS Required
+    when creating the Database.
+    
+    To rename, pass a valid postgres identifier when updating the Database."""
+
+    role: Optional[str] = None
+    """The name of the role that owns the database. Format:
+    projects/{project_id}/branches/{branch_id}/roles/{role_id}
+    
+    To change the owner, pass valid existing Role name when updating the Database
+    
+    A database always has an owner."""
+
+    def as_dict(self) -> dict:
+        """Serializes the DatabaseDatabaseSpec into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.postgres_database is not None:
+            body["postgres_database"] = self.postgres_database
+        if self.role is not None:
+            body["role"] = self.role
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the DatabaseDatabaseSpec into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.postgres_database is not None:
+            body["postgres_database"] = self.postgres_database
+        if self.role is not None:
+            body["role"] = self.role
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> DatabaseDatabaseSpec:
+        """Deserializes the DatabaseDatabaseSpec from a dictionary."""
+        return cls(postgres_database=d.get("postgres_database", None), role=d.get("role", None))
+
+
+@dataclass
+class DatabaseDatabaseStatus:
+    postgres_database: Optional[str] = None
+    """The name of the Postgres database."""
+
+    role: Optional[str] = None
+    """The name of the role that owns the database. Format:
+    projects/{project_id}/branches/{branch_id}/roles/{role_id}"""
+
+    def as_dict(self) -> dict:
+        """Serializes the DatabaseDatabaseStatus into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.postgres_database is not None:
+            body["postgres_database"] = self.postgres_database
+        if self.role is not None:
+            body["role"] = self.role
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the DatabaseDatabaseStatus into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.postgres_database is not None:
+            body["postgres_database"] = self.postgres_database
+        if self.role is not None:
+            body["role"] = self.role
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> DatabaseDatabaseStatus:
+        """Deserializes the DatabaseDatabaseStatus from a dictionary."""
+        return cls(postgres_database=d.get("postgres_database", None), role=d.get("role", None))
+
+
+@dataclass
+class DatabaseOperationMetadata:
+    def as_dict(self) -> dict:
+        """Serializes the DatabaseOperationMetadata into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the DatabaseOperationMetadata into a shallow dictionary of its immediate attributes."""
+        body = {}
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> DatabaseOperationMetadata:
+        """Deserializes the DatabaseOperationMetadata from a dictionary."""
+        return cls()
 
 
 @dataclass
@@ -469,6 +633,100 @@ class Endpoint:
 
 
 @dataclass
+class EndpointGroupSpec:
+    min: int
+    """The minimum number of computes in the endpoint group. Currently, this must be equal to max. This
+    must be greater than or equal to 1."""
+
+    max: int
+    """The maximum number of computes in the endpoint group. Currently, this must be equal to min. Set
+    to 1 for single compute endpoints, to disable HA. To manually suspend all computes in an
+    endpoint group, set disabled to true on the EndpointSpec."""
+
+    enable_readable_secondaries: Optional[bool] = None
+    """Whether to allow read-only connections to read-write endpoints. Only relevant for read-write
+    endpoints where size.max > 1."""
+
+    def as_dict(self) -> dict:
+        """Serializes the EndpointGroupSpec into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.enable_readable_secondaries is not None:
+            body["enable_readable_secondaries"] = self.enable_readable_secondaries
+        if self.max is not None:
+            body["max"] = self.max
+        if self.min is not None:
+            body["min"] = self.min
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the EndpointGroupSpec into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.enable_readable_secondaries is not None:
+            body["enable_readable_secondaries"] = self.enable_readable_secondaries
+        if self.max is not None:
+            body["max"] = self.max
+        if self.min is not None:
+            body["min"] = self.min
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> EndpointGroupSpec:
+        """Deserializes the EndpointGroupSpec from a dictionary."""
+        return cls(
+            enable_readable_secondaries=d.get("enable_readable_secondaries", None),
+            max=d.get("max", None),
+            min=d.get("min", None),
+        )
+
+
+@dataclass
+class EndpointGroupStatus:
+    min: int
+    """The minimum number of computes in the endpoint group. Currently, this must be equal to max. This
+    must be greater than or equal to 1."""
+
+    max: int
+    """The maximum number of computes in the endpoint group. Currently, this must be equal to min. Set
+    to 1 for single compute endpoints, to disable HA. To manually suspend all computes in an
+    endpoint group, set disabled to true on the EndpointSpec."""
+
+    enable_readable_secondaries: Optional[bool] = None
+    """Whether read-only connections to read-write endpoints are allowed. Only relevant if read
+    replicas are configured by specifying size.max > 1."""
+
+    def as_dict(self) -> dict:
+        """Serializes the EndpointGroupStatus into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.enable_readable_secondaries is not None:
+            body["enable_readable_secondaries"] = self.enable_readable_secondaries
+        if self.max is not None:
+            body["max"] = self.max
+        if self.min is not None:
+            body["min"] = self.min
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the EndpointGroupStatus into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.enable_readable_secondaries is not None:
+            body["enable_readable_secondaries"] = self.enable_readable_secondaries
+        if self.max is not None:
+            body["max"] = self.max
+        if self.min is not None:
+            body["min"] = self.min
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> EndpointGroupStatus:
+        """Deserializes the EndpointGroupStatus from a dictionary."""
+        return cls(
+            enable_readable_secondaries=d.get("enable_readable_secondaries", None),
+            max=d.get("max", None),
+            min=d.get("min", None),
+        )
+
+
+@dataclass
 class EndpointHosts:
     """Encapsulates various hostnames (r/w or r/o, pooled or not) for an endpoint."""
 
@@ -477,11 +735,19 @@ class EndpointHosts:
     hostname which connects to the primary compute. For read-only endpoints, this is a read-only
     hostname which allows read-only operations."""
 
+    read_only_host: Optional[str] = None
+    """An optionally defined read-only host for the endpoint, without pooling. For read-only endpoints,
+    this attribute is always defined and is equivalent to host. For read-write endpoints, this
+    attribute is defined if the enclosing endpoint is a group with greater than 1 computes
+    configured, and has readable secondaries enabled."""
+
     def as_dict(self) -> dict:
         """Serializes the EndpointHosts into a dictionary suitable for use as a JSON request body."""
         body = {}
         if self.host is not None:
             body["host"] = self.host
+        if self.read_only_host is not None:
+            body["read_only_host"] = self.read_only_host
         return body
 
     def as_shallow_dict(self) -> dict:
@@ -489,12 +755,14 @@ class EndpointHosts:
         body = {}
         if self.host is not None:
             body["host"] = self.host
+        if self.read_only_host is not None:
+            body["read_only_host"] = self.read_only_host
         return body
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> EndpointHosts:
         """Deserializes the EndpointHosts from a dictionary."""
-        return cls(host=d.get("host", None))
+        return cls(host=d.get("host", None), read_only_host=d.get("read_only_host", None))
 
 
 @dataclass
@@ -558,6 +826,11 @@ class EndpointSpec:
     suspend compute operation. A disabled compute endpoint cannot be enabled by a connection or
     console action."""
 
+    group: Optional[EndpointGroupSpec] = None
+    """Settings for optional HA configuration of the endpoint. If unspecified, the endpoint defaults to
+    non HA settings, with a single compute backing the endpoint (and no readable secondaries for
+    Read/Write endpoints)."""
+
     no_suspension: Optional[bool] = None
     """When set to true, explicitly disables automatic suspension (never suspend). Should be set to
     true when provided."""
@@ -579,6 +852,8 @@ class EndpointSpec:
             body["disabled"] = self.disabled
         if self.endpoint_type is not None:
             body["endpoint_type"] = self.endpoint_type.value
+        if self.group:
+            body["group"] = self.group.as_dict()
         if self.no_suspension is not None:
             body["no_suspension"] = self.no_suspension
         if self.settings:
@@ -598,6 +873,8 @@ class EndpointSpec:
             body["disabled"] = self.disabled
         if self.endpoint_type is not None:
             body["endpoint_type"] = self.endpoint_type
+        if self.group:
+            body["group"] = self.group
         if self.no_suspension is not None:
             body["no_suspension"] = self.no_suspension
         if self.settings:
@@ -614,6 +891,7 @@ class EndpointSpec:
             autoscaling_limit_min_cu=d.get("autoscaling_limit_min_cu", None),
             disabled=d.get("disabled", None),
             endpoint_type=_enum(d, "endpoint_type", EndpointType),
+            group=_from_dict(d, "group", EndpointGroupSpec),
             no_suspension=d.get("no_suspension", None),
             settings=_from_dict(d, "settings", EndpointSettings),
             suspend_timeout_duration=_duration(d, "suspend_timeout_duration"),
@@ -638,6 +916,9 @@ class EndpointStatus:
     endpoint_type: Optional[EndpointType] = None
     """The endpoint type. A branch can only have one READ_WRITE endpoint."""
 
+    group: Optional[EndpointGroupStatus] = None
+    """Details on the HA configuration of the endpoint."""
+
     hosts: Optional[EndpointHosts] = None
     """Contains host information for connecting to the endpoint."""
 
@@ -661,6 +942,8 @@ class EndpointStatus:
             body["disabled"] = self.disabled
         if self.endpoint_type is not None:
             body["endpoint_type"] = self.endpoint_type.value
+        if self.group:
+            body["group"] = self.group.as_dict()
         if self.hosts:
             body["hosts"] = self.hosts.as_dict()
         if self.pending_state is not None:
@@ -684,6 +967,8 @@ class EndpointStatus:
             body["disabled"] = self.disabled
         if self.endpoint_type is not None:
             body["endpoint_type"] = self.endpoint_type
+        if self.group:
+            body["group"] = self.group
         if self.hosts:
             body["hosts"] = self.hosts
         if self.pending_state is not None:
@@ -703,6 +988,7 @@ class EndpointStatus:
             current_state=_enum(d, "current_state", EndpointStatusState),
             disabled=d.get("disabled", None),
             endpoint_type=_enum(d, "endpoint_type", EndpointType),
+            group=_from_dict(d, "group", EndpointGroupStatus),
             hosts=_from_dict(d, "hosts", EndpointHosts),
             pending_state=_enum(d, "pending_state", EndpointStatusState),
             settings=_from_dict(d, "settings", EndpointSettings),
@@ -714,6 +1000,7 @@ class EndpointStatusState(Enum):
     """The state of the compute endpoint."""
 
     ACTIVE = "ACTIVE"
+    DEGRADED = "DEGRADED"
     IDLE = "IDLE"
     INIT = "INIT"
 
@@ -812,6 +1099,31 @@ class ErrorCode(Enum):
 
 
 @dataclass
+class InitialEndpointSpec:
+    group: Optional[EndpointGroupSpec] = None
+    """Settings for HA configuration of the endpoint"""
+
+    def as_dict(self) -> dict:
+        """Serializes the InitialEndpointSpec into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.group:
+            body["group"] = self.group.as_dict()
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the InitialEndpointSpec into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.group:
+            body["group"] = self.group
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> InitialEndpointSpec:
+        """Deserializes the InitialEndpointSpec from a dictionary."""
+        return cls(group=_from_dict(d, "group", EndpointGroupSpec))
+
+
+@dataclass
 class ListBranchesResponse:
     branches: Optional[List[Branch]] = None
     """List of branches in the project."""
@@ -841,6 +1153,38 @@ class ListBranchesResponse:
     def from_dict(cls, d: Dict[str, Any]) -> ListBranchesResponse:
         """Deserializes the ListBranchesResponse from a dictionary."""
         return cls(branches=_repeated_dict(d, "branches", Branch), next_page_token=d.get("next_page_token", None))
+
+
+@dataclass
+class ListDatabasesResponse:
+    databases: Optional[List[Database]] = None
+    """List of databases."""
+
+    next_page_token: Optional[str] = None
+    """Pagination token to request the next page of databases."""
+
+    def as_dict(self) -> dict:
+        """Serializes the ListDatabasesResponse into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.databases:
+            body["databases"] = [v.as_dict() for v in self.databases]
+        if self.next_page_token is not None:
+            body["next_page_token"] = self.next_page_token
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the ListDatabasesResponse into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.databases:
+            body["databases"] = self.databases
+        if self.next_page_token is not None:
+            body["next_page_token"] = self.next_page_token
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> ListDatabasesResponse:
+        """Deserializes the ListDatabasesResponse from a dictionary."""
+        return cls(databases=_repeated_dict(d, "databases", Database), next_page_token=d.get("next_page_token", None))
 
 
 @dataclass
@@ -1010,6 +1354,13 @@ class Project:
     create_time: Optional[Timestamp] = None
     """A timestamp indicating when the project was created."""
 
+    initial_endpoint_spec: Optional[InitialEndpointSpec] = None
+    """Configuration settings for the initial Read/Write endpoint created inside the default branch for
+    a newly created project. If omitted, the initial endpoint created will have default settings,
+    without high availability configured. This field does not apply to any endpoints created after
+    project creation. Use spec.default_endpoint_settings to configure default settings for endpoints
+    created after project creation."""
+
     name: Optional[str] = None
     """Output only. The full resource path of the project. Format: projects/{project_id}"""
 
@@ -1031,6 +1382,8 @@ class Project:
         body = {}
         if self.create_time is not None:
             body["create_time"] = self.create_time.ToJsonString()
+        if self.initial_endpoint_spec:
+            body["initial_endpoint_spec"] = self.initial_endpoint_spec.as_dict()
         if self.name is not None:
             body["name"] = self.name
         if self.spec:
@@ -1048,6 +1401,8 @@ class Project:
         body = {}
         if self.create_time is not None:
             body["create_time"] = self.create_time
+        if self.initial_endpoint_spec:
+            body["initial_endpoint_spec"] = self.initial_endpoint_spec
         if self.name is not None:
             body["name"] = self.name
         if self.spec:
@@ -1065,12 +1420,45 @@ class Project:
         """Deserializes the Project from a dictionary."""
         return cls(
             create_time=_timestamp(d, "create_time"),
+            initial_endpoint_spec=_from_dict(d, "initial_endpoint_spec", InitialEndpointSpec),
             name=d.get("name", None),
             spec=_from_dict(d, "spec", ProjectSpec),
             status=_from_dict(d, "status", ProjectStatus),
             uid=d.get("uid", None),
             update_time=_timestamp(d, "update_time"),
         )
+
+
+@dataclass
+class ProjectCustomTag:
+    key: Optional[str] = None
+    """The key of the custom tag."""
+
+    value: Optional[str] = None
+    """The value of the custom tag."""
+
+    def as_dict(self) -> dict:
+        """Serializes the ProjectCustomTag into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.key is not None:
+            body["key"] = self.key
+        if self.value is not None:
+            body["value"] = self.value
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the ProjectCustomTag into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.key is not None:
+            body["key"] = self.key
+        if self.value is not None:
+            body["value"] = self.value
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> ProjectCustomTag:
+        """Deserializes the ProjectCustomTag from a dictionary."""
+        return cls(key=d.get("key", None), value=d.get("value", None))
 
 
 @dataclass
@@ -1156,14 +1544,28 @@ class ProjectOperationMetadata:
 
 @dataclass
 class ProjectSpec:
+    budget_policy_id: Optional[str] = None
+    """The desired budget policy to associate with the project. See status.budget_policy_id for the
+    policy that is actually applied to the project."""
+
+    custom_tags: Optional[List[ProjectCustomTag]] = None
+    """Custom tags to associate with the project. Forwarded to LBM for billing and cost tracking. To
+    update tags, provide the new tag list and include "spec.custom_tags" in the update_mask. To
+    clear all tags, provide an empty list and include "spec.custom_tags" in the update_mask. To
+    preserve existing tags, omit this field from the update_mask (or use wildcard "*" which
+    auto-excludes empty tags)."""
+
     default_endpoint_settings: Optional[ProjectDefaultEndpointSettings] = None
 
     display_name: Optional[str] = None
     """Human-readable project name. Length should be between 1 and 256 characters."""
 
+    enable_pg_native_login: Optional[bool] = None
+    """Whether to enable PG native password login on all endpoints in this project. Defaults to true."""
+
     history_retention_duration: Optional[Duration] = None
     """The number of seconds to retain the shared history for point in time recovery for all branches
-    in this project. Value should be between 0s and 2592000s (up to 30 days)."""
+    in this project. Value should be between 172800s (2 days) and 2592000s (30 days)."""
 
     pg_version: Optional[int] = None
     """The major Postgres version number. Supported versions are 16 and 17."""
@@ -1171,10 +1573,16 @@ class ProjectSpec:
     def as_dict(self) -> dict:
         """Serializes the ProjectSpec into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.budget_policy_id is not None:
+            body["budget_policy_id"] = self.budget_policy_id
+        if self.custom_tags:
+            body["custom_tags"] = [v.as_dict() for v in self.custom_tags]
         if self.default_endpoint_settings:
             body["default_endpoint_settings"] = self.default_endpoint_settings.as_dict()
         if self.display_name is not None:
             body["display_name"] = self.display_name
+        if self.enable_pg_native_login is not None:
+            body["enable_pg_native_login"] = self.enable_pg_native_login
         if self.history_retention_duration is not None:
             body["history_retention_duration"] = self.history_retention_duration.ToJsonString()
         if self.pg_version is not None:
@@ -1184,10 +1592,16 @@ class ProjectSpec:
     def as_shallow_dict(self) -> dict:
         """Serializes the ProjectSpec into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.budget_policy_id is not None:
+            body["budget_policy_id"] = self.budget_policy_id
+        if self.custom_tags:
+            body["custom_tags"] = self.custom_tags
         if self.default_endpoint_settings:
             body["default_endpoint_settings"] = self.default_endpoint_settings
         if self.display_name is not None:
             body["display_name"] = self.display_name
+        if self.enable_pg_native_login is not None:
+            body["enable_pg_native_login"] = self.enable_pg_native_login
         if self.history_retention_duration is not None:
             body["history_retention_duration"] = self.history_retention_duration
         if self.pg_version is not None:
@@ -1198,8 +1612,11 @@ class ProjectSpec:
     def from_dict(cls, d: Dict[str, Any]) -> ProjectSpec:
         """Deserializes the ProjectSpec from a dictionary."""
         return cls(
+            budget_policy_id=d.get("budget_policy_id", None),
+            custom_tags=_repeated_dict(d, "custom_tags", ProjectCustomTag),
             default_endpoint_settings=_from_dict(d, "default_endpoint_settings", ProjectDefaultEndpointSettings),
             display_name=d.get("display_name", None),
+            enable_pg_native_login=d.get("enable_pg_native_login", None),
             history_retention_duration=_duration(d, "history_retention_duration"),
             pg_version=d.get("pg_version", None),
         )
@@ -1210,11 +1627,20 @@ class ProjectStatus:
     branch_logical_size_limit_bytes: Optional[int] = None
     """The logical size limit for a branch."""
 
+    budget_policy_id: Optional[str] = None
+    """The budget policy that is applied to the project."""
+
+    custom_tags: Optional[List[ProjectCustomTag]] = None
+    """The effective custom tags associated with the project."""
+
     default_endpoint_settings: Optional[ProjectDefaultEndpointSettings] = None
     """The effective default endpoint settings."""
 
     display_name: Optional[str] = None
     """The effective human-readable project name."""
+
+    enable_pg_native_login: Optional[bool] = None
+    """Whether to enable PG native password login on all endpoints in this project."""
 
     history_retention_duration: Optional[Duration] = None
     """The effective number of seconds to retain the shared history for point in time recovery."""
@@ -1233,10 +1659,16 @@ class ProjectStatus:
         body = {}
         if self.branch_logical_size_limit_bytes is not None:
             body["branch_logical_size_limit_bytes"] = self.branch_logical_size_limit_bytes
+        if self.budget_policy_id is not None:
+            body["budget_policy_id"] = self.budget_policy_id
+        if self.custom_tags:
+            body["custom_tags"] = [v.as_dict() for v in self.custom_tags]
         if self.default_endpoint_settings:
             body["default_endpoint_settings"] = self.default_endpoint_settings.as_dict()
         if self.display_name is not None:
             body["display_name"] = self.display_name
+        if self.enable_pg_native_login is not None:
+            body["enable_pg_native_login"] = self.enable_pg_native_login
         if self.history_retention_duration is not None:
             body["history_retention_duration"] = self.history_retention_duration.ToJsonString()
         if self.owner is not None:
@@ -1252,10 +1684,16 @@ class ProjectStatus:
         body = {}
         if self.branch_logical_size_limit_bytes is not None:
             body["branch_logical_size_limit_bytes"] = self.branch_logical_size_limit_bytes
+        if self.budget_policy_id is not None:
+            body["budget_policy_id"] = self.budget_policy_id
+        if self.custom_tags:
+            body["custom_tags"] = self.custom_tags
         if self.default_endpoint_settings:
             body["default_endpoint_settings"] = self.default_endpoint_settings
         if self.display_name is not None:
             body["display_name"] = self.display_name
+        if self.enable_pg_native_login is not None:
+            body["enable_pg_native_login"] = self.enable_pg_native_login
         if self.history_retention_duration is not None:
             body["history_retention_duration"] = self.history_retention_duration
         if self.owner is not None:
@@ -1271,8 +1709,11 @@ class ProjectStatus:
         """Deserializes the ProjectStatus from a dictionary."""
         return cls(
             branch_logical_size_limit_bytes=d.get("branch_logical_size_limit_bytes", None),
+            budget_policy_id=d.get("budget_policy_id", None),
+            custom_tags=_repeated_dict(d, "custom_tags", ProjectCustomTag),
             default_endpoint_settings=_from_dict(d, "default_endpoint_settings", ProjectDefaultEndpointSettings),
             display_name=d.get("display_name", None),
+            enable_pg_native_login=d.get("enable_pg_native_login", None),
             history_retention_duration=_duration(d, "history_retention_duration"),
             owner=d.get("owner", None),
             pg_version=d.get("pg_version", None),
@@ -1420,6 +1861,49 @@ class Role:
         )
 
 
+@dataclass
+class RoleAttributes:
+    """Attributes that can be granted to a Postgres role. We are only implementing a subset for now,
+    see xref: https://www.postgresql.org/docs/16/sql-createrole.html The values follow Postgres
+    keyword naming e.g. CREATEDB, BYPASSRLS, etc. which is why they don't include typical
+    underscores between words."""
+
+    bypassrls: Optional[bool] = None
+
+    createdb: Optional[bool] = None
+
+    createrole: Optional[bool] = None
+
+    def as_dict(self) -> dict:
+        """Serializes the RoleAttributes into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.bypassrls is not None:
+            body["bypassrls"] = self.bypassrls
+        if self.createdb is not None:
+            body["createdb"] = self.createdb
+        if self.createrole is not None:
+            body["createrole"] = self.createrole
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the RoleAttributes into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.bypassrls is not None:
+            body["bypassrls"] = self.bypassrls
+        if self.createdb is not None:
+            body["createdb"] = self.createdb
+        if self.createrole is not None:
+            body["createrole"] = self.createrole
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> RoleAttributes:
+        """Deserializes the RoleAttributes from a dictionary."""
+        return cls(
+            bypassrls=d.get("bypassrls", None), createdb=d.get("createdb", None), createrole=d.get("createrole", None)
+        )
+
+
 class RoleAuthMethod(Enum):
     """How the role is authenticated when connecting to Postgres."""
 
@@ -1435,6 +1919,12 @@ class RoleIdentityType(Enum):
     GROUP = "GROUP"
     SERVICE_PRINCIPAL = "SERVICE_PRINCIPAL"
     USER = "USER"
+
+
+class RoleMembershipRole(Enum):
+    """Roles that the DatabaseInstanceRole can be a member of."""
+
+    DATABRICKS_SUPERUSER = "DATABRICKS_SUPERUSER"
 
 
 @dataclass
@@ -1457,6 +1947,9 @@ class RoleOperationMetadata:
 
 @dataclass
 class RoleRoleSpec:
+    attributes: Optional[RoleAttributes] = None
+    """The desired API-exposed Postgres role attribute to associate with the role. Optional."""
+
     auth_method: Optional[RoleAuthMethod] = None
     """If auth_method is left unspecified, a meaningful authentication method is derived from the
     identity_type: * For the managed identities, OAUTH is used. * For the regular postgres roles,
@@ -1469,6 +1962,9 @@ class RoleRoleSpec:
     """The type of role. When specifying a managed-identity, the chosen role_id must be a valid:
     
     * application ID for SERVICE_PRINCIPAL * user email for USER * group name for GROUP"""
+
+    membership_roles: Optional[List[RoleMembershipRole]] = None
+    """An enum value for a standard role that this role is a member of."""
 
     postgres_role: Optional[str] = None
     """The name of the Postgres role.
@@ -1487,10 +1983,14 @@ class RoleRoleSpec:
     def as_dict(self) -> dict:
         """Serializes the RoleRoleSpec into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.attributes:
+            body["attributes"] = self.attributes.as_dict()
         if self.auth_method is not None:
             body["auth_method"] = self.auth_method.value
         if self.identity_type is not None:
             body["identity_type"] = self.identity_type.value
+        if self.membership_roles:
+            body["membership_roles"] = [v.value for v in self.membership_roles]
         if self.postgres_role is not None:
             body["postgres_role"] = self.postgres_role
         return body
@@ -1498,10 +1998,14 @@ class RoleRoleSpec:
     def as_shallow_dict(self) -> dict:
         """Serializes the RoleRoleSpec into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.attributes:
+            body["attributes"] = self.attributes
         if self.auth_method is not None:
             body["auth_method"] = self.auth_method
         if self.identity_type is not None:
             body["identity_type"] = self.identity_type
+        if self.membership_roles:
+            body["membership_roles"] = self.membership_roles
         if self.postgres_role is not None:
             body["postgres_role"] = self.postgres_role
         return body
@@ -1510,18 +2014,26 @@ class RoleRoleSpec:
     def from_dict(cls, d: Dict[str, Any]) -> RoleRoleSpec:
         """Deserializes the RoleRoleSpec from a dictionary."""
         return cls(
+            attributes=_from_dict(d, "attributes", RoleAttributes),
             auth_method=_enum(d, "auth_method", RoleAuthMethod),
             identity_type=_enum(d, "identity_type", RoleIdentityType),
+            membership_roles=_repeated_enum(d, "membership_roles", RoleMembershipRole),
             postgres_role=d.get("postgres_role", None),
         )
 
 
 @dataclass
 class RoleRoleStatus:
+    attributes: Optional[RoleAttributes] = None
+    """The PG role attributes associated with the role."""
+
     auth_method: Optional[RoleAuthMethod] = None
 
     identity_type: Optional[RoleIdentityType] = None
     """The type of the role."""
+
+    membership_roles: Optional[List[RoleMembershipRole]] = None
+    """An enum value for a standard role that this role is a member of."""
 
     postgres_role: Optional[str] = None
     """The name of the Postgres role."""
@@ -1529,10 +2041,14 @@ class RoleRoleStatus:
     def as_dict(self) -> dict:
         """Serializes the RoleRoleStatus into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.attributes:
+            body["attributes"] = self.attributes.as_dict()
         if self.auth_method is not None:
             body["auth_method"] = self.auth_method.value
         if self.identity_type is not None:
             body["identity_type"] = self.identity_type.value
+        if self.membership_roles:
+            body["membership_roles"] = [v.value for v in self.membership_roles]
         if self.postgres_role is not None:
             body["postgres_role"] = self.postgres_role
         return body
@@ -1540,10 +2056,14 @@ class RoleRoleStatus:
     def as_shallow_dict(self) -> dict:
         """Serializes the RoleRoleStatus into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.attributes:
+            body["attributes"] = self.attributes
         if self.auth_method is not None:
             body["auth_method"] = self.auth_method
         if self.identity_type is not None:
             body["identity_type"] = self.identity_type
+        if self.membership_roles:
+            body["membership_roles"] = self.membership_roles
         if self.postgres_role is not None:
             body["postgres_role"] = self.postgres_role
         return body
@@ -1552,8 +2072,10 @@ class RoleRoleStatus:
     def from_dict(cls, d: Dict[str, Any]) -> RoleRoleStatus:
         """Deserializes the RoleRoleStatus from a dictionary."""
         return cls(
+            attributes=_from_dict(d, "attributes", RoleAttributes),
             auth_method=_enum(d, "auth_method", RoleAuthMethod),
             identity_type=_enum(d, "identity_type", RoleIdentityType),
+            membership_roles=_repeated_enum(d, "membership_roles", RoleMembershipRole),
             postgres_role=d.get("postgres_role", None),
         )
 
@@ -1601,12 +2123,52 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/postgres/{parent}/branches", query=query, body=body, headers=headers)
         operation = Operation.from_dict(res)
         return CreateBranchOperation(self, operation)
+
+    def create_database(
+        self, parent: str, database: Database, *, database_id: Optional[str] = None
+    ) -> CreateDatabaseOperation:
+        """Create a Database.
+
+        Creates a database in the specified branch. A branch can have multiple databases.
+
+        :param parent: str
+          The Branch where this Database will be created. Format: projects/{project_id}/branches/{branch_id}
+        :param database: :class:`Database`
+          The desired specification of a Database.
+        :param database_id: str (optional)
+          The ID to use for the Database, which will become the final component of the database's resource
+          name. This ID becomes the database name in postgres.
+
+          This value should be 4-63 characters, and only use characters available in DNS names, as defined by
+          RFC-1123
+
+          If database_id is not specified in the request, it is generated automatically.
+
+        :returns: :class:`Operation`
+        """
+
+        body = database.as_dict()
+        query = {}
+        if database_id is not None:
+            query["database_id"] = database_id
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+
+        res = self._api.do("POST", f"/api/2.0/postgres/{parent}/databases", query=query, body=body, headers=headers)
+        operation = Operation.from_dict(res)
+        return CreateDatabaseOperation(self, operation)
 
     def create_endpoint(self, parent: str, endpoint: Endpoint, endpoint_id: str) -> CreateEndpointOperation:
         """Creates a new compute endpoint in the branch.
@@ -1634,7 +2196,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/postgres/{parent}/endpoints", query=query, body=body, headers=headers)
@@ -1665,7 +2227,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/postgres/projects", query=query, body=body, headers=headers)
@@ -1701,7 +2263,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/postgres/{parent}/roles", query=query, body=body, headers=headers)
@@ -1722,12 +2284,34 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("DELETE", f"/api/2.0/postgres/{name}", headers=headers)
         operation = Operation.from_dict(res)
         return DeleteBranchOperation(self, operation)
+
+    def delete_database(self, name: str) -> DeleteDatabaseOperation:
+        """Delete a Database.
+
+        :param name: str
+          The resource name of the postgres database. Format:
+          projects/{project_id}/branches/{branch_id}/databases/{database_id}
+
+        :returns: :class:`Operation`
+        """
+
+        headers = {
+            "Accept": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+
+        res = self._api.do("DELETE", f"/api/2.0/postgres/{name}", headers=headers)
+        operation = Operation.from_dict(res)
+        return DeleteDatabaseOperation(self, operation)
 
     def delete_endpoint(self, name: str) -> DeleteEndpointOperation:
         """Deletes the specified compute endpoint.
@@ -1744,7 +2328,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("DELETE", f"/api/2.0/postgres/{name}", headers=headers)
@@ -1765,7 +2349,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("DELETE", f"/api/2.0/postgres/{name}", headers=headers)
@@ -1784,9 +2368,6 @@ class PostgresAPI:
 
           NOTE: setting this requires spinning up a compute to succeed, since it involves running SQL queries.
 
-          TODO: #LKB-7187 implement reassign_owned_to on LBM side. This might end-up being a synchronous query
-          when this parameter is used.
-
         :returns: :class:`Operation`
         """
 
@@ -1798,7 +2379,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("DELETE", f"/api/2.0/postgres/{name}", query=query, headers=headers)
@@ -1830,7 +2411,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/postgres/credentials", body=body, headers=headers)
@@ -1850,11 +2431,32 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/postgres/{name}", headers=headers)
         return Branch.from_dict(res)
+
+    def get_database(self, name: str) -> Database:
+        """Get a Database.
+
+        :param name: str
+          The name of the Database to retrieve. Format:
+          projects/{project_id}/branches/{branch_id}/databases/{database_id}
+
+        :returns: :class:`Database`
+        """
+
+        headers = {
+            "Accept": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+
+        res = self._api.do("GET", f"/api/2.0/postgres/{name}", headers=headers)
+        return Database.from_dict(res)
 
     def get_endpoint(self, name: str) -> Endpoint:
         """Retrieves information about the specified compute endpoint, including its connection details and
@@ -1872,7 +2474,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/postgres/{name}", headers=headers)
@@ -1892,7 +2494,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/postgres/{name}", headers=headers)
@@ -1912,7 +2514,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/postgres/{name}", headers=headers)
@@ -1934,7 +2536,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/postgres/{name}", headers=headers)
@@ -1965,7 +2567,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -1973,6 +2575,44 @@ class PostgresAPI:
             if "branches" in json:
                 for v in json["branches"]:
                     yield Branch.from_dict(v)
+            if "next_page_token" not in json or not json["next_page_token"]:
+                return
+            query["page_token"] = json["next_page_token"]
+
+    def list_databases(
+        self, parent: str, *, page_size: Optional[int] = None, page_token: Optional[str] = None
+    ) -> Iterator[Database]:
+        """List Databases.
+
+        :param parent: str
+          The Branch that owns this collection of databases. Format:
+          projects/{project_id}/branches/{branch_id}
+        :param page_size: int (optional)
+          Upper bound for items returned.
+        :param page_token: str (optional)
+          Pagination token to go to the next page of Databases. Requests first page if absent.
+
+        :returns: Iterator over :class:`Database`
+        """
+
+        query = {}
+        if page_size is not None:
+            query["page_size"] = page_size
+        if page_token is not None:
+            query["page_token"] = page_token
+        headers = {
+            "Accept": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+
+        while True:
+            json = self._api.do("GET", f"/api/2.0/postgres/{parent}/databases", query=query, headers=headers)
+            if "databases" in json:
+                for v in json["databases"]:
+                    yield Database.from_dict(v)
             if "next_page_token" not in json or not json["next_page_token"]:
                 return
             query["page_token"] = json["next_page_token"]
@@ -2003,7 +2643,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -2019,7 +2659,7 @@ class PostgresAPI:
         """Returns a paginated list of database projects in the workspace that the user has permission to access.
 
         :param page_size: int (optional)
-          Upper bound for items returned. Cannot be negative.
+          Upper bound for items returned. Cannot be negative. The maximum value is 100.
         :param page_token: str (optional)
           Page token from a previous response. If not provided, returns the first page.
 
@@ -2036,7 +2676,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -2073,7 +2713,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -2113,12 +2753,46 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/postgres/{name}", query=query, body=body, headers=headers)
         operation = Operation.from_dict(res)
         return UpdateBranchOperation(self, operation)
+
+    def update_database(self, name: str, database: Database, update_mask: FieldMask) -> UpdateDatabaseOperation:
+        """Update a Database.
+
+        :param name: str
+          The resource name of the database. Format:
+          projects/{project_id}/branches/{branch_id}/databases/{database_id}
+        :param database: :class:`Database`
+          The Database to update.
+
+          The database's `name` field is used to identify the database to update. Format:
+          projects/{project_id}/branches/{branch_id}/databases/{database_id}
+        :param update_mask: FieldMask
+          The list of fields to update. If unspecified, all fields will be updated when possible.
+
+        :returns: :class:`Operation`
+        """
+
+        body = database.as_dict()
+        query = {}
+        if update_mask is not None:
+            query["update_mask"] = update_mask.ToJsonString()
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+
+        res = self._api.do("PATCH", f"/api/2.0/postgres/{name}", query=query, body=body, headers=headers)
+        operation = Operation.from_dict(res)
+        return UpdateDatabaseOperation(self, operation)
 
     def update_endpoint(self, name: str, endpoint: Endpoint, update_mask: FieldMask) -> UpdateEndpointOperation:
         """Updates the specified compute endpoint. You can update autoscaling limits, suspend timeout, or
@@ -2148,7 +2822,7 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/postgres/{name}", query=query, body=body, headers=headers)
@@ -2180,12 +2854,47 @@ class PostgresAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/postgres/{name}", query=query, body=body, headers=headers)
         operation = Operation.from_dict(res)
         return UpdateProjectOperation(self, operation)
+
+    def update_role(self, name: str, role: Role, update_mask: FieldMask) -> UpdateRoleOperation:
+        """Update a role for a branch.
+
+        :param name: str
+          Output only. The full resource path of the role. Format:
+          projects/{project_id}/branches/{branch_id}/roles/{role_id}
+        :param role: :class:`Role`
+          The Postgres Role to update.
+
+          The role's `name` field is used to identify the role to update. Format:
+          projects/{project_id}/branches/{branch_id}/roles/{role_id}
+        :param update_mask: FieldMask
+          The list of fields to update in Postgres Role. If unspecified, all fields will be updated when
+          possible.
+
+        :returns: :class:`Operation`
+        """
+
+        body = role.as_dict()
+        query = {}
+        if update_mask is not None:
+            query["update_mask"] = update_mask.ToJsonString()
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+
+        res = self._api.do("PATCH", f"/api/2.0/postgres/{name}", query=query, body=body, headers=headers)
+        operation = Operation.from_dict(res)
+        return UpdateRoleOperation(self, operation)
 
 
 class CreateBranchOperation:
@@ -2250,6 +2959,83 @@ class CreateBranchOperation:
             return None
 
         return BranchOperationMetadata.from_dict(self._operation.metadata)
+
+    def done(self) -> bool:
+        """Done reports whether the long-running operation has completed.
+
+        :returns: bool
+        """
+        # Refresh the operation state first
+        operation = self._impl.get_operation(name=self._operation.name)
+
+        # Update local operation state
+        self._operation = operation
+
+        return operation.done
+
+
+class CreateDatabaseOperation:
+    """Long-running operation for create_database"""
+
+    def __init__(self, impl: PostgresAPI, operation: Operation):
+        self._impl = impl
+        self._operation = operation
+
+    def wait(self, opts: Optional[lro.LroOptions] = None) -> Database:
+        """Wait blocks until the long-running operation is completed. If no timeout is
+        specified, this will poll indefinitely. If a timeout is provided and the operation
+        didn't finish within the timeout, this function will raise an error of type
+        TimeoutError, otherwise returns successful response and any errors encountered.
+
+        :param opts: :class:`LroOptions`
+          Timeout options (default: polls indefinitely)
+
+        :returns: :class:`Database`
+        """
+
+        def poll_operation():
+            operation = self._impl.get_operation(name=self._operation.name)
+
+            # Update local operation state
+            self._operation = operation
+
+            if not operation.done:
+                return None, RetryError.continues("operation still in progress")
+
+            if operation.error:
+                error_msg = operation.error.message if operation.error.message else "unknown error"
+                if operation.error.error_code:
+                    error_msg = f"[{operation.error.error_code}] {error_msg}"
+                return None, RetryError.halt(Exception(f"operation failed: {error_msg}"))
+
+            # Operation completed successfully, unmarshal response.
+            if operation.response is None:
+                return None, RetryError.halt(Exception("operation completed but no response available"))
+
+            database = Database.from_dict(operation.response)
+
+            return database, None
+
+        return poll(poll_operation, timeout=opts.timeout if opts is not None else None)
+
+    def name(self) -> str:
+        """Name returns the name of the long-running operation. The name is assigned
+        by the server and is unique within the service from which the operation is created.
+
+        :returns: str
+        """
+        return self._operation.name
+
+    def metadata(self) -> DatabaseOperationMetadata:
+        """Metadata returns metadata associated with the long-running operation.
+        If the metadata is not available, the returned metadata is None.
+
+        :returns: :class:`DatabaseOperationMetadata` or None
+        """
+        if self._operation.metadata is None:
+            return None
+
+        return DatabaseOperationMetadata.from_dict(self._operation.metadata)
 
     def done(self) -> bool:
         """Done reports whether the long-running operation has completed.
@@ -2571,6 +3357,81 @@ class DeleteBranchOperation:
         return operation.done
 
 
+class DeleteDatabaseOperation:
+    """Long-running operation for delete_database"""
+
+    def __init__(self, impl: PostgresAPI, operation: Operation):
+        self._impl = impl
+        self._operation = operation
+
+    def wait(self, opts: Optional[lro.LroOptions] = None):
+        """Wait blocks until the long-running operation is completed. If no timeout is
+        specified, this will poll indefinitely. If a timeout is provided and the operation
+        didn't finish within the timeout, this function will raise an error of type
+        TimeoutError, otherwise returns successful response and any errors encountered.
+
+        :param opts: :class:`LroOptions`
+          Timeout options (default: polls indefinitely)
+
+        :returns: :class:`Any /* MISSING TYPE */`
+        """
+
+        def poll_operation():
+            operation = self._impl.get_operation(name=self._operation.name)
+
+            # Update local operation state
+            self._operation = operation
+
+            if not operation.done:
+                return None, RetryError.continues("operation still in progress")
+
+            if operation.error:
+                error_msg = operation.error.message if operation.error.message else "unknown error"
+                if operation.error.error_code:
+                    error_msg = f"[{operation.error.error_code}] {error_msg}"
+                return None, RetryError.halt(Exception(f"operation failed: {error_msg}"))
+
+            # Operation completed successfully, unmarshal response.
+            if operation.response is None:
+                return None, RetryError.halt(Exception("operation completed but no response available"))
+
+            return {}, None
+
+        poll(poll_operation, timeout=opts.timeout if opts is not None else None)
+
+    def name(self) -> str:
+        """Name returns the name of the long-running operation. The name is assigned
+        by the server and is unique within the service from which the operation is created.
+
+        :returns: str
+        """
+        return self._operation.name
+
+    def metadata(self) -> DatabaseOperationMetadata:
+        """Metadata returns metadata associated with the long-running operation.
+        If the metadata is not available, the returned metadata is None.
+
+        :returns: :class:`DatabaseOperationMetadata` or None
+        """
+        if self._operation.metadata is None:
+            return None
+
+        return DatabaseOperationMetadata.from_dict(self._operation.metadata)
+
+    def done(self) -> bool:
+        """Done reports whether the long-running operation has completed.
+
+        :returns: bool
+        """
+        # Refresh the operation state first
+        operation = self._impl.get_operation(name=self._operation.name)
+
+        # Update local operation state
+        self._operation = operation
+
+        return operation.done
+
+
 class DeleteEndpointOperation:
     """Long-running operation for delete_endpoint"""
 
@@ -2873,6 +3734,83 @@ class UpdateBranchOperation:
         return operation.done
 
 
+class UpdateDatabaseOperation:
+    """Long-running operation for update_database"""
+
+    def __init__(self, impl: PostgresAPI, operation: Operation):
+        self._impl = impl
+        self._operation = operation
+
+    def wait(self, opts: Optional[lro.LroOptions] = None) -> Database:
+        """Wait blocks until the long-running operation is completed. If no timeout is
+        specified, this will poll indefinitely. If a timeout is provided and the operation
+        didn't finish within the timeout, this function will raise an error of type
+        TimeoutError, otherwise returns successful response and any errors encountered.
+
+        :param opts: :class:`LroOptions`
+          Timeout options (default: polls indefinitely)
+
+        :returns: :class:`Database`
+        """
+
+        def poll_operation():
+            operation = self._impl.get_operation(name=self._operation.name)
+
+            # Update local operation state
+            self._operation = operation
+
+            if not operation.done:
+                return None, RetryError.continues("operation still in progress")
+
+            if operation.error:
+                error_msg = operation.error.message if operation.error.message else "unknown error"
+                if operation.error.error_code:
+                    error_msg = f"[{operation.error.error_code}] {error_msg}"
+                return None, RetryError.halt(Exception(f"operation failed: {error_msg}"))
+
+            # Operation completed successfully, unmarshal response.
+            if operation.response is None:
+                return None, RetryError.halt(Exception("operation completed but no response available"))
+
+            database = Database.from_dict(operation.response)
+
+            return database, None
+
+        return poll(poll_operation, timeout=opts.timeout if opts is not None else None)
+
+    def name(self) -> str:
+        """Name returns the name of the long-running operation. The name is assigned
+        by the server and is unique within the service from which the operation is created.
+
+        :returns: str
+        """
+        return self._operation.name
+
+    def metadata(self) -> DatabaseOperationMetadata:
+        """Metadata returns metadata associated with the long-running operation.
+        If the metadata is not available, the returned metadata is None.
+
+        :returns: :class:`DatabaseOperationMetadata` or None
+        """
+        if self._operation.metadata is None:
+            return None
+
+        return DatabaseOperationMetadata.from_dict(self._operation.metadata)
+
+    def done(self) -> bool:
+        """Done reports whether the long-running operation has completed.
+
+        :returns: bool
+        """
+        # Refresh the operation state first
+        operation = self._impl.get_operation(name=self._operation.name)
+
+        # Update local operation state
+        self._operation = operation
+
+        return operation.done
+
+
 class UpdateEndpointOperation:
     """Long-running operation for update_endpoint"""
 
@@ -3012,6 +3950,83 @@ class UpdateProjectOperation:
             return None
 
         return ProjectOperationMetadata.from_dict(self._operation.metadata)
+
+    def done(self) -> bool:
+        """Done reports whether the long-running operation has completed.
+
+        :returns: bool
+        """
+        # Refresh the operation state first
+        operation = self._impl.get_operation(name=self._operation.name)
+
+        # Update local operation state
+        self._operation = operation
+
+        return operation.done
+
+
+class UpdateRoleOperation:
+    """Long-running operation for update_role"""
+
+    def __init__(self, impl: PostgresAPI, operation: Operation):
+        self._impl = impl
+        self._operation = operation
+
+    def wait(self, opts: Optional[lro.LroOptions] = None) -> Role:
+        """Wait blocks until the long-running operation is completed. If no timeout is
+        specified, this will poll indefinitely. If a timeout is provided and the operation
+        didn't finish within the timeout, this function will raise an error of type
+        TimeoutError, otherwise returns successful response and any errors encountered.
+
+        :param opts: :class:`LroOptions`
+          Timeout options (default: polls indefinitely)
+
+        :returns: :class:`Role`
+        """
+
+        def poll_operation():
+            operation = self._impl.get_operation(name=self._operation.name)
+
+            # Update local operation state
+            self._operation = operation
+
+            if not operation.done:
+                return None, RetryError.continues("operation still in progress")
+
+            if operation.error:
+                error_msg = operation.error.message if operation.error.message else "unknown error"
+                if operation.error.error_code:
+                    error_msg = f"[{operation.error.error_code}] {error_msg}"
+                return None, RetryError.halt(Exception(f"operation failed: {error_msg}"))
+
+            # Operation completed successfully, unmarshal response.
+            if operation.response is None:
+                return None, RetryError.halt(Exception("operation completed but no response available"))
+
+            role = Role.from_dict(operation.response)
+
+            return role, None
+
+        return poll(poll_operation, timeout=opts.timeout if opts is not None else None)
+
+    def name(self) -> str:
+        """Name returns the name of the long-running operation. The name is assigned
+        by the server and is unique within the service from which the operation is created.
+
+        :returns: str
+        """
+        return self._operation.name
+
+    def metadata(self) -> RoleOperationMetadata:
+        """Metadata returns metadata associated with the long-running operation.
+        If the metadata is not available, the returned metadata is None.
+
+        :returns: :class:`RoleOperationMetadata` or None
+        """
+        if self._operation.metadata is None:
+            return None
+
+        return RoleOperationMetadata.from_dict(self._operation.metadata)
 
     def done(self) -> bool:
         """Done reports whether the long-running operation has completed.

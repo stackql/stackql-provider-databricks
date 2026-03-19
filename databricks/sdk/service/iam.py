@@ -7,7 +7,6 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, Iterator, List, Optional
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.service._internal import (_enum, _from_dict,
                                               _repeated_dict, _repeated_enum)
 
@@ -1570,6 +1569,7 @@ class PermissionLevel(Enum):
     CAN_ATTACH_TO = "CAN_ATTACH_TO"
     CAN_BIND = "CAN_BIND"
     CAN_CREATE = "CAN_CREATE"
+    CAN_CREATE_APP = "CAN_CREATE_APP"
     CAN_EDIT = "CAN_EDIT"
     CAN_EDIT_METADATA = "CAN_EDIT_METADATA"
     CAN_MANAGE = "CAN_MANAGE"
@@ -2205,7 +2205,7 @@ class AccessControlAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/access-control/check-policy-v2", query=query, headers=headers)
@@ -2359,7 +2359,7 @@ class AccountAccessControlProxyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -2406,7 +2406,7 @@ class AccountAccessControlProxyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/preview/accounts/access-control/rule-sets", query=query, headers=headers)
@@ -2434,7 +2434,7 @@ class AccountAccessControlProxyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", "/api/2.0/preview/accounts/access-control/rule-sets", body=body, headers=headers)
@@ -3242,7 +3242,7 @@ class CurrentUserAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/preview/scim/v2/Me", headers=headers)
@@ -3322,7 +3322,7 @@ class GroupsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/scim/v2/Groups", body=body, headers=headers)
@@ -3340,7 +3340,7 @@ class GroupsV2API:
         headers = {}
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/scim/v2/Groups/{id}", headers=headers)
@@ -3359,7 +3359,7 @@ class GroupsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/scim/v2/Groups/{id}", headers=headers)
@@ -3421,7 +3421,7 @@ class GroupsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         query["startIndex"] = 1
@@ -3459,7 +3459,7 @@ class GroupsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/preview/scim/v2/Groups/{id}", body=body, headers=headers)
@@ -3524,7 +3524,7 @@ class GroupsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/scim/v2/Groups/{id}", body=body, headers=headers)
@@ -3573,7 +3573,7 @@ class PermissionMigrationAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/permissionmigration", body=body, headers=headers)
@@ -3613,9 +3613,9 @@ class PermissionsAPI:
 
         :param request_object_type: str
           The type of the request object. Can be one of the following: alerts, alertsv2, authorization,
-          clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie,
-          instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or
-          warehouses.
+          clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,
+          experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,
+          repos, serving-endpoints, or warehouses.
         :param request_object_id: str
           The id of the request object.
 
@@ -3627,7 +3627,7 @@ class PermissionsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/{request_object_type}/{request_object_id}", headers=headers)
@@ -3638,9 +3638,9 @@ class PermissionsAPI:
 
         :param request_object_type: str
           The type of the request object. Can be one of the following: alerts, alertsv2, authorization,
-          clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie,
-          instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or
-          warehouses.
+          clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,
+          experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,
+          repos, serving-endpoints, or warehouses.
         :param request_object_id: str
 
         :returns: :class:`GetPermissionLevelsResponse`
@@ -3651,7 +3651,7 @@ class PermissionsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -3672,9 +3672,9 @@ class PermissionsAPI:
 
         :param request_object_type: str
           The type of the request object. Can be one of the following: alerts, alertsv2, authorization,
-          clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie,
-          instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or
-          warehouses.
+          clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,
+          experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,
+          repos, serving-endpoints, or warehouses.
         :param request_object_id: str
           The id of the request object.
         :param access_control_list: List[:class:`AccessControlRequest`] (optional)
@@ -3691,7 +3691,7 @@ class PermissionsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -3711,9 +3711,9 @@ class PermissionsAPI:
 
         :param request_object_type: str
           The type of the request object. Can be one of the following: alerts, alertsv2, authorization,
-          clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie,
-          instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or
-          warehouses.
+          clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,
+          experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,
+          repos, serving-endpoints, or warehouses.
         :param request_object_id: str
           The id of the request object.
         :param access_control_list: List[:class:`AccessControlRequest`] (optional)
@@ -3730,7 +3730,7 @@ class PermissionsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -3812,7 +3812,7 @@ class ServicePrincipalsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/scim/v2/ServicePrincipals", body=body, headers=headers)
@@ -3830,7 +3830,7 @@ class ServicePrincipalsV2API:
         headers = {}
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", headers=headers)
@@ -3849,7 +3849,7 @@ class ServicePrincipalsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", headers=headers)
@@ -3911,7 +3911,7 @@ class ServicePrincipalsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         query["startIndex"] = 1
@@ -3949,7 +3949,7 @@ class ServicePrincipalsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", body=body, headers=headers)
@@ -4017,7 +4017,7 @@ class ServicePrincipalsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", body=body, headers=headers)
@@ -4114,7 +4114,7 @@ class UsersV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/scim/v2/Users", body=body, headers=headers)
@@ -4133,7 +4133,7 @@ class UsersV2API:
         headers = {}
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/scim/v2/Users/{id}", headers=headers)
@@ -4198,7 +4198,7 @@ class UsersV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/scim/v2/Users/{id}", query=query, headers=headers)
@@ -4216,7 +4216,7 @@ class UsersV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/permissions/authorization/passwords/permissionLevels", headers=headers)
@@ -4234,7 +4234,7 @@ class UsersV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/permissions/authorization/passwords", headers=headers)
@@ -4297,7 +4297,7 @@ class UsersV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         query["startIndex"] = 1
@@ -4335,7 +4335,7 @@ class UsersV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/preview/scim/v2/Users/{id}", body=body, headers=headers)
@@ -4360,7 +4360,7 @@ class UsersV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", "/api/2.0/permissions/authorization/passwords", body=body, headers=headers)
@@ -4440,7 +4440,7 @@ class UsersV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/scim/v2/Users/{id}", body=body, headers=headers)
@@ -4464,7 +4464,7 @@ class UsersV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", "/api/2.0/permissions/authorization/passwords", body=body, headers=headers)

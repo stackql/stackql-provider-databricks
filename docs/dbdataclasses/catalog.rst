@@ -420,13 +420,16 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 
 .. py:class:: CredentialType
 
-   Next Id: 15
+   Next Id: 17
 
    .. py:attribute:: ANY_STATIC_CREDENTIAL
       :value: "ANY_STATIC_CREDENTIAL"
 
    .. py:attribute:: BEARER_TOKEN
       :value: "BEARER_TOKEN"
+
+   .. py:attribute:: EDGEGRID_AKAMAI
+      :value: "EDGEGRID_AKAMAI"
 
    .. py:attribute:: OAUTH_ACCESS_TOKEN
       :value: "OAUTH_ACCESS_TOKEN"
@@ -863,19 +866,6 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :members:
    :undoc-members:
 
-.. py:class:: HostType
-
-   Enum representing the type of Databricks host.
-
-   .. py:attribute:: ACCOUNTS
-      :value: "ACCOUNTS"
-
-   .. py:attribute:: WORKSPACE
-      :value: "WORKSPACE"
-
-   .. py:attribute:: UNIFIED
-      :value: "UNIFIED"
-
 .. py:class:: IsolationMode
 
    .. py:attribute:: ISOLATION_MODE_ISOLATED
@@ -1264,6 +1254,10 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :members:
    :undoc-members:
 
+.. autoclass:: PolicyFunctionArgument
+   :members:
+   :undoc-members:
+
 .. autoclass:: PolicyInfo
    :members:
    :undoc-members:
@@ -1513,7 +1507,7 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 
 .. py:class:: SecurableKind
 
-   Latest kind: CONNECTION_OKTA_SYSTEM_LOGS_SSWS_TOKEN = 295; Next id: 296
+   Latest kind: CONNECTION_GOOGLE_DRIVE_SERVICE_ACCOUNT = 301; Next id: 302
 
    .. py:attribute:: TABLE_DB_STORAGE
       :value: "TABLE_DB_STORAGE"
@@ -1935,6 +1929,13 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 
    .. py:attribute:: VIEW
       :value: "VIEW"
+
+.. py:class:: TagAssignmentSourceType
+
+   Enum representing the source type of a tag assignment
+
+   .. py:attribute:: TAG_ASSIGNMENT_SOURCE_TYPE_SYSTEM_DATA_CLASSIFICATION
+      :value: "TAG_ASSIGNMENT_SOURCE_TYPE_SYSTEM_DATA_CLASSIFICATION"
 
 .. autoclass:: TagKeyValue
    :members:

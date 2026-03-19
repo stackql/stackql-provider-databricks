@@ -10,7 +10,6 @@ from datetime import timedelta
 from enum import Enum
 from typing import Any, Callable, Dict, Iterator, List, Optional
 
-from databricks.sdk.client_types import HostType
 from databricks.sdk.common.types.fieldmask import FieldMask
 from databricks.sdk.service._internal import (Wait, _enum, _from_dict,
                                               _repeated_dict, _repeated_enum)
@@ -1222,6 +1221,7 @@ class ChannelName(Enum):
 @dataclass
 class ClientConfig:
     allow_custom_js_visualizations: Optional[bool] = None
+    """allow_custom_js_visualizations is not supported/implemneted."""
 
     allow_downloads: Optional[bool] = None
 
@@ -2459,7 +2459,7 @@ class EndpointInfo:
     please tune max_num_clusters.
     
     Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large
-    - 4X-Large"""
+    - 4X-Large - 5X-Large"""
 
     creator_name: Optional[str] = None
     """warehouse creator name"""
@@ -2467,7 +2467,7 @@ class EndpointInfo:
     enable_photon: Optional[bool] = None
     """Configures whether the warehouse should use Photon optimized clusters.
     
-    Defaults to false."""
+    Defaults to true."""
 
     enable_serverless_compute: Optional[bool] = None
     """Configures whether the warehouse should use serverless compute"""
@@ -3076,7 +3076,7 @@ class GetWarehouseResponse:
     please tune max_num_clusters.
     
     Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large
-    - 4X-Large"""
+    - 4X-Large - 5X-Large"""
 
     creator_name: Optional[str] = None
     """warehouse creator name"""
@@ -3084,7 +3084,7 @@ class GetWarehouseResponse:
     enable_photon: Optional[bool] = None
     """Configures whether the warehouse should use Photon optimized clusters.
     
-    Defaults to false."""
+    Defaults to true."""
 
     enable_serverless_compute: Optional[bool] = None
     """Configures whether the warehouse should use serverless compute"""
@@ -3285,7 +3285,7 @@ class GetWorkspaceWarehouseConfigResponse:
     512K"""
 
     enable_serverless_compute: Optional[bool] = None
-    """Enable Serverless compute for SQL warehouses"""
+    """Deprecated: only setting this to true is allowed."""
 
     enabled_warehouse_types: Optional[List[WarehouseTypePair]] = None
     """List of Warehouse Types allowed in this workspace (limits allowed value of the type field in
@@ -6494,6 +6494,7 @@ class TerminationReasonCode(Enum):
     GCP_TRUSTED_IMAGE_PROJECTS_VIOLATED = "GCP_TRUSTED_IMAGE_PROJECTS_VIOLATED"
     GKE_BASED_CLUSTER_TERMINATION = "GKE_BASED_CLUSTER_TERMINATION"
     GLOBAL_INIT_SCRIPT_FAILURE = "GLOBAL_INIT_SCRIPT_FAILURE"
+    HIVEMETASTORE_CONNECTIVITY_FAILURE = "HIVEMETASTORE_CONNECTIVITY_FAILURE"
     HIVE_METASTORE_PROVISIONING_FAILURE = "HIVE_METASTORE_PROVISIONING_FAILURE"
     IMAGE_PULL_PERMISSION_DENIED = "IMAGE_PULL_PERMISSION_DENIED"
     INACTIVITY = "INACTIVITY"
@@ -7566,7 +7567,7 @@ class AlertsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/sql/alerts", body=body, headers=headers)
@@ -7587,7 +7588,7 @@ class AlertsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/sql/alerts/{id}", headers=headers)
@@ -7605,7 +7606,7 @@ class AlertsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/sql/alerts/{id}", headers=headers)
@@ -7633,7 +7634,7 @@ class AlertsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -7687,7 +7688,7 @@ class AlertsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/sql/alerts/{id}", body=body, headers=headers)
@@ -7755,7 +7756,7 @@ class AlertsLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/sql/alerts", body=body, headers=headers)
@@ -7779,7 +7780,7 @@ class AlertsLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/sql/alerts/{alert_id}", headers=headers)
@@ -7801,7 +7802,7 @@ class AlertsLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/sql/alerts/{alert_id}", headers=headers)
@@ -7823,7 +7824,7 @@ class AlertsLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/preview/sql/alerts", headers=headers)
@@ -7865,7 +7866,7 @@ class AlertsLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/sql/alerts/{alert_id}", body=body, headers=headers)
@@ -7892,7 +7893,7 @@ class AlertsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/alerts", body=body, headers=headers)
@@ -7911,7 +7912,7 @@ class AlertsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/alerts/{id}", headers=headers)
@@ -7936,7 +7937,7 @@ class AlertsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -7968,7 +7969,7 @@ class AlertsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/alerts/{id}", query=query, headers=headers)
@@ -8003,7 +8004,7 @@ class AlertsV2API:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/alerts/{id}", query=query, body=body, headers=headers)
@@ -8059,7 +8060,7 @@ class DashboardWidgetsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/sql/widgets", body=body, headers=headers)
@@ -8079,7 +8080,7 @@ class DashboardWidgetsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/sql/widgets/{id}", headers=headers)
@@ -8129,7 +8130,7 @@ class DashboardWidgetsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/preview/sql/widgets/{id}", body=body, headers=headers)
@@ -8141,7 +8142,11 @@ class DashboardsAPI:
     dashboard objects to look-up a collection of related query IDs. The API can also be used to duplicate
     multiple dashboards at once since you can get a dashboard definition with a GET request and then POST it
     to create a new one. Dashboards can be scheduled using the `sql_task` type of the Jobs API, e.g.
-    :method:jobs/create."""
+    :method:jobs/create.
+
+    **Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]
+
+    [Learn more]: https://docs.databricks.com/en/dashboards/"""
 
     def __init__(self, api_client):
         self._api = api_client
@@ -8149,6 +8154,10 @@ class DashboardsAPI:
     def delete(self, dashboard_id: str):
         """Moves a dashboard to the trash. Trashed dashboards do not appear in list views or searches, and cannot
         be shared.
+
+        **Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]
+
+        [Learn more]: https://docs.databricks.com/en/dashboards/
 
         :param dashboard_id: str
 
@@ -8160,13 +8169,17 @@ class DashboardsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/sql/dashboards/{dashboard_id}", headers=headers)
 
     def get(self, dashboard_id: str) -> Dashboard:
         """Returns a JSON representation of a dashboard object, including its visualization and query objects.
+
+        **Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]
+
+        [Learn more]: https://docs.databricks.com/en/dashboards/
 
         :param dashboard_id: str
 
@@ -8178,7 +8191,7 @@ class DashboardsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/sql/dashboards/{dashboard_id}", headers=headers)
@@ -8196,6 +8209,10 @@ class DashboardsAPI:
 
         **Warning**: Calling this API concurrently 10 or more times could result in throttling, service
         degradation, or a temporary ban.
+
+        **Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]
+
+        [Learn more]: https://docs.databricks.com/en/dashboards/
 
         :param order: :class:`ListOrder` (optional)
           Name of dashboard attribute to order by.
@@ -8223,7 +8240,7 @@ class DashboardsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         query["page"] = 1
@@ -8239,6 +8256,10 @@ class DashboardsAPI:
     def restore(self, dashboard_id: str):
         """A restored dashboard appears in list views and searches and can be shared.
 
+        **Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]
+
+        [Learn more]: https://docs.databricks.com/en/dashboards/
+
         :param dashboard_id: str
 
 
@@ -8249,7 +8270,7 @@ class DashboardsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", f"/api/2.0/preview/sql/dashboards/trash/{dashboard_id}", headers=headers)
@@ -8266,6 +8287,10 @@ class DashboardsAPI:
         does not add, modify, or remove widgets.
 
         **Note**: You cannot undo this operation.
+
+        **Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]
+
+        [Learn more]: https://docs.databricks.com/en/dashboards/
 
         :param dashboard_id: str
         :param name: str (optional)
@@ -8291,7 +8316,7 @@ class DashboardsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/preview/sql/dashboards/{dashboard_id}", body=body, headers=headers)
@@ -8332,7 +8357,7 @@ class DataSourcesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/preview/sql/data_sources", headers=headers)
@@ -8379,7 +8404,7 @@ class DbsqlPermissionsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/sql/permissions/{object_type.value}/{object_id}", headers=headers)
@@ -8417,7 +8442,7 @@ class DbsqlPermissionsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -8454,7 +8479,7 @@ class DbsqlPermissionsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -8498,7 +8523,7 @@ class QueriesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/sql/queries", body=body, headers=headers)
@@ -8519,7 +8544,7 @@ class QueriesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/sql/queries/{id}", headers=headers)
@@ -8537,7 +8562,7 @@ class QueriesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/sql/queries/{id}", headers=headers)
@@ -8565,7 +8590,7 @@ class QueriesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -8599,7 +8624,7 @@ class QueriesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -8653,7 +8678,7 @@ class QueriesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/sql/queries/{id}", body=body, headers=headers)
@@ -8745,7 +8770,7 @@ class QueriesLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/sql/queries", body=body, headers=headers)
@@ -8769,7 +8794,7 @@ class QueriesLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/sql/queries/{query_id}", headers=headers)
@@ -8792,7 +8817,7 @@ class QueriesLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/sql/queries/{query_id}", headers=headers)
@@ -8853,7 +8878,7 @@ class QueriesLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         query["page"] = 1
@@ -8884,7 +8909,7 @@ class QueriesLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", f"/api/2.0/preview/sql/queries/trash/{query_id}", headers=headers)
@@ -8954,7 +8979,7 @@ class QueriesLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/preview/sql/queries/{query_id}", body=body, headers=headers)
@@ -9013,7 +9038,7 @@ class QueryHistoryAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/sql/history/queries", query=query, headers=headers)
@@ -9044,7 +9069,7 @@ class QueryVisualizationsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/sql/visualizations", body=body, headers=headers)
@@ -9063,7 +9088,7 @@ class QueryVisualizationsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/sql/visualizations/{id}", headers=headers)
@@ -9100,7 +9125,7 @@ class QueryVisualizationsAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/sql/visualizations/{id}", body=body, headers=headers)
@@ -9160,7 +9185,7 @@ class QueryVisualizationsLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/sql/visualizations", body=body, headers=headers)
@@ -9185,7 +9210,7 @@ class QueryVisualizationsLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/sql/visualizations/{id}", headers=headers)
@@ -9250,7 +9275,7 @@ class QueryVisualizationsLegacyAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/preview/sql/visualizations/{id}", body=body, headers=headers)
@@ -9275,7 +9300,7 @@ class RedashConfigAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/redash-v2/config", headers=headers)
@@ -9385,7 +9410,7 @@ class StatementExecutionAPI:
         headers = {}
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("POST", f"/api/2.0/sql/statements/{statement_id}/cancel", headers=headers)
@@ -9620,7 +9645,7 @@ class StatementExecutionAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/sql/statements", body=body, headers=headers)
@@ -9648,7 +9673,7 @@ class StatementExecutionAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/sql/statements/{statement_id}", headers=headers)
@@ -9676,7 +9701,7 @@ class StatementExecutionAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -9787,13 +9812,13 @@ class WarehousesAPI:
           max_num_clusters.
 
           Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large -
-          4X-Large
+          4X-Large - 5X-Large
         :param creator_name: str (optional)
           warehouse creator name
         :param enable_photon: bool (optional)
           Configures whether the warehouse should use Photon optimized clusters.
 
-          Defaults to false.
+          Defaults to true.
         :param enable_serverless_compute: bool (optional)
           Configures whether the warehouse should use serverless compute
         :param instance_profile_arn: str (optional)
@@ -9865,7 +9890,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", "/api/2.0/sql/warehouses", body=body, headers=headers)
@@ -9934,7 +9959,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do(
@@ -9956,7 +9981,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/sql/warehouses/{id}", headers=headers)
@@ -9978,7 +10003,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/warehouses/v1/{name}", headers=headers)
@@ -10020,13 +10045,13 @@ class WarehousesAPI:
           max_num_clusters.
 
           Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large -
-          4X-Large
+          4X-Large - 5X-Large
         :param creator_name: str (optional)
           warehouse creator name
         :param enable_photon: bool (optional)
           Configures whether the warehouse should use Photon optimized clusters.
 
-          Defaults to false.
+          Defaults to true.
         :param enable_serverless_compute: bool (optional)
           Configures whether the warehouse should use serverless compute
         :param instance_profile_arn: str (optional)
@@ -10098,7 +10123,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", f"/api/2.0/sql/warehouses/{id}/edit", body=body, headers=headers)
@@ -10154,7 +10179,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/sql/warehouses/{id}", headers=headers)
@@ -10178,7 +10203,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/warehouses/v1/{name}", headers=headers)
@@ -10198,7 +10223,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/warehouses/{warehouse_id}/permissionLevels", headers=headers)
@@ -10219,7 +10244,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/warehouses/{warehouse_id}", headers=headers)
@@ -10237,7 +10262,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/sql/config/warehouses", headers=headers)
@@ -10257,8 +10282,8 @@ class WarehousesAPI:
           When paginating, all other parameters provided to `ListWarehouses` must match the call that provided
           the page token.
         :param run_as_user_id: int (optional)
-          Service Principal which will be used to fetch the list of endpoints. If not specified, SQL Gateway
-          will use the user from the session header.
+          Deprecated: this field is ignored by the server. Service Principal which will be used to fetch the
+          list of endpoints. If not specified, SQL Gateway will use the user from the session header.
 
         :returns: Iterator over :class:`EndpointInfo`
         """
@@ -10275,7 +10300,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -10317,7 +10342,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         while True:
@@ -10351,7 +10376,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/permissions/warehouses/{warehouse_id}", body=body, headers=headers)
@@ -10380,7 +10405,7 @@ class WarehousesAPI:
         :param data_access_config: List[:class:`EndpointConfPair`] (optional)
           Spark confs for external hive metastore configuration JSON serialized size must be less than <= 512K
         :param enable_serverless_compute: bool (optional)
-          Enable Serverless compute for SQL warehouses
+          Deprecated: only setting this to true is allowed.
         :param enabled_warehouse_types: List[:class:`WarehouseTypePair`] (optional)
           List of Warehouse Types allowed in this workspace (limits allowed value of the type field in
           CreateWarehouse and EditWarehouse). Note: Some types cannot be disabled, they don't need to be
@@ -10429,7 +10454,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         self._api.do("PUT", "/api/2.0/sql/config/warehouses", body=body, headers=headers)
@@ -10450,7 +10475,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", f"/api/2.0/sql/warehouses/{id}/start", headers=headers)
@@ -10475,7 +10500,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         op_response = self._api.do("POST", f"/api/2.0/sql/warehouses/{id}/stop", headers=headers)
@@ -10525,7 +10550,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/warehouses/v1/{name}", query=query, body=body, headers=headers)
@@ -10553,7 +10578,7 @@ class WarehousesAPI:
         }
 
         cfg = self._api._cfg
-        if cfg.host_type == HostType.UNIFIED and cfg.workspace_id:
+        if cfg.workspace_id:
             headers["X-Databricks-Org-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/permissions/warehouses/{warehouse_id}", body=body, headers=headers)

@@ -4,6 +4,34 @@ Jobs
 These dataclasses are used in the SDK to represent API requests and responses for services in the ``databricks.sdk.service.jobs`` module.
 
 .. py:currentmodule:: databricks.sdk.service.jobs
+.. py:class:: AlertEvaluationState
+
+   Same alert evaluation state as in redash-v2/api/proto/alertsv2/alerts.proto
+
+   .. py:attribute:: ERROR
+      :value: "ERROR"
+
+   .. py:attribute:: OK
+      :value: "OK"
+
+   .. py:attribute:: TRIGGERED
+      :value: "TRIGGERED"
+
+   .. py:attribute:: UNKNOWN
+      :value: "UNKNOWN"
+
+.. autoclass:: AlertTask
+   :members:
+   :undoc-members:
+
+.. autoclass:: AlertTaskOutput
+   :members:
+   :undoc-members:
+
+.. autoclass:: AlertTaskSubscriber
+   :members:
+   :undoc-members:
+
 .. py:class:: AuthenticationMethod
 
    .. py:attribute:: OAUTH
@@ -327,19 +355,6 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 .. autoclass:: GitSource
    :members:
    :undoc-members:
-
-.. py:class:: HostType
-
-   Enum representing the type of Databricks host.
-
-   .. py:attribute:: ACCOUNTS
-      :value: "ACCOUNTS"
-
-   .. py:attribute:: WORKSPACE
-      :value: "WORKSPACE"
-
-   .. py:attribute:: UNIFIED
-      :value: "UNIFIED"
 
 .. autoclass:: Job
    :members:
@@ -850,6 +865,10 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :undoc-members:
 
 .. autoclass:: SparkSubmitTask
+   :members:
+   :undoc-members:
+
+.. autoclass:: SparseCheckout
    :members:
    :undoc-members:
 
