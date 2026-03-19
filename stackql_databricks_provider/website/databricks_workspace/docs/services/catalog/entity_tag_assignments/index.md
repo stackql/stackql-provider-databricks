@@ -54,6 +54,11 @@ The following fields are returned by `SELECT` queries:
     "description": "The type of the entity to which the tag is assigned. Allowed values are: catalogs, schemas, tables, columns, volumes."
   },
   {
+    "name": "source_type",
+    "type": "string",
+    "description": "The source type of the tag assignment, e.g., user-assigned or system-assigned (TAG_ASSIGNMENT_SOURCE_TYPE_SYSTEM_DATA_CLASSIFICATION)"
+  },
+  {
     "name": "tag_key",
     "type": "string",
     "description": "The key of the tag"
@@ -62,6 +67,16 @@ The following fields are returned by `SELECT` queries:
     "name": "tag_value",
     "type": "string",
     "description": "The value of the tag"
+  },
+  {
+    "name": "update_time",
+    "type": "string (date-time)",
+    "description": "The timestamp when the tag assignment was last updated"
+  },
+  {
+    "name": "updated_by",
+    "type": "string",
+    "description": "The user or principal who updated the tag assignment"
   }
 ]} />
 </TabItem>
@@ -79,6 +94,11 @@ The following fields are returned by `SELECT` queries:
     "description": "The type of the entity to which the tag is assigned. Allowed values are: catalogs, schemas, tables, columns, volumes."
   },
   {
+    "name": "source_type",
+    "type": "string",
+    "description": "The source type of the tag assignment, e.g., user-assigned or system-assigned (TAG_ASSIGNMENT_SOURCE_TYPE_SYSTEM_DATA_CLASSIFICATION)"
+  },
+  {
     "name": "tag_key",
     "type": "string",
     "description": "The key of the tag"
@@ -87,6 +107,16 @@ The following fields are returned by `SELECT` queries:
     "name": "tag_value",
     "type": "string",
     "description": "The value of the tag"
+  },
+  {
+    "name": "update_time",
+    "type": "string (date-time)",
+    "description": "The timestamp when the tag assignment was last updated"
+  },
+  {
+    "name": "updated_by",
+    "type": "string",
+    "description": "The user or principal who updated the tag assignment"
   }
 ]} />
 </TabItem>
@@ -181,7 +211,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
@@ -213,8 +243,11 @@ Gets a tag assignment for an Unity Catalog entity by tag key.
 SELECT
 entity_name,
 entity_type,
+source_type,
 tag_key,
-tag_value
+tag_value,
+update_time,
+updated_by
 FROM databricks_workspace.catalog.entity_tag_assignments
 WHERE entity_type = '{{ entity_type }}' -- required
 AND entity_name = '{{ entity_name }}' -- required
@@ -231,8 +264,11 @@ List tag assignments for an Unity Catalog entity
 SELECT
 entity_name,
 entity_type,
+source_type,
 tag_key,
-tag_value
+tag_value,
+update_time,
+updated_by
 FROM databricks_workspace.catalog.entity_tag_assignments
 WHERE entity_type = '{{ entity_type }}' -- required
 AND entity_name = '{{ entity_name }}' -- required
@@ -269,8 +305,11 @@ SELECT
 RETURNING
 entity_name,
 entity_type,
+source_type,
 tag_key,
-tag_value
+tag_value,
+update_time,
+updated_by
 ;
 ```
 </TabItem>
@@ -284,12 +323,15 @@ tag_value
       description: Required parameter for the entity_tag_assignments resource.
     - name: tag_assignment
       description: |
-        :returns: :class:\`EntityTagAssignment\`
+        Represents a tag assignment to an entity
       value:
         entity_name: "{{ entity_name }}"
         tag_key: "{{ tag_key }}"
         entity_type: "{{ entity_type }}"
+        source_type: "{{ source_type }}"
         tag_value: "{{ tag_value }}"
+        update_time: "{{ update_time }}"
+        updated_by: "{{ updated_by }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -322,8 +364,11 @@ AND tag_assignment = '{{ tag_assignment }}' --required
 RETURNING
 entity_name,
 entity_type,
+source_type,
 tag_key,
-tag_value;
+tag_value,
+update_time,
+updated_by;
 ```
 </TabItem>
 </Tabs>

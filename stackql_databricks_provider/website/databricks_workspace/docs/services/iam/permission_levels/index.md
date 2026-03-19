@@ -55,7 +55,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "permission_level",
         "type": "string",
-        "description": "Permission level (CAN_ATTACH_TO, CAN_BIND, CAN_CREATE, CAN_EDIT, CAN_EDIT_METADATA, CAN_MANAGE, CAN_MANAGE_PRODUCTION_VERSIONS, CAN_MANAGE_RUN, CAN_MANAGE_STAGING_VERSIONS, CAN_MONITOR, CAN_MONITOR_ONLY, CAN_QUERY, CAN_READ, CAN_RESTART, CAN_RUN, CAN_USE, CAN_VIEW, CAN_VIEW_METADATA, IS_OWNER)"
+        "description": "Permission level (CAN_ATTACH_TO, CAN_BIND, CAN_CREATE, CAN_CREATE_APP, CAN_EDIT, CAN_EDIT_METADATA, CAN_MANAGE, CAN_MANAGE_PRODUCTION_VERSIONS, CAN_MANAGE_RUN, CAN_MANAGE_STAGING_VERSIONS, CAN_MONITOR, CAN_MONITOR_ONLY, CAN_QUERY, CAN_READ, CAN_RESTART, CAN_RUN, CAN_USE, CAN_VIEW, CAN_VIEW_METADATA, IS_OWNER)"
       }
     ]
   }
@@ -109,12 +109,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-request_object_id">
     <td><CopyableCode code="request_object_id" /></td>
     <td><code>string</code></td>
-    <td>:returns: :class:`GetPermissionLevelsResponse`</td>
+    <td></td>
 </tr>
 <tr id="parameter-request_object_type">
     <td><CopyableCode code="request_object_type" /></td>
     <td><code>string</code></td>
-    <td>The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses.</td>
+    <td>The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses.</td>
 </tr>
 </tbody>
 </table>

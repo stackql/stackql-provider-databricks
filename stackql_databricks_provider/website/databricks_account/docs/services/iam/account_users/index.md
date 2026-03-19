@@ -478,24 +478,24 @@ Creates a new user in the Databricks account. This new user will also be added t
 ```sql
 INSERT INTO databricks_account.iam.account_users (
 active,
-display_name,
+displayName,
 emails,
-external_id,
+externalId,
 id,
 name,
 roles,
-user_name,
+userName,
 account_id
 )
 SELECT 
 {{ active }},
-'{{ display_name }}',
+'{{ displayName }}',
 '{{ emails }}',
-'{{ external_id }}',
+'{{ externalId }}',
 '{{ id }}',
 '{{ name }}',
 '{{ roles }}',
-'{{ user_name }}',
+'{{ userName }}',
 '{{ account_id }}'
 RETURNING
 id,
@@ -522,8 +522,8 @@ userName
       value: {{ active }}
       description: |
         If this user is active
-    - name: display_name
-      value: "{{ display_name }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
         String that represents a concatenation of given and family names. For example \`John Smith\`.
     - name: emails
@@ -535,8 +535,8 @@ userName
           $ref: "{{ $ref }}"
           type: "{{ type }}"
           value: "{{ value }}"
-    - name: external_id
-      value: "{{ external_id }}"
+    - name: externalId
+      value: "{{ externalId }}"
       description: |
         External ID is not currently supported. It is reserved for future use.
     - name: id
@@ -544,20 +544,20 @@ userName
       description: |
         Databricks user ID.
     - name: name
-      description: |
-        :param roles: List[:class:\`ComplexValue\`] (optional) Indicates if the group has the admin role.
       value:
         familyName: "{{ familyName }}"
         givenName: "{{ givenName }}"
     - name: roles
+      description: |
+        Indicates if the group has the admin role.
       value:
         - display: "{{ display }}"
           primary: {{ primary }}
           $ref: "{{ $ref }}"
           type: "{{ type }}"
           value: "{{ value }}"
-    - name: user_name
-      value: "{{ user_name }}"
+    - name: userName
+      value: "{{ userName }}"
       description: |
         Email address of the Databricks user.
 `}</CodeBlock>
@@ -581,7 +581,7 @@ Partially updates a user resource by applying the supplied operations on specifi
 ```sql
 UPDATE databricks_account.iam.account_users
 SET 
-operations = '{{ operations }}',
+Operations = '{{ Operations }}',
 schemas = '{{ schemas }}'
 WHERE 
 account_id = '{{ account_id }}' --required
@@ -607,12 +607,12 @@ Replaces a user's information with the data supplied in request.
 REPLACE databricks_account.iam.account_users
 SET 
 active = {{ active }},
-display_name = '{{ display_name }}',
+displayName = '{{ displayName }}',
 emails = '{{ emails }}',
-external_id = '{{ external_id }}',
+externalId = '{{ externalId }}',
 name = '{{ name }}',
 roles = '{{ roles }}',
-user_name = '{{ user_name }}'
+userName = '{{ userName }}'
 WHERE 
 account_id = '{{ account_id }}' --required
 AND id = '{{ id }}' --required;

@@ -501,10 +501,10 @@ Creates a new service principal in the Databricks workspace.
 ```sql
 INSERT INTO databricks_workspace.iam.service_principals_v2 (
 active,
-application_id,
-display_name,
+applicationId,
+displayName,
 entitlements,
-external_id,
+externalId,
 groups,
 id,
 roles,
@@ -513,10 +513,10 @@ deployment_name
 )
 SELECT 
 {{ active }},
-'{{ application_id }}',
-'{{ display_name }}',
+'{{ applicationId }}',
+'{{ displayName }}',
 '{{ entitlements }}',
-'{{ external_id }}',
+'{{ externalId }}',
 '{{ groups }}',
 '{{ id }}',
 '{{ roles }}',
@@ -547,12 +547,12 @@ schemas
       value: {{ active }}
       description: |
         If this user is active
-    - name: application_id
-      value: "{{ application_id }}"
+    - name: applicationId
+      value: "{{ applicationId }}"
       description: |
         UUID relating to the service principal
-    - name: display_name
-      value: "{{ display_name }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
         String that represents a concatenation of given and family names.
     - name: entitlements
@@ -564,10 +564,8 @@ schemas
           $ref: "{{ $ref }}"
           type: "{{ type }}"
           value: "{{ value }}"
-    - name: external_id
-      value: "{{ external_id }}"
-      description: |
-        :param groups: List[:class:\`ComplexValue\`] (optional)
+    - name: externalId
+      value: "{{ externalId }}"
     - name: groups
       value:
         - display: "{{ display }}"
@@ -614,7 +612,7 @@ Partially updates the details of a single service principal in the Databricks wo
 ```sql
 UPDATE databricks_workspace.iam.service_principals_v2
 SET 
-operations = '{{ operations }}',
+Operations = '{{ Operations }}',
 schemas = '{{ schemas }}'
 WHERE 
 id = '{{ id }}' --required
@@ -640,10 +638,10 @@ Updates the details of a single service principal.
 REPLACE databricks_workspace.iam.service_principals_v2
 SET 
 active = {{ active }},
-application_id = '{{ application_id }}',
-display_name = '{{ display_name }}',
+applicationId = '{{ applicationId }}',
+displayName = '{{ displayName }}',
 entitlements = '{{ entitlements }}',
-external_id = '{{ external_id }}',
+externalId = '{{ externalId }}',
 groups = '{{ groups }}',
 roles = '{{ roles }}',
 schemas = '{{ schemas }}'

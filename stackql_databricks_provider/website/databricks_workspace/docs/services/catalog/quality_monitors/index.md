@@ -129,7 +129,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "problem_type",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PROBLEM_TYPE_CLASSIFICATION, PROBLEM_TYPE_REGRESSION)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PROBLEM_TYPE_CLASSIFICATION, PROBLEM_TYPE_REGRESSION)"
       },
       {
         "name": "timestamp_col",
@@ -282,42 +282,42 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-table_name"><code>table_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Gets a monitor for the specified table. Use Data Quality Monitors API instead</td>
+    <td>Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets a monitor for</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-table_name"><code>table_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-output_schema_name"><code>output_schema_name</code></a>, <a href="#parameter-assets_dir"><code>assets_dir</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Creates a new monitor for the specified table. Use Data Quality Monitors API instead</td>
+    <td>Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Creates a new</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-table_name"><code>table_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-output_schema_name"><code>output_schema_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Updates a monitor for the specified table. Use Data Quality Monitors API instead</td>
+    <td>Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Updates a monitor</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-table_name"><code>table_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Deletes a monitor for the specified table. Use Data Quality Monitors API instead</td>
+    <td>Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Deletes a monitor</td>
 </tr>
 <tr>
     <td><a href="#cancel_refresh"><CopyableCode code="cancel_refresh" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-table_name"><code>table_name</code></a>, <a href="#parameter-refresh_id"><code>refresh_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Cancels an already-initiated refresh job. Use Data Quality Monitors API instead</td>
+    <td>Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Cancels an</td>
 </tr>
 <tr>
     <td><a href="#regenerate_dashboard"><CopyableCode code="regenerate_dashboard" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-table_name"><code>table_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Regenerates the monitoring dashboard for the specified table. Use Data Quality Monitors</td>
+    <td>Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Regenerates the</td>
 </tr>
 </tbody>
 </table>
@@ -343,7 +343,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-refresh_id">
     <td><CopyableCode code="refresh_id" /></td>
     <td><code>integer</code></td>
-    <td>int</td>
+    <td></td>
 </tr>
 <tr id="parameter-table_name">
     <td><CopyableCode code="table_name" /></td>
@@ -363,7 +363,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-[DEPRECATED] Gets a monitor for the specified table. Use Data Quality Monitors API instead
+Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets a monitor for
 
 ```sql
 SELECT
@@ -405,7 +405,7 @@ AND deployment_name = '{{ deployment_name }}' -- required
 >
 <TabItem value="create">
 
-[DEPRECATED] Creates a new monitor for the specified table. Use Data Quality Monitors API instead
+Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Creates a new
 
 ```sql
 INSERT INTO databricks_workspace.catalog.quality_monitors (
@@ -503,8 +503,6 @@ time_series
       value:
         enabled: {{ enabled }}
     - name: inference_log
-      description: |
-        :param latest_monitor_failure_msg: str (optional) [Create:ERR Update:IGN] The latest error message for a monitor failure.
       value:
         problem_type: "{{ problem_type }}"
         timestamp_col: "{{ timestamp_col }}"
@@ -516,6 +514,8 @@ time_series
         prediction_proba_col: "{{ prediction_proba_col }}"
     - name: latest_monitor_failure_msg
       value: "{{ latest_monitor_failure_msg }}"
+      description: |
+        [Create:ERR Update:IGN] The latest error message for a monitor failure.
     - name: notifications
       description: |
         [Create:OPT Update:OPT] Field for specifying notification settings.
@@ -573,7 +573,7 @@ time_series
 >
 <TabItem value="update">
 
-[DEPRECATED] Updates a monitor for the specified table. Use Data Quality Monitors API instead
+Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Updates a monitor
 
 ```sql
 REPLACE databricks_workspace.catalog.quality_monitors
@@ -628,7 +628,7 @@ time_series;
 >
 <TabItem value="delete">
 
-[DEPRECATED] Deletes a monitor for the specified table. Use Data Quality Monitors API instead
+Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Deletes a monitor
 
 ```sql
 DELETE FROM databricks_workspace.catalog.quality_monitors
@@ -651,7 +651,7 @@ AND deployment_name = '{{ deployment_name }}' --required
 >
 <TabItem value="cancel_refresh">
 
-[DEPRECATED] Cancels an already-initiated refresh job. Use Data Quality Monitors API instead
+Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Cancels an
 
 ```sql
 EXEC databricks_workspace.catalog.quality_monitors.cancel_refresh 
@@ -663,7 +663,7 @@ EXEC databricks_workspace.catalog.quality_monitors.cancel_refresh
 </TabItem>
 <TabItem value="regenerate_dashboard">
 
-[DEPRECATED] Regenerates the monitoring dashboard for the specified table. Use Data Quality Monitors
+Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Regenerates the
 
 ```sql
 EXEC databricks_workspace.catalog.quality_monitors.regenerate_dashboard 

@@ -431,7 +431,7 @@ log_delivery_configuration
       description: Required parameter for the log_delivery resource.
     - name: log_delivery_configuration
       description: |
-        :returns: :class:\`WrappedLogDeliveryConfiguration\`
+        * Log Delivery Configuration
       value:
         log_type: "{{ log_type }}"
         output_format: "{{ output_format }}"

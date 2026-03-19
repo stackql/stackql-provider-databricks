@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks jobs service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.jobs"
   },
   "servers": [
@@ -190,7 +190,7 @@
                           "PAUSED",
                           "UNPAUSED"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
                       "task_retry_mode": {
                         "type": "string",
@@ -374,6 +374,17 @@
                           "import_from_git_branch"
                         ],
                         "description": "The source of the job specification in the remote repository when the job is source controlled."
+                      },
+                      "sparse_checkout": {
+                        "type": "object",
+                        "properties": {
+                          "patterns": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
                       }
                     },
                     "required": [
@@ -421,7 +432,7 @@
                         }
                       }
                     },
-                    "description": ":param job_clusters: List[:class:`JobCluster`] (optional) A list of job cluster specifications that can be shared and reused by tasks of this job. Libraries cannot be declared in a shared job cluster. You must declare dependent libraries in task settings."
+                    "description": "An optional set of health rules that can be defined for this job."
                   },
                   "job_clusters": {
                     "type": "array",
@@ -440,7 +451,8 @@
                         "job_cluster_key",
                         "new_cluster"
                       ]
-                    }
+                    },
+                    "description": "A list of job cluster specifications that can be shared and reused by tasks of this job. Libraries cannot be declared in a shared job cluster. You must declare dependent libraries in task settings."
                   },
                   "max_concurrent_runs": {
                     "type": "integer",
@@ -557,6 +569,40 @@
                       "properties": {
                         "task_key": {
                           "type": "string"
+                        },
+                        "alert_task": {
+                          "type": "object",
+                          "properties": {
+                            "alert_id": {
+                              "type": "string"
+                            },
+                            "subscribers": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "destination_id": {
+                                    "type": "string"
+                                  },
+                                  "user_name": {
+                                    "type": "string",
+                                    "description": "A valid workspace email address."
+                                  }
+                                },
+                                "description": "Represents a subscriber that will receive alert notifications. A subscriber can be either a user\n    (via email) or a notification destination (via destination_id)."
+                              },
+                              "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+                            },
+                            "warehouse_id": {
+                              "type": "string",
+                              "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+                            },
+                            "workspace_path": {
+                              "type": "string",
+                              "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+                            }
+                          },
+                          "description": "New alert v2 task"
                         },
                         "clean_rooms_notebook_task": {
                           "type": "object",
@@ -1039,7 +1085,7 @@
                                     "OAUTH",
                                     "PAT"
                                   ],
-                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
                                 "model_name": {
                                   "type": "string",
@@ -1519,7 +1565,7 @@
                               "MODEL_CREATED",
                               "MODEL_VERSION_READY"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                           },
                           "aliases": {
                             "type": "array",
@@ -2110,8 +2156,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`JobPermissions`"
+                    }
                   }
                 }
               }
@@ -2201,8 +2246,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`JobPermissions`"
+                    }
                   }
                 }
               }
@@ -2656,14 +2700,14 @@
                     "description": "Controls whether the pipeline should perform a full refresh"
                   },
                   "python_named_params": {
-                    "type": "object",
-                    "description": ":param python_params: List[str] (optional) A list of parameters for jobs with Python tasks, for example `\"python_params\": [\"john doe\", \"35\"]`. The parameters are passed to Python file as command-line parameters. If specified upon `run-now`, it would overwrite the parameters specified in job setting. The JSON representation of this field (for example `{\"python_params\":[\"john doe\",\"35\"]}`) cannot exceed 10,000 bytes. \u26a0 **Deprecation note** Use [job parameters] to pass information down to tasks. Important These parameters accept only Latin characters (ASCII character set). Using non-ASCII characters returns an error. Examples of invalid, non-ASCII characters are Chinese, Japanese kanjis, and emojis. [job parameters]: https://docs.databricks.com/jobs/job-parameters.html#job-parameter-pushdown"
+                    "type": "object"
                   },
                   "python_params": {
                     "type": "array",
                     "items": {
                       "type": "string"
-                    }
+                    },
+                    "description": "A list of parameters for jobs with Python tasks, for example `\"python_params\": [\"john doe\", \"35\"]`. The parameters are passed to Python file as command-line parameters. If specified upon `run-now`, it would overwrite the parameters specified in job setting. The JSON representation of this field (for example `{\"python_params\":[\"john doe\",\"35\"]}`) cannot exceed 10,000 bytes. \u26a0 **Deprecation note** Use [job parameters] to pass information down to tasks. Important These parameters accept only Latin characters (ASCII character set). Using non-ASCII characters returns an error. Examples of invalid, non-ASCII characters are Chinese, Japanese kanjis, and emojis. [job parameters]: https://docs.databricks.com/jobs/job-parameters.html#job-parameter-pushdown"
                   },
                   "rerun_all_failed_tasks": {
                     "type": "boolean",
@@ -2765,7 +2809,7 @@
                               "PAUSED",
                               "UNPAUSED"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                           },
                           "task_retry_mode": {
                             "type": "string",
@@ -2949,6 +2993,17 @@
                               "import_from_git_branch"
                             ],
                             "description": "The source of the job specification in the remote repository when the job is source controlled."
+                          },
+                          "sparse_checkout": {
+                            "type": "object",
+                            "properties": {
+                              "patterns": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
                           }
                         },
                         "required": [
@@ -3133,6 +3188,40 @@
                           "properties": {
                             "task_key": {
                               "type": "string"
+                            },
+                            "alert_task": {
+                              "type": "object",
+                              "properties": {
+                                "alert_id": {
+                                  "type": "string"
+                                },
+                                "subscribers": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "destination_id": {
+                                        "type": "string"
+                                      },
+                                      "user_name": {
+                                        "type": "string",
+                                        "description": "A valid workspace email address."
+                                      }
+                                    },
+                                    "description": "Represents a subscriber that will receive alert notifications. A subscriber can be either a user\n    (via email) or a notification destination (via destination_id)."
+                                  },
+                                  "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+                                },
+                                "warehouse_id": {
+                                  "type": "string",
+                                  "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+                                },
+                                "workspace_path": {
+                                  "type": "string",
+                                  "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+                                }
+                              },
+                              "description": "New alert v2 task"
                             },
                             "clean_rooms_notebook_task": {
                               "type": "object",
@@ -3615,7 +3704,7 @@
                                         "OAUTH",
                                         "PAT"
                                       ],
-                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                     },
                                     "model_name": {
                                       "type": "string",
@@ -4095,7 +4184,7 @@
                                   "MODEL_CREATED",
                                   "MODEL_VERSION_READY"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               },
                               "aliases": {
                                 "type": "array",
@@ -4375,14 +4464,14 @@
                     "description": "Controls whether the pipeline should perform a full refresh"
                   },
                   "python_named_params": {
-                    "type": "object",
-                    "description": ":param python_params: List[str] (optional) A list of parameters for jobs with Python tasks, for example `\"python_params\": [\"john doe\", \"35\"]`. The parameters are passed to Python file as command-line parameters. If specified upon `run-now`, it would overwrite the parameters specified in job setting. The JSON representation of this field (for example `{\"python_params\":[\"john doe\",\"35\"]}`) cannot exceed 10,000 bytes. \u26a0 **Deprecation note** Use [job parameters] to pass information down to tasks. Important These parameters accept only Latin characters (ASCII character set). Using non-ASCII characters returns an error. Examples of invalid, non-ASCII characters are Chinese, Japanese kanjis, and emojis. [job parameters]: https://docs.databricks.com/jobs/job-parameters.html#job-parameter-pushdown"
+                    "type": "object"
                   },
                   "python_params": {
                     "type": "array",
                     "items": {
                       "type": "string"
-                    }
+                    },
+                    "description": "A list of parameters for jobs with Python tasks, for example `\"python_params\": [\"john doe\", \"35\"]`. The parameters are passed to Python file as command-line parameters. If specified upon `run-now`, it would overwrite the parameters specified in job setting. The JSON representation of this field (for example `{\"python_params\":[\"john doe\",\"35\"]}`) cannot exceed 10,000 bytes. \u26a0 **Deprecation note** Use [job parameters] to pass information down to tasks. Important These parameters accept only Latin characters (ASCII character set). Using non-ASCII characters returns an error. Examples of invalid, non-ASCII characters are Chinese, Japanese kanjis, and emojis. [job parameters]: https://docs.databricks.com/jobs/job-parameters.html#job-parameter-pushdown"
                   },
                   "queue": {
                     "type": "object",
@@ -4626,6 +4715,17 @@
                           "import_from_git_branch"
                         ],
                         "description": "The source of the job specification in the remote repository when the job is source controlled."
+                      },
+                      "sparse_checkout": {
+                        "type": "object",
+                        "properties": {
+                          "patterns": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
                       }
                     },
                     "required": [
@@ -4673,10 +4773,11 @@
                         }
                       }
                     },
-                    "description": ":param idempotency_token: str (optional) An optional token that can be used to guarantee the idempotency of job run requests. If a run with the provided token already exists, the request does not create a new run but returns the ID of the existing run instead. If a run with the provided token is deleted, an error is returned. If you specify the idempotency token, upon failure you can retry until the request succeeds. Databricks guarantees that exactly one run is launched with that idempotency token. This token must have at most 64 characters. For more information, see [How to ensure idempotency for jobs]. [How to ensure idempotency for jobs]: https://kb.databricks.com/jobs/jobs-idempotency.html"
+                    "description": "An optional set of health rules that can be defined for this job."
                   },
                   "idempotency_token": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "An optional token that can be used to guarantee the idempotency of job run requests. If a run with the provided token already exists, the request does not create a new run but returns the ID of the existing run instead. If a run with the provided token is deleted, an error is returned. If you specify the idempotency token, upon failure you can retry until the request succeeds. Databricks guarantees that exactly one run is launched with that idempotency token. This token must have at most 64 characters. For more information, see [How to ensure idempotency for jobs]. [How to ensure idempotency for jobs]: https://kb.databricks.com/jobs/jobs-idempotency.html"
                   },
                   "notification_settings": {
                     "type": "object",
@@ -4732,6 +4833,40 @@
                       "properties": {
                         "task_key": {
                           "type": "string"
+                        },
+                        "alert_task": {
+                          "type": "object",
+                          "properties": {
+                            "alert_id": {
+                              "type": "string"
+                            },
+                            "subscribers": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "destination_id": {
+                                    "type": "string"
+                                  },
+                                  "user_name": {
+                                    "type": "string",
+                                    "description": "A valid workspace email address."
+                                  }
+                                },
+                                "description": "Represents a subscriber that will receive alert notifications. A subscriber can be either a user\n    (via email) or a notification destination (via destination_id)."
+                              },
+                              "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+                            },
+                            "warehouse_id": {
+                              "type": "string",
+                              "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+                            },
+                            "workspace_path": {
+                              "type": "string",
+                              "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+                            }
+                          },
+                          "description": "New alert v2 task"
                         },
                         "clean_rooms_notebook_task": {
                           "type": "object",
@@ -4938,6 +5073,10 @@
                           "type": "string",
                           "description": "An optional description for this task."
                         },
+                        "disable_auto_optimization": {
+                          "type": "boolean",
+                          "description": "An option to disable auto optimization in serverless"
+                        },
                         "email_notifications": {
                           "type": "object",
                           "properties": {
@@ -5001,6 +5140,40 @@
                               "properties": {
                                 "task_key": {
                                   "type": "string"
+                                },
+                                "alert_task": {
+                                  "type": "object",
+                                  "properties": {
+                                    "alert_id": {
+                                      "type": "string"
+                                    },
+                                    "subscribers": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "destination_id": {
+                                            "type": "string"
+                                          },
+                                          "user_name": {
+                                            "type": "string",
+                                            "description": "A valid workspace email address."
+                                          }
+                                        },
+                                        "description": "Represents a subscriber that will receive alert notifications. A subscriber can be either a user\n    (via email) or a notification destination (via destination_id)."
+                                      },
+                                      "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+                                    },
+                                    "warehouse_id": {
+                                      "type": "string",
+                                      "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+                                    },
+                                    "workspace_path": {
+                                      "type": "string",
+                                      "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+                                    }
+                                  },
+                                  "description": "New alert v2 task"
                                 },
                                 "clean_rooms_notebook_task": {
                                   "type": "object",
@@ -5466,7 +5639,7 @@
                                             "OAUTH",
                                             "PAT"
                                           ],
-                                          "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                          "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                         },
                                         "model_name": {
                                           "type": "string",
@@ -6023,6 +6196,14 @@
                           "type": "string",
                           "description": "An optional list of libraries to be installed on the cluster. The default value is an empty list."
                         },
+                        "max_retries": {
+                          "type": "integer",
+                          "description": "An optional maximum number of times to retry an unsuccessful run. A run is considered to be unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR` `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never retry."
+                        },
+                        "min_retry_interval_millis": {
+                          "type": "integer",
+                          "description": "An optional minimal interval in milliseconds between the start of the failed run and the subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."
+                        },
                         "new_cluster": {
                           "type": "string",
                           "description": "If new_cluster, a description of a new cluster that is created for each run."
@@ -6103,7 +6284,7 @@
                                     "OAUTH",
                                     "PAT"
                                   ],
-                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
                                 "model_name": {
                                   "type": "string",
@@ -6196,6 +6377,10 @@
                             "entry_point"
                           ],
                           "description": "The task runs a Python wheel when the `python_wheel_task` field is present."
+                        },
+                        "retry_on_timeout": {
+                          "type": "boolean",
+                          "description": "An optional policy to specify whether to retry a job when it times out. The default behavior is to not retry on timeout."
                         },
                         "run_if": {
                           "type": "string",
@@ -6540,11 +6725,11 @@
                       "required": [
                         "task_key"
                       ]
-                    },
-                    "description": ":param timeout_seconds: int (optional) An optional timeout applied to each run of this job. A value of `0` means no timeout."
+                    }
                   },
                   "timeout_seconds": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "An optional timeout applied to each run of this job. A value of `0` means no timeout."
                   },
                   "usage_policy_id": {
                     "type": "string",
@@ -6708,7 +6893,7 @@
                               "PAUSED",
                               "UNPAUSED"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                           },
                           "task_retry_mode": {
                             "type": "string",
@@ -6892,6 +7077,17 @@
                               "import_from_git_branch"
                             ],
                             "description": "The source of the job specification in the remote repository when the job is source controlled."
+                          },
+                          "sparse_checkout": {
+                            "type": "object",
+                            "properties": {
+                              "patterns": {
+                                "type": "array",
+                                "items": {
+                                  "type": "string"
+                                }
+                              }
+                            }
                           }
                         },
                         "required": [
@@ -7076,6 +7272,40 @@
                           "properties": {
                             "task_key": {
                               "type": "string"
+                            },
+                            "alert_task": {
+                              "type": "object",
+                              "properties": {
+                                "alert_id": {
+                                  "type": "string"
+                                },
+                                "subscribers": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "destination_id": {
+                                        "type": "string"
+                                      },
+                                      "user_name": {
+                                        "type": "string",
+                                        "description": "A valid workspace email address."
+                                      }
+                                    },
+                                    "description": "Represents a subscriber that will receive alert notifications. A subscriber can be either a user\n    (via email) or a notification destination (via destination_id)."
+                                  },
+                                  "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+                                },
+                                "warehouse_id": {
+                                  "type": "string",
+                                  "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+                                },
+                                "workspace_path": {
+                                  "type": "string",
+                                  "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+                                }
+                              },
+                              "description": "New alert v2 task"
                             },
                             "clean_rooms_notebook_task": {
                               "type": "object",
@@ -7558,7 +7788,7 @@
                                         "OAUTH",
                                         "PAT"
                                       ],
-                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                     },
                                     "model_name": {
                                       "type": "string",
@@ -8038,7 +8268,7 @@
                                   "MODEL_CREATED",
                                   "MODEL_VERSION_READY"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               },
                               "aliases": {
                                 "type": "array",
@@ -8439,6 +8669,50 @@
   },
   "components": {
     "schemas": {
+      "AlertTask": {
+        "type": "object",
+        "properties": {
+          "alert_id": {
+            "type": "string"
+          },
+          "subscribers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AlertTaskSubscriber"
+            },
+            "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+          },
+          "warehouse_id": {
+            "type": "string",
+            "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+          },
+          "workspace_path": {
+            "type": "string",
+            "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+          }
+        }
+      },
+      "AlertTaskOutput": {
+        "type": "object",
+        "properties": {
+          "alert_state": {
+            "$ref": "#/components/schemas/AlertEvaluationState"
+          }
+        }
+      },
+      "AlertTaskSubscriber": {
+        "type": "object",
+        "properties": {
+          "destination_id": {
+            "type": "string"
+          },
+          "user_name": {
+            "type": "string",
+            "description": "A valid workspace email address."
+          }
+        },
+        "description": "Represents a subscriber that will receive alert notifications. A subscriber can be either a user\n    (via email) or a notification destination (via destination_id)."
+      },
       "BaseJob": {
         "type": "object",
         "properties": {
@@ -9276,6 +9550,9 @@
           "job_source": {
             "$ref": "#/components/schemas/JobSource",
             "description": "The source of the job specification in the remote repository when the job is source controlled."
+          },
+          "sparse_checkout": {
+            "$ref": "#/components/schemas/SparseCheckout"
           }
         },
         "required": [
@@ -10519,6 +10796,10 @@
       "RunOutput": {
         "type": "object",
         "properties": {
+          "alert_output": {
+            "$ref": "#/components/schemas/AlertTaskOutput",
+            "description": "The output of an alert task, if available"
+          },
           "clean_rooms_notebook_output": {
             "$ref": "#/components/schemas/CleanRoomsNotebookTaskCleanRoomsNotebookTaskOutput",
             "description": "The output of a clean rooms notebook task, if available"
@@ -10673,6 +10954,10 @@
             "type": "string",
             "description": "A unique name for the task. This field is used to refer to this task from other tasks. This field is required and must be unique within its parent job. On Update or Reset, this field is used to reference the tasks to be updated or reset."
           },
+          "alert_task": {
+            "$ref": "#/components/schemas/AlertTask",
+            "description": "New alert v2 task"
+          },
           "attempt_number": {
             "type": "integer",
             "description": "The sequence number of this run attempt for a triggered job run. The initial attempt of a run has an attempt_number of 0. If the initial run attempt fails, and the job has a retry policy (`max_retries` > 0), subsequent runs are created with an `original_attempt_run_id` of the original attempt\u2019s ID and an incrementing `attempt_number`. Runs are retried only until they succeed, and the maximum `attempt_number` is the same as the `max_retries` value for the job."
@@ -10723,6 +11008,10 @@
             "type": "string",
             "description": "An optional description for this task."
           },
+          "disable_auto_optimization": {
+            "type": "boolean",
+            "description": "An option to disable auto optimization in serverless"
+          },
           "effective_performance_target": {
             "$ref": "#/components/schemas/PerformanceTarget",
             "description": "The actual performance target used by the serverless run during execution. This can differ from the client-set performance target on the request depending on whether the performance mode is supported by the job type. * `STANDARD`: Enables cost-efficient execution of serverless workloads. * `PERFORMANCE_OPTIMIZED`: Prioritizes fast startup and execution times through rapid scaling and optimized cluster performance."
@@ -10766,6 +11055,14 @@
             "type": "string",
             "description": "An optional list of libraries to be installed on the cluster. The default value is an empty list."
           },
+          "max_retries": {
+            "type": "integer",
+            "description": "An optional maximum number of times to retry an unsuccessful run. A run is considered to be unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR` `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never retry."
+          },
+          "min_retry_interval_millis": {
+            "type": "integer",
+            "description": "An optional minimal interval in milliseconds between the start of the failed run and the subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."
+          },
           "new_cluster": {
             "type": "string",
             "description": "If new_cluster, a description of a new cluster that is created for each run."
@@ -10797,6 +11094,10 @@
           "resolved_values": {
             "$ref": "#/components/schemas/ResolvedValues",
             "description": "Parameter values including resolved references"
+          },
+          "retry_on_timeout": {
+            "type": "boolean",
+            "description": "An optional policy to specify whether to retry a job when it times out. The default behavior is to not retry on timeout."
           },
           "run_duration": {
             "type": "integer",
@@ -10911,6 +11212,17 @@
         "type": "object",
         "properties": {
           "parameters": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SparseCheckout": {
+        "type": "object",
+        "properties": {
+          "patterns": {
             "type": "array",
             "items": {
               "type": "string"
@@ -11184,6 +11496,10 @@
           "task_key": {
             "type": "string"
           },
+          "alert_task": {
+            "$ref": "#/components/schemas/AlertTask",
+            "description": "New alert v2 task"
+          },
           "clean_rooms_notebook_task": {
             "$ref": "#/components/schemas/CleanRoomsNotebookTask",
             "description": "The task runs a [clean rooms] notebook when the `clean_rooms_notebook_task` field is present. [clean rooms]: https://docs.databricks.com/clean-rooms/index.html"
@@ -11222,6 +11538,10 @@
             "type": "string",
             "description": "An optional description for this task."
           },
+          "disable_auto_optimization": {
+            "type": "boolean",
+            "description": "An option to disable auto optimization in serverless"
+          },
           "email_notifications": {
             "$ref": "#/components/schemas/JobEmailNotifications",
             "description": "An optional set of email addresses notified when the task run begins or completes. The default behavior is to not send any emails."
@@ -11248,6 +11568,14 @@
             "type": "string",
             "description": "An optional list of libraries to be installed on the cluster. The default value is an empty list."
           },
+          "max_retries": {
+            "type": "integer",
+            "description": "An optional maximum number of times to retry an unsuccessful run. A run is considered to be unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR` `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never retry."
+          },
+          "min_retry_interval_millis": {
+            "type": "integer",
+            "description": "An optional minimal interval in milliseconds between the start of the failed run and the subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."
+          },
           "new_cluster": {
             "type": "string",
             "description": "If new_cluster, a description of a new cluster that is created for each run."
@@ -11271,6 +11599,10 @@
           "python_wheel_task": {
             "$ref": "#/components/schemas/PythonWheelTask",
             "description": "The task runs a Python wheel when the `python_wheel_task` field is present."
+          },
+          "retry_on_timeout": {
+            "type": "boolean",
+            "description": "An optional policy to specify whether to retry a job when it times out. The default behavior is to not retry on timeout."
           },
           "run_if": {
             "$ref": "#/components/schemas/RunIf",
@@ -11398,6 +11730,10 @@
         "properties": {
           "task_key": {
             "type": "string"
+          },
+          "alert_task": {
+            "$ref": "#/components/schemas/AlertTask",
+            "description": "New alert v2 task"
           },
           "clean_rooms_notebook_task": {
             "$ref": "#/components/schemas/CleanRoomsNotebookTask",
@@ -11754,13 +12090,23 @@
           }
         }
       },
+      "AlertEvaluationState": {
+        "type": "string",
+        "x-enum": [
+          "ERROR",
+          "OK",
+          "TRIGGERED",
+          "UNKNOWN"
+        ],
+        "description": "Same alert evaluation state as in redash-v2/api/proto/alertsv2/alerts.proto"
+      },
       "AuthenticationMethod": {
         "type": "string",
         "x-enum": [
           "OAUTH",
           "PAT"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "CleanRoomTaskRunLifeCycleState": {
         "type": "string",
@@ -11803,7 +12149,7 @@
           "ALL_UPDATED",
           "ANY_UPDATED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ConditionTaskOp": {
         "type": "string",
@@ -11835,7 +12181,7 @@
           "MULTI_TASK",
           "SINGLE_TASK"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "GitProvider": {
         "type": "string",
@@ -11849,7 +12195,7 @@
           "gitLab",
           "gitLabEnterpriseEdition"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "JobDeploymentKind": {
         "type": "string",
@@ -11910,7 +12256,7 @@
           "MODEL_CREATED",
           "MODEL_VERSION_READY"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PauseStatus": {
         "type": "string",
@@ -11918,7 +12264,7 @@
           "PAUSED",
           "UNPAUSED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PerformanceTarget": {
         "type": "string",
@@ -11935,7 +12281,7 @@
           "HOURS",
           "WEEKS"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "QueueDetailsCodeCode": {
         "type": "string",
@@ -12045,7 +12391,7 @@
           "RUNNING",
           "SUCCESS"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "StorageMode": {
         "type": "string",
@@ -12054,7 +12400,7 @@
           "DUAL",
           "IMPORT"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "TaskRetryMode": {
         "type": "string",

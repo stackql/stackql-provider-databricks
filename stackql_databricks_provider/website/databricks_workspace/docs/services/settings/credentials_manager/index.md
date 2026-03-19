@@ -54,7 +54,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#exchange_token"><CopyableCode code="exchange_token" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-partition_id"><code>partition_id</code></a>, <a href="#parameter-token_type"><code>token_type</code></a>, <a href="#parameter-scopes"><code>scopes</code></a></td>
+    <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-partition_id"><code>partition_id</code></a>, <a href="#parameter-tokenType"><code>tokenType</code></a>, <a href="#parameter-scopes"><code>scopes</code></a></td>
     <td></td>
     <td>Exchange tokens with an Identity Provider to get a new access token. It allows specifying scopes to</td>
 </tr>
@@ -98,13 +98,13 @@ Exchange tokens with an Identity Provider to get a new access token. It allows s
 ```sql
 INSERT INTO databricks_workspace.settings.credentials_manager (
 partition_id,
-token_type,
+tokenType,
 scopes,
 deployment_name
 )
 SELECT 
 '{{ partition_id }}' /* required */,
-'{{ token_type }}' /* required */,
+'{{ tokenType }}' /* required */,
 '{{ scopes }}' /* required */,
 '{{ deployment_name }}'
 RETURNING
@@ -125,9 +125,9 @@ values
         The partition of Credentials store
       value:
         workspaceId: {{ workspaceId }}
-    - name: token_type
+    - name: tokenType
       value:
-        - "{{ token_type }}"
+        - "{{ tokenType }}"
       description: |
         A list of token types being requested
     - name: scopes

@@ -338,7 +338,9 @@ ip_access_list
     - name: list_type
       value: "{{ list_type }}"
       description: |
-        :param ip_addresses: List[str] (optional)
+        Type of IP access list. Valid values are as follows and are case-sensitive:
+        * \`ALLOW\`: An allow list. Include this IP or range. * \`BLOCK\`: A block list. Exclude this IP or
+        range. IP addresses in the block list are excluded even if they are included in an allow list.
     - name: ip_addresses
       value:
         - "{{ ip_addresses }}"

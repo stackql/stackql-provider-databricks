@@ -121,6 +121,23 @@ The following fields are returned by `SELECT` queries:
     "name": "num_indexes",
     "type": "integer",
     "description": "Number of indexes on the endpoint"
+  },
+  {
+    "name": "scaling_info",
+    "type": "object",
+    "description": "Scaling information for the endpoint",
+    "children": [
+      {
+        "name": "requested_min_qps",
+        "type": "integer",
+        "description": ""
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "description": "The current state of the scaling change request. (SCALING_CHANGE_APPLIED, SCALING_CHANGE_IN_PROGRESS, SCALING_CHANGE_UNSPECIFIED)"
+      }
+    ]
   }
 ]} />
 </TabItem>
@@ -205,6 +222,23 @@ The following fields are returned by `SELECT` queries:
     "name": "num_indexes",
     "type": "integer",
     "description": "Number of indexes on the endpoint"
+  },
+  {
+    "name": "scaling_info",
+    "type": "object",
+    "description": "Scaling information for the endpoint",
+    "children": [
+      {
+        "name": "requested_min_qps",
+        "type": "integer",
+        "description": ""
+      },
+      {
+        "name": "state",
+        "type": "string",
+        "description": "The current state of the scaling change request. (SCALING_CHANGE_APPLIED, SCALING_CHANGE_IN_PROGRESS, SCALING_CHANGE_UNSPECIFIED)"
+      }
+    ]
   }
 ]} />
 </TabItem>
@@ -338,7 +372,8 @@ endpoint_status,
 endpoint_type,
 last_updated_timestamp,
 last_updated_user,
-num_indexes
+num_indexes,
+scaling_info
 FROM databricks_workspace.vectorsearch.endpoints
 WHERE endpoint_name = '{{ endpoint_name }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
@@ -361,7 +396,8 @@ endpoint_status,
 endpoint_type,
 last_updated_timestamp,
 last_updated_user,
-num_indexes
+num_indexes,
+scaling_info
 FROM databricks_workspace.vectorsearch.endpoints
 WHERE deployment_name = '{{ deployment_name }}' -- required
 AND page_token = '{{ page_token }}'
@@ -389,12 +425,14 @@ INSERT INTO databricks_workspace.vectorsearch.endpoints (
 name,
 endpoint_type,
 budget_policy_id,
+min_qps,
 deployment_name
 )
 SELECT 
 '{{ name }}' /* required */,
 '{{ endpoint_type }}' /* required */,
 '{{ budget_policy_id }}',
+{{ min_qps }},
 '{{ deployment_name }}'
 RETURNING
 id,
@@ -407,7 +445,8 @@ endpoint_status,
 endpoint_type,
 last_updated_timestamp,
 last_updated_user,
-num_indexes
+num_indexes,
+scaling_info
 ;
 ```
 </TabItem>
@@ -431,6 +470,10 @@ num_indexes
       value: "{{ budget_policy_id }}"
       description: |
         The budget policy id to be applied
+    - name: min_qps
+      value: {{ min_qps }}
+      description: |
+        Min QPS for the endpoint. Mutually exclusive with num_replicas. The actual replica count is calculated at index creation/sync time based on this value.
 `}</CodeBlock>
 
 </TabItem>

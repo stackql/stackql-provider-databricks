@@ -64,14 +64,41 @@ The following fields are returned by `SELECT` queries:
     "description": "The spec contains the role configuration, including identity type, authentication method, and role attributes.",
     "children": [
       {
+        "name": "attributes",
+        "type": "object",
+        "description": "Attributes that can be granted to a Postgres role. We are only implementing a subset for now,<br />    see xref: https://www.postgresql.org/docs/16/sql-createrole.html The values follow Postgres<br />    keyword naming e.g. CREATEDB, BYPASSRLS, etc. which is why they don't include typical<br />    underscores between words.",
+        "children": [
+          {
+            "name": "bypassrls",
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "createdb",
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "createrole",
+            "type": "boolean",
+            "description": ""
+          }
+        ]
+      },
+      {
         "name": "auth_method",
         "type": "string",
-        "description": "How the role is authenticated when connecting to Postgres. (LAKEBASE_OAUTH_V1, NO_LOGIN, PG_PASSWORD_SCRAM_SHA_256)"
+        "description": "If auth_method is left unspecified, a meaningful authentication method is derived from the identity_type: * For the managed identities, OAUTH is used. * For the regular postgres roles, authentication based on postgres passwords is used. NOTE: this is ignored for the Databricks identity type GROUP, and NO_LOGIN is implicitly assumed instead for the GROUP identity type. (LAKEBASE_OAUTH_V1, NO_LOGIN, PG_PASSWORD_SCRAM_SHA_256)"
       },
       {
         "name": "identity_type",
         "type": "string",
         "description": "The type of role. When specifying a managed-identity, the chosen role_id must be a valid: * application ID for SERVICE_PRINCIPAL * user email for USER * group name for GROUP (GROUP, SERVICE_PRINCIPAL, USER)"
+      },
+      {
+        "name": "membership_roles",
+        "type": "array",
+        "description": "An enum value for a standard role that this role is a member of."
       },
       {
         "name": "postgres_role",
@@ -86,6 +113,28 @@ The following fields are returned by `SELECT` queries:
     "description": "Current status of the role, including its identity type, authentication method, and role attributes.",
     "children": [
       {
+        "name": "attributes",
+        "type": "object",
+        "description": "Attributes that can be granted to a Postgres role. We are only implementing a subset for now,<br />    see xref: https://www.postgresql.org/docs/16/sql-createrole.html The values follow Postgres<br />    keyword naming e.g. CREATEDB, BYPASSRLS, etc. which is why they don't include typical<br />    underscores between words.",
+        "children": [
+          {
+            "name": "bypassrls",
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "createdb",
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "createrole",
+            "type": "boolean",
+            "description": ""
+          }
+        ]
+      },
+      {
         "name": "auth_method",
         "type": "string",
         "description": "How the role is authenticated when connecting to Postgres. (LAKEBASE_OAUTH_V1, NO_LOGIN, PG_PASSWORD_SCRAM_SHA_256)"
@@ -94,6 +143,11 @@ The following fields are returned by `SELECT` queries:
         "name": "identity_type",
         "type": "string",
         "description": "The type of the role. (GROUP, SERVICE_PRINCIPAL, USER)"
+      },
+      {
+        "name": "membership_roles",
+        "type": "array",
+        "description": "An enum value for a standard role that this role is a member of."
       },
       {
         "name": "postgres_role",
@@ -133,14 +187,41 @@ The following fields are returned by `SELECT` queries:
     "description": "The spec contains the role configuration, including identity type, authentication method, and role attributes.",
     "children": [
       {
+        "name": "attributes",
+        "type": "object",
+        "description": "Attributes that can be granted to a Postgres role. We are only implementing a subset for now,<br />    see xref: https://www.postgresql.org/docs/16/sql-createrole.html The values follow Postgres<br />    keyword naming e.g. CREATEDB, BYPASSRLS, etc. which is why they don't include typical<br />    underscores between words.",
+        "children": [
+          {
+            "name": "bypassrls",
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "createdb",
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "createrole",
+            "type": "boolean",
+            "description": ""
+          }
+        ]
+      },
+      {
         "name": "auth_method",
         "type": "string",
-        "description": "How the role is authenticated when connecting to Postgres. (LAKEBASE_OAUTH_V1, NO_LOGIN, PG_PASSWORD_SCRAM_SHA_256)"
+        "description": "If auth_method is left unspecified, a meaningful authentication method is derived from the identity_type: * For the managed identities, OAUTH is used. * For the regular postgres roles, authentication based on postgres passwords is used. NOTE: this is ignored for the Databricks identity type GROUP, and NO_LOGIN is implicitly assumed instead for the GROUP identity type. (LAKEBASE_OAUTH_V1, NO_LOGIN, PG_PASSWORD_SCRAM_SHA_256)"
       },
       {
         "name": "identity_type",
         "type": "string",
         "description": "The type of role. When specifying a managed-identity, the chosen role_id must be a valid: * application ID for SERVICE_PRINCIPAL * user email for USER * group name for GROUP (GROUP, SERVICE_PRINCIPAL, USER)"
+      },
+      {
+        "name": "membership_roles",
+        "type": "array",
+        "description": "An enum value for a standard role that this role is a member of."
       },
       {
         "name": "postgres_role",
@@ -155,6 +236,28 @@ The following fields are returned by `SELECT` queries:
     "description": "Current status of the role, including its identity type, authentication method, and role attributes.",
     "children": [
       {
+        "name": "attributes",
+        "type": "object",
+        "description": "Attributes that can be granted to a Postgres role. We are only implementing a subset for now,<br />    see xref: https://www.postgresql.org/docs/16/sql-createrole.html The values follow Postgres<br />    keyword naming e.g. CREATEDB, BYPASSRLS, etc. which is why they don't include typical<br />    underscores between words.",
+        "children": [
+          {
+            "name": "bypassrls",
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "createdb",
+            "type": "boolean",
+            "description": ""
+          },
+          {
+            "name": "createrole",
+            "type": "boolean",
+            "description": ""
+          }
+        ]
+      },
+      {
         "name": "auth_method",
         "type": "string",
         "description": "How the role is authenticated when connecting to Postgres. (LAKEBASE_OAUTH_V1, NO_LOGIN, PG_PASSWORD_SCRAM_SHA_256)"
@@ -163,6 +266,11 @@ The following fields are returned by `SELECT` queries:
         "name": "identity_type",
         "type": "string",
         "description": "The type of the role. (GROUP, SERVICE_PRINCIPAL, USER)"
+      },
+      {
+        "name": "membership_roles",
+        "type": "array",
+        "description": "An enum value for a standard role that this role is a member of."
       },
       {
         "name": "postgres_role",
@@ -267,7 +375,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-reassign_owned_to">
     <td><CopyableCode code="reassign_owned_to" /></td>
     <td><code>string</code></td>
-    <td>Reassign objects. If this is set, all objects owned by the role are reassigned to the role specified in this parameter. NOTE: setting this requires spinning up a compute to succeed, since it involves running SQL queries. TODO: #LKB-7187 implement reassign_owned_to on LBM side. This might end-up being a synchronous query when this parameter is used.</td>
+    <td>Reassign objects. If this is set, all objects owned by the role are reassigned to the role specified in this parameter. NOTE: setting this requires spinning up a compute to succeed, since it involves running SQL queries.</td>
 </tr>
 <tr id="parameter-role_id">
     <td><CopyableCode code="role_id" /></td>
@@ -374,12 +482,24 @@ SELECT
         name: "{{ name }}"
         parent: "{{ parent }}"
         spec:
+          attributes:
+            bypassrls: {{ bypassrls }}
+            createdb: {{ createdb }}
+            createrole: {{ createrole }}
           auth_method: "{{ auth_method }}"
           identity_type: "{{ identity_type }}"
+          membership_roles:
+            - "{{ membership_roles }}"
           postgres_role: "{{ postgres_role }}"
         status:
+          attributes:
+            bypassrls: {{ bypassrls }}
+            createdb: {{ createdb }}
+            createrole: {{ createrole }}
           auth_method: "{{ auth_method }}"
           identity_type: "{{ identity_type }}"
+          membership_roles:
+            - "{{ membership_roles }}"
           postgres_role: "{{ postgres_role }}"
         update_time: "{{ update_time }}"
     - name: role_id

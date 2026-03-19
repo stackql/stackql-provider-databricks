@@ -18,16 +18,17 @@ vectorsearch service documentation.
 
 :::info[Service Summary]
 
-total resources: __2__  
+total resources: __3__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
-<a href="/services/vectorsearch/endpoints/">endpoints</a>
+<a href="/services/vectorsearch/endpoints/">endpoints</a><br />
+<a href="/services/vectorsearch/indexes/">indexes</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/vectorsearch/indexes/">indexes</a>
+<a href="/services/vectorsearch/vector_search_endpoints/">vector_search_endpoints</a>
 </div>
 </div>

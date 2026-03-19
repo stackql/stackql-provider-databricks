@@ -299,48 +299,6 @@ The following fields are returned by `SELECT` queries:
         "description": "The id of the table."
       },
       {
-        "name": "internal_attributes",
-        "type": "object",
-        "description": "Internal information for D2D sharing that should not be disclosed to external users.",
-        "children": [
-          {
-            "name": "auxiliary_managed_location",
-            "type": "string",
-            "description": "Managed Delta Metadata location for foreign iceberg tables."
-          },
-          {
-            "name": "dependency_storage_locations",
-            "type": "array",
-            "description": "Storage locations of all table dependencies for shared views. Used on the recipient side for SEG (Secure Egress Gateway) whitelisting."
-          },
-          {
-            "name": "has_delta_uniform_iceberg",
-            "type": "boolean",
-            "description": "Whether the table has uniform enabled."
-          },
-          {
-            "name": "parent_storage_location",
-            "type": "string",
-            "description": "Will be populated in the reconciliation response for VIEW and FOREIGN_TABLE, with the value of the parent UC entity's storage_location, following the same logic as getManagedEntityPath in CreateStagingTableHandler, which is used to store the materialized table for a shared VIEW/FOREIGN_TABLE for D2O queries. The value will be used on the recipient side to be whitelisted when SEG is enabled on the workspace of the recipient, to allow the recipient users to query this shared VIEW/FOREIGN_TABLE."
-          },
-          {
-            "name": "storage_location",
-            "type": "string",
-            "description": "The cloud storage location of a shard table with DIRECTORY_BASED_TABLE type."
-          },
-          {
-            "name": "type",
-            "type": "string",
-            "description": "The type of the shared table. (DELTA_ICEBERG_TABLE, DIRECTORY_BASED_TABLE, FILE_BASED_TABLE, FOREIGN_ICEBERG_TABLE, FOREIGN_TABLE, MATERIALIZED_VIEW, METRIC_VIEW, STREAMING_TABLE, VIEW)"
-          },
-          {
-            "name": "view_definition",
-            "type": "string",
-            "description": "The view definition of a shared view. DEPRECATED."
-          }
-        ]
-      },
-      {
         "name": "materialization_namespace",
         "type": "string",
         "description": "The catalog and schema of the materialized table"
@@ -391,23 +349,6 @@ The following fields are returned by `SELECT` queries:
         "name": "id",
         "type": "string",
         "description": "This id maps to the shared_volume_id in database Recipient needs shared_volume_id for recon to check if this volume is already in recipient's DB or not."
-      },
-      {
-        "name": "internal_attributes",
-        "type": "object",
-        "description": "Internal attributes for D2D sharing that should not be disclosed to external users.",
-        "children": [
-          {
-            "name": "storage_location",
-            "type": "string",
-            "description": "The cloud storage location of the volume"
-          },
-          {
-            "name": "type",
-            "type": "string",
-            "description": "The type of the shared volume."
-          }
-        ]
       },
       {
         "name": "name",

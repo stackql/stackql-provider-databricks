@@ -8,7 +8,7 @@ If you're setting up this repository for the first time:
 
 ```bash
 # Clone the repository
-git clone git@github.com:stackql/stackql-provider-databricks.git
+git clone git@github.com:stackql-registry/stackql-provider-databricks.git
 cd stackql-provider-databricks
 
 # Add upstream remote
@@ -79,8 +79,8 @@ git remote -v
 
 Should show:
 ```
-origin    git@github.com:stackql/stackql-provider-databricks.git (fetch)
-origin    git@github.com:stackql/stackql-provider-databricks.git (push)
+origin    git@github.com:stackql-registry/stackql-provider-databricks.git (fetch)
+origin    git@github.com:stackql-registry/stackql-provider-databricks.git (push)
 upstream  https://github.com/databricks/databricks-sdk-py.git (fetch)
 upstream  https://github.com/databricks/databricks-sdk-py.git (push)
 ```

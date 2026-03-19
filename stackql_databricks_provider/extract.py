@@ -133,7 +133,7 @@ def get_operation_details(
         operation["parameters"] = parameters
 
     if body_params:
-        operation["requestBody"] = _build_request_body(body_params, sig, docstring, service_module)
+        operation["requestBody"] = _build_request_body(body_params, sig, docstring, service_module, source)
 
     return_type = _get_return_type(method)
     # For Iterator methods, use the list response wrapper schema instead
@@ -371,16 +371,51 @@ def _classify_params(
 
 
 def _param_in_dict(source: str, dict_name: str, param_name: str) -> bool:
-    """Check if a param is assigned into a named dict in source."""
+    """Check if a param is assigned into a named dict in source.
+
+    Handles case-insensitive key matching because the SDK sometimes uses
+    a different case for the JSON key than the Python parameter name
+    (e.g. ``body["Operations"] = ... operations``).
+    """
     patterns = [
         rf'{dict_name}\["{param_name}"\]',
         rf'{dict_name}\["{param_name}"\]\s*=',
         rf'"{param_name}":\s*{param_name}',
     ]
     for p in patterns:
-        if re.search(p, source):
+        if re.search(p, source, re.IGNORECASE):
             return True
     return False
+
+
+def _extract_body_key_mapping(source: str) -> Dict[str, str]:
+    """Extract mapping from Python parameter names to JSON body key names.
+
+    Parses SDK source for ``body["JsonKey"] = ... param_name`` patterns and
+    returns ``{param_name: "JsonKey"}``.  When the JSON key differs from the
+    Python name only in casing (e.g. ``Operations`` vs ``operations``) the
+    mapping ensures the generated OpenAPI property uses the correct key.
+    """
+    mapping: Dict[str, str] = {}
+    # Match: body["SomeKey"] = [v.xxx for v in param]  or  body["key"] = param
+    for m in re.finditer(
+        r'body\["([^"]+)"\]\s*=\s*.*?\b(\w+)\s*(?:\]|\)|$)', source, re.MULTILINE
+    ):
+        json_key = m.group(1)
+        # Walk backwards to find the param name — the last word token on the
+        # right-hand side that isn't a method/attribute call.
+        rhs = source[m.start():m.end()]
+        # Find all bare identifiers on the rhs (skip self, v, etc.)
+        ident_pattern = r'\b([a-z_]\w*)\b'
+        idents = re.findall(ident_pattern, rhs)
+        # Filter out common non-param tokens
+        skip = {"body", "v", "for", "in", "if", "is", "not", "None", "as_dict",
+                "value", "as_shallow_dict"}
+        candidates = [i for i in idents if i not in skip and not i.startswith("_")]
+        if candidates:
+            param_name = candidates[-1]
+            mapping[param_name] = json_key
+    return mapping
 
 
 def _build_tags(service_name: str, resource_snake_name: str) -> List[str]:
@@ -444,9 +479,15 @@ def _build_request_body(
     sig: inspect.Signature,
     docstring: str,
     service_module=None,
+    source: str = "",
 ) -> Dict[str, Any]:
-    """Build an OpenAPI requestBody object."""
+    """Build an OpenAPI requestBody object.
+
+    Uses the method source to map Python parameter names to their actual
+    JSON body key names (e.g. ``operations`` → ``Operations``).
+    """
     param_docs = _parse_param_docs(docstring)
+    body_key_map = _extract_body_key_mapping(source) if source else {}
     properties: Dict[str, Any] = {}
     required: List[str] = []
 
@@ -456,9 +497,10 @@ def _build_request_body(
         desc = param_docs.get(name)
         if desc:
             prop["description"] = desc
-        properties[name] = prop
+        json_key = body_key_map.get(name, name)
+        properties[json_key] = prop
         if _is_param_required(sig_param):
-            required.append(name)
+            required.append(json_key)
 
     schema: Dict[str, Any] = {
         "type": "object",
@@ -726,8 +768,10 @@ def _parse_param_docs(docstring: str) -> Dict[str, str]:
     result: Dict[str, str] = {}
     if not docstring:
         return result
-    # Match :param name: and capture everything until next :param or :returns or end
-    pattern = r":param (\w+):\s*(?:\S+\s*(?:\(optional\)\s*)?\n\s*)?(.*?)(?=\n\s*:param|\n\s*:returns|$)"
+    # Match :param name: and capture everything until next :param or :returns or end.
+    # The type-skip group uses [^\S\n]* (horizontal whitespace only) to avoid
+    # consuming the newline that the lookahead needs to detect the next :param.
+    pattern = r":param (\w+):[^\S\n]*(?:\S+[^\S\n]*(?:\(optional\)[^\S\n]*)?)?(.*?)(?=\n:param|\n:returns|\Z)"
     for m in re.finditer(pattern, docstring, re.DOTALL):
         name = m.group(1)
         desc = m.group(2).strip()

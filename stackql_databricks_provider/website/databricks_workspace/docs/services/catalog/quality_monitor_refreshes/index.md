@@ -139,21 +139,21 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-table_name"><code>table_name</code></a>, <a href="#parameter-refresh_id"><code>refresh_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Gets info about a specific monitor refresh using the given refresh ID. Use Data Quality</td>
+    <td>Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets info about a</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-table_name"><code>table_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Gets an array containing the history of the most recent refreshes (up to 25) for this</td>
+    <td>Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets an array</td>
 </tr>
 <tr>
     <td><a href="#run"><CopyableCode code="run" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-table_name"><code>table_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Queues a metric refresh on the monitor for the specified table. Use Data Quality Monitors</td>
+    <td>Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Queues a metric</td>
 </tr>
 </tbody>
 </table>
@@ -200,7 +200,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-[DEPRECATED] Gets info about a specific monitor refresh using the given refresh ID. Use Data Quality
+Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets info about a
 
 ```sql
 SELECT
@@ -219,7 +219,7 @@ AND deployment_name = '{{ deployment_name }}' -- required
 </TabItem>
 <TabItem value="list">
 
-[DEPRECATED] Gets an array containing the history of the most recent refreshes (up to 25) for this
+Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets an array
 
 ```sql
 SELECT
@@ -243,7 +243,7 @@ AND deployment_name = '{{ deployment_name }}' -- required
 >
 <TabItem value="run">
 
-[DEPRECATED] Queues a metric refresh on the monitor for the specified table. Use Data Quality Monitors
+Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Queues a metric
 
 ```sql
 EXEC databricks_workspace.catalog.quality_monitor_refreshes.run 

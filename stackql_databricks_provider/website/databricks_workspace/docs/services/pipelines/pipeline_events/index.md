@@ -164,6 +164,31 @@ The following fields are returned by `SELECT` queries:
         "description": "The optional host name where the event was triggered"
       },
       {
+        "name": "ingestion_source_catalog_name",
+        "type": "string",
+        "description": "The name of the source catalog name (if known) from whose data ingestion is described by this event."
+      },
+      {
+        "name": "ingestion_source_connection_name",
+        "type": "string",
+        "description": "The name of the source UC connection (if known) from whose data ingestion is described by this event."
+      },
+      {
+        "name": "ingestion_source_schema_name",
+        "type": "string",
+        "description": "The name of the source schema name (if known) from whose data ingestion is described by this event."
+      },
+      {
+        "name": "ingestion_source_table_name",
+        "type": "string",
+        "description": "The name of the source table name (if known) from whose data ingestion is described by this event."
+      },
+      {
+        "name": "ingestion_source_table_version",
+        "type": "string",
+        "description": "An optional implementation-defined source table version of a dataset being (re)ingested."
+      },
+      {
         "name": "maintenance_id",
         "type": "string",
         "description": "The id of a maintenance run. Globally unique."

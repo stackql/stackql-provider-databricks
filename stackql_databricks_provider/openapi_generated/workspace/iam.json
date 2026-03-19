@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks iam service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.iam"
   },
   "servers": [
@@ -37,8 +37,7 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Actor"
-            },
-            "description": ":param permission: str"
+            }
           },
           {
             "name": "permission",
@@ -63,8 +62,7 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/ConsistencyToken"
-            },
-            "description": ":param authz_identity: :class:`RequestAuthzIdentity`"
+            }
           },
           {
             "name": "authz_identity",
@@ -80,8 +78,7 @@
             "required": false,
             "schema": {
               "$ref": "#/components/schemas/ResourceInfo"
-            },
-            "description": ":returns: :class:`CheckPolicyResponse`"
+            }
           }
         ],
         "responses": {
@@ -284,8 +281,7 @@
                     "required": [
                       "name",
                       "etag"
-                    ],
-                    "description": ":returns: :class:`RuleSetResponse`"
+                    ]
                   }
                 },
                 "required": [
@@ -386,7 +382,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "display_name": {
+                  "displayName": {
                     "type": "string",
                     "description": "String that represents a human-readable group name"
                   },
@@ -414,9 +410,8 @@
                     },
                     "description": "Entitlements assigned to the group. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"
                   },
-                  "external_id": {
-                    "type": "string",
-                    "description": ":param groups: List[:class:`ComplexValue`] (optional)"
+                  "externalId": {
+                    "type": "string"
                   },
                   "groups": {
                     "type": "array",
@@ -466,8 +461,7 @@
                           "type": "string"
                         }
                       }
-                    },
-                    "description": ":param meta: :class:`ResourceMeta` (optional) Container for the group identifier. Workspace local versus account."
+                    }
                   },
                   "meta": {
                     "type": "object",
@@ -475,7 +469,8 @@
                       "resourceType": {
                         "type": "string"
                       }
-                    }
+                    },
+                    "description": "Container for the group identifier. Workspace local versus account."
                   },
                   "roles": {
                     "type": "array",
@@ -508,7 +503,7 @@
                       "x-enum": [
                         "urn:ietf:params:scim:schemas:core:2.0:Group"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                     },
                     "description": "The schema of the group."
                   }
@@ -776,7 +771,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "operations": {
+                  "Operations": {
                     "type": "array",
                     "items": {
                       "type": "object",
@@ -799,8 +794,7 @@
                           "description": "Value to modify"
                         }
                       }
-                    },
-                    "description": ":param schemas: List[:class:`PatchSchema`] (optional) The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
+                    }
                   },
                   "schemas": {
                     "type": "array",
@@ -809,8 +803,9 @@
                       "x-enum": [
                         "urn:ietf:params:scim:api:messages:2.0:PatchOp"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
-                    }
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                    },
+                    "description": "The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
                   }
                 }
               }
@@ -867,7 +862,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "display_name": {
+                  "displayName": {
                     "type": "string",
                     "description": "String that represents a human-readable group name"
                   },
@@ -895,9 +890,8 @@
                     },
                     "description": "Entitlements assigned to the group. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"
                   },
-                  "external_id": {
-                    "type": "string",
-                    "description": ":param groups: List[:class:`ComplexValue`] (optional)"
+                  "externalId": {
+                    "type": "string"
                   },
                   "groups": {
                     "type": "array",
@@ -943,8 +937,7 @@
                           "type": "string"
                         }
                       }
-                    },
-                    "description": ":param meta: :class:`ResourceMeta` (optional) Container for the group identifier. Workspace local versus account."
+                    }
                   },
                   "meta": {
                     "type": "object",
@@ -952,7 +945,8 @@
                       "resourceType": {
                         "type": "string"
                       }
-                    }
+                    },
+                    "description": "Container for the group identifier. Workspace local versus account."
                   },
                   "roles": {
                     "type": "array",
@@ -985,7 +979,7 @@
                       "x-enum": [
                         "urn:ietf:params:scim:schemas:core:2.0:Group"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                     },
                     "description": "The schema of the group."
                   }
@@ -1102,7 +1096,7 @@
           "iam",
           "permissions"
         ],
-        "description": "Gets the permissions of an object. Objects can inherit permissions from their parent objects or root\nobject.\n\n:param request_object_type: str\n  The type of the request object. Can be one of the following: alerts, alertsv2, authorization,\n  clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie,\n  instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or\n  warehouses.\n:param request_object_id: str\n  The id of the request object.\n\n:returns: :class:`ObjectPermissions`",
+        "description": "Gets the permissions of an object. Objects can inherit permissions from their parent objects or root\nobject.\n\n:param request_object_type: str\n  The type of the request object. Can be one of the following: alerts, alertsv2, authorization,\n  clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,\n  experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,\n  repos, serving-endpoints, or warehouses.\n:param request_object_id: str\n  The id of the request object.\n\n:returns: :class:`ObjectPermissions`",
         "parameters": [
           {
             "name": "request_object_type",
@@ -1111,7 +1105,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses."
+            "description": "The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses."
           },
           {
             "name": "request_object_id",
@@ -1162,7 +1156,7 @@
           "iam",
           "permissions"
         ],
-        "description": "Sets permissions on an object, replacing existing permissions if they exist. Deletes all direct\npermissions if none are specified. Objects can inherit permissions from their parent objects or root\nobject.\n\n:param request_object_type: str\n  The type of the request object. Can be one of the following: alerts, alertsv2, authorization,\n  clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie,\n  instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or\n  warehouses.\n:param request_object_id: str\n  The id of the request object.\n:param access_control_list: List[:class:`AccessControlRequest`] (optional)\n\n:returns: :class:`ObjectPermissions`",
+        "description": "Sets permissions on an object, replacing existing permissions if they exist. Deletes all direct\npermissions if none are specified. Objects can inherit permissions from their parent objects or root\nobject.\n\n:param request_object_type: str\n  The type of the request object. Can be one of the following: alerts, alertsv2, authorization,\n  clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,\n  experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,\n  repos, serving-endpoints, or warehouses.\n:param request_object_id: str\n  The id of the request object.\n:param access_control_list: List[:class:`AccessControlRequest`] (optional)\n\n:returns: :class:`ObjectPermissions`",
         "parameters": [
           {
             "name": "request_object_type",
@@ -1171,7 +1165,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses."
+            "description": "The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses."
           },
           {
             "name": "request_object_id",
@@ -1203,6 +1197,7 @@
                             "CAN_ATTACH_TO",
                             "CAN_BIND",
                             "CAN_CREATE",
+                            "CAN_CREATE_APP",
                             "CAN_EDIT",
                             "CAN_EDIT_METADATA",
                             "CAN_MANAGE",
@@ -1231,8 +1226,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`ObjectPermissions`"
+                    }
                   }
                 }
               }
@@ -1278,7 +1272,7 @@
           "iam",
           "permissions"
         ],
-        "description": "Updates the permissions on an object. Objects can inherit permissions from their parent objects or\nroot object.\n\n:param request_object_type: str\n  The type of the request object. Can be one of the following: alerts, alertsv2, authorization,\n  clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie,\n  instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or\n  warehouses.\n:param request_object_id: str\n  The id of the request object.\n:param access_control_list: List[:class:`AccessControlRequest`] (optional)\n\n:returns: :class:`ObjectPermissions`",
+        "description": "Updates the permissions on an object. Objects can inherit permissions from their parent objects or\nroot object.\n\n:param request_object_type: str\n  The type of the request object. Can be one of the following: alerts, alertsv2, authorization,\n  clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,\n  experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,\n  repos, serving-endpoints, or warehouses.\n:param request_object_id: str\n  The id of the request object.\n:param access_control_list: List[:class:`AccessControlRequest`] (optional)\n\n:returns: :class:`ObjectPermissions`",
         "parameters": [
           {
             "name": "request_object_type",
@@ -1287,7 +1281,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses."
+            "description": "The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses."
           },
           {
             "name": "request_object_id",
@@ -1319,6 +1313,7 @@
                             "CAN_ATTACH_TO",
                             "CAN_BIND",
                             "CAN_CREATE",
+                            "CAN_CREATE_APP",
                             "CAN_EDIT",
                             "CAN_EDIT_METADATA",
                             "CAN_MANAGE",
@@ -1347,8 +1342,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`ObjectPermissions`"
+                    }
                   }
                 }
               }
@@ -1396,7 +1390,7 @@
           "iam",
           "permissions"
         ],
-        "description": "Gets the permission levels that a user can have on an object.\n\n:param request_object_type: str\n  The type of the request object. Can be one of the following: alerts, alertsv2, authorization,\n  clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie,\n  instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or\n  warehouses.\n:param request_object_id: str\n\n:returns: :class:`GetPermissionLevelsResponse`",
+        "description": "Gets the permission levels that a user can have on an object.\n\n:param request_object_type: str\n  The type of the request object. Can be one of the following: alerts, alertsv2, authorization,\n  clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,\n  experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,\n  repos, serving-endpoints, or warehouses.\n:param request_object_id: str\n\n:returns: :class:`GetPermissionLevelsResponse`",
         "parameters": [
           {
             "name": "request_object_type",
@@ -1405,7 +1399,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses."
+            "description": "The type of the request object. Can be one of the following: alerts, alertsv2, authorization, clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories, experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models, repos, serving-endpoints, or warehouses."
           },
           {
             "name": "request_object_id",
@@ -1413,8 +1407,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`GetPermissionLevelsResponse`"
+            }
           }
         ],
         "responses": {
@@ -1469,11 +1462,11 @@
                     "type": "boolean",
                     "description": "If this user is active"
                   },
-                  "application_id": {
+                  "applicationId": {
                     "type": "string",
                     "description": "UUID relating to the service principal"
                   },
-                  "display_name": {
+                  "displayName": {
                     "type": "string",
                     "description": "String that represents a concatenation of given and family names."
                   },
@@ -1501,9 +1494,8 @@
                     },
                     "description": "Entitlements assigned to the service principal. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"
                   },
-                  "external_id": {
-                    "type": "string",
-                    "description": ":param groups: List[:class:`ComplexValue`] (optional)"
+                  "externalId": {
+                    "type": "string"
                   },
                   "groups": {
                     "type": "array",
@@ -1563,7 +1555,7 @@
                       "x-enum": [
                         "urn:ietf:params:scim:schemas:core:2.0:ServicePrincipal"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                     },
                     "description": "The schema of the List response."
                   }
@@ -1831,7 +1823,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "operations": {
+                  "Operations": {
                     "type": "array",
                     "items": {
                       "type": "object",
@@ -1854,8 +1846,7 @@
                           "description": "Value to modify"
                         }
                       }
-                    },
-                    "description": ":param schemas: List[:class:`PatchSchema`] (optional) The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
+                    }
                   },
                   "schemas": {
                     "type": "array",
@@ -1864,8 +1855,9 @@
                       "x-enum": [
                         "urn:ietf:params:scim:api:messages:2.0:PatchOp"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
-                    }
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                    },
+                    "description": "The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
                   }
                 }
               }
@@ -1926,11 +1918,11 @@
                     "type": "boolean",
                     "description": "If this user is active"
                   },
-                  "application_id": {
+                  "applicationId": {
                     "type": "string",
                     "description": "UUID relating to the service principal"
                   },
-                  "display_name": {
+                  "displayName": {
                     "type": "string",
                     "description": "String that represents a concatenation of given and family names."
                   },
@@ -1958,9 +1950,8 @@
                     },
                     "description": "Entitlements assigned to the service principal. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"
                   },
-                  "external_id": {
-                    "type": "string",
-                    "description": ":param groups: List[:class:`ComplexValue`] (optional)"
+                  "externalId": {
+                    "type": "string"
                   },
                   "groups": {
                     "type": "array",
@@ -2016,7 +2007,7 @@
                       "x-enum": [
                         "urn:ietf:params:scim:schemas:core:2.0:ServicePrincipal"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                     },
                     "description": "The schema of the List response."
                   }
@@ -2070,7 +2061,7 @@
                     "type": "boolean",
                     "description": "If this user is active"
                   },
-                  "display_name": {
+                  "displayName": {
                     "type": "string",
                     "description": "String that represents a concatenation of given and family names. For example `John Smith`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update `displayName`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation"
                   },
@@ -2122,7 +2113,7 @@
                     },
                     "description": "Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"
                   },
-                  "external_id": {
+                  "externalId": {
                     "type": "string",
                     "description": "External ID is not currently supported. It is reserved for future use."
                   },
@@ -2147,11 +2138,11 @@
                           "type": "string"
                         }
                       }
-                    },
-                    "description": ":param id: str (optional) Databricks user ID."
+                    }
                   },
                   "id": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Databricks user ID."
                   },
                   "name": {
                     "type": "object",
@@ -2163,8 +2154,7 @@
                         "type": "string",
                         "description": "Given name of the Databricks user."
                       }
-                    },
-                    "description": ":param roles: List[:class:`ComplexValue`] (optional) Corresponds to AWS instance profile/arn role."
+                    }
                   },
                   "roles": {
                     "type": "array",
@@ -2187,7 +2177,8 @@
                           "type": "string"
                         }
                       }
-                    }
+                    },
+                    "description": "Corresponds to AWS instance profile/arn role."
                   },
                   "schemas": {
                     "type": "array",
@@ -2197,11 +2188,11 @@
                         "urn:ietf:params:scim:schemas:core:2.0:User",
                         "urn:ietf:params:scim:schemas:extension:workspace:2.0:User"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                     },
                     "description": "The schema of the user."
                   },
-                  "user_name": {
+                  "userName": {
                     "type": "string",
                     "description": "Email address of the Databricks user."
                   }
@@ -2532,7 +2523,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "operations": {
+                  "Operations": {
                     "type": "array",
                     "items": {
                       "type": "object",
@@ -2555,8 +2546,7 @@
                           "description": "Value to modify"
                         }
                       }
-                    },
-                    "description": ":param schemas: List[:class:`PatchSchema`] (optional) The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
+                    }
                   },
                   "schemas": {
                     "type": "array",
@@ -2565,8 +2555,9 @@
                       "x-enum": [
                         "urn:ietf:params:scim:api:messages:2.0:PatchOp"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
-                    }
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                    },
+                    "description": "The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"]."
                   }
                 }
               }
@@ -2627,7 +2618,7 @@
                     "type": "boolean",
                     "description": "If this user is active"
                   },
-                  "display_name": {
+                  "displayName": {
                     "type": "string",
                     "description": "String that represents a concatenation of given and family names. For example `John Smith`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update `displayName`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation"
                   },
@@ -2679,7 +2670,7 @@
                     },
                     "description": "Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"
                   },
-                  "external_id": {
+                  "externalId": {
                     "type": "string",
                     "description": "External ID is not currently supported. It is reserved for future use."
                   },
@@ -2704,8 +2695,7 @@
                           "type": "string"
                         }
                       }
-                    },
-                    "description": ":param name: :class:`Name` (optional)"
+                    }
                   },
                   "name": {
                     "type": "object",
@@ -2751,11 +2741,11 @@
                         "urn:ietf:params:scim:schemas:core:2.0:User",
                         "urn:ietf:params:scim:schemas:extension:workspace:2.0:User"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                     },
                     "description": "The schema of the user."
                   },
-                  "user_name": {
+                  "userName": {
                     "type": "string",
                     "description": "Email address of the Databricks user."
                   }
@@ -2911,8 +2901,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`PasswordPermissions`"
+                    }
                   }
                 }
               }
@@ -2989,8 +2978,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`PasswordPermissions`"
+                    }
                   }
                 }
               }
@@ -3970,21 +3958,21 @@
           "ascending",
           "descending"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "GroupSchema": {
         "type": "string",
         "x-enum": [
           "urn:ietf:params:scim:schemas:core:2.0:Group"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ListResponseSchema": {
         "type": "string",
         "x-enum": [
           "urn:ietf:params:scim:api:messages:2.0:ListResponse"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ListSortOrder": {
         "type": "string",
@@ -3992,7 +3980,7 @@
           "ascending",
           "descending"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PasswordPermissionLevel": {
         "type": "string",
@@ -4015,7 +4003,7 @@
         "x-enum": [
           "urn:ietf:params:scim:api:messages:2.0:PatchOp"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PermissionLevel": {
         "type": "string",
@@ -4023,6 +4011,7 @@
           "CAN_ATTACH_TO",
           "CAN_BIND",
           "CAN_CREATE",
+          "CAN_CREATE_APP",
           "CAN_EDIT",
           "CAN_EDIT_METADATA",
           "CAN_MANAGE",
@@ -4055,7 +4044,7 @@
         "x-enum": [
           "urn:ietf:params:scim:schemas:core:2.0:ServicePrincipal"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "UserSchema": {
         "type": "string",
@@ -4063,7 +4052,7 @@
           "urn:ietf:params:scim:schemas:core:2.0:User",
           "urn:ietf:params:scim:schemas:extension:workspace:2.0:User"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "WorkspacePermission": {
         "type": "string",
@@ -4072,7 +4061,7 @@
           "UNKNOWN",
           "USER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       }
     }
   }

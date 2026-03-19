@@ -676,7 +676,7 @@ results
         The credential name. The name must be unique among storage and service credentials within the metastore.
     - name: aws_iam_role
       description: |
-        :param azure_managed_identity: :class:\`AzureManagedIdentity\` (optional)
+        The AWS IAM role configuration
       value:
         external_id: "{{ external_id }}"
         role_arn: "{{ role_arn }}"
@@ -701,7 +701,7 @@ results
         Comment associated with the credential.
     - name: databricks_gcp_service_account
       description: |
-        :param external_location_name: str (optional) The name of an existing external location to validate. Only applicable for storage credentials (purpose is **STORAGE**.)
+        GCP long-lived credential. Databricks-created Google Cloud Storage service account.
       value:
         credential_id: "{{ credential_id }}"
         email: "{{ email }}"
@@ -724,7 +724,7 @@ results
         Required. The name of an existing credential or long-lived cloud credential to validate.
     - name: azure_options
       description: |
-        :param gcp_options: :class:\`GenerateTemporaryServiceCredentialGcpOptions\` (optional)
+        The Azure cloud options to customize the requested temporary credential
       value:
         resources:
           - "{{ resources }}"
@@ -736,6 +736,8 @@ results
           - "{{ scopes }}"
     - name: external_location_name
       value: "{{ external_location_name }}"
+      description: |
+        The name of an existing external location to validate. Only applicable for storage credentials (purpose is **STORAGE**.)
     - name: url
       value: "{{ url }}"
       description: |

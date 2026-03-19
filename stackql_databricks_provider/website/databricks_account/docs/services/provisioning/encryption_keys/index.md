@@ -453,8 +453,6 @@ use_cases
       description: |
         The cases that the key can be used for.
     - name: aws_key_info
-      description: |
-        :param gcp_key_info: :class:\`CreateGcpKeyInfo\` (optional)
       value:
         key_arn: "{{ key_arn }}"
         key_alias: "{{ key_alias }}"

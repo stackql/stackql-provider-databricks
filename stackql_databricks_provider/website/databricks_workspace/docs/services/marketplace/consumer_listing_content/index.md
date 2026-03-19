@@ -102,7 +102,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-listing_id">
     <td><CopyableCode code="listing_id" /></td>
     <td><code>string</code></td>
-    <td>:param page_size: int (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -112,7 +112,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>:returns: Iterator over :class:`SharedDataObject`</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

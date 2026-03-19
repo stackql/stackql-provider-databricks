@@ -275,7 +275,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
     <td><code>integer</code></td>
-    <td>:param page_token: str (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -285,12 +285,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-policy_id">
     <td><CopyableCode code="policy_id" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>The identifier for the federation policy. The identifier must contain only lowercase alphanumeric characters, numbers, hyphens, and slashes. If unspecified, the id will be assigned by Databricks.</td>
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>The field mask specifies which fields of the policy to update. To specify multiple fields in the field mask, use comma as the separator (no space). The special value '*' indicates that all fields should be updated (full replacement). If unspecified, all fields that are set in the policy provided in the update request will overwrite the corresponding fields in the existing policy. Example value: 'description,oidc_policy.audiences'.</td>
 </tr>
 </tbody>
 </table>
@@ -392,8 +392,6 @@ update_time
       value: "{{ account_id }}"
       description: Required parameter for the account_federation_policy resource.
     - name: policy
-      description: |
-        :param policy_id: str (optional) The identifier for the federation policy. The identifier must contain only lowercase alphanumeric characters, numbers, hyphens, and slashes. If unspecified, the id will be assigned by Databricks.
       value:
         create_time: "{{ create_time }}"
         description: "{{ description }}"
@@ -412,6 +410,7 @@ update_time
         update_time: "{{ update_time }}"
     - name: policy_id
       value: "{{ policy_id }}"
+      description: The identifier for the federation policy. The identifier must contain only lowercase alphanumeric characters, numbers, hyphens, and slashes. If unspecified, the id will be assigned by Databricks.
 `}</CodeBlock>
 
 </TabItem>

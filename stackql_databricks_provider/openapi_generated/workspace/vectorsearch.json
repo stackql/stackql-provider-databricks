@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks vectorsearch service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.vectorsearch"
   },
   "servers": [
@@ -29,7 +29,7 @@
           "vectorsearch",
           "vector_search_endpoints"
         ],
-        "description": "Create a new endpoint.\n\n:param name: str\n  Name of the vector search endpoint\n:param endpoint_type: :class:`EndpointType`\n  Type of endpoint\n:param budget_policy_id: str (optional)\n  The budget policy id to be applied\n\n:returns:\n  Long-running operation waiter for :class:`EndpointInfo`.\n  See :method:wait_get_endpoint_vector_search_endpoint_online for more details.",
+        "description": "Create a new endpoint.\n\n:param name: str\n  Name of the vector search endpoint\n:param endpoint_type: :class:`EndpointType`\n  Type of endpoint\n:param budget_policy_id: str (optional)\n  The budget policy id to be applied\n:param min_qps: int (optional)\n  Min QPS for the endpoint. Mutually exclusive with num_replicas. The actual replica count is\n  calculated at index creation/sync time based on this value.\n\n:returns:\n  Long-running operation waiter for :class:`EndpointInfo`.\n  See :method:wait_get_endpoint_vector_search_endpoint_online for more details.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -50,6 +50,10 @@
                   "budget_policy_id": {
                     "type": "string",
                     "description": "The budget policy id to be applied"
+                  },
+                  "min_qps": {
+                    "type": "integer",
+                    "description": "Min QPS for the endpoint. Mutually exclusive with num_replicas. The actual replica count is calculated at index creation/sync time based on this value."
                   }
                 },
                 "required": [
@@ -208,6 +212,72 @@
             "description": "Name of the endpoint"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EndpointInfo"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "VectorSearchEndpointsAPI"
+      },
+      "patch": {
+        "operationId": "vector_search_endpoints_patch_endpoint",
+        "summary": "Update an endpoint",
+        "tags": [
+          "vectorsearch",
+          "vector_search_endpoints"
+        ],
+        "description": "Update an endpoint\n\n:param endpoint_name: str\n  Name of the vector search endpoint\n:param min_qps: int (optional)\n  Min QPS for the endpoint. Positive integer sets QPS target; -1 resets to default scaling behavior.\n\n:returns: :class:`EndpointInfo`",
+        "parameters": [
+          {
+            "name": "endpoint_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the vector search endpoint"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "min_qps": {
+                    "type": "integer",
+                    "description": "Min QPS for the endpoint. Positive integer sets QPS target; -1 resets to default scaling behavior."
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Success",
@@ -547,7 +617,7 @@
                       "DELTA_SYNC",
                       "DIRECT_ACCESS"
                     ],
-                    "description": ":param delta_sync_index_spec: :class:`DeltaSyncVectorIndexSpecRequest` (optional) Specification for Delta Sync Index. Required if `index_type` is `DELTA_SYNC`."
+                    "description": "There are 2 types of Vector Search indexes: - `DELTA_SYNC`: An index that automatically syncs\nwith a source Delta Table, automatically and incrementally updating the index as the underlying\ndata in the Delta Table changes. - `DIRECT_ACCESS`: An index that supports direct read and write\nof vectors and metadata through our REST and SDK APIs. With this model, the user manages index\nupdates."
                   },
                   "delta_sync_index_spec": {
                     "type": "object",
@@ -610,7 +680,8 @@
                         "type": "string",
                         "description": "The name of the source table."
                       }
-                    }
+                    },
+                    "description": "Specification for Delta Sync Index. Required if `index_type` is `DELTA_SYNC`."
                   },
                   "direct_access_index_spec": {
                     "type": "object",
@@ -1555,6 +1626,22 @@
           "num_indexes": {
             "type": "integer",
             "description": "Number of indexes on the endpoint"
+          },
+          "scaling_info": {
+            "$ref": "#/components/schemas/EndpointScalingInfo",
+            "description": "Scaling information for the endpoint"
+          }
+        }
+      },
+      "EndpointScalingInfo": {
+        "type": "object",
+        "properties": {
+          "requested_min_qps": {
+            "type": "integer"
+          },
+          "state": {
+            "$ref": "#/components/schemas/ScalingChangeState",
+            "description": "The current state of the scaling change request."
           }
         }
       },
@@ -1968,7 +2055,7 @@
           "PARTIAL_SUCCESS",
           "SUCCESS"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "EndpointStatusState": {
         "type": "string",
@@ -1997,6 +2084,15 @@
         ],
         "description": "Pipeline execution mode. - `TRIGGERED`: If the pipeline uses the triggered execution mode, the\nsystem stops processing after successfully refreshing the source table in the pipeline once,\nensuring the table is updated based on the data available when the update started. -\n`CONTINUOUS`: If the pipeline uses continuous execution, the pipeline processes new data as it\narrives in the source table to keep vector index fresh."
       },
+      "ScalingChangeState": {
+        "type": "string",
+        "x-enum": [
+          "SCALING_CHANGE_APPLIED",
+          "SCALING_CHANGE_IN_PROGRESS",
+          "SCALING_CHANGE_UNSPECIFIED"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
       "UpsertDataStatus": {
         "type": "string",
         "x-enum": [
@@ -2004,7 +2100,7 @@
           "PARTIAL_SUCCESS",
           "SUCCESS"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "VectorIndexType": {
         "type": "string",

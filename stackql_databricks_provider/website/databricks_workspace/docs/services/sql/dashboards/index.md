@@ -839,7 +839,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-dashboard_id">
     <td><CopyableCode code="dashboard_id" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 <tr id="parameter-deployment_name">
     <td><CopyableCode code="deployment_name" /></td>
@@ -1003,6 +1003,8 @@ widgets
       description: Required parameter for the dashboards resource.
     - name: name
       value: "{{ name }}"
+      description: |
+        The title of this dashboard that appears in list views and at the top of the dashboard page.
     - name: run_as_role
       value: "{{ run_as_role }}"
       description: |
@@ -1010,8 +1012,6 @@ widgets
     - name: tags
       value:
         - "{{ tags }}"
-      description: |
-        :returns: :class:\`Dashboard\`
 `}</CodeBlock>
 
 </TabItem>

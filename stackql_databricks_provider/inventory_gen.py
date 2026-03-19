@@ -180,7 +180,7 @@ def generate_inventory_for_spec(
     spec_path: str,
     output_dir: str,
     scope: str,
-) -> Tuple[str, int, int]:
+) -> Tuple[str, int, int, List[Dict[str, str]]]:
     """Generate or update a CSV inventory for one spec file.
 
     Existing rows are preserved (not overwritten). Only new operations
@@ -192,7 +192,7 @@ def generate_inventory_for_spec(
         scope: ``"account"`` or ``"workspace"``.
 
     Returns:
-        Tuple of (csv_path, new_count, existing_count).
+        Tuple of (csv_path, new_count, existing_count, new_operations).
     """
     service_name = os.path.splitext(os.path.basename(spec_path))[0]
     filename = f"{service_name}.json"
@@ -221,12 +221,14 @@ def generate_inventory_for_spec(
         existing_count += 1
 
     # Add new rows only
+    new_operations: List[Dict[str, str]] = []
     for row in rows:
         key = _make_row_key(row)
         if key not in seen_keys:
             final_rows.append(row)
             seen_keys.add(key)
             new_count += 1
+            new_operations.append(row)
 
     # Write
     with open(csv_path, "w", newline="") as f:
@@ -238,7 +240,7 @@ def generate_inventory_for_spec(
         "%s/%s: %d existing preserved, %d new added",
         scope, service_name, existing_count, new_count,
     )
-    return csv_path, new_count, existing_count
+    return csv_path, new_count, existing_count, new_operations
 
 
 def generate_all_inventories(
@@ -263,10 +265,11 @@ def generate_all_inventories(
     if output_dir is None:
         output_dir = INVENTORY_DIR
 
-    summary = {
+    summary: Dict[str, Any] = {
         "files_generated": 0,
         "total_new": 0,
         "total_existing": 0,
+        "new_operations": [],
     }
 
     for scope in ("account", "workspace"):
@@ -281,12 +284,21 @@ def generate_all_inventories(
                 continue
             spec_path = os.path.join(scope_spec_dir, fname)
             try:
-                csv_path, new_count, existing_count = generate_inventory_for_spec(
+                csv_path, new_count, existing_count, new_ops = generate_inventory_for_spec(
                     spec_path, output_dir, scope
                 )
                 summary["files_generated"] += 1
                 summary["total_new"] += new_count
                 summary["total_existing"] += existing_count
+                for op in new_ops:
+                    summary["new_operations"].append({
+                        "scope": scope,
+                        "service": os.path.splitext(fname)[0],
+                        "operationId": op.get("operationId", ""),
+                        "verb": op.get("verb", ""),
+                        "path": op.get("path", ""),
+                        "stackql_verb": op.get("stackql_verb", ""),
+                    })
 
                 # Collect rows for consolidated CSV
                 with open(csv_path, "r", newline="") as f:
@@ -664,6 +676,22 @@ def main():
     print(f"  CSV files generated: {summary['files_generated']}")
     print(f"  New operations:      {summary['total_new']}")
     print(f"  Existing preserved:  {summary['total_existing']}")
+
+    new_ops = summary.get("new_operations", [])
+    if new_ops:
+        print()
+        print("=" * 60)
+        print("New Operations (review routing in CSVs)")
+        print("=" * 60)
+        # Group by scope/service
+        current_group = ""
+        for op in sorted(new_ops, key=lambda x: (x["scope"], x["service"], x["operationId"])):
+            group = f"{op['scope']}/{op['service']}"
+            if group != current_group:
+                current_group = group
+                print(f"\n  [{group}]")
+            print(f"    {op['verb'].upper():7s} {op['operationId']:<50s} -> {op['stackql_verb']}")
+
     print()
 
 

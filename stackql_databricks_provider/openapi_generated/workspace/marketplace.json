@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks marketplace service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.marketplace"
   },
   "servers": [
@@ -37,8 +37,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param page_size: int (optional)"
+            }
           },
           {
             "name": "page_size",
@@ -54,8 +53,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: Iterator over :class:`SharedDataObject`"
+            }
           }
         ],
         "responses": {
@@ -107,8 +105,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param page_size: int (optional)"
+            }
           },
           {
             "name": "page_size",
@@ -124,8 +121,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: Iterator over :class:`ListingFulfillment`"
+            }
           }
         ],
         "responses": {
@@ -177,8 +173,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param accepted_consumer_terms: :class:`ConsumerTerms` (optional)"
+            }
           }
         ],
         "requestBody": {
@@ -199,8 +194,7 @@
                     ]
                   },
                   "catalog_name": {
-                    "type": "string",
-                    "description": ":param recipient_type: :class:`DeltaSharingRecipientType` (optional)"
+                    "type": "string"
                   },
                   "recipient_type": {
                     "type": "string",
@@ -208,7 +202,7 @@
                       "DELTA_SHARING_RECIPIENT_TYPE_DATABRICKS",
                       "DELTA_SHARING_RECIPIENT_TYPE_OPEN"
                     ],
-                    "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                    "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                   },
                   "repo_detail": {
                     "type": "object",
@@ -228,8 +222,7 @@
                     "description": "for git repo installations"
                   },
                   "share_name": {
-                    "type": "string",
-                    "description": ":returns: :class:`Installation`"
+                    "type": "string"
                   }
                 }
               }
@@ -283,8 +276,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param page_size: int (optional)"
+            }
           },
           {
             "name": "page_size",
@@ -300,8 +292,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: Iterator over :class:`InstallationDetail`"
+            }
           }
         ],
         "responses": {
@@ -353,8 +344,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param installation_id: str"
+            }
           },
           {
             "name": "installation_id",
@@ -405,8 +395,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param installation_id: str"
+            }
           },
           {
             "name": "installation_id",
@@ -450,7 +439,7 @@
                           "DELTA_SHARING_RECIPIENT_TYPE_DATABRICKS",
                           "DELTA_SHARING_RECIPIENT_TYPE_OPEN"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
                       "repo_name": {
                         "type": "string"
@@ -467,7 +456,7 @@
                           "FAILED",
                           "INSTALLED"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
                       "token_detail": {
                         "type": "object",
@@ -522,8 +511,7 @@
                           }
                         }
                       }
-                    },
-                    "description": ":param rotate_token: bool (optional)"
+                    }
                   },
                   "rotate_token": {
                     "type": "boolean"
@@ -585,8 +573,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -649,8 +636,7 @@
               "items": {
                 "type": "string"
               }
-            },
-            "description": ":returns: :class:`BatchGetListingsResponse`"
+            }
           }
         ],
         "responses": {
@@ -702,8 +688,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`GetListingResponse`"
+            }
           }
         ],
         "responses": {
@@ -806,8 +791,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -924,8 +908,7 @@
             "required": false,
             "schema": {
               "type": "boolean"
-            },
-            "description": ":param is_private_exchange: bool (optional)"
+            }
           },
           {
             "name": "is_private_exchange",
@@ -941,8 +924,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -1014,8 +996,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param intended_use: str"
+            }
           }
         ],
         "requestBody": {
@@ -1036,22 +1017,19 @@
                     },
                     "required": [
                       "version"
-                    ],
-                    "description": ":param comment: str (optional)"
+                    ]
                   },
                   "comment": {
                     "type": "string"
                   },
                   "company": {
-                    "type": "string",
-                    "description": ":param first_name: str (optional)"
+                    "type": "string"
                   },
                   "first_name": {
                     "type": "string"
                   },
                   "is_from_lighthouse": {
-                    "type": "boolean",
-                    "description": ":param last_name: str (optional)"
+                    "type": "boolean"
                   },
                   "last_name": {
                     "type": "string"
@@ -1062,7 +1040,7 @@
                       "DELTA_SHARING_RECIPIENT_TYPE_DATABRICKS",
                       "DELTA_SHARING_RECIPIENT_TYPE_OPEN"
                     ],
-                    "description": ":returns: :class:`CreatePersonalizationRequestResponse`"
+                    "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                   }
                 },
                 "required": [
@@ -1120,8 +1098,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`GetPersonalizationRequestResponse`"
+            }
           }
         ],
         "responses": {
@@ -1173,8 +1150,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -1237,8 +1213,7 @@
               "items": {
                 "type": "string"
               }
-            },
-            "description": ":returns: :class:`BatchGetProvidersResponse`"
+            }
           }
         ],
         "responses": {
@@ -1290,8 +1265,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`GetProviderResponse`"
+            }
           }
         ],
         "responses": {
@@ -1343,8 +1317,7 @@
             "required": false,
             "schema": {
               "type": "boolean"
-            },
-            "description": ":param page_size: int (optional)"
+            }
           },
           {
             "name": "page_size",
@@ -1360,8 +1333,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: Iterator over :class:`ProviderInfo`"
+            }
           }
         ],
         "responses": {
@@ -1426,7 +1398,7 @@
                         "x-enum": [
                           "GLOBAL_METASTORE_ID"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
                       "created_at": {
                         "type": "integer"
@@ -1451,8 +1423,7 @@
                       "exchange_id",
                       "filter_value",
                       "filter_type"
-                    ],
-                    "description": ":returns: :class:`CreateExchangeFilterResponse`"
+                    ]
                   }
                 },
                 "required": [
@@ -1509,8 +1480,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param page_size: int (optional)"
+            }
           },
           {
             "name": "page_size",
@@ -1526,8 +1496,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: Iterator over :class:`ExchangeFilter`"
+            }
           }
         ],
         "responses": {
@@ -1579,8 +1548,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -1623,8 +1591,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param filter: :class:`ExchangeFilter`"
+            }
           }
         ],
         "requestBody": {
@@ -1647,7 +1614,7 @@
                         "x-enum": [
                           "GLOBAL_METASTORE_ID"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
                       "created_at": {
                         "type": "integer"
@@ -1731,8 +1698,7 @@
                 "type": "object",
                 "properties": {
                   "listing_id": {
-                    "type": "string",
-                    "description": ":param exchange_id: str"
+                    "type": "string"
                   },
                   "exchange_id": {
                     "type": "string"
@@ -1793,8 +1759,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param page_size: int (optional)"
+            }
           },
           {
             "name": "page_size",
@@ -1810,8 +1775,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: Iterator over :class:`ExchangeListing`"
+            }
           }
         ],
         "responses": {
@@ -1893,7 +1857,7 @@
                               "x-enum": [
                                 "GLOBAL_METASTORE_ID"
                               ],
-                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                             },
                             "created_at": {
                               "type": "integer"
@@ -1962,8 +1926,7 @@
                     },
                     "required": [
                       "name"
-                    ],
-                    "description": ":returns: :class:`CreateExchangeResponse`"
+                    ]
                   }
                 },
                 "required": [
@@ -2020,8 +1983,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -2081,8 +2043,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -2125,8 +2086,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`GetExchangeResponse`"
+            }
           }
         ],
         "responses": {
@@ -2176,8 +2136,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param exchange: :class:`Exchange`"
+            }
           }
         ],
         "requestBody": {
@@ -2217,7 +2176,7 @@
                               "x-enum": [
                                 "GLOBAL_METASTORE_ID"
                               ],
-                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                             },
                             "created_at": {
                               "type": "integer"
@@ -2345,8 +2304,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -2391,8 +2349,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param page_size: int (optional)"
+            }
           },
           {
             "name": "page_size",
@@ -2408,8 +2365,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: Iterator over :class:`ExchangeListing`"
+            }
           }
         ],
         "responses": {
@@ -2470,14 +2426,13 @@
                           "LISTING_RESOURCE",
                           "PROVIDER"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
                       "parent_id": {
                         "type": "string",
                         "description": "TODO make the following fields required"
                       }
-                    },
-                    "description": ":param marketplace_file_type: :class:`MarketplaceFileType`"
+                    }
                   },
                   "marketplace_file_type": {
                     "type": "string",
@@ -2486,11 +2441,10 @@
                       "EMBEDDED_NOTEBOOK",
                       "PROVIDER_ICON"
                     ],
-                    "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                    "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                   },
                   "mime_type": {
-                    "type": "string",
-                    "description": ":param display_name: str (optional)"
+                    "type": "string"
                   },
                   "display_name": {
                     "type": "string"
@@ -2552,8 +2506,7 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/FileParent"
-            },
-            "description": ":param page_size: int (optional)"
+            }
           },
           {
             "name": "page_size",
@@ -2569,8 +2522,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: Iterator over :class:`FileInfo`"
+            }
           }
         ],
         "responses": {
@@ -2622,8 +2574,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -2666,8 +2617,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`GetFileResponse`"
+            }
           }
         ],
         "responses": {
@@ -2733,7 +2683,7 @@
                               "PERSONALIZED",
                               "STANDARD"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                           },
                           "categories": {
                             "type": "array",
@@ -2763,7 +2713,7 @@
                                 "TRANSPORTATION_AND_LOGISTICS",
                                 "TRAVEL_AND_TOURISM"
                               ],
-                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                             }
                           },
                           "created_at": {
@@ -2822,7 +2772,7 @@
                                   "PRIVATE",
                                   "PUBLIC"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               }
                             }
                           },
@@ -2838,7 +2788,7 @@
                                   "FULL",
                                   "SAMPLE"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               }
                             },
                             "required": [
@@ -2891,7 +2841,7 @@
                                 "ASSET_TYPE_NOTEBOOK",
                                 "ASSET_TYPE_PARTNER_INTEGRATION"
                               ],
-                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                             }
                           },
                           "collection_date_end": {
@@ -2921,7 +2871,7 @@
                                   "WEEKLY",
                                   "YEARLY"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               }
                             },
                             "required": [
@@ -2973,7 +2923,7 @@
                                         "LISTING_RESOURCE",
                                         "PROVIDER"
                                       ],
-                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                     },
                                     "parent_id": {
                                       "type": "string",
@@ -2991,7 +2941,7 @@
                                     "EMBEDDED_NOTEBOOK",
                                     "PROVIDER_ICON"
                                   ],
-                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
                                 "mime_type": {
                                   "type": "string"
@@ -3004,7 +2954,7 @@
                                     "FILE_STATUS_SANITIZING",
                                     "FILE_STATUS_STAGING"
                                   ],
-                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
                                 "status_message": {
                                   "type": "string",
@@ -3055,7 +3005,7 @@
                                     "LISTING_TAG_TYPE_LANGUAGE",
                                     "LISTING_TAG_TYPE_TASK"
                                   ],
-                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
                                 "tag_values": {
                                   "type": "array",
@@ -3090,7 +3040,7 @@
                                   "WEEKLY",
                                   "YEARLY"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               }
                             },
                             "required": [
@@ -3107,8 +3057,7 @@
                     },
                     "required": [
                       "summary"
-                    ],
-                    "description": ":returns: :class:`CreateListingResponse`"
+                    ]
                   }
                 },
                 "required": [
@@ -3167,8 +3116,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -3211,8 +3159,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`GetListingResponse`"
+            }
           }
         ],
         "responses": {
@@ -3262,8 +3209,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param listing: :class:`Listing`"
+            }
           }
         ],
         "requestBody": {
@@ -3287,7 +3233,7 @@
                               "PERSONALIZED",
                               "STANDARD"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                           },
                           "categories": {
                             "type": "array",
@@ -3317,7 +3263,7 @@
                                 "TRANSPORTATION_AND_LOGISTICS",
                                 "TRAVEL_AND_TOURISM"
                               ],
-                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                             }
                           },
                           "created_at": {
@@ -3376,7 +3322,7 @@
                                   "PRIVATE",
                                   "PUBLIC"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               }
                             }
                           },
@@ -3392,7 +3338,7 @@
                                   "FULL",
                                   "SAMPLE"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               }
                             },
                             "required": [
@@ -3445,7 +3391,7 @@
                                 "ASSET_TYPE_NOTEBOOK",
                                 "ASSET_TYPE_PARTNER_INTEGRATION"
                               ],
-                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                             }
                           },
                           "collection_date_end": {
@@ -3475,7 +3421,7 @@
                                   "WEEKLY",
                                   "YEARLY"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               }
                             },
                             "required": [
@@ -3527,7 +3473,7 @@
                                         "LISTING_RESOURCE",
                                         "PROVIDER"
                                       ],
-                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                     },
                                     "parent_id": {
                                       "type": "string",
@@ -3545,7 +3491,7 @@
                                     "EMBEDDED_NOTEBOOK",
                                     "PROVIDER_ICON"
                                   ],
-                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
                                 "mime_type": {
                                   "type": "string"
@@ -3558,7 +3504,7 @@
                                     "FILE_STATUS_SANITIZING",
                                     "FILE_STATUS_STAGING"
                                   ],
-                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
                                 "status_message": {
                                   "type": "string",
@@ -3609,7 +3555,7 @@
                                     "LISTING_TAG_TYPE_LANGUAGE",
                                     "LISTING_TAG_TYPE_TASK"
                                   ],
-                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
                                 "tag_values": {
                                   "type": "array",
@@ -3644,7 +3590,7 @@
                                   "WEEKLY",
                                   "YEARLY"
                                 ],
-                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                               }
                             },
                             "required": [
@@ -3720,8 +3666,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -3781,8 +3726,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -3842,8 +3786,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param request_id: str"
+            }
           },
           {
             "name": "request_id",
@@ -3868,7 +3811,7 @@
                       "NEW",
                       "REQUEST_PENDING"
                     ],
-                    "description": ":param reason: str (optional)"
+                    "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                   },
                   "reason": {
                     "type": "string"
@@ -3885,14 +3828,13 @@
                           "FULL",
                           "SAMPLE"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       }
                     },
                     "required": [
                       "name",
                       "type"
-                    ],
-                    "description": ":returns: :class:`UpdatePersonalizationRequestResponse`"
+                    ]
                   }
                 },
                 "required": [
@@ -4195,8 +4137,7 @@
                       "business_contact_email",
                       "term_of_service_link",
                       "privacy_policy_link"
-                    ],
-                    "description": ":returns: :class:`CreateProviderResponse`"
+                    ]
                   }
                 },
                 "required": [
@@ -4255,8 +4196,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -4299,8 +4239,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`GetProviderResponse`"
+            }
           }
         ],
         "responses": {
@@ -4350,8 +4289,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param provider: :class:`ProviderInfo`"
+            }
           }
         ],
         "requestBody": {
@@ -4472,8 +4410,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -5686,7 +5623,7 @@
           "ASSET_TYPE_NOTEBOOK",
           "ASSET_TYPE_PARTNER_INTEGRATION"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "Category": {
         "type": "string",
@@ -5714,7 +5651,7 @@
           "TRANSPORTATION_AND_LOGISTICS",
           "TRAVEL_AND_TOURISM"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "Cost": {
         "type": "string",
@@ -5722,7 +5659,7 @@
           "FREE",
           "PAID"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "DataRefresh": {
         "type": "string",
@@ -5737,7 +5674,7 @@
           "WEEKLY",
           "YEARLY"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "DeltaSharingRecipientType": {
         "type": "string",
@@ -5745,14 +5682,14 @@
           "DELTA_SHARING_RECIPIENT_TYPE_DATABRICKS",
           "DELTA_SHARING_RECIPIENT_TYPE_OPEN"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ExchangeFilterType": {
         "type": "string",
         "x-enum": [
           "GLOBAL_METASTORE_ID"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FileParentType": {
         "type": "string",
@@ -5761,7 +5698,7 @@
           "LISTING_RESOURCE",
           "PROVIDER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FileStatus": {
         "type": "string",
@@ -5771,7 +5708,7 @@
           "FILE_STATUS_SANITIZING",
           "FILE_STATUS_STAGING"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FulfillmentType": {
         "type": "string",
@@ -5779,7 +5716,7 @@
           "INSTALL",
           "REQUEST_ACCESS"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "InstallationStatus": {
         "type": "string",
@@ -5787,7 +5724,7 @@
           "FAILED",
           "INSTALLED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ListingShareType": {
         "type": "string",
@@ -5795,7 +5732,7 @@
           "FULL",
           "SAMPLE"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ListingStatus": {
         "type": "string",
@@ -5813,7 +5750,7 @@
           "LISTING_TAG_TYPE_LANGUAGE",
           "LISTING_TAG_TYPE_TASK"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ListingType": {
         "type": "string",
@@ -5821,7 +5758,7 @@
           "PERSONALIZED",
           "STANDARD"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "MarketplaceFileType": {
         "type": "string",
@@ -5830,7 +5767,7 @@
           "EMBEDDED_NOTEBOOK",
           "PROVIDER_ICON"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PersonalizationRequestStatus": {
         "type": "string",
@@ -5840,7 +5777,7 @@
           "NEW",
           "REQUEST_PENDING"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "Visibility": {
         "type": "string",
@@ -5848,7 +5785,7 @@
           "PRIVATE",
           "PUBLIC"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       }
     }
   }

@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks ml service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.ml"
   },
   "servers": [
@@ -1108,8 +1108,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`ExperimentPermissions`"
+                    }
                   }
                 }
               }
@@ -1199,8 +1198,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`ExperimentPermissions`"
+                    }
                   }
                 }
               }
@@ -2949,11 +2947,11 @@
                               "properties": {
                                 "catalog_name": {
                                   "type": "string",
-                                  "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name."
+                                  "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name. Quoting is handled by the backend where needed, do not pre-quote it."
                                 },
                                 "schema_name": {
                                   "type": "string",
-                                  "description": "The Unity Catalog schema name."
+                                  "description": "The Unity Catalog schema name. This name is also used as the Lakebase schema name under the database. Quoting is handled by the backend where needed, do not pre-quote it."
                                 },
                                 "table_name_prefix": {
                                   "type": "string",
@@ -3069,22 +3067,32 @@
                               "full_name": {
                                 "type": "string"
                               },
+                              "dataframe_schema": {
+                                "type": "string",
+                                "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: {\"type\":\"struct\",\"fields\":[{\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+                              },
                               "entity_columns": {
                                 "type": "array",
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "The entity columns of the Delta table."
+                                "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+                              },
+                              "filter_condition": {
+                                "type": "string",
+                                "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
                               },
                               "timeseries_column": {
                                 "type": "string",
-                                "description": "The timeseries column of the Delta table."
+                                "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+                              },
+                              "transformation_sql": {
+                                "type": "string",
+                                "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a > 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
                               }
                             },
                             "required": [
-                              "full_name",
-                              "entity_columns",
-                              "timeseries_column"
+                              "full_name"
                             ]
                           },
                           "kafka_source": {
@@ -3106,7 +3114,11 @@
                                     "variant_expr_path"
                                   ]
                                 },
-                                "description": "The entity column identifiers of the Kafka source."
+                                "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity column identifiers of the Kafka source."
+                              },
+                              "filter_condition": {
+                                "type": "string",
+                                "description": "The filter condition applied to the source data before aggregation."
                               },
                               "timeseries_column_identifier": {
                                 "type": "object",
@@ -3118,28 +3130,277 @@
                                 "required": [
                                   "variant_expr_path"
                                 ],
-                                "description": "The timeseries column identifier of the Kafka source."
+                                "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column identifier of the Kafka source."
                               }
                             },
                             "required": [
-                              "name",
-                              "entity_column_identifiers",
-                              "timeseries_column_identifier"
+                              "name"
                             ]
                           }
                         },
                         "description": "The data source of the feature."
                       },
-                      "inputs": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        },
-                        "description": "The input columns from which the feature is computed."
-                      },
                       "function": {
                         "type": "object",
                         "properties": {
+                          "aggregation_function": {
+                            "type": "object",
+                            "properties": {
+                              "approx_count_distinct": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the approximate count of distinct values is computed."
+                                  },
+                                  "relative_sd": {
+                                    "type": "number",
+                                    "description": "The maximum relative standard deviation allowed (default defined by Spark)."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the approximate count of distinct values."
+                              },
+                              "approx_percentile": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the approximate percentile is computed."
+                                  },
+                                  "percentile": {
+                                    "type": "number",
+                                    "description": "The percentile value to compute (between 0 and 1)."
+                                  },
+                                  "accuracy": {
+                                    "type": "integer",
+                                    "description": "The accuracy parameter (higher is more accurate but slower)."
+                                  }
+                                },
+                                "required": [
+                                  "input",
+                                  "percentile"
+                                ],
+                                "description": "Computes the approximate percentile of values."
+                              },
+                              "avg": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the average is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the average of values."
+                              },
+                              "count_function": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the count is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the count of values."
+                              },
+                              "first": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the first value is returned."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Returns the first value."
+                              },
+                              "last": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the last value is returned."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Returns the last value."
+                              },
+                              "max": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the maximum is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the maximum value."
+                              },
+                              "min": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the minimum is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the minimum value."
+                              },
+                              "stddev_pop": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the population standard deviation is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the population standard deviation."
+                              },
+                              "stddev_samp": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the sample standard deviation is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the sample standard deviation."
+                              },
+                              "sum": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the sum is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the sum of values."
+                              },
+                              "time_window": {
+                                "type": "object",
+                                "properties": {
+                                  "continuous": {
+                                    "type": "object",
+                                    "properties": {
+                                      "window_duration": {
+                                        "type": "string"
+                                      },
+                                      "offset": {
+                                        "type": "string",
+                                        "description": "The offset of the continuous window (must be non-positive)."
+                                      }
+                                    },
+                                    "required": [
+                                      "window_duration"
+                                    ]
+                                  },
+                                  "sliding": {
+                                    "type": "object",
+                                    "properties": {
+                                      "window_duration": {
+                                        "type": "string"
+                                      },
+                                      "slide_duration": {
+                                        "type": "string",
+                                        "description": "The slide duration (interval by which windows advance, must be positive and less than duration)."
+                                      }
+                                    },
+                                    "required": [
+                                      "window_duration",
+                                      "slide_duration"
+                                    ]
+                                  },
+                                  "tumbling": {
+                                    "type": "object",
+                                    "properties": {
+                                      "window_duration": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "window_duration"
+                                    ]
+                                  }
+                                },
+                                "description": "The time window over which the aggregation is computed."
+                              },
+                              "var_pop": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the population variance is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the population variance."
+                              },
+                              "var_samp": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the sample variance is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the sample variance."
+                              }
+                            },
+                            "description": "An aggregation function applied over a time window."
+                          },
+                          "extra_parameters": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string",
+                                  "description": "The name of the parameter."
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "description": "The value of the parameter."
+                                }
+                              },
+                              "required": [
+                                "key",
+                                "value"
+                              ],
+                              "description": "Deprecated: Use typed fields on function-specific messages (e.g.\n    ApproxPercentileFunction.percentile) or AggregationFunction.ExtraParameter instead. Kept for\n    backwards compatibility."
+                            },
+                            "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. Extra parameters for parameterized functions."
+                          },
                           "function_type": {
                             "type": "string",
                             "x-enum": [
@@ -3157,41 +3418,40 @@
                               "VAR_POP",
                               "VAR_SAMP"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
-                          },
-                          "extra_parameters": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "key": {
-                                  "type": "string"
-                                },
-                                "value": {
-                                  "type": "string",
-                                  "description": "The value of the parameter."
-                                }
-                              },
-                              "required": [
-                                "key",
-                                "value"
-                              ]
-                            },
-                            "description": "Extra parameters for parameterized functions."
+                            "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. The type of the function."
                           }
                         },
-                        "required": [
-                          "function_type"
-                        ],
                         "description": "The function by which the feature is computed."
                       },
                       "description": {
                         "type": "string",
                         "description": "The description of the feature."
                       },
+                      "entities": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ]
+                        },
+                        "description": "The entity columns for the feature, used as aggregation keys and for query-time lookup."
+                      },
                       "filter_condition": {
                         "type": "string",
-                        "description": "The filter condition applied to the source data before aggregation."
+                        "description": "Deprecated: Use DeltaTableSource.filter_condition or KafkaSource.filter_condition instead. Kept for backwards compatibility. The filter condition applied to the source data before aggregation."
+                      },
+                      "inputs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Deprecated: Use AggregationFunction.inputs instead. Kept for backwards compatibility. The input columns from which the feature is computed."
                       },
                       "lineage_context": {
                         "type": "object",
@@ -3214,7 +3474,7 @@
                             "description": "The notebook ID where this API was invoked."
                           }
                         },
-                        "description": "WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users."
+                        "description": "Lineage context information for this feature. WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users."
                       },
                       "time_window": {
                         "type": "object",
@@ -3262,13 +3522,24 @@
                             ]
                           }
                         },
-                        "description": "The time window in which the feature is computed."
+                        "description": "Deprecated: Use Function.aggregation_function.time_window instead. Kept for backwards compatibility. The time window in which the feature is computed."
+                      },
+                      "timeseries_column": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name"
+                        ],
+                        "description": "Column recording time, used for point-in-time joins, backfills, and aggregations."
                       }
                     },
                     "required": [
                       "full_name",
                       "source",
-                      "inputs",
                       "function"
                     ],
                     "description": "Feature to create."
@@ -3434,22 +3705,32 @@
                               "full_name": {
                                 "type": "string"
                               },
+                              "dataframe_schema": {
+                                "type": "string",
+                                "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: {\"type\":\"struct\",\"fields\":[{\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+                              },
                               "entity_columns": {
                                 "type": "array",
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "The entity columns of the Delta table."
+                                "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+                              },
+                              "filter_condition": {
+                                "type": "string",
+                                "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
                               },
                               "timeseries_column": {
                                 "type": "string",
-                                "description": "The timeseries column of the Delta table."
+                                "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+                              },
+                              "transformation_sql": {
+                                "type": "string",
+                                "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a > 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
                               }
                             },
                             "required": [
-                              "full_name",
-                              "entity_columns",
-                              "timeseries_column"
+                              "full_name"
                             ]
                           }
                         },
@@ -3483,8 +3764,7 @@
                       "bootstrap_servers",
                       "subscription_mode",
                       "auth_config"
-                    ],
-                    "description": ":returns: :class:`KafkaConfig`"
+                    ]
                   }
                 },
                 "required": [
@@ -3649,11 +3929,11 @@
                         "properties": {
                           "catalog_name": {
                             "type": "string",
-                            "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name."
+                            "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name. Quoting is handled by the backend where needed, do not pre-quote it."
                           },
                           "schema_name": {
                             "type": "string",
-                            "description": "The Unity Catalog schema name."
+                            "description": "The Unity Catalog schema name. This name is also used as the Lakebase schema name under the database. Quoting is handled by the backend where needed, do not pre-quote it."
                           },
                           "table_name_prefix": {
                             "type": "string",
@@ -3946,22 +4226,32 @@
                               "full_name": {
                                 "type": "string"
                               },
+                              "dataframe_schema": {
+                                "type": "string",
+                                "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: {\"type\":\"struct\",\"fields\":[{\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+                              },
                               "entity_columns": {
                                 "type": "array",
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "The entity columns of the Delta table."
+                                "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+                              },
+                              "filter_condition": {
+                                "type": "string",
+                                "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
                               },
                               "timeseries_column": {
                                 "type": "string",
-                                "description": "The timeseries column of the Delta table."
+                                "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+                              },
+                              "transformation_sql": {
+                                "type": "string",
+                                "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a > 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
                               }
                             },
                             "required": [
-                              "full_name",
-                              "entity_columns",
-                              "timeseries_column"
+                              "full_name"
                             ]
                           },
                           "kafka_source": {
@@ -3983,7 +4273,11 @@
                                     "variant_expr_path"
                                   ]
                                 },
-                                "description": "The entity column identifiers of the Kafka source."
+                                "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity column identifiers of the Kafka source."
+                              },
+                              "filter_condition": {
+                                "type": "string",
+                                "description": "The filter condition applied to the source data before aggregation."
                               },
                               "timeseries_column_identifier": {
                                 "type": "object",
@@ -3995,28 +4289,277 @@
                                 "required": [
                                   "variant_expr_path"
                                 ],
-                                "description": "The timeseries column identifier of the Kafka source."
+                                "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column identifier of the Kafka source."
                               }
                             },
                             "required": [
-                              "name",
-                              "entity_column_identifiers",
-                              "timeseries_column_identifier"
+                              "name"
                             ]
                           }
                         },
                         "description": "The data source of the feature."
                       },
-                      "inputs": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        },
-                        "description": "The input columns from which the feature is computed."
-                      },
                       "function": {
                         "type": "object",
                         "properties": {
+                          "aggregation_function": {
+                            "type": "object",
+                            "properties": {
+                              "approx_count_distinct": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the approximate count of distinct values is computed."
+                                  },
+                                  "relative_sd": {
+                                    "type": "number",
+                                    "description": "The maximum relative standard deviation allowed (default defined by Spark)."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the approximate count of distinct values."
+                              },
+                              "approx_percentile": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the approximate percentile is computed."
+                                  },
+                                  "percentile": {
+                                    "type": "number",
+                                    "description": "The percentile value to compute (between 0 and 1)."
+                                  },
+                                  "accuracy": {
+                                    "type": "integer",
+                                    "description": "The accuracy parameter (higher is more accurate but slower)."
+                                  }
+                                },
+                                "required": [
+                                  "input",
+                                  "percentile"
+                                ],
+                                "description": "Computes the approximate percentile of values."
+                              },
+                              "avg": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the average is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the average of values."
+                              },
+                              "count_function": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the count is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the count of values."
+                              },
+                              "first": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the first value is returned."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Returns the first value."
+                              },
+                              "last": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the last value is returned."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Returns the last value."
+                              },
+                              "max": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the maximum is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the maximum value."
+                              },
+                              "min": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the minimum is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the minimum value."
+                              },
+                              "stddev_pop": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the population standard deviation is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the population standard deviation."
+                              },
+                              "stddev_samp": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the sample standard deviation is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the sample standard deviation."
+                              },
+                              "sum": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the sum is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the sum of values."
+                              },
+                              "time_window": {
+                                "type": "object",
+                                "properties": {
+                                  "continuous": {
+                                    "type": "object",
+                                    "properties": {
+                                      "window_duration": {
+                                        "type": "string"
+                                      },
+                                      "offset": {
+                                        "type": "string",
+                                        "description": "The offset of the continuous window (must be non-positive)."
+                                      }
+                                    },
+                                    "required": [
+                                      "window_duration"
+                                    ]
+                                  },
+                                  "sliding": {
+                                    "type": "object",
+                                    "properties": {
+                                      "window_duration": {
+                                        "type": "string"
+                                      },
+                                      "slide_duration": {
+                                        "type": "string",
+                                        "description": "The slide duration (interval by which windows advance, must be positive and less than duration)."
+                                      }
+                                    },
+                                    "required": [
+                                      "window_duration",
+                                      "slide_duration"
+                                    ]
+                                  },
+                                  "tumbling": {
+                                    "type": "object",
+                                    "properties": {
+                                      "window_duration": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "window_duration"
+                                    ]
+                                  }
+                                },
+                                "description": "The time window over which the aggregation is computed."
+                              },
+                              "var_pop": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the population variance is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the population variance."
+                              },
+                              "var_samp": {
+                                "type": "object",
+                                "properties": {
+                                  "input": {
+                                    "type": "string",
+                                    "description": "The input column from which the sample variance is computed."
+                                  }
+                                },
+                                "required": [
+                                  "input"
+                                ],
+                                "description": "Computes the sample variance."
+                              }
+                            },
+                            "description": "An aggregation function applied over a time window."
+                          },
+                          "extra_parameters": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "key": {
+                                  "type": "string",
+                                  "description": "The name of the parameter."
+                                },
+                                "value": {
+                                  "type": "string",
+                                  "description": "The value of the parameter."
+                                }
+                              },
+                              "required": [
+                                "key",
+                                "value"
+                              ],
+                              "description": "Deprecated: Use typed fields on function-specific messages (e.g.\n    ApproxPercentileFunction.percentile) or AggregationFunction.ExtraParameter instead. Kept for\n    backwards compatibility."
+                            },
+                            "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. Extra parameters for parameterized functions."
+                          },
                           "function_type": {
                             "type": "string",
                             "x-enum": [
@@ -4034,41 +4577,40 @@
                               "VAR_POP",
                               "VAR_SAMP"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
-                          },
-                          "extra_parameters": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "key": {
-                                  "type": "string"
-                                },
-                                "value": {
-                                  "type": "string",
-                                  "description": "The value of the parameter."
-                                }
-                              },
-                              "required": [
-                                "key",
-                                "value"
-                              ]
-                            },
-                            "description": "Extra parameters for parameterized functions."
+                            "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. The type of the function."
                           }
                         },
-                        "required": [
-                          "function_type"
-                        ],
                         "description": "The function by which the feature is computed."
                       },
                       "description": {
                         "type": "string",
                         "description": "The description of the feature."
                       },
+                      "entities": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ]
+                        },
+                        "description": "The entity columns for the feature, used as aggregation keys and for query-time lookup."
+                      },
                       "filter_condition": {
                         "type": "string",
-                        "description": "The filter condition applied to the source data before aggregation."
+                        "description": "Deprecated: Use DeltaTableSource.filter_condition or KafkaSource.filter_condition instead. Kept for backwards compatibility. The filter condition applied to the source data before aggregation."
+                      },
+                      "inputs": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Deprecated: Use AggregationFunction.inputs instead. Kept for backwards compatibility. The input columns from which the feature is computed."
                       },
                       "lineage_context": {
                         "type": "object",
@@ -4091,7 +4633,7 @@
                             "description": "The notebook ID where this API was invoked."
                           }
                         },
-                        "description": "WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users."
+                        "description": "Lineage context information for this feature. WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users."
                       },
                       "time_window": {
                         "type": "object",
@@ -4139,13 +4681,24 @@
                             ]
                           }
                         },
-                        "description": "The time window in which the feature is computed."
+                        "description": "Deprecated: Use Function.aggregation_function.time_window instead. Kept for backwards compatibility. The time window in which the feature is computed."
+                      },
+                      "timeseries_column": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "name"
+                        ],
+                        "description": "Column recording time, used for point-in-time joins, backfills, and aggregations."
                       }
                     },
                     "required": [
                       "full_name",
                       "source",
-                      "inputs",
                       "function"
                     ],
                     "description": "Feature to update."
@@ -4366,22 +4919,32 @@
                               "full_name": {
                                 "type": "string"
                               },
+                              "dataframe_schema": {
+                                "type": "string",
+                                "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: {\"type\":\"struct\",\"fields\":[{\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+                              },
                               "entity_columns": {
                                 "type": "array",
                                 "items": {
                                   "type": "string"
                                 },
-                                "description": "The entity columns of the Delta table."
+                                "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+                              },
+                              "filter_condition": {
+                                "type": "string",
+                                "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
                               },
                               "timeseries_column": {
                                 "type": "string",
-                                "description": "The timeseries column of the Delta table."
+                                "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+                              },
+                              "transformation_sql": {
+                                "type": "string",
+                                "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a > 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
                               }
                             },
                             "required": [
-                              "full_name",
-                              "entity_columns",
-                              "timeseries_column"
+                              "full_name"
                             ]
                           }
                         },
@@ -4636,11 +5199,11 @@
                         "properties": {
                           "catalog_name": {
                             "type": "string",
-                            "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name."
+                            "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name. Quoting is handled by the backend where needed, do not pre-quote it."
                           },
                           "schema_name": {
                             "type": "string",
-                            "description": "The Unity Catalog schema name."
+                            "description": "The Unity Catalog schema name. This name is also used as the Lakebase schema name under the database. Quoting is handled by the backend where needed, do not pre-quote it."
                           },
                           "table_name_prefix": {
                             "type": "string",
@@ -5447,8 +6010,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param feature_name: str"
+            }
           },
           {
             "name": "feature_name",
@@ -5478,7 +6040,7 @@
                     "required": [
                       "key"
                     ],
-                    "description": ":returns: :class:`FeatureTag`"
+                    "description": "Represents a tag on a feature in a feature table."
                   }
                 },
                 "required": [
@@ -5535,8 +6097,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param feature_name: str"
+            }
           },
           {
             "name": "feature_name",
@@ -5676,8 +6237,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param feature_name: str"
+            }
           },
           {
             "name": "feature_name",
@@ -5693,8 +6253,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`FeatureTag`"
+            }
           }
         ],
         "responses": {
@@ -5744,8 +6303,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param feature_name: str"
+            }
           },
           {
             "name": "feature_name",
@@ -5761,8 +6319,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param feature_tag: :class:`FeatureTag`"
+            }
           },
           {
             "name": "update_mask",
@@ -6329,7 +6886,7 @@
                         "TRANSITION_REQUEST_TO_PRODUCTION_CREATED",
                         "TRANSITION_REQUEST_TO_STAGING_CREATED"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                     },
                     "description": "Events that can trigger a registry webhook: * `MODEL_VERSION_CREATED`: A new model version was created for the associated model. * `MODEL_VERSION_TRANSITIONED_STAGE`: A model version\u2019s stage was changed. * `TRANSITION_REQUEST_CREATED`: A user requested a model version\u2019s stage be transitioned. * `COMMENT_CREATED`: A user wrote a comment on a registered model. * `REGISTERED_MODEL_CREATED`: A new registered model was created. This event type can only be specified for a registry-wide webhook, which can be created by not specifying a model name in the create request. * `MODEL_VERSION_TAG_SET`: A user set a tag on the model version. * `MODEL_VERSION_TRANSITIONED_TO_STAGING`: A model version was transitioned to staging. * `MODEL_VERSION_TRANSITIONED_TO_PRODUCTION`: A model version was transitioned to production. * `MODEL_VERSION_TRANSITIONED_TO_ARCHIVED`: A model version was archived. * `TRANSITION_REQUEST_TO_STAGING_CREATED`: A user requested a model version be transitioned to staging. * `TRANSITION_REQUEST_TO_PRODUCTION_CREATED`: A user requested a model version be transitioned to production. * `TRANSITION_REQUEST_TO_ARCHIVED_CREATED`: A user requested a model version be archived."
                   },
@@ -7239,8 +7796,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`RegisteredModelPermissions`"
+                    }
                   }
                 }
               }
@@ -7332,8 +7888,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`RegisteredModelPermissions`"
+                    }
                   }
                 }
               }
@@ -7525,8 +8080,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param model_name: str (optional) Registered model name If not specified, all webhooks associated with the specified events are listed, regardless of their associated model."
+            }
           },
           {
             "name": "model_name",
@@ -7534,7 +8088,8 @@
             "required": false,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Registered model name If not specified, all webhooks associated with the specified events are listed, regardless of their associated model."
           },
           {
             "name": "page_token",
@@ -8410,7 +8965,7 @@
                         "TRANSITION_REQUEST_TO_PRODUCTION_CREATED",
                         "TRANSITION_REQUEST_TO_STAGING_CREATED"
                       ],
-                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                     },
                     "description": "Events that can trigger a registry webhook: * `MODEL_VERSION_CREATED`: A new model version was created for the associated model. * `MODEL_VERSION_TRANSITIONED_STAGE`: A model version\u2019s stage was changed. * `TRANSITION_REQUEST_CREATED`: A user requested a model version\u2019s stage be transitioned. * `COMMENT_CREATED`: A user wrote a comment on a registered model. * `REGISTERED_MODEL_CREATED`: A new registered model was created. This event type can only be specified for a registry-wide webhook, which can be created by not specifying a model name in the create request. * `MODEL_VERSION_TAG_SET`: A user set a tag on the model version. * `MODEL_VERSION_TRANSITIONED_TO_STAGING`: A model version was transitioned to staging. * `MODEL_VERSION_TRANSITIONED_TO_PRODUCTION`: A model version was transitioned to production. * `MODEL_VERSION_TRANSITIONED_TO_ARCHIVED`: A model version was archived. * `TRANSITION_REQUEST_TO_STAGING_CREATED`: A user requested a model version be transitioned to staging. * `TRANSITION_REQUEST_TO_PRODUCTION_CREATED`: A user requested a model version be transitioned to production. * `TRANSITION_REQUEST_TO_ARCHIVED_CREATED`: A user requested a model version be archived."
                   },
@@ -8435,8 +8990,7 @@
                     },
                     "required": [
                       "url"
-                    ],
-                    "description": ":param job_spec: :class:`JobSpec` (optional)"
+                    ]
                   },
                   "job_spec": {
                     "type": "object",
@@ -8465,7 +9019,7 @@
                       "DISABLED",
                       "TEST_MODE"
                     ],
-                    "description": ":returns: :class:`UpdateWebhookResponse`"
+                    "description": "Enable or disable triggering the webhook, or put the webhook into test mode. The default is\n`ACTIVE`: * `ACTIVE`: Webhook is triggered when an associated event happens.\n\n* `DISABLED`: Webhook is not triggered.\n\n* `TEST_MODE`: Webhook can be triggered through the test endpoint, but is not triggered on a\nreal event."
                   }
                 },
                 "required": [
@@ -8552,6 +9106,55 @@
         },
         "description": "For activities, this contains the activity recorded for the action. For comments, this contains\n    the comment details. For transition requests, this contains the transition request details."
       },
+      "AggregationFunction": {
+        "type": "object",
+        "properties": {
+          "approx_count_distinct": {
+            "$ref": "#/components/schemas/ApproxCountDistinctFunction"
+          },
+          "approx_percentile": {
+            "$ref": "#/components/schemas/ApproxPercentileFunction"
+          },
+          "avg": {
+            "$ref": "#/components/schemas/AvgFunction"
+          },
+          "count_function": {
+            "$ref": "#/components/schemas/CountFunction"
+          },
+          "first": {
+            "$ref": "#/components/schemas/FirstFunction"
+          },
+          "last": {
+            "$ref": "#/components/schemas/LastFunction"
+          },
+          "max": {
+            "$ref": "#/components/schemas/MaxFunction"
+          },
+          "min": {
+            "$ref": "#/components/schemas/MinFunction"
+          },
+          "stddev_pop": {
+            "$ref": "#/components/schemas/StddevPopFunction"
+          },
+          "stddev_samp": {
+            "$ref": "#/components/schemas/StddevSampFunction"
+          },
+          "sum": {
+            "$ref": "#/components/schemas/SumFunction"
+          },
+          "time_window": {
+            "$ref": "#/components/schemas/TimeWindow",
+            "description": "The time window over which the aggregation is computed."
+          },
+          "var_pop": {
+            "$ref": "#/components/schemas/VarPopFunction"
+          },
+          "var_samp": {
+            "$ref": "#/components/schemas/VarSampFunction"
+          }
+        },
+        "description": "An aggregation function applied over a time window."
+      },
       "ApproveTransitionRequestResponse": {
         "type": "object",
         "properties": {
@@ -8560,6 +9163,45 @@
           }
         }
       },
+      "ApproxCountDistinctFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the approximate count of distinct values is computed."
+          },
+          "relative_sd": {
+            "type": "number",
+            "description": "The maximum relative standard deviation allowed (default defined by Spark)."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the approximate count of distinct values."
+      },
+      "ApproxPercentileFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the approximate percentile is computed."
+          },
+          "percentile": {
+            "type": "number",
+            "description": "The percentile value to compute (between 0 and 1)."
+          },
+          "accuracy": {
+            "type": "integer",
+            "description": "The accuracy parameter (higher is more accurate but slower)."
+          }
+        },
+        "required": [
+          "input",
+          "percentile"
+        ],
+        "description": "Computes the approximate percentile of values."
+      },
       "AuthConfig": {
         "type": "object",
         "properties": {
@@ -8567,6 +9209,19 @@
             "type": "string"
           }
         }
+      },
+      "AvgFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the average is computed."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the average of values."
       },
       "BackfillSource": {
         "type": "object",
@@ -8645,6 +9300,19 @@
         "required": [
           "window_duration"
         ]
+      },
+      "CountFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the count is computed."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the count of values."
       },
       "CreateCommentResponse": {
         "type": "object",
@@ -8862,22 +9530,43 @@
           "full_name": {
             "type": "string"
           },
+          "dataframe_schema": {
+            "type": "string",
+            "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: {\"type\":\"struct\",\"fields\":[{\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}},{\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":{}}]}"
+          },
           "entity_columns": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "The entity columns of the Delta table."
+            "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+          },
+          "filter_condition": {
+            "type": "string",
+            "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
           },
           "timeseries_column": {
             "type": "string",
-            "description": "The timeseries column of the Delta table."
+            "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+          },
+          "transformation_sql": {
+            "type": "string",
+            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a > 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
           }
         },
         "required": [
-          "full_name",
-          "entity_columns",
-          "timeseries_column"
+          "full_name"
+        ]
+      },
+      "EntityColumn": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
         ]
       },
       "Experiment": {
@@ -9032,13 +9721,6 @@
             "$ref": "#/components/schemas/DataSource",
             "description": "The data source of the feature."
           },
-          "inputs": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "The input columns from which the feature is computed."
-          },
           "function": {
             "$ref": "#/components/schemas/Function",
             "description": "The function by which the feature is computed."
@@ -9047,23 +9729,40 @@
             "type": "string",
             "description": "The description of the feature."
           },
+          "entities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityColumn"
+            },
+            "description": "The entity columns for the feature, used as aggregation keys and for query-time lookup."
+          },
           "filter_condition": {
             "type": "string",
-            "description": "The filter condition applied to the source data before aggregation."
+            "description": "Deprecated: Use DeltaTableSource.filter_condition or KafkaSource.filter_condition instead. Kept for backwards compatibility. The filter condition applied to the source data before aggregation."
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Deprecated: Use AggregationFunction.inputs instead. Kept for backwards compatibility. The input columns from which the feature is computed."
           },
           "lineage_context": {
             "$ref": "#/components/schemas/LineageContext",
-            "description": "WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users."
+            "description": "Lineage context information for this feature. WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users."
           },
           "time_window": {
             "$ref": "#/components/schemas/TimeWindow",
-            "description": "The time window in which the feature is computed."
+            "description": "Deprecated: Use Function.aggregation_function.time_window instead. Kept for backwards compatibility. The time window in which the feature is computed."
+          },
+          "timeseries_column": {
+            "$ref": "#/components/schemas/TimeseriesColumn",
+            "description": "Column recording time, used for point-in-time joins, backfills, and aggregations."
           }
         },
         "required": [
           "full_name",
           "source",
-          "inputs",
           "function"
         ]
       },
@@ -9177,6 +9876,19 @@
           }
         }
       },
+      "FirstFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the first value is returned."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Returns the first value."
+      },
       "ForecastingExperiment": {
         "type": "object",
         "properties": {
@@ -9198,26 +9910,28 @@
       "Function": {
         "type": "object",
         "properties": {
-          "function_type": {
-            "$ref": "#/components/schemas/FunctionFunctionType"
+          "aggregation_function": {
+            "$ref": "#/components/schemas/AggregationFunction"
           },
           "extra_parameters": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/FunctionExtraParameter"
             },
-            "description": "Extra parameters for parameterized functions."
+            "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. Extra parameters for parameterized functions."
+          },
+          "function_type": {
+            "$ref": "#/components/schemas/FunctionFunctionType",
+            "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. The type of the function."
           }
-        },
-        "required": [
-          "function_type"
-        ]
+        }
       },
       "FunctionExtraParameter": {
         "type": "object",
         "properties": {
           "key": {
-            "type": "string"
+            "type": "string",
+            "description": "The name of the parameter."
           },
           "value": {
             "type": "string",
@@ -9227,7 +9941,8 @@
         "required": [
           "key",
           "value"
-        ]
+        ],
+        "description": "Deprecated: Use typed fields on function-specific messages (e.g.\n    ApproxPercentileFunction.percentile) or AggregationFunction.ExtraParameter instead. Kept for\n    backwards compatibility."
       },
       "GetExperimentByNameResponse": {
         "type": "object",
@@ -9483,18 +10198,33 @@
             "items": {
               "$ref": "#/components/schemas/ColumnIdentifier"
             },
-            "description": "The entity column identifiers of the Kafka source."
+            "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity column identifiers of the Kafka source."
+          },
+          "filter_condition": {
+            "type": "string",
+            "description": "The filter condition applied to the source data before aggregation."
           },
           "timeseries_column_identifier": {
             "$ref": "#/components/schemas/ColumnIdentifier",
-            "description": "The timeseries column identifier of the Kafka source."
+            "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column identifier of the Kafka source."
           }
         },
         "required": [
-          "name",
-          "entity_column_identifiers",
-          "timeseries_column_identifier"
+          "name"
         ]
+      },
+      "LastFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the last value is returned."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Returns the last value."
       },
       "LineageContext": {
         "type": "object",
@@ -9867,6 +10597,19 @@
         ],
         "description": "A materialized feature represents a feature that is continuously computed and stored."
       },
+      "MaxFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the maximum is computed."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the maximum value."
+      },
       "Metric": {
         "type": "object",
         "properties": {
@@ -9904,6 +10647,19 @@
           }
         },
         "description": "Metric associated with a run, represented as a key-value pair."
+      },
+      "MinFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the minimum is computed."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the minimum value."
       },
       "Model": {
         "type": "object",
@@ -10246,11 +11002,11 @@
         "properties": {
           "catalog_name": {
             "type": "string",
-            "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name."
+            "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name. Quoting is handled by the backend where needed, do not pre-quote it."
           },
           "schema_name": {
             "type": "string",
-            "description": "The Unity Catalog schema name."
+            "description": "The Unity Catalog schema name. This name is also used as the Lakebase schema name under the database. Quoting is handled by the backend where needed, do not pre-quote it."
           },
           "table_name_prefix": {
             "type": "string",
@@ -10761,6 +11517,32 @@
           "slide_duration"
         ]
       },
+      "StddevPopFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the population standard deviation is computed."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the population standard deviation."
+      },
+      "StddevSampFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the sample standard deviation is computed."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the sample standard deviation."
+      },
       "SubscriptionMode": {
         "type": "object",
         "properties": {
@@ -10776,6 +11558,19 @@
             "description": "A regular expression matching topics to subscribe to. For example, 'topic.*' will subscribe to all topics starting with 'topic'."
           }
         }
+      },
+      "SumFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the sum is computed."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the sum of values."
       },
       "TestRegistryWebhookResponse": {
         "type": "object",
@@ -10802,6 +11597,17 @@
             "$ref": "#/components/schemas/TumblingWindow"
           }
         }
+      },
+      "TimeseriesColumn": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ]
       },
       "TransitionRequest": {
         "type": "object",
@@ -10895,6 +11701,32 @@
           }
         }
       },
+      "VarPopFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the population variance is computed."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the population variance."
+      },
+      "VarSampFunction": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "The input column from which the sample variance is computed."
+          }
+        },
+        "required": [
+          "input"
+        ],
+        "description": "Computes the sample variance."
+      },
       "ActivityAction": {
         "type": "string",
         "x-enum": [
@@ -10948,7 +11780,7 @@
           "RUNNING",
           "SUCCEEDED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FunctionFunctionType": {
         "type": "string",
@@ -10967,7 +11799,7 @@
           "VAR_POP",
           "VAR_SAMP"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Deprecated: Use the function-specific messages in AggregationFunction.function_type oneof\ninstead. Kept for backwards compatibility."
       },
       "LoggedModelStatus": {
         "type": "string",
@@ -10985,7 +11817,7 @@
           "PAUSED",
           "SNAPSHOT"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ModelVersionStatus": {
         "type": "string",
@@ -11006,7 +11838,7 @@
           "STOPPED",
           "UPDATING"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PermissionLevel": {
         "type": "string",
@@ -11027,7 +11859,7 @@
           "SNAPSHOT",
           "TRIGGERED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "RegisteredModelPermissionLevel": {
         "type": "string",
@@ -11066,7 +11898,7 @@
           "TRANSITION_REQUEST_TO_PRODUCTION_CREATED",
           "TRANSITION_REQUEST_TO_STAGING_CREATED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "RegistryWebhookStatus": {
         "type": "string",

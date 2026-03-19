@@ -148,7 +148,8 @@ primary_key_constraint
         The full name of the table referenced by the constraint.
     - name: constraint
       description: |
-        :returns: :class:\`TableConstraint\`
+        A table constraint, as defined by *one* of the following fields being set:
+        __primary_key_constraint__, __foreign_key_constraint__, __named_table_constraint__.
       value:
         foreign_key_constraint:
           name: "{{ name }}"

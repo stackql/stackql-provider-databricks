@@ -349,7 +349,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-keys">
     <td><CopyableCode code="keys" /></td>
     <td><code>string</code></td>
-    <td>:returns: Dict[str,str]</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

@@ -641,12 +641,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-id">
     <td><CopyableCode code="id" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
     <td><code>integer</code></td>
-    <td>:param page_token: str (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -783,8 +783,6 @@ update_time
       description: |
         If true, automatically resolve query display name conflicts. Otherwise, fail the request if the query's display name conflicts with an existing query's display name.
     - name: query
-      description: |
-        :returns: :class:\`Query\`
       value:
         apply_auto_limit: {{ apply_auto_limit }}
         catalog: "{{ catalog }}"

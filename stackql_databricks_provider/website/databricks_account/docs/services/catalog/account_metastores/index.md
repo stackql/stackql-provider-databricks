@@ -434,8 +434,6 @@ metastore_info
       value: "{{ account_id }}"
       description: Required parameter for the account_metastores resource.
     - name: metastore_info
-      description: |
-        :returns: :class:\`AccountsCreateMetastoreResponse\`
       value:
         name: "{{ name }}"
         external_access_enabled: {{ external_access_enabled }}

@@ -262,35 +262,35 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-object_type"><code>object_type</code></a>, <a href="#parameter-object_id"><code>object_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Read a quality monitor on UC object. Use Data Quality Monitoring API instead.</td>
+    <td>Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Read a quality</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
-    <td>[DEPRECATED] (Unimplemented) List quality monitors. Use Data Quality Monitoring API instead.</td>
+    <td>Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-quality_monitor"><code>quality_monitor</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Create a quality monitor on UC object. Use Data Quality Monitoring API instead.</td>
+    <td>Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Create a quality</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-object_type"><code>object_type</code></a>, <a href="#parameter-object_id"><code>object_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-quality_monitor"><code>quality_monitor</code></a></td>
     <td></td>
-    <td>[DEPRECATED] (Unimplemented) Update a quality monitor on UC object. Use Data Quality Monitoring API</td>
+    <td>Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-object_type"><code>object_type</code></a>, <a href="#parameter-object_id"><code>object_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>[DEPRECATED] Delete a quality monitor on UC object. Use Data Quality Monitoring API instead.</td>
+    <td>Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Delete a quality</td>
 </tr>
 </tbody>
 </table>
@@ -326,7 +326,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
     <td><code>integer</code></td>
-    <td>:param page_token: str (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -347,7 +347,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-[DEPRECATED] Read a quality monitor on UC object. Use Data Quality Monitoring API instead.
+Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Read a quality
 
 ```sql
 SELECT
@@ -364,7 +364,7 @@ AND deployment_name = '{{ deployment_name }}' -- required
 </TabItem>
 <TabItem value="list">
 
-[DEPRECATED] (Unimplemented) List quality monitors. Use Data Quality Monitoring API instead.
+Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)
 
 ```sql
 SELECT
@@ -393,7 +393,7 @@ AND page_token = '{{ page_token }}'
 >
 <TabItem value="create">
 
-[DEPRECATED] Create a quality monitor on UC object. Use Data Quality Monitoring API instead.
+Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Create a quality
 
 ```sql
 INSERT INTO databricks_workspace.qualitymonitorv2.quality_monitor_v2 (
@@ -420,8 +420,6 @@ validity_check_configurations
       value: "{{ deployment_name }}"
       description: Required parameter for the quality_monitor_v2 resource.
     - name: quality_monitor
-      description: |
-        :returns: :class:\`QualityMonitor\`
       value:
         object_type: "{{ object_type }}"
         object_id: "{{ object_id }}"
@@ -460,7 +458,7 @@ validity_check_configurations
 >
 <TabItem value="update">
 
-[DEPRECATED] (Unimplemented) Update a quality monitor on UC object. Use Data Quality Monitoring API
+Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)
 
 ```sql
 REPLACE databricks_workspace.qualitymonitorv2.quality_monitor_v2
@@ -491,7 +489,7 @@ validity_check_configurations;
 >
 <TabItem value="delete">
 
-[DEPRECATED] Delete a quality monitor on UC object. Use Data Quality Monitoring API instead.
+Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Delete a quality
 
 ```sql
 DELETE FROM databricks_workspace.qualitymonitorv2.quality_monitor_v2

@@ -196,7 +196,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-private_access_settings_id">
     <td><CopyableCode code="private_access_settings_id" /></td>
     <td><code>string</code></td>
-    <td>:returns: :class:`PrivateAccessSettings`</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

@@ -85,7 +85,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "resultType",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (error, image, images, table, text)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (error, image, images, table, text)"
       },
       {
         "name": "schema",
@@ -107,7 +107,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "status",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (Cancelled, Cancelling, Error, Finished, Queued, Running)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (Cancelled, Cancelling, Error, Finished, Queued, Running)"
   }
 ]} />
 </TabItem>
@@ -152,7 +152,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#destroy"><CopyableCode code="destroy" /></a></td>
     <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-cluster_id"><code>cluster_id</code></a>, <a href="#parameter-context_id"><code>context_id</code></a></td>
+    <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-clusterId"><code>clusterId</code></a>, <a href="#parameter-contextId"><code>contextId</code></a></td>
     <td></td>
     <td>Deletes an execution context.</td>
 </tr>
@@ -182,12 +182,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-cluster_id">
     <td><CopyableCode code="cluster_id" /></td>
     <td><code>string</code></td>
-    <td>:param context_id: str</td>
+    <td></td>
 </tr>
 <tr id="parameter-command_id">
     <td><CopyableCode code="command_id" /></td>
     <td><code>string</code></td>
-    <td>:returns: :class:`CommandStatusResponse`</td>
+    <td></td>
 </tr>
 <tr id="parameter-context_id">
     <td><CopyableCode code="context_id" /></td>
@@ -245,12 +245,12 @@ Creates an execution context for running cluster commands.
 
 ```sql
 INSERT INTO databricks_workspace.compute.command_execution (
-cluster_id,
+clusterId,
 language,
 deployment_name
 )
 SELECT 
-'{{ cluster_id }}',
+'{{ clusterId }}',
 '{{ language }}',
 '{{ deployment_name }}'
 RETURNING
@@ -267,14 +267,36 @@ status
     - name: deployment_name
       value: "{{ deployment_name }}"
       description: Required parameter for the command_execution resource.
-    - name: cluster_id
-      value: "{{ cluster_id }}"
+    - name: clusterId
+      value: "{{ clusterId }}"
       description: |
         Running cluster id
     - name: language
       value: "{{ language }}"
       description: |
-        :returns: Long-running operation waiter for :class:\`ContextStatusResponse\`. See :method:wait_context_status_command_execution_running for more details.
+        Create a collection of name/value pairs.
+        Example enumeration:
+        >>> class Color(Enum):
+        ...     RED = 1
+        ...     BLUE = 2
+        ...     GREEN = 3
+        Access them by:
+        - attribute access:
+        >>> Color.RED
+        <Color.RED: 1>
+        - value lookup:
+        >>> Color(1)
+        <Color.RED: 1>
+        - name lookup:
+        >>> Color['RED']
+        <Color.RED: 1>
+        Enumerations can be iterated over, and know how many members they have:
+        >>> len(Color)
+        3
+        >>> list(Color)
+        [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+        Methods can be added to enumerations, and members can have their own
+        attributes -- see the documentation for details.
 `}</CodeBlock>
 
 </TabItem>
@@ -300,9 +322,9 @@ EXEC databricks_workspace.compute.command_execution.cancel
 @deployment_name='{{ deployment_name }}' --required 
 @@json=
 '{
-"cluster_id": "{{ cluster_id }}", 
-"command_id": "{{ command_id }}", 
-"context_id": "{{ context_id }}"
+"clusterId": "{{ clusterId }}", 
+"commandId": "{{ commandId }}", 
+"contextId": "{{ contextId }}"
 }'
 ;
 ```
@@ -316,8 +338,8 @@ EXEC databricks_workspace.compute.command_execution.destroy
 @deployment_name='{{ deployment_name }}' --required 
 @@json=
 '{
-"cluster_id": "{{ cluster_id }}", 
-"context_id": "{{ context_id }}"
+"clusterId": "{{ clusterId }}", 
+"contextId": "{{ contextId }}"
 }'
 ;
 ```
@@ -331,9 +353,9 @@ EXEC databricks_workspace.compute.command_execution.execute
 @deployment_name='{{ deployment_name }}' --required 
 @@json=
 '{
-"cluster_id": "{{ cluster_id }}", 
+"clusterId": "{{ clusterId }}", 
 "command": "{{ command }}", 
-"context_id": "{{ context_id }}", 
+"contextId": "{{ contextId }}", 
 "language": "{{ language }}"
 }'
 ;

@@ -76,14 +76,29 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           },
           {
+            "name": "dataframe_schema",
+            "type": "string",
+            "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: &#123;\"type\":\"struct\",\"fields\":[&#123;\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;,&#123;\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;]&#125;"
+          },
+          {
             "name": "entity_columns",
             "type": "array",
-            "description": "The entity columns of the Delta table."
+            "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+          },
+          {
+            "name": "filter_condition",
+            "type": "string",
+            "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
           },
           {
             "name": "timeseries_column",
             "type": "string",
-            "description": "The timeseries column of the Delta table."
+            "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+          },
+          {
+            "name": "transformation_sql",
+            "type": "string",
+            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
           }
         ]
       }
@@ -183,14 +198,29 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           },
           {
+            "name": "dataframe_schema",
+            "type": "string",
+            "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: &#123;\"type\":\"struct\",\"fields\":[&#123;\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;,&#123;\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;]&#125;"
+          },
+          {
             "name": "entity_columns",
             "type": "array",
-            "description": "The entity columns of the Delta table."
+            "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+          },
+          {
+            "name": "filter_condition",
+            "type": "string",
+            "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
           },
           {
             "name": "timeseries_column",
             "type": "string",
-            "description": "The timeseries column of the Delta table."
+            "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+          },
+          {
+            "name": "transformation_sql",
+            "type": "string",
+            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
           }
         ]
       }
@@ -445,8 +475,6 @@ value_schema
       value: "{{ deployment_name }}"
       description: Required parameter for the feature_kafka_configs resource.
     - name: kafka_config
-      description: |
-        :returns: :class:\`KafkaConfig\`
       value:
         name: "{{ name }}"
         bootstrap_servers: "{{ bootstrap_servers }}"
@@ -459,9 +487,12 @@ value_schema
         backfill_source:
           delta_table_source:
             full_name: "{{ full_name }}"
+            dataframe_schema: "{{ dataframe_schema }}"
             entity_columns:
               - "{{ entity_columns }}"
+            filter_condition: "{{ filter_condition }}"
             timeseries_column: "{{ timeseries_column }}"
+            transformation_sql: "{{ transformation_sql }}"
         extra_options: "{{ extra_options }}"
         key_schema:
           json_schema: "{{ json_schema }}"

@@ -245,7 +245,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-dataset_catalog">
     <td><CopyableCode code="dataset_catalog" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.</td>
 </tr>
 <tr id="parameter-dataset_schema">
     <td><CopyableCode code="dataset_schema" /></td>
@@ -382,8 +382,6 @@ update_time
       value: "{{ deployment_name }}"
       description: Required parameter for the lakeview resource.
     - name: dashboard
-      description: |
-        :param dataset_catalog: str (optional) Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.
       value:
         create_time: "{{ create_time }}"
         dashboard_id: "{{ dashboard_id }}"
@@ -397,6 +395,7 @@ update_time
         warehouse_id: "{{ warehouse_id }}"
     - name: dataset_catalog
       value: "{{ dataset_catalog }}"
+      description: Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.
     - name: dataset_schema
       value: "{{ dataset_schema }}"
       description: Sets the default schema for all datasets in this dashboard. Does not impact table references that use fully qualified schema names (ex: nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.

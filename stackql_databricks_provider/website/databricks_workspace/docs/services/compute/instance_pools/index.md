@@ -921,7 +921,6 @@ custom_tags = '{{ custom_tags }}',
 idle_instance_autotermination_minutes = {{ idle_instance_autotermination_minutes }},
 max_capacity = {{ max_capacity }},
 min_idle_instances = {{ min_idle_instances }},
-node_type_flexibility = '{{ node_type_flexibility }}',
 remote_disk_throughput = {{ remote_disk_throughput }},
 total_initial_remote_disk_size = {{ total_initial_remote_disk_size }}
 WHERE 

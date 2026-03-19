@@ -1117,7 +1117,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-query_id">
     <td><CopyableCode code="query_id" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 <tr id="parameter-order">
     <td><CopyableCode code="order" /></td>
@@ -1331,8 +1331,6 @@ visualizations
     - name: tags
       value:
         - "{{ tags }}"
-      description: |
-        :returns: :class:\`LegacyQuery\`
 `}</CodeBlock>
 
 </TabItem>

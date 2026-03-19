@@ -306,7 +306,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names.</td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -445,7 +445,8 @@ updated_time
       description: Required parameter for the private_endpoint_rules resource.
     - name: private_endpoint_rule
       description: |
-        :returns: :class:\`NccPrivateEndpointRule\`
+        Properties of the new private endpoint rule. Note that you must approve the endpoint in Azure
+        portal after initialization.
       value:
         domain_names:
           - "{{ domain_names }}"

@@ -69,8 +69,8 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#get_download"><CopyableCode code="get_download" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-space_id"><code>space_id</code></a>, <a href="#parameter-conversation_id"><code>conversation_id</code></a>, <a href="#parameter-message_id"><code>message_id</code></a>, <a href="#parameter-attachment_id"><code>attachment_id</code></a>, <a href="#parameter-download_id"><code>download_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td><a href="#parameter-download_id_signature"><code>download_id_signature</code></a></td>
+    <td><a href="#parameter-space_id"><code>space_id</code></a>, <a href="#parameter-conversation_id"><code>conversation_id</code></a>, <a href="#parameter-message_id"><code>message_id</code></a>, <a href="#parameter-attachment_id"><code>attachment_id</code></a>, <a href="#parameter-download_id"><code>download_id</code></a>, <a href="#parameter-download_id_signature"><code>download_id_signature</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td></td>
     <td>After [Generating a Full Query Result Download](:method:genie/generatedownloadfullqueryresult) and</td>
 </tr>
 <tr>
@@ -116,6 +116,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>Download ID. This ID is provided by the [Generate Download endpoint](:method:genie/generateDownloadFullQueryResult)</td>
 </tr>
+<tr id="parameter-download_id_signature">
+    <td><CopyableCode code="download_id_signature" /></td>
+    <td><code>string</code></td>
+    <td>JWT signature for the download_id to ensure secure access to query results</td>
+</tr>
 <tr id="parameter-message_id">
     <td><CopyableCode code="message_id" /></td>
     <td><code>string</code></td>
@@ -125,11 +130,6 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><CopyableCode code="space_id" /></td>
     <td><code>string</code></td>
     <td>Genie space ID</td>
-</tr>
-<tr id="parameter-download_id_signature">
-    <td><CopyableCode code="download_id_signature" /></td>
-    <td><code>string</code></td>
-    <td>JWT signature for the download_id to ensure secure access to query results</td>
 </tr>
 </tbody>
 </table>
@@ -155,8 +155,8 @@ AND conversation_id = '{{ conversation_id }}' -- required
 AND message_id = '{{ message_id }}' -- required
 AND attachment_id = '{{ attachment_id }}' -- required
 AND download_id = '{{ download_id }}' -- required
+AND download_id_signature = '{{ download_id_signature }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
-AND download_id_signature = '{{ download_id_signature }}'
 ;
 ```
 </TabItem>

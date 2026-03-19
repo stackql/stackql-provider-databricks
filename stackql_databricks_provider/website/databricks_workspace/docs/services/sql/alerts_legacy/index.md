@@ -591,7 +591,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-alert_id">
     <td><CopyableCode code="alert_id" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 <tr id="parameter-deployment_name">
     <td><CopyableCode code="deployment_name" /></td>

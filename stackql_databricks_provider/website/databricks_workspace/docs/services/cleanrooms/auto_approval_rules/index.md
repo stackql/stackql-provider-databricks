@@ -191,7 +191,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-clean_room_name">
     <td><CopyableCode code="clean_room_name" /></td>
     <td><code>string</code></td>
-    <td>:param rule_id: str</td>
+    <td></td>
 </tr>
 <tr id="parameter-deployment_name">
     <td><CopyableCode code="deployment_name" /></td>
@@ -206,7 +206,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
     <td><code>integer</code></td>
-    <td></td>
+    <td>Maximum number of auto-approval rules to return. Defaults to 100.</td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -315,8 +315,6 @@ runner_collaborator_alias
       value: "{{ deployment_name }}"
       description: Required parameter for the auto_approval_rules resource.
     - name: auto_approval_rule
-      description: |
-        :returns: :class:\`CleanRoomAutoApprovalRule\`
       value:
         author_collaborator_alias: "{{ author_collaborator_alias }}"
         author_scope: "{{ author_scope }}"

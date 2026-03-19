@@ -226,6 +226,11 @@ The following fields are returned by `SELECT` queries:
                 "name": "dependencies",
                 "type": "array",
                 "description": "List of pip dependencies, as supported by the version of pip in this environment. Each dependency is a pip requirement file line https://pip.pypa.io/en/stable/reference/requirements-file-format/ Allowed dependency could be &lt;requirement specifier&gt;, &lt;archive url/path&gt;, &lt;local project path&gt;(WSFS or Volumes in Databricks), &lt;vcs project url&gt;"
+              },
+              {
+                "name": "environment_version",
+                "type": "string",
+                "description": "The environment version of the serverless Python environment used to execute customer Python code. Each environment version includes a specific Python version and a curated set of pre-installed libraries with defined versions, providing a stable and reproducible execution environment. Databricks supports a three-year lifecycle for each environment version. For available versions and their included packages, see https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/ The value should be a string representing the environment version number, for example: `\"4\"`."
               }
             ]
           },
@@ -319,6 +324,16 @@ The following fields are returned by `SELECT` queries:
                 "name": "connection_name",
                 "type": "string",
                 "description": ""
+              },
+              {
+                "name": "connector_type",
+                "type": "string",
+                "description": "(Optional) Connector Type for sources. Ex: CDC, Query Based. (CDC, QUERY_BASED)"
+              },
+              {
+                "name": "data_staging_options",
+                "type": "object",
+                "description": "(Optional) Location of staged data storage. This is required for migration from Cdc Managed Ingestion Pipeline with Gateway pipeline to Combined Cdc Managed Ingestion Pipeline. If not specified, the volume for staged data will be created in catalog and schema/target specified in the top level pipeline definition."
               },
               {
                 "name": "full_refresh_window",
@@ -516,6 +531,11 @@ The following fields are returned by `SELECT` queries:
         "name": "full_refresh_selection",
         "type": "array",
         "description": "A list of tables to update with fullRefresh. If both refresh_selection and full_refresh_selection are empty, this is a full graph update. Full Refresh on a table means that the states of the table will be reset before the refresh."
+      },
+      {
+        "name": "parameters",
+        "type": "object",
+        "description": "Key/value map of parameters used to initiate the update"
       },
       {
         "name": "pipeline_id",
@@ -742,6 +762,11 @@ The following fields are returned by `SELECT` queries:
                 "name": "dependencies",
                 "type": "array",
                 "description": "List of pip dependencies, as supported by the version of pip in this environment. Each dependency is a pip requirement file line https://pip.pypa.io/en/stable/reference/requirements-file-format/ Allowed dependency could be &lt;requirement specifier&gt;, &lt;archive url/path&gt;, &lt;local project path&gt;(WSFS or Volumes in Databricks), &lt;vcs project url&gt;"
+              },
+              {
+                "name": "environment_version",
+                "type": "string",
+                "description": "The environment version of the serverless Python environment used to execute customer Python code. Each environment version includes a specific Python version and a curated set of pre-installed libraries with defined versions, providing a stable and reproducible execution environment. Databricks supports a three-year lifecycle for each environment version. For available versions and their included packages, see https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/ The value should be a string representing the environment version number, for example: `\"4\"`."
               }
             ]
           },
@@ -835,6 +860,16 @@ The following fields are returned by `SELECT` queries:
                 "name": "connection_name",
                 "type": "string",
                 "description": ""
+              },
+              {
+                "name": "connector_type",
+                "type": "string",
+                "description": "(Optional) Connector Type for sources. Ex: CDC, Query Based. (CDC, QUERY_BASED)"
+              },
+              {
+                "name": "data_staging_options",
+                "type": "object",
+                "description": "(Optional) Location of staged data storage. This is required for migration from Cdc Managed Ingestion Pipeline with Gateway pipeline to Combined Cdc Managed Ingestion Pipeline. If not specified, the volume for staged data will be created in catalog and schema/target specified in the top level pipeline definition."
               },
               {
                 "name": "full_refresh_window",
@@ -1034,6 +1069,11 @@ The following fields are returned by `SELECT` queries:
         "description": "A list of tables to update with fullRefresh. If both refresh_selection and full_refresh_selection are empty, this is a full graph update. Full Refresh on a table means that the states of the table will be reset before the refresh."
       },
       {
+        "name": "parameters",
+        "type": "object",
+        "description": "Key/value map of parameters used to initiate the update"
+      },
+      {
         "name": "pipeline_id",
         "type": "string",
         "description": "The ID of the pipeline."
@@ -1124,7 +1164,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-pipeline_id">
     <td><CopyableCode code="pipeline_id" /></td>
     <td><code>string</code></td>
-    <td>:param cause: :class:`StartUpdateCause` (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-update_id">
     <td><CopyableCode code="update_id" /></td>
@@ -1214,7 +1254,10 @@ EXEC databricks_workspace.pipelines.pipeline_updates.start
 "cause": "{{ cause }}", 
 "full_refresh": {{ full_refresh }}, 
 "full_refresh_selection": "{{ full_refresh_selection }}", 
+"parameters": "{{ parameters }}", 
 "refresh_selection": "{{ refresh_selection }}", 
+"replace_where_overrides": "{{ replace_where_overrides }}", 
+"reset_checkpoint_selection": "{{ reset_checkpoint_selection }}", 
 "rewind_spec": "{{ rewind_spec }}", 
 "validate_only": {{ validate_only }}
 }'

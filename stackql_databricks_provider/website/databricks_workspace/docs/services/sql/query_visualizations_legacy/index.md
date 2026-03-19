@@ -194,8 +194,6 @@ updated_at
       description: Required parameter for the query_visualizations_legacy resource.
     - name: created_at
       value: "{{ created_at }}"
-      description: |
-        :param description: str (optional) A short description of this visualization. This is not displayed in the UI.
     - name: description
       value: "{{ description }}"
       description: |
@@ -209,8 +207,6 @@ updated_at
       description: |
         The options object varies widely from one visualization type to the next and is unsupported. Databricks does not recommend modifying visualization settings in JSON.
     - name: query
-      description: |
-        :param type: str (optional) The type of visualization: chart, table, pivot table, and so on.
       value:
         can_edit: {{ can_edit }}
         created_at: "{{ created_at }}"
@@ -348,8 +344,6 @@ updated_at
         The type of visualization: chart, table, pivot table, and so on.
     - name: updated_at
       value: "{{ updated_at }}"
-      description: |
-        :returns: :class:\`LegacyVisualization\`
     - name: query_id
       value: "{{ query_id }}"
       description: |

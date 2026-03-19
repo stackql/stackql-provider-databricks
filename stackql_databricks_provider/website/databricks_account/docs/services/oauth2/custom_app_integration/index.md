@@ -280,12 +280,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-integration_id">
     <td><CopyableCode code="integration_id" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 <tr id="parameter-include_creator_username">
     <td><CopyableCode code="include_creator_username" /></td>
     <td><code>boolean</code></td>
-    <td>:param page_size: int (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -295,7 +295,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>:returns: Iterator over :class:`GetCustomAppIntegrationOutput`</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

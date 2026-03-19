@@ -46,7 +46,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "entity_id",
     "type": "string",
-    "description": "The identifier of the entity to which the tag is assigned"
+    "description": "The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name"
   },
   {
     "name": "entity_type",
@@ -71,7 +71,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "entity_id",
     "type": "string",
-    "description": "The identifier of the entity to which the tag is assigned"
+    "description": "The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name"
   },
   {
     "name": "entity_type",
@@ -166,12 +166,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-entity_id">
     <td><CopyableCode code="entity_id" /></td>
     <td><code>string</code></td>
-    <td>The identifier of the entity to which the tag is assigned</td>
+    <td>The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name</td>
 </tr>
 <tr id="parameter-entity_type">
     <td><CopyableCode code="entity_type" /></td>
     <td><code>string</code></td>
-    <td>The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces</td>
+    <td>The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces, notebooks</td>
 </tr>
 <tr id="parameter-tag_key">
     <td><CopyableCode code="tag_key" /></td>
@@ -181,7 +181,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -283,8 +283,6 @@ tag_value
       value: "{{ deployment_name }}"
       description: Required parameter for the workspace_entity_tag_assignments resource.
     - name: tag_assignment
-      description: |
-        :returns: :class:\`TagAssignment\`
       value:
         entity_type: "{{ entity_type }}"
         entity_id: "{{ entity_id }}"

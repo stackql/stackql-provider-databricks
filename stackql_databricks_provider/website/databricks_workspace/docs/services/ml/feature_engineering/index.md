@@ -54,9 +54,21 @@ The following fields are returned by `SELECT` queries:
     "description": "The description of the feature."
   },
   {
+    "name": "entities",
+    "type": "array",
+    "description": "The entity columns for the feature, used as aggregation keys and for query-time lookup.",
+    "children": [
+      {
+        "name": "name",
+        "type": "string",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "filter_condition",
     "type": "string",
-    "description": "The filter condition applied to the source data before aggregation."
+    "description": "Deprecated: Use DeltaTableSource.filter_condition or KafkaSource.filter_condition instead. Kept for backwards compatibility. The filter condition applied to the source data before aggregation."
   },
   {
     "name": "function",
@@ -64,19 +76,214 @@ The following fields are returned by `SELECT` queries:
     "description": "The function by which the feature is computed.",
     "children": [
       {
-        "name": "function_type",
-        "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (APPROX_COUNT_DISTINCT, APPROX_PERCENTILE, AVG, COUNT, FIRST, LAST, MAX, MIN, STDDEV_POP, STDDEV_SAMP, SUM, VAR_POP, VAR_SAMP)"
+        "name": "aggregation_function",
+        "type": "object",
+        "description": "An aggregation function applied over a time window.",
+        "children": [
+          {
+            "name": "approx_count_distinct",
+            "type": "object",
+            "description": "Computes the approximate count of distinct values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the approximate count of distinct values is computed."
+              },
+              {
+                "name": "relative_sd",
+                "type": "number",
+                "description": "The maximum relative standard deviation allowed (default defined by Spark)."
+              }
+            ]
+          },
+          {
+            "name": "approx_percentile",
+            "type": "object",
+            "description": "Computes the approximate percentile of values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the approximate percentile is computed."
+              },
+              {
+                "name": "percentile",
+                "type": "number",
+                "description": "The percentile value to compute (between 0 and 1)."
+              },
+              {
+                "name": "accuracy",
+                "type": "integer",
+                "description": "The accuracy parameter (higher is more accurate but slower)."
+              }
+            ]
+          },
+          {
+            "name": "avg",
+            "type": "object",
+            "description": "Computes the average of values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the average is computed."
+              }
+            ]
+          },
+          {
+            "name": "count_function",
+            "type": "object",
+            "description": "Computes the count of values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the count is computed."
+              }
+            ]
+          },
+          {
+            "name": "first",
+            "type": "object",
+            "description": "Returns the first value.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the first value is returned."
+              }
+            ]
+          },
+          {
+            "name": "last",
+            "type": "object",
+            "description": "Returns the last value.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the last value is returned."
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": "object",
+            "description": "Computes the maximum value.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the maximum is computed."
+              }
+            ]
+          },
+          {
+            "name": "min",
+            "type": "object",
+            "description": "Computes the minimum value.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the minimum is computed."
+              }
+            ]
+          },
+          {
+            "name": "stddev_pop",
+            "type": "object",
+            "description": "Computes the population standard deviation.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the population standard deviation is computed."
+              }
+            ]
+          },
+          {
+            "name": "stddev_samp",
+            "type": "object",
+            "description": "Computes the sample standard deviation.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the sample standard deviation is computed."
+              }
+            ]
+          },
+          {
+            "name": "sum",
+            "type": "object",
+            "description": "Computes the sum of values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the sum is computed."
+              }
+            ]
+          },
+          {
+            "name": "time_window",
+            "type": "object",
+            "description": "The time window over which the aggregation is computed.",
+            "children": [
+              {
+                "name": "continuous",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "sliding",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "tumbling",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "var_pop",
+            "type": "object",
+            "description": "Computes the population variance.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the population variance is computed."
+              }
+            ]
+          },
+          {
+            "name": "var_samp",
+            "type": "object",
+            "description": "Computes the sample variance.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the sample variance is computed."
+              }
+            ]
+          }
+        ]
       },
       {
         "name": "extra_parameters",
         "type": "array",
-        "description": "Extra parameters for parameterized functions.",
+        "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. Extra parameters for parameterized functions.",
         "children": [
           {
             "name": "key",
             "type": "string",
-            "description": ""
+            "description": "The name of the parameter."
           },
           {
             "name": "value",
@@ -84,18 +291,23 @@ The following fields are returned by `SELECT` queries:
             "description": "The value of the parameter."
           }
         ]
+      },
+      {
+        "name": "function_type",
+        "type": "string",
+        "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. The type of the function. (APPROX_COUNT_DISTINCT, APPROX_PERCENTILE, AVG, COUNT, FIRST, LAST, MAX, MIN, STDDEV_POP, STDDEV_SAMP, SUM, VAR_POP, VAR_SAMP)"
       }
     ]
   },
   {
     "name": "inputs",
     "type": "array",
-    "description": "The input columns from which the feature is computed."
+    "description": "Deprecated: Use AggregationFunction.inputs instead. Kept for backwards compatibility. The input columns from which the feature is computed."
   },
   {
     "name": "lineage_context",
     "type": "object",
-    "description": "WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users.",
+    "description": "Lineage context information for this feature. WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users.",
     "children": [
       {
         "name": "job_context",
@@ -137,14 +349,29 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           },
           {
+            "name": "dataframe_schema",
+            "type": "string",
+            "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: &#123;\"type\":\"struct\",\"fields\":[&#123;\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;,&#123;\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;]&#125;"
+          },
+          {
             "name": "entity_columns",
             "type": "array",
-            "description": "The entity columns of the Delta table."
+            "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+          },
+          {
+            "name": "filter_condition",
+            "type": "string",
+            "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
           },
           {
             "name": "timeseries_column",
             "type": "string",
-            "description": "The timeseries column of the Delta table."
+            "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+          },
+          {
+            "name": "transformation_sql",
+            "type": "string",
+            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
           }
         ]
       },
@@ -161,7 +388,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "entity_column_identifiers",
             "type": "array",
-            "description": "The entity column identifiers of the Kafka source.",
+            "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity column identifiers of the Kafka source.",
             "children": [
               {
                 "name": "variant_expr_path",
@@ -171,9 +398,14 @@ The following fields are returned by `SELECT` queries:
             ]
           },
           {
+            "name": "filter_condition",
+            "type": "string",
+            "description": "The filter condition applied to the source data before aggregation."
+          },
+          {
             "name": "timeseries_column_identifier",
             "type": "object",
-            "description": "The timeseries column identifier of the Kafka source.",
+            "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column identifier of the Kafka source.",
             "children": [
               {
                 "name": "variant_expr_path",
@@ -189,7 +421,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "time_window",
     "type": "object",
-    "description": "The time window in which the feature is computed.",
+    "description": "Deprecated: Use Function.aggregation_function.time_window instead. Kept for backwards compatibility. The time window in which the feature is computed.",
     "children": [
       {
         "name": "continuous",
@@ -236,6 +468,18 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           }
         ]
+      }
+    ]
+  },
+  {
+    "name": "timeseries_column",
+    "type": "object",
+    "description": "Column recording time, used for point-in-time joins, backfills, and aggregations.",
+    "children": [
+      {
+        "name": "name",
+        "type": "string",
+        "description": ""
       }
     ]
   }
@@ -255,9 +499,21 @@ The following fields are returned by `SELECT` queries:
     "description": "The description of the feature."
   },
   {
+    "name": "entities",
+    "type": "array",
+    "description": "The entity columns for the feature, used as aggregation keys and for query-time lookup.",
+    "children": [
+      {
+        "name": "name",
+        "type": "string",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "filter_condition",
     "type": "string",
-    "description": "The filter condition applied to the source data before aggregation."
+    "description": "Deprecated: Use DeltaTableSource.filter_condition or KafkaSource.filter_condition instead. Kept for backwards compatibility. The filter condition applied to the source data before aggregation."
   },
   {
     "name": "function",
@@ -265,19 +521,214 @@ The following fields are returned by `SELECT` queries:
     "description": "The function by which the feature is computed.",
     "children": [
       {
-        "name": "function_type",
-        "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (APPROX_COUNT_DISTINCT, APPROX_PERCENTILE, AVG, COUNT, FIRST, LAST, MAX, MIN, STDDEV_POP, STDDEV_SAMP, SUM, VAR_POP, VAR_SAMP)"
+        "name": "aggregation_function",
+        "type": "object",
+        "description": "An aggregation function applied over a time window.",
+        "children": [
+          {
+            "name": "approx_count_distinct",
+            "type": "object",
+            "description": "Computes the approximate count of distinct values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the approximate count of distinct values is computed."
+              },
+              {
+                "name": "relative_sd",
+                "type": "number",
+                "description": "The maximum relative standard deviation allowed (default defined by Spark)."
+              }
+            ]
+          },
+          {
+            "name": "approx_percentile",
+            "type": "object",
+            "description": "Computes the approximate percentile of values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the approximate percentile is computed."
+              },
+              {
+                "name": "percentile",
+                "type": "number",
+                "description": "The percentile value to compute (between 0 and 1)."
+              },
+              {
+                "name": "accuracy",
+                "type": "integer",
+                "description": "The accuracy parameter (higher is more accurate but slower)."
+              }
+            ]
+          },
+          {
+            "name": "avg",
+            "type": "object",
+            "description": "Computes the average of values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the average is computed."
+              }
+            ]
+          },
+          {
+            "name": "count_function",
+            "type": "object",
+            "description": "Computes the count of values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the count is computed."
+              }
+            ]
+          },
+          {
+            "name": "first",
+            "type": "object",
+            "description": "Returns the first value.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the first value is returned."
+              }
+            ]
+          },
+          {
+            "name": "last",
+            "type": "object",
+            "description": "Returns the last value.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the last value is returned."
+              }
+            ]
+          },
+          {
+            "name": "max",
+            "type": "object",
+            "description": "Computes the maximum value.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the maximum is computed."
+              }
+            ]
+          },
+          {
+            "name": "min",
+            "type": "object",
+            "description": "Computes the minimum value.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the minimum is computed."
+              }
+            ]
+          },
+          {
+            "name": "stddev_pop",
+            "type": "object",
+            "description": "Computes the population standard deviation.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the population standard deviation is computed."
+              }
+            ]
+          },
+          {
+            "name": "stddev_samp",
+            "type": "object",
+            "description": "Computes the sample standard deviation.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the sample standard deviation is computed."
+              }
+            ]
+          },
+          {
+            "name": "sum",
+            "type": "object",
+            "description": "Computes the sum of values.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the sum is computed."
+              }
+            ]
+          },
+          {
+            "name": "time_window",
+            "type": "object",
+            "description": "The time window over which the aggregation is computed.",
+            "children": [
+              {
+                "name": "continuous",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "sliding",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "tumbling",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "var_pop",
+            "type": "object",
+            "description": "Computes the population variance.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the population variance is computed."
+              }
+            ]
+          },
+          {
+            "name": "var_samp",
+            "type": "object",
+            "description": "Computes the sample variance.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the sample variance is computed."
+              }
+            ]
+          }
+        ]
       },
       {
         "name": "extra_parameters",
         "type": "array",
-        "description": "Extra parameters for parameterized functions.",
+        "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. Extra parameters for parameterized functions.",
         "children": [
           {
             "name": "key",
             "type": "string",
-            "description": ""
+            "description": "The name of the parameter."
           },
           {
             "name": "value",
@@ -285,18 +736,23 @@ The following fields are returned by `SELECT` queries:
             "description": "The value of the parameter."
           }
         ]
+      },
+      {
+        "name": "function_type",
+        "type": "string",
+        "description": "Deprecated: Use the function oneof with AggregationFunction instead. Kept for backwards compatibility. The type of the function. (APPROX_COUNT_DISTINCT, APPROX_PERCENTILE, AVG, COUNT, FIRST, LAST, MAX, MIN, STDDEV_POP, STDDEV_SAMP, SUM, VAR_POP, VAR_SAMP)"
       }
     ]
   },
   {
     "name": "inputs",
     "type": "array",
-    "description": "The input columns from which the feature is computed."
+    "description": "Deprecated: Use AggregationFunction.inputs instead. Kept for backwards compatibility. The input columns from which the feature is computed."
   },
   {
     "name": "lineage_context",
     "type": "object",
-    "description": "WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users.",
+    "description": "Lineage context information for this feature. WARNING: This field is primarily intended for internal use by Databricks systems and is automatically populated when features are created through Databricks notebooks or jobs. Users should not manually set this field as incorrect values may lead to inaccurate lineage tracking or unexpected behavior. This field will be set by feature-engineering client and should be left unset by SDK and terraform users.",
     "children": [
       {
         "name": "job_context",
@@ -338,14 +794,29 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           },
           {
+            "name": "dataframe_schema",
+            "type": "string",
+            "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: &#123;\"type\":\"struct\",\"fields\":[&#123;\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;,&#123;\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;]&#125;"
+          },
+          {
             "name": "entity_columns",
             "type": "array",
-            "description": "The entity columns of the Delta table."
+            "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+          },
+          {
+            "name": "filter_condition",
+            "type": "string",
+            "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
           },
           {
             "name": "timeseries_column",
             "type": "string",
-            "description": "The timeseries column of the Delta table."
+            "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+          },
+          {
+            "name": "transformation_sql",
+            "type": "string",
+            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
           }
         ]
       },
@@ -362,7 +833,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "entity_column_identifiers",
             "type": "array",
-            "description": "The entity column identifiers of the Kafka source.",
+            "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity column identifiers of the Kafka source.",
             "children": [
               {
                 "name": "variant_expr_path",
@@ -372,9 +843,14 @@ The following fields are returned by `SELECT` queries:
             ]
           },
           {
+            "name": "filter_condition",
+            "type": "string",
+            "description": "The filter condition applied to the source data before aggregation."
+          },
+          {
             "name": "timeseries_column_identifier",
             "type": "object",
-            "description": "The timeseries column identifier of the Kafka source.",
+            "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column identifier of the Kafka source.",
             "children": [
               {
                 "name": "variant_expr_path",
@@ -390,7 +866,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "time_window",
     "type": "object",
-    "description": "The time window in which the feature is computed.",
+    "description": "Deprecated: Use Function.aggregation_function.time_window instead. Kept for backwards compatibility. The time window in which the feature is computed.",
     "children": [
       {
         "name": "continuous",
@@ -437,6 +913,18 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           }
         ]
+      }
+    ]
+  },
+  {
+    "name": "timeseries_column",
+    "type": "object",
+    "description": "Column recording time, used for point-in-time joins, backfills, and aggregations.",
+    "children": [
+      {
+        "name": "name",
+        "type": "string",
+        "description": ""
       }
     ]
   }
@@ -555,12 +1043,14 @@ Get a Feature.
 SELECT
 full_name,
 description,
+entities,
 filter_condition,
 function,
 inputs,
 lineage_context,
 source,
-time_window
+time_window,
+timeseries_column
 FROM databricks_workspace.ml.feature_engineering
 WHERE full_name = '{{ full_name }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
@@ -575,12 +1065,14 @@ List Features.
 SELECT
 full_name,
 description,
+entities,
 filter_condition,
 function,
 inputs,
 lineage_context,
 source,
-time_window
+time_window,
+timeseries_column
 FROM databricks_workspace.ml.feature_engineering
 WHERE deployment_name = '{{ deployment_name }}' -- required
 AND page_size = '{{ page_size }}'
@@ -615,12 +1107,14 @@ SELECT
 RETURNING
 full_name,
 description,
+entities,
 filter_condition,
 function,
 inputs,
 lineage_context,
 source,
-time_window
+time_window,
+timeseries_column
 ;
 ```
 </TabItem>
@@ -640,24 +1134,69 @@ time_window
         source:
           delta_table_source:
             full_name: "{{ full_name }}"
+            dataframe_schema: "{{ dataframe_schema }}"
             entity_columns:
               - "{{ entity_columns }}"
+            filter_condition: "{{ filter_condition }}"
             timeseries_column: "{{ timeseries_column }}"
+            transformation_sql: "{{ transformation_sql }}"
           kafka_source:
             name: "{{ name }}"
             entity_column_identifiers:
               - variant_expr_path: "{{ variant_expr_path }}"
+            filter_condition: "{{ filter_condition }}"
             timeseries_column_identifier:
               variant_expr_path: "{{ variant_expr_path }}"
-        inputs:
-          - "{{ inputs }}"
         function:
-          function_type: "{{ function_type }}"
+          aggregation_function:
+            approx_count_distinct:
+              input: "{{ input }}"
+              relative_sd: {{ relative_sd }}
+            approx_percentile:
+              input: "{{ input }}"
+              percentile: {{ percentile }}
+              accuracy: {{ accuracy }}
+            avg:
+              input: "{{ input }}"
+            count_function:
+              input: "{{ input }}"
+            first:
+              input: "{{ input }}"
+            last:
+              input: "{{ input }}"
+            max:
+              input: "{{ input }}"
+            min:
+              input: "{{ input }}"
+            stddev_pop:
+              input: "{{ input }}"
+            stddev_samp:
+              input: "{{ input }}"
+            sum:
+              input: "{{ input }}"
+            time_window:
+              continuous:
+                window_duration: "{{ window_duration }}"
+                offset: "{{ offset }}"
+              sliding:
+                window_duration: "{{ window_duration }}"
+                slide_duration: "{{ slide_duration }}"
+              tumbling:
+                window_duration: "{{ window_duration }}"
+            var_pop:
+              input: "{{ input }}"
+            var_samp:
+              input: "{{ input }}"
           extra_parameters:
             - key: "{{ key }}"
               value: "{{ value }}"
+          function_type: "{{ function_type }}"
         description: "{{ description }}"
+        entities:
+          - name: "{{ name }}"
         filter_condition: "{{ filter_condition }}"
+        inputs:
+          - "{{ inputs }}"
         lineage_context:
           job_context:
             job_id: {{ job_id }}
@@ -672,6 +1211,8 @@ time_window
             slide_duration: "{{ slide_duration }}"
           tumbling:
             window_duration: "{{ window_duration }}"
+        timeseries_column:
+          name: "{{ name }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -702,12 +1243,14 @@ AND feature = '{{ feature }}' --required
 RETURNING
 full_name,
 description,
+entities,
 filter_condition,
 function,
 inputs,
 lineage_context,
 source,
-time_window;
+time_window,
+timeseries_column;
 ```
 </TabItem>
 </Tabs>

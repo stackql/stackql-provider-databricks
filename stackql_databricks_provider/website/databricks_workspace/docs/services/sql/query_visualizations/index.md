@@ -153,7 +153,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-id">
     <td><CopyableCode code="id" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -163,7 +163,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>:returns: Iterator over :class:`Visualization`</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -243,8 +243,6 @@ update_time
       value: "{{ deployment_name }}"
       description: Required parameter for the query_visualizations resource.
     - name: visualization
-      description: |
-        :returns: :class:\`Visualization\`
       value:
         display_name: "{{ display_name }}"
         query_id: "{{ query_id }}"

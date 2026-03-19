@@ -269,7 +269,7 @@ class TestRequestBodyRefInlining:
         assert "role_arn" in sts_role.get("properties", {})
 
     def test_inlining_preserves_description(self):
-        """Descriptions on $ref properties should be preserved after inlining."""
+        """Descriptions on request body properties should be preserved after inlining."""
         spec = generate_spec_for_service("provisioning", "account")
         cred_path = spec["paths"].get("/api/2.0/accounts/{account_id}/credentials", {})
         body_schema = (
@@ -279,9 +279,10 @@ class TestRequestBodyRefInlining:
             .get("application/json", {})
             .get("schema", {})
         )
-        aws_creds = body_schema.get("properties", {}).get("aws_credentials", {})
-        # The original $ref had a description - it should still be present
-        assert "description" in aws_creds
+        cred_name = body_schema.get("properties", {}).get("credentials_name", {})
+        # credentials_name has a real docstring description that should be kept
+        assert "description" in cred_name
+        assert "human-readable" in cred_name["description"]
 
     def test_response_refs_are_not_inlined(self):
         """Response schemas should still use $ref (only request bodies are inlined)."""

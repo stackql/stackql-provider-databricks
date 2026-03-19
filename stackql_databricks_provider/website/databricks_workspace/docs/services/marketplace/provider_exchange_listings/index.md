@@ -153,17 +153,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-exchange_id">
     <td><CopyableCode code="exchange_id" /></td>
     <td><code>string</code></td>
-    <td>:param page_size: int (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-id">
     <td><CopyableCode code="id" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 <tr id="parameter-listing_id">
     <td><CopyableCode code="listing_id" /></td>
     <td><code>string</code></td>
-    <td>:param page_size: int (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -173,7 +173,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>:returns: Iterator over :class:`ExchangeListing`</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -264,8 +264,6 @@ exchange_for_listing
       description: Required parameter for the provider_exchange_listings resource.
     - name: listing_id
       value: "{{ listing_id }}"
-      description: |
-        :param exchange_id: str
     - name: exchange_id
       value: "{{ exchange_id }}"
 `}</CodeBlock>

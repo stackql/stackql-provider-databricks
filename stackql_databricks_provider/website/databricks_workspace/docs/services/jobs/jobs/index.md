@@ -101,7 +101,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "pause_status",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
           },
           {
             "name": "task_retry_mode",
@@ -257,6 +257,18 @@ The following fields are returned by `SELECT` queries:
                 "name": "dirty_state",
                 "type": "string",
                 "description": "Dirty state indicates the job is not fully synced with the job specification in the remote repository. Possible values are: * `NOT_SYNCED`: The job is not yet synced with the remote job specification. Import the remote job specification from UI to make the job fully synced. * `DISCONNECTED`: The job is temporary disconnected from the remote job specification and is allowed for live edit. Import the remote job specification again from UI to make the job fully synced. (DISCONNECTED, NOT_SYNCED)"
+              }
+            ]
+          },
+          {
+            "name": "sparse_checkout",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "patterns",
+                "type": "array",
+                "description": ""
               }
             ]
           }
@@ -427,6 +439,33 @@ The following fields are returned by `SELECT` queries:
             "name": "task_key",
             "type": "string",
             "description": ""
+          },
+          {
+            "name": "alert_task",
+            "type": "object",
+            "description": "New alert v2 task",
+            "children": [
+              {
+                "name": "alert_id",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "subscribers",
+                "type": "array",
+                "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+              },
+              {
+                "name": "warehouse_id",
+                "type": "string",
+                "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+              },
+              {
+                "name": "workspace_path",
+                "type": "string",
+                "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+              }
+            ]
           },
           {
             "name": "clean_rooms_notebook_task",
@@ -1146,7 +1185,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "condition",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (MODEL_ALIAS_SET, MODEL_CREATED, MODEL_VERSION_READY)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (MODEL_ALIAS_SET, MODEL_CREATED, MODEL_VERSION_READY)"
               },
               {
                 "name": "aliases",
@@ -1173,7 +1212,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "pause_status",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
           },
           {
             "name": "periodic",
@@ -1396,7 +1435,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "pause_status",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
           },
           {
             "name": "task_retry_mode",
@@ -1552,6 +1591,18 @@ The following fields are returned by `SELECT` queries:
                 "name": "dirty_state",
                 "type": "string",
                 "description": "Dirty state indicates the job is not fully synced with the job specification in the remote repository. Possible values are: * `NOT_SYNCED`: The job is not yet synced with the remote job specification. Import the remote job specification from UI to make the job fully synced. * `DISCONNECTED`: The job is temporary disconnected from the remote job specification and is allowed for live edit. Import the remote job specification again from UI to make the job fully synced. (DISCONNECTED, NOT_SYNCED)"
+              }
+            ]
+          },
+          {
+            "name": "sparse_checkout",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "patterns",
+                "type": "array",
+                "description": ""
               }
             ]
           }
@@ -1722,6 +1773,33 @@ The following fields are returned by `SELECT` queries:
             "name": "task_key",
             "type": "string",
             "description": ""
+          },
+          {
+            "name": "alert_task",
+            "type": "object",
+            "description": "New alert v2 task",
+            "children": [
+              {
+                "name": "alert_id",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "subscribers",
+                "type": "array",
+                "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+              },
+              {
+                "name": "warehouse_id",
+                "type": "string",
+                "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+              },
+              {
+                "name": "workspace_path",
+                "type": "string",
+                "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+              }
+            ]
           },
           {
             "name": "clean_rooms_notebook_task",
@@ -2441,7 +2519,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "condition",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (MODEL_ALIAS_SET, MODEL_CREATED, MODEL_VERSION_READY)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (MODEL_ALIAS_SET, MODEL_CREATED, MODEL_VERSION_READY)"
               },
               {
                 "name": "aliases",
@@ -2468,7 +2546,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "pause_status",
             "type": "string",
-            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (PAUSED, UNPAUSED)"
           },
           {
             "name": "periodic",
@@ -2975,15 +3053,20 @@ job_id
           job_config_path: "{{ job_config_path }}"
           import_from_git_branch: "{{ import_from_git_branch }}"
           dirty_state: "{{ dirty_state }}"
+        sparse_checkout:
+          patterns:
+            - "{{ patterns }}"
     - name: health
       description: |
-        :param job_clusters: List[:class:\`JobCluster\`] (optional) A list of job cluster specifications that can be shared and reused by tasks of this job. Libraries cannot be declared in a shared job cluster. You must declare dependent libraries in task settings.
+        An optional set of health rules that can be defined for this job.
       value:
         rules:
           - metric: "{{ metric }}"
             op: "{{ op }}"
             value: {{ value }}
     - name: job_clusters
+      description: |
+        A list of job cluster specifications that can be shared and reused by tasks of this job. Libraries cannot be declared in a shared job cluster. You must declare dependent libraries in task settings.
       value:
         - job_cluster_key: "{{ job_cluster_key }}"
           new_cluster: "{{ new_cluster }}"
@@ -3039,6 +3122,13 @@ job_id
         A list of task specifications to be executed by this job. It supports up to 1000 elements in write endpoints (:method:jobs/create, :method:jobs/reset, :method:jobs/update, :method:jobs/submit). Read endpoints return only 100 tasks. If more than 100 tasks are available, you can paginate through them using :method:jobs/get. Use the \`next_page_token\` field at the object root to determine if more results are available.
       value:
         - task_key: "{{ task_key }}"
+          alert_task:
+            alert_id: "{{ alert_id }}"
+            subscribers:
+              - destination_id: "{{ destination_id }}"
+                user_name: "{{ user_name }}"
+            warehouse_id: "{{ warehouse_id }}"
+            workspace_path: "{{ workspace_path }}"
           clean_rooms_notebook_task:
             clean_room_name: "{{ clean_room_name }}"
             notebook_name: "{{ notebook_name }}"
@@ -3097,6 +3187,13 @@ job_id
             inputs: "{{ inputs }}"
             task:
               task_key: "{{ task_key }}"
+              alert_task:
+                alert_id: "{{ alert_id }}"
+                subscribers:
+                  - destination_id: "{{ destination_id }}"
+                    user_name: "{{ user_name }}"
+                warehouse_id: "{{ warehouse_id }}"
+                workspace_path: "{{ workspace_path }}"
               clean_rooms_notebook_task:
                 clean_room_name: "{{ clean_room_name }}"
                 notebook_name: "{{ notebook_name }}"
@@ -3155,6 +3252,7 @@ job_id
                 inputs: "{{ inputs }}"
                 task:
                   task_key: "{{ task_key }}"
+                  alert_task: "{{ alert_task }}"
                   clean_rooms_notebook_task: "{{ clean_rooms_notebook_task }}"
                   compute: "{{ compute }}"
                   condition_task: "{{ condition_task }}"

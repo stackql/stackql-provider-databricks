@@ -43,6 +43,18 @@ The following fields are returned by `SELECT` queries:
 
 <SchemaTable fields={[
   {
+    "name": "alert_output",
+    "type": "object",
+    "description": "The output of an alert task, if available",
+    "children": [
+      {
+        "name": "alert_state",
+        "type": "string",
+        "description": "Same alert evaluation state as in redash-v2/api/proto/alertsv2/alerts.proto (ERROR, OK, TRIGGERED, UNKNOWN)"
+      }
+    ]
+  },
+  {
     "name": "clean_rooms_notebook_output",
     "type": "object",
     "description": "The output of a clean rooms notebook task, if available",
@@ -433,6 +445,18 @@ The following fields are returned by `SELECT` queries:
                 "description": "Dirty state indicates the job is not fully synced with the job specification in the remote repository. Possible values are: * `NOT_SYNCED`: The job is not yet synced with the remote job specification. Import the remote job specification from UI to make the job fully synced. * `DISCONNECTED`: The job is temporary disconnected from the remote job specification and is allowed for live edit. Import the remote job specification again from UI to make the job fully synced. (DISCONNECTED, NOT_SYNCED)"
               }
             ]
+          },
+          {
+            "name": "sparse_checkout",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "patterns",
+                "type": "array",
+                "description": ""
+              }
+            ]
           }
         ]
       },
@@ -450,6 +474,33 @@ The following fields are returned by `SELECT` queries:
             "name": "task_key",
             "type": "string",
             "description": "A unique name for the task. This field is used to refer to this task from other tasks. This field is required and must be unique within its parent job. On Update or Reset, this field is used to reference the tasks to be updated or reset."
+          },
+          {
+            "name": "alert_task",
+            "type": "object",
+            "description": "New alert v2 task",
+            "children": [
+              {
+                "name": "alert_id",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "subscribers",
+                "type": "array",
+                "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+              },
+              {
+                "name": "warehouse_id",
+                "type": "string",
+                "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+              },
+              {
+                "name": "workspace_path",
+                "type": "string",
+                "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+              }
+            ]
           },
           {
             "name": "attempt_number",
@@ -670,6 +721,11 @@ The following fields are returned by `SELECT` queries:
             "description": "An optional description for this task."
           },
           {
+            "name": "disable_auto_optimization",
+            "type": "boolean",
+            "description": "An option to disable auto optimization in serverless"
+          },
+          {
             "name": "effective_performance_target",
             "type": "string",
             "description": "The actual performance target used by the serverless run during execution. This can differ from the client-set performance target on the request depending on whether the performance mode is supported by the job type. * `STANDARD`: Enables cost-efficient execution of serverless workloads. * `PERFORMANCE_OPTIMIZED`: Prioritizes fast startup and execution times through rapid scaling and optimized cluster performance. (PERFORMANCE_OPTIMIZED, STANDARD)"
@@ -844,6 +900,11 @@ The following fields are returned by `SELECT` queries:
                 "name": "job_source",
                 "type": "object",
                 "description": "The source of the job specification in the remote repository when the job is source controlled."
+              },
+              {
+                "name": "sparse_checkout",
+                "type": "object",
+                "description": ""
               }
             ]
           },
@@ -856,6 +917,16 @@ The following fields are returned by `SELECT` queries:
             "name": "libraries",
             "type": "string",
             "description": "An optional list of libraries to be installed on the cluster. The default value is an empty list."
+          },
+          {
+            "name": "max_retries",
+            "type": "integer",
+            "description": "An optional maximum number of times to retry an unsuccessful run. A run is considered to be unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR` `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never retry."
+          },
+          {
+            "name": "min_retry_interval_millis",
+            "type": "integer",
+            "description": "An optional minimal interval in milliseconds between the start of the failed run and the subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."
           },
           {
             "name": "new_cluster",
@@ -1048,6 +1119,11 @@ The following fields are returned by `SELECT` queries:
                 "description": ""
               }
             ]
+          },
+          {
+            "name": "retry_on_timeout",
+            "type": "boolean",
+            "description": "An optional policy to specify whether to retry a job when it times out. The default behavior is to not retry on timeout."
           },
           {
             "name": "run_duration",
@@ -1692,6 +1768,33 @@ The following fields are returned by `SELECT` queries:
             "description": "A unique name for the task. This field is used to refer to this task from other tasks. This field is required and must be unique within its parent job. On Update or Reset, this field is used to reference the tasks to be updated or reset."
           },
           {
+            "name": "alert_task",
+            "type": "object",
+            "description": "New alert v2 task",
+            "children": [
+              {
+                "name": "alert_id",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "subscribers",
+                "type": "array",
+                "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100."
+              },
+              {
+                "name": "warehouse_id",
+                "type": "string",
+                "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+              },
+              {
+                "name": "workspace_path",
+                "type": "string",
+                "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+              }
+            ]
+          },
+          {
             "name": "attempt_number",
             "type": "integer",
             "description": "The sequence number of this run attempt for a triggered job run. The initial attempt of a run has an attempt_number of 0. If the initial run attempt fails, and the job has a retry policy (`max_retries` &gt; 0), subsequent runs are created with an `original_attempt_run_id` of the original attempt’s ID and an incrementing `attempt_number`. Runs are retried only until they succeed, and the maximum `attempt_number` is the same as the `max_retries` value for the job."
@@ -1910,6 +2013,11 @@ The following fields are returned by `SELECT` queries:
             "description": "An optional description for this task."
           },
           {
+            "name": "disable_auto_optimization",
+            "type": "boolean",
+            "description": "An option to disable auto optimization in serverless"
+          },
+          {
             "name": "effective_performance_target",
             "type": "string",
             "description": "The actual performance target used by the serverless run during execution. This can differ from the client-set performance target on the request depending on whether the performance mode is supported by the job type. * `STANDARD`: Enables cost-efficient execution of serverless workloads. * `PERFORMANCE_OPTIMIZED`: Prioritizes fast startup and execution times through rapid scaling and optimized cluster performance. (PERFORMANCE_OPTIMIZED, STANDARD)"
@@ -2084,6 +2192,11 @@ The following fields are returned by `SELECT` queries:
                 "name": "job_source",
                 "type": "object",
                 "description": "The source of the job specification in the remote repository when the job is source controlled."
+              },
+              {
+                "name": "sparse_checkout",
+                "type": "object",
+                "description": ""
               }
             ]
           },
@@ -2096,6 +2209,16 @@ The following fields are returned by `SELECT` queries:
             "name": "libraries",
             "type": "string",
             "description": "An optional list of libraries to be installed on the cluster. The default value is an empty list."
+          },
+          {
+            "name": "max_retries",
+            "type": "integer",
+            "description": "An optional maximum number of times to retry an unsuccessful run. A run is considered to be unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR` `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never retry."
+          },
+          {
+            "name": "min_retry_interval_millis",
+            "type": "integer",
+            "description": "An optional minimal interval in milliseconds between the start of the failed run and the subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."
           },
           {
             "name": "new_cluster",
@@ -2288,6 +2411,11 @@ The following fields are returned by `SELECT` queries:
                 "description": ""
               }
             ]
+          },
+          {
+            "name": "retry_on_timeout",
+            "type": "boolean",
+            "description": "An optional policy to specify whether to retry a job when it times out. The default behavior is to not retry on timeout."
           },
           {
             "name": "run_duration",
@@ -2823,6 +2951,7 @@ Retrieve the output and metadata of a single task run. When a notebook task retu
 
 ```sql
 SELECT
+alert_output,
 clean_rooms_notebook_output,
 dashboard_output,
 dbt_cloud_output,

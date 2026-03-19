@@ -45,7 +45,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "Full three-part (catalog, schema, table) name of the table."
+    "description": ""
   },
   {
     "name": "database_instance_name",
@@ -121,7 +121,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-name">
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -189,8 +189,6 @@ logical_database_name
       value: "{{ deployment_name }}"
       description: Required parameter for the database_tables resource.
     - name: table
-      description: |
-        :returns: :class:\`DatabaseTable\`
       value:
         name: "{{ name }}"
         database_instance_name: "{{ database_instance_name }}"

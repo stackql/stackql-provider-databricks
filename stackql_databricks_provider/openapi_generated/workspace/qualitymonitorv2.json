@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks qualitymonitorv2 service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.qualitymonitorv2"
   },
   "servers": [
@@ -24,12 +24,12 @@
     "/api/2.0/quality-monitors": {
       "post": {
         "operationId": "quality_monitor_v2_create_quality_monitor",
-        "summary": "[DEPRECATED] Create a quality monitor on UC object. Use Data Quality Monitoring API instead.",
+        "summary": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Create a quality",
         "tags": [
           "qualitymonitorv2",
           "quality_monitor_v2"
         ],
-        "description": "[DEPRECATED] Create a quality monitor on UC object. Use Data Quality Monitoring API instead.\n\n:param quality_monitor: :class:`QualityMonitor`\n\n:returns: :class:`QualityMonitor`",
+        "description": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Create a quality\nmonitor on UC object.\n\n:param quality_monitor: :class:`QualityMonitor`\n\n:returns: :class:`QualityMonitor`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -136,8 +136,7 @@
                     "required": [
                       "object_type",
                       "object_id"
-                    ],
-                    "description": ":returns: :class:`QualityMonitor`"
+                    ]
                   }
                 },
                 "required": [
@@ -181,12 +180,12 @@
       },
       "get": {
         "operationId": "quality_monitor_v2_list_quality_monitor",
-        "summary": "[DEPRECATED] (Unimplemented) List quality monitors. Use Data Quality Monitoring API instead.",
+        "summary": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)",
         "tags": [
           "qualitymonitorv2",
           "quality_monitor_v2"
         ],
-        "description": "[DEPRECATED] (Unimplemented) List quality monitors. Use Data Quality Monitoring API instead.\n\n:param page_size: int (optional)\n:param page_token: str (optional)\n\n:returns: Iterator over :class:`QualityMonitor`",
+        "description": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)\nList quality monitors.\n\n:param page_size: int (optional)\n:param page_token: str (optional)\n\n:returns: Iterator over :class:`QualityMonitor`",
         "parameters": [
           {
             "name": "page_size",
@@ -194,8 +193,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -242,12 +240,12 @@
     "/api/2.0/quality-monitors/{object_type}/{object_id}": {
       "delete": {
         "operationId": "quality_monitor_v2_delete_quality_monitor",
-        "summary": "[DEPRECATED] Delete a quality monitor on UC object. Use Data Quality Monitoring API instead.",
+        "summary": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Delete a quality",
         "tags": [
           "qualitymonitorv2",
           "quality_monitor_v2"
         ],
-        "description": "[DEPRECATED] Delete a quality monitor on UC object. Use Data Quality Monitoring API instead.\n\n:param object_type: str\n  The type of the monitored object. Can be one of the following: schema.\n:param object_id: str\n  The uuid of the request object. For example, schema id.",
+        "description": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Delete a quality\nmonitor on UC object.\n\n:param object_type: str\n  The type of the monitored object. Can be one of the following: schema.\n:param object_id: str\n  The uuid of the request object. For example, schema id.",
         "parameters": [
           {
             "name": "object_type",
@@ -295,12 +293,12 @@
       },
       "get": {
         "operationId": "quality_monitor_v2_get_quality_monitor",
-        "summary": "[DEPRECATED] Read a quality monitor on UC object. Use Data Quality Monitoring API instead.",
+        "summary": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Read a quality",
         "tags": [
           "qualitymonitorv2",
           "quality_monitor_v2"
         ],
-        "description": "[DEPRECATED] Read a quality monitor on UC object. Use Data Quality Monitoring API instead.\n\n:param object_type: str\n  The type of the monitored object. Can be one of the following: schema.\n:param object_id: str\n  The uuid of the request object. For example, schema id.\n\n:returns: :class:`QualityMonitor`",
+        "description": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). Read a quality\nmonitor on UC object.\n\n:param object_type: str\n  The type of the monitored object. Can be one of the following: schema.\n:param object_id: str\n  The uuid of the request object. For example, schema id.\n\n:returns: :class:`QualityMonitor`",
         "parameters": [
           {
             "name": "object_type",
@@ -355,12 +353,12 @@
       },
       "put": {
         "operationId": "quality_monitor_v2_update_quality_monitor",
-        "summary": "[DEPRECATED] (Unimplemented) Update a quality monitor on UC object. Use Data Quality Monitoring API",
+        "summary": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)",
         "tags": [
           "qualitymonitorv2",
           "quality_monitor_v2"
         ],
-        "description": "[DEPRECATED] (Unimplemented) Update a quality monitor on UC object. Use Data Quality Monitoring API\ninstead.\n\n:param object_type: str\n  The type of the monitored object. Can be one of the following: schema.\n:param object_id: str\n  The uuid of the request object. For example, schema id.\n:param quality_monitor: :class:`QualityMonitor`\n\n:returns: :class:`QualityMonitor`",
+        "description": "Deprecated: Use Data Quality Monitoring API instead (/api/data-quality/v1/monitors). (Unimplemented)\nUpdate a quality monitor on UC object.\n\n:param object_type: str\n  The type of the monitored object. Can be one of the following: schema.\n:param object_id: str\n  The uuid of the request object. For example, schema id.\n:param quality_monitor: :class:`QualityMonitor`\n\n:returns: :class:`QualityMonitor`",
         "parameters": [
           {
             "name": "object_type",
@@ -487,8 +485,7 @@
                     "required": [
                       "object_type",
                       "object_id"
-                    ],
-                    "description": ":returns: :class:`QualityMonitor`"
+                    ]
                   }
                 },
                 "required": [

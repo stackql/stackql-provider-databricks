@@ -273,12 +273,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-id">
     <td><CopyableCode code="id" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
     <td><code>integer</code></td>
-    <td>:param page_token: str (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -375,8 +375,6 @@ id
       value: "{{ deployment_name }}"
       description: Required parameter for the provider_providers resource.
     - name: provider
-      description: |
-        :returns: :class:\`CreateProviderResponse\`
       value:
         name: "{{ name }}"
         business_contact_email: "{{ business_contact_email }}"

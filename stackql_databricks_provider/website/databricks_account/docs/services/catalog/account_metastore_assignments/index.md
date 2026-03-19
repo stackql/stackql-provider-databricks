@@ -239,8 +239,6 @@ SELECT
       value: "{{ metastore_id }}"
       description: Required parameter for the account_metastore_assignments resource.
     - name: metastore_assignment
-      description: |
-        :returns: :class:\`AccountsCreateMetastoreAssignmentResponse\`
       value:
         workspace_id: {{ workspace_id }}
         metastore_id: "{{ metastore_id }}"

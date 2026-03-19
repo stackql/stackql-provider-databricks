@@ -369,18 +369,18 @@ Creates a new service principal in the Databricks account.
 ```sql
 INSERT INTO databricks_account.iam.account_service_principals (
 active,
-application_id,
-display_name,
-external_id,
+applicationId,
+displayName,
+externalId,
 id,
 roles,
 account_id
 )
 SELECT 
 {{ active }},
-'{{ application_id }}',
-'{{ display_name }}',
-'{{ external_id }}',
+'{{ applicationId }}',
+'{{ displayName }}',
+'{{ externalId }}',
 '{{ id }}',
 '{{ roles }}',
 '{{ account_id }}'
@@ -407,20 +407,20 @@ roles
       value: {{ active }}
       description: |
         If this user is active
-    - name: application_id
-      value: "{{ application_id }}"
+    - name: applicationId
+      value: "{{ applicationId }}"
       description: |
         UUID relating to the service principal
-    - name: display_name
-      value: "{{ display_name }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
         String that represents a concatenation of given and family names.
-    - name: external_id
-      value: "{{ external_id }}"
-      description: |
-        :param id: str (optional) Databricks service principal ID.
+    - name: externalId
+      value: "{{ externalId }}"
     - name: id
       value: "{{ id }}"
+      description: |
+        Databricks service principal ID.
     - name: roles
       description: |
         Indicates if the group has the admin role.
@@ -451,7 +451,7 @@ Partially updates the details of a single service principal in the Databricks ac
 ```sql
 UPDATE databricks_account.iam.account_service_principals
 SET 
-operations = '{{ operations }}',
+Operations = '{{ Operations }}',
 schemas = '{{ schemas }}'
 WHERE 
 account_id = '{{ account_id }}' --required
@@ -477,9 +477,9 @@ Updates the details of a single service principal.
 REPLACE databricks_account.iam.account_service_principals
 SET 
 active = {{ active }},
-application_id = '{{ application_id }}',
-display_name = '{{ display_name }}',
-external_id = '{{ external_id }}',
+applicationId = '{{ applicationId }}',
+displayName = '{{ displayName }}',
+externalId = '{{ externalId }}',
 roles = '{{ roles }}'
 WHERE 
 account_id = '{{ account_id }}' --required

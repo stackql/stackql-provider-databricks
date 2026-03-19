@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks tags service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.tags"
   },
   "servers": [
@@ -73,8 +73,7 @@
                     },
                     "required": [
                       "tag_key"
-                    ],
-                    "description": ":returns: :class:`TagPolicy`"
+                    ]
                   }
                 },
                 "required": [
@@ -193,8 +192,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -237,8 +235,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`TagPolicy`"
+            }
           }
         ],
         "responses": {
@@ -288,8 +285,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param tag_policy: :class:`TagPolicy`"
+            }
           },
           {
             "name": "update_mask",
@@ -410,7 +406,7 @@
                       },
                       "entity_id": {
                         "type": "string",
-                        "description": "The identifier of the entity to which the tag is assigned"
+                        "description": "The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name"
                       },
                       "tag_key": {
                         "type": "string",
@@ -425,8 +421,7 @@
                       "entity_type",
                       "entity_id",
                       "tag_key"
-                    ],
-                    "description": ":returns: :class:`TagAssignment`"
+                    ]
                   }
                 },
                 "required": [
@@ -477,7 +472,7 @@
           "tags",
           "workspace_entity_tag_assignments"
         ],
-        "description": "Delete a tag assignment\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned\n:param tag_key: str\n  The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed",
+        "description": "Delete a tag assignment\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,\n  notebooks\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name\n:param tag_key: str\n  The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed",
         "parameters": [
           {
             "name": "entity_type",
@@ -486,7 +481,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces"
+            "description": "The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces, notebooks"
           },
           {
             "name": "entity_id",
@@ -495,7 +490,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The identifier of the entity to which the tag is assigned"
+            "description": "The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name"
           },
           {
             "name": "tag_key",
@@ -539,7 +534,7 @@
           "tags",
           "workspace_entity_tag_assignments"
         ],
-        "description": "Get a tag assignment\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned\n:param tag_key: str\n  The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed\n\n:returns: :class:`TagAssignment`",
+        "description": "Get a tag assignment\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,\n  notebooks\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name\n:param tag_key: str\n  The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed\n\n:returns: :class:`TagAssignment`",
         "parameters": [
           {
             "name": "entity_type",
@@ -548,7 +543,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces"
+            "description": "The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces, notebooks"
           },
           {
             "name": "entity_id",
@@ -557,7 +552,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The identifier of the entity to which the tag is assigned"
+            "description": "The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name"
           },
           {
             "name": "tag_key",
@@ -608,7 +603,7 @@
           "tags",
           "workspace_entity_tag_assignments"
         ],
-        "description": "Update a tag assignment\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned\n:param tag_key: str\n  The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed\n:param tag_assignment: :class:`TagAssignment`\n:param update_mask: str\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g.,\n  `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API\n  changes in the future.\n\n:returns: :class:`TagAssignment`",
+        "description": "Update a tag assignment\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,\n  notebooks\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name\n:param tag_key: str\n  The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed\n:param tag_assignment: :class:`TagAssignment`\n:param update_mask: str\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g.,\n  `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API\n  changes in the future.\n\n:returns: :class:`TagAssignment`",
         "parameters": [
           {
             "name": "entity_type",
@@ -617,7 +612,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces"
+            "description": "The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces, notebooks"
           },
           {
             "name": "entity_id",
@@ -626,7 +621,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The identifier of the entity to which the tag is assigned"
+            "description": "The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name"
           },
           {
             "name": "tag_key",
@@ -643,7 +638,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
           }
         ],
         "requestBody": {
@@ -660,7 +656,7 @@
                       },
                       "entity_id": {
                         "type": "string",
-                        "description": "The identifier of the entity to which the tag is assigned"
+                        "description": "The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name"
                       },
                       "tag_key": {
                         "type": "string",
@@ -675,8 +671,7 @@
                       "entity_type",
                       "entity_id",
                       "tag_key"
-                    ],
-                    "description": ":param update_mask: str The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+                    ]
                   }
                 },
                 "required": [
@@ -727,7 +722,7 @@
           "tags",
           "workspace_entity_tag_assignments"
         ],
-        "description": "List the tag assignments for an entity\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned\n:param page_size: int (optional)\n  Optional. Maximum number of tag assignments to return in a single page\n:param page_token: str (optional)\n  Pagination token to go to the next page of tag assignments. Requests first page if absent.\n\n:returns: Iterator over :class:`TagAssignment`",
+        "description": "List the tag assignments for an entity\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,\n  notebooks\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name\n:param page_size: int (optional)\n  Optional. Maximum number of tag assignments to return in a single page\n:param page_token: str (optional)\n  Pagination token to go to the next page of tag assignments. Requests first page if absent.\n\n:returns: Iterator over :class:`TagAssignment`",
         "parameters": [
           {
             "name": "entity_type",
@@ -736,7 +731,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces"
+            "description": "The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces, notebooks"
           },
           {
             "name": "entity_id",
@@ -745,7 +740,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The identifier of the entity to which the tag is assigned"
+            "description": "The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name"
           },
           {
             "name": "page_size",
@@ -838,7 +833,7 @@
           },
           "entity_id": {
             "type": "string",
-            "description": "The identifier of the entity to which the tag is assigned"
+            "description": "The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name"
           },
           "tag_key": {
             "type": "string",

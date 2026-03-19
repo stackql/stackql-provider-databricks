@@ -79,6 +79,11 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "effective_publishing_mode",
+    "type": "string",
+    "description": "Publishing mode of the pipeline (DEFAULT_PUBLISHING_MODE, LEGACY_PUBLISHING_MODE)"
+  },
+  {
     "name": "health",
     "type": "string",
     "description": "The health of a pipeline. (HEALTHY, UNHEALTHY)"
@@ -312,6 +317,11 @@ The following fields are returned by `SELECT` queries:
             "name": "dependencies",
             "type": "array",
             "description": "List of pip dependencies, as supported by the version of pip in this environment. Each dependency is a pip requirement file line https://pip.pypa.io/en/stable/reference/requirements-file-format/ Allowed dependency could be &lt;requirement specifier&gt;, &lt;archive url/path&gt;, &lt;local project path&gt;(WSFS or Volumes in Databricks), &lt;vcs project url&gt;"
+          },
+          {
+            "name": "environment_version",
+            "type": "string",
+            "description": "The environment version of the serverless Python environment used to execute customer Python code. Each environment version includes a specific Python version and a curated set of pre-installed libraries with defined versions, providing a stable and reproducible execution environment. Databricks supports a three-year lifecycle for each environment version. For available versions and their included packages, see https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/ The value should be a string representing the environment version number, for example: `\"4\"`."
           }
         ]
       },
@@ -412,6 +422,33 @@ The following fields are returned by `SELECT` queries:
             "name": "connection_name",
             "type": "string",
             "description": ""
+          },
+          {
+            "name": "connector_type",
+            "type": "string",
+            "description": "(Optional) Connector Type for sources. Ex: CDC, Query Based. (CDC, QUERY_BASED)"
+          },
+          {
+            "name": "data_staging_options",
+            "type": "object",
+            "description": "(Optional) Location of staged data storage. This is required for migration from Cdc Managed Ingestion Pipeline with Gateway pipeline to Combined Cdc Managed Ingestion Pipeline. If not specified, the volume for staged data will be created in catalog and schema/target specified in the top level pipeline definition.",
+            "children": [
+              {
+                "name": "catalog_name",
+                "type": "string",
+                "description": "(Required, Immutable) The name of the catalog for the connector's staging storage location."
+              },
+              {
+                "name": "schema_name",
+                "type": "string",
+                "description": "(Required, Immutable) The name of the schema for the connector's staging storage location."
+              },
+              {
+                "name": "volume_name",
+                "type": "string",
+                "description": "(Optional) The Unity Catalog-compatible name for the storage location. This is the volume to use for the data that is extracted by the connector. Spark Declarative Pipelines system will automatically create the volume under the catalog and schema. For Combined Cdc Managed Ingestion pipelines default name for the volume would be : __databricks_ingestion_gateway_staging_data-$pipelineId"
+              }
+            ]
           },
           {
             "name": "full_refresh_window",
@@ -880,7 +917,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-pipeline_id">
     <td><CopyableCode code="pipeline_id" /></td>
     <td><code>string</code></td>
-    <td>:returns: Long-running operation waiter for :class:`GetPipelineResponse`. See :method:wait_get_pipeline_idle for more details.</td>
+    <td></td>
 </tr>
 <tr id="parameter-filter">
     <td><CopyableCode code="filter" /></td>
@@ -890,7 +927,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
     <td><code>boolean</code></td>
-    <td></td>
+    <td>If true, deletion will proceed even if resource cleanup fails. By default, deletion will fail if resources cleanup is required but fails.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
@@ -932,6 +969,7 @@ pipeline_id,
 creator_user_name,
 run_as_user_name,
 cause,
+effective_publishing_mode,
 health,
 last_modified,
 latest_updates,
@@ -1127,16 +1165,17 @@ effective_settings
         Whether the pipeline is in Development mode. Defaults to false.
     - name: dry_run
       value: {{ dry_run }}
-      description: |
-        :param edition: str (optional) Pipeline product edition.
     - name: edition
       value: "{{ edition }}"
+      description: |
+        Pipeline product edition.
     - name: environment
       description: |
         Environment specification for this pipeline used to install dependencies.
       value:
         dependencies:
           - "{{ dependencies }}"
+        environment_version: "{{ environment_version }}"
     - name: event_log
       description: |
         Event log configuration for this pipeline
@@ -1172,6 +1211,11 @@ effective_settings
         The configuration for a managed ingestion pipeline. These settings cannot be used with the 'libraries', 'schema', 'target', or 'catalog' settings.
       value:
         connection_name: "{{ connection_name }}"
+        connector_type: "{{ connector_type }}"
+        data_staging_options:
+          catalog_name: "{{ catalog_name }}"
+          schema_name: "{{ schema_name }}"
+          volume_name: "{{ volume_name }}"
         full_refresh_window:
           start_hour: {{ start_hour }}
           days_of_week:
@@ -1342,12 +1386,18 @@ effective_settings
         Root path for this pipeline. This is used as the root directory when editing the pipeline in the Databricks user interface and it is added to sys.path when executing Python sources during pipeline execution.
     - name: run_as
       description: |
-        :param schema: str (optional) The default schema (database) where tables are read from or published to.
+        Write-only setting, available only in Create/Update calls. Specifies the user or service
+        principal that the pipeline runs as. If not specified, the pipeline runs as the user who created
+        the pipeline.
+        Only \`user_name\` or \`service_principal_name\` can be specified. If both are specified, an error
+        is thrown.
       value:
         service_principal_name: "{{ service_principal_name }}"
         user_name: "{{ user_name }}"
     - name: schema
       value: "{{ schema }}"
+      description: |
+        The default schema (database) where tables are read from or published to.
     - name: serverless
       value: {{ serverless }}
       description: |

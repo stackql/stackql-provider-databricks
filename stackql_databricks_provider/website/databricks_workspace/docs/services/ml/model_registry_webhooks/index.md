@@ -199,12 +199,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
     <td><code>integer</code></td>
-    <td>:param model_name: str (optional) Registered model name If not specified, all webhooks associated with the specified events are listed, regardless of their associated model.</td>
+    <td></td>
 </tr>
 <tr id="parameter-model_name">
     <td><CopyableCode code="model_name" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>Registered model name If not specified, all webhooks associated with the specified events are listed, regardless of their associated model.</td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>

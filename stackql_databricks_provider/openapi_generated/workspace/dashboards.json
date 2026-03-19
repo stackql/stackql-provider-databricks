@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks dashboards service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.dashboards"
   },
   "servers": [
@@ -735,6 +735,358 @@
         "x-stackql-sdk-source": "GenieAPI"
       }
     },
+    "/api/2.0/genie/spaces/{space_id}/eval-runs": {
+      "post": {
+        "operationId": "genie_genie_create_eval_run",
+        "summary": "Create and run evaluations for multiple benchmark questions in a Genie space.",
+        "tags": [
+          "dashboards",
+          "genie"
+        ],
+        "description": "Create and run evaluations for multiple benchmark questions in a Genie space.\n\n:param space_id: str\n  The ID associated with the Genie space where the evaluations will be executed.\n:param benchmark_question_ids: List[str] (optional)\n  List of benchmark question IDs to evaluate. These questions must exist in the specified Genie space.\n  If none are specified, then all benchmark questions are evaluated.\n\n:returns: :class:`GenieEvalRunResponse`",
+        "parameters": [
+          {
+            "name": "space_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the Genie space where the evaluations will be executed."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "benchmark_question_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "List of benchmark question IDs to evaluate. These questions must exist in the specified Genie space. If none are specified, then all benchmark questions are evaluated."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenieEvalRunResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "GenieAPI"
+      },
+      "get": {
+        "operationId": "genie_genie_list_eval_runs",
+        "summary": "Lists all evaluation runs in a space.",
+        "tags": [
+          "dashboards",
+          "genie"
+        ],
+        "description": "Lists all evaluation runs in a space.\n\n:param space_id: str\n  The ID associated with the Genie space where the evaluation run is located.\n:param page_size: int (optional)\n  Maximum number of evaluation runs to return per page\n:param page_token: str (optional)\n  Token to get the next page of results\n\n:returns: :class:`GenieListEvalRunsResponse`",
+        "parameters": [
+          {
+            "name": "space_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the Genie space where the evaluation run is located."
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Maximum number of evaluation runs to return per page"
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Token to get the next page of results"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenieListEvalRunsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "GenieAPI"
+      }
+    },
+    "/api/2.0/genie/spaces/{space_id}/eval-runs/{eval_run_id}/results/{result_id}": {
+      "get": {
+        "operationId": "genie_genie_get_eval_result_details",
+        "summary": "Get details for evaluation results.",
+        "tags": [
+          "dashboards",
+          "genie"
+        ],
+        "description": "Get details for evaluation results.\n\n:param space_id: str\n  The ID associated with the Genie space where the evaluation run is located.\n:param eval_run_id: str\n  The unique identifier for the evaluation run.\n:param result_id: str\n  The unique identifier for the evaluation result.\n\n:returns: :class:`GenieEvalResultDetails`",
+        "parameters": [
+          {
+            "name": "space_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the Genie space where the evaluation run is located."
+          },
+          {
+            "name": "eval_run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier for the evaluation run."
+          },
+          {
+            "name": "result_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier for the evaluation result."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenieEvalResultDetails"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "GenieAPI"
+      }
+    },
+    "/api/2.0/genie/spaces/{space_id}/eval-runs/{eval_run_id}": {
+      "get": {
+        "operationId": "genie_genie_get_eval_run",
+        "summary": "Get evaluation run details.",
+        "tags": [
+          "dashboards",
+          "genie"
+        ],
+        "description": "Get evaluation run details.\n\n:param space_id: str\n  The ID associated with the Genie space where the evaluation run is located.\n:param eval_run_id: str\n\n:returns: :class:`GenieEvalRunResponse`",
+        "parameters": [
+          {
+            "name": "space_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the Genie space where the evaluation run is located."
+          },
+          {
+            "name": "eval_run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenieEvalRunResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "GenieAPI"
+      }
+    },
+    "/api/2.0/genie/spaces/{space_id}/eval-runs/{eval_run_id}/results": {
+      "get": {
+        "operationId": "genie_genie_list_eval_results",
+        "summary": "List evaluation results for a specific evaluation run.",
+        "tags": [
+          "dashboards",
+          "genie"
+        ],
+        "description": "List evaluation results for a specific evaluation run.\n\n:param space_id: str\n  The ID associated with the Genie space where the evaluation run is located.\n:param eval_run_id: str\n  The unique identifier for the evaluation run.\n:param page_size: int (optional)\n  Maximum number of eval results to return per page.\n:param page_token: str (optional)\n  Opaque token to retrieve the next page of results.\n\n:returns: :class:`GenieListEvalResultsResponse`",
+        "parameters": [
+          {
+            "name": "space_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the Genie space where the evaluation run is located."
+          },
+          {
+            "name": "eval_run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier for the evaluation run."
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Maximum number of eval results to return per page."
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Opaque token to retrieve the next page of results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenieListEvalResultsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "GenieAPI"
+      }
+    },
     "/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/downloads/{download_id}": {
       "get": {
         "operationId": "genie_get_download_full_query_result",
@@ -743,7 +1095,7 @@
           "dashboards",
           "genie"
         ],
-        "description": "After [Generating a Full Query Result Download](:method:genie/generatedownloadfullqueryresult) and\nsuccessfully receiving a `download_id` and `download_id_signature`, use this API to poll the download\nprogress. Both `download_id` and `download_id_signature` are required to call this endpoint. When the\ndownload is complete, the API returns the result in the `EXTERNAL_LINKS` disposition, containing one\nor more external links to the query result files.\n\n----\n\n### **Warning: Databricks strongly recommends that you protect the URLs that are returned by the\n`EXTERNAL_LINKS` disposition.**\n\nWhen you use the `EXTERNAL_LINKS` disposition, a short-lived, URL is generated, which can be used to\ndownload the results directly from . As a short-lived is embedded in this URL, you should protect the\nURL.\n\nBecause URLs are already generated with embedded temporary s, you must not set an `Authorization`\nheader in the download requests.\n\nSee [Execute Statement](:method:statementexecution/executestatement) for more details.\n\n----\n\n:param space_id: str\n  Genie space ID\n:param conversation_id: str\n  Conversation ID\n:param message_id: str\n  Message ID\n:param attachment_id: str\n  Attachment ID\n:param download_id: str\n  Download ID. This ID is provided by the [Generate Download\n  endpoint](:method:genie/generateDownloadFullQueryResult)\n:param download_id_signature: str (optional)\n  JWT signature for the download_id to ensure secure access to query results\n\n:returns: :class:`GenieGetDownloadFullQueryResultResponse`",
+        "description": "After [Generating a Full Query Result Download](:method:genie/generatedownloadfullqueryresult) and\nsuccessfully receiving a `download_id` and `download_id_signature`, use this API to poll the download\nprogress. Both `download_id` and `download_id_signature` are required to call this endpoint. When the\ndownload is complete, the API returns the result in the `EXTERNAL_LINKS` disposition, containing one\nor more external links to the query result files.\n\n----\n\n### **Warning: Databricks strongly recommends that you protect the URLs that are returned by the\n`EXTERNAL_LINKS` disposition.**\n\nWhen you use the `EXTERNAL_LINKS` disposition, a short-lived, URL is generated, which can be used to\ndownload the results directly from . As a short-lived is embedded in this URL, you should protect the\nURL.\n\nBecause URLs are already generated with embedded temporary s, you must not set an `Authorization`\nheader in the download requests.\n\nSee [Execute Statement](:method:statementexecution/executestatement) for more details.\n\n----\n\n:param space_id: str\n  Genie space ID\n:param conversation_id: str\n  Conversation ID\n:param message_id: str\n  Message ID\n:param attachment_id: str\n  Attachment ID\n:param download_id: str\n  Download ID. This ID is provided by the [Generate Download\n  endpoint](:method:genie/generateDownloadFullQueryResult)\n:param download_id_signature: str\n  JWT signature for the download_id to ensure secure access to query results\n\n:returns: :class:`GenieGetDownloadFullQueryResultResponse`",
         "parameters": [
           {
             "name": "space_id",
@@ -793,7 +1145,7 @@
           {
             "name": "download_id_signature",
             "in": "query",
-            "required": false,
+            "required": true,
             "schema": {
               "type": "string"
             },
@@ -1502,7 +1854,8 @@
             "required": false,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset\u2019s existing configuration."
           },
           {
             "name": "dataset_schema",
@@ -1566,8 +1919,7 @@
                         "type": "string",
                         "description": "The warehouse ID used to run the dashboard."
                       }
-                    },
-                    "description": ":param dataset_catalog: str (optional) Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset\u2019s existing configuration."
+                    }
                   }
                 },
                 "required": [
@@ -1970,6 +2322,10 @@
                       "schedule_id": {
                         "type": "string",
                         "description": "UUID identifying the schedule to which the subscription belongs."
+                      },
+                      "skip_notify": {
+                        "type": "boolean",
+                        "description": "Controls whether notifications are sent to the subscriber for scheduled dashboard refreshes. If not defined, defaults to false in the backend to match the current behavior (refresh and notify)"
                       },
                       "subscription_id": {
                         "type": "string",
@@ -2625,7 +2981,8 @@
             "required": false,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset\u2019s existing configuration."
           },
           {
             "name": "dataset_schema",
@@ -2689,8 +3046,7 @@
                         "type": "string",
                         "description": "The warehouse ID used to run the dashboard."
                       }
-                    },
-                    "description": ":param dataset_catalog: str (optional) Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset\u2019s existing configuration."
+                    }
                   }
                 },
                 "required": [
@@ -3154,7 +3510,7 @@
           },
           "text": {
             "$ref": "#/components/schemas/TextAttachment",
-            "description": "Text Attachment if Genie responds with text. This also contains the final summary when available."
+            "description": "Text Attachment if Genie responds with text This also contains the final summary when available."
           }
         },
         "description": "Genie AI Response"
@@ -3162,16 +3518,8 @@
       "GenieConversation": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "space_id": {
-            "type": "string",
-            "description": "Genie space ID"
-          },
-          "user_id": {
-            "type": "integer",
-            "description": "ID of the user who created the conversation"
+            "type": "string"
           },
           "title": {
             "type": "string",
@@ -3185,15 +3533,21 @@
             "type": "integer",
             "description": "Timestamp when the message was created"
           },
+          "id": {
+            "type": "string",
+            "description": "Conversation ID. Legacy identifier, use conversation_id instead"
+          },
           "last_updated_timestamp": {
             "type": "integer",
             "description": "Timestamp when the message was last updated"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "ID of the user who created the conversation"
           }
         },
         "required": [
-          "id",
           "space_id",
-          "user_id",
           "title",
           "conversation_id"
         ]
@@ -3204,17 +3558,169 @@
           "conversation_id": {
             "type": "string"
           },
-          "title": {
-            "type": "string"
-          },
           "created_timestamp": {
             "type": "integer"
+          },
+          "title": {
+            "type": "string"
           }
         },
         "required": [
-          "conversation_id",
-          "title",
-          "created_timestamp"
+          "conversation_id"
+        ]
+      },
+      "GenieEvalResponse": {
+        "type": "object",
+        "properties": {
+          "response": {
+            "type": "string"
+          },
+          "response_type": {
+            "$ref": "#/components/schemas/GenieEvalResponseType",
+            "description": "Type of response"
+          },
+          "sql_execution_result": {
+            "type": "string",
+            "description": "SQL Statement Execution response."
+          }
+        }
+      },
+      "GenieEvalResult": {
+        "type": "object",
+        "properties": {
+          "result_id": {
+            "type": "string",
+            "description": "Unique identifier for this evaluation result."
+          },
+          "space_id": {
+            "type": "string",
+            "description": "The ID of the space the evaluation result belongs to."
+          },
+          "benchmark_question_id": {
+            "type": "string",
+            "description": "The ID of the benchmark question that was evaluated."
+          },
+          "benchmark_answer": {
+            "type": "string",
+            "description": "Stored snapshot of original benchmark answer text."
+          },
+          "created_by_user": {
+            "type": "integer",
+            "description": "User ID who created evaluation result."
+          },
+          "question": {
+            "type": "string",
+            "description": "Stored snapshot of original benchmark question text."
+          },
+          "status": {
+            "$ref": "#/components/schemas/EvaluationStatusType",
+            "description": "Current status of this evaluation result."
+          }
+        },
+        "required": [
+          "result_id",
+          "space_id",
+          "benchmark_question_id"
+        ],
+        "description": "Shows summary information for an evaluation result. For detailed information including SQL\n    execution results, actual/expected responses, and assessment scores, use\n    GenieGetEvalResultDetails."
+      },
+      "GenieEvalResultDetails": {
+        "type": "object",
+        "properties": {
+          "result_id": {
+            "type": "string",
+            "description": "The unique identifier for the evaluation result."
+          },
+          "space_id": {
+            "type": "string",
+            "description": "The ID of the space the evaluation result belongs to."
+          },
+          "benchmark_question_id": {
+            "type": "string",
+            "description": "The ID of the benchmark question that was evaluated."
+          },
+          "actual_response": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenieEvalResponse"
+            },
+            "description": "The actual response generated by Genie."
+          },
+          "assessment": {
+            "$ref": "#/components/schemas/GenieEvalAssessment",
+            "description": "Assessment of the evaluation result: good, bad, or needs review"
+          },
+          "assessment_reasons": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ScoreReason"
+            },
+            "description": "Reasons for the assessment score."
+          },
+          "eval_run_status": {
+            "$ref": "#/components/schemas/EvaluationStatusType",
+            "description": "Current status of the evaluation run."
+          },
+          "expected_response": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenieEvalResponse"
+            },
+            "description": "The expected responses from the benchmark."
+          },
+          "manual_assessment": {
+            "type": "boolean",
+            "description": "Whether this evaluation was manually assessed."
+          }
+        },
+        "required": [
+          "result_id",
+          "space_id",
+          "benchmark_question_id"
+        ],
+        "description": "Shows detailed information for an evaluation result."
+      },
+      "GenieEvalRunResponse": {
+        "type": "object",
+        "properties": {
+          "eval_run_id": {
+            "type": "string"
+          },
+          "created_timestamp": {
+            "type": "integer",
+            "description": "Timestamp when the evaluation run was created (milliseconds since epoch)."
+          },
+          "eval_run_status": {
+            "$ref": "#/components/schemas/EvaluationStatusType",
+            "description": "Current status of the evaluation run."
+          },
+          "last_updated_timestamp": {
+            "type": "integer",
+            "description": "Timestamp when the evaluation run was last updated (milliseconds since epoch)."
+          },
+          "num_correct": {
+            "type": "integer",
+            "description": "Number of questions answered correctly."
+          },
+          "num_done": {
+            "type": "integer",
+            "description": "Number of questions that have been completed."
+          },
+          "num_needs_review": {
+            "type": "integer",
+            "description": "Number of questions that need manual review."
+          },
+          "num_questions": {
+            "type": "integer",
+            "description": "Total number of questions in the evaluation run."
+          },
+          "run_by_user": {
+            "type": "integer",
+            "description": "User ID who initiated the evaluation run."
+          }
+        },
+        "required": [
+          "eval_run_id"
         ]
       },
       "GenieFeedback": {
@@ -3285,6 +3791,36 @@
           }
         }
       },
+      "GenieListEvalResultsResponse": {
+        "type": "object",
+        "properties": {
+          "eval_results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenieEvalResult"
+            }
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The token to use for retrieving the next page of results."
+          }
+        }
+      },
+      "GenieListEvalRunsResponse": {
+        "type": "object",
+        "properties": {
+          "eval_runs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenieEvalRunResponse"
+            }
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "The token to use for retrieving the next page of results."
+          }
+        }
+      },
       "GenieListSpacesResponse": {
         "type": "object",
         "properties": {
@@ -3303,12 +3839,8 @@
       "GenieMessage": {
         "type": "object",
         "properties": {
-          "id": {
-            "type": "string"
-          },
           "space_id": {
-            "type": "string",
-            "description": "Genie space ID"
+            "type": "string"
           },
           "conversation_id": {
             "type": "string",
@@ -3341,6 +3873,10 @@
             "$ref": "#/components/schemas/GenieFeedback",
             "description": "User feedback for the message if provided"
           },
+          "id": {
+            "type": "string",
+            "description": "Message ID. Legacy identifier, use message_id instead"
+          },
           "last_updated_timestamp": {
             "type": "integer",
             "description": "Timestamp when the message was last updated"
@@ -3358,7 +3894,6 @@
           }
         },
         "required": [
-          "id",
           "space_id",
           "conversation_id",
           "content",
@@ -3427,6 +3962,10 @@
           "description": {
             "type": "string",
             "description": "Description of the Genie Space"
+          },
+          "parent_path": {
+            "type": "string",
+            "description": "Parent folder path of the Genie Space"
           },
           "serialized_space": {
             "type": "string",
@@ -3685,6 +4224,10 @@
             "type": "string",
             "description": "UUID identifying the schedule to which the subscription belongs."
           },
+          "skip_notify": {
+            "type": "boolean",
+            "description": "Controls whether notifications are sent to the subscriber for scheduled dashboard refreshes. If not defined, defaults to false in the backend to match the current behavior (refresh and notify)"
+          },
           "subscription_id": {
             "type": "string",
             "description": "UUID identifying the subscription."
@@ -3748,7 +4291,36 @@
         "x-enum": [
           "DASHBOARD_VIEW_BASIC"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "EvaluationStatusType": {
+        "type": "string",
+        "x-enum": [
+          "DONE",
+          "EVALUATION_CANCELLED",
+          "EVALUATION_FAILED",
+          "EVALUATION_TIMEOUT",
+          "NOT_STARTED",
+          "RUNNING"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "GenieEvalAssessment": {
+        "type": "string",
+        "x-enum": [
+          "BAD",
+          "GOOD",
+          "NEEDS_REVIEW"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "GenieEvalResponseType": {
+        "type": "string",
+        "x-enum": [
+          "SQL",
+          "TEXT"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "GenieFeedbackRating": {
         "type": "string",
@@ -3765,7 +4337,7 @@
           "ACTIVE",
           "TRASHED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "MessageErrorType": {
         "type": "string",
@@ -3776,6 +4348,7 @@
           "CHAT_COMPLETION_NETWORK_EXCEPTION",
           "CONTENT_FILTER_EXCEPTION",
           "CONTEXT_EXCEEDED_EXCEPTION",
+          "COULD_NOT_GET_DASHBOARD_SCHEMA_EXCEPTION",
           "COULD_NOT_GET_MODEL_DEPLOYMENTS_EXCEPTION",
           "COULD_NOT_GET_UC_SCHEMA_EXCEPTION",
           "DEPLOYMENT_NOT_FOUND_EXCEPTION",
@@ -3831,7 +4404,7 @@
           "WAREHOUSE_ACCESS_MISSING_EXCEPTION",
           "WAREHOUSE_NOT_FOUND_EXCEPTION"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "MessageStatus": {
         "type": "string",
@@ -3855,7 +4428,38 @@
           "PAUSED",
           "UNPAUSED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "ScoreReason": {
+        "type": "string",
+        "x-enum": [
+          "COLUMN_TYPE_DIFFERENCE",
+          "EMPTY_GOOD_SQL",
+          "EMPTY_RESULT",
+          "LLM_JUDGE_FORMATTING_ERROR",
+          "LLM_JUDGE_INCOMPLETE_OR_PARTIAL_OUTPUT",
+          "LLM_JUDGE_INCORRECT_FUNCTION_USAGE",
+          "LLM_JUDGE_INCORRECT_METRIC_CALCULATION",
+          "LLM_JUDGE_INCORRECT_TABLE_OR_FIELD_USAGE",
+          "LLM_JUDGE_INSTRUCTION_COMPLIANCE_OR_MISSING_BUSINESS_LOGIC",
+          "LLM_JUDGE_MISINTERPRETATION_OF_USER_REQUEST",
+          "LLM_JUDGE_MISSING_JOIN",
+          "LLM_JUDGE_MISSING_OR_INCORRECT_AGGREGATION",
+          "LLM_JUDGE_MISSING_OR_INCORRECT_FILTER",
+          "LLM_JUDGE_MISSING_OR_INCORRECT_JOIN",
+          "LLM_JUDGE_OTHER",
+          "LLM_JUDGE_SEMANTIC_ERROR",
+          "LLM_JUDGE_SYNTAX_ERROR",
+          "LLM_JUDGE_WRONG_AGGREGATION",
+          "LLM_JUDGE_WRONG_COLUMNS",
+          "LLM_JUDGE_WRONG_FILTER",
+          "RESULT_EXTRA_COLUMNS",
+          "RESULT_EXTRA_ROWS",
+          "RESULT_MISSING_COLUMNS",
+          "RESULT_MISSING_ROWS",
+          "SINGLE_CELL_DIFFERENCE"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "TextAttachmentPurpose": {
         "type": "string",

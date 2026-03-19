@@ -234,8 +234,6 @@ object_type
       description: |
         The type of object permission to set.
     - name: access_control_list
-      description: |
-        :returns: :class:\`SetResponse\`
       value:
         - group_name: "{{ group_name }}"
           permission_level: "{{ permission_level }}"

@@ -157,7 +157,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-name">
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>:param setting: :class:`UserPreference`</td>
+    <td></td>
 </tr>
 <tr id="parameter-user_id">
     <td><CopyableCode code="user_id" /></td>

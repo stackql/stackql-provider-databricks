@@ -568,9 +568,9 @@ Creates a group in the Databricks workspace with a unique name, using the suppli
 
 ```sql
 INSERT INTO databricks_workspace.iam.groups_v2 (
-display_name,
+displayName,
 entitlements,
-external_id,
+externalId,
 groups,
 id,
 members,
@@ -580,9 +580,9 @@ schemas,
 deployment_name
 )
 SELECT 
-'{{ display_name }}',
+'{{ displayName }}',
 '{{ entitlements }}',
-'{{ external_id }}',
+'{{ externalId }}',
 '{{ groups }}',
 '{{ id }}',
 '{{ members }}',
@@ -611,8 +611,8 @@ schemas
     - name: deployment_name
       value: "{{ deployment_name }}"
       description: Required parameter for the groups_v2 resource.
-    - name: display_name
-      value: "{{ display_name }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
         String that represents a human-readable group name
     - name: entitlements
@@ -624,10 +624,8 @@ schemas
           $ref: "{{ $ref }}"
           type: "{{ type }}"
           value: "{{ value }}"
-    - name: external_id
-      value: "{{ external_id }}"
-      description: |
-        :param groups: List[:class:\`ComplexValue\`] (optional)
+    - name: externalId
+      value: "{{ externalId }}"
     - name: groups
       value:
         - display: "{{ display }}"
@@ -640,8 +638,6 @@ schemas
       description: |
         Databricks group ID
     - name: members
-      description: |
-        :param meta: :class:\`ResourceMeta\` (optional) Container for the group identifier. Workspace local versus account.
       value:
         - display: "{{ display }}"
           primary: {{ primary }}
@@ -649,6 +645,8 @@ schemas
           type: "{{ type }}"
           value: "{{ value }}"
     - name: meta
+      description: |
+        Container for the group identifier. Workspace local versus account.
       value:
         resourceType: "{{ resourceType }}"
     - name: roles
@@ -686,7 +684,7 @@ Partially updates the details of a group.
 ```sql
 UPDATE databricks_workspace.iam.groups_v2
 SET 
-operations = '{{ operations }}',
+Operations = '{{ Operations }}',
 schemas = '{{ schemas }}'
 WHERE 
 id = '{{ id }}' --required
@@ -711,9 +709,9 @@ Updates the details of a group by replacing the entire group entity.
 ```sql
 REPLACE databricks_workspace.iam.groups_v2
 SET 
-display_name = '{{ display_name }}',
+displayName = '{{ displayName }}',
 entitlements = '{{ entitlements }}',
-external_id = '{{ external_id }}',
+externalId = '{{ externalId }}',
 groups = '{{ groups }}',
 members = '{{ members }}',
 meta = '{{ meta }}',

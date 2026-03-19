@@ -292,8 +292,6 @@ creation_time
       description: |
         The human-readable name of the credential configuration object.
     - name: aws_credentials
-      description: |
-        :returns: :class:\`Credential\`
       value:
         sts_role:
           role_arn: "{{ role_arn }}"

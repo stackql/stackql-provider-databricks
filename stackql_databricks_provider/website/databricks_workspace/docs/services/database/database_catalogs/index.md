@@ -181,7 +181,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-name">
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>str</td>
+    <td></td>
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
@@ -288,8 +288,6 @@ uid
       value: "{{ deployment_name }}"
       description: Required parameter for the database_catalogs resource.
     - name: catalog
-      description: |
-        :returns: :class:\`DatabaseCatalog\`
       value:
         name: "{{ name }}"
         database_instance_name: "{{ database_instance_name }}"

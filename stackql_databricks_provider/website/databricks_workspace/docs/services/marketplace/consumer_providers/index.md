@@ -259,17 +259,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-id">
     <td><CopyableCode code="id" /></td>
     <td><code>string</code></td>
-    <td>:returns: :class:`GetProviderResponse`</td>
+    <td></td>
 </tr>
 <tr id="parameter-ids">
     <td><CopyableCode code="ids" /></td>
     <td><code>array</code></td>
-    <td>:returns: :class:`BatchGetProvidersResponse`</td>
+    <td></td>
 </tr>
 <tr id="parameter-is_featured">
     <td><CopyableCode code="is_featured" /></td>
     <td><code>boolean</code></td>
-    <td>:param page_size: int (optional)</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -279,7 +279,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>:returns: Iterator over :class:`ProviderInfo`</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

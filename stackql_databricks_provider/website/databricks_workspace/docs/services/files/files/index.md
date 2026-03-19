@@ -167,7 +167,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-overwrite">
     <td><CopyableCode code="overwrite" /></td>
     <td><code>boolean</code></td>
-    <td></td>
+    <td>If true or unspecified, an existing file will be overwritten. If false, an error will be returned if the path points to an existing file.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>

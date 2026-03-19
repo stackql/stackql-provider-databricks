@@ -98,12 +98,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "catalog_name",
         "type": "string",
-        "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name."
+        "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name. Quoting is handled by the backend where needed, do not pre-quote it."
       },
       {
         "name": "schema_name",
         "type": "string",
-        "description": "The Unity Catalog schema name."
+        "description": "The Unity Catalog schema name. This name is also used as the Lakebase schema name under the database. Quoting is handled by the backend where needed, do not pre-quote it."
       },
       {
         "name": "table_name_prefix",
@@ -182,12 +182,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "catalog_name",
         "type": "string",
-        "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name."
+        "description": "The Unity Catalog catalog name. This name is also used as the Lakebase logical database name. Quoting is handled by the backend where needed, do not pre-quote it."
       },
       {
         "name": "schema_name",
         "type": "string",
-        "description": "The Unity Catalog schema name."
+        "description": "The Unity Catalog schema name. This name is also used as the Lakebase schema name under the database. Quoting is handled by the backend where needed, do not pre-quote it."
       },
       {
         "name": "table_name_prefix",

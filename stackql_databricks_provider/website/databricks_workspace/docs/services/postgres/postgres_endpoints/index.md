@@ -83,6 +83,28 @@ The following fields are returned by `SELECT` queries:
         "description": "Whether to restrict connections to the compute endpoint. Enabling this option schedules a suspend compute operation. A disabled compute endpoint cannot be enabled by a connection or console action."
       },
       {
+        "name": "group",
+        "type": "object",
+        "description": "Settings for optional HA configuration of the endpoint. If unspecified, the endpoint defaults to non HA settings, with a single compute backing the endpoint (and no readable secondaries for Read/Write endpoints).",
+        "children": [
+          {
+            "name": "min",
+            "type": "integer",
+            "description": ""
+          },
+          {
+            "name": "max",
+            "type": "integer",
+            "description": "The maximum number of computes in the endpoint group. Currently, this must be equal to min. Set to 1 for single compute endpoints, to disable HA. To manually suspend all computes in an endpoint group, set disabled to true on the EndpointSpec."
+          },
+          {
+            "name": "enable_readable_secondaries",
+            "type": "boolean",
+            "description": "Whether to allow read-only connections to read-write endpoints. Only relevant for read-write endpoints where size.max &gt; 1."
+          }
+        ]
+      },
+      {
         "name": "no_suspension",
         "type": "boolean",
         "description": "When set to true, explicitly disables automatic suspension (never suspend). Should be set to true when provided."
@@ -124,7 +146,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "current_state",
         "type": "string",
-        "description": "The state of the compute endpoint. (ACTIVE, IDLE, INIT)"
+        "description": "The state of the compute endpoint. (ACTIVE, DEGRADED, IDLE, INIT)"
       },
       {
         "name": "disabled",
@@ -137,6 +159,28 @@ The following fields are returned by `SELECT` queries:
         "description": "The compute endpoint type. Either `read_write` or `read_only`. (ENDPOINT_TYPE_READ_ONLY, ENDPOINT_TYPE_READ_WRITE)"
       },
       {
+        "name": "group",
+        "type": "object",
+        "description": "Details on the HA configuration of the endpoint.",
+        "children": [
+          {
+            "name": "min",
+            "type": "integer",
+            "description": ""
+          },
+          {
+            "name": "max",
+            "type": "integer",
+            "description": "The maximum number of computes in the endpoint group. Currently, this must be equal to min. Set to 1 for single compute endpoints, to disable HA. To manually suspend all computes in an endpoint group, set disabled to true on the EndpointSpec."
+          },
+          {
+            "name": "enable_readable_secondaries",
+            "type": "boolean",
+            "description": "Whether read-only connections to read-write endpoints are allowed. Only relevant if read replicas are configured by specifying size.max &gt; 1."
+          }
+        ]
+      },
+      {
         "name": "hosts",
         "type": "object",
         "description": "Contains host information for connecting to the endpoint.",
@@ -145,13 +189,18 @@ The following fields are returned by `SELECT` queries:
             "name": "host",
             "type": "string",
             "description": "The hostname to connect to this endpoint. For read-write endpoints, this is a read-write hostname which connects to the primary compute. For read-only endpoints, this is a read-only hostname which allows read-only operations."
+          },
+          {
+            "name": "read_only_host",
+            "type": "string",
+            "description": "An optionally defined read-only host for the endpoint, without pooling. For read-only endpoints, this attribute is always defined and is equivalent to host. For read-write endpoints, this attribute is defined if the enclosing endpoint is a group with greater than 1 computes configured, and has readable secondaries enabled."
           }
         ]
       },
       {
         "name": "pending_state",
         "type": "string",
-        "description": "The state of the compute endpoint. (ACTIVE, IDLE, INIT)"
+        "description": "The state of the compute endpoint. (ACTIVE, DEGRADED, IDLE, INIT)"
       },
       {
         "name": "settings",
@@ -345,6 +394,10 @@ SELECT
           autoscaling_limit_max_cu: {{ autoscaling_limit_max_cu }}
           autoscaling_limit_min_cu: {{ autoscaling_limit_min_cu }}
           disabled: {{ disabled }}
+          group:
+            min: {{ min }}
+            max: {{ max }}
+            enable_readable_secondaries: {{ enable_readable_secondaries }}
           no_suspension: {{ no_suspension }}
           settings:
             pg_settings: "{{ pg_settings }}"
@@ -355,8 +408,13 @@ SELECT
           current_state: "{{ current_state }}"
           disabled: {{ disabled }}
           endpoint_type: "{{ endpoint_type }}"
+          group:
+            min: {{ min }}
+            max: {{ max }}
+            enable_readable_secondaries: {{ enable_readable_secondaries }}
           hosts:
             host: "{{ host }}"
+            read_only_host: "{{ read_only_host }}"
           pending_state: "{{ pending_state }}"
           settings:
             pg_settings: "{{ pg_settings }}"

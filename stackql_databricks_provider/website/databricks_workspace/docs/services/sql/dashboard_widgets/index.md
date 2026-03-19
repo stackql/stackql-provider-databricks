@@ -185,8 +185,6 @@ width
       description: |
         Dashboard ID returned by :method:dashboards/create.
     - name: options
-      description: |
-        :param width: int Width of a widget
       value:
         created_at: "{{ created_at }}"
         description: "{{ description }}"
@@ -202,6 +200,8 @@ width
         updated_at: "{{ updated_at }}"
     - name: width
       value: {{ width }}
+      description: |
+        Width of a widget
     - name: text
       value: "{{ text }}"
       description: |

@@ -18,18 +18,19 @@ postgres service documentation.
 
 :::info[Service Summary]
 
-total resources: __5__  
+total resources: __6__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
+<a href="/services/postgres/postgres/">postgres</a><br />
 <a href="/services/postgres/postgres_branches/">postgres_branches</a><br />
-<a href="/services/postgres/postgres_credentials/">postgres_credentials</a><br />
-<a href="/services/postgres/postgres_endpoints/">postgres_endpoints</a>
+<a href="/services/postgres/postgres_credentials/">postgres_credentials</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/postgres/postgres_endpoints/">postgres_endpoints</a><br />
 <a href="/services/postgres/postgres_projects/">postgres_projects</a><br />
 <a href="/services/postgres/postgres_roles/">postgres_roles</a>
 </div>

@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks workspace service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.workspace"
   },
   "servers": [
@@ -24,12 +24,12 @@
     "/api/2.0/git-credentials": {
       "post": {
         "operationId": "git_credentials_create",
-        "summary": "Creates a Git credential entry for the user. Only one Git credential per user is supported, so any",
+        "summary": "Creates a Git credential entry for the user. Use the PATCH endpoint to update existing credentials, or",
         "tags": [
           "workspace",
           "git_credentials"
         ],
-        "description": "Creates a Git credential entry for the user. Only one Git credential per user is supported, so any\nattempts to create credentials if an entry already exists will fail. Use the PATCH endpoint to update\nexisting credentials, or the DELETE endpoint to delete existing credentials.\n\n:param git_provider: str\n  Git provider. This field is case-insensitive. The available Git providers are `gitHub`,\n  `bitbucketCloud`, `gitLab`, `azureDevOpsServices`, `gitHubEnterprise`, `bitbucketServer`,\n  `gitLabEnterpriseEdition` and `awsCodeCommit`.\n:param git_email: str (optional)\n  The authenticating email associated with your Git provider user account. Used for authentication\n  with the remote repository and also sets the author & committer identity for commits. Required for\n  most Git providers except AWS CodeCommit. Learn more at\n  https://docs.databricks.com/aws/en/repos/get-access-tokens-from-git-provider\n:param git_username: str (optional)\n  The username provided with your Git provider account and associated with the credential. For most\n  Git providers it is only used to set the Git committer & author names for commits, however it may be\n  required for authentication depending on your Git provider / token requirements. Required for AWS\n  CodeCommit.\n:param is_default_for_provider: bool (optional)\n  if the credential is the default for the given provider\n:param name: str (optional)\n  the name of the git credential, used for identification and ease of lookup\n:param personal_access_token: str (optional)\n  The personal access token used to authenticate to the corresponding Git provider. For certain\n  providers, support may exist for other types of scoped access tokens. [Learn more].\n\n  [Learn more]: https://docs.databricks.com/repos/get-access-tokens-from-git-provider.html\n:param principal_id: int (optional)\n  The ID of the service principal whose credentials will be modified. Only service principal managers\n  can perform this action.\n\n:returns: :class:`CreateCredentialsResponse`",
+        "description": "Creates a Git credential entry for the user. Use the PATCH endpoint to update existing credentials, or\nthe DELETE endpoint to delete existing credentials.\n\n:param git_provider: str\n  Git provider. This field is case-insensitive. The available Git providers are `gitHub`,\n  `bitbucketCloud`, `gitLab`, `azureDevOpsServices`, `gitHubEnterprise`, `bitbucketServer`,\n  `gitLabEnterpriseEdition` and `awsCodeCommit`.\n:param git_email: str (optional)\n  The authenticating email associated with your Git provider user account. Used for authentication\n  with the remote repository and also sets the author & committer identity for commits. Required for\n  most Git providers except AWS CodeCommit. Learn more at\n  https://docs.databricks.com/aws/en/repos/get-access-tokens-from-git-provider\n:param git_username: str (optional)\n  The username provided with your Git provider account and associated with the credential. For most\n  Git providers it is only used to set the Git committer & author names for commits, however it may be\n  required for authentication depending on your Git provider / token requirements. Required for AWS\n  CodeCommit.\n:param is_default_for_provider: bool (optional)\n  if the credential is the default for the given provider\n:param name: str (optional)\n  the name of the git credential, used for identification and ease of lookup\n:param personal_access_token: str (optional)\n  The personal access token used to authenticate to the corresponding Git provider. For certain\n  providers, support may exist for other types of scoped access tokens. [Learn more].\n\n  [Learn more]: https://docs.databricks.com/repos/get-access-tokens-from-git-provider.html\n:param principal_id: int (optional)\n  The ID of the service principal whose credentials will be modified. Only service principal managers\n  can perform this action.\n\n:returns: :class:`CreateCredentialsResponse`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -829,8 +829,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`RepoPermissions`"
+                    }
                   }
                 }
               }
@@ -921,8 +920,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`RepoPermissions`"
+                    }
                   }
                 }
               }
@@ -1918,8 +1916,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`WorkspaceObjectPermissions`"
+                    }
                   }
                 }
               }
@@ -2018,8 +2015,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`WorkspaceObjectPermissions`"
+                    }
                   }
                 }
               }

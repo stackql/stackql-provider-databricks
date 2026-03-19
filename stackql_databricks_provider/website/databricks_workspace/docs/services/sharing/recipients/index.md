@@ -657,9 +657,11 @@ updated_by
     - name: authentication_type
       value: "{{ authentication_type }}"
       description: |
-        :param comment: str (optional) Description about the recipient.
+        The delta sharing authentication type.
     - name: comment
       value: "{{ comment }}"
+      description: |
+        Description about the recipient.
     - name: data_recipient_global_metastore_id
       value: "{{ data_recipient_global_metastore_id }}"
       description: |

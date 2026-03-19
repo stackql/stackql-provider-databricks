@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks catalog service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.catalog"
   },
   "servers": [
@@ -939,9 +939,25 @@
                         "type": "string",
                         "description": "The type of the entity to which the tag is assigned. Allowed values are: catalogs, schemas, tables, columns, volumes."
                       },
+                      "source_type": {
+                        "type": "string",
+                        "x-enum": [
+                          "TAG_ASSIGNMENT_SOURCE_TYPE_SYSTEM_DATA_CLASSIFICATION"
+                        ],
+                        "description": "The source type of the tag assignment, e.g., user-assigned or system-assigned"
+                      },
                       "tag_value": {
                         "type": "string",
                         "description": "The value of the tag"
+                      },
+                      "update_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the tag assignment was last updated"
+                      },
+                      "updated_by": {
+                        "type": "string",
+                        "description": "The user or principal who updated the tag assignment"
                       }
                     },
                     "required": [
@@ -949,7 +965,7 @@
                       "tag_key",
                       "entity_type"
                     ],
-                    "description": ":returns: :class:`EntityTagAssignment`"
+                    "description": "Represents a tag assignment to an entity"
                   }
                 },
                 "required": [
@@ -1166,7 +1182,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
           }
         ],
         "requestBody": {
@@ -1190,9 +1207,25 @@
                         "type": "string",
                         "description": "The type of the entity to which the tag is assigned. Allowed values are: catalogs, schemas, tables, columns, volumes."
                       },
+                      "source_type": {
+                        "type": "string",
+                        "x-enum": [
+                          "TAG_ASSIGNMENT_SOURCE_TYPE_SYSTEM_DATA_CLASSIFICATION"
+                        ],
+                        "description": "The source type of the tag assignment, e.g., user-assigned or system-assigned"
+                      },
                       "tag_value": {
                         "type": "string",
                         "description": "The value of the tag"
+                      },
+                      "update_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "The timestamp when the tag assignment was last updated"
+                      },
+                      "updated_by": {
+                        "type": "string",
+                        "description": "The user or principal who updated the tag assignment"
                       }
                     },
                     "required": [
@@ -1200,7 +1233,7 @@
                       "tag_key",
                       "entity_type"
                     ],
-                    "description": ":param update_mask: str The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+                    "description": "Represents a tag assignment to an entity"
                   }
                 },
                 "required": [
@@ -1449,8 +1482,7 @@
                     "required": [
                       "source",
                       "target"
-                    ],
-                    "description": ":returns: :class:`ExternalLineageRelationship`"
+                    ]
                   }
                 },
                 "required": [
@@ -1507,8 +1539,7 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/DeleteRequestExternalLineage"
-            },
-            "description": ":class:`DeleteRequestExternalLineage`"
+            }
           }
         ],
         "responses": {
@@ -1629,7 +1660,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
           }
         ],
         "requestBody": {
@@ -1749,8 +1781,7 @@
                     "required": [
                       "source",
                       "target"
-                    ],
-                    "description": ":param update_mask: str The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+                    ]
                   }
                 },
                 "required": [
@@ -1801,7 +1832,7 @@
           "catalog",
           "external_locations"
         ],
-        "description": "Creates a new external location entry in the metastore. The caller must be a metastore admin or have\nthe **CREATE_EXTERNAL_LOCATION** privilege on both the metastore and the associated storage\ncredential.\n\n:param name: str\n  Name of the external location.\n:param url: str\n  Path URL of the external location.\n:param credential_name: str\n  Name of the storage credential used with this location.\n:param comment: str (optional)\n  User-provided free-form text description.\n:param enable_file_events: bool (optional)\n  Whether to enable file events on this external location. Default to `true`. Set to `false` to\n  disable file events.\n:param encryption_details: :class:`EncryptionDetails` (optional)\n:param fallback: bool (optional)\n  Indicates whether fallback mode is enabled for this external location. When fallback mode is\n  enabled, the access to the location falls back to cluster credentials if UC credentials are not\n  sufficient.\n:param file_event_queue: :class:`FileEventQueue` (optional)\n  File event queue settings. If `enable_file_events` is not `false`, must be defined and have exactly\n  one of the documented properties.\n:param read_only: bool (optional)\n  Indicates whether the external location is read-only.\n:param skip_validation: bool (optional)\n  Skips validation of the storage credential associated with the external location.\n\n:returns: :class:`ExternalLocationInfo`",
+        "description": "Creates a new external location entry in the metastore. The caller must be a metastore admin or have\nthe **CREATE_EXTERNAL_LOCATION** privilege on both the metastore and the associated storage\ncredential.\n\n:param name: str\n  Name of the external location.\n:param url: str\n  Path URL of the external location.\n:param credential_name: str\n  Name of the storage credential used with this location.\n:param comment: str (optional)\n  User-provided free-form text description.\n:param effective_enable_file_events: bool (optional)\n  The effective value of `enable_file_events` after applying server-side defaults.\n:param enable_file_events: bool (optional)\n  Whether to enable file events on this external location. Default to `true`. Set to `false` to\n  disable file events. The actual applied value may differ due to server-side defaults; check\n  `effective_enable_file_events` for the effective state.\n:param encryption_details: :class:`EncryptionDetails` (optional)\n:param fallback: bool (optional)\n  Indicates whether fallback mode is enabled for this external location. When fallback mode is\n  enabled, the access to the location falls back to cluster credentials if UC credentials are not\n  sufficient.\n:param file_event_queue: :class:`FileEventQueue` (optional)\n  File event queue settings. If `enable_file_events` is not `false`, must be defined and have exactly\n  one of the documented properties.\n:param read_only: bool (optional)\n  Indicates whether the external location is read-only.\n:param skip_validation: bool (optional)\n  Skips validation of the storage credential associated with the external location.\n\n:returns: :class:`ExternalLocationInfo`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1824,9 +1855,13 @@
                     "type": "string",
                     "description": "User-provided free-form text description."
                   },
+                  "effective_enable_file_events": {
+                    "type": "boolean",
+                    "description": "The effective value of `enable_file_events` after applying server-side defaults."
+                  },
                   "enable_file_events": {
                     "type": "boolean",
-                    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events."
+                    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events. The actual applied value may differ due to server-side defaults; check `effective_enable_file_events` for the effective state."
                   },
                   "encryption_details": {
                     "type": "object",
@@ -1850,10 +1885,11 @@
                         "description": "Server-Side Encryption properties for clients communicating with AWS s3."
                       }
                     },
-                    "description": ":param fallback: bool (optional) Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient."
+                    "description": "Encryption options that apply to clients connecting to cloud storage."
                   },
                   "fallback": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient."
                   },
                   "file_event_queue": {
                     "type": "object",
@@ -2199,7 +2235,7 @@
           "catalog",
           "external_locations"
         ],
-        "description": "Updates an external location in the metastore. The caller must be the owner of the external location,\nor be a metastore admin. In the second case, the admin can only update the name of the external\nlocation.\n\n:param name: str\n  Name of the external location.\n:param comment: str (optional)\n  User-provided free-form text description.\n:param credential_name: str (optional)\n  Name of the storage credential used with this location.\n:param enable_file_events: bool (optional)\n  Whether to enable file events on this external location. Default to `true`. Set to `false` to\n  disable file events.\n:param encryption_details: :class:`EncryptionDetails` (optional)\n:param fallback: bool (optional)\n  Indicates whether fallback mode is enabled for this external location. When fallback mode is\n  enabled, the access to the location falls back to cluster credentials if UC credentials are not\n  sufficient.\n:param file_event_queue: :class:`FileEventQueue` (optional)\n  File event queue settings. If `enable_file_events` is not `false`, must be defined and have exactly\n  one of the documented properties.\n:param force: bool (optional)\n  Force update even if changing url invalidates dependent external tables or mounts.\n:param isolation_mode: :class:`IsolationMode` (optional)\n:param new_name: str (optional)\n  New name for the external location.\n:param owner: str (optional)\n  The owner of the external location.\n:param read_only: bool (optional)\n  Indicates whether the external location is read-only.\n:param skip_validation: bool (optional)\n  Skips validation of the storage credential associated with the external location.\n:param url: str (optional)\n  Path URL of the external location.\n\n:returns: :class:`ExternalLocationInfo`",
+        "description": "Updates an external location in the metastore. The caller must be the owner of the external location,\nor be a metastore admin. In the second case, the admin can only update the name of the external\nlocation.\n\n:param name: str\n  Name of the external location.\n:param comment: str (optional)\n  User-provided free-form text description.\n:param credential_name: str (optional)\n  Name of the storage credential used with this location.\n:param effective_enable_file_events: bool (optional)\n  The effective value of `enable_file_events` after applying server-side defaults.\n:param enable_file_events: bool (optional)\n  Whether to enable file events on this external location. Default to `true`. Set to `false` to\n  disable file events. The actual applied value may differ due to server-side defaults; check\n  `effective_enable_file_events` for the effective state.\n:param encryption_details: :class:`EncryptionDetails` (optional)\n:param fallback: bool (optional)\n  Indicates whether fallback mode is enabled for this external location. When fallback mode is\n  enabled, the access to the location falls back to cluster credentials if UC credentials are not\n  sufficient.\n:param file_event_queue: :class:`FileEventQueue` (optional)\n  File event queue settings. If `enable_file_events` is not `false`, must be defined and have exactly\n  one of the documented properties.\n:param force: bool (optional)\n  Force update even if changing url invalidates dependent external tables or mounts.\n:param isolation_mode: :class:`IsolationMode` (optional)\n:param new_name: str (optional)\n  New name for the external location.\n:param owner: str (optional)\n  The owner of the external location.\n:param read_only: bool (optional)\n  Indicates whether the external location is read-only.\n:param skip_validation: bool (optional)\n  Skips validation of the storage credential associated with the external location.\n:param url: str (optional)\n  Path URL of the external location.\n\n:returns: :class:`ExternalLocationInfo`",
         "parameters": [
           {
             "name": "name",
@@ -2225,9 +2261,13 @@
                     "type": "string",
                     "description": "Name of the storage credential used with this location."
                   },
+                  "effective_enable_file_events": {
+                    "type": "boolean",
+                    "description": "The effective value of `enable_file_events` after applying server-side defaults."
+                  },
                   "enable_file_events": {
                     "type": "boolean",
-                    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events."
+                    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events. The actual applied value may differ due to server-side defaults; check `effective_enable_file_events` for the effective state."
                   },
                   "encryption_details": {
                     "type": "object",
@@ -2251,10 +2291,11 @@
                         "description": "Server-Side Encryption properties for clients communicating with AWS s3."
                       }
                     },
-                    "description": ":param fallback: bool (optional) Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient."
+                    "description": "Encryption options that apply to clients connecting to cloud storage."
                   },
                   "fallback": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient."
                   },
                   "file_event_queue": {
                     "type": "object",
@@ -2360,10 +2401,11 @@
                       "ISOLATION_MODE_ISOLATED",
                       "ISOLATION_MODE_OPEN"
                     ],
-                    "description": ":param new_name: str (optional) New name for the external location."
+                    "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                   },
                   "new_name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "New name for the external location."
                   },
                   "owner": {
                     "type": "string",
@@ -2525,8 +2567,7 @@
                       "name",
                       "system_type",
                       "entity_type"
-                    ],
-                    "description": ":returns: :class:`ExternalMetadata`"
+                    ]
                   }
                 },
                 "required": [
@@ -2645,8 +2686,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -2689,8 +2729,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`ExternalMetadata`"
+            }
           }
         ],
         "responses": {
@@ -2749,7 +2788,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
           }
         ],
         "requestBody": {
@@ -2849,8 +2889,7 @@
                       "name",
                       "system_type",
                       "entity_type"
-                    ],
-                    "description": ":param update_mask: str The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+                    ]
                   }
                 },
                 "required": [
@@ -3796,7 +3835,7 @@
                               "WRITE_PRIVATE_FILES",
                               "WRITE_VOLUME"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                           }
                         },
                         "principal": {
@@ -3859,7 +3898,7 @@
                               "WRITE_PRIVATE_FILES",
                               "WRITE_VOLUME"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                           },
                           "description": "The set of privileges to remove."
                         }
@@ -4806,11 +4845,11 @@
                     "description": "The comment attached to the model version"
                   },
                   "created_at": {
-                    "type": "integer",
-                    "description": ":param created_by: str (optional) The identifier of the user who created the model version"
+                    "type": "integer"
                   },
                   "created_by": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The identifier of the user who created the model version"
                   },
                   "id": {
                     "type": "string",
@@ -4917,11 +4956,11 @@
                     "description": "The storage location on the cloud under which model version data files are stored"
                   },
                   "updated_at": {
-                    "type": "integer",
-                    "description": ":param updated_by: str (optional) The identifier of the user who updated the model version last time"
+                    "type": "integer"
                   },
                   "updated_by": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The identifier of the user who updated the model version last time"
                   }
                 }
               }
@@ -6376,12 +6415,12 @@
     "/api/2.1/unity-catalog/tables/{table_name}/monitor/refreshes/{refresh_id}/cancel": {
       "post": {
         "operationId": "quality_monitors_cancel_refresh",
-        "summary": "[DEPRECATED] Cancels an already-initiated refresh job. Use Data Quality Monitors API instead",
+        "summary": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Cancels an",
         "tags": [
           "catalog",
           "quality_monitors"
         ],
-        "description": "[DEPRECATED] Cancels an already-initiated refresh job. Use Data Quality Monitors API instead\n(/api/data-quality/v1/monitors).\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. table_name is case insensitive and spaces are\n  disallowed.\n:param refresh_id: int",
+        "description": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Cancels an\nalready-initiated refresh job.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. table_name is case insensitive and spaces are\n  disallowed.\n:param refresh_id: int",
         "parameters": [
           {
             "name": "table_name",
@@ -6398,8 +6437,7 @@
             "required": true,
             "schema": {
               "type": "integer"
-            },
-            "description": "int"
+            }
           }
         ],
         "responses": {
@@ -6431,12 +6469,12 @@
     "/api/2.1/unity-catalog/tables/{table_name}/monitor": {
       "post": {
         "operationId": "quality_monitors_create",
-        "summary": "[DEPRECATED] Creates a new monitor for the specified table. Use Data Quality Monitors API instead",
+        "summary": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Creates a new",
         "tags": [
           "catalog",
           "quality_monitors"
         ],
-        "description": "[DEPRECATED] Creates a new monitor for the specified table. Use Data Quality Monitors API instead\n(/api/data-quality/v1/monitors).\n\nThe caller must either: 1. be an owner of the table's parent catalog, have **USE_SCHEMA** on the\ntable's parent schema, and have **SELECT** access on the table 2. have **USE_CATALOG** on the table's\nparent catalog, be an owner of the table's parent schema, and have **SELECT** access on the table. 3.\nhave the following permissions: - **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on\nthe table's parent schema - be an owner of the table.\n\nWorkspace assets, such as the dashboard, will be created in the workspace where this call was made.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n:param output_schema_name: str\n  [Create:REQ Update:REQ] Schema where output tables are created. Needs to be in 2-level format\n  {catalog}.{schema}\n:param assets_dir: str\n  [Create:REQ Update:IGN] Field for specifying the absolute path to a custom directory to store\n  data-monitoring assets. Normally prepopulated to a default user location via UI and Python APIs.\n:param baseline_table_name: str (optional)\n  [Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in\n  the monitored `table_name`. The baseline table and the monitored table shall have the same schema.\n:param custom_metrics: List[:class:`MonitorMetric`] (optional)\n  [Create:OPT Update:OPT] Custom metrics.\n:param data_classification_config: :class:`MonitorDataClassificationConfig` (optional)\n  [Create:OPT Update:OPT] Data classification related config.\n:param inference_log: :class:`MonitorInferenceLog` (optional)\n:param latest_monitor_failure_msg: str (optional)\n  [Create:ERR Update:IGN] The latest error message for a monitor failure.\n:param notifications: :class:`MonitorNotifications` (optional)\n  [Create:OPT Update:OPT] Field for specifying notification settings.\n:param schedule: :class:`MonitorCronSchedule` (optional)\n  [Create:OPT Update:OPT] The monitor schedule.\n:param skip_builtin_dashboard: bool (optional)\n  Whether to skip creating a default dashboard summarizing data quality metrics.\n:param slicing_exprs: List[str] (optional)\n  [Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The\n  data is grouped by each expression independently, resulting in a separate slice for each predicate\n  and its complements. For example `slicing_exprs=[\u201ccol_1\u201d, \u201ccol_2 > 10\u201d]` will generate the\n  following slices: two slices for `col_2 > 10` (True and False), and one slice per unique value in\n  `col1`. For high-cardinality columns, only the top 100 unique values by frequency will generate\n  slices.\n:param snapshot: :class:`MonitorSnapshot` (optional)\n  Configuration for monitoring snapshot tables.\n:param time_series: :class:`MonitorTimeSeries` (optional)\n  Configuration for monitoring time series tables.\n:param warehouse_id: str (optional)\n  Optional argument to specify the warehouse for dashboard creation. If not specified, the first\n  running warehouse will be used.\n\n:returns: :class:`MonitorInfo`",
+        "description": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Creates a new\nmonitor for the specified table.\n\nThe caller must either: 1. be an owner of the table's parent catalog, have **USE_SCHEMA** on the\ntable's parent schema, and have **SELECT** access on the table 2. have **USE_CATALOG** on the table's\nparent catalog, be an owner of the table's parent schema, and have **SELECT** access on the table. 3.\nhave the following permissions: - **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on\nthe table's parent schema - be an owner of the table.\n\nWorkspace assets, such as the dashboard, will be created in the workspace where this call was made.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n:param output_schema_name: str\n  [Create:REQ Update:REQ] Schema where output tables are created. Needs to be in 2-level format\n  {catalog}.{schema}\n:param assets_dir: str\n  [Create:REQ Update:IGN] Field for specifying the absolute path to a custom directory to store\n  data-monitoring assets. Normally prepopulated to a default user location via UI and Python APIs.\n:param baseline_table_name: str (optional)\n  [Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in\n  the monitored `table_name`. The baseline table and the monitored table shall have the same schema.\n:param custom_metrics: List[:class:`MonitorMetric`] (optional)\n  [Create:OPT Update:OPT] Custom metrics.\n:param data_classification_config: :class:`MonitorDataClassificationConfig` (optional)\n  [Create:OPT Update:OPT] Data classification related config.\n:param inference_log: :class:`MonitorInferenceLog` (optional)\n:param latest_monitor_failure_msg: str (optional)\n  [Create:ERR Update:IGN] The latest error message for a monitor failure.\n:param notifications: :class:`MonitorNotifications` (optional)\n  [Create:OPT Update:OPT] Field for specifying notification settings.\n:param schedule: :class:`MonitorCronSchedule` (optional)\n  [Create:OPT Update:OPT] The monitor schedule.\n:param skip_builtin_dashboard: bool (optional)\n  Whether to skip creating a default dashboard summarizing data quality metrics.\n:param slicing_exprs: List[str] (optional)\n  [Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The\n  data is grouped by each expression independently, resulting in a separate slice for each predicate\n  and its complements. For example `slicing_exprs=[\u201ccol_1\u201d, \u201ccol_2 > 10\u201d]` will generate the\n  following slices: two slices for `col_2 > 10` (True and False), and one slice per unique value in\n  `col1`. For high-cardinality columns, only the top 100 unique values by frequency will generate\n  slices.\n:param snapshot: :class:`MonitorSnapshot` (optional)\n  Configuration for monitoring snapshot tables.\n:param time_series: :class:`MonitorTimeSeries` (optional)\n  Configuration for monitoring time series tables.\n:param warehouse_id: str (optional)\n  Optional argument to specify the warehouse for dashboard creation. If not specified, the first\n  running warehouse will be used.\n\n:returns: :class:`MonitorInfo`",
         "parameters": [
           {
             "name": "table_name",
@@ -6530,7 +6568,7 @@
                           "PROBLEM_TYPE_CLASSIFICATION",
                           "PROBLEM_TYPE_REGRESSION"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
                       "timestamp_col": {
                         "type": "string",
@@ -6566,11 +6604,11 @@
                       "granularities",
                       "prediction_col",
                       "model_id_col"
-                    ],
-                    "description": ":param latest_monitor_failure_msg: str (optional) [Create:ERR Update:IGN] The latest error message for a monitor failure."
+                    ]
                   },
                   "latest_monitor_failure_msg": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "[Create:ERR Update:IGN] The latest error message for a monitor failure."
                   },
                   "notifications": {
                     "type": "object",
@@ -6711,12 +6749,12 @@
       },
       "delete": {
         "operationId": "quality_monitors_delete",
-        "summary": "[DEPRECATED] Deletes a monitor for the specified table. Use Data Quality Monitors API instead",
+        "summary": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Deletes a monitor",
         "tags": [
           "catalog",
           "quality_monitors"
         ],
-        "description": "[DEPRECATED] Deletes a monitor for the specified table. Use Data Quality Monitors API instead\n(/api/data-quality/v1/monitors).\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema - be an\nowner of the table.\n\nAdditionally, the call must be made from the workspace where the monitor was created.\n\nNote that the metric tables and dashboard will not be deleted as part of this call; those assets must\nbe manually cleaned up (if desired).\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n\n:returns: :class:`DeleteMonitorResponse`",
+        "description": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Deletes a monitor\nfor the specified table.\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema - be an\nowner of the table.\n\nAdditionally, the call must be made from the workspace where the monitor was created.\n\nNote that the metric tables and dashboard will not be deleted as part of this call; those assets must\nbe manually cleaned up (if desired).\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n\n:returns: :class:`DeleteMonitorResponse`",
         "parameters": [
           {
             "name": "table_name",
@@ -6762,12 +6800,12 @@
       },
       "get": {
         "operationId": "quality_monitors_get",
-        "summary": "[DEPRECATED] Gets a monitor for the specified table. Use Data Quality Monitors API instead",
+        "summary": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets a monitor for",
         "tags": [
           "catalog",
           "quality_monitors"
         ],
-        "description": "[DEPRECATED] Gets a monitor for the specified table. Use Data Quality Monitors API instead\n(/api/data-quality/v1/monitors).\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema. 3. have the following\npermissions: - **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent\nschema - **SELECT** privilege on the table.\n\nThe returned information includes configuration values, as well as information on assets created by\nthe monitor. Some information (e.g., dashboard) may be filtered out if the caller is in a different\nworkspace than where the monitor was created.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n\n:returns: :class:`MonitorInfo`",
+        "description": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets a monitor for\nthe specified table.\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema. 3. have the following\npermissions: - **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent\nschema - **SELECT** privilege on the table.\n\nThe returned information includes configuration values, as well as information on assets created by\nthe monitor. Some information (e.g., dashboard) may be filtered out if the caller is in a different\nworkspace than where the monitor was created.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n\n:returns: :class:`MonitorInfo`",
         "parameters": [
           {
             "name": "table_name",
@@ -6813,12 +6851,12 @@
       },
       "put": {
         "operationId": "quality_monitors_update",
-        "summary": "[DEPRECATED] Updates a monitor for the specified table. Use Data Quality Monitors API instead",
+        "summary": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Updates a monitor",
         "tags": [
           "catalog",
           "quality_monitors"
         ],
-        "description": "[DEPRECATED] Updates a monitor for the specified table. Use Data Quality Monitors API instead\n(/api/data-quality/v1/monitors).\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema - be an\nowner of the table.\n\nAdditionally, the call must be made from the workspace where the monitor was created, and the caller\nmust be the original creator of the monitor.\n\nCertain configuration fields, such as output asset identifiers, cannot be updated.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n:param output_schema_name: str\n  [Create:REQ Update:REQ] Schema where output tables are created. Needs to be in 2-level format\n  {catalog}.{schema}\n:param baseline_table_name: str (optional)\n  [Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in\n  the monitored `table_name`. The baseline table and the monitored table shall have the same schema.\n:param custom_metrics: List[:class:`MonitorMetric`] (optional)\n  [Create:OPT Update:OPT] Custom metrics.\n:param dashboard_id: str (optional)\n  [Create:ERR Update:OPT] Id of dashboard that visualizes the computed metrics. This can be empty if\n  the monitor is in PENDING state.\n:param data_classification_config: :class:`MonitorDataClassificationConfig` (optional)\n  [Create:OPT Update:OPT] Data classification related config.\n:param inference_log: :class:`MonitorInferenceLog` (optional)\n:param latest_monitor_failure_msg: str (optional)\n  [Create:ERR Update:IGN] The latest error message for a monitor failure.\n:param notifications: :class:`MonitorNotifications` (optional)\n  [Create:OPT Update:OPT] Field for specifying notification settings.\n:param schedule: :class:`MonitorCronSchedule` (optional)\n  [Create:OPT Update:OPT] The monitor schedule.\n:param slicing_exprs: List[str] (optional)\n  [Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The\n  data is grouped by each expression independently, resulting in a separate slice for each predicate\n  and its complements. For example `slicing_exprs=[\u201ccol_1\u201d, \u201ccol_2 > 10\u201d]` will generate the\n  following slices: two slices for `col_2 > 10` (True and False), and one slice per unique value in\n  `col1`. For high-cardinality columns, only the top 100 unique values by frequency will generate\n  slices.\n:param snapshot: :class:`MonitorSnapshot` (optional)\n  Configuration for monitoring snapshot tables.\n:param time_series: :class:`MonitorTimeSeries` (optional)\n  Configuration for monitoring time series tables.\n\n:returns: :class:`MonitorInfo`",
+        "description": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Updates a monitor\nfor the specified table.\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema - be an\nowner of the table.\n\nAdditionally, the call must be made from the workspace where the monitor was created, and the caller\nmust be the original creator of the monitor.\n\nCertain configuration fields, such as output asset identifiers, cannot be updated.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n:param output_schema_name: str\n  [Create:REQ Update:REQ] Schema where output tables are created. Needs to be in 2-level format\n  {catalog}.{schema}\n:param baseline_table_name: str (optional)\n  [Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in\n  the monitored `table_name`. The baseline table and the monitored table shall have the same schema.\n:param custom_metrics: List[:class:`MonitorMetric`] (optional)\n  [Create:OPT Update:OPT] Custom metrics.\n:param dashboard_id: str (optional)\n  [Create:ERR Update:OPT] Id of dashboard that visualizes the computed metrics. This can be empty if\n  the monitor is in PENDING state.\n:param data_classification_config: :class:`MonitorDataClassificationConfig` (optional)\n  [Create:OPT Update:OPT] Data classification related config.\n:param inference_log: :class:`MonitorInferenceLog` (optional)\n:param latest_monitor_failure_msg: str (optional)\n  [Create:ERR Update:IGN] The latest error message for a monitor failure.\n:param notifications: :class:`MonitorNotifications` (optional)\n  [Create:OPT Update:OPT] Field for specifying notification settings.\n:param schedule: :class:`MonitorCronSchedule` (optional)\n  [Create:OPT Update:OPT] The monitor schedule.\n:param slicing_exprs: List[str] (optional)\n  [Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The\n  data is grouped by each expression independently, resulting in a separate slice for each predicate\n  and its complements. For example `slicing_exprs=[\u201ccol_1\u201d, \u201ccol_2 > 10\u201d]` will generate the\n  following slices: two slices for `col_2 > 10` (True and False), and one slice per unique value in\n  `col1`. For high-cardinality columns, only the top 100 unique values by frequency will generate\n  slices.\n:param snapshot: :class:`MonitorSnapshot` (optional)\n  Configuration for monitoring snapshot tables.\n:param time_series: :class:`MonitorTimeSeries` (optional)\n  Configuration for monitoring time series tables.\n\n:returns: :class:`MonitorInfo`",
         "parameters": [
           {
             "name": "table_name",
@@ -6912,7 +6950,7 @@
                           "PROBLEM_TYPE_CLASSIFICATION",
                           "PROBLEM_TYPE_REGRESSION"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
                       "timestamp_col": {
                         "type": "string",
@@ -6948,11 +6986,11 @@
                       "granularities",
                       "prediction_col",
                       "model_id_col"
-                    ],
-                    "description": ":param latest_monitor_failure_msg: str (optional) [Create:ERR Update:IGN] The latest error message for a monitor failure."
+                    ]
                   },
                   "latest_monitor_failure_msg": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "[Create:ERR Update:IGN] The latest error message for a monitor failure."
                   },
                   "notifications": {
                     "type": "object",
@@ -7086,12 +7124,12 @@
     "/api/2.1/unity-catalog/tables/{table_name}/monitor/refreshes/{refresh_id}": {
       "get": {
         "operationId": "quality_monitors_get_refresh",
-        "summary": "[DEPRECATED] Gets info about a specific monitor refresh using the given refresh ID. Use Data Quality",
+        "summary": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets info about a",
         "tags": [
           "catalog",
           "quality_monitors"
         ],
-        "description": "[DEPRECATED] Gets info about a specific monitor refresh using the given refresh ID. Use Data Quality\nMonitors API instead (/api/data-quality/v1/monitors).\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema -\n**SELECT** privilege on the table.\n\nAdditionally, the call must be made from the workspace where the monitor was created.\n\n:param table_name: str\n  Full name of the table.\n:param refresh_id: int\n  ID of the refresh.\n\n:returns: :class:`MonitorRefreshInfo`",
+        "description": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets info about a\nspecific monitor refresh using the given refresh ID.\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema -\n**SELECT** privilege on the table.\n\nAdditionally, the call must be made from the workspace where the monitor was created.\n\n:param table_name: str\n  Full name of the table.\n:param refresh_id: int\n  ID of the refresh.\n\n:returns: :class:`MonitorRefreshInfo`",
         "parameters": [
           {
             "name": "table_name",
@@ -7148,12 +7186,12 @@
     "/api/2.1/unity-catalog/tables/{table_name}/monitor/refreshes": {
       "get": {
         "operationId": "quality_monitors_list_refreshes",
-        "summary": "[DEPRECATED] Gets an array containing the history of the most recent refreshes (up to 25) for this",
+        "summary": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets an array",
         "tags": [
           "catalog",
           "quality_monitors"
         ],
-        "description": "[DEPRECATED] Gets an array containing the history of the most recent refreshes (up to 25) for this\ntable. Use Data Quality Monitors API instead (/api/data-quality/v1/monitors).\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema -\n**SELECT** privilege on the table.\n\nAdditionally, the call must be made from the workspace where the monitor was created.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. table_name is case insensitive and spaces are\n  disallowed.\n\n:returns: :class:`MonitorRefreshListResponse`",
+        "description": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Gets an array\ncontaining the history of the most recent refreshes (up to 25) for this table.\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema -\n**SELECT** privilege on the table.\n\nAdditionally, the call must be made from the workspace where the monitor was created.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. table_name is case insensitive and spaces are\n  disallowed.\n\n:returns: :class:`MonitorRefreshListResponse`",
         "parameters": [
           {
             "name": "table_name",
@@ -7199,12 +7237,12 @@
       },
       "post": {
         "operationId": "quality_monitors_run_refresh",
-        "summary": "[DEPRECATED] Queues a metric refresh on the monitor for the specified table. Use Data Quality Monitors",
+        "summary": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Queues a metric",
         "tags": [
           "catalog",
           "quality_monitors"
         ],
-        "description": "[DEPRECATED] Queues a metric refresh on the monitor for the specified table. Use Data Quality Monitors\nAPI instead (/api/data-quality/v1/monitors). The refresh will execute in the background.\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema - be an\nowner of the table\n\nAdditionally, the call must be made from the workspace where the monitor was created.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. table_name is case insensitive and spaces are\n  disallowed.\n\n:returns: :class:`MonitorRefreshInfo`",
+        "description": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Queues a metric\nrefresh on the monitor for the specified table. The refresh will execute in the background.\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema - be an\nowner of the table\n\nAdditionally, the call must be made from the workspace where the monitor was created.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. table_name is case insensitive and spaces are\n  disallowed.\n\n:returns: :class:`MonitorRefreshInfo`",
         "parameters": [
           {
             "name": "table_name",
@@ -7252,12 +7290,12 @@
     "/api/2.1/quality-monitoring/tables/{table_name}/monitor/dashboard": {
       "post": {
         "operationId": "quality_monitors_regenerate_dashboard",
-        "summary": "[DEPRECATED] Regenerates the monitoring dashboard for the specified table. Use Data Quality Monitors",
+        "summary": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Regenerates the",
         "tags": [
           "catalog",
           "quality_monitors"
         ],
-        "description": "[DEPRECATED] Regenerates the monitoring dashboard for the specified table. Use Data Quality Monitors\nAPI instead (/api/data-quality/v1/monitors).\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema - be an\nowner of the table\n\nThe call must be made from the workspace where the monitor was created. The dashboard will be\nregenerated in the assets directory that was specified when the monitor was created.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n:param warehouse_id: str (optional)\n  Optional argument to specify the warehouse for dashboard regeneration. If not specified, the first\n  running warehouse will be used.\n\n:returns: :class:`RegenerateDashboardResponse`",
+        "description": "Deprecated: Use Data Quality Monitors API instead (/api/data-quality/v1/monitors). Regenerates the\nmonitoring dashboard for the specified table.\n\nThe caller must either: 1. be an owner of the table's parent catalog 2. have **USE_CATALOG** on the\ntable's parent catalog and be an owner of the table's parent schema 3. have the following permissions:\n- **USE_CATALOG** on the table's parent catalog - **USE_SCHEMA** on the table's parent schema - be an\nowner of the table\n\nThe call must be made from the workspace where the monitor was created. The dashboard will be\nregenerated in the assets directory that was specified when the monitor was created.\n\n:param table_name: str\n  UC table name in format `catalog.schema.table_name`. This field corresponds to the\n  {full_table_name_arg} arg in the endpoint path.\n:param warehouse_id: str (optional)\n  Optional argument to specify the warehouse for dashboard regeneration. If not specified, the first\n  running warehouse will be used.\n\n:returns: :class:`RegenerateDashboardResponse`",
         "parameters": [
           {
             "name": "table_name",
@@ -7968,7 +8006,7 @@
                                 "SERVICE_PRINCIPAL",
                                 "USER_PRINCIPAL"
                               ],
-                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                              "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                             }
                           }
                         },
@@ -9633,7 +9671,7 @@
                         ]
                       }
                     },
-                    "description": ":returns: :class:`TableConstraint`"
+                    "description": "A table constraint, as defined by *one* of the following fields being set:\n    __primary_key_constraint__, __foreign_key_constraint__, __named_table_constraint__."
                   }
                 },
                 "required": [
@@ -9781,7 +9819,7 @@
                       "STREAMING_TABLE",
                       "VIEW"
                     ],
-                    "description": ":param data_source_format: :class:`DataSourceFormat`"
+                    "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                   },
                   "data_source_format": {
                     "type": "string",
@@ -9836,6 +9874,24 @@
                           "properties": {
                             "function_name": {
                               "type": "string"
+                            },
+                            "using_arguments": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "column": {
+                                    "type": "string",
+                                    "description": "A column reference."
+                                  },
+                                  "constant": {
+                                    "type": "string",
+                                    "description": "A constant literal."
+                                  }
+                                },
+                                "description": "A positional argument passed to a row filter or column mask function. Distinguishes between\n    column references and literals."
+                              },
+                              "description": "The list of additional table columns or literals to be passed as additional arguments to a column mask function. This is the replacement of the deprecated using_column_names field and carries information about the types (alias or constant) of the arguments to the mask function."
                             },
                             "using_column_names": {
                               "type": "array",
@@ -9898,7 +9954,7 @@
                             "USER_DEFINED_TYPE",
                             "VARIANT"
                           ],
-                          "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                          "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                         },
                         "type_precision": {
                           "type": "integer",
@@ -11814,6 +11870,13 @@
           "function_name": {
             "type": "string"
           },
+          "using_arguments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PolicyFunctionArgument"
+            },
+            "description": "The list of additional table columns or literals to be passed as additional arguments to a column mask function. This is the replacement of the deprecated using_column_names field and carries information about the types (alias or constant) of the arguments to the mask function."
+          },
           "using_column_names": {
             "type": "array",
             "items": {
@@ -12530,9 +12593,22 @@
             "type": "string",
             "description": "The type of the entity to which the tag is assigned. Allowed values are: catalogs, schemas, tables, columns, volumes."
           },
+          "source_type": {
+            "$ref": "#/components/schemas/TagAssignmentSourceType",
+            "description": "The source type of the tag assignment, e.g., user-assigned or system-assigned"
+          },
           "tag_value": {
             "type": "string",
             "description": "The value of the tag"
+          },
+          "update_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp when the tag assignment was last updated"
+          },
+          "updated_by": {
+            "type": "string",
+            "description": "The user or principal who updated the tag assignment"
           }
         },
         "required": [
@@ -12796,9 +12872,13 @@
             "type": "string",
             "description": "Name of the storage credential used with this location."
           },
+          "effective_enable_file_events": {
+            "type": "boolean",
+            "description": "The effective value of `enable_file_events` after applying server-side defaults."
+          },
           "enable_file_events": {
             "type": "boolean",
-            "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events."
+            "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events. The actual applied value may differ due to server-side defaults; check `effective_enable_file_events` for the effective state."
           },
           "encryption_details": {
             "$ref": "#/components/schemas/EncryptionDetails"
@@ -14456,6 +14536,20 @@
         },
         "description": "Progress information of the Online Table data synchronization pipeline."
       },
+      "PolicyFunctionArgument": {
+        "type": "object",
+        "properties": {
+          "column": {
+            "type": "string",
+            "description": "A column reference."
+          },
+          "constant": {
+            "type": "string",
+            "description": "A constant literal."
+          }
+        },
+        "description": "A positional argument passed to a row filter or column mask function. Distinguishes between\n    column references and literals."
+      },
       "PolicyInfo": {
         "type": "object",
         "properties": {
@@ -15220,6 +15314,13 @@
               "type": "string"
             },
             "description": "The list of table columns to be passed as input to the row filter function. The column types should match the types of the filter function arguments."
+          },
+          "input_arguments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PolicyFunctionArgument"
+            },
+            "description": "The list of additional table columns or literals to be passed as additional arguments to a row filter function. This is the replacement of the deprecated input_column_names field and carries information about the types (alias or constant) of the arguments to the filter function."
           }
         },
         "required": [
@@ -15604,7 +15705,7 @@
           "ISOLATED",
           "OPEN"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "CatalogType": {
         "type": "string",
@@ -15646,7 +15747,7 @@
           "USER_DEFINED_TYPE",
           "VARIANT"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ConnectionType": {
         "type": "string",
@@ -15679,7 +15780,7 @@
         "x-enum": [
           "S"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "CreateFunctionRoutineBody": {
         "type": "string",
@@ -15687,14 +15788,14 @@
           "EXTERNAL",
           "SQL"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "CreateFunctionSecurityType": {
         "type": "string",
         "x-enum": [
           "DEFINER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "CreateFunctionSqlDataAccess": {
         "type": "string",
@@ -15703,7 +15804,7 @@
           "NO_SQL",
           "READS_SQL_DATA"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "CredentialPurpose": {
         "type": "string",
@@ -15711,13 +15812,14 @@
           "SERVICE",
           "STORAGE"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "CredentialType": {
         "type": "string",
         "x-enum": [
           "ANY_STATIC_CREDENTIAL",
           "BEARER_TOKEN",
+          "EDGEGRID_AKAMAI",
           "OAUTH_ACCESS_TOKEN",
           "OAUTH_M2M",
           "OAUTH_MTLS",
@@ -15732,7 +15834,7 @@
           "UNKNOWN_CREDENTIAL_TYPE",
           "USERNAME_PASSWORD"
         ],
-        "description": "Next Id: 15"
+        "description": "Next Id: 17"
       },
       "DataSourceFormat": {
         "type": "string",
@@ -15776,7 +15878,7 @@
           "INTERNAL",
           "INTERNAL_AND_EXTERNAL"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "DestinationType": {
         "type": "string",
@@ -15787,7 +15889,7 @@
           "SLACK",
           "URL"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "EffectivePredictiveOptimizationFlagInheritedFromType": {
         "type": "string",
@@ -15795,7 +15897,7 @@
           "CATALOG",
           "SCHEMA"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "EnablePredictiveOptimization": {
         "type": "string",
@@ -15804,14 +15906,14 @@
           "ENABLE",
           "INHERIT"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FunctionInfoParameterStyle": {
         "type": "string",
         "x-enum": [
           "S"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FunctionInfoRoutineBody": {
         "type": "string",
@@ -15819,14 +15921,14 @@
           "EXTERNAL",
           "SQL"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FunctionInfoSecurityType": {
         "type": "string",
         "x-enum": [
           "DEFINER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FunctionInfoSqlDataAccess": {
         "type": "string",
@@ -15835,14 +15937,14 @@
           "NO_SQL",
           "READS_SQL_DATA"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FunctionParameterMode": {
         "type": "string",
         "x-enum": [
           "IN"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "FunctionParameterType": {
         "type": "string",
@@ -15850,7 +15952,7 @@
           "COLUMN",
           "PARAM"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "IsolationMode": {
         "type": "string",
@@ -15858,7 +15960,7 @@
           "ISOLATION_MODE_ISOLATED",
           "ISOLATION_MODE_OPEN"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "LineageDirection": {
         "type": "string",
@@ -15866,7 +15968,7 @@
           "DOWNSTREAM",
           "UPSTREAM"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "MatchType": {
         "type": "string",
@@ -15883,7 +15985,7 @@
           "PENDING_REGISTRATION",
           "READY"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "MonitorCronSchedulePauseStatus": {
         "type": "string",
@@ -15900,7 +16002,7 @@
           "PROBLEM_TYPE_CLASSIFICATION",
           "PROBLEM_TYPE_REGRESSION"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "MonitorInfoStatus": {
         "type": "string",
@@ -15911,7 +16013,7 @@
           "MONITOR_STATUS_FAILED",
           "MONITOR_STATUS_PENDING"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "MonitorMetricType": {
         "type": "string",
@@ -15941,7 +16043,7 @@
           "SCHEDULE",
           "UNKNOWN_TRIGGER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "OnlineTableState": {
         "type": "string",
@@ -15988,7 +16090,7 @@
           "PATH_READ",
           "PATH_READ_WRITE"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PolicyType": {
         "type": "string",
@@ -15996,7 +16098,7 @@
           "POLICY_TYPE_COLUMN_MASK",
           "POLICY_TYPE_ROW_FILTER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PrincipalType": {
         "type": "string",
@@ -16005,7 +16107,7 @@
           "SERVICE_PRINCIPAL",
           "USER_PRINCIPAL"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "Privilege": {
         "type": "string",
@@ -16061,7 +16163,7 @@
           "WRITE_PRIVATE_FILES",
           "WRITE_VOLUME"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ProvisioningInfoState": {
         "type": "string",
@@ -16073,7 +16175,7 @@
           "PROVISIONING",
           "UPDATING"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "SecurableKind": {
         "type": "string",
@@ -16142,7 +16244,7 @@
           "TABLE_VIEW",
           "TABLE_VIEW_DELTASHARING"
         ],
-        "description": "Latest kind: CONNECTION_OKTA_SYSTEM_LOGS_SSWS_TOKEN = 295; Next id: 296"
+        "description": "Latest kind: CONNECTION_GOOGLE_DRIVE_SERVICE_ACCOUNT = 301; Next id: 302"
       },
       "SecurableType": {
         "type": "string",
@@ -16176,7 +16278,7 @@
           "SPECIAL_DESTINATION_EXTERNAL_LOCATION_OWNER",
           "SPECIAL_DESTINATION_METASTORE_OWNER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "SseEncryptionDetailsAlgorithm": {
         "type": "string",
@@ -16184,7 +16286,7 @@
           "AWS_SSE_KMS",
           "AWS_SSE_S3"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "SystemType": {
         "type": "string",
@@ -16213,7 +16315,7 @@
           "TERADATA",
           "WORKDAY"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "TableOperation": {
         "type": "string",
@@ -16221,7 +16323,7 @@
           "READ",
           "READ_WRITE"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "TableType": {
         "type": "string",
@@ -16236,7 +16338,14 @@
           "STREAMING_TABLE",
           "VIEW"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "TagAssignmentSourceType": {
+        "type": "string",
+        "x-enum": [
+          "TAG_ASSIGNMENT_SOURCE_TYPE_SYSTEM_DATA_CLASSIFICATION"
+        ],
+        "description": "Enum representing the source type of a tag assignment"
       },
       "ValidateCredentialResult": {
         "type": "string",
@@ -16273,7 +16382,7 @@
           "EXTERNAL",
           "MANAGED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "WorkspaceBindingBindingType": {
         "type": "string",

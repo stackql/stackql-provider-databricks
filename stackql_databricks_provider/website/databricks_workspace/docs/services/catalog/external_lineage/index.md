@@ -375,7 +375,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-external_lineage_relationship">
     <td><CopyableCode code="external_lineage_relationship" /></td>
     <td><code>object</code></td>
-    <td>:class:`DeleteRequestExternalLineage`</td>
+    <td></td>
 </tr>
 <tr id="parameter-lineage_direction">
     <td><CopyableCode code="lineage_direction" /></td>
@@ -390,7 +390,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -475,8 +475,6 @@ target
       value: "{{ deployment_name }}"
       description: Required parameter for the external_lineage resource.
     - name: external_lineage_relationship
-      description: |
-        :returns: :class:\`ExternalLineageRelationship\`
       value:
         source:
           external_metadata:

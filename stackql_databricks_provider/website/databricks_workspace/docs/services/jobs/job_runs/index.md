@@ -215,6 +215,18 @@ The following fields are returned by `SELECT` queries:
             "description": "Dirty state indicates the job is not fully synced with the job specification in the remote repository. Possible values are: * `NOT_SYNCED`: The job is not yet synced with the remote job specification. Import the remote job specification from UI to make the job fully synced. * `DISCONNECTED`: The job is temporary disconnected from the remote job specification and is allowed for live edit. Import the remote job specification again from UI to make the job fully synced. (DISCONNECTED, NOT_SYNCED)"
           }
         ]
+      },
+      {
+        "name": "sparse_checkout",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "patterns",
+            "type": "array",
+            "description": ""
+          }
+        ]
       }
     ]
   },
@@ -232,6 +244,45 @@ The following fields are returned by `SELECT` queries:
         "name": "task_key",
         "type": "string",
         "description": "A unique name for the task. This field is used to refer to this task from other tasks. This field is required and must be unique within its parent job. On Update or Reset, this field is used to reference the tasks to be updated or reset."
+      },
+      {
+        "name": "alert_task",
+        "type": "object",
+        "description": "New alert v2 task",
+        "children": [
+          {
+            "name": "alert_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "subscribers",
+            "type": "array",
+            "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100.",
+            "children": [
+              {
+                "name": "destination_id",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "user_name",
+                "type": "string",
+                "description": "A valid workspace email address."
+              }
+            ]
+          },
+          {
+            "name": "warehouse_id",
+            "type": "string",
+            "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+          },
+          {
+            "name": "workspace_path",
+            "type": "string",
+            "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+          }
+        ]
       },
       {
         "name": "attempt_number",
@@ -469,6 +520,11 @@ The following fields are returned by `SELECT` queries:
         "description": "An optional description for this task."
       },
       {
+        "name": "disable_auto_optimization",
+        "type": "boolean",
+        "description": "An option to disable auto optimization in serverless"
+      },
+      {
         "name": "effective_performance_target",
         "type": "string",
         "description": "The actual performance target used by the serverless run during execution. This can differ from the client-set performance target on the request depending on whether the performance mode is supported by the job type. * `STANDARD`: Enables cost-efficient execution of serverless workloads. * `PERFORMANCE_OPTIMIZED`: Prioritizes fast startup and execution times through rapid scaling and optimized cluster performance. (PERFORMANCE_OPTIMIZED, STANDARD)"
@@ -549,6 +605,11 @@ The following fields are returned by `SELECT` queries:
                 "name": "task_key",
                 "type": "string",
                 "description": ""
+              },
+              {
+                "name": "alert_task",
+                "type": "object",
+                "description": "New alert v2 task"
               },
               {
                 "name": "clean_rooms_notebook_task",
@@ -883,6 +944,18 @@ The following fields are returned by `SELECT` queries:
                 "description": "Dirty state indicates the job is not fully synced with the job specification in the remote repository. Possible values are: * `NOT_SYNCED`: The job is not yet synced with the remote job specification. Import the remote job specification from UI to make the job fully synced. * `DISCONNECTED`: The job is temporary disconnected from the remote job specification and is allowed for live edit. Import the remote job specification again from UI to make the job fully synced. (DISCONNECTED, NOT_SYNCED)"
               }
             ]
+          },
+          {
+            "name": "sparse_checkout",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "patterns",
+                "type": "array",
+                "description": ""
+              }
+            ]
           }
         ]
       },
@@ -895,6 +968,16 @@ The following fields are returned by `SELECT` queries:
         "name": "libraries",
         "type": "string",
         "description": "An optional list of libraries to be installed on the cluster. The default value is an empty list."
+      },
+      {
+        "name": "max_retries",
+        "type": "integer",
+        "description": "An optional maximum number of times to retry an unsuccessful run. A run is considered to be unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR` `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never retry."
+      },
+      {
+        "name": "min_retry_interval_millis",
+        "type": "integer",
+        "description": "An optional minimal interval in milliseconds between the start of the failed run and the subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."
       },
       {
         "name": "new_cluster",
@@ -985,7 +1068,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "authentication_method",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
               },
               {
                 "name": "model_name",
@@ -1221,6 +1304,11 @@ The following fields are returned by `SELECT` queries:
             ]
           }
         ]
+      },
+      {
+        "name": "retry_on_timeout",
+        "type": "boolean",
+        "description": "An optional policy to specify whether to retry a job when it times out. The default behavior is to not retry on timeout."
       },
       {
         "name": "run_duration",
@@ -1998,6 +2086,45 @@ The following fields are returned by `SELECT` queries:
         "description": "A unique name for the task. This field is used to refer to this task from other tasks. This field is required and must be unique within its parent job. On Update or Reset, this field is used to reference the tasks to be updated or reset."
       },
       {
+        "name": "alert_task",
+        "type": "object",
+        "description": "New alert v2 task",
+        "children": [
+          {
+            "name": "alert_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "subscribers",
+            "type": "array",
+            "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100.",
+            "children": [
+              {
+                "name": "destination_id",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "user_name",
+                "type": "string",
+                "description": "A valid workspace email address."
+              }
+            ]
+          },
+          {
+            "name": "warehouse_id",
+            "type": "string",
+            "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+          },
+          {
+            "name": "workspace_path",
+            "type": "string",
+            "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+          }
+        ]
+      },
+      {
         "name": "attempt_number",
         "type": "integer",
         "description": "The sequence number of this run attempt for a triggered job run. The initial attempt of a run has an attempt_number of 0. If the initial run attempt fails, and the job has a retry policy (`max_retries` &gt; 0), subsequent runs are created with an `original_attempt_run_id` of the original attempt’s ID and an incrementing `attempt_number`. Runs are retried only until they succeed, and the maximum `attempt_number` is the same as the `max_retries` value for the job."
@@ -2233,6 +2360,11 @@ The following fields are returned by `SELECT` queries:
         "description": "An optional description for this task."
       },
       {
+        "name": "disable_auto_optimization",
+        "type": "boolean",
+        "description": "An option to disable auto optimization in serverless"
+      },
+      {
         "name": "effective_performance_target",
         "type": "string",
         "description": "The actual performance target used by the serverless run during execution. This can differ from the client-set performance target on the request depending on whether the performance mode is supported by the job type. * `STANDARD`: Enables cost-efficient execution of serverless workloads. * `PERFORMANCE_OPTIMIZED`: Prioritizes fast startup and execution times through rapid scaling and optimized cluster performance. (PERFORMANCE_OPTIMIZED, STANDARD)"
@@ -2313,6 +2445,11 @@ The following fields are returned by `SELECT` queries:
                 "name": "task_key",
                 "type": "string",
                 "description": ""
+              },
+              {
+                "name": "alert_task",
+                "type": "object",
+                "description": "New alert v2 task"
               },
               {
                 "name": "clean_rooms_notebook_task",
@@ -2647,6 +2784,18 @@ The following fields are returned by `SELECT` queries:
                 "description": "Dirty state indicates the job is not fully synced with the job specification in the remote repository. Possible values are: * `NOT_SYNCED`: The job is not yet synced with the remote job specification. Import the remote job specification from UI to make the job fully synced. * `DISCONNECTED`: The job is temporary disconnected from the remote job specification and is allowed for live edit. Import the remote job specification again from UI to make the job fully synced. (DISCONNECTED, NOT_SYNCED)"
               }
             ]
+          },
+          {
+            "name": "sparse_checkout",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "patterns",
+                "type": "array",
+                "description": ""
+              }
+            ]
           }
         ]
       },
@@ -2659,6 +2808,16 @@ The following fields are returned by `SELECT` queries:
         "name": "libraries",
         "type": "string",
         "description": "An optional list of libraries to be installed on the cluster. The default value is an empty list."
+      },
+      {
+        "name": "max_retries",
+        "type": "integer",
+        "description": "An optional maximum number of times to retry an unsuccessful run. A run is considered to be unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR` `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never retry."
+      },
+      {
+        "name": "min_retry_interval_millis",
+        "type": "integer",
+        "description": "An optional minimal interval in milliseconds between the start of the failed run and the subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."
       },
       {
         "name": "new_cluster",
@@ -2749,7 +2908,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "authentication_method",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
               },
               {
                 "name": "model_name",
@@ -2985,6 +3144,11 @@ The following fields are returned by `SELECT` queries:
             ]
           }
         ]
+      },
+      {
+        "name": "retry_on_timeout",
+        "type": "boolean",
+        "description": "An optional policy to specify whether to retry a job when it times out. The default behavior is to not retry on timeout."
       },
       {
         "name": "run_duration",
@@ -3587,6 +3751,18 @@ The following fields are returned by `SELECT` queries:
             "description": "Dirty state indicates the job is not fully synced with the job specification in the remote repository. Possible values are: * `NOT_SYNCED`: The job is not yet synced with the remote job specification. Import the remote job specification from UI to make the job fully synced. * `DISCONNECTED`: The job is temporary disconnected from the remote job specification and is allowed for live edit. Import the remote job specification again from UI to make the job fully synced. (DISCONNECTED, NOT_SYNCED)"
           }
         ]
+      },
+      {
+        "name": "sparse_checkout",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "patterns",
+            "type": "array",
+            "description": ""
+          }
+        ]
       }
     ]
   },
@@ -3959,6 +4135,45 @@ The following fields are returned by `SELECT` queries:
         "description": "A unique name for the task. This field is used to refer to this task from other tasks. This field is required and must be unique within its parent job. On Update or Reset, this field is used to reference the tasks to be updated or reset."
       },
       {
+        "name": "alert_task",
+        "type": "object",
+        "description": "New alert v2 task",
+        "children": [
+          {
+            "name": "alert_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "subscribers",
+            "type": "array",
+            "description": "The subscribers receive alert evaluation result notifications after the alert task is completed. The number of subscriptions is limited to 100.",
+            "children": [
+              {
+                "name": "destination_id",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "user_name",
+                "type": "string",
+                "description": "A valid workspace email address."
+              }
+            ]
+          },
+          {
+            "name": "warehouse_id",
+            "type": "string",
+            "description": "The warehouse_id identifies the warehouse settings used by the alert task."
+          },
+          {
+            "name": "workspace_path",
+            "type": "string",
+            "description": "The workspace_path is the path to the alert file in the workspace. The path: * must start with \"/Workspace\" * must be a normalized path. User has to select only one of alert_id or workspace_path to identify the alert."
+          }
+        ]
+      },
+      {
         "name": "attempt_number",
         "type": "integer",
         "description": "The sequence number of this run attempt for a triggered job run. The initial attempt of a run has an attempt_number of 0. If the initial run attempt fails, and the job has a retry policy (`max_retries` &gt; 0), subsequent runs are created with an `original_attempt_run_id` of the original attempt’s ID and an incrementing `attempt_number`. Runs are retried only until they succeed, and the maximum `attempt_number` is the same as the `max_retries` value for the job."
@@ -4194,6 +4409,11 @@ The following fields are returned by `SELECT` queries:
         "description": "An optional description for this task."
       },
       {
+        "name": "disable_auto_optimization",
+        "type": "boolean",
+        "description": "An option to disable auto optimization in serverless"
+      },
+      {
         "name": "effective_performance_target",
         "type": "string",
         "description": "The actual performance target used by the serverless run during execution. This can differ from the client-set performance target on the request depending on whether the performance mode is supported by the job type. * `STANDARD`: Enables cost-efficient execution of serverless workloads. * `PERFORMANCE_OPTIMIZED`: Prioritizes fast startup and execution times through rapid scaling and optimized cluster performance. (PERFORMANCE_OPTIMIZED, STANDARD)"
@@ -4274,6 +4494,11 @@ The following fields are returned by `SELECT` queries:
                 "name": "task_key",
                 "type": "string",
                 "description": ""
+              },
+              {
+                "name": "alert_task",
+                "type": "object",
+                "description": "New alert v2 task"
               },
               {
                 "name": "clean_rooms_notebook_task",
@@ -4608,6 +4833,18 @@ The following fields are returned by `SELECT` queries:
                 "description": "Dirty state indicates the job is not fully synced with the job specification in the remote repository. Possible values are: * `NOT_SYNCED`: The job is not yet synced with the remote job specification. Import the remote job specification from UI to make the job fully synced. * `DISCONNECTED`: The job is temporary disconnected from the remote job specification and is allowed for live edit. Import the remote job specification again from UI to make the job fully synced. (DISCONNECTED, NOT_SYNCED)"
               }
             ]
+          },
+          {
+            "name": "sparse_checkout",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "patterns",
+                "type": "array",
+                "description": ""
+              }
+            ]
           }
         ]
       },
@@ -4620,6 +4857,16 @@ The following fields are returned by `SELECT` queries:
         "name": "libraries",
         "type": "string",
         "description": "An optional list of libraries to be installed on the cluster. The default value is an empty list."
+      },
+      {
+        "name": "max_retries",
+        "type": "integer",
+        "description": "An optional maximum number of times to retry an unsuccessful run. A run is considered to be unsuccessful if it completes with the `FAILED` result_state or `INTERNAL_ERROR` `life_cycle_state`. The value `-1` means to retry indefinitely and the value `0` means to never retry."
+      },
+      {
+        "name": "min_retry_interval_millis",
+        "type": "integer",
+        "description": "An optional minimal interval in milliseconds between the start of the failed run and the subsequent retry run. The default behavior is that unsuccessful runs are immediately retried."
       },
       {
         "name": "new_cluster",
@@ -4710,7 +4957,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "authentication_method",
                 "type": "string",
-                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (OAUTH, PAT)"
               },
               {
                 "name": "model_name",
@@ -4946,6 +5193,11 @@ The following fields are returned by `SELECT` queries:
             ]
           }
         ]
+      },
+      {
+        "name": "retry_on_timeout",
+        "type": "boolean",
+        "description": "An optional policy to specify whether to retry a job when it times out. The default behavior is to not retry on timeout."
       },
       {
         "name": "run_duration",
@@ -5803,9 +6055,12 @@ trigger_info
           job_config_path: "{{ job_config_path }}"
           import_from_git_branch: "{{ import_from_git_branch }}"
           dirty_state: "{{ dirty_state }}"
+        sparse_checkout:
+          patterns:
+            - "{{ patterns }}"
     - name: health
       description: |
-        :param idempotency_token: str (optional) An optional token that can be used to guarantee the idempotency of job run requests. If a run with the provided token already exists, the request does not create a new run but returns the ID of the existing run instead. If a run with the provided token is deleted, an error is returned. If you specify the idempotency token, upon failure you can retry until the request succeeds. Databricks guarantees that exactly one run is launched with that idempotency token. This token must have at most 64 characters. For more information, see [How to ensure idempotency for jobs]. [How to ensure idempotency for jobs]: https://kb.databricks.com/jobs/jobs-idempotency.html
+        An optional set of health rules that can be defined for this job.
       value:
         rules:
           - metric: "{{ metric }}"
@@ -5813,6 +6068,8 @@ trigger_info
             value: {{ value }}
     - name: idempotency_token
       value: "{{ idempotency_token }}"
+      description: |
+        An optional token that can be used to guarantee the idempotency of job run requests. If a run with the provided token already exists, the request does not create a new run but returns the ID of the existing run instead. If a run with the provided token is deleted, an error is returned. If you specify the idempotency token, upon failure you can retry until the request succeeds. Databricks guarantees that exactly one run is launched with that idempotency token. This token must have at most 64 characters. For more information, see [How to ensure idempotency for jobs]. [How to ensure idempotency for jobs]: https://kb.databricks.com/jobs/jobs-idempotency.html
     - name: notification_settings
       description: |
         Optional notification settings that are used when sending notifications to each of the \`email_notifications\` and \`webhook_notifications\` for this run.
@@ -5836,10 +6093,15 @@ trigger_info
       description: |
         An optional name for the run. The default value is \`Untitled\`.
     - name: tasks
-      description: |
-        :param timeout_seconds: int (optional) An optional timeout applied to each run of this job. A value of \`0\` means no timeout.
       value:
         - task_key: "{{ task_key }}"
+          alert_task:
+            alert_id: "{{ alert_id }}"
+            subscribers:
+              - destination_id: "{{ destination_id }}"
+                user_name: "{{ user_name }}"
+            warehouse_id: "{{ warehouse_id }}"
+            workspace_path: "{{ workspace_path }}"
           clean_rooms_notebook_task:
             clean_room_name: "{{ clean_room_name }}"
             notebook_name: "{{ notebook_name }}"
@@ -5878,6 +6140,7 @@ trigger_info
             warehouse_id: "{{ warehouse_id }}"
           depends_on: "{{ depends_on }}"
           description: "{{ description }}"
+          disable_auto_optimization: {{ disable_auto_optimization }}
           email_notifications:
             no_alert_for_skipped_runs: {{ no_alert_for_skipped_runs }}
             on_duration_warning_threshold_exceeded:
@@ -5896,6 +6159,13 @@ trigger_info
             inputs: "{{ inputs }}"
             task:
               task_key: "{{ task_key }}"
+              alert_task:
+                alert_id: "{{ alert_id }}"
+                subscribers:
+                  - destination_id: "{{ destination_id }}"
+                    user_name: "{{ user_name }}"
+                warehouse_id: "{{ warehouse_id }}"
+                workspace_path: "{{ workspace_path }}"
               clean_rooms_notebook_task:
                 clean_room_name: "{{ clean_room_name }}"
                 notebook_name: "{{ notebook_name }}"
@@ -5954,6 +6224,7 @@ trigger_info
                 inputs: "{{ inputs }}"
                 task:
                   task_key: "{{ task_key }}"
+                  alert_task: "{{ alert_task }}"
                   clean_rooms_notebook_task: "{{ clean_rooms_notebook_task }}"
                   compute: "{{ compute }}"
                   condition_task: "{{ condition_task }}"
@@ -6126,6 +6397,8 @@ trigger_info
                 op: "{{ op }}"
                 value: {{ value }}
           libraries: "{{ libraries }}"
+          max_retries: {{ max_retries }}
+          min_retry_interval_millis: {{ min_retry_interval_millis }}
           new_cluster: "{{ new_cluster }}"
           notebook_task:
             notebook_path: "{{ notebook_path }}"
@@ -6160,6 +6433,7 @@ trigger_info
             named_parameters: "{{ named_parameters }}"
             parameters:
               - "{{ parameters }}"
+          retry_on_timeout: {{ retry_on_timeout }}
           run_if: "{{ run_if }}"
           run_job_task:
             job_id: {{ job_id }}
@@ -6226,6 +6500,8 @@ trigger_info
               - id: "{{ id }}"
     - name: timeout_seconds
       value: {{ timeout_seconds }}
+      description: |
+        An optional timeout applied to each run of this job. A value of \`0\` means no timeout.
     - name: usage_policy_id
       value: "{{ usage_policy_id }}"
       description: |

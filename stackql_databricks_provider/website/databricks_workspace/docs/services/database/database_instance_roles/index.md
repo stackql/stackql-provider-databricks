@@ -247,7 +247,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-instance_name">
     <td><CopyableCode code="instance_name" /></td>
     <td><code>string</code></td>
-    <td>:param name: str</td>
+    <td></td>
 </tr>
 <tr id="parameter-name">
     <td><CopyableCode code="name" /></td>
@@ -262,12 +262,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-database_instance_name">
     <td><CopyableCode code="database_instance_name" /></td>
     <td><code>string</code></td>
-    <td>:returns: :class:`DatabaseInstanceRole`</td>
+    <td></td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
     <td><code>integer</code></td>
-    <td></td>
+    <td>Upper bound for items returned.</td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -277,7 +277,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-reassign_owned_to">
     <td><CopyableCode code="reassign_owned_to" /></td>
     <td><code>string</code></td>
-    <td>str (optional)</td>
+    <td></td>
 </tr>
 </tbody>
 </table>
@@ -397,7 +397,6 @@ membership_role
         membership_role: "{{ membership_role }}"
     - name: database_instance_name
       value: "{{ database_instance_name }}"
-      description: :returns: :class:\`DatabaseInstanceRole\`
 `}</CodeBlock>
 
 </TabItem>

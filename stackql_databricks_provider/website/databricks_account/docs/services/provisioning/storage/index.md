@@ -193,7 +193,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-storage_configuration_id">
     <td><CopyableCode code="storage_configuration_id" /></td>
     <td><code>string</code></td>
-    <td>:returns: :class:`StorageConfiguration`</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

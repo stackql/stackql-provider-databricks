@@ -53,13 +53,13 @@ The following fields are returned by `SELECT` queries:
         "description": ""
       },
       {
-        "name": "title",
-        "type": "string",
+        "name": "created_timestamp",
+        "type": "integer",
         "description": ""
       },
       {
-        "name": "created_timestamp",
-        "type": "integer",
+        "name": "title",
+        "type": "string",
         "description": ""
       }
     ]

@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks database service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.database"
   },
   "servers": [
@@ -60,8 +60,7 @@
                       "name",
                       "database_instance_name",
                       "database_name"
-                    ],
-                    "description": ":returns: :class:`DatabaseCatalog`"
+                    ]
                   }
                 },
                 "required": [
@@ -357,7 +356,7 @@
         "tags": [
           "database"
         ],
-        "description": "List Database Instances.\n\n:param page_size: int (optional)\n  Upper bound for items returned.\n:param page_token: str (optional)\n  Pagination token to go to the next page of Database Instances. Requests first page if absent.\n\n:returns: Iterator over :class:`DatabaseInstance`",
+        "description": "List Database Instances.\n\n:param page_size: int (optional)\n  Upper bound for items returned. The maximum value is 100.\n:param page_token: str (optional)\n  Pagination token to go to the next page of Database Instances. Requests first page if absent.\n\n:returns: Iterator over :class:`DatabaseInstance`",
         "parameters": [
           {
             "name": "page_size",
@@ -366,7 +365,7 @@
             "schema": {
               "type": "integer"
             },
-            "description": "Upper bound for items returned."
+            "description": "Upper bound for items returned. The maximum value is 100."
           },
           {
             "name": "page_token",
@@ -426,8 +425,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param database_instance_role: :class:`DatabaseInstanceRole`"
+            }
           },
           {
             "name": "database_instance_name",
@@ -435,8 +433,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`DatabaseInstanceRole`"
+            }
           }
         ],
         "requestBody": {
@@ -562,8 +559,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param page_size: int (optional) Upper bound for items returned."
+            }
           },
           {
             "name": "page_size",
@@ -571,7 +567,8 @@
             "required": false,
             "schema": {
               "type": "integer"
-            }
+            },
+            "description": "Upper bound for items returned."
           },
           {
             "name": "page_token",
@@ -634,8 +631,7 @@
                     "type": "object",
                     "properties": {
                       "name": {
-                        "type": "string",
-                        "description": "Full three-part (catalog, schema, table) name of the table."
+                        "type": "string"
                       },
                       "database_instance_name": {
                         "type": "string",
@@ -648,8 +644,7 @@
                     },
                     "required": [
                       "name"
-                    ],
-                    "description": ":returns: :class:`DatabaseTable`"
+                    ]
                   }
                 },
                 "required": [
@@ -710,8 +705,7 @@
                     "type": "object",
                     "properties": {
                       "name": {
-                        "type": "string",
-                        "description": "Full three-part (catalog, schema, table) name of the table."
+                        "type": "string"
                       },
                       "data_synchronization_status": {
                         "type": "object",
@@ -1010,8 +1004,7 @@
                     },
                     "required": [
                       "name"
-                    ],
-                    "description": ":returns: :class:`SyncedDatabaseTable`"
+                    ]
                   }
                 },
                 "required": [
@@ -1069,8 +1062,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -1112,8 +1104,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`DatabaseCatalog`"
+            }
           }
         ],
         "responses": {
@@ -1385,7 +1376,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The list of fields to update. If unspecified, all fields will be updated when possible. To wipe out custom_tags, specify custom_tags in the update_mask with an empty custom_tags map."
           }
         ],
         "requestBody": {
@@ -1585,7 +1577,7 @@
                     "required": [
                       "name"
                     ],
-                    "description": ":param update_mask: str The list of fields to update. If unspecified, all fields will be updated when possible. To wipe out custom_tags, specify custom_tags in the update_mask with an empty custom_tags map."
+                    "description": "A DatabaseInstance represents a logical Postgres instance, comprised of both compute and\n    storage."
                   }
                 },
                 "required": [
@@ -1643,8 +1635,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param name: str"
+            }
           },
           {
             "name": "name",
@@ -1669,8 +1660,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": "str (optional)"
+            }
           }
         ],
         "responses": {
@@ -1712,8 +1702,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param name: str"
+            }
           },
           {
             "name": "name",
@@ -1772,8 +1761,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -1815,8 +1803,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`DatabaseTable`"
+            }
           }
         ],
         "responses": {
@@ -1867,8 +1854,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param purge_data: bool (optional) Optional. When set to true, the actual PostgreSQL table will be dropped from the database."
+            }
           },
           {
             "name": "purge_data",
@@ -1876,7 +1862,8 @@
             "required": false,
             "schema": {
               "type": "boolean"
-            }
+            },
+            "description": "Optional. When set to true, the actual PostgreSQL table will be dropped from the database."
           }
         ],
         "responses": {
@@ -1918,8 +1905,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`SyncedDatabaseTable`"
+            }
           }
         ],
         "responses": {
@@ -1991,8 +1977,7 @@
                     "type": "object",
                     "properties": {
                       "name": {
-                        "type": "string",
-                        "description": "Full three-part (catalog, schema, table) name of the table."
+                        "type": "string"
                       },
                       "data_synchronization_status": {
                         "type": "object",
@@ -2394,7 +2379,7 @@
         "tags": [
           "database"
         ],
-        "description": "Generates a credential that can be used to access database instances.\n\n:param claims: List[:class:`RequestedClaims`] (optional)\n  The returned token will be scoped to the union of instance_names and instances containing the\n  specified UC tables, so instance_names is allowed to be empty.\n:param instance_names: List[str] (optional)\n  Instances to which the token will be scoped.\n:param request_id: str (optional)\n\n:returns: :class:`DatabaseCredential`",
+        "description": "Generates a credential that can be used to access database instances.\n\n:param claims: List[:class:`RequestedClaims`] (optional)\n  A set of UC permissions to add to the credential. We verify that the caller has the necessary\n  permissions in UC and include a reference in the token. Postgres uses that token to give the\n  connecting user additional grants to the Postgres resources that correspond to the UC resources. The\n  UC resources need to be something that have a Postgres counterpart. For example, a synced table or a\n  table in a UC database catalog.\n:param instance_names: List[str] (optional)\n  Instances to request a credential for. At least one of instance_names or claims must be specified.\n:param request_id: str (optional)\n\n:returns: :class:`DatabaseCredential`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2429,18 +2414,17 @@
                         }
                       }
                     },
-                    "description": "The returned token will be scoped to the union of instance_names and instances containing the specified UC tables, so instance_names is allowed to be empty."
+                    "description": "A set of UC permissions to add to the credential. We verify that the caller has the necessary permissions in UC and include a reference in the token. Postgres uses that token to give the connecting user additional grants to the Postgres resources that correspond to the UC resources. The UC resources need to be something that have a Postgres counterpart. For example, a synced table or a table in a UC database catalog."
                   },
                   "instance_names": {
                     "type": "array",
                     "items": {
                       "type": "string"
                     },
-                    "description": "Instances to which the token will be scoped."
+                    "description": "Instances to request a credential for. At least one of instance_names or claims must be specified."
                   },
                   "request_id": {
-                    "type": "string",
-                    "description": ":returns: :class:`DatabaseCredential`"
+                    "type": "string"
                   }
                 }
               }
@@ -2872,8 +2856,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string",
-            "description": "Full three-part (catalog, schema, table) name of the table."
+            "type": "string"
           },
           "database_instance_name": {
             "type": "string",
@@ -2886,8 +2869,7 @@
         },
         "required": [
           "name"
-        ],
-        "description": "Next field marker: 13"
+        ]
       },
       "DeltaTableSyncInfo": {
         "type": "object",
@@ -3007,8 +2989,7 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string",
-            "description": "Full three-part (catalog, schema, table) name of the table."
+            "type": "string"
           },
           "data_synchronization_status": {
             "$ref": "#/components/schemas/SyncedTableStatus",
@@ -3040,8 +3021,7 @@
         },
         "required": [
           "name"
-        ],
-        "description": "Next field marker: 18"
+        ]
       },
       "SyncedTableContinuousUpdateStatus": {
         "type": "object",
@@ -3228,7 +3208,7 @@
           "SERVICE_PRINCIPAL",
           "USER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "DatabaseInstanceRoleMembershipRole": {
         "type": "string",
@@ -3247,7 +3227,7 @@
           "STOPPED",
           "UPDATING"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ProvisioningInfoState": {
         "type": "string",
@@ -3259,7 +3239,7 @@
           "PROVISIONING",
           "UPDATING"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ProvisioningPhase": {
         "type": "string",
@@ -3268,7 +3248,7 @@
           "PROVISIONING_PHASE_INDEX_SORT",
           "PROVISIONING_PHASE_MAIN"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "RequestedClaimsPermissionSet": {
         "type": "string",
@@ -3284,7 +3264,7 @@
           "SNAPSHOT",
           "TRIGGERED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "SyncedTableState": {
         "type": "string",

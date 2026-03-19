@@ -119,6 +119,23 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           },
           {
+            "name": "using_arguments",
+            "type": "array",
+            "description": "The list of additional table columns or literals to be passed as additional arguments to a column mask function. This is the replacement of the deprecated using_column_names field and carries information about the types (alias or constant) of the arguments to the mask function.",
+            "children": [
+              {
+                "name": "column",
+                "type": "string",
+                "description": "A column reference."
+              },
+              {
+                "name": "constant",
+                "type": "string",
+                "description": "A constant literal."
+              }
+            ]
+          },
+          {
             "name": "using_column_names",
             "type": "array",
             "description": "The list of additional table columns to be passed as input to the column mask function. The first arg of the mask function should be of the type of the column being masked and the types of the rest of the args should match the types of columns in 'using_column_names'."
@@ -158,7 +175,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "type_name",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
       },
       {
         "name": "type_precision",
@@ -222,7 +239,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "value",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DISABLE, ENABLE, INHERIT)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DISABLE, ENABLE, INHERIT)"
       },
       {
         "name": "inherited_from_name",
@@ -239,7 +256,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "enable_predictive_optimization",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DISABLE, ENABLE, INHERIT)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DISABLE, ENABLE, INHERIT)"
   },
   {
     "name": "encryption_details",
@@ -289,6 +306,23 @@ The following fields are returned by `SELECT` queries:
         "name": "input_column_names",
         "type": "array",
         "description": "The list of table columns to be passed as input to the row filter function. The column types should match the types of the filter function arguments."
+      },
+      {
+        "name": "input_arguments",
+        "type": "array",
+        "description": "The list of additional table columns or literals to be passed as additional arguments to a row filter function. This is the replacement of the deprecated input_column_names field and carries information about the types (alias or constant) of the arguments to the filter function.",
+        "children": [
+          {
+            "name": "column",
+            "type": "string",
+            "description": "A column reference."
+          },
+          {
+            "name": "constant",
+            "type": "string",
+            "description": "A constant literal."
+          }
+        ]
       }
     ]
   },
@@ -487,7 +521,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "table_type",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (EXTERNAL, EXTERNAL_SHALLOW_CLONE, FOREIGN, MANAGED, MANAGED_SHALLOW_CLONE, MATERIALIZED_VIEW, METRIC_VIEW, STREAMING_TABLE, VIEW)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (EXTERNAL, EXTERNAL_SHALLOW_CLONE, FOREIGN, MANAGED, MANAGED_SHALLOW_CLONE, MATERIALIZED_VIEW, METRIC_VIEW, STREAMING_TABLE, VIEW)"
   },
   {
     "name": "updated_at",
@@ -647,6 +681,23 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           },
           {
+            "name": "using_arguments",
+            "type": "array",
+            "description": "The list of additional table columns or literals to be passed as additional arguments to a column mask function. This is the replacement of the deprecated using_column_names field and carries information about the types (alias or constant) of the arguments to the mask function.",
+            "children": [
+              {
+                "name": "column",
+                "type": "string",
+                "description": "A column reference."
+              },
+              {
+                "name": "constant",
+                "type": "string",
+                "description": "A constant literal."
+              }
+            ]
+          },
+          {
             "name": "using_column_names",
             "type": "array",
             "description": "The list of additional table columns to be passed as input to the column mask function. The first arg of the mask function should be of the type of the column being masked and the types of the rest of the args should match the types of columns in 'using_column_names'."
@@ -686,7 +737,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "type_name",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
       },
       {
         "name": "type_precision",
@@ -750,7 +801,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "value",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DISABLE, ENABLE, INHERIT)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DISABLE, ENABLE, INHERIT)"
       },
       {
         "name": "inherited_from_name",
@@ -767,7 +818,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "enable_predictive_optimization",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DISABLE, ENABLE, INHERIT)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DISABLE, ENABLE, INHERIT)"
   },
   {
     "name": "encryption_details",
@@ -817,6 +868,23 @@ The following fields are returned by `SELECT` queries:
         "name": "input_column_names",
         "type": "array",
         "description": "The list of table columns to be passed as input to the row filter function. The column types should match the types of the filter function arguments."
+      },
+      {
+        "name": "input_arguments",
+        "type": "array",
+        "description": "The list of additional table columns or literals to be passed as additional arguments to a row filter function. This is the replacement of the deprecated input_column_names field and carries information about the types (alias or constant) of the arguments to the filter function.",
+        "children": [
+          {
+            "name": "column",
+            "type": "string",
+            "description": "A column reference."
+          },
+          {
+            "name": "constant",
+            "type": "string",
+            "description": "A constant literal."
+          }
+        ]
       }
     ]
   },
@@ -1015,7 +1083,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "table_type",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (EXTERNAL, EXTERNAL_SHALLOW_CLONE, FOREIGN, MANAGED, MANAGED_SHALLOW_CLONE, MATERIALIZED_VIEW, METRIC_VIEW, STREAMING_TABLE, VIEW)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (EXTERNAL, EXTERNAL_SHALLOW_CLONE, FOREIGN, MANAGED, MANAGED_SHALLOW_CLONE, MATERIALIZED_VIEW, METRIC_VIEW, STREAMING_TABLE, VIEW)"
   },
   {
     "name": "updated_at",
@@ -1442,7 +1510,29 @@ view_dependencies
     - name: table_type
       value: "{{ table_type }}"
       description: |
-        :param data_source_format: :class:\`DataSourceFormat\`
+        Create a collection of name/value pairs.
+        Example enumeration:
+        >>> class Color(Enum):
+        ...     RED = 1
+        ...     BLUE = 2
+        ...     GREEN = 3
+        Access them by:
+        - attribute access:
+        >>> Color.RED
+        <Color.RED: 1>
+        - value lookup:
+        >>> Color(1)
+        <Color.RED: 1>
+        - name lookup:
+        >>> Color['RED']
+        <Color.RED: 1>
+        Enumerations can be iterated over, and know how many members they have:
+        >>> len(Color)
+        3
+        >>> list(Color)
+        [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+        Methods can be added to enumerations, and members can have their own
+        attributes -- see the documentation for details.
     - name: data_source_format
       value: "{{ data_source_format }}"
       description: |
@@ -1458,6 +1548,9 @@ view_dependencies
         - comment: "{{ comment }}"
           mask:
             function_name: "{{ function_name }}"
+            using_arguments:
+              - column: "{{ column }}"
+                constant: "{{ constant }}"
             using_column_names:
               - "{{ using_column_names }}"
           name: "{{ name }}"

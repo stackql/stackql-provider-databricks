@@ -596,8 +596,6 @@ credential_info
       value: "{{ metastore_id }}"
       description: Required parameter for the account_storage_credentials resource.
     - name: credential_info
-      description: |
-        :param skip_validation: bool (optional) Optional, default false. Supplying true to this argument skips validation of the created set of credentials.
       value:
         name: "{{ name }}"
         aws_iam_role:
@@ -618,6 +616,8 @@ credential_info
         read_only: {{ read_only }}
     - name: skip_validation
       value: {{ skip_validation }}
+      description: |
+        Optional, default false. Supplying true to this argument skips validation of the created set of credentials.
 `}</CodeBlock>
 
 </TabItem>

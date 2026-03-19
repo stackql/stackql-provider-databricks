@@ -146,7 +146,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-git_provider"><code>git_provider</code></a></td>
     <td></td>
-    <td>Creates a Git credential entry for the user. Only one Git credential per user is supported, so any</td>
+    <td>Creates a Git credential entry for the user. Use the PATCH endpoint to update existing credentials, or</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
@@ -256,7 +256,7 @@ AND principal_id = '{{ principal_id }}'
 >
 <TabItem value="create">
 
-Creates a Git credential entry for the user. Only one Git credential per user is supported, so any
+Creates a Git credential entry for the user. Use the PATCH endpoint to update existing credentials, or
 
 ```sql
 INSERT INTO databricks_workspace.workspace.git_credentials (

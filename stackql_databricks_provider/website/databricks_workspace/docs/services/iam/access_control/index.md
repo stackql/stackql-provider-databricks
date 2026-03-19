@@ -104,7 +104,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-actor">
     <td><CopyableCode code="actor" /></td>
     <td><code>object</code></td>
-    <td>:param permission: str</td>
+    <td></td>
 </tr>
 <tr id="parameter-authz_identity">
     <td><CopyableCode code="authz_identity" /></td>
@@ -114,7 +114,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-consistency_token">
     <td><CopyableCode code="consistency_token" /></td>
     <td><code>object</code></td>
-    <td>:param authz_identity: :class:`RequestAuthzIdentity`</td>
+    <td></td>
 </tr>
 <tr id="parameter-deployment_name">
     <td><CopyableCode code="deployment_name" /></td>
@@ -134,7 +134,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-resource_info">
     <td><CopyableCode code="resource_info" /></td>
     <td><code>object</code></td>
-    <td>:returns: :class:`CheckPolicyResponse`</td>
+    <td></td>
 </tr>
 </tbody>
 </table>

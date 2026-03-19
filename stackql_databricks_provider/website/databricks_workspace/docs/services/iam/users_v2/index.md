@@ -610,30 +610,30 @@ Creates a new user in the Databricks workspace. This new user will also be added
 ```sql
 INSERT INTO databricks_workspace.iam.users_v2 (
 active,
-display_name,
+displayName,
 emails,
 entitlements,
-external_id,
+externalId,
 groups,
 id,
 name,
 roles,
 schemas,
-user_name,
+userName,
 deployment_name
 )
 SELECT 
 {{ active }},
-'{{ display_name }}',
+'{{ displayName }}',
 '{{ emails }}',
 '{{ entitlements }}',
-'{{ external_id }}',
+'{{ externalId }}',
 '{{ groups }}',
 '{{ id }}',
 '{{ name }}',
 '{{ roles }}',
 '{{ schemas }}',
-'{{ user_name }}',
+'{{ userName }}',
 '{{ deployment_name }}'
 RETURNING
 id,
@@ -662,8 +662,8 @@ userName
       value: {{ active }}
       description: |
         If this user is active
-    - name: display_name
-      value: "{{ display_name }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
         String that represents a concatenation of given and family names. For example \`John Smith\`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update \`displayName\`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation
     - name: emails
@@ -684,13 +684,11 @@ userName
           $ref: "{{ $ref }}"
           type: "{{ type }}"
           value: "{{ value }}"
-    - name: external_id
-      value: "{{ external_id }}"
+    - name: externalId
+      value: "{{ externalId }}"
       description: |
         External ID is not currently supported. It is reserved for future use.
     - name: groups
-      description: |
-        :param id: str (optional) Databricks user ID.
       value:
         - display: "{{ display }}"
           primary: {{ primary }}
@@ -699,13 +697,15 @@ userName
           value: "{{ value }}"
     - name: id
       value: "{{ id }}"
-    - name: name
       description: |
-        :param roles: List[:class:\`ComplexValue\`] (optional) Corresponds to AWS instance profile/arn role.
+        Databricks user ID.
+    - name: name
       value:
         familyName: "{{ familyName }}"
         givenName: "{{ givenName }}"
     - name: roles
+      description: |
+        Corresponds to AWS instance profile/arn role.
       value:
         - display: "{{ display }}"
           primary: {{ primary }}
@@ -717,8 +717,8 @@ userName
         - "{{ schemas }}"
       description: |
         The schema of the user.
-    - name: user_name
-      value: "{{ user_name }}"
+    - name: userName
+      value: "{{ userName }}"
       description: |
         Email address of the Databricks user.
 `}</CodeBlock>
@@ -742,7 +742,7 @@ Partially updates a user resource by applying the supplied operations on specifi
 ```sql
 UPDATE databricks_workspace.iam.users_v2
 SET 
-operations = '{{ operations }}',
+Operations = '{{ Operations }}',
 schemas = '{{ schemas }}'
 WHERE 
 id = '{{ id }}' --required
@@ -768,15 +768,15 @@ Replaces a user's information with the data supplied in request.
 REPLACE databricks_workspace.iam.users_v2
 SET 
 active = {{ active }},
-display_name = '{{ display_name }}',
+displayName = '{{ displayName }}',
 emails = '{{ emails }}',
 entitlements = '{{ entitlements }}',
-external_id = '{{ external_id }}',
+externalId = '{{ externalId }}',
 groups = '{{ groups }}',
 name = '{{ name }}',
 roles = '{{ roles }}',
 schemas = '{{ schemas }}',
-user_name = '{{ user_name }}'
+userName = '{{ userName }}'
 WHERE 
 id = '{{ id }}' --required
 AND deployment_name = '{{ deployment_name }}' --required;

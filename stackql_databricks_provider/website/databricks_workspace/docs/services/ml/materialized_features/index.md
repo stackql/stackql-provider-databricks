@@ -268,7 +268,7 @@ value
       description: Required parameter for the materialized_features resource.
     - name: feature_tag
       description: |
-        :returns: :class:\`FeatureTag\`
+        Represents a tag on a feature in a feature table.
       value:
         key: "{{ key }}"
         value: "{{ value }}"

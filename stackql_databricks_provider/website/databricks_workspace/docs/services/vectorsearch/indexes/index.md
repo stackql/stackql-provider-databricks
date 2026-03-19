@@ -497,8 +497,14 @@ status
     - name: index_type
       value: "{{ index_type }}"
       description: |
-        :param delta_sync_index_spec: :class:\`DeltaSyncVectorIndexSpecRequest\` (optional) Specification for Delta Sync Index. Required if \`index_type\` is \`DELTA_SYNC\`.
+        There are 2 types of Vector Search indexes: - \`DELTA_SYNC\`: An index that automatically syncs
+        with a source Delta Table, automatically and incrementally updating the index as the underlying
+        data in the Delta Table changes. - \`DIRECT_ACCESS\`: An index that supports direct read and write
+        of vectors and metadata through our REST and SDK APIs. With this model, the user manages index
+        updates.
     - name: delta_sync_index_spec
+      description: |
+        Specification for Delta Sync Index. Required if \`index_type\` is \`DELTA_SYNC\`.
       value:
         columns_to_sync:
           - "{{ columns_to_sync }}"

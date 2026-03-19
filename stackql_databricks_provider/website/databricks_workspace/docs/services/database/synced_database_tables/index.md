@@ -46,7 +46,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "Full three-part (catalog, schema, table) name of the table."
+    "description": ""
   },
   {
     "name": "database_instance_name",
@@ -365,7 +365,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "Full three-part (catalog, schema, table) name of the table."
+    "description": ""
   },
   {
     "name": "database_instance_name",
@@ -759,7 +759,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-name">
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>:param purge_data: bool (optional) Optional. When set to true, the actual PostgreSQL table will be dropped from the database.</td>
+    <td></td>
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
@@ -779,7 +779,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-purge_data">
     <td><CopyableCode code="purge_data" /></td>
     <td><code>boolean</code></td>
-    <td></td>
+    <td>Optional. When set to true, the actual PostgreSQL table will be dropped from the database.</td>
 </tr>
 </tbody>
 </table>
@@ -880,8 +880,6 @@ unity_catalog_provisioning_state
       value: "{{ deployment_name }}"
       description: Required parameter for the synced_database_tables resource.
     - name: synced_table
-      description: |
-        :returns: :class:\`SyncedDatabaseTable\`
       value:
         name: "{{ name }}"
         data_synchronization_status:

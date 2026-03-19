@@ -74,6 +74,11 @@ The following fields are returned by `SELECT` queries:
     "description": "The etag for the subscription. Must be left empty on create, can be optionally provided on delete to ensure that the subscription has not been deleted since the last read."
   },
   {
+    "name": "skip_notify",
+    "type": "boolean",
+    "description": "Controls whether notifications are sent to the subscriber for scheduled dashboard refreshes. If not defined, defaults to false in the backend to match the current behavior (refresh and notify)"
+  },
+  {
     "name": "subscriber",
     "type": "object",
     "description": "",
@@ -143,6 +148,11 @@ The following fields are returned by `SELECT` queries:
     "name": "etag",
     "type": "string",
     "description": "The etag for the subscription. Must be left empty on create, can be optionally provided on delete to ensure that the subscription has not been deleted since the last read."
+  },
+  {
+    "name": "skip_notify",
+    "type": "boolean",
+    "description": "Controls whether notifications are sent to the subscriber for scheduled dashboard refreshes. If not defined, defaults to false in the backend to match the current behavior (refresh and notify)"
   },
   {
     "name": "subscriber",
@@ -302,6 +312,7 @@ schedule_id,
 subscription_id,
 create_time,
 etag,
+skip_notify,
 subscriber,
 update_time
 FROM databricks_workspace.dashboards.lakeview_subscriptions
@@ -324,6 +335,7 @@ schedule_id,
 subscription_id,
 create_time,
 etag,
+skip_notify,
 subscriber,
 update_time
 FROM databricks_workspace.dashboards.lakeview_subscriptions
@@ -370,6 +382,7 @@ schedule_id,
 subscription_id,
 create_time,
 etag,
+skip_notify,
 subscriber,
 update_time
 ;
@@ -403,6 +416,7 @@ update_time
         dashboard_id: "{{ dashboard_id }}"
         etag: "{{ etag }}"
         schedule_id: "{{ schedule_id }}"
+        skip_notify: {{ skip_notify }}
         subscription_id: "{{ subscription_id }}"
         update_time: "{{ update_time }}"
 `}</CodeBlock>

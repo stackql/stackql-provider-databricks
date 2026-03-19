@@ -53,10 +53,61 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "initial_endpoint_spec",
+    "type": "object",
+    "description": "Configuration settings for the initial Read/Write endpoint created inside the default branch for a newly created project. If omitted, the initial endpoint created will have default settings, without high availability configured. This field does not apply to any endpoints created after project creation. Use spec.default_endpoint_settings to configure default settings for endpoints created after project creation.",
+    "children": [
+      {
+        "name": "group",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "min",
+            "type": "integer",
+            "description": ""
+          },
+          {
+            "name": "max",
+            "type": "integer",
+            "description": "The maximum number of computes in the endpoint group. Currently, this must be equal to min. Set to 1 for single compute endpoints, to disable HA. To manually suspend all computes in an endpoint group, set disabled to true on the EndpointSpec."
+          },
+          {
+            "name": "enable_readable_secondaries",
+            "type": "boolean",
+            "description": "Whether to allow read-only connections to read-write endpoints. Only relevant for read-write endpoints where size.max &gt; 1."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "spec",
     "type": "object",
     "description": "The spec contains the project configuration, including display_name, pg_version (Postgres version), history_retention_duration, and default_endpoint_settings.",
     "children": [
+      {
+        "name": "budget_policy_id",
+        "type": "string",
+        "description": ""
+      },
+      {
+        "name": "custom_tags",
+        "type": "array",
+        "description": "Custom tags to associate with the project. Forwarded to LBM for billing and cost tracking. To update tags, provide the new tag list and include \"spec.custom_tags\" in the update_mask. To clear all tags, provide an empty list and include \"spec.custom_tags\" in the update_mask. To preserve existing tags, omit this field from the update_mask (or use wildcard \"*\" which auto-excludes empty tags).",
+        "children": [
+          {
+            "name": "key",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The value of the custom tag."
+          }
+        ]
+      },
       {
         "name": "default_endpoint_settings",
         "type": "object",
@@ -95,9 +146,14 @@ The following fields are returned by `SELECT` queries:
         "description": "Human-readable project name. Length should be between 1 and 256 characters."
       },
       {
+        "name": "enable_pg_native_login",
+        "type": "boolean",
+        "description": "Whether to enable PG native password login on all endpoints in this project. Defaults to true."
+      },
+      {
         "name": "history_retention_duration",
         "type": "string",
-        "description": "The number of seconds to retain the shared history for point in time recovery for all branches in this project. Value should be between 0s and 2592000s (up to 30 days)."
+        "description": "The number of seconds to retain the shared history for point in time recovery for all branches in this project. Value should be between 172800s (2 days) and 2592000s (30 days)."
       },
       {
         "name": "pg_version",
@@ -115,6 +171,28 @@ The following fields are returned by `SELECT` queries:
         "name": "branch_logical_size_limit_bytes",
         "type": "integer",
         "description": ""
+      },
+      {
+        "name": "budget_policy_id",
+        "type": "string",
+        "description": "The budget policy that is applied to the project."
+      },
+      {
+        "name": "custom_tags",
+        "type": "array",
+        "description": "The effective custom tags associated with the project.",
+        "children": [
+          {
+            "name": "key",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The value of the custom tag."
+          }
+        ]
       },
       {
         "name": "default_endpoint_settings",
@@ -152,6 +230,11 @@ The following fields are returned by `SELECT` queries:
         "name": "display_name",
         "type": "string",
         "description": "The effective human-readable project name."
+      },
+      {
+        "name": "enable_pg_native_login",
+        "type": "boolean",
+        "description": "Whether to enable PG native password login on all endpoints in this project."
       },
       {
         "name": "history_retention_duration",
@@ -221,9 +304,9 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-update_mask"><code>update_mask</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-project"><code>project</code></a></td>
+    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-update_mask"><code>update_mask</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-role"><code>role</code></a></td>
     <td></td>
-    <td>Updates the specified database project.</td>
+    <td>Update a role for a branch.</td>
 </tr>
 </tbody>
 </table>
@@ -249,7 +332,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-name">
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Output only. The full resource path of the project. Format: projects/&#123;project_id&#125;</td>
+    <td>Output only. The full resource path of the role. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/roles/&#123;role_id&#125;</td>
 </tr>
 <tr id="parameter-project_id">
     <td><CopyableCode code="project_id" /></td>
@@ -259,12 +342,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>object</code></td>
-    <td>The list of fields to update. If unspecified, all fields will be updated when possible.</td>
+    <td>The list of fields to update in Postgres Role. If unspecified, all fields will be updated when possible.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
     <td><code>integer</code></td>
-    <td>Upper bound for items returned. Cannot be negative.</td>
+    <td>Upper bound for items returned. Cannot be negative. The maximum value is 100.</td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -290,6 +373,7 @@ Returns a paginated list of database projects in the workspace that the user has
 SELECT
 name,
 create_time,
+initial_endpoint_spec,
 spec,
 status,
 uid,
@@ -346,8 +430,17 @@ SELECT
         The Project to create.
       value:
         create_time: "{{ create_time }}"
+        initial_endpoint_spec:
+          group:
+            min: {{ min }}
+            max: {{ max }}
+            enable_readable_secondaries: {{ enable_readable_secondaries }}
         name: "{{ name }}"
         spec:
+          budget_policy_id: "{{ budget_policy_id }}"
+          custom_tags:
+            - key: "{{ key }}"
+              value: "{{ value }}"
           default_endpoint_settings:
             autoscaling_limit_max_cu: {{ autoscaling_limit_max_cu }}
             autoscaling_limit_min_cu: {{ autoscaling_limit_min_cu }}
@@ -355,10 +448,15 @@ SELECT
             pg_settings: "{{ pg_settings }}"
             suspend_timeout_duration: "{{ suspend_timeout_duration }}"
           display_name: "{{ display_name }}"
+          enable_pg_native_login: {{ enable_pg_native_login }}
           history_retention_duration: "{{ history_retention_duration }}"
           pg_version: {{ pg_version }}
         status:
           branch_logical_size_limit_bytes: {{ branch_logical_size_limit_bytes }}
+          budget_policy_id: "{{ budget_policy_id }}"
+          custom_tags:
+            - key: "{{ key }}"
+              value: "{{ value }}"
           default_endpoint_settings:
             autoscaling_limit_max_cu: {{ autoscaling_limit_max_cu }}
             autoscaling_limit_min_cu: {{ autoscaling_limit_min_cu }}
@@ -366,6 +464,7 @@ SELECT
             pg_settings: "{{ pg_settings }}"
             suspend_timeout_duration: "{{ suspend_timeout_duration }}"
           display_name: "{{ display_name }}"
+          enable_pg_native_login: {{ enable_pg_native_login }}
           history_retention_duration: "{{ history_retention_duration }}"
           owner: "{{ owner }}"
           pg_version: {{ pg_version }}
@@ -388,17 +487,17 @@ SELECT
 >
 <TabItem value="update">
 
-Updates the specified database project.
+Update a role for a branch.
 
 ```sql
 UPDATE databricks_workspace.postgres.postgres_projects
 SET 
-project = '{{ project }}'
+role = '{{ role }}'
 WHERE 
 name = '{{ name }}' --required
 AND update_mask = '{{ update_mask }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
-AND project = '{{ project }}' --required;
+AND role = '{{ role }}' --required;
 ```
 </TabItem>
 </Tabs>

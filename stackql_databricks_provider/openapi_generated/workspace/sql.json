@@ -5,7 +5,7 @@
     "description": "OpenAPI specification for the Databricks sql service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
     "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-02-24",
+    "x-stackql-date-generated": "2026-03-20",
     "x-stackql-sdk-namespace": "databricks.sdk.service.sql"
   },
   "servers": [
@@ -49,7 +49,7 @@
                               "TRIGGERED",
                               "UNKNOWN"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                           },
                           "op": {
                             "type": "string",
@@ -128,11 +128,11 @@
                         "type": "integer",
                         "description": "Number of seconds an alert must wait after being triggered to rearm itself. After rearming, it can be triggered again. If 0 or not specified, the alert will not be triggered again."
                       }
-                    },
-                    "description": ":param auto_resolve_display_name: bool (optional) If true, automatically resolve alert display name conflicts. Otherwise, fail the request if the alert's display name conflicts with an existing alert's display name."
+                    }
                   },
                   "auto_resolve_display_name": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "If true, automatically resolve alert display name conflicts. Otherwise, fail the request if the alert's display name conflicts with an existing alert's display name."
                   }
                 }
               }
@@ -186,8 +186,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -247,8 +246,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -291,8 +289,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`Alert`"
+            }
           }
         ],
         "responses": {
@@ -342,8 +339,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param update_mask: str The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+            }
           }
         ],
         "requestBody": {
@@ -353,7 +349,8 @@
                 "type": "object",
                 "properties": {
                   "update_mask": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
                   },
                   "alert": {
                     "type": "object",
@@ -368,7 +365,7 @@
                               "TRIGGERED",
                               "UNKNOWN"
                             ],
-                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                            "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                           },
                           "op": {
                             "type": "string",
@@ -447,11 +444,11 @@
                         "type": "integer",
                         "description": "Number of seconds an alert must wait after being triggered to rearm itself. After rearming, it can be triggered again. If 0 or not specified, the alert will not be triggered again."
                       }
-                    },
-                    "description": ":param auto_resolve_display_name: bool (optional) If true, automatically resolve alert display name conflicts. Otherwise, fail the request if the alert's display name conflicts with an existing alert's display name."
+                    }
                   },
                   "auto_resolve_display_name": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "description": "If true, automatically resolve alert display name conflicts. Otherwise, fail the request if the alert's display name conflicts with an existing alert's display name."
                   }
                 },
                 "required": [
@@ -668,8 +665,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -712,8 +708,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`LegacyAlert`"
+            }
           }
         ],
         "responses": {
@@ -763,8 +758,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param name: str Name of the alert."
+            }
           }
         ],
         "requestBody": {
@@ -774,7 +768,8 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Name of the alert."
                   },
                   "options": {
                     "type": "object",
@@ -1140,8 +1135,7 @@
                       "warehouse_id",
                       "evaluation",
                       "schedule"
-                    ],
-                    "description": ":returns: :class:`AlertV2`"
+                    ]
                   }
                 },
                 "required": [
@@ -1198,8 +1192,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -1259,8 +1252,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`AlertV2`"
+            }
           }
         ],
         "responses": {
@@ -1310,8 +1302,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param purge: bool (optional) Whether to permanently delete the alert. If not set, the alert will only be soft deleted."
+            }
           },
           {
             "name": "purge",
@@ -1319,7 +1310,8 @@
             "required": false,
             "schema": {
               "type": "boolean"
-            }
+            },
+            "description": "Whether to permanently delete the alert. If not set, the alert will only be soft deleted."
           }
         ],
         "responses": {
@@ -1371,7 +1363,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
+            },
+            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
           }
         ],
         "requestBody": {
@@ -1641,8 +1634,7 @@
                       "warehouse_id",
                       "evaluation",
                       "schedule"
-                    ],
-                    "description": ":param update_mask: str The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+                    ]
                   }
                 },
                 "required": [
@@ -1756,11 +1748,11 @@
                         "type": "string",
                         "description": "Timestamp of the last time this object was updated."
                       }
-                    },
-                    "description": ":param width: int Width of a widget"
+                    }
                   },
                   "width": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Width of a widget"
                   },
                   "text": {
                     "type": "string",
@@ -1939,11 +1931,11 @@
                         "type": "string",
                         "description": "Timestamp of the last time this object was updated."
                       }
-                    },
-                    "description": ":param width: int Width of a widget"
+                    }
                   },
                   "width": {
-                    "type": "integer"
+                    "type": "integer",
+                    "description": "Width of a widget"
                   },
                   "text": {
                     "type": "string",
@@ -2004,7 +1996,7 @@
           "sql",
           "dashboards"
         ],
-        "description": "Moves a dashboard to the trash. Trashed dashboards do not appear in list views or searches, and cannot\nbe shared.\n\n:param dashboard_id: str",
+        "description": "Moves a dashboard to the trash. Trashed dashboards do not appear in list views or searches, and cannot\nbe shared.\n\n**Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]\n\n[Learn more]: https://docs.databricks.com/en/dashboards/\n\n:param dashboard_id: str",
         "parameters": [
           {
             "name": "dashboard_id",
@@ -2012,8 +2004,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -2048,7 +2039,7 @@
           "sql",
           "dashboards"
         ],
-        "description": "Returns a JSON representation of a dashboard object, including its visualization and query objects.\n\n:param dashboard_id: str\n\n:returns: :class:`Dashboard`",
+        "description": "Returns a JSON representation of a dashboard object, including its visualization and query objects.\n\n**Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]\n\n[Learn more]: https://docs.databricks.com/en/dashboards/\n\n:param dashboard_id: str\n\n:returns: :class:`Dashboard`",
         "parameters": [
           {
             "name": "dashboard_id",
@@ -2056,8 +2047,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`Dashboard`"
+            }
           }
         ],
         "responses": {
@@ -2099,7 +2089,7 @@
           "sql",
           "dashboards"
         ],
-        "description": "Modify this dashboard definition. This operation only affects attributes of the dashboard object. It\ndoes not add, modify, or remove widgets.\n\n**Note**: You cannot undo this operation.\n\n:param dashboard_id: str\n:param name: str (optional)\n  The title of this dashboard that appears in list views and at the top of the dashboard page.\n:param run_as_role: :class:`RunAsRole` (optional)\n  Sets the **Run as** role for the object. Must be set to one of `\"viewer\"` (signifying \"run as\n  viewer\" behavior) or `\"owner\"` (signifying \"run as owner\" behavior)\n:param tags: List[str] (optional)\n\n:returns: :class:`Dashboard`",
+        "description": "Modify this dashboard definition. This operation only affects attributes of the dashboard object. It\ndoes not add, modify, or remove widgets.\n\n**Note**: You cannot undo this operation.\n\n**Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]\n\n[Learn more]: https://docs.databricks.com/en/dashboards/\n\n:param dashboard_id: str\n:param name: str (optional)\n  The title of this dashboard that appears in list views and at the top of the dashboard page.\n:param run_as_role: :class:`RunAsRole` (optional)\n  Sets the **Run as** role for the object. Must be set to one of `\"viewer\"` (signifying \"run as\n  viewer\" behavior) or `\"owner\"` (signifying \"run as owner\" behavior)\n:param tags: List[str] (optional)\n\n:returns: :class:`Dashboard`",
         "parameters": [
           {
             "name": "dashboard_id",
@@ -2107,8 +2097,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param name: str (optional) The title of this dashboard that appears in list views and at the top of the dashboard page."
+            }
           }
         ],
         "requestBody": {
@@ -2118,7 +2107,8 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The title of this dashboard that appears in list views and at the top of the dashboard page."
                   },
                   "run_as_role": {
                     "type": "string",
@@ -2132,8 +2122,7 @@
                     "type": "array",
                     "items": {
                       "type": "string"
-                    },
-                    "description": ":returns: :class:`Dashboard`"
+                    }
                   }
                 }
               }
@@ -2181,7 +2170,7 @@
           "sql",
           "dashboards"
         ],
-        "description": "Fetch a paginated list of dashboard objects.\n\n**Warning**: Calling this API concurrently 10 or more times could result in throttling, service\ndegradation, or a temporary ban.\n\n:param order: :class:`ListOrder` (optional)\n  Name of dashboard attribute to order by.\n:param page: int (optional)\n  Page number to retrieve.\n:param page_size: int (optional)\n  Number of dashboards to return per page.\n:param q: str (optional)\n  Full text search term.\n\n:returns: Iterator over :class:`Dashboard`",
+        "description": "Fetch a paginated list of dashboard objects.\n\n**Warning**: Calling this API concurrently 10 or more times could result in throttling, service\ndegradation, or a temporary ban.\n\n**Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]\n\n[Learn more]: https://docs.databricks.com/en/dashboards/\n\n:param order: :class:`ListOrder` (optional)\n  Name of dashboard attribute to order by.\n:param page: int (optional)\n  Page number to retrieve.\n:param page_size: int (optional)\n  Number of dashboards to return per page.\n:param q: str (optional)\n  Full text search term.\n\n:returns: Iterator over :class:`Dashboard`",
         "parameters": [
           {
             "name": "order",
@@ -2261,7 +2250,7 @@
           "sql",
           "dashboards"
         ],
-        "description": "A restored dashboard appears in list views and searches and can be shared.\n\n:param dashboard_id: str",
+        "description": "A restored dashboard appears in list views and searches and can be shared.\n\n**Warning**: This API is deprecated. Please use the AI/BI Dashboards API instead. [Learn more]\n\n[Learn more]: https://docs.databricks.com/en/dashboards/\n\n:param dashboard_id: str",
         "parameters": [
           {
             "name": "dashboard_id",
@@ -2269,8 +2258,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -2475,8 +2463,7 @@
                           "type": "string"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`SetResponse`"
+                    }
                   }
                 },
                 "required": [
@@ -2856,8 +2843,7 @@
                         "type": "string",
                         "description": "ID of the SQL warehouse attached to the query."
                       }
-                    },
-                    "description": ":returns: :class:`Query`"
+                    }
                   }
                 }
               }
@@ -2911,8 +2897,7 @@
             "required": false,
             "schema": {
               "type": "integer"
-            },
-            "description": ":param page_token: str (optional)"
+            }
           },
           {
             "name": "page_token",
@@ -2972,8 +2957,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -3016,8 +3000,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`Query`"
+            }
           }
         ],
         "responses": {
@@ -3067,8 +3050,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param update_mask: str The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+            }
           }
         ],
         "requestBody": {
@@ -3078,7 +3060,8 @@
                 "type": "object",
                 "properties": {
                   "update_mask": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
                   },
                   "auto_resolve_display_name": {
                     "type": "boolean",
@@ -3314,8 +3297,7 @@
                         "type": "string",
                         "description": "ID of the SQL warehouse attached to the query."
                       }
-                    },
-                    "description": ":returns: :class:`Query`"
+                    }
                   }
                 },
                 "required": [
@@ -3374,8 +3356,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param page_size: int (optional)"
+            }
           },
           {
             "name": "page_size",
@@ -3391,8 +3372,7 @@
             "required": false,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: Iterator over :class:`Visualization`"
+            }
           }
         ],
         "responses": {
@@ -3479,8 +3459,7 @@
                     "type": "array",
                     "items": {
                       "type": "string"
-                    },
-                    "description": ":returns: :class:`LegacyQuery`"
+                    }
                   }
                 }
               }
@@ -3614,8 +3593,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -3658,8 +3636,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":returns: :class:`LegacyQuery`"
+            }
           }
         ],
         "responses": {
@@ -3709,8 +3686,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param data_source_id: str (optional) Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+            }
           }
         ],
         "requestBody": {
@@ -3720,7 +3696,8 @@
                 "type": "object",
                 "properties": {
                   "data_source_id": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
                   },
                   "description": {
                     "type": "string",
@@ -3750,8 +3727,7 @@
                     "type": "array",
                     "items": {
                       "type": "string"
-                    },
-                    "description": ":returns: :class:`LegacyQuery`"
+                    }
                   }
                 }
               }
@@ -3807,8 +3783,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -3954,8 +3929,7 @@
                         "type": "string",
                         "description": "The type of visualization: counter, table, funnel, and so on."
                       }
-                    },
-                    "description": ":returns: :class:`Visualization`"
+                    }
                   }
                 }
               }
@@ -4011,8 +3985,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "str"
+            }
           }
         ],
         "responses": {
@@ -4055,8 +4028,7 @@
             "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": ":param update_mask: str The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+            }
           }
         ],
         "requestBody": {
@@ -4066,7 +4038,8 @@
                 "type": "object",
                 "properties": {
                   "update_mask": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
                   },
                   "visualization": {
                     "type": "object",
@@ -4086,8 +4059,7 @@
                         "type": "string",
                         "description": "The type of visualization: counter, table, funnel, and so on."
                       }
-                    },
-                    "description": ":returns: :class:`Visualization`"
+                    }
                   }
                 },
                 "required": [
@@ -4279,11 +4251,11 @@
                 "type": "object",
                 "properties": {
                   "created_at": {
-                    "type": "string",
-                    "description": ":param description: str (optional) A short description of this visualization. This is not displayed in the UI."
+                    "type": "string"
                   },
                   "description": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "A short description of this visualization. This is not displayed in the UI."
                   },
                   "name": {
                     "type": "string",
@@ -4524,15 +4496,14 @@
                           "description": "The visualization description API changes frequently and is unsupported. You can duplicate a\n    visualization by copying description objects received _from the API_ and then using them to\n    create a new one with a POST request to the same endpoint. Databricks does not recommend\n    constructing ad-hoc visualizations entirely in JSON."
                         }
                       }
-                    },
-                    "description": ":param type: str (optional) The type of visualization: chart, table, pivot table, and so on."
+                    }
                   },
                   "type": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The type of visualization: chart, table, pivot table, and so on."
                   },
                   "updated_at": {
-                    "type": "string",
-                    "description": ":returns: :class:`LegacyVisualization`"
+                    "type": "string"
                   }
                 }
               }
@@ -4890,8 +4861,7 @@
             "required": true,
             "schema": {
               "type": "integer"
-            },
-            "description": ":returns: :class:`ResultData`"
+            }
           }
         ],
         "responses": {
@@ -4935,7 +4905,7 @@
           "sql",
           "warehouses"
         ],
-        "description": "Creates a new SQL warehouse.\n\n:param auto_stop_mins: int (optional)\n  The amount of time in minutes that a SQL warehouse must be idle (i.e., no RUNNING queries) before it\n  is automatically stopped.\n\n  Supported values: - Must be == 0 or >= 10 mins - 0 indicates no autostop.\n\n  Defaults to 120 mins\n:param channel: :class:`Channel` (optional)\n  Channel Details\n:param cluster_size: str (optional)\n  Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you\n  to run larger queries on it. If you want to increase the number of concurrent queries, please tune\n  max_num_clusters.\n\n  Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large -\n  4X-Large\n:param creator_name: str (optional)\n  warehouse creator name\n:param enable_photon: bool (optional)\n  Configures whether the warehouse should use Photon optimized clusters.\n\n  Defaults to false.\n:param enable_serverless_compute: bool (optional)\n  Configures whether the warehouse should use serverless compute\n:param instance_profile_arn: str (optional)\n  Deprecated. Instance profile used to pass IAM role to the cluster\n:param max_num_clusters: int (optional)\n  Maximum number of clusters that the autoscaler will create to handle concurrent queries.\n\n  Supported values: - Must be >= min_num_clusters - Must be <= 40.\n\n  Defaults to min_clusters if unset.\n:param min_num_clusters: int (optional)\n  Minimum number of available clusters that will be maintained for this SQL warehouse. Increasing this\n  will ensure that a larger number of clusters are always running and therefore may reduce the cold\n  start time for new queries. This is similar to reserved vs. revocable cores in a resource manager.\n\n  Supported values: - Must be > 0 - Must be <= min(max_num_clusters, 30)\n\n  Defaults to 1\n:param name: str (optional)\n  Logical name for the cluster.\n\n  Supported values: - Must be unique within an org. - Must be less than 100 characters.\n:param spot_instance_policy: :class:`SpotInstancePolicy` (optional)\n  Configurations whether the endpoint should use spot instances.\n:param tags: :class:`EndpointTags` (optional)\n  A set of key-value pairs that will be tagged on all resources (e.g., AWS instances and EBS volumes)\n  associated with this SQL warehouse.\n\n  Supported values: - Number of tags < 45.\n:param warehouse_type: :class:`CreateWarehouseRequestWarehouseType` (optional)\n  Warehouse type: `PRO` or `CLASSIC`. If you want to use serverless compute, you must set to `PRO` and\n  also set the field `enable_serverless_compute` to `true`.\n\n:returns:\n  Long-running operation waiter for :class:`GetWarehouseResponse`.\n  See :method:wait_get_warehouse_running for more details.",
+        "description": "Creates a new SQL warehouse.\n\n:param auto_stop_mins: int (optional)\n  The amount of time in minutes that a SQL warehouse must be idle (i.e., no RUNNING queries) before it\n  is automatically stopped.\n\n  Supported values: - Must be == 0 or >= 10 mins - 0 indicates no autostop.\n\n  Defaults to 120 mins\n:param channel: :class:`Channel` (optional)\n  Channel Details\n:param cluster_size: str (optional)\n  Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you\n  to run larger queries on it. If you want to increase the number of concurrent queries, please tune\n  max_num_clusters.\n\n  Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large -\n  4X-Large - 5X-Large\n:param creator_name: str (optional)\n  warehouse creator name\n:param enable_photon: bool (optional)\n  Configures whether the warehouse should use Photon optimized clusters.\n\n  Defaults to true.\n:param enable_serverless_compute: bool (optional)\n  Configures whether the warehouse should use serverless compute\n:param instance_profile_arn: str (optional)\n  Deprecated. Instance profile used to pass IAM role to the cluster\n:param max_num_clusters: int (optional)\n  Maximum number of clusters that the autoscaler will create to handle concurrent queries.\n\n  Supported values: - Must be >= min_num_clusters - Must be <= 40.\n\n  Defaults to min_clusters if unset.\n:param min_num_clusters: int (optional)\n  Minimum number of available clusters that will be maintained for this SQL warehouse. Increasing this\n  will ensure that a larger number of clusters are always running and therefore may reduce the cold\n  start time for new queries. This is similar to reserved vs. revocable cores in a resource manager.\n\n  Supported values: - Must be > 0 - Must be <= min(max_num_clusters, 30)\n\n  Defaults to 1\n:param name: str (optional)\n  Logical name for the cluster.\n\n  Supported values: - Must be unique within an org. - Must be less than 100 characters.\n:param spot_instance_policy: :class:`SpotInstancePolicy` (optional)\n  Configurations whether the endpoint should use spot instances.\n:param tags: :class:`EndpointTags` (optional)\n  A set of key-value pairs that will be tagged on all resources (e.g., AWS instances and EBS volumes)\n  associated with this SQL warehouse.\n\n  Supported values: - Number of tags < 45.\n:param warehouse_type: :class:`CreateWarehouseRequestWarehouseType` (optional)\n  Warehouse type: `PRO` or `CLASSIC`. If you want to use serverless compute, you must set to `PRO` and\n  also set the field `enable_serverless_compute` to `true`.\n\n:returns:\n  Long-running operation waiter for :class:`GetWarehouseResponse`.\n  See :method:wait_get_warehouse_running for more details.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -4960,14 +4930,14 @@
                           "CHANNEL_NAME_PREVIEW",
                           "CHANNEL_NAME_PREVIOUS"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       }
                     },
                     "description": "Channel Details"
                   },
                   "cluster_size": {
                     "type": "string",
-                    "description": "Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you to run larger queries on it. If you want to increase the number of concurrent queries, please tune max_num_clusters. Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large - 4X-Large"
+                    "description": "Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you to run larger queries on it. If you want to increase the number of concurrent queries, please tune max_num_clusters. Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large - 4X-Large - 5X-Large"
                   },
                   "creator_name": {
                     "type": "string",
@@ -4975,7 +4945,7 @@
                   },
                   "enable_photon": {
                     "type": "boolean",
-                    "description": "Configures whether the warehouse should use Photon optimized clusters. Defaults to false."
+                    "description": "Configures whether the warehouse should use Photon optimized clusters. Defaults to true."
                   },
                   "enable_serverless_compute": {
                     "type": "boolean",
@@ -5079,7 +5049,7 @@
           "sql",
           "warehouses"
         ],
-        "description": "Lists all SQL warehouses that a user has access to.\n\n:param page_size: int (optional)\n  The max number of warehouses to return.\n:param page_token: str (optional)\n  A page token, received from a previous `ListWarehouses` call. Provide this to retrieve the\n  subsequent page; otherwise the first will be retrieved.\n\n  When paginating, all other parameters provided to `ListWarehouses` must match the call that provided\n  the page token.\n:param run_as_user_id: int (optional)\n  Service Principal which will be used to fetch the list of endpoints. If not specified, SQL Gateway\n  will use the user from the session header.\n\n:returns: Iterator over :class:`EndpointInfo`",
+        "description": "Lists all SQL warehouses that a user has access to.\n\n:param page_size: int (optional)\n  The max number of warehouses to return.\n:param page_token: str (optional)\n  A page token, received from a previous `ListWarehouses` call. Provide this to retrieve the\n  subsequent page; otherwise the first will be retrieved.\n\n  When paginating, all other parameters provided to `ListWarehouses` must match the call that provided\n  the page token.\n:param run_as_user_id: int (optional)\n  Deprecated: this field is ignored by the server. Service Principal which will be used to fetch the\n  list of endpoints. If not specified, SQL Gateway will use the user from the session header.\n\n:returns: Iterator over :class:`EndpointInfo`",
         "parameters": [
           {
             "name": "page_size",
@@ -5106,7 +5076,7 @@
             "schema": {
               "type": "integer"
             },
-            "description": "Service Principal which will be used to fetch the list of endpoints. If not specified, SQL Gateway will use the user from the session header."
+            "description": "Deprecated: this field is ignored by the server. Service Principal which will be used to fetch the list of endpoints. If not specified, SQL Gateway will use the user from the session header."
           }
         ],
         "responses": {
@@ -5612,7 +5582,7 @@
           "sql",
           "warehouses"
         ],
-        "description": "Updates the configuration for a SQL warehouse.\n\n:param id: str\n  Required. Id of the warehouse to configure.\n:param auto_stop_mins: int (optional)\n  The amount of time in minutes that a SQL warehouse must be idle (i.e., no RUNNING queries) before it\n  is automatically stopped.\n\n  Supported values: - Must be == 0 or >= 10 mins - 0 indicates no autostop.\n\n  Defaults to 120 mins\n:param channel: :class:`Channel` (optional)\n  Channel Details\n:param cluster_size: str (optional)\n  Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you\n  to run larger queries on it. If you want to increase the number of concurrent queries, please tune\n  max_num_clusters.\n\n  Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large -\n  4X-Large\n:param creator_name: str (optional)\n  warehouse creator name\n:param enable_photon: bool (optional)\n  Configures whether the warehouse should use Photon optimized clusters.\n\n  Defaults to false.\n:param enable_serverless_compute: bool (optional)\n  Configures whether the warehouse should use serverless compute\n:param instance_profile_arn: str (optional)\n  Deprecated. Instance profile used to pass IAM role to the cluster\n:param max_num_clusters: int (optional)\n  Maximum number of clusters that the autoscaler will create to handle concurrent queries.\n\n  Supported values: - Must be >= min_num_clusters - Must be <= 40.\n\n  Defaults to min_clusters if unset.\n:param min_num_clusters: int (optional)\n  Minimum number of available clusters that will be maintained for this SQL warehouse. Increasing this\n  will ensure that a larger number of clusters are always running and therefore may reduce the cold\n  start time for new queries. This is similar to reserved vs. revocable cores in a resource manager.\n\n  Supported values: - Must be > 0 - Must be <= min(max_num_clusters, 30)\n\n  Defaults to 1\n:param name: str (optional)\n  Logical name for the cluster.\n\n  Supported values: - Must be unique within an org. - Must be less than 100 characters.\n:param spot_instance_policy: :class:`SpotInstancePolicy` (optional)\n  Configurations whether the endpoint should use spot instances.\n:param tags: :class:`EndpointTags` (optional)\n  A set of key-value pairs that will be tagged on all resources (e.g., AWS instances and EBS volumes)\n  associated with this SQL warehouse.\n\n  Supported values: - Number of tags < 45.\n:param warehouse_type: :class:`EditWarehouseRequestWarehouseType` (optional)\n  Warehouse type: `PRO` or `CLASSIC`. If you want to use serverless compute, you must set to `PRO` and\n  also set the field `enable_serverless_compute` to `true`.\n\n:returns:\n  Long-running operation waiter for :class:`GetWarehouseResponse`.\n  See :method:wait_get_warehouse_running for more details.",
+        "description": "Updates the configuration for a SQL warehouse.\n\n:param id: str\n  Required. Id of the warehouse to configure.\n:param auto_stop_mins: int (optional)\n  The amount of time in minutes that a SQL warehouse must be idle (i.e., no RUNNING queries) before it\n  is automatically stopped.\n\n  Supported values: - Must be == 0 or >= 10 mins - 0 indicates no autostop.\n\n  Defaults to 120 mins\n:param channel: :class:`Channel` (optional)\n  Channel Details\n:param cluster_size: str (optional)\n  Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you\n  to run larger queries on it. If you want to increase the number of concurrent queries, please tune\n  max_num_clusters.\n\n  Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large -\n  4X-Large - 5X-Large\n:param creator_name: str (optional)\n  warehouse creator name\n:param enable_photon: bool (optional)\n  Configures whether the warehouse should use Photon optimized clusters.\n\n  Defaults to true.\n:param enable_serverless_compute: bool (optional)\n  Configures whether the warehouse should use serverless compute\n:param instance_profile_arn: str (optional)\n  Deprecated. Instance profile used to pass IAM role to the cluster\n:param max_num_clusters: int (optional)\n  Maximum number of clusters that the autoscaler will create to handle concurrent queries.\n\n  Supported values: - Must be >= min_num_clusters - Must be <= 40.\n\n  Defaults to min_clusters if unset.\n:param min_num_clusters: int (optional)\n  Minimum number of available clusters that will be maintained for this SQL warehouse. Increasing this\n  will ensure that a larger number of clusters are always running and therefore may reduce the cold\n  start time for new queries. This is similar to reserved vs. revocable cores in a resource manager.\n\n  Supported values: - Must be > 0 - Must be <= min(max_num_clusters, 30)\n\n  Defaults to 1\n:param name: str (optional)\n  Logical name for the cluster.\n\n  Supported values: - Must be unique within an org. - Must be less than 100 characters.\n:param spot_instance_policy: :class:`SpotInstancePolicy` (optional)\n  Configurations whether the endpoint should use spot instances.\n:param tags: :class:`EndpointTags` (optional)\n  A set of key-value pairs that will be tagged on all resources (e.g., AWS instances and EBS volumes)\n  associated with this SQL warehouse.\n\n  Supported values: - Number of tags < 45.\n:param warehouse_type: :class:`EditWarehouseRequestWarehouseType` (optional)\n  Warehouse type: `PRO` or `CLASSIC`. If you want to use serverless compute, you must set to `PRO` and\n  also set the field `enable_serverless_compute` to `true`.\n\n:returns:\n  Long-running operation waiter for :class:`GetWarehouseResponse`.\n  See :method:wait_get_warehouse_running for more details.",
         "parameters": [
           {
             "name": "id",
@@ -5648,14 +5618,14 @@
                           "CHANNEL_NAME_PREVIEW",
                           "CHANNEL_NAME_PREVIOUS"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       }
                     },
                     "description": "Channel Details"
                   },
                   "cluster_size": {
                     "type": "string",
-                    "description": "Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you to run larger queries on it. If you want to increase the number of concurrent queries, please tune max_num_clusters. Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large - 4X-Large"
+                    "description": "Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you to run larger queries on it. If you want to increase the number of concurrent queries, please tune max_num_clusters. Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large - 4X-Large - 5X-Large"
                   },
                   "creator_name": {
                     "type": "string",
@@ -5663,7 +5633,7 @@
                   },
                   "enable_photon": {
                     "type": "boolean",
-                    "description": "Configures whether the warehouse should use Photon optimized clusters. Defaults to false."
+                    "description": "Configures whether the warehouse should use Photon optimized clusters. Defaults to true."
                   },
                   "enable_serverless_compute": {
                     "type": "boolean",
@@ -5919,8 +5889,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`WarehousePermissions`"
+                    }
                   }
                 }
               }
@@ -6012,8 +5981,7 @@
                           "description": "name of the user"
                         }
                       }
-                    },
-                    "description": ":returns: :class:`WarehousePermissions`"
+                    }
                   }
                 }
               }
@@ -6101,7 +6069,7 @@
           "sql",
           "warehouses"
         ],
-        "description": "Sets the workspace level configuration that is shared by all SQL warehouses in a workspace.\n\n:param channel: :class:`Channel` (optional)\n  Optional: Channel selection details\n:param config_param: :class:`RepeatedEndpointConfPairs` (optional)\n  Deprecated: Use sql_configuration_parameters\n:param data_access_config: List[:class:`EndpointConfPair`] (optional)\n  Spark confs for external hive metastore configuration JSON serialized size must be less than <= 512K\n:param enable_serverless_compute: bool (optional)\n  Enable Serverless compute for SQL warehouses\n:param enabled_warehouse_types: List[:class:`WarehouseTypePair`] (optional)\n  List of Warehouse Types allowed in this workspace (limits allowed value of the type field in\n  CreateWarehouse and EditWarehouse). Note: Some types cannot be disabled, they don't need to be\n  specified in SetWorkspaceWarehouseConfig. Note: Disabling a type may cause existing warehouses to be\n  converted to another type. Used by frontend to save specific type availability in the warehouse\n  create and edit form UI.\n:param global_param: :class:`RepeatedEndpointConfPairs` (optional)\n  Deprecated: Use sql_configuration_parameters\n:param google_service_account: str (optional)\n  GCP only: Google Service Account used to pass to cluster to access Google Cloud Storage\n:param instance_profile_arn: str (optional)\n  AWS Only: The instance profile used to pass an IAM role to the SQL warehouses. This configuration is\n  also applied to the workspace's serverless compute for notebooks and jobs.\n:param security_policy: :class:`SetWorkspaceWarehouseConfigRequestSecurityPolicy` (optional)\n  Security policy for warehouses\n:param sql_configuration_parameters: :class:`RepeatedEndpointConfPairs` (optional)\n  SQL configuration parameters",
+        "description": "Sets the workspace level configuration that is shared by all SQL warehouses in a workspace.\n\n:param channel: :class:`Channel` (optional)\n  Optional: Channel selection details\n:param config_param: :class:`RepeatedEndpointConfPairs` (optional)\n  Deprecated: Use sql_configuration_parameters\n:param data_access_config: List[:class:`EndpointConfPair`] (optional)\n  Spark confs for external hive metastore configuration JSON serialized size must be less than <= 512K\n:param enable_serverless_compute: bool (optional)\n  Deprecated: only setting this to true is allowed.\n:param enabled_warehouse_types: List[:class:`WarehouseTypePair`] (optional)\n  List of Warehouse Types allowed in this workspace (limits allowed value of the type field in\n  CreateWarehouse and EditWarehouse). Note: Some types cannot be disabled, they don't need to be\n  specified in SetWorkspaceWarehouseConfig. Note: Disabling a type may cause existing warehouses to be\n  converted to another type. Used by frontend to save specific type availability in the warehouse\n  create and edit form UI.\n:param global_param: :class:`RepeatedEndpointConfPairs` (optional)\n  Deprecated: Use sql_configuration_parameters\n:param google_service_account: str (optional)\n  GCP only: Google Service Account used to pass to cluster to access Google Cloud Storage\n:param instance_profile_arn: str (optional)\n  AWS Only: The instance profile used to pass an IAM role to the SQL warehouses. This configuration is\n  also applied to the workspace's serverless compute for notebooks and jobs.\n:param security_policy: :class:`SetWorkspaceWarehouseConfigRequestSecurityPolicy` (optional)\n  Security policy for warehouses\n:param sql_configuration_parameters: :class:`RepeatedEndpointConfPairs` (optional)\n  SQL configuration parameters",
         "requestBody": {
           "content": {
             "application/json": {
@@ -6122,7 +6090,7 @@
                           "CHANNEL_NAME_PREVIEW",
                           "CHANNEL_NAME_PREVIOUS"
                         ],
-                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       }
                     },
                     "description": "Optional: Channel selection details"
@@ -6178,7 +6146,7 @@
                   },
                   "enable_serverless_compute": {
                     "type": "boolean",
-                    "description": "Enable Serverless compute for SQL warehouses"
+                    "description": "Deprecated: only setting this to true is allowed."
                   },
                   "enabled_warehouse_types": {
                     "type": "array",
@@ -6196,7 +6164,7 @@
                             "PRO",
                             "TYPE_UNSPECIFIED"
                           ],
-                          "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                          "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                         }
                       },
                       "description": "* Configuration values to enable or disable the access to specific warehouse types in the\n    workspace."
@@ -7373,7 +7341,7 @@
           },
           "cluster_size": {
             "type": "string",
-            "description": "Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you to run larger queries on it. If you want to increase the number of concurrent queries, please tune max_num_clusters. Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large - 4X-Large"
+            "description": "Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you to run larger queries on it. If you want to increase the number of concurrent queries, please tune max_num_clusters. Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large - 4X-Large - 5X-Large"
           },
           "creator_name": {
             "type": "string",
@@ -7381,7 +7349,7 @@
           },
           "enable_photon": {
             "type": "boolean",
-            "description": "Configures whether the warehouse should use Photon optimized clusters. Defaults to false."
+            "description": "Configures whether the warehouse should use Photon optimized clusters. Defaults to true."
           },
           "enable_serverless_compute": {
             "type": "boolean",
@@ -7615,7 +7583,7 @@
           },
           "cluster_size": {
             "type": "string",
-            "description": "Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you to run larger queries on it. If you want to increase the number of concurrent queries, please tune max_num_clusters. Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large - 4X-Large"
+            "description": "Size of the clusters allocated for this warehouse. Increasing the size of a spark cluster allows you to run larger queries on it. If you want to increase the number of concurrent queries, please tune max_num_clusters. Supported values: - 2X-Small - X-Small - Small - Medium - Large - X-Large - 2X-Large - 3X-Large - 4X-Large - 5X-Large"
           },
           "creator_name": {
             "type": "string",
@@ -7623,7 +7591,7 @@
           },
           "enable_photon": {
             "type": "boolean",
-            "description": "Configures whether the warehouse should use Photon optimized clusters. Defaults to false."
+            "description": "Configures whether the warehouse should use Photon optimized clusters. Defaults to true."
           },
           "enable_serverless_compute": {
             "type": "boolean",
@@ -7706,7 +7674,7 @@
           },
           "enable_serverless_compute": {
             "type": "boolean",
-            "description": "Enable Serverless compute for SQL warehouses"
+            "description": "Deprecated: only setting this to true is allowed."
           },
           "enabled_warehouse_types": {
             "type": "array",
@@ -9360,7 +9328,7 @@
           "STDDEV",
           "SUM"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "AlertEvaluationState": {
         "type": "string",
@@ -9378,7 +9346,7 @@
           "ACTIVE",
           "DELETED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "AlertOperator": {
         "type": "string",
@@ -9391,7 +9359,7 @@
           "LESS_THAN_OR_EQUAL",
           "NOT_EQUAL"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "AlertOptionsEmptyResultState": {
         "type": "string",
@@ -9409,7 +9377,7 @@
           "TRIGGERED",
           "UNKNOWN"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ChannelName": {
         "type": "string",
@@ -9419,7 +9387,7 @@
           "CHANNEL_NAME_PREVIEW",
           "CHANNEL_NAME_PREVIOUS"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ColumnInfoTypeName": {
         "type": "string",
@@ -9458,7 +9426,7 @@
           "LESS_THAN_OR_EQUAL",
           "NOT_EQUAL"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "CreateWarehouseRequestWarehouseType": {
         "type": "string",
@@ -9467,7 +9435,7 @@
           "PRO",
           "TYPE_UNSPECIFIED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "DatePrecision": {
         "type": "string",
@@ -9476,7 +9444,7 @@
           "MINUTE_PRECISION",
           "SECOND_PRECISION"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "DateRangeValueDynamicDateRange": {
         "type": "string",
@@ -9499,7 +9467,7 @@
           "TODAY",
           "YESTERDAY"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "DateValueDynamicDate": {
         "type": "string",
@@ -9507,7 +9475,7 @@
           "NOW",
           "YESTERDAY"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "DefaultWarehouseOverrideType": {
         "type": "string",
@@ -9523,7 +9491,7 @@
           "EXTERNAL_LINKS",
           "INLINE"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "EditWarehouseRequestWarehouseType": {
         "type": "string",
@@ -9532,7 +9500,7 @@
           "PRO",
           "TYPE_UNSPECIFIED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "EndpointInfoWarehouseType": {
         "type": "string",
@@ -9541,7 +9509,7 @@
           "PRO",
           "TYPE_UNSPECIFIED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ExecuteStatementRequestOnWaitTimeout": {
         "type": "string",
@@ -9558,7 +9526,7 @@
           "CSV",
           "JSON_ARRAY"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "GetWarehouseResponseWarehouseType": {
         "type": "string",
@@ -9567,7 +9535,7 @@
           "PRO",
           "TYPE_UNSPECIFIED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "GetWorkspaceWarehouseConfigResponseSecurityPolicy": {
         "type": "string",
@@ -9585,7 +9553,7 @@
           "triggered",
           "unknown"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "LifecycleState": {
         "type": "string",
@@ -9593,7 +9561,7 @@
           "ACTIVE",
           "TRASHED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ListOrder": {
         "type": "string",
@@ -9601,7 +9569,7 @@
           "created_at",
           "name"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ObjectType": {
         "type": "string",
@@ -9630,7 +9598,7 @@
           "dashboard",
           "query"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ParameterType": {
         "type": "string",
@@ -9641,7 +9609,7 @@
           "query",
           "text"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "PermissionLevel": {
         "type": "string",
@@ -9691,7 +9659,7 @@
           "UPDATE",
           "USE"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "QueryStatus": {
         "type": "string",
@@ -9713,7 +9681,7 @@
           "OWNER",
           "VIEWER"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "RunAsRole": {
         "type": "string",
@@ -9721,7 +9689,7 @@
           "owner",
           "viewer"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "SchedulePauseStatus": {
         "type": "string",
@@ -9729,7 +9697,7 @@
           "PAUSED",
           "UNPAUSED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "ServiceErrorCode": {
         "type": "string",
@@ -9749,7 +9717,7 @@
           "UNKNOWN",
           "WORKSPACE_TEMPORARILY_UNAVAILABLE"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "SetWorkspaceWarehouseConfigRequestSecurityPolicy": {
         "type": "string",
@@ -9791,7 +9759,7 @@
           "RUNNING",
           "SUCCEEDED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "Status": {
         "type": "string",
@@ -9800,14 +9768,14 @@
           "FAILED",
           "HEALTHY"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "SuccessMessage": {
         "type": "string",
         "x-enum": [
           "Success"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "TerminationReasonCode": {
         "type": "string",
@@ -9910,6 +9878,7 @@
           "GCP_TRUSTED_IMAGE_PROJECTS_VIOLATED",
           "GKE_BASED_CLUSTER_TERMINATION",
           "GLOBAL_INIT_SCRIPT_FAILURE",
+          "HIVEMETASTORE_CONNECTIVITY_FAILURE",
           "HIVE_METASTORE_PROVISIONING_FAILURE",
           "IMAGE_PULL_PERMISSION_DENIED",
           "INACTIVITY",
@@ -10029,7 +9998,7 @@
           "PRO",
           "TYPE_UNSPECIFIED"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access::\n\n>>> Color.RED\n<Color.RED: 1>\n\n- value lookup:\n\n>>> Color(1)\n<Color.RED: 1>\n\n- name lookup:\n\n>>> Color['RED']\n<Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       }
     }
   }

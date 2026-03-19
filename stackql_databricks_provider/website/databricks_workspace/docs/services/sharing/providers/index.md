@@ -446,9 +446,11 @@ updated_by
     - name: authentication_type
       value: "{{ authentication_type }}"
       description: |
-        :param comment: str (optional) Description about the provider.
+        The delta sharing authentication type.
     - name: comment
       value: "{{ comment }}"
+      description: |
+        Description about the provider.
     - name: recipient_profile_str
       value: "{{ recipient_profile_str }}"
       description: |

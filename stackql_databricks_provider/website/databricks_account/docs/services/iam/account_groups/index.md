@@ -436,8 +436,8 @@ Creates a group in the Databricks account with a unique name, using the supplied
 
 ```sql
 INSERT INTO databricks_account.iam.account_groups (
-display_name,
-external_id,
+displayName,
+externalId,
 id,
 members,
 meta,
@@ -445,8 +445,8 @@ roles,
 account_id
 )
 SELECT 
-'{{ display_name }}',
-'{{ external_id }}',
+'{{ displayName }}',
+'{{ externalId }}',
 '{{ id }}',
 '{{ members }}',
 '{{ meta }}',
@@ -471,19 +471,17 @@ roles
     - name: account_id
       value: "{{ account_id }}"
       description: Required parameter for the account_groups resource.
-    - name: display_name
-      value: "{{ display_name }}"
+    - name: displayName
+      value: "{{ displayName }}"
       description: |
         String that represents a human-readable group name
-    - name: external_id
-      value: "{{ external_id }}"
-      description: |
-        :param id: str (optional) Databricks group ID
+    - name: externalId
+      value: "{{ externalId }}"
     - name: id
       value: "{{ id }}"
-    - name: members
       description: |
-        :param meta: :class:\`ResourceMeta\` (optional) Container for the group identifier. Workspace local versus account.
+        Databricks group ID
+    - name: members
       value:
         - display: "{{ display }}"
           primary: {{ primary }}
@@ -491,6 +489,8 @@ roles
           type: "{{ type }}"
           value: "{{ value }}"
     - name: meta
+      description: |
+        Container for the group identifier. Workspace local versus account.
       value:
         resourceType: "{{ resourceType }}"
     - name: roles
@@ -523,7 +523,7 @@ Partially updates the details of a group.
 ```sql
 UPDATE databricks_account.iam.account_groups
 SET 
-operations = '{{ operations }}',
+Operations = '{{ Operations }}',
 schemas = '{{ schemas }}'
 WHERE 
 account_id = '{{ account_id }}' --required
@@ -548,8 +548,8 @@ Updates the details of a group by replacing the entire group entity.
 ```sql
 REPLACE databricks_account.iam.account_groups
 SET 
-display_name = '{{ display_name }}',
-external_id = '{{ external_id }}',
+displayName = '{{ displayName }}',
+externalId = '{{ externalId }}',
 members = '{{ members }}',
 meta = '{{ meta }}',
 roles = '{{ roles }}'

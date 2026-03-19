@@ -84,9 +84,14 @@ The following fields are returned by `SELECT` queries:
     "description": "Username of external location creator."
   },
   {
+    "name": "effective_enable_file_events",
+    "type": "boolean",
+    "description": "The effective value of `enable_file_events` after applying server-side defaults."
+  },
+  {
     "name": "enable_file_events",
     "type": "boolean",
-    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events."
+    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events. The actual applied value may differ due to server-side defaults; check `effective_enable_file_events` for the effective state."
   },
   {
     "name": "encryption_details",
@@ -249,7 +254,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
   },
   {
     "name": "owner",
@@ -322,9 +327,14 @@ The following fields are returned by `SELECT` queries:
     "description": "Username of external location creator."
   },
   {
+    "name": "effective_enable_file_events",
+    "type": "boolean",
+    "description": "The effective value of `enable_file_events` after applying server-side defaults."
+  },
+  {
     "name": "enable_file_events",
     "type": "boolean",
-    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events."
+    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events. The actual applied value may differ due to server-side defaults; check `effective_enable_file_events` for the effective state."
   },
   {
     "name": "encryption_details",
@@ -487,7 +497,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
   },
   {
     "name": "owner",
@@ -645,6 +655,7 @@ browse_only,
 comment,
 created_at,
 created_by,
+effective_enable_file_events,
 enable_file_events,
 encryption_details,
 fallback,
@@ -676,6 +687,7 @@ browse_only,
 comment,
 created_at,
 created_by,
+effective_enable_file_events,
 enable_file_events,
 encryption_details,
 fallback,
@@ -717,6 +729,7 @@ name,
 url,
 credential_name,
 comment,
+effective_enable_file_events,
 enable_file_events,
 encryption_details,
 fallback,
@@ -730,6 +743,7 @@ SELECT
 '{{ url }}' /* required */,
 '{{ credential_name }}' /* required */,
 '{{ comment }}',
+{{ effective_enable_file_events }},
 {{ enable_file_events }},
 '{{ encryption_details }}',
 {{ fallback }},
@@ -746,6 +760,7 @@ browse_only,
 comment,
 created_at,
 created_by,
+effective_enable_file_events,
 enable_file_events,
 encryption_details,
 fallback,
@@ -783,19 +798,25 @@ url
       value: "{{ comment }}"
       description: |
         User-provided free-form text description.
+    - name: effective_enable_file_events
+      value: {{ effective_enable_file_events }}
+      description: |
+        The effective value of \`enable_file_events\` after applying server-side defaults.
     - name: enable_file_events
       value: {{ enable_file_events }}
       description: |
-        Whether to enable file events on this external location. Default to \`true\`. Set to \`false\` to disable file events.
+        Whether to enable file events on this external location. Default to \`true\`. Set to \`false\` to disable file events. The actual applied value may differ due to server-side defaults; check \`effective_enable_file_events\` for the effective state.
     - name: encryption_details
       description: |
-        :param fallback: bool (optional) Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient.
+        Encryption options that apply to clients connecting to cloud storage.
       value:
         sse_encryption_details:
           algorithm: "{{ algorithm }}"
           aws_kms_key_arn: "{{ aws_kms_key_arn }}"
     - name: fallback
       value: {{ fallback }}
+      description: |
+        Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient.
     - name: file_event_queue
       description: |
         File event queue settings. If \`enable_file_events\` is not \`false\`, must be defined and have exactly one of the documented properties.
@@ -853,6 +874,7 @@ UPDATE databricks_workspace.catalog.external_locations
 SET 
 comment = '{{ comment }}',
 credential_name = '{{ credential_name }}',
+effective_enable_file_events = {{ effective_enable_file_events }},
 enable_file_events = {{ enable_file_events }},
 encryption_details = '{{ encryption_details }}',
 fallback = {{ fallback }},
@@ -876,6 +898,7 @@ browse_only,
 comment,
 created_at,
 created_by,
+effective_enable_file_events,
 enable_file_events,
 encryption_details,
 fallback,

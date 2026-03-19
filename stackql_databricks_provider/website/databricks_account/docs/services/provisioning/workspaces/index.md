@@ -262,7 +262,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "pricing_tier",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (COMMUNITY_EDITION, DEDICATED, ENTERPRISE, PREMIUM, STANDARD, UNKNOWN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (COMMUNITY_EDITION, DEDICATED, ENTERPRISE, PREMIUM, STANDARD, UNKNOWN)"
   },
   {
     "name": "storage_mode",
@@ -503,7 +503,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "pricing_tier",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access::<br /><br />&gt;&gt;&gt; Color.RED<br />&lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />&gt;&gt;&gt; Color(1)<br />&lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />&gt;&gt;&gt; Color['RED']<br />&lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (COMMUNITY_EDITION, DEDICATED, ENTERPRISE, PREMIUM, STANDARD, UNKNOWN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (COMMUNITY_EDITION, DEDICATED, ENTERPRISE, PREMIUM, STANDARD, UNKNOWN)"
   },
   {
     "name": "storage_mode",
@@ -598,12 +598,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-workspace_id">
     <td><CopyableCode code="workspace_id" /></td>
     <td><code>integer</code></td>
-    <td>:returns: :class:`Workspace`</td>
+    <td></td>
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future.</td>
 </tr>
 </tbody>
 </table>
@@ -793,21 +793,18 @@ workspace_status_message
       description: Required parameter for the workspaces resource.
     - name: aws_region
       value: "{{ aws_region }}"
-      description: |
-        :param cloud: str (optional) The cloud name. This field always has the value \`gcp\`.
     - name: cloud
       value: "{{ cloud }}"
-    - name: cloud_resource_container
       description: |
-        :param compute_mode: :class:\`CustomerFacingComputeMode\` (optional) If the compute mode is \`SERVERLESS\`, a serverless workspace is created that comes pre-configured with serverless compute and default storage, providing a fully-managed, enterprise-ready SaaS experience. This means you don't need to provide any resources managed by you, such as credentials, storage, or network. If the compute mode is \`HYBRID\` (which is the default option), a classic workspace is created that uses customer-managed resources.
+        DEPRECATED: This field is being ignored by the server and will be removed in the future. The cloud name. This field always has the value \`gcp\`.
+    - name: cloud_resource_container
       value:
         gcp:
           project_id: "{{ project_id }}"
     - name: compute_mode
       value: "{{ compute_mode }}"
       description: |
-        Corresponds to compute mode defined here:
-        https://src.dev.databricks.com/databricks/universe@9076536b18479afd639d1c1f9dd5a59f72215e69/-/blob/central/api/common.proto?L872
+        If the compute mode is \`SERVERLESS\`, a serverless workspace is created that comes pre-configured with serverless compute and default storage, providing a fully-managed, enterprise-ready SaaS experience. This means you don't need to provide any resources managed by you, such as credentials, storage, or network. If the compute mode is \`HYBRID\` (which is the default option), a classic workspace is created that uses customer-managed resources.
     - name: credentials_id
       value: "{{ credentials_id }}"
       description: |
@@ -822,7 +819,7 @@ workspace_status_message
         The deployment name defines part of the subdomain for the workspace. The workspace URL for the web application and REST APIs is <workspace-deployment-name>.cloud.databricks.com. For example, if the deployment name is abcsales, your workspace URL will be https://abcsales.cloud.databricks.com. Hyphens are allowed. This property supports only the set of characters that are allowed in a subdomain. To set this value, you must have a deployment name prefix. Contact your Databricks account team to add an account deployment name prefix to your account. Workspace deployment names follow the account prefix and a hyphen. For example, if your account's deployment prefix is acme and the workspace deployment name is workspace-1, the JSON response for the deployment_name field becomes acme-workspace-1. The workspace URL would be acme-workspace-1.cloud.databricks.com. You can also set the deployment_name to the reserved keyword EMPTY if you want the deployment name to only include the deployment prefix. For example, if your account's deployment prefix is acme and the workspace deployment name is EMPTY, the deployment_name becomes acme only and the workspace URL is acme.cloud.databricks.com. This value must be unique across all non-deleted deployments across all AWS regions. If a new workspace omits this property, the server generates a unique deployment name for you with the pattern dbc-xxxxxxxx-xxxx.
     - name: gcp_managed_network_config
       description: |
-        :param gke_config: :class:\`GkeConfig\` (optional)
+        The network configuration for the workspace.
       value:
         gke_cluster_pod_ip_range: "{{ gke_cluster_pod_ip_range }}"
         gke_cluster_service_ip_range: "{{ gke_cluster_service_ip_range }}"
@@ -852,9 +849,33 @@ workspace_status_message
     - name: pricing_tier
       value: "{{ pricing_tier }}"
       description: |
-        :param private_access_settings_id: str (optional) ID of the workspace's private access settings object. Only used for PrivateLink. You must specify this ID if you are using [AWS PrivateLink] for either front-end (user-to-workspace connection), back-end (data plane to control plane connection), or both connection types. Before configuring PrivateLink, read the [Databricks article about PrivateLink].", [AWS PrivateLink]: https://aws.amazon.com/privatelink/ [Databricks article about PrivateLink]: https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html
+        Create a collection of name/value pairs.
+        Example enumeration:
+        >>> class Color(Enum):
+        ...     RED = 1
+        ...     BLUE = 2
+        ...     GREEN = 3
+        Access them by:
+        - attribute access:
+        >>> Color.RED
+        <Color.RED: 1>
+        - value lookup:
+        >>> Color(1)
+        <Color.RED: 1>
+        - name lookup:
+        >>> Color['RED']
+        <Color.RED: 1>
+        Enumerations can be iterated over, and know how many members they have:
+        >>> len(Color)
+        3
+        >>> list(Color)
+        [<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]
+        Methods can be added to enumerations, and members can have their own
+        attributes -- see the documentation for details.
     - name: private_access_settings_id
       value: "{{ private_access_settings_id }}"
+      description: |
+        ID of the workspace's private access settings object. Only used for PrivateLink. You must specify this ID if you are using [AWS PrivateLink] for either front-end (user-to-workspace connection), back-end (data plane to control plane connection), or both connection types. Before configuring PrivateLink, read the [Databricks article about PrivateLink].", [AWS PrivateLink]: https://aws.amazon.com/privatelink/ [Databricks article about PrivateLink]: https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html
     - name: storage_configuration_id
       value: "{{ storage_configuration_id }}"
       description: |

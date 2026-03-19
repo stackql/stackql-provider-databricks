@@ -773,7 +773,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td></td>
+    <td>The list of fields to update. If unspecified, all fields will be updated when possible. To wipe out custom_tags, specify custom_tags in the update_mask with an empty custom_tags map.</td>
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
@@ -783,7 +783,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
     <td><code>integer</code></td>
-    <td>Upper bound for items returned.</td>
+    <td>Upper bound for items returned. The maximum value is 100.</td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
