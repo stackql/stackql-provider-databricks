@@ -1,9 +1,9 @@
 ---
-title: postgres_roles
+title: roles
 hide_title: false
 hide_table_of_contents: false
 keywords:
-  - postgres_roles
+  - roles
   - postgres
   - databricks_workspace
   - infrastructure-as-code
@@ -20,13 +20,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
 
-Creates, updates, deletes, gets or lists a <code>postgres_roles</code> resource.
+Creates, updates, deletes, gets or lists a <code>roles</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><CopyableCode code="postgres_roles" /></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="roles" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
-<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.postgres_roles" /></td></tr>
+<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.roles" /></td></tr>
 </tbody></table>
 
 ## Fields
@@ -306,28 +306,28 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
     <td>Returns a paginated list of Postgres roles in the branch.</td>
 </tr>
 <tr>
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-role_id"><code>role_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
     <td>Retrieves information about the specified Postgres role, including its authentication method and</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-role"><code>role</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-role"><code>role</code></a></td>
     <td><a href="#parameter-role_id"><code>role_id</code></a></td>
     <td>Creates a new Postgres role in the branch.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
-    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-role_id"><code>role_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-reassign_owned_to"><code>reassign_owned_to</code></a></td>
     <td>Deletes the specified Postgres role.</td>
 </tr>
@@ -347,20 +347,25 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-branch_id">
+    <td><CopyableCode code="branch_id" /></td>
+    <td><code>string</code></td>
+    <td>The unique identifier of the branch. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;</td>
+</tr>
 <tr id="parameter-deployment_name">
     <td><CopyableCode code="deployment_name" /></td>
     <td><code>string</code></td>
     <td>The Databricks Workspace Deployment Name (default: dbc-abcd0123-a1bc)</td>
 </tr>
-<tr id="parameter-name">
-    <td><CopyableCode code="name" /></td>
+<tr id="parameter-project_id">
+    <td><CopyableCode code="project_id" /></td>
     <td><code>string</code></td>
-    <td>The full resource path of the role to delete. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/roles/&#123;role_id&#125;</td>
+    <td>The unique identifier of the Postgres project. Format: projects/&#123;project_id&#125;</td>
 </tr>
-<tr id="parameter-parent">
-    <td><CopyableCode code="parent" /></td>
+<tr id="parameter-role_id">
+    <td><CopyableCode code="role_id" /></td>
     <td><code>string</code></td>
-    <td>The Branch where this Role is created. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;</td>
+    <td>The unique identifier of the role to delete. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/roles/&#123;role_id&#125;</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -406,8 +411,9 @@ parent,
 spec,
 status,
 update_time
-FROM databricks_workspace.postgres.postgres_roles
-WHERE parent = '{{ parent }}' -- required
+FROM databricks_workspace.postgres.roles
+WHERE project_id = '{{ project_id }}' -- required
+AND branch_id = '{{ branch_id }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
 AND page_size = '{{ page_size }}'
 AND page_token = '{{ page_token }}'
@@ -426,8 +432,10 @@ parent,
 spec,
 status,
 update_time
-FROM databricks_workspace.postgres.postgres_roles
-WHERE name = '{{ name }}' -- required
+FROM databricks_workspace.postgres.roles
+WHERE project_id = '{{ project_id }}' -- required
+AND branch_id = '{{ branch_id }}' -- required
+AND role_id = '{{ role_id }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
 ;
 ```
@@ -449,15 +457,17 @@ AND deployment_name = '{{ deployment_name }}' -- required
 Creates a new Postgres role in the branch.
 
 ```sql
-INSERT INTO databricks_workspace.postgres.postgres_roles (
+INSERT INTO databricks_workspace.postgres.roles (
 role,
-parent,
+project_id,
+branch_id,
 deployment_name,
 role_id
 )
 SELECT 
 '{{ role }}' /* required */,
-'{{ parent }}',
+'{{ project_id }}',
+'{{ branch_id }}',
 '{{ deployment_name }}',
 '{{ role_id }}'
 ;
@@ -466,14 +476,17 @@ SELECT
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
-- name: postgres_roles
+- name: roles
   props:
-    - name: parent
-      value: "{{ parent }}"
-      description: Required parameter for the postgres_roles resource.
+    - name: project_id
+      value: "{{ project_id }}"
+      description: Required parameter for the roles resource.
+    - name: branch_id
+      value: "{{ branch_id }}"
+      description: Required parameter for the roles resource.
     - name: deployment_name
       value: "{{ deployment_name }}"
-      description: Required parameter for the postgres_roles resource.
+      description: Required parameter for the roles resource.
     - name: role
       description: |
         The desired specification of a Role.
@@ -524,8 +537,10 @@ SELECT
 Deletes the specified Postgres role.
 
 ```sql
-DELETE FROM databricks_workspace.postgres.postgres_roles
-WHERE name = '{{ name }}' --required
+DELETE FROM databricks_workspace.postgres.roles
+WHERE project_id = '{{ project_id }}' --required
+AND branch_id = '{{ branch_id }}' --required
+AND role_id = '{{ role_id }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
 AND reassign_owned_to = '{{ reassign_owned_to }}'
 ;

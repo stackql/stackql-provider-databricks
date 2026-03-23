@@ -1,9 +1,9 @@
 ---
-title: postgres_branches
+title: branches
 hide_title: false
 hide_table_of_contents: false
 keywords:
-  - postgres_branches
+  - branches
   - postgres
   - databricks_workspace
   - infrastructure-as-code
@@ -20,13 +20,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
 
-Creates, updates, deletes, gets or lists a <code>postgres_branches</code> resource.
+Creates, updates, deletes, gets or lists a <code>branches</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><CopyableCode code="postgres_branches" /></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="branches" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
-<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.postgres_branches" /></td></tr>
+<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.branches" /></td></tr>
 </tbody></table>
 
 ## Fields
@@ -188,14 +188,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
     <td>Returns a paginated list of database branches in the project.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-branch"><code>branch</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-branch"><code>branch</code></a></td>
     <td></td>
     <td>Creates a new database branch in the project.</td>
 </tr>
@@ -225,8 +225,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>The Databricks Workspace Deployment Name (default: dbc-abcd0123-a1bc)</td>
 </tr>
-<tr id="parameter-parent">
-    <td><CopyableCode code="parent" /></td>
+<tr id="parameter-project_id">
+    <td><CopyableCode code="project_id" /></td>
     <td><code>string</code></td>
     <td>The Project where this Branch will be created. Format: projects/&#123;project_id&#125;</td>
 </tr>
@@ -264,8 +264,8 @@ spec,
 status,
 uid,
 update_time
-FROM databricks_workspace.postgres.postgres_branches
-WHERE parent = '{{ parent }}' -- required
+FROM databricks_workspace.postgres.branches
+WHERE project_id = '{{ project_id }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
 AND page_size = '{{ page_size }}'
 AND page_token = '{{ page_token }}'
@@ -289,15 +289,15 @@ AND page_token = '{{ page_token }}'
 Creates a new database branch in the project.
 
 ```sql
-INSERT INTO databricks_workspace.postgres.postgres_branches (
+INSERT INTO databricks_workspace.postgres.branches (
 branch,
-parent,
+project_id,
 branch_id,
 deployment_name
 )
 SELECT 
 '{{ branch }}' /* required */,
-'{{ parent }}',
+'{{ project_id }}',
 '{{ branch_id }}',
 '{{ deployment_name }}'
 ;
@@ -306,17 +306,17 @@ SELECT
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
-- name: postgres_branches
+- name: branches
   props:
-    - name: parent
-      value: "{{ parent }}"
-      description: Required parameter for the postgres_branches resource.
+    - name: project_id
+      value: "{{ project_id }}"
+      description: Required parameter for the branches resource.
     - name: branch_id
       value: "{{ branch_id }}"
-      description: Required parameter for the postgres_branches resource.
+      description: Required parameter for the branches resource.
     - name: deployment_name
       value: "{{ deployment_name }}"
-      description: Required parameter for the postgres_branches resource.
+      description: Required parameter for the branches resource.
     - name: branch
       description: |
         The Branch to create.

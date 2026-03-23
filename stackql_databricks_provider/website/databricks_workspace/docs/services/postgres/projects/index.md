@@ -1,9 +1,9 @@
 ---
-title: postgres_projects
+title: projects
 hide_title: false
 hide_table_of_contents: false
 keywords:
-  - postgres_projects
+  - projects
   - postgres
   - databricks_workspace
   - infrastructure-as-code
@@ -20,13 +20,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
 
-Creates, updates, deletes, gets or lists a <code>postgres_projects</code> resource.
+Creates, updates, deletes, gets or lists a <code>projects</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><CopyableCode code="postgres_projects" /></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="projects" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
-<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.postgres_projects" /></td></tr>
+<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.projects" /></td></tr>
 </tbody></table>
 
 ## Fields
@@ -304,7 +304,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
-    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-update_mask"><code>update_mask</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-role"><code>role</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-role_id"><code>role_id</code></a>, <a href="#parameter-update_mask"><code>update_mask</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-role"><code>role</code></a></td>
     <td></td>
     <td>Update a role for a branch.</td>
 </tr>
@@ -324,20 +324,25 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-branch_id">
+    <td><CopyableCode code="branch_id" /></td>
+    <td><code>string</code></td>
+    <td>The unique identifier of the branch. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;</td>
+</tr>
 <tr id="parameter-deployment_name">
     <td><CopyableCode code="deployment_name" /></td>
     <td><code>string</code></td>
     <td>The Databricks Workspace Deployment Name (default: dbc-abcd0123-a1bc)</td>
 </tr>
-<tr id="parameter-name">
-    <td><CopyableCode code="name" /></td>
-    <td><code>string</code></td>
-    <td>Output only. The full resource path of the role. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/roles/&#123;role_id&#125;</td>
-</tr>
 <tr id="parameter-project_id">
     <td><CopyableCode code="project_id" /></td>
     <td><code>string</code></td>
-    <td>The ID to use for the Project. This becomes the final component of the project's resource name. The ID is required and must be 1-63 characters long, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens. For example, `my-app` becomes `projects/my-app`.</td>
+    <td>The unique identifier of the Postgres project. Format: projects/&#123;project_id&#125;</td>
+</tr>
+<tr id="parameter-role_id">
+    <td><CopyableCode code="role_id" /></td>
+    <td><code>string</code></td>
+    <td>The unique identifier of the role to update. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/roles/&#123;role_id&#125;</td>
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
@@ -378,7 +383,7 @@ spec,
 status,
 uid,
 update_time
-FROM databricks_workspace.postgres.postgres_projects
+FROM databricks_workspace.postgres.projects
 WHERE deployment_name = '{{ deployment_name }}' -- required
 AND page_size = '{{ page_size }}'
 AND page_token = '{{ page_token }}'
@@ -402,7 +407,7 @@ AND page_token = '{{ page_token }}'
 Creates a new Lakebase Autoscaling Postgres database project, which contains branches and compute
 
 ```sql
-INSERT INTO databricks_workspace.postgres.postgres_projects (
+INSERT INTO databricks_workspace.postgres.projects (
 project,
 project_id,
 deployment_name
@@ -417,14 +422,14 @@ SELECT
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
-- name: postgres_projects
+- name: projects
   props:
     - name: project_id
       value: "{{ project_id }}"
-      description: Required parameter for the postgres_projects resource.
+      description: Required parameter for the projects resource.
     - name: deployment_name
       value: "{{ deployment_name }}"
-      description: Required parameter for the postgres_projects resource.
+      description: Required parameter for the projects resource.
     - name: project
       description: |
         The Project to create.
@@ -490,11 +495,13 @@ SELECT
 Update a role for a branch.
 
 ```sql
-UPDATE databricks_workspace.postgres.postgres_projects
+UPDATE databricks_workspace.postgres.projects
 SET 
 role = '{{ role }}'
 WHERE 
-name = '{{ name }}' --required
+project_id = '{{ project_id }}' --required
+AND branch_id = '{{ branch_id }}' --required
+AND role_id = '{{ role_id }}' --required
 AND update_mask = '{{ update_mask }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
 AND role = '{{ role }}' --required;

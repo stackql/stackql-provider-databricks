@@ -18,20 +18,25 @@ postgres service documentation.
 
 :::info[Service Summary]
 
-total resources: __6__  
+total resources: __11__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
-<a href="/services/postgres/postgres/">postgres</a><br />
-<a href="/services/postgres/postgres_branches/">postgres_branches</a><br />
-<a href="/services/postgres/postgres_credentials/">postgres_credentials</a>
+<a href="/services/postgres/branches/">branches</a><br />
+<a href="/services/postgres/credentials/">credentials</a><br />
+<a href="/services/postgres/databases/">databases</a><br />
+<a href="/services/postgres/endpoints/">endpoints</a><br />
+<a href="/services/postgres/projects/">projects</a><br />
+<a href="/services/postgres/roles/">roles</a>
 </div>
 <div class="providerDocColumn">
-<a href="/services/postgres/postgres_endpoints/">postgres_endpoints</a><br />
-<a href="/services/postgres/postgres_projects/">postgres_projects</a><br />
-<a href="/services/postgres/postgres_roles/">postgres_roles</a>
+<a href="/services/postgres/vw_branches/">vw_branches</a><br />
+<a href="/services/postgres/vw_databases/">vw_databases</a><br />
+<a href="/services/postgres/vw_endpoints/">vw_endpoints</a><br />
+<a href="/services/postgres/vw_projects/">vw_projects</a><br />
+<a href="/services/postgres/vw_roles/">vw_roles</a>
 </div>
 </div>

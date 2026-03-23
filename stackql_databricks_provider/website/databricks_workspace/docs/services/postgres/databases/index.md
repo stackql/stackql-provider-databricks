@@ -1,9 +1,9 @@
 ---
-title: postgres
+title: databases
 hide_title: false
 hide_table_of_contents: false
 keywords:
-  - postgres
+  - databases
   - postgres
   - databricks_workspace
   - infrastructure-as-code
@@ -20,13 +20,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
 
-Creates, updates, deletes, gets or lists a <code>postgres</code> resource.
+Creates, updates, deletes, gets or lists a <code>databases</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><CopyableCode code="postgres" /></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="databases" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
-<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.postgres" /></td></tr>
+<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.databases" /></td></tr>
 </tbody></table>
 
 ## Fields
@@ -34,79 +34,67 @@ Creates, updates, deletes, gets or lists a <code>postgres</code> resource.
 The following fields are returned by `SELECT` queries:
 
 <Tabs
-    defaultValue="postgres_list_databases"
+    defaultValue="list_databases"
     values={[
-        { label: 'postgres_list_databases', value: 'postgres_list_databases' }
+        { label: 'list_databases', value: 'list_databases' }
     ]}
 >
-<TabItem value="postgres_list_databases">
+<TabItem value="list_databases">
 
 <SchemaTable fields={[
   {
-    "name": "databases",
-    "type": "array",
-    "description": "",
+    "name": "name",
+    "type": "string",
+    "description": "The resource name of the database. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/databases/&#123;database_id&#125;"
+  },
+  {
+    "name": "create_time",
+    "type": "string (date-time)",
+    "description": "A timestamp indicating when the database was created."
+  },
+  {
+    "name": "parent",
+    "type": "string",
+    "description": "The branch containing this database. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;"
+  },
+  {
+    "name": "spec",
+    "type": "object",
+    "description": "The desired state of the Database.",
     "children": [
       {
-        "name": "create_time",
-        "type": "string (date-time)",
-        "description": "A timestamp indicating when the database was created."
-      },
-      {
-        "name": "name",
+        "name": "postgres_database",
         "type": "string",
-        "description": "The resource name of the database. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/databases/&#123;database_id&#125;"
+        "description": ""
       },
       {
-        "name": "parent",
+        "name": "role",
         "type": "string",
-        "description": "The branch containing this database. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;"
-      },
-      {
-        "name": "spec",
-        "type": "object",
-        "description": "The desired state of the Database.",
-        "children": [
-          {
-            "name": "postgres_database",
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "role",
-            "type": "string",
-            "description": "The name of the role that owns the database. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/roles/&#123;role_id&#125; To change the owner, pass valid existing Role name when updating the Database A database always has an owner."
-          }
-        ]
-      },
-      {
-        "name": "status",
-        "type": "object",
-        "description": "The observed state of the Database.",
-        "children": [
-          {
-            "name": "postgres_database",
-            "type": "string",
-            "description": ""
-          },
-          {
-            "name": "role",
-            "type": "string",
-            "description": "The name of the role that owns the database. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/roles/&#123;role_id&#125;"
-          }
-        ]
-      },
-      {
-        "name": "update_time",
-        "type": "string (date-time)",
-        "description": "A timestamp indicating when the database was last updated."
+        "description": "The name of the role that owns the database. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/roles/&#123;role_id&#125; To change the owner, pass valid existing Role name when updating the Database A database always has an owner."
       }
     ]
   },
   {
-    "name": "next_page_token",
-    "type": "string",
-    "description": "Pagination token to request the next page of databases."
+    "name": "status",
+    "type": "object",
+    "description": "The observed state of the Database.",
+    "children": [
+      {
+        "name": "postgres_database",
+        "type": "string",
+        "description": ""
+      },
+      {
+        "name": "role",
+        "type": "string",
+        "description": "The name of the role that owns the database. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;/roles/&#123;role_id&#125;"
+      }
+    ]
+  },
+  {
+    "name": "update_time",
+    "type": "string (date-time)",
+    "description": "A timestamp indicating when the database was last updated."
   }
 ]} />
 </TabItem>
@@ -128,16 +116,16 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#postgres_list_databases"><CopyableCode code="postgres_list_databases" /></a></td>
+    <td><a href="#list_databases"><CopyableCode code="list_databases" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
     <td>List Databases.</td>
 </tr>
 <tr>
-    <td><a href="#postgres_create_database"><CopyableCode code="postgres_create_database" /></a></td>
+    <td><a href="#create_database"><CopyableCode code="create_database" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-database"><code>database</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-database"><code>database</code></a></td>
     <td><a href="#parameter-database_id"><code>database_id</code></a></td>
     <td>Create a Database.</td>
 </tr>
@@ -157,15 +145,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-branch_id">
+    <td><CopyableCode code="branch_id" /></td>
+    <td><code>string</code></td>
+    <td>The unique identifier of the branch where this Database will be created. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;</td>
+</tr>
 <tr id="parameter-deployment_name">
     <td><CopyableCode code="deployment_name" /></td>
     <td><code>string</code></td>
     <td>The Databricks Workspace Deployment Name (default: dbc-abcd0123-a1bc)</td>
 </tr>
-<tr id="parameter-parent">
-    <td><CopyableCode code="parent" /></td>
+<tr id="parameter-project_id">
+    <td><CopyableCode code="project_id" /></td>
     <td><code>string</code></td>
-    <td>The Branch where this Database will be created. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;</td>
+    <td>The unique identifier of the Postgres project. Format: projects/&#123;project_id&#125;</td>
 </tr>
 <tr id="parameter-database_id">
     <td><CopyableCode code="database_id" /></td>
@@ -188,21 +181,26 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `SELECT` examples
 
 <Tabs
-    defaultValue="postgres_list_databases"
+    defaultValue="list_databases"
     values={[
-        { label: 'postgres_list_databases', value: 'postgres_list_databases' }
+        { label: 'list_databases', value: 'list_databases' }
     ]}
 >
-<TabItem value="postgres_list_databases">
+<TabItem value="list_databases">
 
 List Databases.
 
 ```sql
 SELECT
-databases,
-next_page_token
-FROM databricks_workspace.postgres.postgres
-WHERE parent = '{{ parent }}' -- required
+name,
+create_time,
+parent,
+spec,
+status,
+update_time
+FROM databricks_workspace.postgres.databases
+WHERE project_id = '{{ project_id }}' -- required
+AND branch_id = '{{ branch_id }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
 AND page_size = '{{ page_size }}'
 AND page_token = '{{ page_token }}'
@@ -215,26 +213,28 @@ AND page_token = '{{ page_token }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="postgres_create_database"
+    defaultValue="create_database"
     values={[
-        { label: 'postgres_create_database', value: 'postgres_create_database' },
+        { label: 'create_database', value: 'create_database' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
-<TabItem value="postgres_create_database">
+<TabItem value="create_database">
 
 Create a Database.
 
 ```sql
-INSERT INTO databricks_workspace.postgres.postgres (
+INSERT INTO databricks_workspace.postgres.databases (
 database,
-parent,
+project_id,
+branch_id,
 deployment_name,
 database_id
 )
 SELECT 
 '{{ database }}' /* required */,
-'{{ parent }}',
+'{{ project_id }}',
+'{{ branch_id }}',
 '{{ deployment_name }}',
 '{{ database_id }}'
 ;
@@ -243,14 +243,17 @@ SELECT
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
-- name: postgres
+- name: databases
   props:
-    - name: parent
-      value: "{{ parent }}"
-      description: Required parameter for the postgres resource.
+    - name: project_id
+      value: "{{ project_id }}"
+      description: Required parameter for the databases resource.
+    - name: branch_id
+      value: "{{ branch_id }}"
+      description: Required parameter for the databases resource.
     - name: deployment_name
       value: "{{ deployment_name }}"
-      description: Required parameter for the postgres resource.
+      description: Required parameter for the databases resource.
     - name: database
       description: |
         The desired specification of a Database.

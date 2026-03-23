@@ -28,7 +28,7 @@ For Databricks account operations use the [__`databricks_account`__](https://dat
 :::info[Provider Summary]
 
 total services: __26__
-total resources: __280__
+total resources: __285__
 
 :::
 

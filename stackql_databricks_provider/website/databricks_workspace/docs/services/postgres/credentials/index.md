@@ -1,9 +1,9 @@
 ---
-title: postgres_credentials
+title: credentials
 hide_title: false
 hide_table_of_contents: false
 keywords:
-  - postgres_credentials
+  - credentials
   - postgres
   - databricks_workspace
   - infrastructure-as-code
@@ -20,21 +20,41 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
 
-Creates, updates, deletes, gets or lists a <code>postgres_credentials</code> resource.
+Creates, updates, deletes, gets or lists a <code>credentials</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><CopyableCode code="postgres_credentials" /></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="credentials" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
-<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.postgres_credentials" /></td></tr>
+<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.credentials" /></td></tr>
 </tbody></table>
 
 ## Fields
 
 The following fields are returned by `SELECT` queries:
 
-`SELECT` not supported for this resource, use `SHOW METHODS` to view available operations for the resource.
+<Tabs
+    defaultValue="generate"
+    values={[
+        { label: 'generate', value: 'generate' }
+    ]}
+>
+<TabItem value="generate">
 
+<SchemaTable fields={[
+  {
+    "name": "expire_time",
+    "type": "string (date-time)",
+    "description": ""
+  },
+  {
+    "name": "token",
+    "type": "string",
+    "description": "The OAuth token that can be used as a password when connecting to a database."
+  }
+]} />
+</TabItem>
+</Tabs>
 
 ## Methods
 
@@ -53,8 +73,8 @@ The following methods are available for this resource:
 <tbody>
 <tr>
     <td><a href="#generate"><CopyableCode code="generate" /></a></td>
-    <td><CopyableCode code="exec" /></td>
-    <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-endpoint"><code>endpoint</code></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
     <td>Generate OAuth credentials for a Postgres database.</td>
 </tr>
@@ -82,7 +102,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 </tbody>
 </table>
 
-## Lifecycle Methods
+## `SELECT` examples
 
 <Tabs
     defaultValue="generate"
@@ -95,13 +115,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 Generate OAuth credentials for a Postgres database.
 
 ```sql
-EXEC databricks_workspace.postgres.postgres_credentials.generate 
-@deployment_name='{{ deployment_name }}' --required 
-@@json=
-'{
-"endpoint": "{{ endpoint }}", 
-"claims": "{{ claims }}"
-}'
+SELECT
+expire_time,
+token
+FROM databricks_workspace.postgres.credentials
+WHERE deployment_name = '{{ deployment_name }}' -- required
 ;
 ```
 </TabItem>

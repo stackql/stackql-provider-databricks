@@ -1,9 +1,9 @@
 ---
-title: postgres_endpoints
+title: endpoints
 hide_title: false
 hide_table_of_contents: false
 keywords:
-  - postgres_endpoints
+  - endpoints
   - postgres
   - databricks_workspace
   - infrastructure-as-code
@@ -20,13 +20,13 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import SchemaTable from '@site/src/components/SchemaTable/SchemaTable';
 
-Creates, updates, deletes, gets or lists a <code>postgres_endpoints</code> resource.
+Creates, updates, deletes, gets or lists an <code>endpoints</code> resource.
 
 ## Overview
 <table><tbody>
-<tr><td><b>Name</b></td><td><CopyableCode code="postgres_endpoints" /></td></tr>
+<tr><td><b>Name</b></td><td><CopyableCode code="endpoints" /></td></tr>
 <tr><td><b>Type</b></td><td>Resource</td></tr>
-<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.postgres_endpoints" /></td></tr>
+<tr><td><b>Id</b></td><td><CopyableCode code="databricks_workspace.postgres.endpoints" /></td></tr>
 </tbody></table>
 
 ## Fields
@@ -253,14 +253,14 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
     <td>Returns a paginated list of compute endpoints in the branch.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-parent"><code>parent</code></a>, <a href="#parameter-endpoint_id"><code>endpoint_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-endpoint"><code>endpoint</code></a></td>
+    <td><a href="#parameter-project_id"><code>project_id</code></a>, <a href="#parameter-branch_id"><code>branch_id</code></a>, <a href="#parameter-endpoint_id"><code>endpoint_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-endpoint"><code>endpoint</code></a></td>
     <td></td>
     <td>Creates a new compute endpoint in the branch.</td>
 </tr>
@@ -280,6 +280,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-branch_id">
+    <td><CopyableCode code="branch_id" /></td>
+    <td><code>string</code></td>
+    <td>The unique identifier of the branch where this Endpoint will be created. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;</td>
+</tr>
 <tr id="parameter-deployment_name">
     <td><CopyableCode code="deployment_name" /></td>
     <td><code>string</code></td>
@@ -290,10 +295,10 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>The ID to use for the Endpoint. This becomes the final component of the endpoint's resource name. The ID is required and must be 1-63 characters long, start with a lowercase letter, and contain only lowercase letters, numbers, and hyphens. For example, `primary` becomes `projects/my-app/branches/development/endpoints/primary`.</td>
 </tr>
-<tr id="parameter-parent">
-    <td><CopyableCode code="parent" /></td>
+<tr id="parameter-project_id">
+    <td><CopyableCode code="project_id" /></td>
     <td><code>string</code></td>
-    <td>The Branch where this Endpoint will be created. Format: projects/&#123;project_id&#125;/branches/&#123;branch_id&#125;</td>
+    <td>The unique identifier of the Postgres project. Format: projects/&#123;project_id&#125;</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -329,8 +334,9 @@ spec,
 status,
 uid,
 update_time
-FROM databricks_workspace.postgres.postgres_endpoints
-WHERE parent = '{{ parent }}' -- required
+FROM databricks_workspace.postgres.endpoints
+WHERE project_id = '{{ project_id }}' -- required
+AND branch_id = '{{ branch_id }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
 AND page_size = '{{ page_size }}'
 AND page_token = '{{ page_token }}'
@@ -354,15 +360,17 @@ AND page_token = '{{ page_token }}'
 Creates a new compute endpoint in the branch.
 
 ```sql
-INSERT INTO databricks_workspace.postgres.postgres_endpoints (
+INSERT INTO databricks_workspace.postgres.endpoints (
 endpoint,
-parent,
+project_id,
+branch_id,
 endpoint_id,
 deployment_name
 )
 SELECT 
 '{{ endpoint }}' /* required */,
-'{{ parent }}',
+'{{ project_id }}',
+'{{ branch_id }}',
 '{{ endpoint_id }}',
 '{{ deployment_name }}'
 ;
@@ -371,17 +379,20 @@ SELECT
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
-- name: postgres_endpoints
+- name: endpoints
   props:
-    - name: parent
-      value: "{{ parent }}"
-      description: Required parameter for the postgres_endpoints resource.
+    - name: project_id
+      value: "{{ project_id }}"
+      description: Required parameter for the endpoints resource.
+    - name: branch_id
+      value: "{{ branch_id }}"
+      description: Required parameter for the endpoints resource.
     - name: endpoint_id
       value: "{{ endpoint_id }}"
-      description: Required parameter for the postgres_endpoints resource.
+      description: Required parameter for the endpoints resource.
     - name: deployment_name
       value: "{{ deployment_name }}"
-      description: Required parameter for the postgres_endpoints resource.
+      description: Required parameter for the endpoints resource.
     - name: endpoint
       description: |
         The Endpoint to create.
