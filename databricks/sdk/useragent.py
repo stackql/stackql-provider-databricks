@@ -3,6 +3,7 @@ import logging
 import os
 import platform
 import re
+from dataclasses import dataclass
 from typing import List, Optional, Tuple
 
 from .version import __version__
@@ -11,6 +12,7 @@ from .version import __version__
 RUNTIME_KEY = "runtime"
 CICD_KEY = "cicd"
 AUTH_KEY = "auth"
+META_HARNESS_KEY = "meta-harness"
 
 _product_name = "unknown"
 _product_version = "0.0.0"
@@ -21,6 +23,11 @@ _extra = []
 
 # Precompiled regex patterns
 alphanum_pattern = re.compile(r"^[a-zA-Z0-9_.+-]+$")
+
+# Matches any single character not allowed in a User-Agent token. Used to
+# sanitize free-form values (e.g. the AGENT/AI_AGENT fallback) by replacing
+# disallowed characters with a hyphen.
+alphanum_inverse_pattern = re.compile(r"[^a-zA-Z0-9_.+-]")
 
 # official https://semver.org/ recommendation: https://regex101.com/r/Ly7O1x/
 # with addition of "x" wildcards for minor/patch versions. Also, patch version may be omitted.
@@ -132,6 +139,11 @@ def _sanitize_header_value(value: str) -> str:
     return value
 
 
+def _sanitize_agent_value(value: str) -> str:
+    """Replace any character not allowed in a User-Agent token with a hyphen."""
+    return alphanum_inverse_pattern.sub("-", value)
+
+
 def to_string(
     alternate_product_info: Optional[Tuple[str, str]] = None,
     other_info: Optional[List[Tuple[str, str]]] = None,
@@ -164,6 +176,9 @@ def to_string(
     agent = agent_provider()
     if agent:
         base.append(("agent", agent))
+    meta_harness = meta_harness_provider()
+    if meta_harness:
+        base.append((META_HARNESS_KEY, meta_harness))
     return " ".join(f"{k}/{v}" for k, v in base)
 
 
@@ -224,19 +239,45 @@ def cicd_provider() -> str:
     return _cicd_provider
 
 
-# Canonical list of known AI coding agents.
-# Keep this list in sync with databricks-sdk-go and databricks-sdk-java.
-_KNOWN_AGENTS = {
-    "ANTIGRAVITY_AGENT": "antigravity",  # Closed source (Google)
-    "CLAUDECODE": "claude-code",  # https://github.com/anthropics/claude-code
-    "CLINE_ACTIVE": "cline",  # https://github.com/cline/cline (v3.24.0+)
-    "CODEX_CI": "codex",  # https://github.com/openai/codex
-    "COPILOT_CLI": "copilot-cli",  # https://github.com/features/copilot
-    "CURSOR_AGENT": "cursor",  # Closed source
-    "GEMINI_CLI": "gemini-cli",  # https://google-gemini.github.io/gemini-cli
-    "OPENCODE": "opencode",  # https://github.com/opencode-ai/opencode
-    "OPENCLAW_SHELL": "openclaw",  # https://github.com/anthropics/openclaw
-}
+# Canonical list of known AI coding agents. Alphabetical by product name.
+# Keep this list, and the AGENT / AI_AGENT fallback handling in
+# _agent_env_fallback, in sync with databricks-sdk-go and databricks-sdk-java.
+#
+# Each record has a single env var that identifies the product by presence
+# (the env var just needs to be set, even to an empty string).
+@dataclass(frozen=True)
+class _AgentRecord:
+    env_var: str
+    product: str
+
+
+# Caps fallback values to keep the User-Agent bounded. Explicit-matcher
+# products are short by construction; only the fallback path can carry
+# arbitrary lengths.
+_MAX_AGENT_FALLBACK_LEN = 64
+
+
+_KNOWN_AGENTS: List[_AgentRecord] = [
+    _AgentRecord("AMP_CURRENT_THREAD_ID", "amp"),  # https://ampcode.com/ (also sets AGENT=amp, handled centrally)
+    _AgentRecord("ANTIGRAVITY_AGENT", "antigravity"),  # Closed source (Google)
+    _AgentRecord("AUGMENT_AGENT", "augment"),  # https://www.augmentcode.com/
+    _AgentRecord("CLAUDECODE", "claude-code"),  # https://github.com/anthropics/claude-code
+    _AgentRecord("CLINE_ACTIVE", "cline"),  # https://github.com/cline/cline (v3.24.0+)
+    _AgentRecord("CODEX_CI", "codex"),  # https://github.com/openai/codex
+    _AgentRecord("COPILOT_CLI", "copilot-cli"),  # https://github.com/features/copilot
+    _AgentRecord("CURSOR_AGENT", "cursor"),  # Closed source
+    _AgentRecord("GEMINI_CLI", "gemini-cli"),  # https://google-gemini.github.io/gemini-cli
+    _AgentRecord(
+        "GOOSE_TERMINAL", "goose"
+    ),  # https://block.github.io/goose/ (also sets AGENT=goose, handled centrally)
+    _AgentRecord("KIRO", "kiro"),  # https://kiro.dev/ (Amazon)
+    _AgentRecord("OPENCLAW_SHELL", "openclaw"),  # https://github.com/anthropics/openclaw
+    _AgentRecord("OPENCODE", "opencode"),  # https://github.com/opencode-ai/opencode
+    _AgentRecord(
+        "VSCODE_AGENT", "vscode-agent"
+    ),  # Set by VS Code 1.121+ for agent-initiated terminal commands (https://code.visualstudio.com/updates/v1_121)
+    _AgentRecord("WINDSURF_AGENT", "windsurf"),  # https://codeium.com/windsurf (Codeium)
+]
 
 # Private variable to store the detected agent provider. This value is computed
 # at the first invocation of agent_provider() and is cached for subsequent calls.
@@ -247,22 +288,82 @@ _agent_provider = None
 def agent_provider() -> str:
     """Detect if running inside a known AI coding agent.
 
-    Returns the agent name if exactly one known agent env var is set (non-empty).
-    Returns empty string if zero or multiple agents detected.
-    Result is cached after first call.
+    Iterates the list of known agents. Each agent fires if its explicit,
+    product-specific env var is set. If exactly one agent fired, returns its
+    product name. If more than one fired, returns "multiple" (nested agents,
+    e.g. a Cursor CLI subagent invoked by Claude Code, inherit env vars from
+    every enclosing layer).
 
-    Unlike CI/CD detection (which returns the first/sorted match), agent detection
-    uses an ambiguity guard: multiple matches return empty. Agent env vars can be
-    stacked (e.g., running Cline inside Cursor), so we only report when unambiguous.
+    Explicit agent env vars (e.g. CLAUDECODE, GOOSE_TERMINAL) always take
+    precedence. The agents.md-standard AGENT=<name> env var and the Vercel
+    AI_AGENT=<name> convention are only consulted as a fallback when no
+    explicit matcher fired (see _agent_env_fallback).
+
+    This means AGENT/AI_AGENT never contribute to the multi-agent signal: if
+    any explicit matcher fires, they are ignored entirely, even when they name
+    a different known product.
+
+    Result is cached after first call.
     """
     global _agent_provider
     if _agent_provider is not None:
         return _agent_provider
 
-    detected = []
-    for env_var, name in _KNOWN_AGENTS.items():
-        if os.environ.get(env_var, ""):
-            detected.append(name)
+    matches = [a.product for a in _KNOWN_AGENTS if a.env_var in os.environ]
 
-    _agent_provider = detected[0] if len(detected) == 1 else ""
+    if len(matches) == 1:
+        _agent_provider = matches[0]
+    elif len(matches) > 1:
+        _agent_provider = "multiple"
+    else:
+        _agent_provider = _agent_env_fallback()
     return _agent_provider
+
+
+def _agent_env_fallback() -> str:
+    """Return a sanitized, length-capped name from AGENT or AI_AGENT.
+
+    AGENT (the agents.md standard) is preferred; AI_AGENT (the Vercel
+    @vercel/detect-agent convention) is consulted only when AGENT is unset or
+    empty. The value is passed through rather than categorized so that new
+    names are propagated without updating the list of known agents. Returns ""
+    if both are unset or empty.
+    """
+    v = os.environ.get("AGENT") or os.environ.get("AI_AGENT")
+    if not v:
+        return ""
+    return _sanitize_agent_value(v)[:_MAX_AGENT_FALLBACK_LEN]
+
+
+@dataclass(frozen=True)
+class _MetaHarnessRecord:
+    env_var: str
+    product: str
+
+
+# Known agent meta-harnesses, detected independently of agents (a meta-harness
+# is not an agent). Keep in sync with databricks-sdk-go and databricks-sdk-java.
+_KNOWN_META_HARNESSES: List[_MetaHarnessRecord] = [
+    _MetaHarnessRecord("OMNIGENT", "omnigent"),  # https://github.com/omnigent-ai/omnigent
+]
+
+# None = not computed, "" = computed but no meta-harness found.
+_meta_harness_provider = None
+
+
+def meta_harness_provider() -> str:
+    """Detect a known agent meta-harness by presence-only env var, else "".
+
+    Returns "multiple" if more than one matched. Cached after the first call.
+    """
+    global _meta_harness_provider
+    if _meta_harness_provider is not None:
+        return _meta_harness_provider
+    matches = [h.product for h in _KNOWN_META_HARNESSES if h.env_var in os.environ]
+    if len(matches) == 1:
+        _meta_harness_provider = matches[0]
+    elif len(matches) > 1:
+        _meta_harness_provider = "multiple"
+    else:
+        _meta_harness_provider = ""
+    return _meta_harness_provider

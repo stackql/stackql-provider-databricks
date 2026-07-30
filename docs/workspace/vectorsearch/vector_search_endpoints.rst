@@ -4,43 +4,48 @@
 
 .. py:class:: VectorSearchEndpointsAPI
 
-    **Endpoint**: Represents the compute resources to host vector search indexes.
+    **Endpoint**: Represents the compute resources to host AI Search indexes.
 
-    .. py:method:: create_endpoint(name: str, endpoint_type: EndpointType [, budget_policy_id: Optional[str], min_qps: Optional[int]]) -> Wait[EndpointInfo]
+    .. py:method:: create_endpoint(name: str, endpoint_type: EndpointType [, budget_policy_id: Optional[str], num_replicas: Optional[int], target_qps: Optional[int], usage_policy_id: Optional[str]]) -> Wait[EndpointInfo]
 
         Create a new endpoint.
 
         :param name: str
-          Name of the vector search endpoint
+          Name of the AI Search endpoint
         :param endpoint_type: :class:`EndpointType`
           Type of endpoint
         :param budget_policy_id: str (optional)
           The budget policy id to be applied
-        :param min_qps: int (optional)
-          Min QPS for the endpoint. Mutually exclusive with num_replicas. The actual replica count is
-          calculated at index creation/sync time based on this value.
+        :param num_replicas: int (optional)
+          Initial number of replicas for the endpoint. If not specified, defaults to 1.
+        :param target_qps: int (optional)
+          Target QPS for the endpoint. Mutually exclusive with num_replicas. The actual replica count is
+          calculated at index creation/sync time based on this value. Best-effort target; the system does not
+          guarantee this QPS will be achieved.
+        :param usage_policy_id: str (optional)
+          The usage policy id to be applied once we've migrated to usage policies
 
         :returns:
           Long-running operation waiter for :class:`EndpointInfo`.
           See :method:wait_get_endpoint_vector_search_endpoint_online for more details.
         
 
-    .. py:method:: create_endpoint_and_wait(name: str, endpoint_type: EndpointType [, budget_policy_id: Optional[str], min_qps: Optional[int], timeout: datetime.timedelta = 0:20:00]) -> EndpointInfo
+    .. py:method:: create_endpoint_and_wait(name: str, endpoint_type: EndpointType [, budget_policy_id: Optional[str], num_replicas: Optional[int], target_qps: Optional[int], usage_policy_id: Optional[str], timeout: datetime.timedelta = 0:20:00]) -> EndpointInfo
 
 
     .. py:method:: delete_endpoint(endpoint_name: str)
 
-        Delete a vector search endpoint.
+        Delete an AI Search endpoint.
 
         :param endpoint_name: str
-          Name of the vector search endpoint
+          Name of the AI Search endpoint
 
 
         
 
     .. py:method:: get_endpoint(endpoint_name: str) -> EndpointInfo
 
-        Get details for a single vector search endpoint.
+        Get details for a single AI Search endpoint.
 
         :param endpoint_name: str
           Name of the endpoint
@@ -48,9 +53,30 @@
         :returns: :class:`EndpointInfo`
         
 
+    .. py:method:: get_permission_levels(endpoint_id: str) -> GetVectorSearchEndpointPermissionLevelsResponse
+
+        Gets the permission levels that a user can have on an object.
+
+        :param endpoint_id: str
+          The vector search endpoint for which to get or manage permissions.
+
+        :returns: :class:`GetVectorSearchEndpointPermissionLevelsResponse`
+        
+
+    .. py:method:: get_permissions(endpoint_id: str) -> VectorSearchEndpointPermissions
+
+        Gets the permissions of a vector search endpoint. Vector search endpoints can inherit permissions from
+        their root object.
+
+        :param endpoint_id: str
+          The vector search endpoint for which to get or manage permissions.
+
+        :returns: :class:`VectorSearchEndpointPermissions`
+        
+
     .. py:method:: list_endpoints( [, page_token: Optional[str]]) -> Iterator[EndpointInfo]
 
-        List all vector search endpoints in the workspace.
+        List all AI Search endpoints in the workspace.
 
         :param page_token: str (optional)
           Token for pagination
@@ -58,16 +84,46 @@
         :returns: Iterator over :class:`EndpointInfo`
         
 
-    .. py:method:: patch_endpoint(endpoint_name: str [, min_qps: Optional[int]]) -> EndpointInfo
+    .. py:method:: patch_endpoint(endpoint_name: str [, replication_factor: Optional[int], target_qps: Optional[int]]) -> EndpointInfo
 
         Update an endpoint
 
         :param endpoint_name: str
-          Name of the vector search endpoint
-        :param min_qps: int (optional)
-          Min QPS for the endpoint. Positive integer sets QPS target; -1 resets to default scaling behavior.
+          Name of the AI Search endpoint
+        :param replication_factor: int (optional)
+          OpenSearch replication factor. Directly sets userThroughputSettings.replicationFactor. Mutually
+          exclusive with target_qps (and the deprecated min_qps alias). Must be non-negative (0 = no
+          replication). The autoscaler caps the effective value based on endpoint scaling settings. Note: This
+          is the raw replication factor, not "total data copies". For the user-facing replica count (which
+          uses total-copies semantics), see PatchEndpointThroughputRequest.num_replicas.
+        :param target_qps: int (optional)
+          Target QPS for the endpoint. Best-effort; the system does not guarantee this QPS will be achieved.
 
         :returns: :class:`EndpointInfo`
+        
+
+    .. py:method:: patch_endpoint_throughput(endpoint_name: str [, all_or_nothing: Optional[bool], concurrency: Optional[float], maximum_concurrency_allowed: Optional[float], minimal_concurrency_allowed: Optional[float], num_replicas: Optional[int]]) -> PatchEndpointThroughputResponse
+
+        Update the throughput (concurrency) of an endpoint
+
+        :param endpoint_name: str
+          Name of the AI Search endpoint
+        :param all_or_nothing: bool (optional)
+          If true, the request will fail if the requested concurrency or limits cannot be exactly met. If
+          false, the request will be adjusted to the closest possible value.
+        :param concurrency: float (optional)
+          Requested concurrency (total CPU) for the endpoint. If not specified, the current concurrency is
+          maintained.
+        :param maximum_concurrency_allowed: float (optional)
+          Maximum concurrency allowed for the endpoint. If not specified, the current maximum is maintained.
+        :param minimal_concurrency_allowed: float (optional)
+          Minimum concurrency allowed for the endpoint. If not specified, the current minimum is maintained.
+        :param num_replicas: int (optional)
+          Requested number of data copies for the endpoint (including primary). For example: num_replicas=2
+          means 2 total copies of the data (1 primary + 1 replica). If not specified, the current replication
+          factor is maintained. Valid range: 1-6 (where 1 = no replication, 6 = 1 primary + 5 replicas).
+
+        :returns: :class:`PatchEndpointThroughputResponse`
         
 
     .. py:method:: retrieve_user_visible_metrics(name: str [, end_time: Optional[str], granularity_in_seconds: Optional[int], metrics: Optional[List[Metric]], page_token: Optional[str], start_time: Optional[str]]) -> RetrieveUserVisibleMetricsResponse
@@ -75,7 +131,7 @@
         Retrieve user-visible metrics for an endpoint
 
         :param name: str
-          Vector search endpoint name
+          AI Search endpoint name
         :param end_time: str (optional)
           End time for metrics query
         :param granularity_in_seconds: int (optional)
@@ -90,12 +146,24 @@
         :returns: :class:`RetrieveUserVisibleMetricsResponse`
         
 
+    .. py:method:: set_permissions(endpoint_id: str [, access_control_list: Optional[List[VectorSearchEndpointAccessControlRequest]]]) -> VectorSearchEndpointPermissions
+
+        Sets permissions on an object, replacing existing permissions if they exist. Deletes all direct
+        permissions if none are specified. Objects can inherit permissions from their root object.
+
+        :param endpoint_id: str
+          The vector search endpoint for which to get or manage permissions.
+        :param access_control_list: List[:class:`VectorSearchEndpointAccessControlRequest`] (optional)
+
+        :returns: :class:`VectorSearchEndpointPermissions`
+        
+
     .. py:method:: update_endpoint_budget_policy(endpoint_name: str, budget_policy_id: str) -> PatchEndpointBudgetPolicyResponse
 
         Update the budget policy of an endpoint
 
         :param endpoint_name: str
-          Name of the vector search endpoint
+          Name of the AI Search endpoint
         :param budget_policy_id: str
           The budget policy id to be applied
 
@@ -107,11 +175,23 @@
         Update the custom tags of an endpoint.
 
         :param endpoint_name: str
-          Name of the vector search endpoint
+          Name of the AI Search endpoint
         :param custom_tags: List[:class:`CustomTag`]
-          The new custom tags for the vector search endpoint
+          The new custom tags for the AI Search endpoint
 
         :returns: :class:`UpdateEndpointCustomTagsResponse`
+        
+
+    .. py:method:: update_permissions(endpoint_id: str [, access_control_list: Optional[List[VectorSearchEndpointAccessControlRequest]]]) -> VectorSearchEndpointPermissions
+
+        Updates the permissions on a vector search endpoint. Vector search endpoints can inherit permissions
+        from their root object.
+
+        :param endpoint_id: str
+          The vector search endpoint for which to get or manage permissions.
+        :param access_control_list: List[:class:`VectorSearchEndpointAccessControlRequest`] (optional)
+
+        :returns: :class:`VectorSearchEndpointPermissions`
         
 
     .. py:method:: wait_get_endpoint_vector_search_endpoint_online(endpoint_name: str, timeout: datetime.timedelta = 0:20:00, callback: Optional[Callable[[EndpointInfo], None]]) -> EndpointInfo

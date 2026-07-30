@@ -27,6 +27,9 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    .. py:attribute:: ARCHIVED
       :value: "ARCHIVED"
 
+   .. py:attribute:: DELETED
+      :value: "DELETED"
+
    .. py:attribute:: IMPORTING
       :value: "IMPORTING"
 
@@ -38,6 +41,96 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 
    .. py:attribute:: RESETTING
       :value: "RESETTING"
+
+.. autoclass:: Catalog
+   :members:
+   :undoc-members:
+
+.. autoclass:: CatalogCatalogSpec
+   :members:
+   :undoc-members:
+
+.. autoclass:: CatalogCatalogStatus
+   :members:
+   :undoc-members:
+
+.. autoclass:: CatalogOperationMetadata
+   :members:
+   :undoc-members:
+
+.. autoclass:: CdfConfig
+   :members:
+   :undoc-members:
+
+.. autoclass:: CdfConfigOperationMetadata
+   :members:
+   :undoc-members:
+
+.. py:class:: CdfState
+
+   The replication state of a single replicated table (CdfStatus).
+
+   .. py:attribute:: CDF_STATE_SKIPPED
+      :value: "CDF_STATE_SKIPPED"
+
+   .. py:attribute:: CDF_STATE_SNAPSHOTTING
+      :value: "CDF_STATE_SNAPSHOTTING"
+
+   .. py:attribute:: CDF_STATE_STREAMING
+      :value: "CDF_STATE_STREAMING"
+
+   .. py:attribute:: CDF_STATE_TERMINATED
+      :value: "CDF_STATE_TERMINATED"
+
+.. autoclass:: CdfStatus
+   :members:
+   :undoc-members:
+
+.. autoclass:: ComputeInstance
+   :members:
+   :undoc-members:
+
+.. py:class:: ComputeInstanceComputeState
+
+   .. py:attribute:: ACTIVE
+      :value: "ACTIVE"
+
+   .. py:attribute:: IDLE
+      :value: "IDLE"
+
+   .. py:attribute:: INIT
+      :value: "INIT"
+
+.. py:class:: ComputeInstanceComputeType
+
+   .. py:attribute:: HOT_STANDBY
+      :value: "HOT_STANDBY"
+
+   .. py:attribute:: READ_ONLY
+      :value: "READ_ONLY"
+
+   .. py:attribute:: READ_WRITE
+      :value: "READ_WRITE"
+
+.. autoclass:: DailySchedule
+   :members:
+   :undoc-members:
+
+.. autoclass:: DataApi
+   :members:
+   :undoc-members:
+
+.. autoclass:: DataApiDataApiSpec
+   :members:
+   :undoc-members:
+
+.. autoclass:: DataApiDataApiStatus
+   :members:
+   :undoc-members:
+
+.. autoclass:: DataApiOperationMetadata
+   :members:
+   :undoc-members:
 
 .. autoclass:: Database
    :members:
@@ -60,6 +153,43 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :undoc-members:
 
 .. autoclass:: DatabricksServiceExceptionWithDetailsProto
+   :members:
+   :undoc-members:
+
+.. py:class:: DayOfWeek
+
+   The day of the week on which a weekly snapshot is taken.
+
+   .. py:attribute:: FRIDAY
+      :value: "FRIDAY"
+
+   .. py:attribute:: MONDAY
+      :value: "MONDAY"
+
+   .. py:attribute:: SATURDAY
+      :value: "SATURDAY"
+
+   .. py:attribute:: SUNDAY
+      :value: "SUNDAY"
+
+   .. py:attribute:: THURSDAY
+      :value: "THURSDAY"
+
+   .. py:attribute:: TUESDAY
+      :value: "TUESDAY"
+
+   .. py:attribute:: WEDNESDAY
+      :value: "WEDNESDAY"
+
+.. autoclass:: DeleteForwardEtlConfigurationResponse
+   :members:
+   :undoc-members:
+
+.. autoclass:: DeltaTableSyncInfo
+   :members:
+   :undoc-members:
+
+.. autoclass:: DisableForwardEtlResponse
    :members:
    :undoc-members:
 
@@ -113,7 +243,7 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 
 .. py:class:: EndpointType
 
-   The compute endpoint type. Either `read_write` or `read_only`.
+   The compute endpoint type. Either ``read_write`` or ``read_only``.
 
    .. py:attribute:: ENDPOINT_TYPE_READ_ONLY
       :value: "ENDPOINT_TYPE_READ_ONLY"
@@ -368,11 +498,59 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    .. py:attribute:: WORKSPACE_TEMPORARILY_UNAVAILABLE
       :value: "WORKSPACE_TEMPORARILY_UNAVAILABLE"
 
+.. autoclass:: ForwardEtlConfig
+   :members:
+   :undoc-members:
+
+.. autoclass:: ForwardEtlDatabase
+   :members:
+   :undoc-members:
+
+.. autoclass:: ForwardEtlMetadata
+   :members:
+   :undoc-members:
+
+.. autoclass:: ForwardEtlSchema
+   :members:
+   :undoc-members:
+
+.. autoclass:: ForwardEtlStatus
+   :members:
+   :undoc-members:
+
+.. autoclass:: ForwardEtlTableMapping
+   :members:
+   :undoc-members:
+
+.. autoclass:: InitialBranchSpec
+   :members:
+   :undoc-members:
+
+.. autoclass:: InitialDatabaseSpec
+   :members:
+   :undoc-members:
+
 .. autoclass:: InitialEndpointSpec
    :members:
    :undoc-members:
 
+.. autoclass:: InitialRoleSpec
+   :members:
+   :undoc-members:
+
 .. autoclass:: ListBranchesResponse
+   :members:
+   :undoc-members:
+
+.. autoclass:: ListCdfConfigsResponse
+   :members:
+   :undoc-members:
+
+.. autoclass:: ListCdfStatusesResponse
+   :members:
+   :undoc-members:
+
+.. autoclass:: ListComputeInstancesResponse
    :members:
    :undoc-members:
 
@@ -388,9 +566,49 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :members:
    :undoc-members:
 
+.. autoclass:: ListRecoveryBranchPreviewsResponse
+   :members:
+   :undoc-members:
+
+.. autoclass:: ListReplicationGroupPreviewsResponse
+   :members:
+   :undoc-members:
+
 .. autoclass:: ListRolesResponse
    :members:
    :undoc-members:
+
+.. autoclass:: ListSnapshotsResponse
+   :members:
+   :undoc-members:
+
+.. autoclass:: MonthlySchedule
+   :members:
+   :undoc-members:
+
+.. autoclass:: NewPipelineSpec
+   :members:
+   :undoc-members:
+
+.. py:class:: NewPipelineSpecPipelineChannel
+
+   Release channel of the underlying pipeline's runtime. PREVIEW provides early access to the latest features but may be less stable. Some source table configurations (e.g., read-time CDF) require PREVIEW. Defaults to CURRENT if not specified.
+
+   .. py:attribute:: CURRENT
+      :value: "CURRENT"
+
+   .. py:attribute:: PREVIEW
+      :value: "PREVIEW"
+
+.. py:class:: OpenApiMode
+
+   Controls how the Data API exposes the OpenAPI documentation endpoint. Only IGNORE_PRIVILEGES and DISABLED are supported today; "follow-privileges" is not implemented yet (it may be added later as value 3 — adding new enum values is backward-compatible).
+
+   .. py:attribute:: OPEN_API_MODE_DISABLED
+      :value: "OPEN_API_MODE_DISABLED"
+
+   .. py:attribute:: OPEN_API_MODE_IGNORE_PRIVILEGES
+      :value: "OPEN_API_MODE_IGNORE_PRIVILEGES"
 
 .. autoclass:: Operation
    :members:
@@ -419,6 +637,113 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 .. autoclass:: ProjectStatus
    :members:
    :undoc-members:
+
+.. py:class:: ProvisioningInfoState
+
+   .. py:attribute:: ACTIVE
+      :value: "ACTIVE"
+
+   .. py:attribute:: DEGRADED
+      :value: "DEGRADED"
+
+   .. py:attribute:: DELETING
+      :value: "DELETING"
+
+   .. py:attribute:: FAILED
+      :value: "FAILED"
+
+   .. py:attribute:: PROVISIONING
+      :value: "PROVISIONING"
+
+   .. py:attribute:: UPDATING
+      :value: "UPDATING"
+
+.. py:class:: ProvisioningPhase
+
+   The current phase of the data synchronization pipeline.
+
+   .. py:attribute:: PROVISIONING_PHASE_INDEX_SCAN
+      :value: "PROVISIONING_PHASE_INDEX_SCAN"
+
+   .. py:attribute:: PROVISIONING_PHASE_INDEX_SORT
+      :value: "PROVISIONING_PHASE_INDEX_SORT"
+
+   .. py:attribute:: PROVISIONING_PHASE_MAIN
+      :value: "PROVISIONING_PHASE_MAIN"
+
+.. autoclass:: RecoveryBranchPreview
+   :members:
+   :undoc-members:
+
+.. autoclass:: RecoveryBranchPreviewStatus
+   :members:
+   :undoc-members:
+
+.. py:class:: RecoveryBranchPreviewStatusState
+
+   .. py:attribute:: PENDING_HOME_SYNC
+      :value: "PENDING_HOME_SYNC"
+
+   .. py:attribute:: READY_FOR_INSPECTION
+      :value: "READY_FOR_INSPECTION"
+
+   .. py:attribute:: RECONCILED
+      :value: "RECONCILED"
+
+.. autoclass:: ReplicationGroupPreview
+   :members:
+   :undoc-members:
+
+.. autoclass:: ReplicationGroupPreviewOperationMetadata
+   :members:
+   :undoc-members:
+
+.. py:class:: ReplicationGroupPreviewState
+
+   .. py:attribute:: REPLICATION_GROUP_PREVIEW_STATE_DEGRADED
+      :value: "REPLICATION_GROUP_PREVIEW_STATE_DEGRADED"
+
+   .. py:attribute:: REPLICATION_GROUP_PREVIEW_STATE_DELETING
+      :value: "REPLICATION_GROUP_PREVIEW_STATE_DELETING"
+
+   .. py:attribute:: REPLICATION_GROUP_PREVIEW_STATE_FAILING_OVER
+      :value: "REPLICATION_GROUP_PREVIEW_STATE_FAILING_OVER"
+
+   .. py:attribute:: REPLICATION_GROUP_PREVIEW_STATE_PROVISIONING
+      :value: "REPLICATION_GROUP_PREVIEW_STATE_PROVISIONING"
+
+   .. py:attribute:: REPLICATION_GROUP_PREVIEW_STATE_READY
+      :value: "REPLICATION_GROUP_PREVIEW_STATE_READY"
+
+   .. py:attribute:: REPLICATION_GROUP_PREVIEW_STATE_SWITCHING_OVER
+      :value: "REPLICATION_GROUP_PREVIEW_STATE_SWITCHING_OVER"
+
+.. autoclass:: ReplicationMetricsPreview
+   :members:
+   :undoc-members:
+
+.. py:class:: ReplicationModePreview
+
+   How changes are propagated from the primary workspace to its secondaries in a replication group: on a fixed schedule or continuously as they occur.
+
+   .. py:attribute:: REPLICATION_MODE_PREVIEW_LIVE
+      :value: "REPLICATION_MODE_PREVIEW_LIVE"
+
+   .. py:attribute:: REPLICATION_MODE_PREVIEW_PERIODIC
+      :value: "REPLICATION_MODE_PREVIEW_PERIODIC"
+
+.. py:class:: ReplicationRolePreview
+
+   The replication role of the project in its current workspace. Populated only when cross-workspace replication is configured for the project.
+
+   .. py:attribute:: REPLICATION_ROLE_PREVIEW_DEMOTING
+      :value: "REPLICATION_ROLE_PREVIEW_DEMOTING"
+
+   .. py:attribute:: REPLICATION_ROLE_PREVIEW_PRIMARY
+      :value: "REPLICATION_ROLE_PREVIEW_PRIMARY"
+
+   .. py:attribute:: REPLICATION_ROLE_PREVIEW_SECONDARY
+      :value: "REPLICATION_ROLE_PREVIEW_SECONDARY"
 
 .. autoclass:: RequestedClaims
    :members:
@@ -483,5 +808,169 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :undoc-members:
 
 .. autoclass:: RoleRoleStatus
+   :members:
+   :undoc-members:
+
+.. autoclass:: ScheduleCadence
+   :members:
+   :undoc-members:
+
+.. autoclass:: Snapshot
+   :members:
+   :undoc-members:
+
+.. autoclass:: SnapshotOperationMetadata
+   :members:
+   :undoc-members:
+
+.. autoclass:: SnapshotSchedule
+   :members:
+   :undoc-members:
+
+.. autoclass:: SnapshotSpec
+   :members:
+   :undoc-members:
+
+.. autoclass:: SnapshotStatus
+   :members:
+   :undoc-members:
+
+.. py:class:: SnapshotStatusState
+
+   The state of the snapshot.
+
+   .. py:attribute:: AVAILABLE
+      :value: "AVAILABLE"
+
+   .. py:attribute:: CREATING
+      :value: "CREATING"
+
+   .. py:attribute:: DELETING
+      :value: "DELETING"
+
+   .. py:attribute:: FAILED
+      :value: "FAILED"
+
+.. autoclass:: SyncedTable
+   :members:
+   :undoc-members:
+
+.. autoclass:: SyncedTableOperationMetadata
+   :members:
+   :undoc-members:
+
+.. autoclass:: SyncedTablePipelineProgress
+   :members:
+   :undoc-members:
+
+.. autoclass:: SyncedTablePosition
+   :members:
+   :undoc-members:
+
+.. py:class:: SyncedTableState
+
+   The state of a synced table.
+
+   .. py:attribute:: SYNCED_TABLE_OFFLINE
+      :value: "SYNCED_TABLE_OFFLINE"
+
+   .. py:attribute:: SYNCED_TABLE_OFFLINE_FAILED
+      :value: "SYNCED_TABLE_OFFLINE_FAILED"
+
+   .. py:attribute:: SYNCED_TABLE_ONLINE
+      :value: "SYNCED_TABLE_ONLINE"
+
+   .. py:attribute:: SYNCED_TABLE_ONLINE_CONTINUOUS_UPDATE
+      :value: "SYNCED_TABLE_ONLINE_CONTINUOUS_UPDATE"
+
+   .. py:attribute:: SYNCED_TABLE_ONLINE_NO_PENDING_UPDATE
+      :value: "SYNCED_TABLE_ONLINE_NO_PENDING_UPDATE"
+
+   .. py:attribute:: SYNCED_TABLE_ONLINE_PIPELINE_FAILED
+      :value: "SYNCED_TABLE_ONLINE_PIPELINE_FAILED"
+
+   .. py:attribute:: SYNCED_TABLE_ONLINE_TRIGGERED_UPDATE
+      :value: "SYNCED_TABLE_ONLINE_TRIGGERED_UPDATE"
+
+   .. py:attribute:: SYNCED_TABLE_ONLINE_UPDATING_PIPELINE_RESOURCES
+      :value: "SYNCED_TABLE_ONLINE_UPDATING_PIPELINE_RESOURCES"
+
+   .. py:attribute:: SYNCED_TABLE_PROVISIONING
+      :value: "SYNCED_TABLE_PROVISIONING"
+
+   .. py:attribute:: SYNCED_TABLE_PROVISIONING_INITIAL_SNAPSHOT
+      :value: "SYNCED_TABLE_PROVISIONING_INITIAL_SNAPSHOT"
+
+   .. py:attribute:: SYNCED_TABLE_PROVISIONING_PIPELINE_RESOURCES
+      :value: "SYNCED_TABLE_PROVISIONING_PIPELINE_RESOURCES"
+
+.. autoclass:: SyncedTableSyncedTableSpec
+   :members:
+   :undoc-members:
+
+.. autoclass:: SyncedTableSyncedTableSpecExtraColumn
+   :members:
+   :undoc-members:
+
+.. py:class:: SyncedTableSyncedTableSpecExtraColumnMaintenance
+
+   How the column's value is populated and kept up to date.
+
+   .. py:attribute:: DEFAULT_VALUE
+      :value: "DEFAULT_VALUE"
+
+   .. py:attribute:: STORED_GENERATED
+      :value: "STORED_GENERATED"
+
+.. py:class:: SyncedTableSyncedTableSpecPgSpecificType
+
+   PostgreSQL-specific target types that can override the default Delta-to-PG mapping.
+
+   .. py:attribute:: PG_SPECIFIC_TYPE_HALFVEC
+      :value: "PG_SPECIFIC_TYPE_HALFVEC"
+
+   .. py:attribute:: PG_SPECIFIC_TYPE_VARCHAR
+      :value: "PG_SPECIFIC_TYPE_VARCHAR"
+
+   .. py:attribute:: PG_SPECIFIC_TYPE_VECTOR
+      :value: "PG_SPECIFIC_TYPE_VECTOR"
+
+.. autoclass:: SyncedTableSyncedTableSpecSecondaryIndex
+   :members:
+   :undoc-members:
+
+.. py:class:: SyncedTableSyncedTableSpecSecondaryIndexCreationPoint
+
+   Controls when the index is created relative to the initial data load.
+
+   .. py:attribute:: CREATION_POINT_AFTER_DATA_LOAD
+      :value: "CREATION_POINT_AFTER_DATA_LOAD"
+
+.. py:class:: SyncedTableSyncedTableSpecSyncedTableSchedulingPolicy
+
+   Scheduling policy of the synced table's underlying pipeline.
+
+   .. py:attribute:: CONTINUOUS
+      :value: "CONTINUOUS"
+
+   .. py:attribute:: SNAPSHOT
+      :value: "SNAPSHOT"
+
+   .. py:attribute:: TRIGGERED
+      :value: "TRIGGERED"
+
+.. autoclass:: SyncedTableSyncedTableSpecTypeOverride
+   :members:
+   :undoc-members:
+
+.. autoclass:: SyncedTableSyncedTableStatus
+   :members:
+   :undoc-members:
+
+.. autoclass:: Table
+   :members:
+   :undoc-members:
+
+.. autoclass:: WeeklySchedule
    :members:
    :undoc-members:

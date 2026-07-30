@@ -10,8 +10,7 @@ from urllib.parse import parse_qs
 import pytest
 
 from databricks.sdk import AccountClient, WorkspaceClient, oauth, useragent
-from databricks.sdk.config import (ClientType, Config, HostType, with_product,
-                                   with_user_agent_extra)
+from databricks.sdk.config import ClientType, Config, HostType, with_product, with_user_agent_extra
 from databricks.sdk.environments import Cloud
 from databricks.sdk.oauth import HostMetadata
 from databricks.sdk.version import __version__
@@ -47,10 +46,32 @@ def test_config_host_url_format_check(mocker, host, expected):
     assert Config(host=host).host == expected
 
 
+def test_oidc_token_filepath_env_alias(monkeypatch, mocker):
+    monkeypatch.setenv("DATABRICKS_HOST", "https://abc.def.ghi")
+    monkeypatch.setenv("DATABRICKS_OIDC_TOKEN_FILE", "/tmp/token")
+    monkeypatch.delenv("DATABRICKS_OIDC_TOKEN_FILEPATH", raising=False)
+    mocker.patch("databricks.sdk.config.Config.init_auth")
+    assert Config().oidc_token_filepath == "/tmp/token"
+
+
+def test_oidc_token_filepath_env_primary_precedence(monkeypatch, mocker):
+    monkeypatch.setenv("DATABRICKS_HOST", "https://abc.def.ghi")
+    monkeypatch.setenv("DATABRICKS_OIDC_TOKEN_FILEPATH", "/tmp/primary")
+    monkeypatch.setenv("DATABRICKS_OIDC_TOKEN_FILE", "/tmp/alias")
+    mocker.patch("databricks.sdk.config.Config.init_auth")
+    assert Config().oidc_token_filepath == "/tmp/primary"
+
+
+def test_oidc_token_filepath_env_constructor_precedence(monkeypatch, mocker):
+    monkeypatch.setenv("DATABRICKS_HOST", "https://abc.def.ghi")
+    monkeypatch.setenv("DATABRICKS_OIDC_TOKEN_FILEPATH", "/tmp/env")
+    monkeypatch.setenv("DATABRICKS_OIDC_TOKEN_FILE", "/tmp/alias")
+    mocker.patch("databricks.sdk.config.Config.init_auth")
+    assert Config(oidc_token_filepath="/tmp/constructor").oidc_token_filepath == "/tmp/constructor"
+
+
 def test_extra_and_upstream_user_agent(monkeypatch):
-
     class MockUname:
-
         @property
         def system(self):
             return "TestOS"
@@ -61,6 +82,7 @@ def test_extra_and_upstream_user_agent(monkeypatch):
     monkeypatch.setattr(useragent, "_extra", [])
     monkeypatch.setattr(useragent, "_cicd_provider", None)
     monkeypatch.setattr(useragent, "_agent_provider", None)
+    monkeypatch.setattr(useragent, "_meta_harness_provider", None)
 
     monkeypatch.setattr(platform, "python_version", lambda: "3.0.0")
     monkeypatch.setattr(platform, "uname", MockUname)
@@ -293,7 +315,6 @@ def test_client_type_workspace():
         host="https://unified.databricks.com",
         workspace_id="test-workspace",
         account_id="test-account",
-        experimental_is_unified_host=True,
         token="test-token",
     )
     assert config.client_type == ClientType.WORKSPACE
@@ -328,7 +349,6 @@ def test_is_account_client_does_not_raise_on_unified_host():
     """Test that is_account_client raises ValueError when used with unified hosts."""
     config = Config(
         host="https://unified.databricks.com",
-        experimental_is_unified_host=True,
         workspace_id="test-workspace",
         token="test-token",
     )
@@ -431,8 +451,8 @@ def test_oidc_endpoints_falls_back_to_databricks_when_no_azure_client_id(mocker,
     assert "https://adb-123.4.azuredatabricks.net/oidc/v1/token" == endpoints.token_endpoint
 
 
-def test_workspace_org_id_header_on_unified_host(requests_mock):
-    """Test that X-Databricks-Org-Id header is added for workspace clients on unified hosts."""
+def test_workspace_id_header_on_unified_host(requests_mock):
+    """Test that X-Databricks-Workspace-Id header is added for workspace clients on unified hosts."""
 
     requests_mock.get("https://unified.databricks.com/api/2.0/preview/scim/v2/Me", json={"result": "success"})
 
@@ -440,19 +460,18 @@ def test_workspace_org_id_header_on_unified_host(requests_mock):
         host="https://unified.databricks.com",
         account_id="test-account",
         workspace_id="test-workspace-123",
-        experimental_is_unified_host=True,
         token="test-token",
     )
 
     workspace_client = WorkspaceClient(config=config)
     workspace_client.current_user.me()
 
-    # Verify the request was made with the X-Databricks-Org-Id header
-    assert requests_mock.last_request.headers.get("X-Databricks-Org-Id") == "test-workspace-123"
+    # Verify the request was made with the X-Databricks-Workspace-Id header
+    assert requests_mock.last_request.headers.get("X-Databricks-Workspace-Id") == "test-workspace-123"
 
 
-def test_not_workspace_org_id_header_on_unified_host_on_account_endpoint(requests_mock):
-    """Test that X-Databricks-Org-Id header is added for workspace clients on unified hosts."""
+def test_not_workspace_id_header_on_unified_host_on_account_endpoint(requests_mock):
+    """Test that X-Databricks-Workspace-Id header is added for workspace clients on unified hosts."""
 
     requests_mock.get(
         "https://unified.databricks.com/api/2.0/accounts/test-account/scim/v2/Groups/test-group-123",
@@ -463,30 +482,38 @@ def test_not_workspace_org_id_header_on_unified_host_on_account_endpoint(request
         host="https://unified.databricks.com",
         account_id="test-account",
         workspace_id="test-workspace-123",
-        experimental_is_unified_host=True,
         token="test-token",
     )
 
     account_client = AccountClient(config=config)
     account_client.groups.get("test-group-123")
 
-    # Verify the request was made without the X-Databricks-Org-Id header
-    assert "X-Databricks-Org-Id" not in requests_mock.last_request.headers
+    # Verify the request was made without the X-Databricks-Workspace-Id header
+    assert "X-Databricks-Workspace-Id" not in requests_mock.last_request.headers
 
 
-def test_no_org_id_header_on_regular_workspace(requests_mock):
-    """Test that X-Databricks-Org-Id header is NOT added for regular workspace hosts."""
-    from databricks.sdk.core import ApiClient
+def test_get_workspace_id_reads_org_id_response_header_when_config_missing_workspace_id(requests_mock):
+    """When Config.workspace_id is empty, get_workspace_id() fetches the ID via SCIM /Me.
 
-    requests_mock.get("https://test.databricks.com/api/2.0/test", json={"result": "success"})
+    Verifies both directions of the migration on the workspace-id probe:
+    - request must NOT carry the new X-Databricks-Workspace-Id header (Config.workspace_id is empty)
+    - response is parsed from the legacy X-Databricks-Org-Id header (server-side hasn't migrated)
+    """
+    requests_mock.get(
+        "https://unified.databricks.com/api/2.0/preview/scim/v2/Me",
+        json={},
+        headers={"X-Databricks-Org-Id": "7474644166319138"},
+    )
 
-    config = Config(host="https://test.databricks.com", token="test-token")
+    config = Config(
+        host="https://unified.databricks.com",
+        account_id="test-account",
+        token="test-token",
+    )
 
-    api_client = ApiClient(config)
-    api_client.do("GET", "/api/2.0/test")
-
-    # Verify the X-Databricks-Org-Id header was NOT added
-    assert "X-Databricks-Org-Id" not in requests_mock.last_request.headers
+    workspace_client = WorkspaceClient(config=config)
+    assert workspace_client.get_workspace_id() == 7474644166319138
+    assert "X-Databricks-Workspace-Id" not in requests_mock.last_request.headers
 
 
 def test_disable_oauth_refresh_token_from_env(monkeypatch, mocker):
@@ -703,7 +730,7 @@ def test_databricks_oidc_endpoints_uses_discovery_url(requests_mock):
                 "account_id": _DUMMY_ACCOUNT_ID,
                 "workspace_id": _DUMMY_WORKSPACE_ID,
             },
-            {"experimental_is_unified_host": True},
+            {},
             {
                 "account_id": _DUMMY_ACCOUNT_ID,
                 "workspace_id": _DUMMY_WORKSPACE_ID,
@@ -714,7 +741,7 @@ def test_databricks_oidc_endpoints_uses_discovery_url(requests_mock):
         pytest.param(
             _DUMMY_ACC_HOST,
             {"oidc_endpoint": f"{_DUMMY_ACC_HOST}/oidc/accounts/{{account_id}}"},
-            {"account_id": _DUMMY_ACCOUNT_ID, "experimental_is_unified_host": True},
+            {"account_id": _DUMMY_ACCOUNT_ID},
             {
                 "discovery_url": f"{_DUMMY_ACC_HOST}/oidc/accounts/{_DUMMY_ACCOUNT_ID}/.well-known/oauth-authorization-server"
             },
@@ -726,7 +753,6 @@ def test_databricks_oidc_endpoints_uses_discovery_url(requests_mock):
             {
                 "account_id": _DUMMY_ACCOUNT_ID,
                 "workspace_id": _DUMMY_WORKSPACE_ID,
-                "experimental_is_unified_host": True,
             },
             {"account_id": _DUMMY_ACCOUNT_ID, "workspace_id": _DUMMY_WORKSPACE_ID},
             id="unified-does-not-overwrite-existing-fields",
@@ -747,7 +773,7 @@ def test_resolve_host_metadata_missing_account_id(mocker):
         return_value=oauth.HostMetadata.from_dict({"oidc_endpoint": f"{_DUMMY_ACC_HOST}/oidc/accounts/{{account_id}}"}),
     )
     with pytest.raises(ValueError, match="account_id is required to resolve discovery_url"):
-        Config(host=_DUMMY_ACC_HOST, token="t", experimental_is_unified_host=True)
+        Config(host=_DUMMY_ACC_HOST, token="t")
 
 
 def test_resolve_host_metadata_no_oidc_endpoint(mocker):
@@ -756,7 +782,7 @@ def test_resolve_host_metadata_no_oidc_endpoint(mocker):
         "databricks.sdk.config.get_host_metadata",
         return_value=oauth.HostMetadata.from_dict({"account_id": _DUMMY_ACCOUNT_ID}),
     )
-    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    config = Config(host=_DUMMY_WS_HOST, token="t")
     assert config.account_id == _DUMMY_ACCOUNT_ID
     assert config.discovery_url is None
 
@@ -767,7 +793,7 @@ def test_resolve_host_metadata_http_error(mocker):
         "databricks.sdk.config.get_host_metadata",
         side_effect=ValueError(f"Failed to fetch host metadata from {_DUMMY_WS_HOST}/.well-known/databricks-config"),
     )
-    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    config = Config(host=_DUMMY_WS_HOST, token="t")
     assert config.account_id is None
     assert config.discovery_url is None
 
@@ -777,6 +803,19 @@ def test_resolve_host_metadata_called_for_non_unified(mocker):
     mock_get = mocker.patch("databricks.sdk.config.get_host_metadata")
     Config(host=_DUMMY_WS_HOST, token="t")
     mock_get.assert_called_once()
+
+
+def test_resolve_host_metadata_uses_configured_timeouts(mocker):
+    """The discovery client honors the configured timeouts so an unreachable host
+    cannot block Config() init for the default 300s retry budget."""
+    mock_get = mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=oauth.HostMetadata(oidc_endpoint=""),
+    )
+    Config(host=_DUMMY_WS_HOST, token="t", retry_timeout_seconds=7, http_timeout_seconds=3)
+    client = mock_get.call_args.kwargs["client"]
+    assert client._retry_timeout_seconds == 7
+    assert client._http_timeout_seconds == 3
 
 
 # ---------------------------------------------------------------------------
@@ -863,7 +902,7 @@ def test_resolve_host_metadata_populates_cloud(mocker):
             }
         ),
     )
-    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    config = Config(host=_DUMMY_WS_HOST, token="t")
     assert config.cloud == Cloud.AWS
 
 
@@ -881,7 +920,6 @@ def test_resolve_host_metadata_cloud_not_overwritten(mocker):
     config = Config(
         host=_DUMMY_WS_HOST,
         token="t",
-        experimental_is_unified_host=True,
         cloud="AWS",
     )
     assert config.cloud == Cloud.AWS
@@ -893,7 +931,7 @@ def test_resolve_host_metadata_cloud_missing_in_response(mocker):
         "databricks.sdk.config.get_host_metadata",
         return_value=oauth.HostMetadata.from_dict({"oidc_endpoint": f"{_DUMMY_WS_HOST}/oidc"}),
     )
-    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    config = Config(host=_DUMMY_WS_HOST, token="t")
     assert config.cloud is None
 
 
@@ -917,7 +955,6 @@ def test_resolve_host_metadata_sets_token_audience_for_account_host(mocker):
         host=_DUMMY_ACC_HOST,
         token="t",
         account_id=_DUMMY_ACCOUNT_ID,
-        experimental_is_unified_host=True,
     )
     assert config.token_audience == _DUMMY_ACCOUNT_ID
 
@@ -934,7 +971,7 @@ def test_resolve_host_metadata_no_token_audience_for_workspace_host(mocker):
             }
         ),
     )
-    config = Config(host=_DUMMY_WS_HOST, token="t", experimental_is_unified_host=True)
+    config = Config(host=_DUMMY_WS_HOST, token="t")
     assert config.token_audience is None
 
 
@@ -953,7 +990,80 @@ def test_resolve_host_metadata_does_not_overwrite_token_audience(mocker):
         host=_DUMMY_ACC_HOST,
         token="t",
         account_id=_DUMMY_ACCOUNT_ID,
-        experimental_is_unified_host=True,
         token_audience="custom-audience",
     )
     assert config.token_audience == "custom-audience"
+
+
+# ---------------------------------------------------------------------------
+# token_federation_default_oidc_audiences resolution from host metadata
+# ---------------------------------------------------------------------------
+
+
+def test_resolve_host_metadata_sets_token_audience_from_token_federation_default_oidc_audiences(mocker):
+    """token_audience is set from token_federation_default_oidc_audiences in host metadata."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=HostMetadata.from_dict(
+            {
+                "oidc_endpoint": f"{_DUMMY_WS_HOST}/oidc",
+                "account_id": _DUMMY_ACCOUNT_ID,
+                "workspace_id": _DUMMY_WORKSPACE_ID,
+                "token_federation_default_oidc_audiences": [f"{_DUMMY_WS_HOST}/oidc/v1/token"],
+            }
+        ),
+    )
+    config = Config(host=_DUMMY_WS_HOST, token="t")
+    assert config.token_audience == f"{_DUMMY_WS_HOST}/oidc/v1/token"
+
+
+def test_resolve_host_metadata_token_federation_default_oidc_audiences_takes_priority_over_account_id_fallback(mocker):
+    """token_federation_default_oidc_audiences takes priority over the account_id fallback."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=HostMetadata.from_dict(
+            {
+                "oidc_endpoint": f"{_DUMMY_ACC_HOST}/oidc/accounts/{_DUMMY_ACCOUNT_ID}",
+                "account_id": _DUMMY_ACCOUNT_ID,
+                "token_federation_default_oidc_audiences": ["custom-audience-from-server"],
+            }
+        ),
+    )
+    config = Config(host=_DUMMY_ACC_HOST, token="t", account_id=_DUMMY_ACCOUNT_ID)
+    # token_federation_default_oidc_audiences should take priority over the account_id fallback
+    assert config.token_audience == "custom-audience-from-server"
+
+
+def test_resolve_host_metadata_token_federation_default_oidc_audiences_does_not_override_existing_token_audience(
+    mocker,
+):
+    """An explicitly set token_audience is not overwritten by token_federation_default_oidc_audiences."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=HostMetadata.from_dict(
+            {
+                "oidc_endpoint": f"{_DUMMY_WS_HOST}/oidc",
+                "account_id": _DUMMY_ACCOUNT_ID,
+                "workspace_id": _DUMMY_WORKSPACE_ID,
+                "token_federation_default_oidc_audiences": [f"{_DUMMY_WS_HOST}/oidc/v1/token"],
+            }
+        ),
+    )
+    config = Config(host=_DUMMY_WS_HOST, token="t", token_audience="my-custom-audience")
+    assert config.token_audience == "my-custom-audience"
+
+
+def test_resolve_host_metadata_falls_back_to_account_id_when_no_token_federation_default_oidc_audiences(mocker):
+    """When no token_federation_default_oidc_audiences and no workspace_id, falls back to account_id."""
+    mocker.patch(
+        "databricks.sdk.config.get_host_metadata",
+        return_value=HostMetadata.from_dict(
+            {
+                "oidc_endpoint": f"{_DUMMY_ACC_HOST}/oidc/accounts/{_DUMMY_ACCOUNT_ID}",
+                "account_id": _DUMMY_ACCOUNT_ID,
+            }
+        ),
+    )
+    config = Config(host=_DUMMY_ACC_HOST, token="t", account_id=_DUMMY_ACCOUNT_ID)
+    # No token_federation_default_oidc_audiences and no workspace_id → falls back to account_id
+    assert config.token_audience == _DUMMY_ACCOUNT_ID

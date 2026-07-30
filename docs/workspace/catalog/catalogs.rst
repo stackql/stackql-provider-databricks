@@ -11,7 +11,7 @@
     the workspaces in a Databricks account. Users in different workspaces can share access to the same data,
     depending on privileges granted centrally in Unity Catalog.
 
-    .. py:method:: create(name: str [, comment: Optional[str], connection_name: Optional[str], options: Optional[Dict[str, str]], properties: Optional[Dict[str, str]], provider_name: Optional[str], share_name: Optional[str], storage_root: Optional[str]]) -> CatalogInfo
+    .. py:method:: create(name: str [, catalog_federation_config: Optional[CatalogFederationConfig], comment: Optional[str], connection_name: Optional[str], conversion_info: Optional[ConversionInfo], custom_max_retention_hours: Optional[int], dr_replication_info: Optional[DrReplicationInfo], managed_encryption_settings: Optional[EncryptionSettings], options: Optional[Dict[str, str]], properties: Optional[Dict[str, str]], provider_name: Optional[str], share_name: Optional[str], storage_root: Optional[str]]) -> CatalogInfo
 
 
         Usage:
@@ -34,10 +34,20 @@
 
         :param name: str
           Name of catalog.
+        :param catalog_federation_config: :class:`CatalogFederationConfig` (optional)
+          Federation-only configuration, present only for FOREIGN catalogs.
         :param comment: str (optional)
           User-provided free-form text description.
         :param connection_name: str (optional)
           The name of the connection to an external data source.
+        :param conversion_info: :class:`ConversionInfo` (optional)
+          Status of conversion of FOREIGN catalog to UC Native catalog.
+        :param custom_max_retention_hours: int (optional)
+          Custom maximum retention period in hours for the catalog
+        :param dr_replication_info: :class:`DrReplicationInfo` (optional)
+          Disaster Recovery replication state snapshot.
+        :param managed_encryption_settings: :class:`EncryptionSettings` (optional)
+          Control CMK encryption for managed catalog data
         :param options: Dict[str,str] (optional)
           A map of key-value properties attached to the securable.
         :param properties: Dict[str,str] (optional)
@@ -132,20 +142,23 @@
           Whether to include catalogs not bound to the workspace. Effective only if the user has permission to
           update the catalog–workspace binding.
         :param max_results: int (optional)
-          Maximum number of catalogs to return. - when set to 0, the page length is set to a server configured
-          value (recommended); - when set to a value greater than 0, the page length is the minimum of this
-          value and a server configured value; - when set to a value less than 0, an invalid parameter error
-          is returned; - If not set, all valid catalogs are returned (not recommended). - Note: The number of
-          returned catalogs might be less than the specified max_results size, even zero. The only definitive
-          indication that no further catalogs can be fetched is when the next_page_token is unset from the
-          response.
+          Maximum number of catalogs to return.
+
+          - when set to 0, the page length is set to a server configured value (recommended);
+          - when set to a value greater than 0, the page length is the minimum of this value and a server
+            configured value;
+          - when set to a value less than 0, an invalid parameter error is returned;
+          - If not set, all valid catalogs are returned (not recommended).
+          - Note: The number of returned catalogs might be less than the specified max_results size, even
+            zero. The only definitive indication that no further catalogs can be fetched is when the
+            next_page_token is unset from the response.
         :param page_token: str (optional)
           Opaque pagination token to go to next page based on previous query.
 
         :returns: Iterator over :class:`CatalogInfo`
         
 
-    .. py:method:: update(name: str [, comment: Optional[str], enable_predictive_optimization: Optional[EnablePredictiveOptimization], isolation_mode: Optional[CatalogIsolationMode], new_name: Optional[str], options: Optional[Dict[str, str]], owner: Optional[str], properties: Optional[Dict[str, str]]]) -> CatalogInfo
+    .. py:method:: update(name: str [, catalog_federation_config: Optional[CatalogFederationConfig], comment: Optional[str], conversion_info: Optional[ConversionInfo], custom_max_retention_hours: Optional[int], dr_replication_info: Optional[DrReplicationInfo], enable_predictive_optimization: Optional[EnablePredictiveOptimization], isolation_mode: Optional[CatalogIsolationMode], managed_encryption_settings: Optional[EncryptionSettings], new_name: Optional[str], options: Optional[Dict[str, str]], owner: Optional[str], properties: Optional[Dict[str, str]]]) -> CatalogInfo
 
 
         Usage:
@@ -171,12 +184,22 @@
 
         :param name: str
           The name of the catalog.
+        :param catalog_federation_config: :class:`CatalogFederationConfig` (optional)
+          Federation-only configuration, present only for FOREIGN catalogs.
         :param comment: str (optional)
           User-provided free-form text description.
+        :param conversion_info: :class:`ConversionInfo` (optional)
+          Status of conversion of FOREIGN catalog to UC Native catalog.
+        :param custom_max_retention_hours: int (optional)
+          Custom maximum retention period in hours for the catalog
+        :param dr_replication_info: :class:`DrReplicationInfo` (optional)
+          Disaster Recovery replication state snapshot.
         :param enable_predictive_optimization: :class:`EnablePredictiveOptimization` (optional)
           Whether predictive optimization should be enabled for this object and objects under it.
         :param isolation_mode: :class:`CatalogIsolationMode` (optional)
           Whether the current securable is accessible from all workspaces or a specific set of workspaces.
+        :param managed_encryption_settings: :class:`EncryptionSettings` (optional)
+          Control CMK encryption for managed catalog data
         :param new_name: str (optional)
           New name for the catalog.
         :param options: Dict[str,str] (optional)

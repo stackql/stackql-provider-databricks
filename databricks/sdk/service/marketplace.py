@@ -1,4 +1,7 @@
 # Code generated from OpenAPI specs by Databricks SDK Generator. DO NOT EDIT.
+# ruff: noqa: F811, F841
+# F401 is intentionally NOT covered: `make fmt` uses `ruff check --fix-only`
+# to strip the fat-import header below; ignoring F401 would defeat that.
 
 from __future__ import annotations
 
@@ -7,8 +10,12 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, Iterator, List, Optional
 
-from databricks.sdk.service._internal import (_enum, _from_dict,
-                                              _repeated_dict, _repeated_enum)
+from databricks.sdk.service._internal import (
+    _enum,
+    _from_dict,
+    _repeated_dict,
+    _repeated_enum,
+)
 
 _LOG = logging.getLogger("databricks.sdk")
 
@@ -41,7 +48,6 @@ class AddExchangeForListingResponse:
 
 
 class AssetType(Enum):
-
     ASSET_TYPE_APP = "ASSET_TYPE_APP"
     ASSET_TYPE_DATA_TABLE = "ASSET_TYPE_DATA_TABLE"
     ASSET_TYPE_GIT_REPO = "ASSET_TYPE_GIT_REPO"
@@ -101,7 +107,6 @@ class BatchGetProvidersResponse:
 
 
 class Category(Enum):
-
     ADVERTISING_AND_MARKETING = "ADVERTISING_AND_MARKETING"
     CLIMATE_AND_ENVIRONMENT = "CLIMATE_AND_ENVIRONMENT"
     COMMERCE = "COMMERCE"
@@ -116,6 +121,7 @@ class Category(Enum):
     LOOKUP_TABLES = "LOOKUP_TABLES"
     MANUFACTURING = "MANUFACTURING"
     MEDIA = "MEDIA"
+    OPEN_SOURCE = "OPEN_SOURCE"
     OTHER = "OTHER"
     PUBLIC_SECTOR = "PUBLIC_SECTOR"
     RETAIL = "RETAIL"
@@ -200,7 +206,6 @@ class ContactInfo:
 
 
 class Cost(Enum):
-
     FREE = "FREE"
     PAID = "PAID"
 
@@ -357,7 +362,6 @@ class CreateProviderResponse:
 
 
 class DataRefresh(Enum):
-
     DAILY = "DAILY"
     HOURLY = "HOURLY"
     MINUTE = "MINUTE"
@@ -508,7 +512,6 @@ class DeleteProviderResponse:
 
 
 class DeltaSharingRecipientType(Enum):
-
     DELTA_SHARING_RECIPIENT_TYPE_DATABRICKS = "DELTA_SHARING_RECIPIENT_TYPE_DATABRICKS"
     DELTA_SHARING_RECIPIENT_TYPE_OPEN = "DELTA_SHARING_RECIPIENT_TYPE_OPEN"
 
@@ -678,7 +681,6 @@ class ExchangeFilter:
 
 
 class ExchangeFilterType(Enum):
-
     GLOBAL_METASTORE_ID = "GLOBAL_METASTORE_ID"
 
 
@@ -846,7 +848,6 @@ class FileParent:
     file_parent_type: Optional[FileParentType] = None
 
     parent_id: Optional[str] = None
-    """TODO make the following fields required"""
 
     def as_dict(self) -> dict:
         """Serializes the FileParent into a dictionary suitable for use as a JSON request body."""
@@ -873,14 +874,13 @@ class FileParent:
 
 
 class FileParentType(Enum):
-
     LISTING = "LISTING"
     LISTING_RESOURCE = "LISTING_RESOURCE"
     PROVIDER = "PROVIDER"
 
 
 class FileStatus(Enum):
-
+    FILE_STATUS_COMMIT_DRAWDOWN = "FILE_STATUS_COMMIT_DRAWDOWN"
     FILE_STATUS_PUBLISHED = "FILE_STATUS_PUBLISHED"
     FILE_STATUS_SANITIZATION_FAILED = "FILE_STATUS_SANITIZATION_FAILED"
     FILE_STATUS_SANITIZING = "FILE_STATUS_SANITIZING"
@@ -888,7 +888,6 @@ class FileStatus(Enum):
 
 
 class FulfillmentType(Enum):
-
     INSTALL = "INSTALL"
     REQUEST_ACCESS = "REQUEST_ACCESS"
 
@@ -1102,6 +1101,120 @@ class GetProviderResponse:
 
 
 @dataclass
+class InstallListingMcpConnectionDetail:
+    """Consumer-supplied details for creating the Unity Catalog HTTP connection when installing an MCP
+    listing. Values the provider configures on the listing (port, credential type, OAuth
+    token/authorization endpoints, scope, exchange method) are not repeated here."""
+
+    connection_name: str
+    """Name of the Unity Catalog connection to create for the MCP server."""
+
+    base_path: Optional[str] = None
+    """Optional override of the MCP server base path. Defaults to the base path on the listing."""
+
+    bearer_token: Optional[str] = None
+    """Bearer token supplied by the consumer, for bearer-token authentication."""
+
+    catalog: Optional[str] = None
+    """Catalog the MCP service (and its schema-scoped UC connection) is created under. The consumer
+    must hold the privileges to create a service and connection in this catalog/schema."""
+
+    host: Optional[str] = None
+    """Optional override of the MCP server host. Defaults to the host configured on the listing."""
+
+    oauth_credentials: Optional[InstallListingMcpConnectionDetailOauthCredentials] = None
+    """OAuth client credentials supplied by the consumer, for OAuth (U2M/M2M) authentication."""
+
+    schema: Optional[str] = None
+    """Schema (within ``catalog``) the MCP service and its UC connection are created under."""
+
+    def as_dict(self) -> dict:
+        """Serializes the InstallListingMcpConnectionDetail into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.base_path is not None:
+            body["base_path"] = self.base_path
+        if self.bearer_token is not None:
+            body["bearer_token"] = self.bearer_token
+        if self.catalog is not None:
+            body["catalog"] = self.catalog
+        if self.connection_name is not None:
+            body["connection_name"] = self.connection_name
+        if self.host is not None:
+            body["host"] = self.host
+        if self.oauth_credentials:
+            body["oauth_credentials"] = self.oauth_credentials.as_dict()
+        if self.schema is not None:
+            body["schema"] = self.schema
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the InstallListingMcpConnectionDetail into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.base_path is not None:
+            body["base_path"] = self.base_path
+        if self.bearer_token is not None:
+            body["bearer_token"] = self.bearer_token
+        if self.catalog is not None:
+            body["catalog"] = self.catalog
+        if self.connection_name is not None:
+            body["connection_name"] = self.connection_name
+        if self.host is not None:
+            body["host"] = self.host
+        if self.oauth_credentials:
+            body["oauth_credentials"] = self.oauth_credentials
+        if self.schema is not None:
+            body["schema"] = self.schema
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> InstallListingMcpConnectionDetail:
+        """Deserializes the InstallListingMcpConnectionDetail from a dictionary."""
+        return cls(
+            base_path=d.get("base_path", None),
+            bearer_token=d.get("bearer_token", None),
+            catalog=d.get("catalog", None),
+            connection_name=d.get("connection_name", None),
+            host=d.get("host", None),
+            oauth_credentials=_from_dict(d, "oauth_credentials", InstallListingMcpConnectionDetailOauthCredentials),
+            schema=d.get("schema", None),
+        )
+
+
+@dataclass
+class InstallListingMcpConnectionDetailOauthCredentials:
+    """OAuth client credentials supplied by the consumer for an MCP connection."""
+
+    client_id: str
+    """OAuth client id. Identifies the credential; not the secret itself."""
+
+    client_secret: str
+    """OAuth client secret supplied by the consumer."""
+
+    def as_dict(self) -> dict:
+        """Serializes the InstallListingMcpConnectionDetailOauthCredentials into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.client_id is not None:
+            body["client_id"] = self.client_id
+        if self.client_secret is not None:
+            body["client_secret"] = self.client_secret
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the InstallListingMcpConnectionDetailOauthCredentials into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.client_id is not None:
+            body["client_id"] = self.client_id
+        if self.client_secret is not None:
+            body["client_secret"] = self.client_secret
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> InstallListingMcpConnectionDetailOauthCredentials:
+        """Deserializes the InstallListingMcpConnectionDetailOauthCredentials from a dictionary."""
+        return cls(client_id=d.get("client_id", None), client_secret=d.get("client_secret", None))
+
+
+@dataclass
 class Installation:
     installation: Optional[InstallationDetail] = None
 
@@ -1236,7 +1349,6 @@ class InstallationDetail:
 
 
 class InstallationStatus(Enum):
-
     FAILED = "FAILED"
     INSTALLED = "INSTALLED"
 
@@ -1705,7 +1817,7 @@ class ListingDetail:
 
     pricing_model: Optional[str] = None
     """What the pricing model is (e.g. paid, subscription, paid upfront); should only be present if
-    cost is paid TODO: Not used yet, should deprecate if we will never use it"""
+    cost is paid"""
 
     privacy_policy_link: Optional[str] = None
 
@@ -1718,9 +1830,10 @@ class ListingDetail:
     """Listing tags - Simple key value pair to annotate listings. When should I use tags vs dedicated
     fields? Using tags avoids the need to add new columns in the database for new annotations.
     However, this should be used sparingly since tags are stored as key value pair. Use tags only:
-    1. If the field is optional and won't need to have NOT NULL integrity check 2. The value is
-    fairly fixed, static and low cardinality (eg. enums). 3. The value won't be used in filters or
-    joins with other tables."""
+    
+    1. If the field is optional and won't need to have NOT NULL integrity check
+    2. The value is fairly fixed, static and low cardinality (eg. enums).
+    3. The value won't be used in filters or joins with other tables."""
 
     terms_of_service: Optional[str] = None
 
@@ -1918,7 +2031,6 @@ class ListingSetting:
 
 
 class ListingShareType(Enum):
-
     FULL = "FULL"
     SAMPLE = "SAMPLE"
 
@@ -2119,22 +2231,22 @@ class ListingTag:
 
 
 class ListingTagType(Enum):
-
     LISTING_TAG_TYPE_LANGUAGE = "LISTING_TAG_TYPE_LANGUAGE"
     LISTING_TAG_TYPE_TASK = "LISTING_TAG_TYPE_TASK"
 
 
 class ListingType(Enum):
-
     PERSONALIZED = "PERSONALIZED"
     STANDARD = "STANDARD"
 
 
 class MarketplaceFileType(Enum):
-
     APP = "APP"
+    COMMIT_DRAWDOWN_REQUEST_ATTACHMENT = "COMMIT_DRAWDOWN_REQUEST_ATTACHMENT"
+    EMBEDDED_MARKDOWN = "EMBEDDED_MARKDOWN"
     EMBEDDED_NOTEBOOK = "EMBEDDED_NOTEBOOK"
     PROVIDER_ICON = "PROVIDER_ICON"
+    SCREENSHOT = "SCREENSHOT"
 
 
 @dataclass
@@ -2271,7 +2383,6 @@ class PersonalizationRequest:
 
 
 class PersonalizationRequestStatus(Enum):
-
     DENIED = "DENIED"
     FULFILLED = "FULFILLED"
     NEW = "NEW"
@@ -2927,7 +3038,6 @@ class UpdateProviderResponse:
 
 
 class Visibility(Enum):
-
     PRIVATE = "PRIVATE"
     PUBLIC = "PUBLIC"
 
@@ -2961,7 +3071,7 @@ class ConsumerFulfillmentsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -2977,7 +3087,7 @@ class ConsumerFulfillmentsAPI:
     def list(
         self, listing_id: str, *, page_size: Optional[int] = None, page_token: Optional[str] = None
     ) -> Iterator[ListingFulfillment]:
-        """Get all listings fulfillments associated with a listing. A _fulfillment_ is a potential installation.
+        """Get all listings fulfillments associated with a listing. A *fulfillment* is a potential installation.
         Standard installations contain metadata about the attached share or git repo. Only one of these fields
         will be present. Personalized installations contain metadata about the attached share or git repo, as
         well as the Delta Sharing recipient type.
@@ -3000,7 +3110,7 @@ class ConsumerFulfillmentsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -3026,6 +3136,7 @@ class ConsumerInstallationsAPI:
         *,
         accepted_consumer_terms: Optional[ConsumerTerms] = None,
         catalog_name: Optional[str] = None,
+        mcp_connection_detail: Optional[InstallListingMcpConnectionDetail] = None,
         recipient_type: Optional[DeltaSharingRecipientType] = None,
         repo_detail: Optional[RepoInstallation] = None,
         share_name: Optional[str] = None,
@@ -3035,6 +3146,7 @@ class ConsumerInstallationsAPI:
         :param listing_id: str
         :param accepted_consumer_terms: :class:`ConsumerTerms` (optional)
         :param catalog_name: str (optional)
+        :param mcp_connection_detail: :class:`InstallListingMcpConnectionDetail` (optional)
         :param recipient_type: :class:`DeltaSharingRecipientType` (optional)
         :param repo_detail: :class:`RepoInstallation` (optional)
           for git repo installations
@@ -3048,6 +3160,8 @@ class ConsumerInstallationsAPI:
             body["accepted_consumer_terms"] = accepted_consumer_terms.as_dict()
         if catalog_name is not None:
             body["catalog_name"] = catalog_name
+        if mcp_connection_detail is not None:
+            body["mcp_connection_detail"] = mcp_connection_detail.as_dict()
         if recipient_type is not None:
             body["recipient_type"] = recipient_type.value
         if repo_detail is not None:
@@ -3061,7 +3175,7 @@ class ConsumerInstallationsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "POST", f"/api/2.1/marketplace-consumer/listings/{listing_id}/installations", body=body, headers=headers
@@ -3083,7 +3197,7 @@ class ConsumerInstallationsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do(
             "DELETE",
@@ -3113,7 +3227,7 @@ class ConsumerInstallationsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.1/marketplace-consumer/installations", query=query, headers=headers)
@@ -3147,7 +3261,7 @@ class ConsumerInstallationsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -3172,9 +3286,10 @@ class ConsumerInstallationsAPI:
         rotate_token: Optional[bool] = None,
     ) -> UpdateInstallationResponse:
         """This is a update API that will update the part of the fields defined in the installation table as well
-        as interact with external services according to the fields not included in the installation table 1.
-        the token will be rotate if the rotateToken flag is true 2. the token will be forcibly rotate if the
-        rotateToken flag is true and the tokenInfo field is empty
+        as interact with external services according to the fields not included in the installation table
+
+        1. the token will be rotate if the rotateToken flag is true
+        2. the token will be forcibly rotate if the rotateToken flag is true and the tokenInfo field is empty
 
         :param listing_id: str
         :param installation_id: str
@@ -3196,7 +3311,7 @@ class ConsumerInstallationsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "PUT",
@@ -3231,7 +3346,7 @@ class ConsumerListingsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.1/marketplace-consumer/listings:batchGet", query=query, headers=headers)
         return BatchGetListingsResponse.from_dict(res)
@@ -3250,7 +3365,7 @@ class ConsumerListingsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.1/marketplace-consumer/listings/{id}", headers=headers)
         return GetListingResponse.from_dict(res)
@@ -3266,7 +3381,7 @@ class ConsumerListingsAPI:
         page_size: Optional[int] = None,
         page_token: Optional[str] = None,
         provider_ids: Optional[List[str]] = None,
-        tags: Optional[List[ListingTag]] = None,
+        tags: Optional[ListingTag] = None,
     ) -> Iterator[Listing]:
         """List all published listings in the Databricks Marketplace that the consumer has access to.
 
@@ -3284,8 +3399,8 @@ class ConsumerListingsAPI:
         :param page_token: str (optional)
         :param provider_ids: List[str] (optional)
           Matches any of the following provider ids
-        :param tags: List[:class:`ListingTag`] (optional)
-          Matches any of the following tags
+        :param tags: :class:`ListingTag` (optional)
+          Matches listings with this tag
 
         :returns: Iterator over :class:`Listing`
         """
@@ -3308,14 +3423,14 @@ class ConsumerListingsAPI:
         if provider_ids is not None:
             query["provider_ids"] = [v for v in provider_ids]
         if tags is not None:
-            query["tags"] = [v.as_dict() for v in tags]
+            query["tags"] = tags.as_dict()
         headers = {
             "Accept": "application/json",
         }
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.1/marketplace-consumer/listings", query=query, headers=headers)
@@ -3380,7 +3495,7 @@ class ConsumerListingsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.1/marketplace-consumer/search-listings", query=query, headers=headers)
@@ -3450,7 +3565,7 @@ class ConsumerPersonalizationRequestsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "POST",
@@ -3475,7 +3590,7 @@ class ConsumerPersonalizationRequestsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET", f"/api/2.1/marketplace-consumer/listings/{listing_id}/personalization-requests", headers=headers
@@ -3504,7 +3619,7 @@ class ConsumerPersonalizationRequestsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -3541,7 +3656,7 @@ class ConsumerProvidersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.1/marketplace-consumer/providers:batchGet", query=query, headers=headers)
         return BatchGetProvidersResponse.from_dict(res)
@@ -3560,7 +3675,7 @@ class ConsumerProvidersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.1/marketplace-consumer/providers/{id}", headers=headers)
         return GetProviderResponse.from_dict(res)
@@ -3590,7 +3705,7 @@ class ConsumerProvidersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.1/marketplace-consumer/providers", query=query, headers=headers)
@@ -3626,7 +3741,7 @@ class ProviderExchangeFiltersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/marketplace-exchange/filters", body=body, headers=headers)
         return CreateExchangeFilterResponse.from_dict(res)
@@ -3645,7 +3760,7 @@ class ProviderExchangeFiltersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/marketplace-exchange/filters/{id}", headers=headers)
 
@@ -3674,7 +3789,7 @@ class ProviderExchangeFiltersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.0/marketplace-exchange/filters", query=query, headers=headers)
@@ -3704,7 +3819,7 @@ class ProviderExchangeFiltersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/marketplace-exchange/filters/{id}", body=body, headers=headers)
         return UpdateExchangeFilterResponse.from_dict(res)
@@ -3737,7 +3852,7 @@ class ProviderExchangesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/marketplace-exchange/exchanges-for-listing", body=body, headers=headers)
         return AddExchangeForListingResponse.from_dict(res)
@@ -3760,7 +3875,7 @@ class ProviderExchangesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/marketplace-exchange/exchanges", body=body, headers=headers)
         return CreateExchangeResponse.from_dict(res)
@@ -3779,7 +3894,7 @@ class ProviderExchangesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/marketplace-exchange/exchanges/{id}", headers=headers)
 
@@ -3797,7 +3912,7 @@ class ProviderExchangesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/marketplace-exchange/exchanges-for-listing/{id}", headers=headers)
 
@@ -3815,7 +3930,7 @@ class ProviderExchangesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/marketplace-exchange/exchanges/{id}", headers=headers)
         return GetExchangeResponse.from_dict(res)
@@ -3840,7 +3955,7 @@ class ProviderExchangesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.0/marketplace-exchange/exchanges", query=query, headers=headers)
@@ -3876,7 +3991,7 @@ class ProviderExchangesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -3914,7 +4029,7 @@ class ProviderExchangesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -3946,7 +4061,7 @@ class ProviderExchangesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/marketplace-exchange/exchanges/{id}", body=body, headers=headers)
         return UpdateExchangeResponse.from_dict(res)
@@ -3992,7 +4107,7 @@ class ProviderFilesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/marketplace-provider/files", body=body, headers=headers)
         return CreateFileResponse.from_dict(res)
@@ -4011,7 +4126,7 @@ class ProviderFilesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/marketplace-provider/files/{file_id}", headers=headers)
 
@@ -4029,7 +4144,7 @@ class ProviderFilesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/marketplace-provider/files/{file_id}", headers=headers)
         return GetFileResponse.from_dict(res)
@@ -4059,7 +4174,7 @@ class ProviderFilesAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.0/marketplace-provider/files", query=query, headers=headers)
@@ -4096,7 +4211,7 @@ class ProviderListingsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/marketplace-provider/listing", body=body, headers=headers)
         return CreateListingResponse.from_dict(res)
@@ -4115,7 +4230,7 @@ class ProviderListingsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/marketplace-provider/listings/{id}", headers=headers)
 
@@ -4133,7 +4248,7 @@ class ProviderListingsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/marketplace-provider/listings/{id}", headers=headers)
         return GetListingResponse.from_dict(res)
@@ -4158,7 +4273,7 @@ class ProviderListingsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.0/marketplace-provider/listings", query=query, headers=headers)
@@ -4188,7 +4303,7 @@ class ProviderListingsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/marketplace-provider/listings/{id}", body=body, headers=headers)
         return UpdateListingResponse.from_dict(res)
@@ -4224,7 +4339,7 @@ class ProviderPersonalizationRequestsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -4271,7 +4386,7 @@ class ProviderPersonalizationRequestsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "PUT",
@@ -4289,22 +4404,24 @@ class ProviderProviderAnalyticsDashboardsAPI:
         self._api = api_client
 
     def create(self) -> ProviderAnalyticsDashboard:
-        """Create provider analytics dashboard. Returns Marketplace specific `id`. Not to be confused with the
+        """Create provider analytics dashboard. Returns Marketplace specific ``id``. Not to be confused with the
         Lakeview dashboard id.
 
 
         :returns: :class:`ProviderAnalyticsDashboard`
         """
 
+        body = {}
         headers = {
             "Accept": "application/json",
+            "Content-Type": "application/json",
         }
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
-        res = self._api.do("POST", "/api/2.0/marketplace-provider/analytics_dashboard", headers=headers)
+        res = self._api.do("POST", "/api/2.0/marketplace-provider/analytics_dashboard", body=body, headers=headers)
         return ProviderAnalyticsDashboard.from_dict(res)
 
     def get(self) -> ListProviderAnalyticsDashboardResponse:
@@ -4320,7 +4437,7 @@ class ProviderProviderAnalyticsDashboardsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/marketplace-provider/analytics_dashboard", headers=headers)
         return ListProviderAnalyticsDashboardResponse.from_dict(res)
@@ -4338,7 +4455,7 @@ class ProviderProviderAnalyticsDashboardsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/marketplace-provider/analytics_dashboard/latest", headers=headers)
         return GetLatestVersionProviderAnalyticsDashboardResponse.from_dict(res)
@@ -4365,7 +4482,7 @@ class ProviderProviderAnalyticsDashboardsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/marketplace-provider/analytics_dashboard/{id}", body=body, headers=headers)
         return UpdateProviderAnalyticsDashboardResponse.from_dict(res)
@@ -4395,7 +4512,7 @@ class ProviderProvidersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/marketplace-provider/provider", body=body, headers=headers)
         return CreateProviderResponse.from_dict(res)
@@ -4414,7 +4531,7 @@ class ProviderProvidersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/marketplace-provider/providers/{id}", headers=headers)
 
@@ -4432,7 +4549,7 @@ class ProviderProvidersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/marketplace-provider/providers/{id}", headers=headers)
         return GetProviderResponse.from_dict(res)
@@ -4457,7 +4574,7 @@ class ProviderProvidersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.0/marketplace-provider/providers", query=query, headers=headers)
@@ -4487,7 +4604,7 @@ class ProviderProvidersAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", f"/api/2.0/marketplace-provider/providers/{id}", body=body, headers=headers)
         return UpdateProviderResponse.from_dict(res)

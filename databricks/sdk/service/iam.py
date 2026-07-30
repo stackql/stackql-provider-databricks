@@ -1,4 +1,7 @@
 # Code generated from OpenAPI specs by Databricks SDK Generator. DO NOT EDIT.
+# ruff: noqa: F811, F841
+# F401 is intentionally NOT covered: `make fmt` uses `ruff check --fix-only`
+# to strip the fat-import header below; ignoring F401 would defeat that.
 
 from __future__ import annotations
 
@@ -7,8 +10,12 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, Iterator, List, Optional
 
-from databricks.sdk.service._internal import (_enum, _from_dict,
-                                              _repeated_dict, _repeated_enum)
+from databricks.sdk.service._internal import (
+    _enum,
+    _from_dict,
+    _repeated_dict,
+    _repeated_enum,
+)
 
 _LOG = logging.getLogger("databricks.sdk")
 
@@ -282,10 +289,11 @@ class AccountUser:
     """If this user is active"""
 
     display_name: Optional[str] = None
-    """String that represents a concatenation of given and family names. For example `John Smith`."""
+    """String that represents a concatenation of given and family names. For example ``John Smith``."""
 
     emails: Optional[List[ComplexValue]] = None
-    """All the emails associated with the Databricks user."""
+    """All the emails associated with the Databricks user. This attribute cannot be updated through the
+    SCIM PATCH or PUT APIs; any supplied change is ignored."""
 
     external_id: Optional[str] = None
     """External ID is not currently supported. It is reserved for future use."""
@@ -299,7 +307,8 @@ class AccountUser:
     """Indicates if the group has the admin role."""
 
     user_name: Optional[str] = None
-    """Email address of the Databricks user."""
+    """Email address of the Databricks user. This attribute cannot be updated through the SCIM PATCH or
+    PUT APIs; any supplied change is ignored."""
 
     def as_dict(self) -> dict:
         """Serializes the AccountUser into a dictionary suitable for use as a JSON request body."""
@@ -388,6 +397,21 @@ class Actor:
     def from_dict(cls, d: Dict[str, Any]) -> Actor:
         """Deserializes the Actor from a dictionary."""
         return cls(actor_id=d.get("actor_id", None))
+
+
+class AutoscopeState(Enum):
+    """State of inferred scope collection (autoscope) for an external PAT. Mirrored in
+    databricks.identity.AutoscopeState in common/principal-context/api/proto/tokendetails.proto.
+    Token store and token management proto can depend on this. Principal context proto should NOT
+    depend on this proto definitions because too many services depend on the principal context
+    proto."""
+
+    AUTOSCOPE_STATE_API_NOT_COVERED = "AUTOSCOPE_STATE_API_NOT_COVERED"
+    AUTOSCOPE_STATE_BACKFILLED = "AUTOSCOPE_STATE_BACKFILLED"
+    AUTOSCOPE_STATE_COMPLETED = "AUTOSCOPE_STATE_COMPLETED"
+    AUTOSCOPE_STATE_DISABLED = "AUTOSCOPE_STATE_DISABLED"
+    AUTOSCOPE_STATE_RUNNING = "AUTOSCOPE_STATE_RUNNING"
+    AUTOSCOPE_STATE_USER_SELECTED = "AUTOSCOPE_STATE_USER_SELECTED"
 
 
 @dataclass
@@ -594,7 +618,6 @@ class GetPermissionLevelsResponse:
 
 
 class GetSortOrder(Enum):
-
     ASCENDING = "ascending"
     DESCENDING = "descending"
 
@@ -607,8 +630,11 @@ class GrantRule:
     principals: Optional[List[str]] = None
     """Principals this grant rule applies to. A principal can be a user (for end users), a service
     principal (for applications and compute workloads), or an account group. Each principal has its
-    own identifier format: * users/<USERNAME> * groups/<GROUP_NAME> *
-    servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>"""
+    own identifier format:
+    
+    - users/<USERNAME>
+    - groups/<GROUP_NAME>
+    - servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>"""
 
     def as_dict(self) -> dict:
         """Serializes the GrantRule into a dictionary suitable for use as a JSON request body."""
@@ -640,10 +666,9 @@ class Group:
     """String that represents a human-readable group name"""
 
     entitlements: Optional[List[ComplexValue]] = None
-    """Entitlements assigned to the group. See [assigning entitlements] for a full list of supported
-    values.
-    
-    [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"""
+    """Entitlements assigned to the group. See `assigning entitlements
+    <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__
+    for a full list of supported values."""
 
     external_id: Optional[str] = None
     """external_id should be unique for identifying groups"""
@@ -727,7 +752,6 @@ class Group:
 
 
 class GroupSchema(Enum):
-
     URN_IETF_PARAMS_SCIM_SCHEMAS_CORE_2_0_GROUP = "urn:ietf:params:scim:schemas:core:2.0:Group"
 
 
@@ -944,7 +968,6 @@ class ListGroupsResponse:
 
 
 class ListResponseSchema(Enum):
-
     URN_IETF_PARAMS_SCIM_API_MESSAGES_2_0_LIST_RESPONSE = "urn:ietf:params:scim:api:messages:2.0:ListResponse"
 
 
@@ -1008,7 +1031,6 @@ class ListServicePrincipalResponse:
 
 
 class ListSortOrder(Enum):
-
     ASCENDING = "ascending"
     DESCENDING = "descending"
 
@@ -1448,7 +1470,6 @@ class PatchOp(Enum):
 
 
 class PatchSchema(Enum):
-
     URN_IETF_PARAMS_SCIM_API_MESSAGES_2_0_PATCH_OP = "urn:ietf:params:scim:api:messages:2.0:PatchOp"
 
 
@@ -1540,27 +1561,45 @@ class PermissionAssignment:
 
 @dataclass
 class PermissionAssignments:
+    next_page_token: Optional[str] = None
+    """Token to retrieve the next page of results."""
+
     permission_assignments: Optional[List[PermissionAssignment]] = None
     """Array of permissions assignments defined for a workspace."""
+
+    prev_page_token: Optional[str] = None
+    """Token to retrieve the previous page of results."""
 
     def as_dict(self) -> dict:
         """Serializes the PermissionAssignments into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.next_page_token is not None:
+            body["next_page_token"] = self.next_page_token
         if self.permission_assignments:
             body["permission_assignments"] = [v.as_dict() for v in self.permission_assignments]
+        if self.prev_page_token is not None:
+            body["prev_page_token"] = self.prev_page_token
         return body
 
     def as_shallow_dict(self) -> dict:
         """Serializes the PermissionAssignments into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.next_page_token is not None:
+            body["next_page_token"] = self.next_page_token
         if self.permission_assignments:
             body["permission_assignments"] = self.permission_assignments
+        if self.prev_page_token is not None:
+            body["prev_page_token"] = self.prev_page_token
         return body
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> PermissionAssignments:
         """Deserializes the PermissionAssignments from a dictionary."""
-        return cls(permission_assignments=_repeated_dict(d, "permission_assignments", PermissionAssignment))
+        return cls(
+            next_page_token=d.get("next_page_token", None),
+            permission_assignments=_repeated_dict(d, "permission_assignments", PermissionAssignment),
+            prev_page_token=d.get("prev_page_token", None),
+        )
 
 
 class PermissionLevel(Enum):
@@ -1586,6 +1625,7 @@ class PermissionLevel(Enum):
     CAN_VIEW = "CAN_VIEW"
     CAN_VIEW_METADATA = "CAN_VIEW_METADATA"
     IS_OWNER = "IS_OWNER"
+    UNSPECIFIED = "UNSPECIFIED"
 
 
 @dataclass
@@ -1768,8 +1808,8 @@ class ResourceInfo:
 @dataclass
 class ResourceMeta:
     resource_type: Optional[str] = None
-    """Identifier for group type. Can be local workspace group (`WorkspaceGroup`) or account group
-    (`Group`)."""
+    """Identifier for group type. Can be local workspace group (``WorkspaceGroup``) or account group
+    (``Group``)."""
 
     def as_dict(self) -> dict:
         """Serializes the ResourceMeta into a dictionary suitable for use as a JSON request body."""
@@ -1920,10 +1960,9 @@ class ServicePrincipal:
     """String that represents a concatenation of given and family names."""
 
     entitlements: Optional[List[ComplexValue]] = None
-    """Entitlements assigned to the service principal. See [assigning entitlements] for a full list of
-    supported values.
-    
-    [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"""
+    """Entitlements assigned to the service principal. See `assigning entitlements
+    <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__
+    for a full list of supported values."""
 
     external_id: Optional[str] = None
 
@@ -2001,7 +2040,6 @@ class ServicePrincipal:
 
 
 class ServicePrincipalSchema(Enum):
-
     URN_IETF_PARAMS_SCIM_SCHEMAS_CORE_2_0_SERVICE_PRINCIPAL = "urn:ietf:params:scim:schemas:core:2.0:ServicePrincipal"
 
 
@@ -2011,20 +2049,20 @@ class User:
     """If this user is active"""
 
     display_name: Optional[str] = None
-    """String that represents a concatenation of given and family names. For example `John Smith`. This
-    field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled].
-    Use Account SCIM APIs to update `displayName`.
-    
-    [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation"""
+    """String that represents a concatenation of given and family names. For example ``John Smith``.
+    This field cannot be updated through the Workspace SCIM APIs when `identity federation is
+    enabled
+    <https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation>`__.
+    Use Account SCIM APIs to update ``displayName``."""
 
     emails: Optional[List[ComplexValue]] = None
-    """All the emails associated with the Databricks user."""
+    """All the emails associated with the Databricks user. This attribute cannot be updated through the
+    SCIM PATCH or PUT APIs; any supplied change is ignored."""
 
     entitlements: Optional[List[ComplexValue]] = None
-    """Entitlements assigned to the user. See [assigning entitlements] for a full list of supported
-    values.
-    
-    [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"""
+    """Entitlements assigned to the user. See `assigning entitlements
+    <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__
+    for a full list of supported values."""
 
     external_id: Optional[str] = None
     """External ID is not currently supported. It is reserved for future use."""
@@ -2043,7 +2081,8 @@ class User:
     """The schema of the user."""
 
     user_name: Optional[str] = None
-    """Email address of the Databricks user."""
+    """Email address of the Databricks user. This attribute cannot be updated through the SCIM PATCH or
+    PUT APIs; any supplied change is ignored."""
 
     def as_dict(self) -> dict:
         """Serializes the User into a dictionary suitable for use as a JSON request body."""
@@ -2118,7 +2157,6 @@ class User:
 
 
 class UserSchema(Enum):
-
     URN_IETF_PARAMS_SCIM_SCHEMAS_CORE_2_0_USER = "urn:ietf:params:scim:schemas:core:2.0:User"
     URN_IETF_PARAMS_SCIM_SCHEMAS_EXTENSION_WORKSPACE_2_0_USER = (
         "urn:ietf:params:scim:schemas:extension:workspace:2.0:User"
@@ -2126,7 +2164,6 @@ class UserSchema(Enum):
 
 
 class WorkspacePermission(Enum):
-
     ADMIN = "ADMIN"
     UNKNOWN = "UNKNOWN"
     USER = "USER"
@@ -2206,7 +2243,7 @@ class AccessControlAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/access-control/check-policy-v2", query=query, headers=headers)
         return CheckPolicyResponse.from_dict(res)
@@ -2227,10 +2264,10 @@ class AccountAccessControlAPI:
         :param resource: str
           The resource name for which assignable roles will be listed.
 
-          Examples | Summary :--- | :--- `resource=accounts/<ACCOUNT_ID>` | A resource name for the account.
-          `resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>` | A resource name for the group.
-          `resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SP_ID>` | A resource name for the service
-          principal. `resource=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>` | A resource name for the
+          Examples | Summary :--- | :--- ``resource=accounts/<ACCOUNT_ID>`` | A resource name for the account.
+          ``resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>`` | A resource name for the group.
+          ``resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SP_ID>`` | A resource name for the service
+          principal. ``resource=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>`` | A resource name for the
           tag policy.
 
         :returns: :class:`GetAssignableRolesForResourceResponse`
@@ -2258,13 +2295,13 @@ class AccountAccessControlAPI:
         :param name: str
           The ruleset name associated with the request.
 
-          Examples | Summary :--- | :--- `name=accounts/<ACCOUNT_ID>/ruleSets/default` | A name for a rule set
-          on the account. `name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default` | A name for a rule
-          set on the group.
-          `name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default` |
-          A name for a rule set on the service principal.
-          `name=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>/ruleSets/default` | A name for a rule set on
-          the tag policy.
+          Examples | Summary :--- | :--- ``name=accounts/<ACCOUNT_ID>/ruleSets/default`` | A name for a rule
+          set on the account. ``name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default`` | A name for a
+          rule set on the group.
+          ``name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default``
+          | A name for a rule set on the service principal.
+          ``name=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>/ruleSets/default`` | A name for a rule set
+          on the tag policy.
         :param etag: str
           Etag used for versioning. The response is at least as fresh as the eTag provided. Etag is used for
           optimistic concurrency control as a way to help prevent simultaneous updates of a rule set from
@@ -2273,8 +2310,8 @@ class AccountAccessControlAPI:
           etag from a GET rule set request, and pass it with the PUT update request to identify the rule set
           version you are updating.
 
-          Examples | Summary :--- | :--- `etag=` | An empty etag can only be used in GET to indicate no
-          freshness requirements. `etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==` | An
+          Examples | Summary :--- | :--- ``etag=`` | An empty etag can only be used in GET to indicate no
+          freshness requirements. ``etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==`` | An
           etag encoded a specific version of the rule set to get or to be updated.
 
         :returns: :class:`RuleSetResponse`
@@ -2342,10 +2379,10 @@ class AccountAccessControlProxyAPI:
         :param resource: str
           The resource name for which assignable roles will be listed.
 
-          Examples | Summary :--- | :--- `resource=accounts/<ACCOUNT_ID>` | A resource name for the account.
-          `resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>` | A resource name for the group.
-          `resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SP_ID>` | A resource name for the service
-          principal. `resource=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>` | A resource name for the
+          Examples | Summary :--- | :--- ``resource=accounts/<ACCOUNT_ID>`` | A resource name for the account.
+          ``resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>`` | A resource name for the group.
+          ``resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SP_ID>`` | A resource name for the service
+          principal. ``resource=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>`` | A resource name for the
           tag policy.
 
         :returns: :class:`GetAssignableRolesForResourceResponse`
@@ -2360,7 +2397,7 @@ class AccountAccessControlProxyAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET", "/api/2.0/preview/accounts/access-control/assignable-roles", query=query, headers=headers
@@ -2374,13 +2411,13 @@ class AccountAccessControlProxyAPI:
         :param name: str
           The ruleset name associated with the request.
 
-          Examples | Summary :--- | :--- `name=accounts/<ACCOUNT_ID>/ruleSets/default` | A name for a rule set
-          on the account. `name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default` | A name for a rule
-          set on the group.
-          `name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default` |
-          A name for a rule set on the service principal.
-          `name=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>/ruleSets/default` | A name for a rule set on
-          the tag policy.
+          Examples | Summary :--- | :--- ``name=accounts/<ACCOUNT_ID>/ruleSets/default`` | A name for a rule
+          set on the account. ``name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default`` | A name for a
+          rule set on the group.
+          ``name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default``
+          | A name for a rule set on the service principal.
+          ``name=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>/ruleSets/default`` | A name for a rule set
+          on the tag policy.
         :param etag: str
           Etag used for versioning. The response is at least as fresh as the eTag provided. Etag is used for
           optimistic concurrency control as a way to help prevent simultaneous updates of a rule set from
@@ -2389,8 +2426,8 @@ class AccountAccessControlProxyAPI:
           etag from a GET rule set request, and pass it with the PUT update request to identify the rule set
           version you are updating.
 
-          Examples | Summary :--- | :--- `etag=` | An empty etag can only be used in GET to indicate no
-          freshness requirements. `etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==` | An
+          Examples | Summary :--- | :--- ``etag=`` | An empty etag can only be used in GET to indicate no
+          freshness requirements. ``etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==`` | An
           etag encoded a specific version of the rule set to get or to be updated.
 
         :returns: :class:`RuleSetResponse`
@@ -2407,7 +2444,7 @@ class AccountAccessControlProxyAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/preview/accounts/access-control/rule-sets", query=query, headers=headers)
         return RuleSetResponse.from_dict(res)
@@ -2435,7 +2472,7 @@ class AccountAccessControlProxyAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", "/api/2.0/preview/accounts/access-control/rule-sets", body=body, headers=headers)
         return RuleSetResponse.from_dict(res)
@@ -2542,8 +2579,8 @@ class AccountGroupsV2API:
         start_index: Optional[int] = None,
     ) -> Iterator[AccountGroup]:
         """Gets all details of the groups associated with the Databricks account. As of 08/22/2025, this endpoint
-        will no longer return members. Instead, members should be retrieved by iterating through `Get group
-        details`. Existing accounts that rely on this attribute will not be impacted and will continue
+        will no longer return members. Instead, members should be retrieved by iterating through ``Get group
+        details``. Existing accounts that rely on this attribute will not be impacted and will continue
         receiving member data as before.
 
         :param attributes: str (optional)
@@ -2553,12 +2590,11 @@ class AccountGroupsV2API:
         :param excluded_attributes: str (optional)
           Comma-separated list of attributes to exclude in response.
         :param filter: str (optional)
-          Query by which the results have to be filtered. Supported operators are equals(`eq`),
-          contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be
-          formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently
-          only support simple expressions.
-
-          [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2
+          Query by which the results have to be filtered. Supported operators are equals(``eq``),
+          contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can
+          be formed using logical operators - ``and`` and ``or``. The `SCIM RFC
+          <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only
+          support simple expressions.
         :param sort_by: str (optional)
           Attribute to sort the results.
         :param sort_order: :class:`ListSortOrder` (optional)
@@ -2785,12 +2821,11 @@ class AccountServicePrincipalsV2API:
         :param excluded_attributes: str (optional)
           Comma-separated list of attributes to exclude in response.
         :param filter: str (optional)
-          Query by which the results have to be filtered. Supported operators are equals(`eq`),
-          contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be
-          formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently
-          only support simple expressions.
-
-          [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2
+          Query by which the results have to be filtered. Supported operators are equals(``eq``),
+          contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can
+          be formed using logical operators - ``and`` and ``or``. The `SCIM RFC
+          <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only
+          support simple expressions.
         :param sort_by: str (optional)
           Attribute to sort the results.
         :param sort_order: :class:`ListSortOrder` (optional)
@@ -2951,7 +2986,7 @@ class AccountUsersV2API:
         :param active: bool (optional)
           If this user is active
         :param display_name: str (optional)
-          String that represents a concatenation of given and family names. For example `John Smith`.
+          String that represents a concatenation of given and family names. For example ``John Smith``.
         :param emails: List[:class:`ComplexValue`] (optional)
           All the emails associated with the Databricks user.
         :param external_id: str (optional)
@@ -3031,15 +3066,14 @@ class AccountUsersV2API:
         :param excluded_attributes: str (optional)
           Comma-separated list of attributes to exclude in response.
         :param filter: str (optional)
-          Query by which the results have to be filtered. Supported operators are equals(`eq`),
-          contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be
-          formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently
-          only support simple expressions.
-
-          [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2
+          Query by which the results have to be filtered. Supported operators are equals(``eq``),
+          contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can
+          be formed using logical operators - ``and`` and ``or``. The `SCIM RFC
+          <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only
+          support simple expressions.
         :param sort_by: str (optional)
-          Attribute to sort the results. Multi-part paths are supported. For example, `userName`,
-          `name.givenName`, and `emails`.
+          Attribute to sort the results. Multi-part paths are supported. For example, ``userName``,
+          ``name.givenName``, and ``emails``.
         :param sort_order: :class:`GetSortOrder` (optional)
           The order to sort the results.
         :param start_index: int (optional)
@@ -3092,15 +3126,14 @@ class AccountUsersV2API:
         :param excluded_attributes: str (optional)
           Comma-separated list of attributes to exclude in response.
         :param filter: str (optional)
-          Query by which the results have to be filtered. Supported operators are equals(`eq`),
-          contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be
-          formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently
-          only support simple expressions.
-
-          [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2
+          Query by which the results have to be filtered. Supported operators are equals(``eq``),
+          contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can
+          be formed using logical operators - ``and`` and ``or``. The `SCIM RFC
+          <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only
+          support simple expressions.
         :param sort_by: str (optional)
-          Attribute to sort the results. Multi-part paths are supported. For example, `userName`,
-          `name.givenName`, and `emails`.
+          Attribute to sort the results. Multi-part paths are supported. For example, ``userName``,
+          ``name.givenName``, and ``emails``.
         :param sort_order: :class:`ListSortOrder` (optional)
           The order to sort the results.
         :param start_index: int (optional)
@@ -3143,7 +3176,9 @@ class AccountUsersV2API:
             query["startIndex"] += len(json["Resources"])
 
     def patch(self, id: str, *, operations: Optional[List[Patch]] = None, schemas: Optional[List[PatchSchema]] = None):
-        """Partially updates a user resource by applying the supplied operations on specific user attributes.
+        """Partially updates a user resource by applying the supplied operations on specific user attributes. The
+        ``userName`` and ``emails`` attributes cannot be updated through this API; any supplied changes to
+        them are ignored (no-op).
 
         :param id: str
           Unique ID in the Databricks workspace.
@@ -3187,7 +3222,7 @@ class AccountUsersV2API:
         :param active: bool (optional)
           If this user is active
         :param display_name: str (optional)
-          String that represents a concatenation of given and family names. For example `John Smith`.
+          String that represents a concatenation of given and family names. For example ``John Smith``.
         :param emails: List[:class:`ComplexValue`] (optional)
           All the emails associated with the Databricks user.
         :param external_id: str (optional)
@@ -3230,22 +3265,31 @@ class CurrentUserAPI:
     def __init__(self, api_client):
         self._api = api_client
 
-    def me(self) -> User:
+    def me(self, *, attributes: Optional[str] = None, excluded_attributes: Optional[str] = None) -> User:
         """Get details about the current method caller's identity.
 
+        :param attributes: str (optional)
+          Comma-separated list of attributes to return in response.
+        :param excluded_attributes: str (optional)
+          Comma-separated list of attributes to exclude in response.
 
         :returns: :class:`User`
         """
 
+        query = {}
+        if attributes is not None:
+            query["attributes"] = attributes
+        if excluded_attributes is not None:
+            query["excludedAttributes"] = excluded_attributes
         headers = {
             "Accept": "application/json",
         }
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
-        res = self._api.do("GET", "/api/2.0/preview/scim/v2/Me", headers=headers)
+        res = self._api.do("GET", "/api/2.0/preview/scim/v2/Me", query=query, headers=headers)
         return User.from_dict(res)
 
 
@@ -3278,10 +3322,9 @@ class GroupsV2API:
         :param display_name: str (optional)
           String that represents a human-readable group name
         :param entitlements: List[:class:`ComplexValue`] (optional)
-          Entitlements assigned to the group. See [assigning entitlements] for a full list of supported
-          values.
-
-          [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+          Entitlements assigned to the group. See `assigning entitlements
+          <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__
+          for a full list of supported values.
         :param external_id: str (optional)
         :param groups: List[:class:`ComplexValue`] (optional)
         :param id: str (optional)
@@ -3323,7 +3366,7 @@ class GroupsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/scim/v2/Groups", body=body, headers=headers)
         return Group.from_dict(res)
@@ -3341,7 +3384,7 @@ class GroupsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/scim/v2/Groups/{id}", headers=headers)
 
@@ -3360,7 +3403,7 @@ class GroupsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/scim/v2/Groups/{id}", headers=headers)
         return Group.from_dict(res)
@@ -3385,12 +3428,11 @@ class GroupsV2API:
         :param excluded_attributes: str (optional)
           Comma-separated list of attributes to exclude in response.
         :param filter: str (optional)
-          Query by which the results have to be filtered. Supported operators are equals(`eq`),
-          contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be
-          formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently
-          only support simple expressions.
-
-          [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2
+          Query by which the results have to be filtered. Supported operators are equals(``eq``),
+          contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can
+          be formed using logical operators - ``and`` and ``or``. The `SCIM RFC
+          <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only
+          support simple expressions.
         :param sort_by: str (optional)
           Attribute to sort the results.
         :param sort_order: :class:`ListSortOrder` (optional)
@@ -3422,7 +3464,7 @@ class GroupsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         query["startIndex"] = 1
         if "count" not in query:
@@ -3460,7 +3502,7 @@ class GroupsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/preview/scim/v2/Groups/{id}", body=body, headers=headers)
 
@@ -3484,10 +3526,9 @@ class GroupsV2API:
         :param display_name: str (optional)
           String that represents a human-readable group name
         :param entitlements: List[:class:`ComplexValue`] (optional)
-          Entitlements assigned to the group. See [assigning entitlements] for a full list of supported
-          values.
-
-          [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+          Entitlements assigned to the group. See `assigning entitlements
+          <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__
+          for a full list of supported values.
         :param external_id: str (optional)
         :param groups: List[:class:`ComplexValue`] (optional)
         :param members: List[:class:`ComplexValue`] (optional)
@@ -3525,7 +3566,7 @@ class GroupsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/scim/v2/Groups/{id}", body=body, headers=headers)
 
@@ -3574,7 +3615,7 @@ class PermissionMigrationAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/permissionmigration", body=body, headers=headers)
         return MigratePermissionsResponse.from_dict(res)
@@ -3582,27 +3623,35 @@ class PermissionMigrationAPI:
 
 class PermissionsAPI:
     """Permissions API are used to create read, write, edit, update and manage access for various users on
-    different objects and endpoints. * **[Apps permissions](:service:apps)** — Manage which users can manage
-    or use apps. * **[Cluster permissions](:service:clusters)** — Manage which users can manage, restart, or
-    attach to clusters. * **[Cluster policy permissions](:service:clusterpolicies)** — Manage which users
-    can use cluster policies. * **[Delta Live Tables pipeline permissions](:service:pipelines)** — Manage
-    which users can view, manage, run, cancel, or own a Delta Live Tables pipeline. * **[Job
-    permissions](:service:jobs)** — Manage which users can view, manage, trigger, cancel, or own a job. *
-    **[MLflow experiment permissions](:service:experiments)** — Manage which users can read, edit, or manage
-    MLflow experiments. * **[MLflow registered model permissions](:service:modelregistry)** — Manage which
-    users can read, edit, or manage MLflow registered models. * **[Instance Pool
-    permissions](:service:instancepools)** — Manage which users can manage or attach to pools. * **[Repo
-    permissions](repos)** — Manage which users can read, run, edit, or manage a repo. * **[Serving endpoint
-    permissions](:service:servingendpoints)** — Manage which users can view, query, or manage a serving
-    endpoint. * **[SQL warehouse permissions](:service:warehouses)** — Manage which users can use or manage
-    SQL warehouses. * **[Token permissions](:service:tokenmanagement)** — Manage which users can create or
-    use tokens. * **[Workspace object permissions](:service:workspace)** — Manage which users can read, run,
-    edit, or manage alerts, dbsql-dashboards, directories, files, notebooks and queries. For the mapping of
-    the required permissions for specific actions or abilities and other important information, see [Access
-    Control]. Note that to manage access control on service principals, use **[Account Access Control
-    Proxy](:service:accountaccesscontrolproxy)**.
+    different objects and endpoints.
 
-    [Access Control]: https://docs.databricks.com/security/auth-authz/access-control/index.html"""
+    - **[Apps permissions](:service:apps)** — Manage which users can manage or use apps.
+    - **[Cluster permissions](:service:clusters)** — Manage which users can manage, restart, or attach to
+      clusters.
+    - **[Cluster policy permissions](:service:clusterpolicies)** — Manage which users can use cluster
+      policies.
+    - **[Spark Declarative Pipelines permissions](:service:pipelines)** — Manage which users can view,
+      manage, run, cancel, or own a Spark Declarative Pipeline.
+    - **[Job permissions](:service:jobs)** — Manage which users can view, manage, trigger, cancel, or own a
+      job.
+    - **[MLflow experiment permissions](:service:experiments)** — Manage which users can read, edit, or
+      manage MLflow experiments.
+    - **[MLflow registered model permissions](:service:modelregistry)** — Manage which users can read, edit,
+      or manage MLflow registered models.
+    - **[Instance Pool permissions](:service:instancepools)** — Manage which users can manage or attach to
+      pools.
+    - **[Repo permissions](repos)** — Manage which users can read, run, edit, or manage a repo.
+    - **[Serving endpoint permissions](:service:servingendpoints)** — Manage which users can view, query, or
+      manage a serving endpoint.
+    - **[SQL warehouse permissions](:service:warehouses)** — Manage which users can use or manage SQL
+      warehouses.
+    - **[Token permissions](:service:tokenmanagement)** — Manage which users can create or use tokens.
+    - **[Workspace object permissions](:service:workspace)** — Manage which users can read, run, edit, or
+      manage alerts, dbsql-dashboards, directories, files, notebooks and queries. For the mapping of the
+      required permissions for specific actions or abilities and other important information, see `Access
+      Control <https://docs.databricks.com/security/auth-authz/access-control/index.html>`__. Note that to
+      manage access control on service principals, use **[Account Access Control
+      Proxy](:service:accountaccesscontrolproxy)**."""
 
     def __init__(self, api_client):
         self._api = api_client
@@ -3614,8 +3663,9 @@ class PermissionsAPI:
         :param request_object_type: str
           The type of the request object. Can be one of the following: alerts, alertsv2, authorization,
           clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,
-          experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,
-          repos, serving-endpoints, or warehouses.
+          experiments, files, genie, instance-pools, jobs, knowledge-assistants, notebooks, pipelines,
+          queries, registered-models, repos, serving-endpoints, supervisor-agents, vector-search-endpoints, or
+          warehouses.
         :param request_object_id: str
           The id of the request object.
 
@@ -3628,7 +3678,7 @@ class PermissionsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/permissions/{request_object_type}/{request_object_id}", headers=headers)
         return ObjectPermissions.from_dict(res)
@@ -3639,8 +3689,9 @@ class PermissionsAPI:
         :param request_object_type: str
           The type of the request object. Can be one of the following: alerts, alertsv2, authorization,
           clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,
-          experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,
-          repos, serving-endpoints, or warehouses.
+          experiments, files, genie, instance-pools, jobs, knowledge-assistants, notebooks, pipelines,
+          queries, registered-models, repos, serving-endpoints, supervisor-agents, vector-search-endpoints, or
+          warehouses.
         :param request_object_id: str
 
         :returns: :class:`GetPermissionLevelsResponse`
@@ -3652,7 +3703,7 @@ class PermissionsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET", f"/api/2.0/permissions/{request_object_type}/{request_object_id}/permissionLevels", headers=headers
@@ -3673,8 +3724,9 @@ class PermissionsAPI:
         :param request_object_type: str
           The type of the request object. Can be one of the following: alerts, alertsv2, authorization,
           clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,
-          experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,
-          repos, serving-endpoints, or warehouses.
+          experiments, files, genie, instance-pools, jobs, knowledge-assistants, notebooks, pipelines,
+          queries, registered-models, repos, serving-endpoints, supervisor-agents, vector-search-endpoints, or
+          warehouses.
         :param request_object_id: str
           The id of the request object.
         :param access_control_list: List[:class:`AccessControlRequest`] (optional)
@@ -3692,7 +3744,7 @@ class PermissionsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "PUT", f"/api/2.0/permissions/{request_object_type}/{request_object_id}", body=body, headers=headers
@@ -3712,8 +3764,9 @@ class PermissionsAPI:
         :param request_object_type: str
           The type of the request object. Can be one of the following: alerts, alertsv2, authorization,
           clusters, cluster-policies, dashboards, database-projects, dbsql-dashboards, directories,
-          experiments, files, genie, instance-pools, jobs, notebooks, pipelines, queries, registered-models,
-          repos, serving-endpoints, or warehouses.
+          experiments, files, genie, instance-pools, jobs, knowledge-assistants, notebooks, pipelines,
+          queries, registered-models, repos, serving-endpoints, supervisor-agents, vector-search-endpoints, or
+          warehouses.
         :param request_object_id: str
           The id of the request object.
         :param access_control_list: List[:class:`AccessControlRequest`] (optional)
@@ -3731,7 +3784,7 @@ class PermissionsAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "PATCH", f"/api/2.0/permissions/{request_object_type}/{request_object_id}", body=body, headers=headers
@@ -3771,10 +3824,9 @@ class ServicePrincipalsV2API:
         :param display_name: str (optional)
           String that represents a concatenation of given and family names.
         :param entitlements: List[:class:`ComplexValue`] (optional)
-          Entitlements assigned to the service principal. See [assigning entitlements] for a full list of
-          supported values.
-
-          [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+          Entitlements assigned to the service principal. See `assigning entitlements
+          <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__
+          for a full list of supported values.
         :param external_id: str (optional)
         :param groups: List[:class:`ComplexValue`] (optional)
         :param id: str (optional)
@@ -3813,7 +3865,7 @@ class ServicePrincipalsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/scim/v2/ServicePrincipals", body=body, headers=headers)
         return ServicePrincipal.from_dict(res)
@@ -3831,7 +3883,7 @@ class ServicePrincipalsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", headers=headers)
 
@@ -3850,7 +3902,7 @@ class ServicePrincipalsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", headers=headers)
         return ServicePrincipal.from_dict(res)
@@ -3875,12 +3927,11 @@ class ServicePrincipalsV2API:
         :param excluded_attributes: str (optional)
           Comma-separated list of attributes to exclude in response.
         :param filter: str (optional)
-          Query by which the results have to be filtered. Supported operators are equals(`eq`),
-          contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be
-          formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently
-          only support simple expressions.
-
-          [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2
+          Query by which the results have to be filtered. Supported operators are equals(``eq``),
+          contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can
+          be formed using logical operators - ``and`` and ``or``. The `SCIM RFC
+          <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only
+          support simple expressions.
         :param sort_by: str (optional)
           Attribute to sort the results.
         :param sort_order: :class:`ListSortOrder` (optional)
@@ -3912,7 +3963,7 @@ class ServicePrincipalsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         query["startIndex"] = 1
         if "count" not in query:
@@ -3950,7 +4001,7 @@ class ServicePrincipalsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", body=body, headers=headers)
 
@@ -3980,10 +4031,9 @@ class ServicePrincipalsV2API:
         :param display_name: str (optional)
           String that represents a concatenation of given and family names.
         :param entitlements: List[:class:`ComplexValue`] (optional)
-          Entitlements assigned to the service principal. See [assigning entitlements] for a full list of
-          supported values.
-
-          [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+          Entitlements assigned to the service principal. See `assigning entitlements
+          <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__
+          for a full list of supported values.
         :param external_id: str (optional)
         :param groups: List[:class:`ComplexValue`] (optional)
         :param roles: List[:class:`ComplexValue`] (optional)
@@ -4018,7 +4068,7 @@ class ServicePrincipalsV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", body=body, headers=headers)
 
@@ -4058,17 +4108,16 @@ class UsersV2API:
         :param active: bool (optional)
           If this user is active
         :param display_name: str (optional)
-          String that represents a concatenation of given and family names. For example `John Smith`. This
-          field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use
-          Account SCIM APIs to update `displayName`.
-
-          [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation
+          String that represents a concatenation of given and family names. For example ``John Smith``. This
+          field cannot be updated through the Workspace SCIM APIs when `identity federation is enabled
+          <https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation>`__.
+          Use Account SCIM APIs to update ``displayName``.
         :param emails: List[:class:`ComplexValue`] (optional)
           All the emails associated with the Databricks user.
         :param entitlements: List[:class:`ComplexValue`] (optional)
-          Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values.
-
-          [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+          Entitlements assigned to the user. See `assigning entitlements
+          <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__
+          for a full list of supported values.
         :param external_id: str (optional)
           External ID is not currently supported. It is reserved for future use.
         :param groups: List[:class:`ComplexValue`] (optional)
@@ -4115,7 +4164,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/scim/v2/Users", body=body, headers=headers)
         return User.from_dict(res)
@@ -4134,7 +4183,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/scim/v2/Users/{id}", headers=headers)
 
@@ -4161,15 +4210,14 @@ class UsersV2API:
         :param excluded_attributes: str (optional)
           Comma-separated list of attributes to exclude in response.
         :param filter: str (optional)
-          Query by which the results have to be filtered. Supported operators are equals(`eq`),
-          contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be
-          formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently
-          only support simple expressions.
-
-          [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2
+          Query by which the results have to be filtered. Supported operators are equals(``eq``),
+          contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can
+          be formed using logical operators - ``and`` and ``or``. The `SCIM RFC
+          <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only
+          support simple expressions.
         :param sort_by: str (optional)
-          Attribute to sort the results. Multi-part paths are supported. For example, `userName`,
-          `name.givenName`, and `emails`.
+          Attribute to sort the results. Multi-part paths are supported. For example, ``userName``,
+          ``name.givenName``, and ``emails``.
         :param sort_order: :class:`GetSortOrder` (optional)
           The order to sort the results.
         :param start_index: int (optional)
@@ -4199,7 +4247,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/scim/v2/Users/{id}", query=query, headers=headers)
         return User.from_dict(res)
@@ -4217,7 +4265,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/permissions/authorization/passwords/permissionLevels", headers=headers)
         return GetPasswordPermissionLevelsResponse.from_dict(res)
@@ -4235,7 +4283,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/permissions/authorization/passwords", headers=headers)
         return PasswordPermissions.from_dict(res)
@@ -4260,15 +4308,14 @@ class UsersV2API:
         :param excluded_attributes: str (optional)
           Comma-separated list of attributes to exclude in response.
         :param filter: str (optional)
-          Query by which the results have to be filtered. Supported operators are equals(`eq`),
-          contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be
-          formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently
-          only support simple expressions.
-
-          [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2
+          Query by which the results have to be filtered. Supported operators are equals(``eq``),
+          contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can
+          be formed using logical operators - ``and`` and ``or``. The `SCIM RFC
+          <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only
+          support simple expressions.
         :param sort_by: str (optional)
-          Attribute to sort the results. Multi-part paths are supported. For example, `userName`,
-          `name.givenName`, and `emails`.
+          Attribute to sort the results. Multi-part paths are supported. For example, ``userName``,
+          ``name.givenName``, and ``emails``.
         :param sort_order: :class:`ListSortOrder` (optional)
           The order to sort the results.
         :param start_index: int (optional)
@@ -4298,7 +4345,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         query["startIndex"] = 1
         if "count" not in query:
@@ -4313,7 +4360,9 @@ class UsersV2API:
             query["startIndex"] += len(json["Resources"])
 
     def patch(self, id: str, *, operations: Optional[List[Patch]] = None, schemas: Optional[List[PatchSchema]] = None):
-        """Partially updates a user resource by applying the supplied operations on specific user attributes.
+        """Partially updates a user resource by applying the supplied operations on specific user attributes. The
+        ``userName`` and ``emails`` attributes cannot be updated through this API; any supplied changes to
+        them are ignored (no-op).
 
         :param id: str
           Unique ID in the Databricks workspace.
@@ -4336,7 +4385,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/preview/scim/v2/Users/{id}", body=body, headers=headers)
 
@@ -4361,7 +4410,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", "/api/2.0/permissions/authorization/passwords", body=body, headers=headers)
         return PasswordPermissions.from_dict(res)
@@ -4388,17 +4437,16 @@ class UsersV2API:
         :param active: bool (optional)
           If this user is active
         :param display_name: str (optional)
-          String that represents a concatenation of given and family names. For example `John Smith`. This
-          field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use
-          Account SCIM APIs to update `displayName`.
-
-          [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation
+          String that represents a concatenation of given and family names. For example ``John Smith``. This
+          field cannot be updated through the Workspace SCIM APIs when `identity federation is enabled
+          <https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation>`__.
+          Use Account SCIM APIs to update ``displayName``.
         :param emails: List[:class:`ComplexValue`] (optional)
           All the emails associated with the Databricks user.
         :param entitlements: List[:class:`ComplexValue`] (optional)
-          Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values.
-
-          [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+          Entitlements assigned to the user. See `assigning entitlements
+          <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__
+          for a full list of supported values.
         :param external_id: str (optional)
           External ID is not currently supported. It is reserved for future use.
         :param groups: List[:class:`ComplexValue`] (optional)
@@ -4441,7 +4489,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/scim/v2/Users/{id}", body=body, headers=headers)
 
@@ -4465,7 +4513,7 @@ class UsersV2API:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", "/api/2.0/permissions/authorization/passwords", body=body, headers=headers)
         return PasswordPermissions.from_dict(res)
@@ -4520,15 +4568,35 @@ class WorkspaceAssignmentAPI:
         )
         return WorkspacePermissions.from_dict(res)
 
-    def list(self, workspace_id: int) -> Iterator[PermissionAssignment]:
+    def list(
+        self,
+        workspace_id: int,
+        *,
+        filter: Optional[str] = None,
+        max_results: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> Iterator[PermissionAssignment]:
         """Get the permission assignments for the specified Databricks account and Databricks workspace.
 
         :param workspace_id: int
           The workspace ID for the account.
+        :param filter: str (optional)
+          Filter string to search principals.
+        :param max_results: int (optional)
+          Maximum number of permission assignments to return.
+        :param page_token: str (optional)
+          Page token returned by previous call to retrieve the next page of results.
 
         :returns: Iterator over :class:`PermissionAssignment`
         """
 
+        query = {}
+        if filter is not None:
+            query["filter"] = filter
+        if max_results is not None:
+            query["max_results"] = max_results
+        if page_token is not None:
+            query["page_token"] = page_token
         headers = {
             "Accept": "application/json",
         }
@@ -4536,6 +4604,7 @@ class WorkspaceAssignmentAPI:
         json = self._api.do(
             "GET",
             f"/api/2.0/accounts/{self._api.account_id}/workspaces/{workspace_id}/permissionassignments",
+            query=query,
             headers=headers,
         )
         parsed = PermissionAssignments.from_dict(json).permission_assignments
@@ -5540,6 +5609,9 @@ class GroupsAPI:
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/scim/v2/Groups", body=body, headers=headers)
         return Group.from_dict(res)
@@ -5554,6 +5626,9 @@ class GroupsAPI:
         """
 
         headers = {}
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/scim/v2/Groups/{id}", headers=headers)
 
@@ -5569,6 +5644,9 @@ class GroupsAPI:
         headers = {
             "Accept": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/scim/v2/Groups/{id}", headers=headers)
         return Group.from_dict(res)
@@ -5627,6 +5705,9 @@ class GroupsAPI:
         headers = {
             "Accept": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         # deduplicate items that may have been added during iteration
         seen = set()
@@ -5665,6 +5746,9 @@ class GroupsAPI:
         headers = {
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/preview/scim/v2/Groups/{id}", body=body, headers=headers)
 
@@ -5724,6 +5808,9 @@ class GroupsAPI:
         headers = {
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/scim/v2/Groups/{id}", body=body, headers=headers)
 
@@ -5798,6 +5885,9 @@ class ServicePrincipalsAPI:
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/scim/v2/ServicePrincipals", body=body, headers=headers)
         return ServicePrincipal.from_dict(res)
@@ -5812,6 +5902,9 @@ class ServicePrincipalsAPI:
         """
 
         headers = {}
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", headers=headers)
 
@@ -5827,6 +5920,9 @@ class ServicePrincipalsAPI:
         headers = {
             "Accept": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", headers=headers)
         return ServicePrincipal.from_dict(res)
@@ -5885,6 +5981,9 @@ class ServicePrincipalsAPI:
         headers = {
             "Accept": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         # deduplicate items that may have been added during iteration
         seen = set()
@@ -5923,6 +6022,9 @@ class ServicePrincipalsAPI:
         headers = {
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", body=body, headers=headers)
 
@@ -5985,6 +6087,9 @@ class ServicePrincipalsAPI:
         headers = {
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/scim/v2/ServicePrincipals/{id}", body=body, headers=headers)
 
@@ -6077,6 +6182,9 @@ class UsersAPI:
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/preview/scim/v2/Users", body=body, headers=headers)
         return User.from_dict(res)
@@ -6092,6 +6200,9 @@ class UsersAPI:
         """
 
         headers = {}
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/preview/scim/v2/Users/{id}", headers=headers)
 
@@ -6153,6 +6264,9 @@ class UsersAPI:
         headers = {
             "Accept": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/preview/scim/v2/Users/{id}", query=query, headers=headers)
         return User.from_dict(res)
@@ -6167,6 +6281,9 @@ class UsersAPI:
         headers = {
             "Accept": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/permissions/authorization/passwords/permissionLevels", headers=headers)
         return GetPasswordPermissionLevelsResponse.from_dict(res)
@@ -6181,6 +6298,9 @@ class UsersAPI:
         headers = {
             "Accept": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/permissions/authorization/passwords", headers=headers)
         return PasswordPermissions.from_dict(res)
@@ -6240,6 +6360,9 @@ class UsersAPI:
         headers = {
             "Accept": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         # deduplicate items that may have been added during iteration
         seen = set()
@@ -6278,6 +6401,9 @@ class UsersAPI:
         headers = {
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PATCH", f"/api/2.0/preview/scim/v2/Users/{id}", body=body, headers=headers)
 
@@ -6298,6 +6424,9 @@ class UsersAPI:
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PUT", "/api/2.0/permissions/authorization/passwords", body=body, headers=headers)
         return PasswordPermissions.from_dict(res)
@@ -6372,6 +6501,9 @@ class UsersAPI:
         headers = {
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("PUT", f"/api/2.0/preview/scim/v2/Users/{id}", body=body, headers=headers)
 
@@ -6391,6 +6523,9 @@ class UsersAPI:
             "Accept": "application/json",
             "Content-Type": "application/json",
         }
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", "/api/2.0/permissions/authorization/passwords", body=body, headers=headers)
         return PasswordPermissions.from_dict(res)

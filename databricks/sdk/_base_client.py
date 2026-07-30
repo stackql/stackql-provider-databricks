@@ -1,11 +1,12 @@
 import io
+import json
 import logging
 import urllib.parse
 from abc import ABC, abstractmethod
-from datetime import timedelta
+from datetime import date, datetime, timedelta
+from enum import Enum
 from types import TracebackType
-from typing import (Any, BinaryIO, Callable, Dict, Iterable, Iterator, List,
-                    Optional, Type, Union)
+from typing import Any, BinaryIO, Callable, Dict, Iterable, Iterator, List, Optional, Type, Union
 
 import requests
 import requests.adapters
@@ -18,6 +19,27 @@ from .logger import RoundTrip
 from .retries import retried
 
 logger = logging.getLogger("databricks.sdk")
+
+
+def _json_default(o: Any) -> Any:
+    """``json.dumps`` ``default`` hook coercing SDK values into their wire form.
+
+    Lets an open ``Any`` body field accept an SDK response passed straight into
+    the next call (function chaining), which is otherwise not JSON serializable.
+    """
+    as_dict = getattr(o, "as_dict", None)
+    if callable(as_dict):
+        return as_dict()
+    to_json_string = getattr(o, "ToJsonString", None)  # protobuf Timestamp/Duration, FieldMask
+    if callable(to_json_string):
+        return to_json_string()
+    if isinstance(o, (datetime, date)):
+        return o.isoformat()
+    if isinstance(o, timedelta):
+        return f"{o.total_seconds()}s"
+    if isinstance(o, Enum):
+        return o.value
+    raise TypeError(f"Object of type {type(o).__name__} is not JSON serializable")
 
 
 def _fix_host_if_needed(host: Optional[str]) -> Optional[str]:
@@ -40,7 +62,6 @@ def _fix_host_if_needed(host: Optional[str]) -> Optional[str]:
 
 
 class _BaseClient:
-
     def __init__(
         self,
         debug_truncate_bytes: Optional[int] = None,
@@ -117,7 +138,7 @@ class _BaseClient:
         # See: https://github.com/databricks/databricks-sdk-py/issues/142
         if query is None:
             return None
-        with_fixed_bools = {k: v if type(v) != bool else ("true" if v else "false") for k, v in query.items()}
+        with_fixed_bools = {k: v if type(v) is not bool else ("true" if v else "false") for k, v in query.items()}
 
         # Query parameters may be nested, e.g.
         # {'filter_by': {'user_ids': [123, 456]}}
@@ -246,13 +267,13 @@ class _BaseClient:
             #
             # return a simple string for debug log readability, as `raise TimeoutError(...) from err`
             # will bubble up the original exception in case we reach max retries.
-            return f"cannot connect"
+            return "cannot connect"
         if isinstance(err, requests.Timeout):
             # corresponds to `TLS handshake timeout` and `i/o timeout` in Go.
             #
             # return a simple string for debug log readability, as `raise TimeoutError(...) from err`
             # will bubble up the original exception in case we reach max retries.
-            return f"timeout"
+            return "timeout"
         if isinstance(err, DatabricksError):
             message = str(err)
             transient_error_string_matches = [
@@ -283,14 +304,18 @@ class _BaseClient:
         data=None,
         auth: Callable[[requests.PreparedRequest], requests.PreparedRequest] = None,
     ):
+        json_data = None
+        if body is not None and data is None and files is None:
+            json_data = json.dumps(body, allow_nan=False, default=_json_default)
+            headers = {"Content-Type": "application/json", **(headers or {})}
         response = self._session.request(
             method,
             url,
             params=self._fix_query_string(query),
-            json=body,
+            json=None if json_data is not None else body,
             headers=headers,
             files=files,
-            data=data,
+            data=json_data if json_data is not None else data,
             auth=auth,
             stream=raw,
             timeout=self._http_timeout_seconds,
@@ -309,7 +334,6 @@ class _BaseClient:
 
 
 class _RawResponse(ABC):
-
     @abstractmethod
     # follows Response signature: https://github.com/psf/requests/blob/main/src/requests/models.py#L799
     def iter_content(self, chunk_size: int = 1, decode_unicode: bool = False):

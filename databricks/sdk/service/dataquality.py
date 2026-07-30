@@ -1,4 +1,7 @@
 # Code generated from OpenAPI specs by Databricks SDK Generator. DO NOT EDIT.
+# ruff: noqa: F811, F841
+# F401 is intentionally NOT covered: `make fmt` uses `ruff check --fix-only`
+# to strip the fat-import header below; ignoring F401 would defeat that.
 
 from __future__ import annotations
 
@@ -7,8 +10,12 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, Iterator, List, Optional
 
-from databricks.sdk.service._internal import (_enum, _from_dict,
-                                              _repeated_dict, _repeated_enum)
+from databricks.sdk.service._internal import (
+    _enum,
+    _from_dict,
+    _repeated_dict,
+    _repeated_enum,
+)
 
 _LOG = logging.getLogger("databricks.sdk")
 
@@ -35,27 +42,72 @@ class AggregationGranularity(Enum):
 class AnomalyDetectionConfig:
     """Anomaly Detection Configurations."""
 
+    anomaly_detection_workflow_id: Optional[int] = None
+    """The id of the workflow that detects the anomaly. This field will only be returned in the
+    Get/Update response, if the request comes from the workspace where this anomaly detection job is
+    created."""
+
     excluded_table_full_names: Optional[List[str]] = None
     """List of fully qualified table names to exclude from anomaly detection."""
+
+    job_type: Optional[AnomalyDetectionJobType] = None
+    """The type of the last run of the workflow."""
+
+    publish_health_indicator: Optional[bool] = None
+    """If the health indicator should be shown."""
+
+    validity_check_configurations: Optional[List[ValidityCheckConfiguration]] = None
+    """Validity check configurations for anomaly detection."""
 
     def as_dict(self) -> dict:
         """Serializes the AnomalyDetectionConfig into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.anomaly_detection_workflow_id is not None:
+            body["anomaly_detection_workflow_id"] = self.anomaly_detection_workflow_id
         if self.excluded_table_full_names:
             body["excluded_table_full_names"] = [v for v in self.excluded_table_full_names]
+        if self.job_type is not None:
+            body["job_type"] = self.job_type.value
+        if self.publish_health_indicator is not None:
+            body["publish_health_indicator"] = self.publish_health_indicator
+        if self.validity_check_configurations:
+            body["validity_check_configurations"] = [v.as_dict() for v in self.validity_check_configurations]
         return body
 
     def as_shallow_dict(self) -> dict:
         """Serializes the AnomalyDetectionConfig into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.anomaly_detection_workflow_id is not None:
+            body["anomaly_detection_workflow_id"] = self.anomaly_detection_workflow_id
         if self.excluded_table_full_names:
             body["excluded_table_full_names"] = self.excluded_table_full_names
+        if self.job_type is not None:
+            body["job_type"] = self.job_type
+        if self.publish_health_indicator is not None:
+            body["publish_health_indicator"] = self.publish_health_indicator
+        if self.validity_check_configurations:
+            body["validity_check_configurations"] = self.validity_check_configurations
         return body
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> AnomalyDetectionConfig:
         """Deserializes the AnomalyDetectionConfig from a dictionary."""
-        return cls(excluded_table_full_names=d.get("excluded_table_full_names", None))
+        return cls(
+            anomaly_detection_workflow_id=d.get("anomaly_detection_workflow_id", None),
+            excluded_table_full_names=d.get("excluded_table_full_names", None),
+            job_type=_enum(d, "job_type", AnomalyDetectionJobType),
+            publish_health_indicator=d.get("publish_health_indicator", None),
+            validity_check_configurations=_repeated_dict(
+                d, "validity_check_configurations", ValidityCheckConfiguration
+            ),
+        )
+
+
+class AnomalyDetectionJobType(Enum):
+    """Anomaly Detection job type."""
+
+    ANOMALY_DETECTION_JOB_TYPE_INTERNAL_HIDDEN = "ANOMALY_DETECTION_JOB_TYPE_INTERNAL_HIDDEN"
+    ANOMALY_DETECTION_JOB_TYPE_NORMAL = "ANOMALY_DETECTION_JOB_TYPE_NORMAL"
 
 
 @dataclass
@@ -90,9 +142,8 @@ class CronSchedule:
     """The data quality monitoring workflow cron schedule."""
 
     quartz_cron_expression: str
-    """The expression that determines when to run the monitor. See [examples].
-    
-    [examples]: https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html"""
+    """The expression that determines when to run the monitor. See `examples
+    <https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html>`__."""
 
     timezone_id: str
     """A Java timezone id. The schedule for a job will be resolved with respect to this timezone. See
@@ -154,7 +205,7 @@ class DataProfilingConfig:
 
     baseline_table_name: Optional[str] = None
     """Baseline table name. Baseline data is used to compute drift from the data in the monitored
-    `table_name`. The baseline table and the monitored table shall have the same schema."""
+    ``table_name``. The baseline table and the monitored table shall have the same schema."""
 
     custom_metrics: Optional[List[DataProfilingCustomMetric]] = None
     """Custom metrics."""
@@ -164,13 +215,13 @@ class DataProfilingConfig:
     PENDING state."""
 
     drift_metrics_table_name: Optional[str] = None
-    """Table that stores drift metrics data. Format: `catalog.schema.table_name`."""
+    """Table that stores drift metrics data. Format: ``catalog.schema.table_name``."""
 
     effective_warehouse_id: Optional[str] = None
     """The warehouse for dashboard creation"""
 
     inference_log: Optional[InferenceLogConfig] = None
-    """`Analysis Configuration` for monitoring inference log tables."""
+    """``Analysis Configuration`` for monitoring inference log tables."""
 
     latest_monitor_failure_message: Optional[str] = None
     """The latest error message for a monitor failure."""
@@ -181,13 +232,13 @@ class DataProfilingConfig:
     indicate corrupted monitor_version numbers."""
 
     monitored_table_name: Optional[str] = None
-    """Unity Catalog table to monitor. Format: `catalog.schema.table_name`"""
+    """Unity Catalog table to monitor. Format: ``catalog.schema.table_name``"""
 
     notification_settings: Optional[NotificationSettings] = None
     """Field for specifying notification settings."""
 
     profile_metrics_table_name: Optional[str] = None
-    """Table that stores profile metrics data. Format: `catalog.schema.table_name`."""
+    """Table that stores profile metrics data. Format: ``catalog.schema.table_name``."""
 
     schedule: Optional[CronSchedule] = None
     """The cron schedule."""
@@ -198,18 +249,19 @@ class DataProfilingConfig:
     slicing_exprs: Optional[List[str]] = None
     """List of column expressions to slice data with for targeted analysis. The data is grouped by each
     expression independently, resulting in a separate slice for each predicate and its complements.
-    For example `slicing_exprs=[“col_1”, “col_2 > 10”]` will generate the following slices:
-    two slices for `col_2 > 10` (True and False), and one slice per unique value in `col1`. For
-    high-cardinality columns, only the top 100 unique values by frequency will generate slices."""
+    For example ``slicing_exprs=[“col_1”, “col_2 > 10”]`` will generate the following
+    slices: two slices for ``col_2 > 10`` (True and False), and one slice per unique value in
+    ``col1``. For high-cardinality columns, only the top 100 unique values by frequency will
+    generate slices."""
 
     snapshot: Optional[SnapshotConfig] = None
-    """`Analysis Configuration` for monitoring snapshot tables."""
+    """``Analysis Configuration`` for monitoring snapshot tables."""
 
     status: Optional[DataProfilingStatus] = None
     """The data profiling monitor status."""
 
     time_series: Optional[TimeSeriesConfig] = None
-    """`Analysis Configuration` for monitoring time series tables."""
+    """``Analysis Configuration`` for monitoring time series tables."""
 
     warehouse_id: Optional[str] = None
     """Optional argument to specify the warehouse for dashboard creation. If not specified, the first
@@ -340,10 +392,9 @@ class DataProfilingCustomMetric:
     """Name of the metric in the output tables."""
 
     definition: str
-    """Jinja template for a SQL expression that specifies how to compute the metric. See [create metric
-    definition].
-    
-    [create metric definition]: https://docs.databricks.com/en/lakehouse-monitoring/custom-metrics.html#create-definition"""
+    """Jinja template for a SQL expression that specifies how to compute the metric. See `create metric
+    definition
+    <https://docs.databricks.com/en/lakehouse-monitoring/custom-metrics.html#create-definition>`__."""
 
     input_columns: List[str]
     """A list of column names in the input table the metric should be computed for. Can use
@@ -437,6 +488,9 @@ class InferenceLogConfig:
     label_column: Optional[str] = None
     """Column for the label."""
 
+    prediction_probability_column: Optional[str] = None
+    """Column for prediction probabilities"""
+
     def as_dict(self) -> dict:
         """Serializes the InferenceLogConfig into a dictionary suitable for use as a JSON request body."""
         body = {}
@@ -448,6 +502,8 @@ class InferenceLogConfig:
             body["model_id_column"] = self.model_id_column
         if self.prediction_column is not None:
             body["prediction_column"] = self.prediction_column
+        if self.prediction_probability_column is not None:
+            body["prediction_probability_column"] = self.prediction_probability_column
         if self.problem_type is not None:
             body["problem_type"] = self.problem_type.value
         if self.timestamp_column is not None:
@@ -465,6 +521,8 @@ class InferenceLogConfig:
             body["model_id_column"] = self.model_id_column
         if self.prediction_column is not None:
             body["prediction_column"] = self.prediction_column
+        if self.prediction_probability_column is not None:
+            body["prediction_probability_column"] = self.prediction_probability_column
         if self.problem_type is not None:
             body["problem_type"] = self.problem_type
         if self.timestamp_column is not None:
@@ -479,6 +537,7 @@ class InferenceLogConfig:
             label_column=d.get("label_column", None),
             model_id_column=d.get("model_id_column", None),
             prediction_column=d.get("prediction_column", None),
+            prediction_probability_column=d.get("prediction_probability_column", None),
             problem_type=_enum(d, "problem_type", InferenceProblemType),
             timestamp_column=d.get("timestamp_column", None),
         )
@@ -560,27 +619,32 @@ class Monitor:
     """Monitor for the data quality of unity catalog entities such as schema or table."""
 
     object_type: str
-    """The type of the monitored object. Can be one of the following: `schema` or `table`."""
+    """The type of the monitored object. Can be one of the following: ``schema`` or ``table``."""
 
     object_id: str
-    """The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+    """The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for
+    ``table``.
     
-    Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-    Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+    Find the ``schema_id`` from either:
     
-    Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-    Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+    1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+       ``Schemas`` resource.
+    2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+       ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
     
-    [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-    [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-    [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id"""
+    Find the ``table_id`` from either:
+    
+    1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+       ``Tables`` resource.
+    2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+       ``table`` > go to the ``Details`` tab > the ``Table ID`` field."""
 
     anomaly_detection_config: Optional[AnomalyDetectionConfig] = None
-    """Anomaly Detection Configuration, applicable to `schema` object types."""
+    """Anomaly Detection Configuration, applicable to ``schema`` object types."""
 
     data_profiling_config: Optional[DataProfilingConfig] = None
-    """Data Profiling Configuration, applicable to `table` object types. Exactly one `Analysis
-    Configuration` must be present."""
+    """Data Profiling Configuration, applicable to ``table`` object types. Exactly one ``Analysis
+    Configuration`` must be present."""
 
     def as_dict(self) -> dict:
         """Serializes the Monitor into a dictionary suitable for use as a JSON request body."""
@@ -675,24 +739,104 @@ class NotificationSettings:
 
 
 @dataclass
+class PercentNullValidityCheck:
+    column_names: Optional[List[str]] = None
+    """List of column names to check for null percentage"""
+
+    upper_bound: Optional[float] = None
+    """Optional upper bound; we should use auto determined bounds for now"""
+
+    def as_dict(self) -> dict:
+        """Serializes the PercentNullValidityCheck into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.column_names:
+            body["column_names"] = [v for v in self.column_names]
+        if self.upper_bound is not None:
+            body["upper_bound"] = self.upper_bound
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the PercentNullValidityCheck into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.column_names:
+            body["column_names"] = self.column_names
+        if self.upper_bound is not None:
+            body["upper_bound"] = self.upper_bound
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> PercentNullValidityCheck:
+        """Deserializes the PercentNullValidityCheck from a dictionary."""
+        return cls(column_names=d.get("column_names", None), upper_bound=d.get("upper_bound", None))
+
+
+@dataclass
+class RangeValidityCheck:
+    column_names: Optional[List[str]] = None
+    """List of column names to check for range validity"""
+
+    lower_bound: Optional[float] = None
+    """Lower bound for the range"""
+
+    upper_bound: Optional[float] = None
+    """Upper bound for the range"""
+
+    def as_dict(self) -> dict:
+        """Serializes the RangeValidityCheck into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.column_names:
+            body["column_names"] = [v for v in self.column_names]
+        if self.lower_bound is not None:
+            body["lower_bound"] = self.lower_bound
+        if self.upper_bound is not None:
+            body["upper_bound"] = self.upper_bound
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the RangeValidityCheck into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.column_names:
+            body["column_names"] = self.column_names
+        if self.lower_bound is not None:
+            body["lower_bound"] = self.lower_bound
+        if self.upper_bound is not None:
+            body["upper_bound"] = self.upper_bound
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> RangeValidityCheck:
+        """Deserializes the RangeValidityCheck from a dictionary."""
+        return cls(
+            column_names=d.get("column_names", None),
+            lower_bound=d.get("lower_bound", None),
+            upper_bound=d.get("upper_bound", None),
+        )
+
+
+@dataclass
 class Refresh:
     """The Refresh object gives information on a refresh of the data quality monitoring pipeline."""
 
     object_type: str
-    """The type of the monitored object. Can be one of the following: `schema`or `table`."""
+    """The type of the monitored object. Can be one of the following: ``schema`` or ``table``."""
 
     object_id: str
-    """The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+    """The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for
+    ``table``.
     
-    Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-    Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+    Find the ``schema_id`` from either:
     
-    Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-    Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+    1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+       ``Schemas`` resource.
+    2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+       ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
     
-    [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-    [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-    [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id"""
+    Find the ``table_id`` from either:
+    
+    1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+       ``Tables`` resource.
+    2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+       ``table`` > go to the ``Details`` tab > the ``Table ID`` field."""
 
     end_time_ms: Optional[int] = None
     """Time when the refresh ended (milliseconds since 1/1/1970 UTC)."""
@@ -847,41 +991,122 @@ class TimeSeriesConfig:
         )
 
 
+@dataclass
+class UniquenessValidityCheck:
+    column_names: Optional[List[str]] = None
+    """List of column names to check for uniqueness"""
+
+    def as_dict(self) -> dict:
+        """Serializes the UniquenessValidityCheck into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.column_names:
+            body["column_names"] = [v for v in self.column_names]
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the UniquenessValidityCheck into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.column_names:
+            body["column_names"] = self.column_names
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> UniquenessValidityCheck:
+        """Deserializes the UniquenessValidityCheck from a dictionary."""
+        return cls(column_names=d.get("column_names", None))
+
+
+@dataclass
+class ValidityCheckConfiguration:
+    name: Optional[str] = None
+    """Can be set by system. Does not need to be user facing."""
+
+    percent_null_validity_check: Optional[PercentNullValidityCheck] = None
+
+    range_validity_check: Optional[RangeValidityCheck] = None
+
+    uniqueness_validity_check: Optional[UniquenessValidityCheck] = None
+
+    def as_dict(self) -> dict:
+        """Serializes the ValidityCheckConfiguration into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.name is not None:
+            body["name"] = self.name
+        if self.percent_null_validity_check:
+            body["percent_null_validity_check"] = self.percent_null_validity_check.as_dict()
+        if self.range_validity_check:
+            body["range_validity_check"] = self.range_validity_check.as_dict()
+        if self.uniqueness_validity_check:
+            body["uniqueness_validity_check"] = self.uniqueness_validity_check.as_dict()
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the ValidityCheckConfiguration into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.name is not None:
+            body["name"] = self.name
+        if self.percent_null_validity_check:
+            body["percent_null_validity_check"] = self.percent_null_validity_check
+        if self.range_validity_check:
+            body["range_validity_check"] = self.range_validity_check
+        if self.uniqueness_validity_check:
+            body["uniqueness_validity_check"] = self.uniqueness_validity_check
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> ValidityCheckConfiguration:
+        """Deserializes the ValidityCheckConfiguration from a dictionary."""
+        return cls(
+            name=d.get("name", None),
+            percent_null_validity_check=_from_dict(d, "percent_null_validity_check", PercentNullValidityCheck),
+            range_validity_check=_from_dict(d, "range_validity_check", RangeValidityCheck),
+            uniqueness_validity_check=_from_dict(d, "uniqueness_validity_check", UniquenessValidityCheck),
+        )
+
+
 class DataQualityAPI:
-    """Manage the data quality of Unity Catalog objects (currently support `schema` and `table`)"""
+    """Manage the data quality of Unity Catalog objects (currently support ``schema`` and ``table``)"""
 
     def __init__(self, api_client):
         self._api = api_client
 
     def cancel_refresh(self, object_type: str, object_id: str, refresh_id: int) -> CancelRefreshResponse:
-        """Cancels a data quality monitor refresh. Currently only supported for the `table` `object_type`. The
-        call must be made in the same workspace as where the monitor was created.
+        """Cancels a data quality monitor refresh. Currently only supported for the ``table`` ``object_type``.
+        The call must be made in the same workspace as where the monitor was created.
 
-        The caller must have either of the following sets of permissions: 1. **MANAGE** and **USE_CATALOG** on
-        the table's parent catalog. 2. **USE_CATALOG** on the table's parent catalog, and **MANAGE** and
-        **USE_SCHEMA** on the table's parent schema. 3. **USE_CATALOG** on the table's parent catalog,
-        **USE_SCHEMA** on the table's parent schema, and **MANAGE** on the table.
+        The caller must have either of the following sets of permissions:
+
+        1. **MANAGE** and **USE_CATALOG** on the table's parent catalog.
+        2. **USE_CATALOG** on the table's parent catalog, and **MANAGE** and **USE_SCHEMA** on the table's
+           parent schema.
+        3. **USE_CATALOG** on the table's parent catalog, **USE_SCHEMA** on the table's parent schema, and
+           **MANAGE** on the table.
 
         :param object_type: str
-          The type of the monitored object. Can be one of the following: `schema` or `table`.
+          The type of the monitored object. Can be one of the following: ``schema`` or ``table``.
         :param object_id: str
-          The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+          The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``.
 
-          Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-          Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+          Find the ``schema_id`` from either:
 
-          Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-          Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+          1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+             ``Schemas`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
 
-          [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-          [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-          [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id
+          Find the ``table_id`` from either:
+
+          1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+             ``Tables`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``table`` > go to the ``Details`` tab > the ``Table ID`` field.
         :param refresh_id: int
           Unique id of the refresh operation.
 
         :returns: :class:`CancelRefreshResponse`
         """
 
+        body = {}
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -889,31 +1114,35 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "POST",
             f"/api/data-quality/v1/monitors/{object_type}/{object_id}/refreshes/{refresh_id}/cancel",
+            body=body,
             headers=headers,
         )
         return CancelRefreshResponse.from_dict(res)
 
     def create_monitor(self, monitor: Monitor) -> Monitor:
         """Create a data quality monitor on a Unity Catalog object. The caller must provide either
-        `anomaly_detection_config` for a schema monitor or `data_profiling_config` for a table monitor.
+        ``anomaly_detection_config`` for a schema monitor or ``data_profiling_config`` for a table monitor.
 
-        For the `table` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the table's parent catalog, **USE_SCHEMA** on the table's parent
-        schema, and **SELECT** on the table 2. **USE_CATALOG** on the table's parent catalog, **MANAGE** and
-        **USE_SCHEMA** on the table's parent schema, and **SELECT** on the table. 3. **USE_CATALOG** on the
-        table's parent catalog, **USE_SCHEMA** on the table's parent schema, and **MANAGE** and **SELECT** on
-        the table.
+        For the ``table`` ``object_type``, the caller must have either of the following sets of permissions:
+
+        1. **MANAGE** and **USE_CATALOG** on the table's parent catalog, **USE_SCHEMA** on the table's parent
+           schema, and **SELECT** on the table
+        2. **USE_CATALOG** on the table's parent catalog, **MANAGE** and **USE_SCHEMA** on the table's parent
+           schema, and **SELECT** on the table.
+        3. **USE_CATALOG** on the table's parent catalog, **USE_SCHEMA** on the table's parent schema, and
+           **MANAGE** and **SELECT** on the table.
 
         Workspace assets, such as the dashboard, will be created in the workspace where this call was made.
 
-        For the `schema` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the schema's parent catalog. 2. **USE_CATALOG** on the schema's
-        parent catalog, and **MANAGE** and **USE_SCHEMA** on the schema.
+        For the ``schema`` ``object_type``, the caller must have either of the following sets of permissions:
+
+        1. **MANAGE** and **USE_CATALOG** on the schema's parent catalog.
+        2. **USE_CATALOG** on the schema's parent catalog, and **MANAGE** and **USE_SCHEMA** on the schema.
 
         :param monitor: :class:`Monitor`
           The monitor to create.
@@ -922,6 +1151,7 @@ class DataQualityAPI:
         """
 
         body = monitor.as_dict()
+        query = {}
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -929,34 +1159,41 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/data-quality/v1/monitors", body=body, headers=headers)
         return Monitor.from_dict(res)
 
     def create_refresh(self, object_type: str, object_id: str, refresh: Refresh) -> Refresh:
-        """Creates a refresh. Currently only supported for the `table` `object_type`. The call must be made in
-        the same workspace as where the monitor was created.
+        """Creates a refresh. Currently only supported for the ``table`` ``object_type``. The call must be made
+        in the same workspace as where the monitor was created.
 
-        The caller must have either of the following sets of permissions: 1. **MANAGE** and **USE_CATALOG** on
-        the table's parent catalog. 2. **USE_CATALOG** on the table's parent catalog, and **MANAGE** and
-        **USE_SCHEMA** on the table's parent schema. 3. **USE_CATALOG** on the table's parent catalog,
-        **USE_SCHEMA** on the table's parent schema, and **MANAGE** on the table.
+        The caller must have either of the following sets of permissions:
+
+        1. **MANAGE** and **USE_CATALOG** on the table's parent catalog.
+        2. **USE_CATALOG** on the table's parent catalog, and **MANAGE** and **USE_SCHEMA** on the table's
+           parent schema.
+        3. **USE_CATALOG** on the table's parent catalog, **USE_SCHEMA** on the table's parent schema, and
+           **MANAGE** on the table.
 
         :param object_type: str
-          The type of the monitored object. Can be one of the following: `schema`or `table`.
+          The type of the monitored object. Can be one of the following: ``schema`` or ``table``.
         :param object_id: str
-          The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+          The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``.
 
-          Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-          Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+          Find the ``schema_id`` from either:
 
-          Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-          Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+          1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+             ``Schemas`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
 
-          [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-          [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-          [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id
+          Find the ``table_id`` from either:
+
+          1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+             ``Tables`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``table`` > go to the ``Details`` tab > the ``Table ID`` field.
         :param refresh: :class:`Refresh`
           The refresh to create
 
@@ -964,6 +1201,7 @@ class DataQualityAPI:
         """
 
         body = refresh.as_dict()
+        query = {}
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -971,7 +1209,7 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "POST", f"/api/data-quality/v1/monitors/{object_type}/{object_id}/refreshes", body=body, headers=headers
@@ -981,7 +1219,7 @@ class DataQualityAPI:
     def delete_monitor(self, object_type: str, object_id: str):
         """Delete a data quality monitor on Unity Catalog object.
 
-        For the `table` `object_type`, the caller must have either of the following sets of permissions:
+        For the ``table`` ``object_type``, the caller must have either of the following sets of permissions:
         **MANAGE** and **USE_CATALOG** on the table's parent catalog. **USE_CATALOG** on the table's parent
         catalog, and **MANAGE** and **USE_SCHEMA** on the table's parent schema. **USE_CATALOG** on the
         table's parent catalog, **USE_SCHEMA** on the table's parent schema, and **MANAGE** on the table.
@@ -989,24 +1227,29 @@ class DataQualityAPI:
         Note that the metric tables and dashboard will not be deleted as part of this call; those assets must
         be manually cleaned up (if desired).
 
-        For the `schema` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the schema's parent catalog. 2. **USE_CATALOG** on the schema's
-        parent catalog, and **MANAGE** and **USE_SCHEMA** on the schema.
+        For the ``schema`` ``object_type``, the caller must have either of the following sets of permissions:
+
+        1. **MANAGE** and **USE_CATALOG** on the schema's parent catalog.
+        2. **USE_CATALOG** on the schema's parent catalog, and **MANAGE** and **USE_SCHEMA** on the schema.
 
         :param object_type: str
-          The type of the monitored object. Can be one of the following: `schema` or `table`.
+          The type of the monitored object. Can be one of the following: ``schema`` or ``table``.
         :param object_id: str
-          The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+          The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``.
 
-          Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-          Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+          Find the ``schema_id`` from either:
 
-          Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-          Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+          1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+             ``Schemas`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
 
-          [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-          [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-          [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id
+          Find the ``table_id`` from either:
+
+          1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+             ``Tables`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``table`` > go to the ``Details`` tab > the ``Table ID`` field.
 
 
         """
@@ -1017,7 +1260,7 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/data-quality/v1/monitors/{object_type}/{object_id}", headers=headers)
 
@@ -1025,19 +1268,23 @@ class DataQualityAPI:
         """(Unimplemented) Delete a refresh
 
         :param object_type: str
-          The type of the monitored object. Can be one of the following: `schema` or `table`.
+          The type of the monitored object. Can be one of the following: ``schema`` or ``table``.
         :param object_id: str
-          The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+          The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``.
 
-          Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-          Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+          Find the ``schema_id`` from either:
 
-          Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-          Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+          1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+             ``Schemas`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
 
-          [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-          [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-          [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id
+          Find the ``table_id`` from either:
+
+          1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+             ``Tables`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``table`` > go to the ``Details`` tab > the ``Table ID`` field.
         :param refresh_id: int
           Unique id of the refresh operation.
 
@@ -1050,7 +1297,7 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do(
             "DELETE", f"/api/data-quality/v1/monitors/{object_type}/{object_id}/refreshes/{refresh_id}", headers=headers
@@ -1059,33 +1306,41 @@ class DataQualityAPI:
     def get_monitor(self, object_type: str, object_id: str) -> Monitor:
         """Read a data quality monitor on a Unity Catalog object.
 
-        For the `table` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the table's parent catalog. 2. **USE_CATALOG** on the table's parent
-        catalog, and **MANAGE** and **USE_SCHEMA** on the table's parent schema. 3. **USE_CATALOG** on the
-        table's parent catalog, **USE_SCHEMA** on the table's parent schema, and **SELECT** on the table.
+        For the ``table`` ``object_type``, the caller must have either of the following sets of permissions:
 
-        For the `schema` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the schema's parent catalog. 2. **USE_CATALOG** on the schema's
-        parent catalog, and **USE_SCHEMA** on the schema.
+        1. **MANAGE** and **USE_CATALOG** on the table's parent catalog.
+        2. **USE_CATALOG** on the table's parent catalog, and **MANAGE** and **USE_SCHEMA** on the table's
+           parent schema.
+        3. **USE_CATALOG** on the table's parent catalog, **USE_SCHEMA** on the table's parent schema, and
+           **SELECT** on the table.
+
+        For the ``schema`` ``object_type``, the caller must have either of the following sets of permissions:
+
+        1. **MANAGE** and **USE_CATALOG** on the schema's parent catalog.
+        2. **USE_CATALOG** on the schema's parent catalog, and **USE_SCHEMA** on the schema.
 
         The returned information includes configuration values on the entity and parent entity as well as
         information on assets created by the monitor. Some information (e.g. dashboard) may be filtered out if
         the caller is in a different workspace than where the monitor was created.
 
         :param object_type: str
-          The type of the monitored object. Can be one of the following: `schema` or `table`.
+          The type of the monitored object. Can be one of the following: ``schema`` or ``table``.
         :param object_id: str
-          The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+          The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``.
 
-          Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-          Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+          Find the ``schema_id`` from either:
 
-          Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-          Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+          1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+             ``Schemas`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
 
-          [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-          [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-          [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id
+          Find the ``table_id`` from either:
+
+          1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+             ``Tables`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``table`` > go to the ``Details`` tab > the ``Table ID`` field.
 
         :returns: :class:`Monitor`
         """
@@ -1096,7 +1351,7 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/data-quality/v1/monitors/{object_type}/{object_id}", headers=headers)
         return Monitor.from_dict(res)
@@ -1105,29 +1360,37 @@ class DataQualityAPI:
         """Get data quality monitor refresh. The call must be made in the same workspace as where the monitor was
         created.
 
-        For the `table` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the table's parent catalog. 2. **USE_CATALOG** on the table's parent
-        catalog, and **MANAGE** and **USE_SCHEMA** on the table's parent schema. 3. **USE_CATALOG** on the
-        table's parent catalog, **USE_SCHEMA** on the table's parent schema, and **SELECT** on the table.
+        For the ``table`` ``object_type``, the caller must have either of the following sets of permissions:
 
-        For the `schema` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the schema's parent catalog. 2. **USE_CATALOG** on the schema's
-        parent catalog, and **USE_SCHEMA** on the schema.
+        1. **MANAGE** and **USE_CATALOG** on the table's parent catalog.
+        2. **USE_CATALOG** on the table's parent catalog, and **MANAGE** and **USE_SCHEMA** on the table's
+           parent schema.
+        3. **USE_CATALOG** on the table's parent catalog, **USE_SCHEMA** on the table's parent schema, and
+           **SELECT** on the table.
+
+        For the ``schema`` ``object_type``, the caller must have either of the following sets of permissions:
+
+        1. **MANAGE** and **USE_CATALOG** on the schema's parent catalog.
+        2. **USE_CATALOG** on the schema's parent catalog, and **USE_SCHEMA** on the schema.
 
         :param object_type: str
-          The type of the monitored object. Can be one of the following: `schema` or `table`.
+          The type of the monitored object. Can be one of the following: ``schema`` or ``table``.
         :param object_id: str
-          The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+          The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``.
 
-          Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-          Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+          Find the ``schema_id`` from either:
 
-          Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-          Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+          1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+             ``Schemas`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
 
-          [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-          [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-          [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id
+          Find the ``table_id`` from either:
+
+          1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+             ``Tables`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``table`` > go to the ``Details`` tab > the ``Table ID`` field.
         :param refresh_id: int
           Unique id of the refresh operation.
 
@@ -1140,7 +1403,7 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET", f"/api/data-quality/v1/monitors/{object_type}/{object_id}/refreshes/{refresh_id}", headers=headers
@@ -1167,7 +1430,7 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/data-quality/v1/monitors", query=query, headers=headers)
@@ -1184,29 +1447,37 @@ class DataQualityAPI:
         """List data quality monitor refreshes. The call must be made in the same workspace as where the monitor
         was created.
 
-        For the `table` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the table's parent catalog. 2. **USE_CATALOG** on the table's parent
-        catalog, and **MANAGE** and **USE_SCHEMA** on the table's parent schema. 3. **USE_CATALOG** on the
-        table's parent catalog, **USE_SCHEMA** on the table's parent schema, and **SELECT** on the table.
+        For the ``table`` ``object_type``, the caller must have either of the following sets of permissions:
 
-        For the `schema` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the schema's parent catalog. 2. **USE_CATALOG** on the schema's
-        parent catalog, and **USE_SCHEMA** on the schema.
+        1. **MANAGE** and **USE_CATALOG** on the table's parent catalog.
+        2. **USE_CATALOG** on the table's parent catalog, and **MANAGE** and **USE_SCHEMA** on the table's
+           parent schema.
+        3. **USE_CATALOG** on the table's parent catalog, **USE_SCHEMA** on the table's parent schema, and
+           **SELECT** on the table.
+
+        For the ``schema`` ``object_type``, the caller must have either of the following sets of permissions:
+
+        1. **MANAGE** and **USE_CATALOG** on the schema's parent catalog.
+        2. **USE_CATALOG** on the schema's parent catalog, and **USE_SCHEMA** on the schema.
 
         :param object_type: str
-          The type of the monitored object. Can be one of the following: `schema` or `table`.
+          The type of the monitored object. Can be one of the following: ``schema`` or ``table``.
         :param object_id: str
-          The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+          The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``.
 
-          Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-          Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+          Find the ``schema_id`` from either:
 
-          Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-          Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+          1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+             ``Schemas`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
 
-          [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-          [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-          [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id
+          Find the ``table_id`` from either:
+
+          1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+             ``Tables`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``table`` > go to the ``Details`` tab > the ``Table ID`` field.
         :param page_size: int (optional)
         :param page_token: str (optional)
 
@@ -1224,7 +1495,7 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -1243,34 +1514,42 @@ class DataQualityAPI:
     def update_monitor(self, object_type: str, object_id: str, monitor: Monitor, update_mask: str) -> Monitor:
         """Update a data quality monitor on Unity Catalog object.
 
-        For the `table` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the table's parent catalog. 2. **USE_CATALOG** on the table's parent
-        catalog, and **MANAGE** and **USE_SCHEMA** on the table's parent schema. 3. **USE_CATALOG** on the
-        table's parent catalog, **USE_SCHEMA** on the table's parent schema, and **MANAGE** on the table.
+        For the ``table`` ``object_type``, the caller must have either of the following sets of permissions:
 
-        For the `schema` `object_type`, the caller must have either of the following sets of permissions: 1.
-        **MANAGE** and **USE_CATALOG** on the schema's parent catalog. 2. **USE_CATALOG** on the schema's
-        parent catalog, and **MANAGE** and **USE_SCHEMA** on the schema.
+        1. **MANAGE** and **USE_CATALOG** on the table's parent catalog.
+        2. **USE_CATALOG** on the table's parent catalog, and **MANAGE** and **USE_SCHEMA** on the table's
+           parent schema.
+        3. **USE_CATALOG** on the table's parent catalog, **USE_SCHEMA** on the table's parent schema, and
+           **MANAGE** on the table.
+
+        For the ``schema`` ``object_type``, the caller must have either of the following sets of permissions:
+
+        1. **MANAGE** and **USE_CATALOG** on the schema's parent catalog.
+        2. **USE_CATALOG** on the schema's parent catalog, and **MANAGE** and **USE_SCHEMA** on the schema.
 
         :param object_type: str
-          The type of the monitored object. Can be one of the following: `schema` or `table`.
+          The type of the monitored object. Can be one of the following: ``schema`` or ``table``.
         :param object_id: str
-          The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+          The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``.
 
-          Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-          Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+          Find the ``schema_id`` from either:
 
-          Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-          Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+          1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+             ``Schemas`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
 
-          [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-          [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-          [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id
+          Find the ``table_id`` from either:
+
+          1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+             ``Tables`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``table`` > go to the ``Details`` tab > the ``Table ID`` field.
         :param monitor: :class:`Monitor`
           The monitor to update.
         :param update_mask: str
           The field mask to specify which fields to update as a comma-separated list. Example value:
-          `data_profiling_config.custom_metrics,data_profiling_config.schedule.quartz_cron_expression`
+          ``data_profiling_config.custom_metrics,data_profiling_config.schedule.quartz_cron_expression``
 
         :returns: :class:`Monitor`
         """
@@ -1286,7 +1565,7 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "PATCH", f"/api/data-quality/v1/monitors/{object_type}/{object_id}", query=query, body=body, headers=headers
@@ -1299,19 +1578,23 @@ class DataQualityAPI:
         """(Unimplemented) Update a refresh
 
         :param object_type: str
-          The type of the monitored object. Can be one of the following: `schema` or `table`.
+          The type of the monitored object. Can be one of the following: ``schema`` or ``table``.
         :param object_id: str
-          The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`.
+          The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``.
 
-          Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog
-          Explorer] > select the `schema` > go to the `Details` tab > the `Schema ID` field.
+          Find the ``schema_id`` from either:
 
-          Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog
-          Explorer] > select the `table` > go to the `Details` tab > the `Table ID` field.
+          1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the
+             ``Schemas`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``schema`` > go to the ``Details`` tab > the ``Schema ID`` field.
 
-          [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/
-          [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id
-          [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id
+          Find the ``table_id`` from either:
+
+          1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the
+             ``Tables`` resource.
+          2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ > select the
+             ``table`` > go to the ``Details`` tab > the ``Table ID`` field.
         :param refresh_id: int
           Unique id of the refresh operation.
         :param refresh: :class:`Refresh`
@@ -1333,7 +1616,7 @@ class DataQualityAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "PATCH",

@@ -4,6 +4,10 @@ Knowledge Assistants
 These dataclasses are used in the SDK to represent API requests and responses for services in the ``databricks.sdk.service.knowledgeassistants`` module.
 
 .. py:currentmodule:: databricks.sdk.service.knowledgeassistants
+.. autoclass:: Example
+   :members:
+   :undoc-members:
+
 .. autoclass:: FileTableSpec
    :members:
    :undoc-members:
@@ -12,11 +16,45 @@ These dataclasses are used in the SDK to represent API requests and responses fo
    :members:
    :undoc-members:
 
+.. autoclass:: GetKnowledgeAssistantPermissionLevelsResponse
+   :members:
+   :undoc-members:
+
 .. autoclass:: IndexSpec
    :members:
    :undoc-members:
 
 .. autoclass:: KnowledgeAssistant
+   :members:
+   :undoc-members:
+
+.. autoclass:: KnowledgeAssistantAccessControlRequest
+   :members:
+   :undoc-members:
+
+.. autoclass:: KnowledgeAssistantAccessControlResponse
+   :members:
+   :undoc-members:
+
+.. autoclass:: KnowledgeAssistantPermission
+   :members:
+   :undoc-members:
+
+.. py:class:: KnowledgeAssistantPermissionLevel
+
+   Permission level
+
+   .. py:attribute:: CAN_MANAGE
+      :value: "CAN_MANAGE"
+
+   .. py:attribute:: CAN_QUERY
+      :value: "CAN_QUERY"
+
+.. autoclass:: KnowledgeAssistantPermissions
+   :members:
+   :undoc-members:
+
+.. autoclass:: KnowledgeAssistantPermissionsDescription
    :members:
    :undoc-members:
 
@@ -45,6 +83,10 @@ These dataclasses are used in the SDK to represent API requests and responses fo
 
    .. py:attribute:: UPDATING
       :value: "UPDATING"
+
+.. autoclass:: ListExamplesResponse
+   :members:
+   :undoc-members:
 
 .. autoclass:: ListKnowledgeAssistantsResponse
    :members:

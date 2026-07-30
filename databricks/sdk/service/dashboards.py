@@ -1,4 +1,7 @@
 # Code generated from OpenAPI specs by Databricks SDK Generator. DO NOT EDIT.
+# ruff: noqa: F811, F841
+# F401 is intentionally NOT covered: `make fmt` uses `ruff check --fix-only`
+# to strip the fat-import header below; ignoring F401 would defeat that.
 
 from __future__ import annotations
 
@@ -8,11 +11,16 @@ import time
 from dataclasses import dataclass
 from datetime import timedelta
 from enum import Enum
-from typing import Any, Callable, Dict, Iterator, List, Optional
+from typing import Any, BinaryIO, Callable, Dict, Iterator, List, Optional
 
 from databricks.sdk.service import sql
-from databricks.sdk.service._internal import (Wait, _enum, _from_dict,
-                                              _repeated_dict, _repeated_enum)
+from databricks.sdk.service._internal import (
+    Wait,
+    _enum,
+    _from_dict,
+    _repeated_dict,
+    _repeated_enum,
+)
 
 from ..errors import OperationFailed
 
@@ -26,18 +34,19 @@ _LOG = logging.getLogger("databricks.sdk")
 class AuthorizationDetails:
     grant_rules: Optional[List[AuthorizationDetailsGrantRule]] = None
     """Represents downscoped permission rules with specific access rights. This field is specific to
-    `workspace_rule_set` constraint."""
+    ``workspace_rule_set`` constraint."""
 
     resource_legacy_acl_path: Optional[str] = None
     """The acl path of the tree store resource resource."""
 
     resource_name: Optional[str] = None
     """The resource name to which the authorization rule applies. This field is specific to
-    `workspace_rule_set` constraint. Format: `workspaces/{workspace_id}/dashboards/{dashboard_id}`"""
+    ``workspace_rule_set`` constraint. Format:
+    ``workspaces/{workspace_id}/dashboards/{dashboard_id}``"""
 
     type: Optional[str] = None
-    """The type of authorization downscoping policy. Ex: `workspace_rule_set` defines access rules for
-    a specific workspace resource"""
+    """The type of authorization downscoping policy. Ex: ``workspace_rule_set`` defines access rules
+    for a specific workspace resource"""
 
     def as_dict(self) -> dict:
         """Serializes the AuthorizationDetails into a dictionary suitable for use as a JSON request body."""
@@ -81,7 +90,7 @@ class AuthorizationDetailsGrantRule:
     permission_set: Optional[str] = None
     """Permission sets for dashboard are defined in
     iam-common/rbac-common/permission-sets/definitions/TreeStoreBasePermissionSets Ex:
-    `permissionSets/dashboard.runner`"""
+    ``permissionSets/dashboard.runner``"""
 
     def as_dict(self) -> dict:
         """Serializes the AuthorizationDetailsGrantRule into a dictionary suitable for use as a JSON request body."""
@@ -106,16 +115,14 @@ class AuthorizationDetailsGrantRule:
 @dataclass
 class CronSchedule:
     quartz_cron_expression: str
-    """A cron expression using quartz syntax. EX: `0 0 8 * * ?` represents everyday at 8am. See [Cron
-    Trigger] for details.
-    
-    [Cron Trigger]: http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html"""
+    """A cron expression using quartz syntax. EX: ``0 0 8 * * ?`` represents everyday at 8am. See `Cron
+    Trigger
+    <http://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html>`__ for
+    details."""
 
     timezone_id: str
-    """A Java timezone id. The schedule will be resolved with respect to this timezone. See [Java
-    TimeZone] for details.
-    
-    [Java TimeZone]: https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html"""
+    """A Java timezone id. The schedule will be resolved with respect to this timezone. See `Java
+    TimeZone <https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html>`__ for details."""
 
     def as_dict(self) -> dict:
         """Serializes the CronSchedule into a dictionary suitable for use as a JSON request body."""
@@ -165,15 +172,14 @@ class Dashboard:
 
     path: Optional[str] = None
     """The workspace path of the dashboard asset, including the file name. Exported dashboards always
-    have the file extension `.lvdash.json`. This field is excluded in List Dashboards responses."""
+    have the file extension ``.lvdash.json``. This field is excluded in List Dashboards responses."""
 
     serialized_dashboard: Optional[str] = None
     """The contents of the dashboard in serialized string form. This field is excluded in List
-    Dashboards responses. Use the [get dashboard API] to retrieve an example response, which
-    includes the `serialized_dashboard` field. This field provides the structure of the JSON string
-    that represents the dashboard's layout and components.
-    
-    [get dashboard API]: https://docs.databricks.com/api/workspace/lakeview/get"""
+    Dashboards responses. Use the `get dashboard API
+    <https://docs.databricks.com/api/workspace/lakeview/get>`__ to retrieve an example response,
+    which includes the ``serialized_dashboard`` field. This field provides the structure of the JSON
+    string that represents the dashboard's layout and components."""
 
     update_time: Optional[str] = None
     """The timestamp of when the dashboard was last updated by the user. This field is excluded in List
@@ -250,12 +256,34 @@ class Dashboard:
 
 
 class DashboardView(Enum):
-
     DASHBOARD_VIEW_BASIC = "DASHBOARD_VIEW_BASIC"
 
 
-class EvaluationStatusType(Enum):
+@dataclass
+class DownloadMessageAttachmentVisualizationResponse:
+    contents: Optional[BinaryIO] = None
 
+    def as_dict(self) -> dict:
+        """Serializes the DownloadMessageAttachmentVisualizationResponse into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.contents:
+            body["contents"] = self.contents
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the DownloadMessageAttachmentVisualizationResponse into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.contents:
+            body["contents"] = self.contents
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> DownloadMessageAttachmentVisualizationResponse:
+        """Deserializes the DownloadMessageAttachmentVisualizationResponse from a dictionary."""
+        return cls(contents=d.get("contents", None))
+
+
+class EvaluationStatusType(Enum):
     DONE = "DONE"
     EVALUATION_CANCELLED = "EVALUATION_CANCELLED"
     EVALUATION_FAILED = "EVALUATION_FAILED"
@@ -280,6 +308,9 @@ class GenieAttachment:
     text: Optional[TextAttachment] = None
     """Text Attachment if Genie responds with text This also contains the final summary when available."""
 
+    viz: Optional[GenieVizAttachment] = None
+    """Visualization generated by Genie, if requested via ``enable_visualization``"""
+
     def as_dict(self) -> dict:
         """Serializes the GenieAttachment into a dictionary suitable for use as a JSON request body."""
         body = {}
@@ -291,6 +322,8 @@ class GenieAttachment:
             body["suggested_questions"] = self.suggested_questions.as_dict()
         if self.text:
             body["text"] = self.text.as_dict()
+        if self.viz:
+            body["viz"] = self.viz.as_dict()
         return body
 
     def as_shallow_dict(self) -> dict:
@@ -304,6 +337,8 @@ class GenieAttachment:
             body["suggested_questions"] = self.suggested_questions
         if self.text:
             body["text"] = self.text
+        if self.viz:
+            body["viz"] = self.viz
         return body
 
     @classmethod
@@ -314,6 +349,7 @@ class GenieAttachment:
             query=_from_dict(d, "query", GenieQueryAttachment),
             suggested_questions=_from_dict(d, "suggested_questions", GenieSuggestedQuestionsAttachment),
             text=_from_dict(d, "text", TextAttachment),
+            viz=_from_dict(d, "viz", GenieVizAttachment),
         )
 
 
@@ -433,7 +469,6 @@ class GenieConversationSummary:
 
 
 class GenieEvalAssessment(Enum):
-
     BAD = "BAD"
     GOOD = "GOOD"
     NEEDS_REVIEW = "NEEDS_REVIEW"
@@ -483,7 +518,6 @@ class GenieEvalResponse:
 
 
 class GenieEvalResponseType(Enum):
-
     SQL = "SQL"
     TEXT = "TEXT"
 
@@ -587,7 +621,57 @@ class GenieEvalResultDetails:
     """Assessment of the evaluation result: good, bad, or needs review"""
 
     assessment_reasons: Optional[List[ScoreReason]] = None
-    """Reasons for the assessment score."""
+    """Reasons for the assessment score.
+    
+    Assessment reasons describe why a Genie response was scored as BAD.
+    
+    Deterministic values (compared against the ground truth result):
+    
+    - EMPTY_RESULT: Genie's generated SQL results were empty for this benchmark question.
+    - RESULT_MISSING_ROWS: Genie's generated SQL response is missing rows from the provided ground
+      truth SQL.
+    - RESULT_EXTRA_ROWS: Genie's generated SQL response has more rows than the provided ground truth
+      SQL.
+    - RESULT_MISSING_COLUMNS: Genie's generated SQL response is missing columns from the provided
+      ground truth SQL.
+    - RESULT_EXTRA_COLUMNS: Genie's generated SQL response has more columns than the provided ground
+      truth SQL.
+    - SINGLE_CELL_DIFFERENCE: Single value result was produced but differs from ground truth result.
+    - EMPTY_GOOD_SQL: The benchmark SQL returned an empty result.
+    - COLUMN_TYPE_DIFFERENCE: The values between the results match but the column type is different.
+    
+    LLM judge ratings explain the factors driving BAD results:
+    
+    - LLM_JUDGE_MISSING_OR_INCORRECT_FILTER: Genie's generated SQL is missing a WHERE clause
+      condition or has incorrect filter logic that excludes/includes wrong data.
+    - LLM_JUDGE_INCOMPLETE_OR_PARTIAL_OUTPUT: Genie's generated SQL returns only some of the
+      requested data or columns, missing parts of what the ground truth SQL returns.
+    - LLM_JUDGE_MISINTERPRETATION_OF_USER_REQUEST: Genie's generated SQL fundamentally
+      misunderstands what the user is asking for, addressing the wrong question or goal.
+    - LLM_JUDGE_INSTRUCTION_COMPLIANCE_OR_MISSING_BUSINESS_LOGIC: Genie's generated SQL fails to
+      apply specified instructions or business logic that should be followed.
+    - LLM_JUDGE_INCORRECT_METRIC_CALCULATION: Genie's generated SQL uses incorrect logic or makes
+      wrong assumptions when calculating metrics.
+    - LLM_JUDGE_INCORRECT_TABLE_OR_FIELD_USAGE: Genie's generated SQL references wrong tables,
+      columns, or uses fields that don't match the ground truth SQL's intent.
+    - LLM_JUDGE_INCORRECT_FUNCTION_USAGE: Genie's generated SQL uses SQL functions incorrectly or
+      inappropriately (wrong parameters, wrong function for the task, etc.).
+    - LLM_JUDGE_MISSING_OR_INCORRECT_JOIN: Genie's generated SQL is missing necessary joins between
+      tables or has incorrect join conditions/types that produce wrong results.
+    - LLM_JUDGE_MISSING_OR_INCORRECT_AGGREGATION: Genie's generated SQL is missing GROUP BY clauses
+      or has incorrect grouping that doesn't match the requested aggregation level.
+    - LLM_JUDGE_FORMATTING_ERROR: Genie's generated SQL output has incorrect formatting, ordering
+      (ORDER BY), or presentation issues that don't match expectations.
+    - LLM_JUDGE_OTHER: LLM judge identified an error that doesn't fall into other categories.
+    
+    Deprecated LLM judge values (kept for backward compatibility, do not use):
+    
+    - LLM_JUDGE_MISSING_JOIN (deprecated)
+    - LLM_JUDGE_WRONG_FILTER (deprecated)
+    - LLM_JUDGE_WRONG_AGGREGATION (deprecated)
+    - LLM_JUDGE_WRONG_COLUMNS (deprecated)
+    - LLM_JUDGE_SYNTAX_ERROR (deprecated)
+    - LLM_JUDGE_SEMANTIC_ERROR (deprecated)"""
 
     eval_run_status: Optional[EvaluationStatusType] = None
     """Current status of the evaluation run."""
@@ -755,12 +839,17 @@ class GenieEvalRunResponse:
 class GenieFeedback:
     """Feedback containing rating and optional comment"""
 
+    comment: Optional[str] = None
+    """Optional feedback comment text"""
+
     rating: Optional[GenieFeedbackRating] = None
     """The feedback rating"""
 
     def as_dict(self) -> dict:
         """Serializes the GenieFeedback into a dictionary suitable for use as a JSON request body."""
         body = {}
+        if self.comment is not None:
+            body["comment"] = self.comment
         if self.rating is not None:
             body["rating"] = self.rating.value
         return body
@@ -768,6 +857,8 @@ class GenieFeedback:
     def as_shallow_dict(self) -> dict:
         """Serializes the GenieFeedback into a shallow dictionary of its immediate attributes."""
         body = {}
+        if self.comment is not None:
+            body["comment"] = self.comment
         if self.rating is not None:
             body["rating"] = self.rating
         return body
@@ -775,7 +866,7 @@ class GenieFeedback:
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> GenieFeedback:
         """Deserializes the GenieFeedback from a dictionary."""
-        return cls(rating=_enum(d, "rating", GenieFeedbackRating))
+        return cls(comment=d.get("comment", None), rating=_enum(d, "rating", GenieFeedbackRating))
 
 
 class GenieFeedbackRating(Enum):
@@ -868,6 +959,40 @@ class GenieGetMessageQueryResultResponse:
     def from_dict(cls, d: Dict[str, Any]) -> GenieGetMessageQueryResultResponse:
         """Deserializes the GenieGetMessageQueryResultResponse from a dictionary."""
         return cls(statement_response=_from_dict(d, "statement_response", sql.StatementResponse))
+
+
+@dataclass
+class GenieListConversationCommentsResponse:
+    comments: Optional[List[GenieMessageComment]] = None
+    """List of comments in the conversation."""
+
+    next_page_token: Optional[str] = None
+    """Token to get the next page of results."""
+
+    def as_dict(self) -> dict:
+        """Serializes the GenieListConversationCommentsResponse into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.comments:
+            body["comments"] = [v.as_dict() for v in self.comments]
+        if self.next_page_token is not None:
+            body["next_page_token"] = self.next_page_token
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the GenieListConversationCommentsResponse into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.comments:
+            body["comments"] = self.comments
+        if self.next_page_token is not None:
+            body["next_page_token"] = self.next_page_token
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> GenieListConversationCommentsResponse:
+        """Deserializes the GenieListConversationCommentsResponse from a dictionary."""
+        return cls(
+            comments=_repeated_dict(d, "comments", GenieMessageComment), next_page_token=d.get("next_page_token", None)
+        )
 
 
 @dataclass
@@ -1008,6 +1133,40 @@ class GenieListEvalRunsResponse:
 
 
 @dataclass
+class GenieListMessageCommentsResponse:
+    comments: Optional[List[GenieMessageComment]] = None
+    """List of comments on the message."""
+
+    next_page_token: Optional[str] = None
+    """Token to get the next page of results."""
+
+    def as_dict(self) -> dict:
+        """Serializes the GenieListMessageCommentsResponse into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.comments:
+            body["comments"] = [v.as_dict() for v in self.comments]
+        if self.next_page_token is not None:
+            body["next_page_token"] = self.next_page_token
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the GenieListMessageCommentsResponse into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.comments:
+            body["comments"] = self.comments
+        if self.next_page_token is not None:
+            body["next_page_token"] = self.next_page_token
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> GenieListMessageCommentsResponse:
+        """Deserializes the GenieListMessageCommentsResponse from a dictionary."""
+        return cls(
+            comments=_repeated_dict(d, "comments", GenieMessageComment), next_page_token=d.get("next_page_token", None)
+        )
+
+
+@dataclass
 class GenieListSpacesResponse:
     next_page_token: Optional[str] = None
     """Token to get the next page of results"""
@@ -1073,7 +1232,7 @@ class GenieMessage:
 
     query_result: Optional[Result] = None
     """The result of SQL query if the message includes a query attachment. Deprecated. Use
-    `query_result_metadata` in `GenieQueryAttachment` instead."""
+    ``query_result_metadata`` in ``GenieQueryAttachment`` instead."""
 
     status: Optional[MessageStatus] = None
 
@@ -1163,6 +1322,83 @@ class GenieMessage:
 
 
 @dataclass
+class GenieMessageComment:
+    """A comment on a Genie conversation message."""
+
+    space_id: str
+    """Genie space ID"""
+
+    conversation_id: str
+    """Conversation ID"""
+
+    message_id: str
+    """Message ID"""
+
+    message_comment_id: str
+    """Comment ID"""
+
+    content: str
+    """Comment text content"""
+
+    created_timestamp: Optional[int] = None
+    """Timestamp when the comment was created"""
+
+    user_id: Optional[int] = None
+    """ID of the user who created the comment"""
+
+    def as_dict(self) -> dict:
+        """Serializes the GenieMessageComment into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.content is not None:
+            body["content"] = self.content
+        if self.conversation_id is not None:
+            body["conversation_id"] = self.conversation_id
+        if self.created_timestamp is not None:
+            body["created_timestamp"] = self.created_timestamp
+        if self.message_comment_id is not None:
+            body["message_comment_id"] = self.message_comment_id
+        if self.message_id is not None:
+            body["message_id"] = self.message_id
+        if self.space_id is not None:
+            body["space_id"] = self.space_id
+        if self.user_id is not None:
+            body["user_id"] = self.user_id
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the GenieMessageComment into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.content is not None:
+            body["content"] = self.content
+        if self.conversation_id is not None:
+            body["conversation_id"] = self.conversation_id
+        if self.created_timestamp is not None:
+            body["created_timestamp"] = self.created_timestamp
+        if self.message_comment_id is not None:
+            body["message_comment_id"] = self.message_comment_id
+        if self.message_id is not None:
+            body["message_id"] = self.message_id
+        if self.space_id is not None:
+            body["space_id"] = self.space_id
+        if self.user_id is not None:
+            body["user_id"] = self.user_id
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> GenieMessageComment:
+        """Deserializes the GenieMessageComment from a dictionary."""
+        return cls(
+            content=d.get("content", None),
+            conversation_id=d.get("conversation_id", None),
+            created_timestamp=d.get("created_timestamp", None),
+            message_comment_id=d.get("message_comment_id", None),
+            message_id=d.get("message_id", None),
+            space_id=d.get("space_id", None),
+            user_id=d.get("user_id", None),
+        )
+
+
+@dataclass
 class GenieQueryAttachment:
     description: Optional[str] = None
     """Description of the query"""
@@ -1184,6 +1420,9 @@ class GenieQueryAttachment:
     """Statement Execution API statement id. Use [Get status, manifest, and result first
     chunk](:method:statementexecution/getstatement) to get the full result data."""
 
+    thoughts: Optional[List[Thought]] = None
+    """Insights into how Genie came to generate the SQL."""
+
     title: Optional[str] = None
     """Name of the query"""
 
@@ -1204,6 +1443,8 @@ class GenieQueryAttachment:
             body["query_result_metadata"] = self.query_result_metadata.as_dict()
         if self.statement_id is not None:
             body["statement_id"] = self.statement_id
+        if self.thoughts:
+            body["thoughts"] = [v.as_dict() for v in self.thoughts]
         if self.title is not None:
             body["title"] = self.title
         return body
@@ -1225,6 +1466,8 @@ class GenieQueryAttachment:
             body["query_result_metadata"] = self.query_result_metadata
         if self.statement_id is not None:
             body["statement_id"] = self.statement_id
+        if self.thoughts:
+            body["thoughts"] = self.thoughts
         if self.title is not None:
             body["title"] = self.title
         return body
@@ -1240,6 +1483,7 @@ class GenieQueryAttachment:
             query=d.get("query", None),
             query_result_metadata=_from_dict(d, "query_result_metadata", GenieResultMetadata),
             statement_id=d.get("statement_id", None),
+            thoughts=_repeated_dict(d, "thoughts", Thought),
             title=d.get("title", None),
         )
 
@@ -1287,14 +1531,18 @@ class GenieSpace:
     description: Optional[str] = None
     """Description of the Genie Space"""
 
+    etag: Optional[str] = None
+    """ETag for this space. Pass this value back in the update request to prevent overwriting
+    concurrent changes."""
+
     parent_path: Optional[str] = None
     """Parent folder path of the Genie Space"""
 
     serialized_space: Optional[str] = None
     """The contents of the Genie Space in serialized string form. This field is excluded in List Genie
     spaces responses. Use the [Get Genie Space](:method:genie/getspace) API to retrieve an example
-    response, which includes the `serialized_space` field. This field provides the structure of the
-    JSON string that represents the space's layout and components."""
+    response, which includes the ``serialized_space`` field. This field provides the structure of
+    the JSON string that represents the space's layout and components."""
 
     warehouse_id: Optional[str] = None
     """Warehouse associated with the Genie Space"""
@@ -1304,6 +1552,8 @@ class GenieSpace:
         body = {}
         if self.description is not None:
             body["description"] = self.description
+        if self.etag is not None:
+            body["etag"] = self.etag
         if self.parent_path is not None:
             body["parent_path"] = self.parent_path
         if self.serialized_space is not None:
@@ -1321,6 +1571,8 @@ class GenieSpace:
         body = {}
         if self.description is not None:
             body["description"] = self.description
+        if self.etag is not None:
+            body["etag"] = self.etag
         if self.parent_path is not None:
             body["parent_path"] = self.parent_path
         if self.serialized_space is not None:
@@ -1338,6 +1590,7 @@ class GenieSpace:
         """Deserializes the GenieSpace from a dictionary."""
         return cls(
             description=d.get("description", None),
+            etag=d.get("etag", None),
             parent_path=d.get("parent_path", None),
             serialized_space=d.get("serialized_space", None),
             space_id=d.get("space_id", None),
@@ -1423,15 +1676,68 @@ class GenieSuggestedQuestionsAttachment:
 
 
 @dataclass
+class GenieVizAttachment:
+    """Visualization generated by Genie for a query result. Use the attachment ID with the download
+    visualization API to retrieve the rendered image."""
+
+    query_attachment_id: Optional[str] = None
+    """The ID of the query attachment the visualization was generated from"""
+
+    title: Optional[str] = None
+    """Name of the visualization"""
+
+    def as_dict(self) -> dict:
+        """Serializes the GenieVizAttachment into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.query_attachment_id is not None:
+            body["query_attachment_id"] = self.query_attachment_id
+        if self.title is not None:
+            body["title"] = self.title
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the GenieVizAttachment into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.query_attachment_id is not None:
+            body["query_attachment_id"] = self.query_attachment_id
+        if self.title is not None:
+            body["title"] = self.title
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> GenieVizAttachment:
+        """Deserializes the GenieVizAttachment from a dictionary."""
+        return cls(query_attachment_id=d.get("query_attachment_id", None), title=d.get("title", None))
+
+
+@dataclass
+class GetPublishedDashboardEmbeddedResponse:
+    def as_dict(self) -> dict:
+        """Serializes the GetPublishedDashboardEmbeddedResponse into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the GetPublishedDashboardEmbeddedResponse into a shallow dictionary of its immediate attributes."""
+        body = {}
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> GetPublishedDashboardEmbeddedResponse:
+        """Deserializes the GetPublishedDashboardEmbeddedResponse from a dictionary."""
+        return cls()
+
+
+@dataclass
 class GetPublishedDashboardTokenInfoResponse:
     authorization_details: Optional[List[AuthorizationDetails]] = None
     """Authorization constraints for accessing the published dashboard. Currently includes
-    `workspace_rule_set` and could be enriched with `unity_catalog_privileges` before oAuth token
-    generation."""
+    ``workspace_rule_set`` and could be enriched with ``unity_catalog_privileges`` before oAuth
+    token generation."""
 
     custom_claim: Optional[str] = None
     """Custom claim generated from external_value and external_viewer_id. Format:
-    `urn:aibi:external_data:<external_value>:<external_viewer_id>:<dashboard_id>`"""
+    ``urn:aibi:external_data:<external_value>:<external_viewer_id>:<dashboard_id>``"""
 
     scope: Optional[str] = None
     """Scope defining access permissions."""
@@ -1469,7 +1775,6 @@ class GetPublishedDashboardTokenInfoResponse:
 
 
 class LifecycleState(Enum):
-
     ACTIVE = "ACTIVE"
     TRASHED = "TRASHED"
 
@@ -1479,8 +1784,8 @@ class ListDashboardsResponse:
     dashboards: Optional[List[Dashboard]] = None
 
     next_page_token: Optional[str] = None
-    """A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted,
-    there are no subsequent dashboards."""
+    """A token, which can be sent as ``page_token`` to retrieve the next page. If this field is
+    omitted, there are no subsequent dashboards."""
 
     def as_dict(self) -> dict:
         """Serializes the ListDashboardsResponse into a dictionary suitable for use as a JSON request body."""
@@ -1511,7 +1816,7 @@ class ListDashboardsResponse:
 @dataclass
 class ListSchedulesResponse:
     next_page_token: Optional[str] = None
-    """A token that can be used as a `page_token` in subsequent requests to retrieve the next page of
+    """A token that can be used as a ``page_token`` in subsequent requests to retrieve the next page of
     results. If this field is omitted, there are no subsequent schedules."""
 
     schedules: Optional[List[Schedule]] = None
@@ -1543,7 +1848,7 @@ class ListSchedulesResponse:
 @dataclass
 class ListSubscriptionsResponse:
     next_page_token: Optional[str] = None
-    """A token that can be used as a `page_token` in subsequent requests to retrieve the next page of
+    """A token that can be used as a ``page_token`` in subsequent requests to retrieve the next page of
     results. If this field is omitted, there are no subsequent subscriptions."""
 
     subscriptions: Optional[List[Subscription]] = None
@@ -1606,8 +1911,9 @@ class MessageError:
 
 
 class MessageErrorType(Enum):
-
     BLOCK_MULTIPLE_EXECUTIONS_EXCEPTION = "BLOCK_MULTIPLE_EXECUTIONS_EXCEPTION"
+    BUDGET_EXCEEDED_EXCEPTION = "BUDGET_EXCEEDED_EXCEPTION"
+    CERTIFIED_ANSWERS_MISSING_EXCEPTION = "CERTIFIED_ANSWERS_MISSING_EXCEPTION"
     CHAT_COMPLETION_CLIENT_EXCEPTION = "CHAT_COMPLETION_CLIENT_EXCEPTION"
     CHAT_COMPLETION_CLIENT_TIMEOUT_EXCEPTION = "CHAT_COMPLETION_CLIENT_TIMEOUT_EXCEPTION"
     CHAT_COMPLETION_NETWORK_EXCEPTION = "CHAT_COMPLETION_NETWORK_EXCEPTION"
@@ -1616,6 +1922,8 @@ class MessageErrorType(Enum):
     COULD_NOT_GET_DASHBOARD_SCHEMA_EXCEPTION = "COULD_NOT_GET_DASHBOARD_SCHEMA_EXCEPTION"
     COULD_NOT_GET_MODEL_DEPLOYMENTS_EXCEPTION = "COULD_NOT_GET_MODEL_DEPLOYMENTS_EXCEPTION"
     COULD_NOT_GET_UC_SCHEMA_EXCEPTION = "COULD_NOT_GET_UC_SCHEMA_EXCEPTION"
+    DASHBOARD_PERMISSION_DENIED_EXCEPTION = "DASHBOARD_PERMISSION_DENIED_EXCEPTION"
+    DELEGATION_NOT_FOUND_EXCEPTION = "DELEGATION_NOT_FOUND_EXCEPTION"
     DEPLOYMENT_NOT_FOUND_EXCEPTION = "DEPLOYMENT_NOT_FOUND_EXCEPTION"
     DESCRIBE_QUERY_INVALID_SQL_ERROR = "DESCRIBE_QUERY_INVALID_SQL_ERROR"
     DESCRIBE_QUERY_TIMEOUT = "DESCRIBE_QUERY_TIMEOUT"
@@ -1638,6 +1946,7 @@ class MessageErrorType(Enum):
     INTERNAL_CATALOG_PATH_OVERLAP_EXCEPTION = "INTERNAL_CATALOG_PATH_OVERLAP_EXCEPTION"
     INVALID_CERTIFIED_ANSWER_FUNCTION_EXCEPTION = "INVALID_CERTIFIED_ANSWER_FUNCTION_EXCEPTION"
     INVALID_CERTIFIED_ANSWER_IDENTIFIER_EXCEPTION = "INVALID_CERTIFIED_ANSWER_IDENTIFIER_EXCEPTION"
+    INVALID_CHAT_COMPLETION_ARGUMENTS_JSON_EXCEPTION = "INVALID_CHAT_COMPLETION_ARGUMENTS_JSON_EXCEPTION"
     INVALID_CHAT_COMPLETION_JSON_EXCEPTION = "INVALID_CHAT_COMPLETION_JSON_EXCEPTION"
     INVALID_COMPLETION_REQUEST_EXCEPTION = "INVALID_COMPLETION_REQUEST_EXCEPTION"
     INVALID_FUNCTION_CALL_EXCEPTION = "INVALID_FUNCTION_CALL_EXCEPTION"
@@ -1654,6 +1963,7 @@ class MessageErrorType(Enum):
     NO_DEPLOYMENTS_AVAILABLE_TO_WORKSPACE = "NO_DEPLOYMENTS_AVAILABLE_TO_WORKSPACE"
     NO_QUERY_TO_VISUALIZE_EXCEPTION = "NO_QUERY_TO_VISUALIZE_EXCEPTION"
     NO_TABLES_TO_QUERY_EXCEPTION = "NO_TABLES_TO_QUERY_EXCEPTION"
+    PAY_PER_TOKEN_DISABLED_EXCEPTION = "PAY_PER_TOKEN_DISABLED_EXCEPTION"
     RATE_LIMIT_EXCEEDED_GENERIC_EXCEPTION = "RATE_LIMIT_EXCEEDED_GENERIC_EXCEPTION"
     RATE_LIMIT_EXCEEDED_SPECIFIED_WAIT_EXCEPTION = "RATE_LIMIT_EXCEEDED_SPECIFIED_WAIT_EXCEPTION"
     REPLY_PROCESS_TIMEOUT_EXCEPTION = "REPLY_PROCESS_TIMEOUT_EXCEPTION"
@@ -1671,20 +1981,23 @@ class MessageErrorType(Enum):
 
 
 class MessageStatus(Enum):
-    """MessageStatus. The possible values are: * `FETCHING_METADATA`: Fetching metadata from the data
-    sources. * `FILTERING_CONTEXT`: Running smart context step to determine relevant context. *
-    `ASKING_AI`: Waiting for the LLM to respond to the user's question. * `PENDING_WAREHOUSE`:
-    Waiting for warehouse before the SQL query can start executing. * `EXECUTING_QUERY`: Executing a
-    generated SQL query. Get the SQL query result by calling
-    [getMessageAttachmentQueryResult](:method:genie/getMessageAttachmentQueryResult) API. *
-    `FAILED`: The response generation or query execution failed. See `error` field. * `COMPLETED`:
-    Message processing is completed. Results are in the `attachments` field. Get the SQL query
-    result by calling
-    [getMessageAttachmentQueryResult](:method:genie/getMessageAttachmentQueryResult) API. *
-    `SUBMITTED`: Message has been submitted. * `QUERY_RESULT_EXPIRED`: SQL result is not available
-    anymore. The user needs to rerun the query. Rerun the SQL query result by calling
-    [executeMessageAttachmentQuery](:method:genie/executeMessageAttachmentQuery) API. * `CANCELLED`:
-    Message has been cancelled."""
+    """MessageStatus. The possible values are:
+
+    - ``FETCHING_METADATA``: Fetching metadata from the data sources.
+    - ``FILTERING_CONTEXT``: Running smart context step to determine relevant context.
+    - ``ASKING_AI``: Waiting for the LLM to respond to the user's question.
+    - ``PENDING_WAREHOUSE``: Waiting for warehouse before the SQL query can start executing.
+    - ``EXECUTING_QUERY``: Executing a generated SQL query. Get the SQL query result by calling
+      [getMessageAttachmentQueryResult](:method:genie/getMessageAttachmentQueryResult) API.
+    - ``FAILED``: The response generation or query execution failed. See ``error`` field.
+    - ``COMPLETED``: Message processing is completed. Results are in the ``attachments`` field. Get
+      the SQL query result by calling
+      [getMessageAttachmentQueryResult](:method:genie/getMessageAttachmentQueryResult) API.
+    - ``SUBMITTED``: Message has been submitted.
+    - ``QUERY_RESULT_EXPIRED``: SQL result is not available anymore. The user needs to rerun the
+      query. Rerun the SQL query result by calling
+      [executeMessageAttachmentQuery](:method:genie/executeMessageAttachmentQuery) API.
+    - ``CANCELLED``: Message has been cancelled."""
 
     ASKING_AI = "ASKING_AI"
     CANCELLED = "CANCELLED"
@@ -1785,6 +2098,11 @@ class QueryAttachmentParameter:
         return cls(keyword=d.get("keyword", None), sql_type=d.get("sql_type", None), value=d.get("value", None))
 
 
+class ResponsePhase(Enum):
+    RESPONSE_PHASE_THINKING = "RESPONSE_PHASE_THINKING"
+    RESPONSE_PHASE_VERIFYING = "RESPONSE_PHASE_VERIFYING"
+
+
 @dataclass
 class Result:
     is_truncated: Optional[bool] = None
@@ -1835,6 +2153,33 @@ class Result:
             statement_id=d.get("statement_id", None),
             statement_id_signature=d.get("statement_id_signature", None),
         )
+
+
+@dataclass
+class RevertDashboardResponse:
+    """Response to revert a dashboard draft to its last published state."""
+
+    dashboard: Optional[Dashboard] = None
+    """The reverted dashboard."""
+
+    def as_dict(self) -> dict:
+        """Serializes the RevertDashboardResponse into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.dashboard:
+            body["dashboard"] = self.dashboard.as_dict()
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the RevertDashboardResponse into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.dashboard:
+            body["dashboard"] = self.dashboard
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> RevertDashboardResponse:
+        """Deserializes the RevertDashboardResponse from a dictionary."""
+        return cls(dashboard=_from_dict(d, "dashboard", Dashboard))
 
 
 @dataclass
@@ -1931,13 +2276,11 @@ class Schedule:
 
 
 class SchedulePauseStatus(Enum):
-
     PAUSED = "PAUSED"
     UNPAUSED = "UNPAUSED"
 
 
 class ScoreReason(Enum):
-
     COLUMN_TYPE_DIFFERENCE = "COLUMN_TYPE_DIFFERENCE"
     EMPTY_GOOD_SQL = "EMPTY_GOOD_SQL"
     EMPTY_RESULT = "EMPTY_RESULT"
@@ -1965,17 +2308,18 @@ class ScoreReason(Enum):
     RESULT_MISSING_COLUMNS = "RESULT_MISSING_COLUMNS"
     RESULT_MISSING_ROWS = "RESULT_MISSING_ROWS"
     SINGLE_CELL_DIFFERENCE = "SINGLE_CELL_DIFFERENCE"
+    TRANSIENT_ERROR = "TRANSIENT_ERROR"
 
 
 @dataclass
 class Subscriber:
     destination_subscriber: Optional[SubscriptionSubscriberDestination] = None
     """The destination to receive the subscription email. This parameter is mutually exclusive with
-    `user_subscriber`."""
+    ``user_subscriber``."""
 
     user_subscriber: Optional[SubscriptionSubscriberUser] = None
     """The user to receive the subscription email. This parameter is mutually exclusive with
-    `destination_subscriber`."""
+    ``destination_subscriber``."""
 
     def as_dict(self) -> dict:
         """Serializes the Subscriber into a dictionary suitable for use as a JSON request body."""
@@ -2155,8 +2499,13 @@ class TextAttachment:
 
     id: Optional[str] = None
 
+    phase: Optional[ResponsePhase] = None
+
     purpose: Optional[TextAttachmentPurpose] = None
     """Purpose/intent of this text attachment"""
+
+    verification_metadata: Optional[VerificationMetadata] = None
+    """Metadata for verification phase attachments. Only set when phase = RESPONSE_PHASE_VERIFYING."""
 
     def as_dict(self) -> dict:
         """Serializes the TextAttachment into a dictionary suitable for use as a JSON request body."""
@@ -2165,8 +2514,12 @@ class TextAttachment:
             body["content"] = self.content
         if self.id is not None:
             body["id"] = self.id
+        if self.phase is not None:
+            body["phase"] = self.phase.value
         if self.purpose is not None:
             body["purpose"] = self.purpose.value
+        if self.verification_metadata:
+            body["verification_metadata"] = self.verification_metadata.as_dict()
         return body
 
     def as_shallow_dict(self) -> dict:
@@ -2176,15 +2529,23 @@ class TextAttachment:
             body["content"] = self.content
         if self.id is not None:
             body["id"] = self.id
+        if self.phase is not None:
+            body["phase"] = self.phase
         if self.purpose is not None:
             body["purpose"] = self.purpose
+        if self.verification_metadata:
+            body["verification_metadata"] = self.verification_metadata
         return body
 
     @classmethod
     def from_dict(cls, d: Dict[str, Any]) -> TextAttachment:
         """Deserializes the TextAttachment from a dictionary."""
         return cls(
-            content=d.get("content", None), id=d.get("id", None), purpose=_enum(d, "purpose", TextAttachmentPurpose)
+            content=d.get("content", None),
+            id=d.get("id", None),
+            phase=_enum(d, "phase", ResponsePhase),
+            purpose=_enum(d, "purpose", TextAttachmentPurpose),
+            verification_metadata=_from_dict(d, "verification_metadata", VerificationMetadata),
         )
 
 
@@ -2192,6 +2553,64 @@ class TextAttachmentPurpose(Enum):
     """Purpose/intent of a text attachment"""
 
     FOLLOW_UP_QUESTION = "FOLLOW_UP_QUESTION"
+
+
+@dataclass
+class Thought:
+    """A single thought in the AI's reasoning process for a query."""
+
+    content: Optional[str] = None
+    """The md formatted content for this thought."""
+
+    thought_type: Optional[ThoughtType] = None
+    """The category of this thought. The possible values are:
+    
+    - ``THOUGHT_TYPE_DESCRIPTION``: A high-level description of how the question was interpreted.
+    - ``THOUGHT_TYPE_UNDERSTANDING``: How ambiguous parts of the question were resolved.
+    - ``THOUGHT_TYPE_DATA_SOURCING``: Which tables or datasets were identified as relevant.
+    - ``THOUGHT_TYPE_INSTRUCTIONS``: Which author-defined instructions were referenced.
+    - ``THOUGHT_TYPE_STEPS``: The logical steps taken to compute the answer."""
+
+    def as_dict(self) -> dict:
+        """Serializes the Thought into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.content is not None:
+            body["content"] = self.content
+        if self.thought_type is not None:
+            body["thought_type"] = self.thought_type.value
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the Thought into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.content is not None:
+            body["content"] = self.content
+        if self.thought_type is not None:
+            body["thought_type"] = self.thought_type
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> Thought:
+        """Deserializes the Thought from a dictionary."""
+        return cls(content=d.get("content", None), thought_type=_enum(d, "thought_type", ThoughtType))
+
+
+class ThoughtType(Enum):
+    """ThoughtType. The possible values are:
+
+    - ``THOUGHT_TYPE_UNSPECIFIED``: Default value that should not be used.
+    - ``THOUGHT_TYPE_DESCRIPTION``: A high-level description of how the question was interpreted.
+    - ``THOUGHT_TYPE_UNDERSTANDING``: How ambiguous parts of the question were resolved.
+    - ``THOUGHT_TYPE_DATA_SOURCING``: Which tables or datasets were identified as relevant.
+    - ``THOUGHT_TYPE_INSTRUCTIONS``: Which author-defined instructions were referenced.
+    - ``THOUGHT_TYPE_STEPS``: The logical steps taken to compute the answer. The category of a
+      Thought. Additional values may be added in the future."""
+
+    THOUGHT_TYPE_DATA_SOURCING = "THOUGHT_TYPE_DATA_SOURCING"
+    THOUGHT_TYPE_DESCRIPTION = "THOUGHT_TYPE_DESCRIPTION"
+    THOUGHT_TYPE_INSTRUCTIONS = "THOUGHT_TYPE_INSTRUCTIONS"
+    THOUGHT_TYPE_STEPS = "THOUGHT_TYPE_STEPS"
+    THOUGHT_TYPE_UNDERSTANDING = "THOUGHT_TYPE_UNDERSTANDING"
 
 
 @dataclass
@@ -2228,6 +2647,49 @@ class UnpublishDashboardResponse:
     def from_dict(cls, d: Dict[str, Any]) -> UnpublishDashboardResponse:
         """Deserializes the UnpublishDashboardResponse from a dictionary."""
         return cls()
+
+
+@dataclass
+class VerificationMetadata:
+    """Metadata for verification phase attachments"""
+
+    index: Optional[int] = None
+    """Optional index to help order attachments within the same section"""
+
+    section: Optional[VerificationSection] = None
+
+    def as_dict(self) -> dict:
+        """Serializes the VerificationMetadata into a dictionary suitable for use as a JSON request body."""
+        body = {}
+        if self.index is not None:
+            body["index"] = self.index
+        if self.section is not None:
+            body["section"] = self.section.value
+        return body
+
+    def as_shallow_dict(self) -> dict:
+        """Serializes the VerificationMetadata into a shallow dictionary of its immediate attributes."""
+        body = {}
+        if self.index is not None:
+            body["index"] = self.index
+        if self.section is not None:
+            body["section"] = self.section
+        return body
+
+    @classmethod
+    def from_dict(cls, d: Dict[str, Any]) -> VerificationMetadata:
+        """Deserializes the VerificationMetadata from a dictionary."""
+        return cls(index=d.get("index", None), section=_enum(d, "section", VerificationSection))
+
+
+class VerificationSection(Enum):
+    """Verification workflow section - indicates which stage of verification this attachment belongs to
+    These sections are used for grouping and ordering attachments in the frontend UI"""
+
+    VERIFICATION_SECTION_FINAL_DECISION = "VERIFICATION_SECTION_FINAL_DECISION"
+    VERIFICATION_SECTION_PROPOSED_IMPROVEMENT = "VERIFICATION_SECTION_PROPOSED_IMPROVEMENT"
+    VERIFICATION_SECTION_SQL_EXAMPLES_VALIDATION = "VERIFICATION_SECTION_SQL_EXAMPLES_VALIDATION"
+    VERIFICATION_SECTION_VERIFICATION_QUERIES = "VERIFICATION_SECTION_VERIFICATION_QUERIES"
 
 
 class GenieAPI:
@@ -2273,7 +2735,9 @@ class GenieAPI:
             attempt += 1
         raise TimeoutError(f"timed out after {timeout}: {status_message}")
 
-    def create_message(self, space_id: str, conversation_id: str, content: str) -> Wait[GenieMessage]:
+    def create_message(
+        self, space_id: str, conversation_id: str, content: str, *, enable_visualization: Optional[bool] = None
+    ) -> Wait[GenieMessage]:
         """Create new message in a [conversation](:method:genie/startconversation). The AI response uses all
         previously created messages in the conversation to respond.
 
@@ -2283,6 +2747,8 @@ class GenieAPI:
           The ID associated with the conversation.
         :param content: str
           User message content.
+        :param enable_visualization: bool (optional)
+          Enable visualization generation.
 
         :returns:
           Long-running operation waiter for :class:`GenieMessage`.
@@ -2292,6 +2758,8 @@ class GenieAPI:
         body = {}
         if content is not None:
             body["content"] = content
+        if enable_visualization is not None:
+            body["enable_visualization"] = enable_visualization
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -2299,7 +2767,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         op_response = self._api.do(
             "POST",
@@ -2316,11 +2784,57 @@ class GenieAPI:
         )
 
     def create_message_and_wait(
-        self, space_id: str, conversation_id: str, content: str, timeout=timedelta(minutes=20)
+        self,
+        space_id: str,
+        conversation_id: str,
+        content: str,
+        *,
+        enable_visualization: Optional[bool] = None,
+        timeout=timedelta(minutes=20),
     ) -> GenieMessage:
-        return self.create_message(content=content, conversation_id=conversation_id, space_id=space_id).result(
-            timeout=timeout
+        return self.create_message(
+            content=content,
+            conversation_id=conversation_id,
+            enable_visualization=enable_visualization,
+            space_id=space_id,
+        ).result(timeout=timeout)
+
+    def create_message_comment(
+        self, space_id: str, conversation_id: str, message_id: str, content: str
+    ) -> GenieMessageComment:
+        """Create a comment on a conversation message.
+
+        :param space_id: str
+          The ID associated with the Genie space.
+        :param conversation_id: str
+          The ID associated with the conversation.
+        :param message_id: str
+          The ID associated with the message.
+        :param content: str
+          Comment text content.
+
+        :returns: :class:`GenieMessageComment`
+        """
+
+        body = {}
+        if content is not None:
+            body["content"] = content
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
+
+        res = self._api.do(
+            "POST",
+            f"/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/comments",
+            body=body,
+            headers=headers,
         )
+        return GenieMessageComment.from_dict(res)
 
     def create_space(
         self,
@@ -2338,7 +2852,7 @@ class GenieAPI:
         :param serialized_space: str
           The contents of the Genie Space in serialized string form. Use the [Get Genie
           Space](:method:genie/getspace) API to retrieve an example response, which includes the
-          `serialized_space` field. This field provides the structure of the JSON string that represents the
+          ``serialized_space`` field. This field provides the structure of the JSON string that represents the
           space's layout and components.
         :param description: str (optional)
           Optional description
@@ -2368,7 +2882,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/genie/spaces", body=body, headers=headers)
         return GenieSpace.from_dict(res)
@@ -2390,7 +2904,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}", headers=headers)
 
@@ -2413,13 +2927,36 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do(
             "DELETE",
             f"/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}",
             headers=headers,
         )
+
+    def download_message_attachment_visualization(self, name: str) -> DownloadMessageAttachmentVisualizationResponse:
+        """Download a rendered image of a message visualization attachment. The response body is the raw PNG
+        image, not a JSON payload. This is only available if the attachment is a visualization and the message
+        status is ``COMPLETED``. This endpoint is not supported for Private Link workspaces.
+
+        :param name: str
+          The resource name of the attachment to render, in the format
+          ``spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}``.
+
+        :returns: :class:`DownloadMessageAttachmentVisualizationResponse`
+        """
+
+        headers = {
+            "Accept": "application/octet-stream",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
+
+        res = self._api.do("GET", f"/api/2.0/genie/{name}/download-visualization", headers=headers, raw=True)
+        return DownloadMessageAttachmentVisualizationResponse.from_dict(res)
 
     def execute_message_attachment_query(
         self, space_id: str, conversation_id: str, message_id: str, attachment_id: str
@@ -2439,17 +2976,20 @@ class GenieAPI:
         :returns: :class:`GenieGetMessageQueryResultResponse`
         """
 
+        body = {}
         headers = {
             "Accept": "application/json",
+            "Content-Type": "application/json",
         }
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "POST",
             f"/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/execute-query",
+            body=body,
             headers=headers,
         )
         return GenieGetMessageQueryResultResponse.from_dict(res)
@@ -2470,17 +3010,20 @@ class GenieAPI:
         :returns: :class:`GenieGetMessageQueryResultResponse`
         """
 
+        body = {}
         headers = {
             "Accept": "application/json",
+            "Content-Type": "application/json",
         }
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "POST",
             f"/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/execute-query",
+            body=body,
             headers=headers,
         )
         return GenieGetMessageQueryResultResponse.from_dict(res)
@@ -2488,26 +3031,22 @@ class GenieAPI:
     def generate_download_full_query_result(
         self, space_id: str, conversation_id: str, message_id: str, attachment_id: str
     ) -> GenieGenerateDownloadFullQueryResultResponse:
-        """Initiates a new SQL execution and returns a `download_id` and `download_id_signature` that you can use
-        to track the progress of the download. The query result is stored in an external link and can be
+        """Initiates a new SQL execution and returns a ``download_id`` and ``download_id_signature`` that you can
+        use to track the progress of the download. The query result is stored in an external link and can be
         retrieved using the [Get Download Full Query Result](:method:genie/getdownloadfullqueryresult) API.
-        Both `download_id` and `download_id_signature` must be provided when calling the Get endpoint.
+        Both ``download_id`` and ``download_id_signature`` must be provided when calling the Get endpoint.
 
-        ----
+        **Warning: Databricks strongly recommends that you protect the URLs that are returned by the
+        ``EXTERNAL_LINKS`` disposition.**
 
-        ### **Warning: Databricks strongly recommends that you protect the URLs that are returned by the
-        `EXTERNAL_LINKS` disposition.**
-
-        When you use the `EXTERNAL_LINKS` disposition, a short-lived, URL is generated, which can be used to
+        When you use the ``EXTERNAL_LINKS`` disposition, a short-lived, URL is generated, which can be used to
         download the results directly from . As a short-lived is embedded in this URL, you should protect the
         URL.
 
-        Because URLs are already generated with embedded temporary s, you must not set an `Authorization`
+        Because URLs are already generated with embedded temporary s, you must not set an ``Authorization``
         header in the download requests.
 
         See [Execute Statement](:method:statementexecution/executestatement) for more details.
-
-        ----
 
         :param space_id: str
           Genie space ID
@@ -2521,17 +3060,20 @@ class GenieAPI:
         :returns: :class:`GenieGenerateDownloadFullQueryResultResponse`
         """
 
+        body = {}
         headers = {
             "Accept": "application/json",
+            "Content-Type": "application/json",
         }
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "POST",
             f"/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/downloads",
+            body=body,
             headers=headers,
         )
         return GenieGenerateDownloadFullQueryResultResponse.from_dict(res)
@@ -2560,7 +3102,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/genie/spaces/{space_id}/eval-runs", body=body, headers=headers)
         return GenieEvalRunResponse.from_dict(res)
@@ -2584,7 +3126,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET", f"/api/2.0/genie/spaces/{space_id}/eval-runs/{eval_run_id}/results/{result_id}", headers=headers
@@ -2607,7 +3149,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/genie/spaces/{space_id}/eval-runs/{eval_run_id}", headers=headers)
         return GenieEvalRunResponse.from_dict(res)
@@ -2640,7 +3182,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET", f"/api/2.0/genie/spaces/{space_id}/eval-runs/{eval_run_id}/results", query=query, headers=headers
@@ -2673,7 +3215,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/genie/spaces/{space_id}/eval-runs", query=query, headers=headers)
         return GenieListEvalRunsResponse.from_dict(res)
@@ -2688,26 +3230,22 @@ class GenieAPI:
         download_id_signature: str,
     ) -> GenieGetDownloadFullQueryResultResponse:
         """After [Generating a Full Query Result Download](:method:genie/generatedownloadfullqueryresult) and
-        successfully receiving a `download_id` and `download_id_signature`, use this API to poll the download
-        progress. Both `download_id` and `download_id_signature` are required to call this endpoint. When the
-        download is complete, the API returns the result in the `EXTERNAL_LINKS` disposition, containing one
-        or more external links to the query result files.
+        successfully receiving a ``download_id`` and ``download_id_signature``, use this API to poll the
+        download progress. Both ``download_id`` and ``download_id_signature`` are required to call this
+        endpoint. When the download is complete, the API returns the result in the ``EXTERNAL_LINKS``
+        disposition, containing one or more external links to the query result files.
 
-        ----
+        **Warning: Databricks strongly recommends that you protect the URLs that are returned by the
+        ``EXTERNAL_LINKS`` disposition.**
 
-        ### **Warning: Databricks strongly recommends that you protect the URLs that are returned by the
-        `EXTERNAL_LINKS` disposition.**
-
-        When you use the `EXTERNAL_LINKS` disposition, a short-lived, URL is generated, which can be used to
+        When you use the ``EXTERNAL_LINKS`` disposition, a short-lived, URL is generated, which can be used to
         download the results directly from . As a short-lived is embedded in this URL, you should protect the
         URL.
 
-        Because URLs are already generated with embedded temporary s, you must not set an `Authorization`
+        Because URLs are already generated with embedded temporary s, you must not set an ``Authorization``
         header in the download requests.
 
         See [Execute Statement](:method:statementexecution/executestatement) for more details.
-
-        ----
 
         :param space_id: str
           Genie space ID
@@ -2735,7 +3273,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET",
@@ -2764,7 +3302,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET",
@@ -2777,7 +3315,7 @@ class GenieAPI:
         self, space_id: str, conversation_id: str, message_id: str, attachment_id: str
     ) -> GenieGetMessageQueryResultResponse:
         """Get the result of SQL query if the message has a query attachment. This is only available if a message
-        has a query attachment and the message status is `EXECUTING_QUERY` OR `COMPLETED`.
+        has a query attachment and the message status is ``EXECUTING_QUERY`` OR ``COMPLETED``.
 
         :param space_id: str
           Genie space ID
@@ -2797,7 +3335,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET",
@@ -2828,7 +3366,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET",
@@ -2861,7 +3399,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET",
@@ -2891,10 +3429,48 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/genie/spaces/{space_id}", query=query, headers=headers)
         return GenieSpace.from_dict(res)
+
+    def list_conversation_comments(
+        self, space_id: str, conversation_id: str, *, page_size: Optional[int] = None, page_token: Optional[str] = None
+    ) -> GenieListConversationCommentsResponse:
+        """List all comments across all messages in a conversation.
+
+        :param space_id: str
+          The ID associated with the Genie space.
+        :param conversation_id: str
+          The ID associated with the conversation.
+        :param page_size: int (optional)
+          Maximum number of comments to return per page.
+        :param page_token: str (optional)
+          Pagination token for getting the next page of results.
+
+        :returns: :class:`GenieListConversationCommentsResponse`
+        """
+
+        query = {}
+        if page_size is not None:
+            query["page_size"] = page_size
+        if page_token is not None:
+            query["page_token"] = page_token
+        headers = {
+            "Accept": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
+
+        res = self._api.do(
+            "GET",
+            f"/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/list-comments",
+            query=query,
+            headers=headers,
+        )
+        return GenieListConversationCommentsResponse.from_dict(res)
 
     def list_conversation_messages(
         self, space_id: str, conversation_id: str, *, page_size: Optional[int] = None, page_token: Optional[str] = None
@@ -2924,7 +3500,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET",
@@ -2970,10 +3546,56 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/genie/spaces/{space_id}/conversations", query=query, headers=headers)
         return GenieListConversationsResponse.from_dict(res)
+
+    def list_message_comments(
+        self,
+        space_id: str,
+        conversation_id: str,
+        message_id: str,
+        *,
+        page_size: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> GenieListMessageCommentsResponse:
+        """List comments on a specific conversation message.
+
+        :param space_id: str
+          The ID associated with the Genie space.
+        :param conversation_id: str
+          The ID associated with the conversation.
+        :param message_id: str
+          The ID associated with the message.
+        :param page_size: int (optional)
+          Maximum number of comments to return per page.
+        :param page_token: str (optional)
+          Pagination token for getting the next page of results.
+
+        :returns: :class:`GenieListMessageCommentsResponse`
+        """
+
+        query = {}
+        if page_size is not None:
+            query["page_size"] = page_size
+        if page_token is not None:
+            query["page_token"] = page_token
+        headers = {
+            "Accept": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
+
+        res = self._api.do(
+            "GET",
+            f"/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/comments",
+            query=query,
+            headers=headers,
+        )
+        return GenieListMessageCommentsResponse.from_dict(res)
 
     def list_spaces(
         self, *, page_size: Optional[int] = None, page_token: Optional[str] = None
@@ -2999,12 +3621,20 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", "/api/2.0/genie/spaces", query=query, headers=headers)
         return GenieListSpacesResponse.from_dict(res)
 
-    def send_message_feedback(self, space_id: str, conversation_id: str, message_id: str, rating: GenieFeedbackRating):
+    def send_message_feedback(
+        self,
+        space_id: str,
+        conversation_id: str,
+        message_id: str,
+        rating: GenieFeedbackRating,
+        *,
+        comment: Optional[str] = None,
+    ):
         """Send feedback for a message.
 
         :param space_id: str
@@ -3015,11 +3645,15 @@ class GenieAPI:
           The ID associated with the message to provide feedback for.
         :param rating: :class:`GenieFeedbackRating`
           The rating (POSITIVE, NEGATIVE, or NONE).
+        :param comment: str (optional)
+          Optional text feedback that will be stored as a comment.
 
 
         """
 
         body = {}
+        if comment is not None:
+            body["comment"] = comment
         if rating is not None:
             body["rating"] = rating.value
         headers = {
@@ -3029,7 +3663,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do(
             "POST",
@@ -3038,13 +3672,17 @@ class GenieAPI:
             headers=headers,
         )
 
-    def start_conversation(self, space_id: str, content: str) -> Wait[GenieMessage]:
+    def start_conversation(
+        self, space_id: str, content: str, *, enable_visualization: Optional[bool] = None
+    ) -> Wait[GenieMessage]:
         """Start a new conversation.
 
         :param space_id: str
           The ID associated with the Genie space where you want to start a conversation.
         :param content: str
           The text of the message that starts the conversation.
+        :param enable_visualization: bool (optional)
+          Enable visualization generation.
 
         :returns:
           Long-running operation waiter for :class:`GenieMessage`.
@@ -3054,6 +3692,8 @@ class GenieAPI:
         body = {}
         if content is not None:
             body["content"] = content
+        if enable_visualization is not None:
+            body["enable_visualization"] = enable_visualization
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -3061,7 +3701,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         op_response = self._api.do(
             "POST", f"/api/2.0/genie/spaces/{space_id}/start-conversation", body=body, headers=headers
@@ -3074,8 +3714,12 @@ class GenieAPI:
             space_id=space_id,
         )
 
-    def start_conversation_and_wait(self, space_id: str, content: str, timeout=timedelta(minutes=20)) -> GenieMessage:
-        return self.start_conversation(content=content, space_id=space_id).result(timeout=timeout)
+    def start_conversation_and_wait(
+        self, space_id: str, content: str, *, enable_visualization: Optional[bool] = None, timeout=timedelta(minutes=20)
+    ) -> GenieMessage:
+        return self.start_conversation(
+            content=content, enable_visualization=enable_visualization, space_id=space_id
+        ).result(timeout=timeout)
 
     def trash_space(self, space_id: str):
         """Move a Genie Space to the trash.
@@ -3092,7 +3736,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/genie/spaces/{space_id}", headers=headers)
 
@@ -3101,6 +3745,8 @@ class GenieAPI:
         space_id: str,
         *,
         description: Optional[str] = None,
+        etag: Optional[str] = None,
+        parent_path: Optional[str] = None,
         serialized_space: Optional[str] = None,
         title: Optional[str] = None,
         warehouse_id: Optional[str] = None,
@@ -3111,10 +3757,15 @@ class GenieAPI:
           Genie space ID
         :param description: str (optional)
           Optional description
+        :param etag: str (optional)
+          ETag returned by a previous GET or UPDATE. When set, the update will fail if the space has been
+          modified since. Omit to apply the update unconditionally.
+        :param parent_path: str (optional)
+          Parent workspace folder path to move this Genie space under.
         :param serialized_space: str (optional)
           The contents of the Genie Space in serialized string form (full replacement). Use the [Get Genie
           Space](:method:genie/getspace) API to retrieve an example response, which includes the
-          `serialized_space` field. This field provides the structure of the JSON string that represents the
+          ``serialized_space`` field. This field provides the structure of the JSON string that represents the
           space's layout and components.
         :param title: str (optional)
           Optional title override
@@ -3127,6 +3778,10 @@ class GenieAPI:
         body = {}
         if description is not None:
             body["description"] = description
+        if etag is not None:
+            body["etag"] = etag
+        if parent_path is not None:
+            body["parent_path"] = parent_path
         if serialized_space is not None:
             body["serialized_space"] = serialized_space
         if title is not None:
@@ -3140,7 +3795,7 @@ class GenieAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("PATCH", f"/api/2.0/genie/spaces/{space_id}", body=body, headers=headers)
         return GenieSpace.from_dict(res)
@@ -3184,7 +3839,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/lakeview/dashboards", query=query, body=body, headers=headers)
         return Dashboard.from_dict(res)
@@ -3201,6 +3856,7 @@ class LakeviewAPI:
         """
 
         body = schedule.as_dict()
+        query = {}
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -3208,7 +3864,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/lakeview/dashboards/{dashboard_id}/schedules", body=body, headers=headers)
         return Schedule.from_dict(res)
@@ -3227,6 +3883,7 @@ class LakeviewAPI:
         """
 
         body = subscription.as_dict()
+        query = {}
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -3234,7 +3891,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "POST",
@@ -3267,7 +3924,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do(
             "DELETE",
@@ -3303,7 +3960,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do(
             "DELETE",
@@ -3327,7 +3984,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/lakeview/dashboards/{dashboard_id}", headers=headers)
         return Dashboard.from_dict(res)
@@ -3347,7 +4004,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("GET", f"/api/2.0/lakeview/dashboards/{dashboard_id}/published", headers=headers)
         return PublishedDashboard.from_dict(res)
@@ -3369,7 +4026,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET", f"/api/2.0/lakeview/dashboards/{dashboard_id}/schedules/{schedule_id}", headers=headers
@@ -3395,7 +4052,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET",
@@ -3417,13 +4074,13 @@ class LakeviewAPI:
         :param page_size: int (optional)
           The number of dashboards to return per page.
         :param page_token: str (optional)
-          A page token, received from a previous `ListDashboards` call. This token can be used to retrieve the
-          subsequent page.
+          A page token, received from a previous ``ListDashboards`` call. This token can be used to retrieve
+          the subsequent page.
         :param show_trashed: bool (optional)
           The flag to include dashboards located in the trash. If unspecified, only active dashboards will be
           returned.
         :param view: :class:`DashboardView` (optional)
-          `DASHBOARD_VIEW_BASIC`only includes summary metadata from the dashboard.
+          ``DASHBOARD_VIEW_BASIC`` only includes summary metadata from the dashboard.
 
         :returns: Iterator over :class:`Dashboard`
         """
@@ -3443,7 +4100,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do("GET", "/api/2.0/lakeview/dashboards", query=query, headers=headers)
@@ -3464,7 +4121,7 @@ class LakeviewAPI:
         :param page_size: int (optional)
           The number of schedules to return per page.
         :param page_token: str (optional)
-          A page token, received from a previous `ListSchedules` call. Use this to retrieve the subsequent
+          A page token, received from a previous ``ListSchedules`` call. Use this to retrieve the subsequent
           page.
 
         :returns: Iterator over :class:`Schedule`
@@ -3481,7 +4138,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -3506,8 +4163,8 @@ class LakeviewAPI:
         :param page_size: int (optional)
           The number of subscriptions to return per page.
         :param page_token: str (optional)
-          A page token, received from a previous `ListSubscriptions` call. Use this to retrieve the subsequent
-          page.
+          A page token, received from a previous ``ListSubscriptions`` call. Use this to retrieve the
+          subsequent page.
 
         :returns: Iterator over :class:`Subscription`
         """
@@ -3523,7 +4180,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         while True:
             json = self._api.do(
@@ -3578,7 +4235,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", "/api/2.0/lakeview/dashboards/migrate", body=body, headers=headers)
         return Dashboard.from_dict(res)
@@ -3611,10 +4268,37 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do("POST", f"/api/2.0/lakeview/dashboards/{dashboard_id}/published", body=body, headers=headers)
         return PublishedDashboard.from_dict(res)
+
+    def revert(self, dashboard_id: str, *, etag: Optional[str] = None) -> RevertDashboardResponse:
+        """Revert a dashboard's definition in draft mode to the last published version.
+
+        :param dashboard_id: str
+          UUID identifying the dashboard.
+        :param etag: str (optional)
+          The etag for the dashboard. Optionally, it can be provided to verify that the dashboard has not been
+          modified from its last retrieval.
+
+        :returns: :class:`RevertDashboardResponse`
+        """
+
+        body = {}
+        if etag is not None:
+            body["etag"] = etag
+        headers = {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
+
+        res = self._api.do("POST", f"/api/2.0/lakeview/dashboards/{dashboard_id}/revert", body=body, headers=headers)
+        return RevertDashboardResponse.from_dict(res)
 
     def trash(self, dashboard_id: str):
         """Trash a dashboard.
@@ -3631,7 +4315,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/lakeview/dashboards/{dashboard_id}", headers=headers)
 
@@ -3650,7 +4334,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         self._api.do("DELETE", f"/api/2.0/lakeview/dashboards/{dashboard_id}/published", headers=headers)
 
@@ -3692,7 +4376,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "PATCH", f"/api/2.0/lakeview/dashboards/{dashboard_id}", query=query, body=body, headers=headers
@@ -3713,6 +4397,7 @@ class LakeviewAPI:
         """
 
         body = schedule.as_dict()
+        query = {}
         headers = {
             "Accept": "application/json",
             "Content-Type": "application/json",
@@ -3720,7 +4405,7 @@ class LakeviewAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "PUT", f"/api/2.0/lakeview/dashboards/{dashboard_id}/schedules/{schedule_id}", body=body, headers=headers
@@ -3733,6 +4418,25 @@ class LakeviewEmbeddedAPI:
 
     def __init__(self, api_client):
         self._api = api_client
+
+    def get_published_dashboard_embedded(self, dashboard_id: str):
+        """Get the current published dashboard within an embedded context.
+
+        :param dashboard_id: str
+          UUID identifying the published dashboard.
+
+
+        """
+
+        headers = {
+            "Accept": "application/json",
+        }
+
+        cfg = self._api._cfg
+        if cfg.workspace_id:
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
+
+        self._api.do("GET", f"/api/2.0/lakeview/dashboards/{dashboard_id}/published/embedded", headers=headers)
 
     def get_published_dashboard_token_info(
         self, dashboard_id: str, *, external_value: Optional[str] = None, external_viewer_id: Optional[str] = None
@@ -3760,7 +4464,7 @@ class LakeviewEmbeddedAPI:
 
         cfg = self._api._cfg
         if cfg.workspace_id:
-            headers["X-Databricks-Org-Id"] = cfg.workspace_id
+            headers["X-Databricks-Workspace-Id"] = cfg.workspace_id
 
         res = self._api.do(
             "GET", f"/api/2.0/lakeview/dashboards/{dashboard_id}/published/tokeninfo", query=query, headers=headers

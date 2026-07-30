@@ -5,23 +5,24 @@ import logging
 import os
 import pathlib
 import re
-import sys
 import urllib.parse
 from typing import Dict, Iterable, List, Optional
 
 import requests
 
 from . import useragent
-from ._base_client import _fix_host_if_needed
+from ._base_client import _BaseClient, _fix_host_if_needed
 from .client_types import ClientType, HostType
 from .clock import Clock, RealClock
-from .credentials_provider import (CredentialsStrategy, DefaultCredentials,
-                                   OAuthCredentialsProvider)
-from .environments import (ALL_ENVS, AzureEnvironment, Cloud,
-                           DatabricksEnvironment, get_environment_for_hostname)
-from .oauth import (OidcEndpoints, Token,
-                    get_azure_entra_id_workspace_endpoints,
-                    get_endpoints_from_url, get_host_metadata)
+from .credentials_provider import CredentialsStrategy, DefaultCredentials, OAuthCredentialsProvider
+from .environments import ALL_ENVS, AzureEnvironment, Cloud, DatabricksEnvironment, get_environment_for_hostname
+from .oauth import (
+    OidcEndpoints,
+    Token,
+    get_azure_entra_id_workspace_endpoints,
+    get_endpoints_from_url,
+    get_host_metadata,
+)
 
 logger = logging.getLogger("databricks.sdk")
 
@@ -34,11 +35,14 @@ class ConfigAttribute:
     transform: type = str
     _custom_transform = None
 
-    def __init__(self, env: str = None, auth: str = None, sensitive: bool = False, transform=None):
+    def __init__(
+        self, env: str = None, auth: str = None, sensitive: bool = False, transform=None, env_aliases: List[str] = None
+    ):
         self.env = env
         self.auth = auth
         self.sensitive = sensitive
         self._custom_transform = transform
+        self.env_aliases = env_aliases or []
 
     def __get__(self, cfg: "Config", owner):
         if not cfg:
@@ -87,16 +91,16 @@ def with_user_agent_extra(key: str, value: str):
 class Config:
     host: str = ConfigAttribute(env="DATABRICKS_HOST")
     account_id: str = ConfigAttribute(env="DATABRICKS_ACCOUNT_ID")
+    # Workspace identifier sent on workspace-scoped API calls so unified hosts
+    # can route to the right workspace. Accepts a classic numeric workspace ID
+    # or another workspace identifier format that the server understands.
     workspace_id: str = ConfigAttribute(env="DATABRICKS_WORKSPACE_ID")
 
-    # Experimental flag to indicate if the host is a unified host (supports both workspace and account APIs)
-    experimental_is_unified_host: bool = ConfigAttribute(env="DATABRICKS_EXPERIMENTAL_IS_UNIFIED_HOST")
-
-    # [Experimental] Cloud provider. When set, is_aws/is_azure/is_gcp use this value directly
+    # Cloud provider. When set, is_aws/is_azure/is_gcp use this value directly
     # instead of inferring from hostname. Populated automatically from /.well-known/databricks-config.
     cloud: Cloud = ConfigAttribute(env="DATABRICKS_CLOUD", transform=_parse_cloud)
 
-    # [Experimental] OpenID Connect discovery URL. When set, OIDC endpoints are fetched directly
+    # OpenID Connect discovery URL. When set, OIDC endpoints are fetched directly
     # from this URL instead of the default host-type-based well-known endpoint logic.
     discovery_url: str = ConfigAttribute(env="DATABRICKS_DISCOVERY_URL")
 
@@ -109,7 +113,10 @@ class Config:
 
     # Environment variable for OIDC token.
     oidc_token_env: str = ConfigAttribute(env="DATABRICKS_OIDC_TOKEN_ENV", auth="env-oidc")
-    oidc_token_filepath: str = ConfigAttribute(env="DATABRICKS_OIDC_TOKEN_FILE", auth="file-oidc")
+    # The DATABRICKS_OIDC_TOKEN_FILE alias is kept for backward compatibility.
+    oidc_token_filepath: str = ConfigAttribute(
+        env="DATABRICKS_OIDC_TOKEN_FILEPATH", auth="file-oidc", env_aliases=["DATABRICKS_OIDC_TOKEN_FILE"]
+    )
 
     username: str = ConfigAttribute(env="DATABRICKS_USERNAME", auth="basic")
     password: str = ConfigAttribute(env="DATABRICKS_PASSWORD", auth="basic", sensitive=True)
@@ -557,6 +564,11 @@ class Config:
         for attr in Config.attributes():
             if attr.env and os.environ.get(attr.env):
                 envs_used.append(attr.env)
+            else:
+                for alias in attr.env_aliases:
+                    if os.environ.get(alias):
+                        envs_used.append(alias)
+                        break
             value = getattr(self, attr.name)
             if not value:
                 continue
@@ -603,18 +615,12 @@ class Config:
         """Returns a list of Databricks SDK configuration metadata"""
         if hasattr(cls, "_attributes"):
             return cls._attributes
-        if sys.version_info[1] >= 10:
-            import inspect
+        import inspect
 
-            anno = inspect.get_annotations(cls)
-        else:
-            # Python 3.7 compatibility: getting type hints require extra hop, as described in
-            # "Accessing The Annotations Dict Of An Object In Python 3.9 And Older" section of
-            # https://docs.python.org/3/howto/annotations.html
-            anno = cls.__dict__["__annotations__"]
+        anno = inspect.get_annotations(cls)
         attrs = []
         for name, v in cls.__dict__.items():
-            if type(v) != ConfigAttribute:
+            if type(v) is not ConfigAttribute:
                 continue
             v.name = name
             v.transform = v._custom_transform if v._custom_transform else anno.get(name, str)
@@ -631,8 +637,17 @@ class Config:
         """
         if not self.host:
             return
+        # Host metadata is a best-effort discovery probe that falls back to the
+        # explicit configuration below on any failure. Build its client from the
+        # configured timeouts: otherwise it uses the default 300s retry budget,
+        # which blocks Config() initialization for ~5 minutes when the host is
+        # unreachable.
+        client = _BaseClient(
+            retry_timeout_seconds=self.retry_timeout_seconds,
+            http_timeout_seconds=self.http_timeout_seconds,
+        )
         try:
-            meta = get_host_metadata(self.host)
+            meta = get_host_metadata(self.host, client=client)
         except Exception as e:
             logger.warning(
                 f"Failed to automatically resolve config from host metadata: {e}. Falling back to explicit user provided configuration."
@@ -654,10 +669,15 @@ class Config:
         if not self.cloud and meta.cloud:
             logger.debug(f"Resolved cloud from host metadata: {meta.cloud.value}")
             self.cloud = meta.cloud
+        if not self.token_audience and meta.token_federation_default_oidc_audiences:
+            audience = meta.token_federation_default_oidc_audiences[0]
+            logger.debug(
+                f"Resolved token_audience from host metadata token_federation_default_oidc_audiences: {audience}"
+            )
+            self.token_audience = audience
         # Account hosts use account_id as the OIDC token audience instead of the token endpoint.
         # This is a special case: when the metadata has no workspace_id, the host is acting as an
         # account-level endpoint and the audience must be scoped to the account.
-        # TODO: Add explicit audience to the metadata discovery endpoint.
         if not self.token_audience and not meta.workspace_id and self.account_id:
             logger.debug(f"Setting token_audience to account_id for account host: {self.account_id}")
             self.token_audience = self.account_id
@@ -710,11 +730,47 @@ class Config:
                 continue
             value = os.environ.get(attr.env)
             if not value:
+                for alias in attr.env_aliases:
+                    value = os.environ.get(alias)
+                    if value:
+                        break
+            if not value:
                 continue
             self.__setattr__(attr.name, value)
             found = True
         if found:
             logger.debug("Loaded from environment")
+
+    @staticmethod
+    def _resolve_profile(requested_profile, ini_file):
+        """Resolve which profile to load from the config file.
+
+        Returns (profile_name, is_fallback):
+          - If requested_profile is set explicitly, returns it with is_fallback=False.
+          - If [__settings__].default_profile is set, returns it with is_fallback=False.
+          - If [DEFAULT] has keys, returns "DEFAULT" with is_fallback=True.
+          - Otherwise returns (None, True) to signal no config is available.
+
+        Raises ValueError if the resolved profile is the reserved __settings__ section.
+        """
+        _SETTINGS_SECTION = "__settings__"
+
+        if requested_profile is not None:
+            if requested_profile == _SETTINGS_SECTION:
+                raise ValueError(f"{_SETTINGS_SECTION} is a reserved section name and cannot be used as a profile")
+            return requested_profile, False
+
+        settings = ini_file._sections.get(_SETTINGS_SECTION, {})
+        default_profile = settings.get("default_profile", "").strip()
+        if default_profile:
+            if default_profile == _SETTINGS_SECTION:
+                raise ValueError(f"{_SETTINGS_SECTION} is a reserved section name and cannot be used as a profile")
+            return default_profile, False
+
+        if ini_file.defaults():
+            return "DEFAULT", True
+
+        return None, True
 
     def _known_file_config_loader(self):
         if not self.profile and (self.is_any_auth_configured or self.host or self.azure_workspace_resource_id):
@@ -730,31 +786,22 @@ class Config:
             return
         ini_file = configparser.ConfigParser()
         ini_file.read(config_path)
-        profile = self.profile
-        has_explicit_profile = self.profile is not None
-        has_default_profile_setting = False
         # In Go SDK, we skip merging the profile with DEFAULT section, though Python's ConfigParser.items()
         # is returning profile key-value pairs _including those from DEFAULT_. This is not what we expect
         # from Unified Auth test suite at the moment. Hence, the private variable access.
         # See: https://docs.python.org/3/library/configparser.html#mapping-protocol-access
-        if not has_explicit_profile:
-            # Check [__settings__].default_profile before falling back to [DEFAULT].
-            settings = ini_file._sections.get("__settings__", {})
-            default_profile = settings.get("default_profile", "").strip()
-            if default_profile:
-                profile = default_profile
-                has_default_profile_setting = True
-            elif ini_file.defaults():
-                profile = "DEFAULT"
-            else:
-                logger.debug(f"{config_path} has no DEFAULT profile configured")
-                return
+        profile, is_fallback = self._resolve_profile(self.profile, ini_file)
+        if profile is None:
+            logger.debug(f"{config_path} has no DEFAULT profile configured")
+            return
         profiles = {name: values for name, values in ini_file._sections.items()}
-        # [__settings__] is not a profile; exclude it from the profile map.
         profiles.pop("__settings__", None)
         if ini_file.defaults():
             profiles["DEFAULT"] = ini_file.defaults()
         if profile not in profiles:
+            if is_fallback:
+                logger.debug(f"{config_path} has no {profile} profile configured")
+                return
             raise ValueError(f"resolve: {config_path} has no {profile} profile configured")
         raw_config = profiles[profile]
         logger.info(f"loading {profile} profile from {config_file}: {', '.join(raw_config.keys())}")
@@ -763,7 +810,7 @@ class Config:
                 # don't overwrite a value previously set
                 continue
             self.__setattr__(k, v)
-        if has_default_profile_setting:
+        if not is_fallback:
             self.profile = profile
 
     def _validate(self):

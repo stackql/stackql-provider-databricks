@@ -40,14 +40,14 @@
         :param app_name: str
         :param update_mask: str
           The field mask must be a single string, with multiple fields separated by commas (no spaces). The
-          field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g.,
-          `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only
+          field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g.,
+          ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only
           the entire collection field can be specified. Field names must exactly match the resource field
           names.
 
-          A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the
-          fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API
-          changes in the future.
+          A field mask of ``*`` indicates full replacement. It’s recommended to always explicitly list the
+          fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the
+          API changes in the future.
         :param app: :class:`App` (optional)
 
         :returns:
@@ -66,6 +66,16 @@
           The name of the app.
 
         :returns: :class:`App`
+        
+
+    .. py:method:: delete_app_thumbnail(name: str)
+
+        Deletes the thumbnail for an app.
+
+        :param name: str
+          The name of the app.
+
+
         
 
     .. py:method:: delete_space(name: str) -> DeleteSpaceOperation
@@ -261,6 +271,18 @@
         :returns: :class:`App`
         
 
+    .. py:method:: update_app_thumbnail(name: str [, app_thumbnail: Optional[AppThumbnail]]) -> AppThumbnail
+
+        Updates the thumbnail for an app.
+
+        :param name: str
+          The name of the app.
+        :param app_thumbnail: :class:`AppThumbnail` (optional)
+          The app thumbnail to set.
+
+        :returns: :class:`AppThumbnail`
+        
+
     .. py:method:: update_permissions(app_name: str [, access_control_list: Optional[List[AppAccessControlRequest]]]) -> AppPermissions
 
         Updates the permissions on an app. Apps can inherit permissions from their root object.
@@ -283,14 +305,14 @@
         :param space: :class:`Space`
         :param update_mask: FieldMask
           The field mask must be a single string, with multiple fields separated by commas (no spaces). The
-          field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g.,
-          `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only
+          field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g.,
+          ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only
           the entire collection field can be specified. Field names must exactly match the resource field
           names.
 
-          A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the
-          fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API
-          changes in the future.
+          A field mask of ``*`` indicates full replacement. It’s recommended to always explicitly list the
+          fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the
+          API changes in the future.
 
         :returns: :class:`Operation`
         
