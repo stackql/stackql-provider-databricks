@@ -192,7 +192,7 @@ SELECT
   JSON_EXTRACT(status, '$.pg_version') AS pg_version,
   uid,
   update_time
-FROM databricks_workspace.postgres.projects
+FROM databricks_workspace.postgres.postgres_projects
 WHERE deployment_name = '{{ deployment_name }}'
 ```
 
@@ -216,7 +216,7 @@ SELECT
   (status::jsonb)->>'pg_version' AS pg_version,
   uid,
   update_time
-FROM databricks_workspace.postgres.projects
+FROM databricks_workspace.postgres.postgres_projects
 WHERE deployment_name = '{{ deployment_name }}'
 ```
 

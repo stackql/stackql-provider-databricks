@@ -181,7 +181,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-allow_missing">
     <td><CopyableCode code="allow_missing" /></td>
     <td><code>boolean</code></td>
-    <td>If set to true, and the override is not found, a new override will be created. In this situation, `update_mask` is ignored and all fields are applied. Defaults to false.</td>
+    <td>If set to true, and the override is not found, a new override will be created. In this situation, ``update_mask`` is ignored and all fields are applied. Defaults to false.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -191,7 +191,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>A page token, received from a previous `ListDefaultWarehouseOverrides` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDefaultWarehouseOverrides` must match the call that provided the page token.</td>
+    <td>A page token, received from a previous ``ListDefaultWarehouseOverrides`` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ``ListDefaultWarehouseOverrides`` must match the call that provided the page token.</td>
 </tr>
 </tbody>
 </table>

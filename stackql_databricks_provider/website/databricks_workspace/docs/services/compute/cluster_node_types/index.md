@@ -60,7 +60,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "num_cores",
         "type": "number",
-        "description": "Number of CPU cores available for this node type. Note that this can be fractional, e.g., 2.5 cores, if the the number of cores on a machine instance is not divisible by the number of Spark nodes on that machine."
+        "description": "Number of CPU cores available for this node type. Note that this can be fractional, e.g., 2.5 cores, if the number of cores on a machine instance is not divisible by the number of Spark nodes on that machine."
       },
       {
         "name": "description",

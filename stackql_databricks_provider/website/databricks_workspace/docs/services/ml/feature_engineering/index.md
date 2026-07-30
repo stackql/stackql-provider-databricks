@@ -44,9 +44,34 @@ The following fields are returned by `SELECT` queries:
 
 <SchemaTable fields={[
   {
+    "name": "name",
+    "type": "string",
+    "description": "Name of the feature, extracted from the full three-part name (catalog.schema.name)."
+  },
+  {
+    "name": "catalog_name",
+    "type": "string",
+    "description": "Name of parent catalog."
+  },
+  {
     "name": "full_name",
     "type": "string",
     "description": ""
+  },
+  {
+    "name": "schema_name",
+    "type": "string",
+    "description": "Name of parent schema relative to its parent catalog."
+  },
+  {
+    "name": "created_at",
+    "type": "string (date-time)",
+    "description": "Time at which this feature was created."
+  },
+  {
+    "name": "created_by",
+    "type": "string",
+    "description": "Username of the feature creator."
   },
   {
     "name": "description",
@@ -127,7 +152,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "input",
                 "type": "string",
-                "description": "The input column from which the average is computed."
+                "description": "The input column from which the average is computed. For Kafka sources, use dot-prefixed path notation (e.g., \"value.amount\"). For nested fields, the leaf node name is used. Colon-prefixed notation (e.g., \"value:amount\") is supported for backwards compatibility but is deprecated; migrate to dot notation."
               }
             ]
           },
@@ -139,7 +164,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "input",
                 "type": "string",
-                "description": "The input column from which the count is computed."
+                "description": "The input column from which the count is computed. For Kafka sources, use dot-prefixed path notation (e.g., \"value.amount\"). For nested fields, the leaf node name is used. Colon-prefixed notation (e.g., \"value:amount\") is supported for backwards compatibility but is deprecated; migrate to dot notation."
               }
             ]
           },
@@ -156,6 +181,40 @@ The following fields are returned by `SELECT` queries:
             ]
           },
           {
+            "name": "first_distinct",
+            "type": "object",
+            "description": "Returns the first N distinct values, ordered by the feature's timeseries column.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the first N distinct values are returned."
+              },
+              {
+                "name": "n",
+                "type": "integer",
+                "description": "The number of distinct values to return."
+              }
+            ]
+          },
+          {
+            "name": "first_n",
+            "type": "object",
+            "description": "Returns the first N values, ordered by the feature's timeseries column.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the first N values are returned."
+              },
+              {
+                "name": "n",
+                "type": "integer",
+                "description": "The number of values to return."
+              }
+            ]
+          },
+          {
             "name": "last",
             "type": "object",
             "description": "Returns the last value.",
@@ -164,6 +223,40 @@ The following fields are returned by `SELECT` queries:
                 "name": "input",
                 "type": "string",
                 "description": "The input column from which the last value is returned."
+              }
+            ]
+          },
+          {
+            "name": "last_distinct",
+            "type": "object",
+            "description": "Returns the last N distinct values, ordered by the feature's timeseries column.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the last N distinct values are returned."
+              },
+              {
+                "name": "n",
+                "type": "integer",
+                "description": "The number of distinct values to return."
+              }
+            ]
+          },
+          {
+            "name": "last_n",
+            "type": "object",
+            "description": "Returns the last N values, ordered by the feature's timeseries column.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the last N values are returned."
+              },
+              {
+                "name": "n",
+                "type": "integer",
+                "description": "The number of values to return."
               }
             ]
           },
@@ -199,7 +292,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "input",
                 "type": "string",
-                "description": "The input column from which the population standard deviation is computed."
+                "description": "The input column from which the population standard deviation is computed. For Kafka sources, use dot-prefixed path notation (e.g., \"value.amount\"). For nested fields, the leaf node name is used. Colon-prefixed notation (e.g., \"value:amount\") is supported for backwards compatibility but is deprecated; migrate to dot notation."
               }
             ]
           },
@@ -223,7 +316,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "input",
                 "type": "string",
-                "description": "The input column from which the sum is computed."
+                "description": "The input column from which the sum is computed. For Kafka sources, use dot-prefixed path notation (e.g., \"value.amount\"). For nested fields, the leaf node name is used. Colon-prefixed notation (e.g., \"value:amount\") is supported for backwards compatibility but is deprecated; migrate to dot notation."
               }
             ]
           },
@@ -235,7 +328,17 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "continuous",
                 "type": "object",
-                "description": ""
+                "description": "Deprecated: use RollingWindow with ``delay`` instead."
+              },
+              {
+                "name": "rolling",
+                "type": "object",
+                "description": "A rolling time window with an optional delay. This is the SQL-spec-aligned replacement for<br />    ContinuousWindow: ``delay`` is the non-negative counterpart of the legacy non-positive<br />    ``ContinuousWindow.offset``."
+              },
+              {
+                "name": "sawtooth",
+                "type": "object",
+                "description": "A sawtooth window served via the hybrid batch + streaming path."
               },
               {
                 "name": "sliding",
@@ -270,6 +373,47 @@ The following fields are returned by `SELECT` queries:
                 "name": "input",
                 "type": "string",
                 "description": "The input column from which the sample variance is computed."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "column_selection",
+        "type": "object",
+        "description": "Selects the latest value of a single column in a data source",
+        "children": [
+          {
+            "name": "column",
+            "type": "string",
+            "description": "Column name from source to select as the feature value."
+          }
+        ]
+      },
+      {
+        "name": "custom_udf",
+        "type": "object",
+        "description": "Applies a registered Unity Catalog function row-wise to source columns.",
+        "children": [
+          {
+            "name": "function_path",
+            "type": "string",
+            "description": "Fully qualified 3-part Unity Catalog path of the function to apply."
+          },
+          {
+            "name": "input_bindings",
+            "type": "array",
+            "description": "Binds each UC function parameter to a source column. May be empty for zero-argument functions (e.g. a timestamp generator).",
+            "children": [
+              {
+                "name": "parameter",
+                "type": "string",
+                "description": "Name of the UC function parameter."
+              },
+              {
+                "name": "column",
+                "type": "string",
+                "description": "Source column whose value is passed for this parameter at execution time."
               }
             ]
           }
@@ -341,7 +485,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "delta_table_source",
         "type": "object",
-        "description": "",
+        "description": "A Delta table data source.",
         "children": [
           {
             "name": "full_name",
@@ -371,19 +515,24 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "transformation_sql",
             "type": "string",
-            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
+            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have ``transformation_sql`` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
           }
         ]
       },
       {
         "name": "kafka_source",
         "type": "object",
-        "description": "",
+        "description": "A Kafka stream data source.",
         "children": [
           {
             "name": "name",
             "type": "string",
             "description": ""
+          },
+          {
+            "name": "dataframe_schema",
+            "type": "string",
+            "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Any subsequent functions operate against this dataframe."
           },
           {
             "name": "entity_column_identifiers",
@@ -413,6 +562,57 @@ The following fields are returned by `SELECT` queries:
                 "description": ""
               }
             ]
+          },
+          {
+            "name": "transformation_sql",
+            "type": "string",
+            "description": "The pipeline runs these SQL statements immediately after conversion into the schema specified on the KafkaConfig object."
+          }
+        ]
+      },
+      {
+        "name": "request_source",
+        "type": "object",
+        "description": "A request-time data source.",
+        "children": [
+          {
+            "name": "flat_schema",
+            "type": "object",
+            "description": "A flat schema with scalar-typed fields only.",
+            "children": [
+              {
+                "name": "fields",
+                "type": "array",
+                "description": "The list of fields in this schema."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "stream_source",
+        "type": "object",
+        "description": "A Stream data source.",
+        "children": [
+          {
+            "name": "full_name",
+            "type": "string",
+            "description": "Three-part full name of the Stream (catalog.schema.stream)."
+          },
+          {
+            "name": "dataframe_schema",
+            "type": "string",
+            "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Any subsequent functions operate against this dataframe."
+          },
+          {
+            "name": "filter_condition",
+            "type": "string",
+            "description": "The filter condition applied to the source data before aggregation."
+          },
+          {
+            "name": "transformation_sql",
+            "type": "string",
+            "description": "The pipeline runs these SQL statements immediately after conversion into the schema specified on the Stream object."
           }
         ]
       }
@@ -426,12 +626,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "continuous",
         "type": "object",
-        "description": "",
+        "description": "Deprecated: use RollingWindow with ``delay`` instead.",
         "children": [
           {
             "name": "window_duration",
             "type": "string",
-            "description": ""
+            "description": "The duration of the continuous window (must be positive)."
           },
           {
             "name": "offset",
@@ -441,19 +641,53 @@ The following fields are returned by `SELECT` queries:
         ]
       },
       {
+        "name": "rolling",
+        "type": "object",
+        "description": "A rolling time window with an optional delay. This is the SQL-spec-aligned replacement for<br />    ContinuousWindow: ``delay`` is the non-negative counterpart of the legacy non-positive<br />    ``ContinuousWindow.offset``.",
+        "children": [
+          {
+            "name": "delay",
+            "type": "string",
+            "description": "The delay applied to the end of the rolling window (must be non-negative). For example, delay=1d shifts the window end 1 day before the evaluation time."
+          },
+          {
+            "name": "window_duration",
+            "type": "string",
+            "description": "The duration of the rolling window. Must be positive when set; absent means lifetime (aggregate over the entity's entire history)."
+          }
+        ]
+      },
+      {
+        "name": "sawtooth",
+        "type": "object",
+        "description": "A sawtooth window served via the hybrid batch + streaming path.",
+        "children": [
+          {
+            "name": "delay",
+            "type": "string",
+            "description": "The delay applied to the end of the window (must be non-negative). For example, delay=1d shifts the window end 1 day before the evaluation time."
+          },
+          {
+            "name": "window_duration",
+            "type": "string",
+            "description": "The duration of the window. Must be positive and span more than two days when set, so that both the batch (N-1 day) and stale-path (N-2 day) partial aggregates are well defined. The duration need not be a whole number of days (e.g. 3 days 15 minutes is allowed). Absent means lifetime (aggregate over the entity's entire history)."
+          }
+        ]
+      },
+      {
         "name": "sliding",
         "type": "object",
         "description": "",
         "children": [
           {
-            "name": "window_duration",
+            "name": "slide_duration",
             "type": "string",
             "description": ""
           },
           {
-            "name": "slide_duration",
+            "name": "window_duration",
             "type": "string",
-            "description": "The slide duration (interval by which windows advance, must be positive and less than duration)."
+            "description": "The duration of the sliding window. Must be positive when set; absent means lifetime (aggregate over the entity's entire history)."
           }
         ]
       },
@@ -489,9 +723,34 @@ The following fields are returned by `SELECT` queries:
 
 <SchemaTable fields={[
   {
+    "name": "name",
+    "type": "string",
+    "description": "Name of the feature, extracted from the full three-part name (catalog.schema.name)."
+  },
+  {
+    "name": "catalog_name",
+    "type": "string",
+    "description": "Name of parent catalog."
+  },
+  {
     "name": "full_name",
     "type": "string",
     "description": ""
+  },
+  {
+    "name": "schema_name",
+    "type": "string",
+    "description": "Name of parent schema relative to its parent catalog."
+  },
+  {
+    "name": "created_at",
+    "type": "string (date-time)",
+    "description": "Time at which this feature was created."
+  },
+  {
+    "name": "created_by",
+    "type": "string",
+    "description": "Username of the feature creator."
   },
   {
     "name": "description",
@@ -572,7 +831,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "input",
                 "type": "string",
-                "description": "The input column from which the average is computed."
+                "description": "The input column from which the average is computed. For Kafka sources, use dot-prefixed path notation (e.g., \"value.amount\"). For nested fields, the leaf node name is used. Colon-prefixed notation (e.g., \"value:amount\") is supported for backwards compatibility but is deprecated; migrate to dot notation."
               }
             ]
           },
@@ -584,7 +843,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "input",
                 "type": "string",
-                "description": "The input column from which the count is computed."
+                "description": "The input column from which the count is computed. For Kafka sources, use dot-prefixed path notation (e.g., \"value.amount\"). For nested fields, the leaf node name is used. Colon-prefixed notation (e.g., \"value:amount\") is supported for backwards compatibility but is deprecated; migrate to dot notation."
               }
             ]
           },
@@ -601,6 +860,40 @@ The following fields are returned by `SELECT` queries:
             ]
           },
           {
+            "name": "first_distinct",
+            "type": "object",
+            "description": "Returns the first N distinct values, ordered by the feature's timeseries column.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the first N distinct values are returned."
+              },
+              {
+                "name": "n",
+                "type": "integer",
+                "description": "The number of distinct values to return."
+              }
+            ]
+          },
+          {
+            "name": "first_n",
+            "type": "object",
+            "description": "Returns the first N values, ordered by the feature's timeseries column.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the first N values are returned."
+              },
+              {
+                "name": "n",
+                "type": "integer",
+                "description": "The number of values to return."
+              }
+            ]
+          },
+          {
             "name": "last",
             "type": "object",
             "description": "Returns the last value.",
@@ -609,6 +902,40 @@ The following fields are returned by `SELECT` queries:
                 "name": "input",
                 "type": "string",
                 "description": "The input column from which the last value is returned."
+              }
+            ]
+          },
+          {
+            "name": "last_distinct",
+            "type": "object",
+            "description": "Returns the last N distinct values, ordered by the feature's timeseries column.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the last N distinct values are returned."
+              },
+              {
+                "name": "n",
+                "type": "integer",
+                "description": "The number of distinct values to return."
+              }
+            ]
+          },
+          {
+            "name": "last_n",
+            "type": "object",
+            "description": "Returns the last N values, ordered by the feature's timeseries column.",
+            "children": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "The input column from which the last N values are returned."
+              },
+              {
+                "name": "n",
+                "type": "integer",
+                "description": "The number of values to return."
               }
             ]
           },
@@ -644,7 +971,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "input",
                 "type": "string",
-                "description": "The input column from which the population standard deviation is computed."
+                "description": "The input column from which the population standard deviation is computed. For Kafka sources, use dot-prefixed path notation (e.g., \"value.amount\"). For nested fields, the leaf node name is used. Colon-prefixed notation (e.g., \"value:amount\") is supported for backwards compatibility but is deprecated; migrate to dot notation."
               }
             ]
           },
@@ -668,7 +995,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "input",
                 "type": "string",
-                "description": "The input column from which the sum is computed."
+                "description": "The input column from which the sum is computed. For Kafka sources, use dot-prefixed path notation (e.g., \"value.amount\"). For nested fields, the leaf node name is used. Colon-prefixed notation (e.g., \"value:amount\") is supported for backwards compatibility but is deprecated; migrate to dot notation."
               }
             ]
           },
@@ -680,7 +1007,17 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "continuous",
                 "type": "object",
-                "description": ""
+                "description": "Deprecated: use RollingWindow with ``delay`` instead."
+              },
+              {
+                "name": "rolling",
+                "type": "object",
+                "description": "A rolling time window with an optional delay. This is the SQL-spec-aligned replacement for<br />    ContinuousWindow: ``delay`` is the non-negative counterpart of the legacy non-positive<br />    ``ContinuousWindow.offset``."
+              },
+              {
+                "name": "sawtooth",
+                "type": "object",
+                "description": "A sawtooth window served via the hybrid batch + streaming path."
               },
               {
                 "name": "sliding",
@@ -715,6 +1052,47 @@ The following fields are returned by `SELECT` queries:
                 "name": "input",
                 "type": "string",
                 "description": "The input column from which the sample variance is computed."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "column_selection",
+        "type": "object",
+        "description": "Selects the latest value of a single column in a data source",
+        "children": [
+          {
+            "name": "column",
+            "type": "string",
+            "description": "Column name from source to select as the feature value."
+          }
+        ]
+      },
+      {
+        "name": "custom_udf",
+        "type": "object",
+        "description": "Applies a registered Unity Catalog function row-wise to source columns.",
+        "children": [
+          {
+            "name": "function_path",
+            "type": "string",
+            "description": "Fully qualified 3-part Unity Catalog path of the function to apply."
+          },
+          {
+            "name": "input_bindings",
+            "type": "array",
+            "description": "Binds each UC function parameter to a source column. May be empty for zero-argument functions (e.g. a timestamp generator).",
+            "children": [
+              {
+                "name": "parameter",
+                "type": "string",
+                "description": "Name of the UC function parameter."
+              },
+              {
+                "name": "column",
+                "type": "string",
+                "description": "Source column whose value is passed for this parameter at execution time."
               }
             ]
           }
@@ -786,7 +1164,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "delta_table_source",
         "type": "object",
-        "description": "",
+        "description": "A Delta table data source.",
         "children": [
           {
             "name": "full_name",
@@ -816,19 +1194,24 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "transformation_sql",
             "type": "string",
-            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
+            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have ``transformation_sql`` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
           }
         ]
       },
       {
         "name": "kafka_source",
         "type": "object",
-        "description": "",
+        "description": "A Kafka stream data source.",
         "children": [
           {
             "name": "name",
             "type": "string",
             "description": ""
+          },
+          {
+            "name": "dataframe_schema",
+            "type": "string",
+            "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Any subsequent functions operate against this dataframe."
           },
           {
             "name": "entity_column_identifiers",
@@ -858,6 +1241,57 @@ The following fields are returned by `SELECT` queries:
                 "description": ""
               }
             ]
+          },
+          {
+            "name": "transformation_sql",
+            "type": "string",
+            "description": "The pipeline runs these SQL statements immediately after conversion into the schema specified on the KafkaConfig object."
+          }
+        ]
+      },
+      {
+        "name": "request_source",
+        "type": "object",
+        "description": "A request-time data source.",
+        "children": [
+          {
+            "name": "flat_schema",
+            "type": "object",
+            "description": "A flat schema with scalar-typed fields only.",
+            "children": [
+              {
+                "name": "fields",
+                "type": "array",
+                "description": "The list of fields in this schema."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "stream_source",
+        "type": "object",
+        "description": "A Stream data source.",
+        "children": [
+          {
+            "name": "full_name",
+            "type": "string",
+            "description": "Three-part full name of the Stream (catalog.schema.stream)."
+          },
+          {
+            "name": "dataframe_schema",
+            "type": "string",
+            "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Any subsequent functions operate against this dataframe."
+          },
+          {
+            "name": "filter_condition",
+            "type": "string",
+            "description": "The filter condition applied to the source data before aggregation."
+          },
+          {
+            "name": "transformation_sql",
+            "type": "string",
+            "description": "The pipeline runs these SQL statements immediately after conversion into the schema specified on the Stream object."
           }
         ]
       }
@@ -871,12 +1305,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "continuous",
         "type": "object",
-        "description": "",
+        "description": "Deprecated: use RollingWindow with ``delay`` instead.",
         "children": [
           {
             "name": "window_duration",
             "type": "string",
-            "description": ""
+            "description": "The duration of the continuous window (must be positive)."
           },
           {
             "name": "offset",
@@ -886,19 +1320,53 @@ The following fields are returned by `SELECT` queries:
         ]
       },
       {
+        "name": "rolling",
+        "type": "object",
+        "description": "A rolling time window with an optional delay. This is the SQL-spec-aligned replacement for<br />    ContinuousWindow: ``delay`` is the non-negative counterpart of the legacy non-positive<br />    ``ContinuousWindow.offset``.",
+        "children": [
+          {
+            "name": "delay",
+            "type": "string",
+            "description": "The delay applied to the end of the rolling window (must be non-negative). For example, delay=1d shifts the window end 1 day before the evaluation time."
+          },
+          {
+            "name": "window_duration",
+            "type": "string",
+            "description": "The duration of the rolling window. Must be positive when set; absent means lifetime (aggregate over the entity's entire history)."
+          }
+        ]
+      },
+      {
+        "name": "sawtooth",
+        "type": "object",
+        "description": "A sawtooth window served via the hybrid batch + streaming path.",
+        "children": [
+          {
+            "name": "delay",
+            "type": "string",
+            "description": "The delay applied to the end of the window (must be non-negative). For example, delay=1d shifts the window end 1 day before the evaluation time."
+          },
+          {
+            "name": "window_duration",
+            "type": "string",
+            "description": "The duration of the window. Must be positive and span more than two days when set, so that both the batch (N-1 day) and stale-path (N-2 day) partial aggregates are well defined. The duration need not be a whole number of days (e.g. 3 days 15 minutes is allowed). Absent means lifetime (aggregate over the entity's entire history)."
+          }
+        ]
+      },
+      {
         "name": "sliding",
         "type": "object",
         "description": "",
         "children": [
           {
-            "name": "window_duration",
+            "name": "slide_duration",
             "type": "string",
             "description": ""
           },
           {
-            "name": "slide_duration",
+            "name": "window_duration",
             "type": "string",
-            "description": "The slide duration (interval by which windows advance, must be positive and less than duration)."
+            "description": "The duration of the sliding window. Must be positive when set; absent means lifetime (aggregate over the entity's entire history)."
           }
         ]
       },
@@ -957,7 +1425,7 @@ The following methods are available for this resource:
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
-    <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td><a href="#parameter-catalog_name"><code>catalog_name</code></a>, <a href="#parameter-schema_name"><code>schema_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
     <td>List Features.</td>
 </tr>
@@ -998,6 +1466,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     </tr>
 </thead>
 <tbody>
+<tr id="parameter-catalog_name">
+    <td><CopyableCode code="catalog_name" /></td>
+    <td><code>string</code></td>
+    <td>Name of parent catalog for features of interest.</td>
+</tr>
 <tr id="parameter-deployment_name">
     <td><CopyableCode code="deployment_name" /></td>
     <td><code>string</code></td>
@@ -1007,6 +1480,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><CopyableCode code="full_name" /></td>
     <td><code>string</code></td>
     <td>Name of the feature to delete.</td>
+</tr>
+<tr id="parameter-schema_name">
+    <td><CopyableCode code="schema_name" /></td>
+    <td><code>string</code></td>
+    <td>Name of parent schema relative to its parent catalog.</td>
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
@@ -1041,7 +1519,12 @@ Get a Feature.
 
 ```sql
 SELECT
+name,
+catalog_name,
 full_name,
+schema_name,
+created_at,
+created_by,
 description,
 entities,
 filter_condition,
@@ -1063,7 +1546,12 @@ List Features.
 
 ```sql
 SELECT
+name,
+catalog_name,
 full_name,
+schema_name,
+created_at,
+created_by,
 description,
 entities,
 filter_condition,
@@ -1074,7 +1562,9 @@ source,
 time_window,
 timeseries_column
 FROM databricks_workspace.ml.feature_engineering
-WHERE deployment_name = '{{ deployment_name }}' -- required
+WHERE catalog_name = '{{ catalog_name }}' -- required
+AND schema_name = '{{ schema_name }}' -- required
+AND deployment_name = '{{ deployment_name }}' -- required
 AND page_size = '{{ page_size }}'
 AND page_token = '{{ page_token }}'
 ;
@@ -1105,7 +1595,12 @@ SELECT
 '{{ feature }}' /* required */,
 '{{ deployment_name }}'
 RETURNING
+name,
+catalog_name,
 full_name,
+schema_name,
+created_at,
+created_by,
 description,
 entities,
 filter_condition,
@@ -1142,11 +1637,23 @@ timeseries_column
             transformation_sql: "{{ transformation_sql }}"
           kafka_source:
             name: "{{ name }}"
+            dataframe_schema: "{{ dataframe_schema }}"
             entity_column_identifiers:
               - variant_expr_path: "{{ variant_expr_path }}"
             filter_condition: "{{ filter_condition }}"
             timeseries_column_identifier:
               variant_expr_path: "{{ variant_expr_path }}"
+            transformation_sql: "{{ transformation_sql }}"
+          request_source:
+            flat_schema:
+              fields:
+                - name: "{{ name }}"
+                  data_type: "{{ data_type }}"
+          stream_source:
+            full_name: "{{ full_name }}"
+            dataframe_schema: "{{ dataframe_schema }}"
+            filter_condition: "{{ filter_condition }}"
+            transformation_sql: "{{ transformation_sql }}"
         function:
           aggregation_function:
             approx_count_distinct:
@@ -1162,8 +1669,20 @@ timeseries_column
               input: "{{ input }}"
             first:
               input: "{{ input }}"
+            first_distinct:
+              input: "{{ input }}"
+              n: {{ n }}
+            first_n:
+              input: "{{ input }}"
+              n: {{ n }}
             last:
               input: "{{ input }}"
+            last_distinct:
+              input: "{{ input }}"
+              n: {{ n }}
+            last_n:
+              input: "{{ input }}"
+              n: {{ n }}
             max:
               input: "{{ input }}"
             min:
@@ -1178,19 +1697,35 @@ timeseries_column
               continuous:
                 window_duration: "{{ window_duration }}"
                 offset: "{{ offset }}"
-              sliding:
+              rolling:
+                delay: "{{ delay }}"
                 window_duration: "{{ window_duration }}"
+              sawtooth:
+                delay: "{{ delay }}"
+                window_duration: "{{ window_duration }}"
+              sliding:
                 slide_duration: "{{ slide_duration }}"
+                window_duration: "{{ window_duration }}"
               tumbling:
                 window_duration: "{{ window_duration }}"
             var_pop:
               input: "{{ input }}"
             var_samp:
               input: "{{ input }}"
+          column_selection:
+            column: "{{ column }}"
+          custom_udf:
+            function_path: "{{ function_path }}"
+            input_bindings:
+              - parameter: "{{ parameter }}"
+                column: "{{ column }}"
           extra_parameters:
             - key: "{{ key }}"
               value: "{{ value }}"
           function_type: "{{ function_type }}"
+        catalog_name: "{{ catalog_name }}"
+        created_at: "{{ created_at }}"
+        created_by: "{{ created_by }}"
         description: "{{ description }}"
         entities:
           - name: "{{ name }}"
@@ -1202,13 +1737,21 @@ timeseries_column
             job_id: {{ job_id }}
             job_run_id: {{ job_run_id }}
           notebook_id: {{ notebook_id }}
+        name: "{{ name }}"
+        schema_name: "{{ schema_name }}"
         time_window:
           continuous:
             window_duration: "{{ window_duration }}"
             offset: "{{ offset }}"
-          sliding:
+          rolling:
+            delay: "{{ delay }}"
             window_duration: "{{ window_duration }}"
+          sawtooth:
+            delay: "{{ delay }}"
+            window_duration: "{{ window_duration }}"
+          sliding:
             slide_duration: "{{ slide_duration }}"
+            window_duration: "{{ window_duration }}"
           tumbling:
             window_duration: "{{ window_duration }}"
         timeseries_column:
@@ -1241,7 +1784,12 @@ AND update_mask = '{{ update_mask }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
 AND feature = '{{ feature }}' --required
 RETURNING
+name,
+catalog_name,
 full_name,
+schema_name,
+created_at,
+created_by,
 description,
 entities,
 filter_condition,

@@ -66,7 +66,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "run_as_user_name",
     "type": "string",
-    "description": "The run as username or application ID of service principal. On Create and Update, this field can be set to application ID of an active service principal. Setting this field requires the servicePrincipal/user role. Deprecated: Use `run_as` field instead. This field will be removed in a future release."
+    "description": "The run as username or application ID of service principal. On Create and Update, this field can be set to application ID of an active service principal. Setting this field requires the servicePrincipal/user role. Deprecated: Use ``run_as`` field instead. This field will be removed in a future release."
   },
   {
     "name": "create_time",
@@ -82,6 +82,11 @@ The following fields are returned by `SELECT` queries:
     "name": "custom_summary",
     "type": "string",
     "description": "Custom summary for the alert. support mustache template."
+  },
+  {
+    "name": "effective_parent_path",
+    "type": "string",
+    "description": "The actual workspace path of the folder containing the alert. This is an output-only field."
   },
   {
     "name": "effective_run_as",
@@ -118,7 +123,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "aggregation",
             "type": "string",
-            "description": "If not set, the behavior is equivalent to using `First row` in the UI. (AVG, COUNT, COUNT_DISTINCT, MAX, MEDIAN, MIN, STDDEV, SUM)"
+            "description": "If not set, the behavior is equivalent to using ``First row`` in the UI. (AVG, COUNT, COUNT_DISTINCT, MAX, MEDIAN, MIN, STDDEV, SUM)"
           },
           {
             "name": "display",
@@ -135,7 +140,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "empty_result_state",
         "type": "string",
-        "description": "Alert state if result is empty. Please avoid setting this field to be `UNKNOWN` because `UNKNOWN` state is planned to be deprecated. (ERROR, OK, TRIGGERED, UNKNOWN)"
+        "description": "Alert state if result is empty. Please avoid setting this field to be ``UNKNOWN`` because ``UNKNOWN`` state is planned to be deprecated. (ERROR, OK, TRIGGERED, UNKNOWN)"
       },
       {
         "name": "last_evaluated_at",
@@ -199,7 +204,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "aggregation",
                 "type": "string",
-                "description": "If not set, the behavior is equivalent to using `First row` in the UI. (AVG, COUNT, COUNT_DISTINCT, MAX, MEDIAN, MIN, STDDEV, SUM)"
+                "description": "If not set, the behavior is equivalent to using ``First row`` in the UI. (AVG, COUNT, COUNT_DISTINCT, MAX, MEDIAN, MIN, STDDEV, SUM)"
               },
               {
                 "name": "display",
@@ -240,6 +245,28 @@ The following fields are returned by `SELECT` queries:
     "description": "Indicates whether the query is trashed. (ACTIVE, DELETED)"
   },
   {
+    "name": "parameters",
+    "type": "array",
+    "description": "Query parameters bound when executing the alert query, referenced in the query text with ``:name`` syntax. Static values only.",
+    "children": [
+      {
+        "name": "name",
+        "type": "string",
+        "description": "The name of the parameter, referenced in the query as ``:name``."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "description": "The SQL data type of the parameter, e.g. STRING, INT, or DATE. Defaults to STRING. This is a string rather than an enum because scalar subtypes such as DECIMAL(10, 4) cannot be enumerated. Complex types such as ARRAY, MAP, and STRUCT are not supported."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "The bound value for the parameter, given as a string. If omitted, the value is interpreted as NULL."
+      }
+    ]
+  },
+  {
     "name": "parent_path",
     "type": "string",
     "description": "The workspace path of the folder containing the alert. Can only be set on create, and cannot be updated."
@@ -252,7 +279,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "run_as",
     "type": "object",
-    "description": "Specifies the identity that will be used to run the alert. This field allows you to configure alerts to run as a specific user or service principal. - For user identity: Set `user_name` to the email of an active workspace user. Users can only set this to their own email. - For service principal: Set `service_principal_name` to the application ID. Requires the `servicePrincipal/user` role. If not specified, the alert will run as the request user.",
+    "description": "Specifies the identity that will be used to run the alert. This field allows you to configure alerts to run as a specific user or service principal. - For user identity: Set ``user_name`` to the email of an active workspace user. Users can only set this to their own email. - For service principal: Set ``service_principal_name`` to the application ID. Requires the ``servicePrincipal/user`` role. If not specified, the alert will run as the request user.",
     "children": [
       {
         "name": "service_principal_name",
@@ -280,6 +307,11 @@ The following fields are returned by `SELECT` queries:
         "name": "timezone_id",
         "type": "string",
         "description": "A Java timezone id. The schedule will be resolved using this timezone. This will be combined with the quartz_cron_schedule to determine the schedule. See https://docs.databricks.com/sql/language-manual/sql-ref-syntax-aux-conf-mgmt-set-timezone.html for details."
+      },
+      {
+        "name": "effective_pause_status",
+        "type": "string",
+        "description": "The actual pause status of the schedule. This is an output-only field. (PAUSED, UNPAUSED)"
       },
       {
         "name": "pause_status",
@@ -321,7 +353,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "run_as_user_name",
     "type": "string",
-    "description": "The run as username or application ID of service principal. On Create and Update, this field can be set to application ID of an active service principal. Setting this field requires the servicePrincipal/user role. Deprecated: Use `run_as` field instead. This field will be removed in a future release."
+    "description": "The run as username or application ID of service principal. On Create and Update, this field can be set to application ID of an active service principal. Setting this field requires the servicePrincipal/user role. Deprecated: Use ``run_as`` field instead. This field will be removed in a future release."
   },
   {
     "name": "create_time",
@@ -337,6 +369,11 @@ The following fields are returned by `SELECT` queries:
     "name": "custom_summary",
     "type": "string",
     "description": "Custom summary for the alert. support mustache template."
+  },
+  {
+    "name": "effective_parent_path",
+    "type": "string",
+    "description": "The actual workspace path of the folder containing the alert. This is an output-only field."
   },
   {
     "name": "effective_run_as",
@@ -373,7 +410,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "aggregation",
             "type": "string",
-            "description": "If not set, the behavior is equivalent to using `First row` in the UI. (AVG, COUNT, COUNT_DISTINCT, MAX, MEDIAN, MIN, STDDEV, SUM)"
+            "description": "If not set, the behavior is equivalent to using ``First row`` in the UI. (AVG, COUNT, COUNT_DISTINCT, MAX, MEDIAN, MIN, STDDEV, SUM)"
           },
           {
             "name": "display",
@@ -390,7 +427,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "empty_result_state",
         "type": "string",
-        "description": "Alert state if result is empty. Please avoid setting this field to be `UNKNOWN` because `UNKNOWN` state is planned to be deprecated. (ERROR, OK, TRIGGERED, UNKNOWN)"
+        "description": "Alert state if result is empty. Please avoid setting this field to be ``UNKNOWN`` because ``UNKNOWN`` state is planned to be deprecated. (ERROR, OK, TRIGGERED, UNKNOWN)"
       },
       {
         "name": "last_evaluated_at",
@@ -454,7 +491,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "aggregation",
                 "type": "string",
-                "description": "If not set, the behavior is equivalent to using `First row` in the UI. (AVG, COUNT, COUNT_DISTINCT, MAX, MEDIAN, MIN, STDDEV, SUM)"
+                "description": "If not set, the behavior is equivalent to using ``First row`` in the UI. (AVG, COUNT, COUNT_DISTINCT, MAX, MEDIAN, MIN, STDDEV, SUM)"
               },
               {
                 "name": "display",
@@ -495,6 +532,28 @@ The following fields are returned by `SELECT` queries:
     "description": "Indicates whether the query is trashed. (ACTIVE, DELETED)"
   },
   {
+    "name": "parameters",
+    "type": "array",
+    "description": "Query parameters bound when executing the alert query, referenced in the query text with ``:name`` syntax. Static values only.",
+    "children": [
+      {
+        "name": "name",
+        "type": "string",
+        "description": "The name of the parameter, referenced in the query as ``:name``."
+      },
+      {
+        "name": "type",
+        "type": "string",
+        "description": "The SQL data type of the parameter, e.g. STRING, INT, or DATE. Defaults to STRING. This is a string rather than an enum because scalar subtypes such as DECIMAL(10, 4) cannot be enumerated. Complex types such as ARRAY, MAP, and STRUCT are not supported."
+      },
+      {
+        "name": "value",
+        "type": "string",
+        "description": "The bound value for the parameter, given as a string. If omitted, the value is interpreted as NULL."
+      }
+    ]
+  },
+  {
     "name": "parent_path",
     "type": "string",
     "description": "The workspace path of the folder containing the alert. Can only be set on create, and cannot be updated."
@@ -507,7 +566,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "run_as",
     "type": "object",
-    "description": "Specifies the identity that will be used to run the alert. This field allows you to configure alerts to run as a specific user or service principal. - For user identity: Set `user_name` to the email of an active workspace user. Users can only set this to their own email. - For service principal: Set `service_principal_name` to the application ID. Requires the `servicePrincipal/user` role. If not specified, the alert will run as the request user.",
+    "description": "Specifies the identity that will be used to run the alert. This field allows you to configure alerts to run as a specific user or service principal. - For user identity: Set ``user_name`` to the email of an active workspace user. Users can only set this to their own email. - For service principal: Set ``service_principal_name`` to the application ID. Requires the ``servicePrincipal/user`` role. If not specified, the alert will run as the request user.",
     "children": [
       {
         "name": "service_principal_name",
@@ -535,6 +594,11 @@ The following fields are returned by `SELECT` queries:
         "name": "timezone_id",
         "type": "string",
         "description": "A Java timezone id. The schedule will be resolved using this timezone. This will be combined with the quartz_cron_schedule to determine the schedule. See https://docs.databricks.com/sql/language-manual/sql-ref-syntax-aux-conf-mgmt-set-timezone.html for details."
+      },
+      {
+        "name": "effective_pause_status",
+        "type": "string",
+        "description": "The actual pause status of the schedule. This is an output-only field. (PAUSED, UNPAUSED)"
       },
       {
         "name": "pause_status",
@@ -631,7 +695,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future.</td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of ``*`` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the API changes in the future.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -674,9 +738,11 @@ run_as_user_name,
 create_time,
 custom_description,
 custom_summary,
+effective_parent_path,
 effective_run_as,
 evaluation,
 lifecycle_state,
+parameters,
 parent_path,
 query_text,
 run_as,
@@ -702,9 +768,11 @@ run_as_user_name,
 create_time,
 custom_description,
 custom_summary,
+effective_parent_path,
 effective_run_as,
 evaluation,
 lifecycle_state,
+parameters,
 parent_path,
 query_text,
 run_as,
@@ -750,9 +818,11 @@ run_as_user_name,
 create_time,
 custom_description,
 custom_summary,
+effective_parent_path,
 effective_run_as,
 evaluation,
 lifecycle_state,
+parameters,
 parent_path,
 query_text,
 run_as,
@@ -801,16 +871,22 @@ update_time
         schedule:
           quartz_cron_schedule: "{{ quartz_cron_schedule }}"
           timezone_id: "{{ timezone_id }}"
+          effective_pause_status: "{{ effective_pause_status }}"
           pause_status: "{{ pause_status }}"
         create_time: "{{ create_time }}"
         custom_description: "{{ custom_description }}"
         custom_summary: "{{ custom_summary }}"
+        effective_parent_path: "{{ effective_parent_path }}"
         effective_run_as:
           service_principal_name: "{{ service_principal_name }}"
           user_name: "{{ user_name }}"
         id: "{{ id }}"
         lifecycle_state: "{{ lifecycle_state }}"
         owner_user_name: "{{ owner_user_name }}"
+        parameters:
+          - name: "{{ name }}"
+            type: "{{ type }}"
+            value: "{{ value }}"
         parent_path: "{{ parent_path }}"
         run_as:
           service_principal_name: "{{ service_principal_name }}"
@@ -853,9 +929,11 @@ run_as_user_name,
 create_time,
 custom_description,
 custom_summary,
+effective_parent_path,
 effective_run_as,
 evaluation,
 lifecycle_state,
+parameters,
 parent_path,
 query_text,
 run_as,

@@ -81,7 +81,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_token"><code>page_token</code></a>, <a href="#parameter-path"><code>path</code></a>, <a href="#parameter-run_id"><code>run_id</code></a>, <a href="#parameter-run_uuid"><code>run_uuid</code></a></td>
-    <td>List artifacts for a run. Takes an optional `artifact_path` prefix which if specified, the response</td>
+    <td>List artifacts for a run. Takes an optional ``artifact_path`` prefix which if specified, the response</td>
 </tr>
 </tbody>
 </table>
@@ -107,7 +107,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>The token indicating the page of artifact results to fetch. `page_token` is not supported when listing artifacts in UC Volumes. A maximum of 1000 artifacts will be retrieved for UC Volumes. Please call `/api/2.0/fs/directories&#123;directory_path&#125;` for listing artifacts in UC Volumes, which supports pagination. See [List directory contents | Files API](/api/workspace/files/listdirectorycontents).</td>
+    <td>The token indicating the page of artifact results to fetch. ``page_token`` is not supported when listing artifacts in UC Volumes. A maximum of 1000 artifacts will be retrieved for UC Volumes. Please call ``/api/2.0/fs/directories&#123;directory_path&#125;`` for listing artifacts in UC Volumes, which supports pagination. See [List directory contents | Files API](/api/workspace/files/listdirectorycontents).</td>
 </tr>
 <tr id="parameter-path">
     <td><CopyableCode code="path" /></td>
@@ -122,7 +122,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-run_uuid">
     <td><CopyableCode code="run_uuid" /></td>
     <td><code>string</code></td>
-    <td>[Deprecated, use `run_id` instead] ID of the run whose artifacts to list. This field will be removed in a future MLflow version.</td>
+    <td>[Deprecated, use ``run_id`` instead] ID of the run whose artifacts to list. This field will be removed in a future MLflow version.</td>
 </tr>
 </tbody>
 </table>
@@ -137,7 +137,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list">
 
-List artifacts for a run. Takes an optional `artifact_path` prefix which if specified, the response
+List artifacts for a run. Takes an optional ``artifact_path`` prefix which if specified, the response
 
 ```sql
 SELECT

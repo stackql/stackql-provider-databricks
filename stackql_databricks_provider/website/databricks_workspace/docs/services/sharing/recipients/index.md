@@ -56,12 +56,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "data_recipient_global_metastore_id",
     "type": "string",
-    "description": "The global Unity Catalog metastore id provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**. The identifier is of format __cloud__:__region__:__metastore-uuid__."
+    "description": "The global Unity Catalog metastore id provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**. The identifier is of format **cloud**:**region**:**metastore-uuid**."
   },
   {
     "name": "metastore_id",
     "type": "string",
-    "description": "Unique identifier of recipient's Unity Catalog Metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Unique identifier of recipient's Unity Catalog Metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "activated",
@@ -74,14 +74,24 @@ The following fields are returned by `SELECT` queries:
     "description": "Full activation url to retrieve the access token. It will be empty if the token is already retrieved."
   },
   {
+    "name": "allowed_acceptance_types",
+    "type": "array",
+    "description": "Authentication types the invitee may choose from when activating. Each value must be TOKEN or DATABRICKS. Empty means all supported types are allowed. This field is only present when the **authentication_type** is **EMAIL**."
+  },
+  {
+    "name": "allowed_data_recipient_global_metastore_ids",
+    "type": "array",
+    "description": "Optional allowlist of the data recipient's global metastore IDs permitted to accept the invite with the DATABRICKS acceptance type. Each ID is of the form **cloud**:**region**:**metastore-uuid**. Empty means any metastore is allowed. If non-empty, **allowed_acceptance_types** must include **DATABRICKS**. This field is only present when the **authentication_type** is **EMAIL**."
+  },
+  {
     "name": "authentication_type",
     "type": "string",
-    "description": "The delta sharing authentication type. (DATABRICKS, OAUTH_CLIENT_CREDENTIALS, OIDC_FEDERATION, TOKEN)"
+    "description": "The delta sharing authentication type. (DATABRICKS, EMAIL, OAUTH_CLIENT_CREDENTIALS, OIDC_FEDERATION, TOKEN)"
   },
   {
     "name": "cloud",
     "type": "string",
-    "description": "Cloud vendor of the recipient's Unity Catalog Metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Cloud vendor of the recipient's Unity Catalog Metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "comment",
@@ -97,6 +107,11 @@ The following fields are returned by `SELECT` queries:
     "name": "created_by",
     "type": "string",
     "description": "Username of recipient creator."
+  },
+  {
+    "name": "email",
+    "type": "string",
+    "description": "The invited email address. This field is only present when the **authentication_type** is **EMAIL**. The 320-character cap follows RFC 5321 (64-octet local-part + ``@`` + 255-octet domain)."
   },
   {
     "name": "expiration_time",
@@ -135,17 +150,17 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "region",
     "type": "string",
-    "description": "Cloud region of the recipient's Unity Catalog Metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Cloud region of the recipient's Unity Catalog Metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "sharing_code",
     "type": "string",
-    "description": "The one-time sharing code provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "The one-time sharing code provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "tokens",
     "type": "array",
-    "description": "This field is only present when the __authentication_type__ is **TOKEN**.",
+    "description": "This field is only present when the **authentication_type** is **TOKEN**.",
     "children": [
       {
         "name": "activation_url",
@@ -212,12 +227,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "data_recipient_global_metastore_id",
     "type": "string",
-    "description": "The global Unity Catalog metastore id provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**. The identifier is of format __cloud__:__region__:__metastore-uuid__."
+    "description": "The global Unity Catalog metastore id provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**. The identifier is of format **cloud**:**region**:**metastore-uuid**."
   },
   {
     "name": "metastore_id",
     "type": "string",
-    "description": "Unique identifier of recipient's Unity Catalog Metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Unique identifier of recipient's Unity Catalog Metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "activated",
@@ -230,14 +245,24 @@ The following fields are returned by `SELECT` queries:
     "description": "Full activation url to retrieve the access token. It will be empty if the token is already retrieved."
   },
   {
+    "name": "allowed_acceptance_types",
+    "type": "array",
+    "description": "Authentication types the invitee may choose from when activating. Each value must be TOKEN or DATABRICKS. Empty means all supported types are allowed. This field is only present when the **authentication_type** is **EMAIL**."
+  },
+  {
+    "name": "allowed_data_recipient_global_metastore_ids",
+    "type": "array",
+    "description": "Optional allowlist of the data recipient's global metastore IDs permitted to accept the invite with the DATABRICKS acceptance type. Each ID is of the form **cloud**:**region**:**metastore-uuid**. Empty means any metastore is allowed. If non-empty, **allowed_acceptance_types** must include **DATABRICKS**. This field is only present when the **authentication_type** is **EMAIL**."
+  },
+  {
     "name": "authentication_type",
     "type": "string",
-    "description": "The delta sharing authentication type. (DATABRICKS, OAUTH_CLIENT_CREDENTIALS, OIDC_FEDERATION, TOKEN)"
+    "description": "The delta sharing authentication type. (DATABRICKS, EMAIL, OAUTH_CLIENT_CREDENTIALS, OIDC_FEDERATION, TOKEN)"
   },
   {
     "name": "cloud",
     "type": "string",
-    "description": "Cloud vendor of the recipient's Unity Catalog Metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Cloud vendor of the recipient's Unity Catalog Metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "comment",
@@ -253,6 +278,11 @@ The following fields are returned by `SELECT` queries:
     "name": "created_by",
     "type": "string",
     "description": "Username of recipient creator."
+  },
+  {
+    "name": "email",
+    "type": "string",
+    "description": "The invited email address. This field is only present when the **authentication_type** is **EMAIL**. The 320-character cap follows RFC 5321 (64-octet local-part + ``@`` + 255-octet domain)."
   },
   {
     "name": "expiration_time",
@@ -291,17 +321,17 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "region",
     "type": "string",
-    "description": "Cloud region of the recipient's Unity Catalog Metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Cloud region of the recipient's Unity Catalog Metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "sharing_code",
     "type": "string",
-    "description": "The one-time sharing code provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "The one-time sharing code provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "tokens",
     "type": "array",
-    "description": "This field is only present when the __authentication_type__ is **TOKEN**.",
+    "description": "This field is only present when the **authentication_type** is **TOKEN**.",
     "children": [
       {
         "name": "activation_url",
@@ -374,13 +404,13 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Gets a share recipient from the metastore. The caller must be one of: * A user with **USE_RECIPIENT**</td>
+    <td>Gets a share recipient from the metastore. The caller must be one of:</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td><a href="#parameter-data_recipient_global_metastore_id"><code>data_recipient_global_metastore_id</code></a>, <a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
+    <td><a href="#parameter-data_recipient_global_metastore_id"><code>data_recipient_global_metastore_id</code></a>, <a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a>, <a href="#parameter-parent_recipient_name"><code>parent_recipient_name</code></a></td>
     <td>Gets an array of all share recipients within the current metastore where:</td>
 </tr>
 <tr>
@@ -452,6 +482,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>Opaque pagination token to go to next page based on previous query.</td>
 </tr>
+<tr id="parameter-parent_recipient_name">
+    <td><CopyableCode code="parent_recipient_name" /></td>
+    <td><code>string</code></td>
+    <td>If set, the response is scoped to the child recipients of the named parent recipient. Child recipients are otherwise hidden from the default list response. Only applicable to email recipient parents — non-email recipients have no children to scope to.</td>
+</tr>
 </tbody>
 </table>
 
@@ -466,7 +501,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets a share recipient from the metastore. The caller must be one of: * A user with **USE_RECIPIENT**
+Gets a share recipient from the metastore. The caller must be one of:
 
 ```sql
 SELECT
@@ -476,11 +511,14 @@ data_recipient_global_metastore_id,
 metastore_id,
 activated,
 activation_url,
+allowed_acceptance_types,
+allowed_data_recipient_global_metastore_ids,
 authentication_type,
 cloud,
 comment,
 created_at,
 created_by,
+email,
 expiration_time,
 ip_access_list,
 owner,
@@ -508,11 +546,14 @@ data_recipient_global_metastore_id,
 metastore_id,
 activated,
 activation_url,
+allowed_acceptance_types,
+allowed_data_recipient_global_metastore_ids,
 authentication_type,
 cloud,
 comment,
 created_at,
 created_by,
+email,
 expiration_time,
 ip_access_list,
 owner,
@@ -527,6 +568,7 @@ WHERE deployment_name = '{{ deployment_name }}' -- required
 AND data_recipient_global_metastore_id = '{{ data_recipient_global_metastore_id }}'
 AND max_results = '{{ max_results }}'
 AND page_token = '{{ page_token }}'
+AND parent_recipient_name = '{{ parent_recipient_name }}'
 ;
 ```
 </TabItem>
@@ -564,11 +606,14 @@ data_recipient_global_metastore_id,
 metastore_id,
 activated,
 activation_url,
+allowed_acceptance_types,
+allowed_data_recipient_global_metastore_ids,
 authentication_type,
 cloud,
 comment,
 created_at,
 created_by,
+email,
 expiration_time,
 ip_access_list,
 owner,
@@ -589,8 +634,11 @@ Creates a new recipient with the delta sharing authentication type in the metast
 INSERT INTO databricks_workspace.sharing.recipients (
 name,
 authentication_type,
+allowed_acceptance_types,
+allowed_data_recipient_global_metastore_ids,
 comment,
 data_recipient_global_metastore_id,
+email,
 expiration_time,
 id,
 ip_access_list,
@@ -602,8 +650,11 @@ deployment_name
 SELECT 
 '{{ name }}' /* required */,
 '{{ authentication_type }}' /* required */,
+'{{ allowed_acceptance_types }}',
+'{{ allowed_data_recipient_global_metastore_ids }}',
 '{{ comment }}',
 '{{ data_recipient_global_metastore_id }}',
+'{{ email }}',
 {{ expiration_time }},
 '{{ id }}',
 '{{ ip_access_list }}',
@@ -618,11 +669,14 @@ data_recipient_global_metastore_id,
 metastore_id,
 activated,
 activation_url,
+allowed_acceptance_types,
+allowed_data_recipient_global_metastore_ids,
 authentication_type,
 cloud,
 comment,
 created_at,
 created_by,
+email,
 expiration_time,
 ip_access_list,
 owner,
@@ -658,6 +712,16 @@ updated_by
       value: "{{ authentication_type }}"
       description: |
         The delta sharing authentication type.
+    - name: allowed_acceptance_types
+      value:
+        - "{{ allowed_acceptance_types }}"
+      description: |
+        Authentication types the invitee may choose from when activating. Each value must be TOKEN or DATABRICKS. Empty means all supported types are allowed. This field is only present when the **authentication_type** is **EMAIL**.
+    - name: allowed_data_recipient_global_metastore_ids
+      value:
+        - "{{ allowed_data_recipient_global_metastore_ids }}"
+      description: |
+        Optional allowlist of the data recipient's global metastore IDs permitted to accept the invite with the DATABRICKS acceptance type. Each ID is of the form **cloud**:**region**:**metastore-uuid**. Empty means any metastore is allowed. If non-empty, **allowed_acceptance_types** must include **DATABRICKS**. This field is only present when the **authentication_type** is **EMAIL**.
     - name: comment
       value: "{{ comment }}"
       description: |
@@ -665,7 +729,11 @@ updated_by
     - name: data_recipient_global_metastore_id
       value: "{{ data_recipient_global_metastore_id }}"
       description: |
-        The global Unity Catalog metastore id provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**. The identifier is of format __cloud__:__region__:__metastore-uuid__.
+        The global Unity Catalog metastore id provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**. The identifier is of format **cloud**:**region**:**metastore-uuid**.
+    - name: email
+      value: "{{ email }}"
+      description: |
+        The invited email address. This field is only present when the **authentication_type** is **EMAIL**. The 320-character cap follows RFC 5321 (64-octet local-part + \`\`@\`\` + 255-octet domain).
     - name: expiration_time
       value: {{ expiration_time }}
       description: |
@@ -692,7 +760,7 @@ updated_by
     - name: sharing_code
       value: "{{ sharing_code }}"
       description: |
-        The one-time sharing code provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**.
+        The one-time sharing code provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**.
 `}</CodeBlock>
 
 </TabItem>
@@ -714,7 +782,10 @@ Updates an existing recipient in the metastore. The caller must be a metastore a
 ```sql
 UPDATE databricks_workspace.sharing.recipients
 SET 
+allowed_acceptance_types = '{{ allowed_acceptance_types }}',
+allowed_data_recipient_global_metastore_ids = '{{ allowed_data_recipient_global_metastore_ids }}',
 comment = '{{ comment }}',
+email = '{{ email }}',
 expiration_time = {{ expiration_time }},
 id = '{{ id }}',
 ip_access_list = '{{ ip_access_list }}',
@@ -731,11 +802,14 @@ data_recipient_global_metastore_id,
 metastore_id,
 activated,
 activation_url,
+allowed_acceptance_types,
+allowed_data_recipient_global_metastore_ids,
 authentication_type,
 cloud,
 comment,
 created_at,
 created_by,
+email,
 expiration_time,
 ip_access_list,
 owner,

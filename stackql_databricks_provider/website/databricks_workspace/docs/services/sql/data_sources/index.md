@@ -45,7 +45,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "id",
     "type": "string",
-    "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+    "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. `Learn more <https://docs.databricks.com/api/workspace/datasources/list>`__"
   },
   {
     "name": "name",
@@ -80,7 +80,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "type",
     "type": "string",
-    "description": "The type of data source. For SQL warehouses, this will be `databricks_internal`."
+    "description": "The type of data source. For SQL warehouses, this will be ``databricks_internal``."
   },
   {
     "name": "view_only",

@@ -136,12 +136,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "custom_body",
     "type": "string",
-    "description": "Custom body of alert notification, if it exists. See [here] for custom templating instructions. [here]: https://docs.databricks.com/sql/user/alerts/index.html"
+    "description": "Custom body of alert notification, if it exists. See `here <https://docs.databricks.com/sql/user/alerts/index.html>`__ for custom templating instructions."
   },
   {
     "name": "custom_subject",
     "type": "string",
-    "description": "Custom subject of alert notification, if it exists. This can include email subject entries and Slack notification headers, for example. See [here] for custom templating instructions. [here]: https://docs.databricks.com/sql/user/alerts/index.html"
+    "description": "Custom subject of alert notification, if it exists. This can include email subject entries and Slack notification headers, for example. See `here <https://docs.databricks.com/sql/user/alerts/index.html>`__ for custom templating instructions."
   },
   {
     "name": "lifecycle_state",
@@ -276,12 +276,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "custom_body",
     "type": "string",
-    "description": "Custom body of alert notification, if it exists. See [here] for custom templating instructions. [here]: https://docs.databricks.com/sql/user/alerts/index.html"
+    "description": "Custom body of alert notification, if it exists. See `here <https://docs.databricks.com/sql/user/alerts/index.html>`__ for custom templating instructions."
   },
   {
     "name": "custom_subject",
     "type": "string",
-    "description": "Custom subject of alert notification, if it exists. This can include email subject entries and Slack notification headers, for example. See [here] for custom templating instructions. [here]: https://docs.databricks.com/sql/user/alerts/index.html"
+    "description": "Custom subject of alert notification, if it exists. This can include email subject entries and Slack notification headers, for example. See `here <https://docs.databricks.com/sql/user/alerts/index.html>`__ for custom templating instructions."
   },
   {
     "name": "lifecycle_state",

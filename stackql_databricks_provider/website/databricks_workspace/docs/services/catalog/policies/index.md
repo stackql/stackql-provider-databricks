@@ -51,12 +51,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "Name of the policy. Required on create and optional on update. To rename the policy, set `name` to a different value on update."
+    "description": "Name of the policy. Required on create and optional on update. To rename the policy, set ``name`` to a different value on update."
   },
   {
     "name": "column_mask",
     "type": "object",
-    "description": "Options for column mask policies. Valid only if `policy_type` is `POLICY_TYPE_COLUMN_MASK`. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
+    "description": "Options for column mask policies. Valid only if ``policy_type`` is ``POLICY_TYPE_COLUMN_MASK``. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
     "children": [
       {
         "name": "function_name",
@@ -82,6 +82,18 @@ The following fields are returned by `SELECT` queries:
             "name": "constant",
             "type": "string",
             "description": "A constant literal."
+          },
+          {
+            "name": "function_arg_expression",
+            "type": "object",
+            "description": "An expression evaluated at query time. Wraps per-request expression variants (e.g., tag introspection) so new variants can be added without extending the FunctionArgument oneof.",
+            "children": [
+              {
+                "name": "tag_introspection",
+                "type": "object",
+                "description": "An expression that introspects tags at query time."
+              }
+            ]
           }
         ]
       }
@@ -103,6 +115,18 @@ The following fields are returned by `SELECT` queries:
     "description": "Username of the user who created the policy. Output only."
   },
   {
+    "name": "deny",
+    "type": "object",
+    "description": "Options for deny policies. Valid only if ``policy_type`` is ``POLICY_TYPE_DENY``. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
+    "children": [
+      {
+        "name": "privileges",
+        "type": "array",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "except_principals",
     "type": "array",
     "description": "Optional list of user or group names that should be excluded from the policy."
@@ -113,9 +137,21 @@ The following fields are returned by `SELECT` queries:
     "description": "The type of Unity Catalog securable. (CATALOG, CLEAN_ROOM, CONNECTION, CREDENTIAL, EXTERNAL_LOCATION, EXTERNAL_METADATA, FUNCTION, METASTORE, PIPELINE, PROVIDER, RECIPIENT, SCHEMA, SHARE, STAGING_TABLE, STORAGE_CREDENTIAL, TABLE, VOLUME)"
   },
   {
+    "name": "grant",
+    "type": "object",
+    "description": "Options for grant policies. Valid only if ``policy_type`` is ``POLICY_TYPE_GRANT``. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
+    "children": [
+      {
+        "name": "privileges",
+        "type": "array",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "match_columns",
     "type": "array",
-    "description": "Optional list of condition expressions used to match table columns. Only valid when `for_securable_type` is `TABLE`. When specified, the policy only applies to tables whose columns satisfy all match conditions.",
+    "description": "Optional list of condition expressions used to match table columns. Only valid when ``for_securable_type`` is ``TABLE``. When specified, the policy only applies to tables whose columns satisfy all match conditions.",
     "children": [
       {
         "name": "alias",
@@ -142,12 +178,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "policy_type",
     "type": "string",
-    "description": "Type of the policy. Required on create. (POLICY_TYPE_COLUMN_MASK, POLICY_TYPE_ROW_FILTER)"
+    "description": "Type of the policy. Required on create. (POLICY_TYPE_COLUMN_MASK, POLICY_TYPE_DENY, POLICY_TYPE_GRANT, POLICY_TYPE_ROW_FILTER)"
   },
   {
     "name": "row_filter",
     "type": "object",
-    "description": "Options for row filter policies. Valid only if `policy_type` is `POLICY_TYPE_ROW_FILTER`. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
+    "description": "Options for row filter policies. Valid only if ``policy_type`` is ``POLICY_TYPE_ROW_FILTER``. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
     "children": [
       {
         "name": "function_name",
@@ -168,6 +204,18 @@ The following fields are returned by `SELECT` queries:
             "name": "constant",
             "type": "string",
             "description": "A constant literal."
+          },
+          {
+            "name": "function_arg_expression",
+            "type": "object",
+            "description": "An expression evaluated at query time. Wraps per-request expression variants (e.g., tag introspection) so new variants can be added without extending the FunctionArgument oneof.",
+            "children": [
+              {
+                "name": "tag_introspection",
+                "type": "object",
+                "description": "An expression that introspects tags at query time."
+              }
+            ]
           }
         ]
       }
@@ -187,6 +235,11 @@ The following fields are returned by `SELECT` queries:
     "name": "updated_by",
     "type": "string",
     "description": "Username of the user who last modified the policy. Output only."
+  },
+  {
+    "name": "use_session_identity",
+    "type": "boolean",
+    "description": "Temporary for migrating customers to session identity. Customers not currently using ABAC will not be able to set this field to false and all new policies will have this field default to true. Existing customers will have this field default to false, but can set it to true to opt in to session identity. after a grace period, this field will be removed and all policies will use session identity. Only for row filter and column mask policies. Not applicable to deny policies."
   },
   {
     "name": "when_condition",
@@ -206,12 +259,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "Name of the policy. Required on create and optional on update. To rename the policy, set `name` to a different value on update."
+    "description": "Name of the policy. Required on create and optional on update. To rename the policy, set ``name`` to a different value on update."
   },
   {
     "name": "column_mask",
     "type": "object",
-    "description": "Options for column mask policies. Valid only if `policy_type` is `POLICY_TYPE_COLUMN_MASK`. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
+    "description": "Options for column mask policies. Valid only if ``policy_type`` is ``POLICY_TYPE_COLUMN_MASK``. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
     "children": [
       {
         "name": "function_name",
@@ -237,6 +290,18 @@ The following fields are returned by `SELECT` queries:
             "name": "constant",
             "type": "string",
             "description": "A constant literal."
+          },
+          {
+            "name": "function_arg_expression",
+            "type": "object",
+            "description": "An expression evaluated at query time. Wraps per-request expression variants (e.g., tag introspection) so new variants can be added without extending the FunctionArgument oneof.",
+            "children": [
+              {
+                "name": "tag_introspection",
+                "type": "object",
+                "description": "An expression that introspects tags at query time."
+              }
+            ]
           }
         ]
       }
@@ -258,6 +323,18 @@ The following fields are returned by `SELECT` queries:
     "description": "Username of the user who created the policy. Output only."
   },
   {
+    "name": "deny",
+    "type": "object",
+    "description": "Options for deny policies. Valid only if ``policy_type`` is ``POLICY_TYPE_DENY``. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
+    "children": [
+      {
+        "name": "privileges",
+        "type": "array",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "except_principals",
     "type": "array",
     "description": "Optional list of user or group names that should be excluded from the policy."
@@ -268,9 +345,21 @@ The following fields are returned by `SELECT` queries:
     "description": "The type of Unity Catalog securable. (CATALOG, CLEAN_ROOM, CONNECTION, CREDENTIAL, EXTERNAL_LOCATION, EXTERNAL_METADATA, FUNCTION, METASTORE, PIPELINE, PROVIDER, RECIPIENT, SCHEMA, SHARE, STAGING_TABLE, STORAGE_CREDENTIAL, TABLE, VOLUME)"
   },
   {
+    "name": "grant",
+    "type": "object",
+    "description": "Options for grant policies. Valid only if ``policy_type`` is ``POLICY_TYPE_GRANT``. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
+    "children": [
+      {
+        "name": "privileges",
+        "type": "array",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "match_columns",
     "type": "array",
-    "description": "Optional list of condition expressions used to match table columns. Only valid when `for_securable_type` is `TABLE`. When specified, the policy only applies to tables whose columns satisfy all match conditions.",
+    "description": "Optional list of condition expressions used to match table columns. Only valid when ``for_securable_type`` is ``TABLE``. When specified, the policy only applies to tables whose columns satisfy all match conditions.",
     "children": [
       {
         "name": "alias",
@@ -297,12 +386,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "policy_type",
     "type": "string",
-    "description": "Type of the policy. Required on create. (POLICY_TYPE_COLUMN_MASK, POLICY_TYPE_ROW_FILTER)"
+    "description": "Type of the policy. Required on create. (POLICY_TYPE_COLUMN_MASK, POLICY_TYPE_DENY, POLICY_TYPE_GRANT, POLICY_TYPE_ROW_FILTER)"
   },
   {
     "name": "row_filter",
     "type": "object",
-    "description": "Options for row filter policies. Valid only if `policy_type` is `POLICY_TYPE_ROW_FILTER`. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
+    "description": "Options for row filter policies. Valid only if ``policy_type`` is ``POLICY_TYPE_ROW_FILTER``. Required on create and optional on update. When specified on update, the new options will replace the existing options as a whole.",
     "children": [
       {
         "name": "function_name",
@@ -323,6 +412,18 @@ The following fields are returned by `SELECT` queries:
             "name": "constant",
             "type": "string",
             "description": "A constant literal."
+          },
+          {
+            "name": "function_arg_expression",
+            "type": "object",
+            "description": "An expression evaluated at query time. Wraps per-request expression variants (e.g., tag introspection) so new variants can be added without extending the FunctionArgument oneof.",
+            "children": [
+              {
+                "name": "tag_introspection",
+                "type": "object",
+                "description": "An expression that introspects tags at query time."
+              }
+            ]
           }
         ]
       }
@@ -342,6 +443,11 @@ The following fields are returned by `SELECT` queries:
     "name": "updated_by",
     "type": "string",
     "description": "Username of the user who last modified the policy. Output only."
+  },
+  {
+    "name": "use_session_identity",
+    "type": "boolean",
+    "description": "Temporary for migrating customers to session identity. Customers not currently using ABAC will not be able to set this field to false and all new policies will have this field default to true. Existing customers will have this field default to false, but can set it to true to opt in to session identity. after a grace period, this field will be removed and all policies will use session identity. Only for row filter and column mask policies. Not applicable to deny policies."
   },
   {
     "name": "when_condition",
@@ -482,8 +588,10 @@ column_mask,
 comment,
 created_at,
 created_by,
+deny,
 except_principals,
 for_securable_type,
+grant,
 match_columns,
 on_securable_fullname,
 on_securable_type,
@@ -492,6 +600,7 @@ row_filter,
 to_principals,
 updated_at,
 updated_by,
+use_session_identity,
 when_condition
 FROM databricks_workspace.catalog.policies
 WHERE on_securable_type = '{{ on_securable_type }}' -- required
@@ -513,8 +622,10 @@ column_mask,
 comment,
 created_at,
 created_by,
+deny,
 except_principals,
 for_securable_type,
+grant,
 match_columns,
 on_securable_fullname,
 on_securable_type,
@@ -523,6 +634,7 @@ row_filter,
 to_principals,
 updated_at,
 updated_by,
+use_session_identity,
 when_condition
 FROM databricks_workspace.catalog.policies
 WHERE on_securable_type = '{{ on_securable_type }}' -- required
@@ -565,8 +677,10 @@ column_mask,
 comment,
 created_at,
 created_by,
+deny,
 except_principals,
 for_securable_type,
+grant,
 match_columns,
 on_securable_fullname,
 on_securable_type,
@@ -575,6 +689,7 @@ row_filter,
 to_principals,
 updated_at,
 updated_by,
+use_session_identity,
 when_condition
 ;
 ```
@@ -601,11 +716,21 @@ when_condition
           using:
             - alias: "{{ alias }}"
               constant: "{{ constant }}"
+              function_arg_expression:
+                tag_introspection:
+                  column_tag_value: "{{ column_tag_value }}"
+                  tag_value: "{{ tag_value }}"
         comment: "{{ comment }}"
         created_at: {{ created_at }}
         created_by: "{{ created_by }}"
+        deny:
+          privileges:
+            - "{{ privileges }}"
         except_principals:
           - "{{ except_principals }}"
+        grant:
+          privileges:
+            - "{{ privileges }}"
         id: "{{ id }}"
         match_columns:
           - alias: "{{ alias }}"
@@ -618,8 +743,13 @@ when_condition
           using:
             - alias: "{{ alias }}"
               constant: "{{ constant }}"
+              function_arg_expression:
+                tag_introspection:
+                  column_tag_value: "{{ column_tag_value }}"
+                  tag_value: "{{ tag_value }}"
         updated_at: {{ updated_at }}
         updated_by: "{{ updated_by }}"
+        use_session_identity: {{ use_session_identity }}
         when_condition: "{{ when_condition }}"
 `}</CodeBlock>
 
@@ -657,8 +787,10 @@ column_mask,
 comment,
 created_at,
 created_by,
+deny,
 except_principals,
 for_securable_type,
+grant,
 match_columns,
 on_securable_fullname,
 on_securable_type,
@@ -667,6 +799,7 @@ row_filter,
 to_principals,
 updated_at,
 updated_by,
+use_session_identity,
 when_condition;
 ```
 </TabItem>

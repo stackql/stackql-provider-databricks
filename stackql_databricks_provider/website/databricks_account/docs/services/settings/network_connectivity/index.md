@@ -106,6 +106,18 @@ The following fields are returned by `SELECT` queries:
                 "description": "The Azure services to which this service endpoint rule applies to."
               }
             ]
+          },
+          {
+            "name": "gcp_project_id_rule",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "project_ids",
+                "type": "array",
+                "description": ""
+              }
+            ]
           }
         ]
       },
@@ -338,6 +350,18 @@ The following fields are returned by `SELECT` queries:
                 "name": "target_services",
                 "type": "array",
                 "description": "The Azure services to which this service endpoint rule applies to."
+              }
+            ]
+          },
+          {
+            "name": "gcp_project_id_rule",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "project_ids",
+                "type": "array",
+                "description": ""
               }
             ]
           }

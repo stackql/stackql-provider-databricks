@@ -53,9 +53,24 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "compatibility_flags",
+    "type": "array",
+    "description": "Echoes the compatibility flags submitted on the most recent update (the input set from ``App.compatibility_flags``). To see the flags currently in effect on the app, read ``App.effective_compatibility_flags`` via GetApp."
+  },
+  {
+    "name": "compute_max_instances",
+    "type": "integer",
+    "description": "Maximum number of app instances. Must be set together with ``compute_min_instances``."
+  },
+  {
+    "name": "compute_min_instances",
+    "type": "integer",
+    "description": "Minimum number of app instances. Must be set together with ``compute_max_instances``."
+  },
+  {
     "name": "compute_size",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (LARGE, MEDIUM)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (LARGE, LIQUID, MEDIUM, XLARGE)"
   },
   {
     "name": "description",
@@ -76,6 +91,16 @@ The following fields are returned by `SELECT` queries:
         "name": "provider",
         "type": "string",
         "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+      },
+      {
+        "name": "auto_deploy",
+        "type": "boolean",
+        "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+      },
+      {
+        "name": "caller_credential_id",
+        "type": "integer",
+        "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
       }
     ]
   },
@@ -92,7 +117,19 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "app",
         "type": "object",
-        "description": ""
+        "description": "",
+        "children": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "permission",
+            "type": "string",
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (CAN_USE)"
+          }
+        ]
       },
       {
         "name": "database",
@@ -302,6 +339,35 @@ The following fields are returned by `SELECT` queries:
     ]
   },
   {
+    "name": "telemetry_export_destinations",
+    "type": "array",
+    "description": "",
+    "children": [
+      {
+        "name": "unity_catalog",
+        "type": "object",
+        "description": "Unity Catalog Destinations for OTEL telemetry export.",
+        "children": [
+          {
+            "name": "logs_table",
+            "type": "string",
+            "description": "Unity Catalog table for OTEL logs."
+          },
+          {
+            "name": "metrics_table",
+            "type": "string",
+            "description": "Unity Catalog table for OTEL metrics."
+          },
+          {
+            "name": "traces_table",
+            "type": "string",
+            "description": "Unity Catalog table for OTEL traces (spans)."
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "user_api_scopes",
     "type": "array",
     "description": ""
@@ -384,11 +450,15 @@ Gets the status of an app update.
 SELECT
 budget_policy_id,
 usage_policy_id,
+compatibility_flags,
+compute_max_instances,
+compute_min_instances,
 compute_size,
 description,
 git_repository,
 resources,
 status,
+telemetry_export_destinations,
 user_api_scopes
 FROM databricks_workspace.apps.app_updates
 WHERE app_name = '{{ app_name }}' -- required
@@ -427,11 +497,15 @@ SELECT
 RETURNING
 budget_policy_id,
 usage_policy_id,
+compatibility_flags,
+compute_max_instances,
+compute_min_instances,
 compute_size,
 description,
 git_repository,
 resources,
 status,
+telemetry_export_destinations,
 user_api_scopes
 ;
 ```
@@ -450,7 +524,7 @@ user_api_scopes
     - name: update_mask
       value: "{{ update_mask }}"
       description: |
-        The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (\`.\`) to navigate sub-fields (e.g., \`author.given_name\`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of \`*\` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using \`*\` wildcards, as it can lead to unintended results if the API changes in the future.
+        The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (\`\`.\`\`) to navigate sub-fields (e.g., \`\`author.given_name\`\`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of \`\`*\`\` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using \`\`*\`\` wildcards, as it can lead to unintended results if the API changes in the future.
     - name: app
       value:
         name: "{{ name }}"
@@ -472,6 +546,8 @@ user_api_scopes
             git_repository:
               url: "{{ url }}"
               provider: "{{ provider }}"
+              auto_deploy: {{ auto_deploy }}
+              caller_credential_id: {{ caller_credential_id }}
             resolved_commit: "{{ resolved_commit }}"
             source_code_path: "{{ source_code_path }}"
             tag: "{{ tag }}"
@@ -483,8 +559,13 @@ user_api_scopes
           update_time: "{{ update_time }}"
         app_status:
           message: "{{ message }}"
+          running_instances: {{ running_instances }}
           state: "{{ state }}"
         budget_policy_id: "{{ budget_policy_id }}"
+        compatibility_flags:
+          - "{{ compatibility_flags }}"
+        compute_max_instances: {{ compute_max_instances }}
+        compute_min_instances: {{ compute_min_instances }}
         compute_size: "{{ compute_size }}"
         compute_status:
           active_instances: {{ active_instances }}
@@ -492,16 +573,82 @@ user_api_scopes
           state: "{{ state }}"
         create_time: "{{ create_time }}"
         creator: "{{ creator }}"
+        default_git_source:
+          branch: "{{ branch }}"
+          commit: "{{ commit }}"
+          git_repository:
+            url: "{{ url }}"
+            provider: "{{ provider }}"
+            auto_deploy: {{ auto_deploy }}
+            caller_credential_id: {{ caller_credential_id }}
+          resolved_commit: "{{ resolved_commit }}"
+          source_code_path: "{{ source_code_path }}"
+          tag: "{{ tag }}"
         default_source_code_path: "{{ default_source_code_path }}"
         description: "{{ description }}"
         effective_budget_policy_id: "{{ effective_budget_policy_id }}"
+        effective_compatibility_flags:
+          - "{{ effective_compatibility_flags }}"
+        effective_resources:
+          - name: "{{ name }}"
+            app:
+              name: "{{ name }}"
+              permission: "{{ permission }}"
+            database:
+              instance_name: "{{ instance_name }}"
+              database_name: "{{ database_name }}"
+              permission: "{{ permission }}"
+            description: "{{ description }}"
+            experiment:
+              experiment_id: "{{ experiment_id }}"
+              permission: "{{ permission }}"
+            genie_space:
+              name: "{{ name }}"
+              space_id: "{{ space_id }}"
+              permission: "{{ permission }}"
+            job:
+              id: "{{ id }}"
+              permission: "{{ permission }}"
+            postgres:
+              branch: "{{ branch }}"
+              database: "{{ database }}"
+              permission: "{{ permission }}"
+            secret:
+              scope: "{{ scope }}"
+              key: "{{ key }}"
+              permission: "{{ permission }}"
+            serving_endpoint:
+              name: "{{ name }}"
+              permission: "{{ permission }}"
+            sql_warehouse:
+              id: "{{ id }}"
+              permission: "{{ permission }}"
+            uc_securable:
+              securable_full_name: "{{ securable_full_name }}"
+              securable_type: "{{ securable_type }}"
+              permission: "{{ permission }}"
+              securable_kind: "{{ securable_kind }}"
         effective_usage_policy_id: "{{ effective_usage_policy_id }}"
         effective_user_api_scopes:
           - "{{ effective_user_api_scopes }}"
         git_repository:
           url: "{{ url }}"
           provider: "{{ provider }}"
+          auto_deploy: {{ auto_deploy }}
+          caller_credential_id: {{ caller_credential_id }}
+        git_source:
+          branch: "{{ branch }}"
+          commit: "{{ commit }}"
+          git_repository:
+            url: "{{ url }}"
+            provider: "{{ provider }}"
+            auto_deploy: {{ auto_deploy }}
+            caller_credential_id: {{ caller_credential_id }}
+          resolved_commit: "{{ resolved_commit }}"
+          source_code_path: "{{ source_code_path }}"
+          tag: "{{ tag }}"
         id: "{{ id }}"
+        last_deployment_id: "{{ last_deployment_id }}"
         oauth2_app_client_id: "{{ oauth2_app_client_id }}"
         oauth2_app_integration_id: "{{ oauth2_app_integration_id }}"
         pending_deployment:
@@ -522,6 +669,8 @@ user_api_scopes
             git_repository:
               url: "{{ url }}"
               provider: "{{ provider }}"
+              auto_deploy: {{ auto_deploy }}
+              caller_credential_id: {{ caller_credential_id }}
             resolved_commit: "{{ resolved_commit }}"
             source_code_path: "{{ source_code_path }}"
             tag: "{{ tag }}"
@@ -533,7 +682,9 @@ user_api_scopes
           update_time: "{{ update_time }}"
         resources:
           - name: "{{ name }}"
-            app: "{{ app }}"
+            app:
+              name: "{{ name }}"
+              permission: "{{ permission }}"
             database:
               instance_name: "{{ instance_name }}"
               database_name: "{{ database_name }}"
@@ -571,12 +722,15 @@ user_api_scopes
         service_principal_client_id: "{{ service_principal_client_id }}"
         service_principal_id: {{ service_principal_id }}
         service_principal_name: "{{ service_principal_name }}"
+        source_code_path: "{{ source_code_path }}"
         space: "{{ space }}"
+        space_id: "{{ space_id }}"
         telemetry_export_destinations:
           - unity_catalog:
               logs_table: "{{ logs_table }}"
               metrics_table: "{{ metrics_table }}"
               traces_table: "{{ traces_table }}"
+        thumbnail_url: "{{ thumbnail_url }}"
         update_time: "{{ update_time }}"
         updater: "{{ updater }}"
         url: "{{ url }}"

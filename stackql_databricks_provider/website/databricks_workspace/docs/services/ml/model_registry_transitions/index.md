@@ -55,7 +55,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "activity_type",
     "type": "string",
-    "description": "Type of activity. Valid values are: * `APPLIED_TRANSITION`: User applied the corresponding stage<br />transition.<br /><br />* `REQUESTED_TRANSITION`: User requested the corresponding stage transition.<br /><br />* `CANCELLED_REQUEST`: User cancelled an existing transition request.<br /><br />* `APPROVED_REQUEST`: User approved the corresponding stage transition.<br /><br />* `REJECTED_REQUEST`: User rejected the coressponding stage transition.<br /><br />* `SYSTEM_TRANSITION`: For events performed as a side effect, such as archiving existing model<br />versions in a stage. (APPLIED_TRANSITION, APPROVED_REQUEST, CANCELLED_REQUEST, NEW_COMMENT, REJECTED_REQUEST, REQUESTED_TRANSITION, SYSTEM_TRANSITION)"
+    "description": "Type of activity. Valid values are:<br /><br />- ``APPLIED_TRANSITION``: User applied the corresponding stage transition.<br />- ``REQUESTED_TRANSITION``: User requested the corresponding stage transition.<br />- ``CANCELLED_REQUEST``: User cancelled an existing transition request.<br />- ``APPROVED_REQUEST``: User approved the corresponding stage transition.<br />- ``REJECTED_REQUEST``: User rejected the coressponding stage transition.<br />- ``SYSTEM_TRANSITION``: For events performed as a side effect, such as archiving existing model<br />  versions in a stage. (APPLIED_TRANSITION, APPROVED_REQUEST, CANCELLED_REQUEST, NEW_COMMENT, REJECTED_REQUEST, REQUESTED_TRANSITION, SYSTEM_TRANSITION)"
   },
   {
     "name": "comment",
@@ -70,7 +70,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "from_stage",
     "type": "string",
-    "description": "Source stage of the transition (if the activity is stage transition related). Valid values are: * `None`: The initial stage of a model version. * `Staging`: Staging or pre-production stage. * `Production`: Production stage. * `Archived`: Archived stage."
+    "description": "Source stage of the transition (if the activity is stage transition related). Valid values are: - ``None``: The initial stage of a model version. - ``Staging``: Staging or pre-production stage. - ``Production``: Production stage. - ``Archived``: Archived stage."
   },
   {
     "name": "last_updated_timestamp",
@@ -80,12 +80,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "system_comment",
     "type": "string",
-    "description": "Comment made by system, for example explaining an activity of type `SYSTEM_TRANSITION`. It usually describes a side effect, such as a version being archived as part of another version's stage transition, and may not be returned for some activity types."
+    "description": "Comment made by system, for example explaining an activity of type ``SYSTEM_TRANSITION``. It usually describes a side effect, such as a version being archived as part of another version's stage transition, and may not be returned for some activity types."
   },
   {
     "name": "to_stage",
     "type": "string",
-    "description": "Target stage of the transition (if the activity is stage transition related). Valid values are: * `None`: The initial stage of a model version. * `Staging`: Staging or pre-production stage. * `Production`: Production stage. * `Archived`: Archived stage."
+    "description": "Target stage of the transition (if the activity is stage transition related). Valid values are: - ``None``: The initial stage of a model version. - ``Staging``: Staging or pre-production stage. - ``Production``: Production stage. - ``Archived``: Archived stage."
   }
 ]} />
 </TabItem>
@@ -146,7 +146,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-version"><code>version</code></a>, <a href="#parameter-stage"><code>stage</code></a>, <a href="#parameter-archive_existing_versions"><code>archive_existing_versions</code></a></td>
     <td></td>
-    <td>Transition a model version's stage. This is a Databricks workspace version of the [MLflow endpoint]</td>
+    <td>Transition a model version's stage. This is a Databricks workspace version of the `MLflow endpoint</td>
 </tr>
 </tbody>
 </table>
@@ -182,7 +182,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-stage">
     <td><CopyableCode code="stage" /></td>
     <td><code>string</code></td>
-    <td>Target stage of the transition request. Valid values are: * `None`: The initial stage of a model version. * `Staging`: Staging or pre-production stage. * `Production`: Production stage. * `Archived`: Archived stage.</td>
+    <td>Target stage of the transition request. Valid values are: - ``None``: The initial stage of a model version. - ``Staging``: Staging or pre-production stage. - ``Production``: Production stage. - ``Archived``: Archived stage.</td>
 </tr>
 <tr id="parameter-version">
     <td><CopyableCode code="version" /></td>
@@ -281,7 +281,7 @@ request
     - name: stage
       value: "{{ stage }}"
       description: |
-        Target stage of the transition. Valid values are: * \`None\`: The initial stage of a model version. * \`Staging\`: Staging or pre-production stage. * \`Production\`: Production stage. * \`Archived\`: Archived stage.
+        Target stage of the transition. Valid values are: - \`\`None\`\`: The initial stage of a model version. - \`\`Staging\`\`: Staging or pre-production stage. - \`\`Production\`\`: Production stage. - \`\`Archived\`\`: Archived stage.
     - name: comment
       value: "{{ comment }}"
       description: |
@@ -355,7 +355,7 @@ EXEC databricks_workspace.ml.model_registry_transitions.reject
 </TabItem>
 <TabItem value="transition">
 
-Transition a model version's stage. This is a Databricks workspace version of the [MLflow endpoint]
+Transition a model version's stage. This is a Databricks workspace version of the `MLflow endpoint
 
 ```sql
 EXEC databricks_workspace.ml.model_registry_transitions.transition 

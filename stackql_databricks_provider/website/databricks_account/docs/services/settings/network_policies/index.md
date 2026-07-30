@@ -69,6 +69,18 @@ The following fields are returned by `SELECT` queries:
             "description": "At which level can Databricks and Databricks managed compute access Internet. FULL_ACCESS:<br />Databricks can access Internet. No blocking rules will apply. RESTRICTED_ACCESS: Databricks can<br />only access explicitly allowed internet and storage destinations, as well as UC connections and<br />external locations. (FULL_ACCESS, RESTRICTED_ACCESS)"
           },
           {
+            "name": "allowed_databricks_destinations",
+            "type": "array",
+            "description": "List of Databricks workspace destinations that serverless workloads are allowed to access when in RESTRICTED_ACCESS mode.",
+            "children": [
+              {
+                "name": "workspace_ids",
+                "type": "array",
+                "description": ""
+              }
+            ]
+          },
+          {
             "name": "allowed_internet_destinations",
             "type": "array",
             "description": "List of internet destinations that serverless workloads are allowed to access when in RESTRICTED_ACCESS mode.",
@@ -118,6 +130,23 @@ The following fields are returned by `SELECT` queries:
             ]
           },
           {
+            "name": "blocked_internet_destinations",
+            "type": "array",
+            "description": "List of internet destinations that serverless workloads are blocked from accessing. These destinations are enforced when restriction mode is RESTRICTED_ACCESS or DRY_RUN. Currently supports DNS_NAME type only; IP_RANGE support is planned.",
+            "children": [
+              {
+                "name": "destination",
+                "type": "string",
+                "description": "The internet destination to which access will be allowed. Format dependent on the destination type."
+              },
+              {
+                "name": "internet_destination_type",
+                "type": "string",
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DNS_NAME)"
+              }
+            ]
+          },
+          {
             "name": "policy_enforcement",
             "type": "object",
             "description": "Optional. When policy_enforcement is not provided, we default to ENFORCE_MODE_ALL_SERVICES",
@@ -131,6 +160,416 @@ The following fields are returned by `SELECT` queries:
                 "name": "enforcement_mode",
                 "type": "string",
                 "description": "The mode of policy enforcement. ENFORCED blocks traffic that violates policy, while DRY_RUN only logs violations without blocking. When not specified, defaults to ENFORCED. (DRY_RUN, ENFORCED)"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ingress",
+    "type": "object",
+    "description": "The network policies applying for ingress traffic.",
+    "children": [
+      {
+        "name": "cross_workspace_access",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FULL_ACCESS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "private_access",
+        "type": "object",
+        "description": "The network policy restrictions for private access. Configures how requests arriving over private connectivity are governed.",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "The restriction mode for private access. (ALLOW_ALL_REGISTERED_ENDPOINTS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "Allow rules are evaluated after deny rules. A request matching any allow rule is allowed; a request matching no rule is denied by default. Only applies when restriction_mode is RESTRICTED_ACCESS.",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": "The authenticated identity the request must match. When unset, the rule matches all users and service principals. On the account-level network policy, scoping to specific identities is not currently supported, so this field must be unset (the rule matches all users and service principals)."
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": "The destination the request must match — the resource being accessed, for example the workspace UI, workspace APIs, or account-level APIs. See RequestDestination."
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": "The origin the request must match — the private connectivity the request arrives through, for example a specific set of registered endpoints or any endpoint registered to the account. See PrivateRequestOrigin."
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "Deny rules are evaluated first. A request matching any deny rule is denied, regardless of allow rules. Only applies when restriction_mode is RESTRICTED_ACCESS.",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": "The authenticated identity the request must match. When unset, the rule matches all users and service principals. On the account-level network policy, scoping to specific identities is not currently supported, so this field must be unset (the rule matches all users and service principals)."
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": "The destination the request must match — the resource being accessed, for example the workspace UI, workspace APIs, or account-level APIs. See RequestDestination."
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": "The origin the request must match — the private connectivity the request arrives through, for example a specific set of registered endpoints or any endpoint registered to the account. See PrivateRequestOrigin."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "public_access",
+        "type": "object",
+        "description": "The network policy restrictions for public access to the workspace. Configures how public internet traffic is allowed or denied access.",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FULL_ACCESS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ingress_dry_run",
+    "type": "object",
+    "description": "The ingress policy for dry run mode. Dry run will always run even if the request is allowed by the ingress policy. When this field is set, the policy will be evaluated and emit logs only without blocking requests.",
+    "children": [
+      {
+        "name": "cross_workspace_access",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FULL_ACCESS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "private_access",
+        "type": "object",
+        "description": "The network policy restrictions for private access. Configures how requests arriving over private connectivity are governed.",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "The restriction mode for private access. (ALLOW_ALL_REGISTERED_ENDPOINTS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "Allow rules are evaluated after deny rules. A request matching any allow rule is allowed; a request matching no rule is denied by default. Only applies when restriction_mode is RESTRICTED_ACCESS.",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": "The authenticated identity the request must match. When unset, the rule matches all users and service principals. On the account-level network policy, scoping to specific identities is not currently supported, so this field must be unset (the rule matches all users and service principals)."
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": "The destination the request must match — the resource being accessed, for example the workspace UI, workspace APIs, or account-level APIs. See RequestDestination."
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": "The origin the request must match — the private connectivity the request arrives through, for example a specific set of registered endpoints or any endpoint registered to the account. See PrivateRequestOrigin."
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "Deny rules are evaluated first. A request matching any deny rule is denied, regardless of allow rules. Only applies when restriction_mode is RESTRICTED_ACCESS.",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": "The authenticated identity the request must match. When unset, the rule matches all users and service principals. On the account-level network policy, scoping to specific identities is not currently supported, so this field must be unset (the rule matches all users and service principals)."
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": "The destination the request must match — the resource being accessed, for example the workspace UI, workspace APIs, or account-level APIs. See RequestDestination."
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": "The origin the request must match — the private connectivity the request arrives through, for example a specific set of registered endpoints or any endpoint registered to the account. See PrivateRequestOrigin."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "public_access",
+        "type": "object",
+        "description": "The network policy restrictions for public access to the workspace. Configures how public internet traffic is allowed or denied access.",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FULL_ACCESS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
               }
             ]
           }
@@ -169,6 +608,18 @@ The following fields are returned by `SELECT` queries:
             "description": "At which level can Databricks and Databricks managed compute access Internet. FULL_ACCESS:<br />Databricks can access Internet. No blocking rules will apply. RESTRICTED_ACCESS: Databricks can<br />only access explicitly allowed internet and storage destinations, as well as UC connections and<br />external locations. (FULL_ACCESS, RESTRICTED_ACCESS)"
           },
           {
+            "name": "allowed_databricks_destinations",
+            "type": "array",
+            "description": "List of Databricks workspace destinations that serverless workloads are allowed to access when in RESTRICTED_ACCESS mode.",
+            "children": [
+              {
+                "name": "workspace_ids",
+                "type": "array",
+                "description": ""
+              }
+            ]
+          },
+          {
             "name": "allowed_internet_destinations",
             "type": "array",
             "description": "List of internet destinations that serverless workloads are allowed to access when in RESTRICTED_ACCESS mode.",
@@ -218,6 +669,23 @@ The following fields are returned by `SELECT` queries:
             ]
           },
           {
+            "name": "blocked_internet_destinations",
+            "type": "array",
+            "description": "List of internet destinations that serverless workloads are blocked from accessing. These destinations are enforced when restriction mode is RESTRICTED_ACCESS or DRY_RUN. Currently supports DNS_NAME type only; IP_RANGE support is planned.",
+            "children": [
+              {
+                "name": "destination",
+                "type": "string",
+                "description": "The internet destination to which access will be allowed. Format dependent on the destination type."
+              },
+              {
+                "name": "internet_destination_type",
+                "type": "string",
+                "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DNS_NAME)"
+              }
+            ]
+          },
+          {
             "name": "policy_enforcement",
             "type": "object",
             "description": "Optional. When policy_enforcement is not provided, we default to ENFORCE_MODE_ALL_SERVICES",
@@ -231,6 +699,416 @@ The following fields are returned by `SELECT` queries:
                 "name": "enforcement_mode",
                 "type": "string",
                 "description": "The mode of policy enforcement. ENFORCED blocks traffic that violates policy, while DRY_RUN only logs violations without blocking. When not specified, defaults to ENFORCED. (DRY_RUN, ENFORCED)"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ingress",
+    "type": "object",
+    "description": "The network policies applying for ingress traffic.",
+    "children": [
+      {
+        "name": "cross_workspace_access",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FULL_ACCESS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "private_access",
+        "type": "object",
+        "description": "The network policy restrictions for private access. Configures how requests arriving over private connectivity are governed.",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "The restriction mode for private access. (ALLOW_ALL_REGISTERED_ENDPOINTS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "Allow rules are evaluated after deny rules. A request matching any allow rule is allowed; a request matching no rule is denied by default. Only applies when restriction_mode is RESTRICTED_ACCESS.",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": "The authenticated identity the request must match. When unset, the rule matches all users and service principals. On the account-level network policy, scoping to specific identities is not currently supported, so this field must be unset (the rule matches all users and service principals)."
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": "The destination the request must match — the resource being accessed, for example the workspace UI, workspace APIs, or account-level APIs. See RequestDestination."
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": "The origin the request must match — the private connectivity the request arrives through, for example a specific set of registered endpoints or any endpoint registered to the account. See PrivateRequestOrigin."
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "Deny rules are evaluated first. A request matching any deny rule is denied, regardless of allow rules. Only applies when restriction_mode is RESTRICTED_ACCESS.",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": "The authenticated identity the request must match. When unset, the rule matches all users and service principals. On the account-level network policy, scoping to specific identities is not currently supported, so this field must be unset (the rule matches all users and service principals)."
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": "The destination the request must match — the resource being accessed, for example the workspace UI, workspace APIs, or account-level APIs. See RequestDestination."
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": "The origin the request must match — the private connectivity the request arrives through, for example a specific set of registered endpoints or any endpoint registered to the account. See PrivateRequestOrigin."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "public_access",
+        "type": "object",
+        "description": "The network policy restrictions for public access to the workspace. Configures how public internet traffic is allowed or denied access.",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FULL_ACCESS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "ingress_dry_run",
+    "type": "object",
+    "description": "The ingress policy for dry run mode. Dry run will always run even if the request is allowed by the ingress policy. When this field is set, the policy will be evaluated and emit logs only without blocking requests.",
+    "children": [
+      {
+        "name": "cross_workspace_access",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FULL_ACCESS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "private_access",
+        "type": "object",
+        "description": "The network policy restrictions for private access. Configures how requests arriving over private connectivity are governed.",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "The restriction mode for private access. (ALLOW_ALL_REGISTERED_ENDPOINTS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "Allow rules are evaluated after deny rules. A request matching any allow rule is allowed; a request matching no rule is denied by default. Only applies when restriction_mode is RESTRICTED_ACCESS.",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": "The authenticated identity the request must match. When unset, the rule matches all users and service principals. On the account-level network policy, scoping to specific identities is not currently supported, so this field must be unset (the rule matches all users and service principals)."
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": "The destination the request must match — the resource being accessed, for example the workspace UI, workspace APIs, or account-level APIs. See RequestDestination."
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": "The origin the request must match — the private connectivity the request arrives through, for example a specific set of registered endpoints or any endpoint registered to the account. See PrivateRequestOrigin."
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "Deny rules are evaluated first. A request matching any deny rule is denied, regardless of allow rules. Only applies when restriction_mode is RESTRICTED_ACCESS.",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": "The authenticated identity the request must match. When unset, the rule matches all users and service principals. On the account-level network policy, scoping to specific identities is not currently supported, so this field must be unset (the rule matches all users and service principals)."
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": "The destination the request must match — the resource being accessed, for example the workspace UI, workspace APIs, or account-level APIs. See RequestDestination."
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": "The origin the request must match — the private connectivity the request arrives through, for example a specific set of registered endpoints or any endpoint registered to the account. See PrivateRequestOrigin."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "public_access",
+        "type": "object",
+        "description": "The network policy restrictions for public access to the workspace. Configures how public internet traffic is allowed or denied access.",
+        "children": [
+          {
+            "name": "restriction_mode",
+            "type": "string",
+            "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FULL_ACCESS, RESTRICTED_ACCESS)"
+          },
+          {
+            "name": "allow_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "deny_rules",
+            "type": "array",
+            "description": "",
+            "children": [
+              {
+                "name": "authentication",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "destination",
+                "type": "object",
+                "description": ""
+              },
+              {
+                "name": "label",
+                "type": "string",
+                "description": "The label for this ingress rule."
+              },
+              {
+                "name": "origin",
+                "type": "object",
+                "description": ""
               }
             ]
           }
@@ -343,7 +1221,9 @@ Gets a network policy.
 SELECT
 account_id,
 network_policy_id,
-egress
+egress,
+ingress,
+ingress_dry_run
 FROM databricks_account.settings.network_policies
 WHERE account_id = '{{ account_id }}' -- required
 AND network_policy_id = '{{ network_policy_id }}' -- required
@@ -358,7 +1238,9 @@ Gets an array of network policies.
 SELECT
 account_id,
 network_policy_id,
-egress
+egress,
+ingress,
+ingress_dry_run
 FROM databricks_account.settings.network_policies
 WHERE account_id = '{{ account_id }}' -- required
 AND page_token = '{{ page_token }}'
@@ -392,7 +1274,9 @@ SELECT
 RETURNING
 account_id,
 network_policy_id,
-egress
+egress,
+ingress,
+ingress_dry_run
 ;
 ```
 </TabItem>
@@ -412,6 +1296,8 @@ egress
         egress:
           network_access:
             restriction_mode: "{{ restriction_mode }}"
+            allowed_databricks_destinations:
+              - workspace_ids: "{{ workspace_ids }}"
             allowed_internet_destinations:
               - destination: "{{ destination }}"
                 internet_destination_type: "{{ internet_destination_type }}"
@@ -421,10 +1307,247 @@ egress
                 bucket_name: "{{ bucket_name }}"
                 region: "{{ region }}"
                 storage_destination_type: "{{ storage_destination_type }}"
+            blocked_internet_destinations:
+              - destination: "{{ destination }}"
+                internet_destination_type: "{{ internet_destination_type }}"
             policy_enforcement:
               dry_run_mode_product_filter:
                 - "{{ dry_run_mode_product_filter }}"
               enforcement_mode: "{{ enforcement_mode }}"
+        ingress:
+          cross_workspace_access:
+            restriction_mode: "{{ restriction_mode }}"
+            allow_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_source_workspaces: {{ all_source_workspaces }}
+                  selected_workspaces: "{{ selected_workspaces }}"
+            deny_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_source_workspaces: {{ all_source_workspaces }}
+                  selected_workspaces: "{{ selected_workspaces }}"
+          private_access:
+            restriction_mode: "{{ restriction_mode }}"
+            allow_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_private_access: {{ all_private_access }}
+                  all_registered_endpoints: {{ all_registered_endpoints }}
+                  azure_workspace_private_link: {{ azure_workspace_private_link }}
+                  endpoints: "{{ endpoints }}"
+            deny_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_private_access: {{ all_private_access }}
+                  all_registered_endpoints: {{ all_registered_endpoints }}
+                  azure_workspace_private_link: {{ azure_workspace_private_link }}
+                  endpoints: "{{ endpoints }}"
+          public_access:
+            restriction_mode: "{{ restriction_mode }}"
+            allow_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_ip_ranges: {{ all_ip_ranges }}
+                  excluded_ip_ranges: "{{ excluded_ip_ranges }}"
+                  included_ip_ranges: "{{ included_ip_ranges }}"
+                  managed_ip_range: "{{ managed_ip_range }}"
+            deny_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_ip_ranges: {{ all_ip_ranges }}
+                  excluded_ip_ranges: "{{ excluded_ip_ranges }}"
+                  included_ip_ranges: "{{ included_ip_ranges }}"
+                  managed_ip_range: "{{ managed_ip_range }}"
+        ingress_dry_run:
+          cross_workspace_access:
+            restriction_mode: "{{ restriction_mode }}"
+            allow_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_source_workspaces: {{ all_source_workspaces }}
+                  selected_workspaces: "{{ selected_workspaces }}"
+            deny_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_source_workspaces: {{ all_source_workspaces }}
+                  selected_workspaces: "{{ selected_workspaces }}"
+          private_access:
+            restriction_mode: "{{ restriction_mode }}"
+            allow_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_private_access: {{ all_private_access }}
+                  all_registered_endpoints: {{ all_registered_endpoints }}
+                  azure_workspace_private_link: {{ azure_workspace_private_link }}
+                  endpoints: "{{ endpoints }}"
+            deny_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_private_access: {{ all_private_access }}
+                  all_registered_endpoints: {{ all_registered_endpoints }}
+                  azure_workspace_private_link: {{ azure_workspace_private_link }}
+                  endpoints: "{{ endpoints }}"
+          public_access:
+            restriction_mode: "{{ restriction_mode }}"
+            allow_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_ip_ranges: {{ all_ip_ranges }}
+                  excluded_ip_ranges: "{{ excluded_ip_ranges }}"
+                  included_ip_ranges: "{{ included_ip_ranges }}"
+                  managed_ip_range: "{{ managed_ip_range }}"
+            deny_rules:
+              - authentication:
+                  identities: "{{ identities }}"
+                  identity_type: "{{ identity_type }}"
+                destination:
+                  account_api: "{{ account_api }}"
+                  account_databricks_one: "{{ account_databricks_one }}"
+                  account_ui: "{{ account_ui }}"
+                  all_destinations: {{ all_destinations }}
+                  apps_runtime: "{{ apps_runtime }}"
+                  lakebase_runtime: "{{ lakebase_runtime }}"
+                  workspace_api: "{{ workspace_api }}"
+                  workspace_ui: "{{ workspace_ui }}"
+                label: "{{ label }}"
+                origin:
+                  all_ip_ranges: {{ all_ip_ranges }}
+                  excluded_ip_ranges: "{{ excluded_ip_ranges }}"
+                  included_ip_ranges: "{{ included_ip_ranges }}"
+                  managed_ip_range: "{{ managed_ip_range }}"
         network_policy_id: "{{ network_policy_id }}"
 `}</CodeBlock>
 
@@ -455,7 +1578,9 @@ AND network_policy = '{{ network_policy }}' --required
 RETURNING
 account_id,
 network_policy_id,
-egress;
+egress,
+ingress,
+ingress_dry_run;
 ```
 </TabItem>
 </Tabs>

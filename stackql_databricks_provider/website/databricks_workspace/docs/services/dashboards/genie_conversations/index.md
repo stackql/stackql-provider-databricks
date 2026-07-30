@@ -227,7 +227,8 @@ EXEC databricks_workspace.dashboards.genie_conversations.start
 @deployment_name='{{ deployment_name }}' --required 
 @@json=
 '{
-"content": "{{ content }}"
+"content": "{{ content }}", 
+"enable_visualization": {{ enable_visualization }}
 }'
 ;
 ```

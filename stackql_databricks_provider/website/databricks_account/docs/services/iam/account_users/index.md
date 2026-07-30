@@ -78,12 +78,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "displayName",
     "type": "string",
-    "description": "String that represents a concatenation of given and family names. For example `John Smith`."
+    "description": "String that represents a concatenation of given and family names. For example ``John Smith``."
   },
   {
     "name": "emails",
     "type": "array",
-    "description": "All the emails associated with the Databricks user.",
+    "description": "All the emails associated with the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored.",
     "children": [
       {
         "name": "display",
@@ -152,7 +152,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "userName",
     "type": "string",
-    "description": "Email address of the Databricks user."
+    "description": "Email address of the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored."
   }
 ]} />
 </TabItem>
@@ -194,12 +194,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "displayName",
     "type": "string",
-    "description": "String that represents a concatenation of given and family names. For example `John Smith`."
+    "description": "String that represents a concatenation of given and family names. For example ``John Smith``."
   },
   {
     "name": "emails",
     "type": "array",
-    "description": "All the emails associated with the Databricks user.",
+    "description": "All the emails associated with the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored.",
     "children": [
       {
         "name": "display",
@@ -268,7 +268,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "userName",
     "type": "string",
-    "description": "Email address of the Databricks user."
+    "description": "Email address of the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored."
   }
 ]} />
 </TabItem>
@@ -315,7 +315,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-account_id"><code>account_id</code></a>, <a href="#parameter-id"><code>id</code></a></td>
     <td></td>
-    <td>Partially updates a user resource by applying the supplied operations on specific user attributes.</td>
+    <td>Partially updates a user resource by applying the supplied operations on specific user attributes. The</td>
 </tr>
 <tr>
     <td><a href="#account_users_v2_update"><CopyableCode code="account_users_v2_update" /></a></td>
@@ -375,12 +375,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-filter">
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Query by which the results have to be filtered. Supported operators are equals(`eq`), contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently only support simple expressions. [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2</td>
+    <td>Query by which the results have to be filtered. Supported operators are equals(``eq``), contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can be formed using logical operators - ``and`` and ``or``. The `SCIM RFC <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only support simple expressions.</td>
 </tr>
 <tr id="parameter-sort_by">
     <td><CopyableCode code="sort_by" /></td>
     <td><code>string</code></td>
-    <td>Attribute to sort the results. Multi-part paths are supported. For example, `userName`, `name.givenName`, and `emails`.</td>
+    <td>Attribute to sort the results. Multi-part paths are supported. For example, ``userName``, ``name.givenName``, and ``emails``.</td>
 </tr>
 <tr id="parameter-sort_order">
     <td><CopyableCode code="sort_order" /></td>
@@ -525,7 +525,7 @@ userName
     - name: displayName
       value: "{{ displayName }}"
       description: |
-        String that represents a concatenation of given and family names. For example \`John Smith\`.
+        String that represents a concatenation of given and family names. For example \`\`John Smith\`\`.
     - name: emails
       description: |
         All the emails associated with the Databricks user.
@@ -576,7 +576,7 @@ userName
 >
 <TabItem value="account_users_v2_patch">
 
-Partially updates a user resource by applying the supplied operations on specific user attributes.
+Partially updates a user resource by applying the supplied operations on specific user attributes. The
 
 ```sql
 UPDATE databricks_account.iam.account_users

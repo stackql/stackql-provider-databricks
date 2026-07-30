@@ -149,7 +149,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "connection_name",
                 "type": "string",
-                "description": "Full name of the dependent connection, in the form of __connection_name__."
+                "description": "Full name of the dependent connection, in the form of **connection_name**."
               }
             ]
           },
@@ -161,7 +161,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "credential_name",
                 "type": "string",
-                "description": "Full name of the dependent credential, in the form of __credential_name__."
+                "description": "Full name of the dependent credential, in the form of **credential_name**."
               }
             ]
           },
@@ -173,7 +173,24 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "function_full_name",
                 "type": "string",
-                "description": "Full name of the dependent function, in the form of __catalog_name__.__schema_name__.__function_name__."
+                "description": "Full name of the dependent function, in the form of **catalog_name**.**schema_name**.**function_name**."
+              }
+            ]
+          },
+          {
+            "name": "metastore_name",
+            "type": "string",
+            "description": "Metastore context for the dependency. Global UC server responses currently populate this with the metastore UUID string so clients can disambiguate dependencies with identical names across metastores."
+          },
+          {
+            "name": "secret",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog secret.",
+            "children": [
+              {
+                "name": "secret_full_name",
+                "type": "string",
+                "description": "Full name of the dependent secret, in the form of **catalog_name**.**schema_name**.**secret_name**."
               }
             ]
           },
@@ -185,7 +202,19 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "table_full_name",
                 "type": "string",
-                "description": "Full name of the dependent table, in the form of __catalog_name__.__schema_name__.__table_name__."
+                "description": "Full name of the dependent table, in the form of **catalog_name**.**schema_name**.**table_name**."
+              }
+            ]
+          },
+          {
+            "name": "volume",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog volume.",
+            "children": [
+              {
+                "name": "volume_full_name",
+                "type": "string",
+                "description": "Full name of the dependent volume, in the form of **catalog_name**.**schema_name**.**volume_name**."
               }
             ]
           }
@@ -333,7 +362,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "connection_name",
                 "type": "string",
-                "description": "Full name of the dependent connection, in the form of __connection_name__."
+                "description": "Full name of the dependent connection, in the form of **connection_name**."
               }
             ]
           },
@@ -345,7 +374,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "credential_name",
                 "type": "string",
-                "description": "Full name of the dependent credential, in the form of __credential_name__."
+                "description": "Full name of the dependent credential, in the form of **credential_name**."
               }
             ]
           },
@@ -357,7 +386,24 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "function_full_name",
                 "type": "string",
-                "description": "Full name of the dependent function, in the form of __catalog_name__.__schema_name__.__function_name__."
+                "description": "Full name of the dependent function, in the form of **catalog_name**.**schema_name**.**function_name**."
+              }
+            ]
+          },
+          {
+            "name": "metastore_name",
+            "type": "string",
+            "description": "Metastore context for the dependency. Global UC server responses currently populate this with the metastore UUID string so clients can disambiguate dependencies with identical names across metastores."
+          },
+          {
+            "name": "secret",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog secret.",
+            "children": [
+              {
+                "name": "secret_full_name",
+                "type": "string",
+                "description": "Full name of the dependent secret, in the form of **catalog_name**.**schema_name**.**secret_name**."
               }
             ]
           },
@@ -369,7 +415,19 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "table_full_name",
                 "type": "string",
-                "description": "Full name of the dependent table, in the form of __catalog_name__.__schema_name__.__table_name__."
+                "description": "Full name of the dependent table, in the form of **catalog_name**.**schema_name**.**table_name**."
+              }
+            ]
+          },
+          {
+            "name": "volume",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog volume.",
+            "children": [
+              {
+                "name": "volume_full_name",
+                "type": "string",
+                "description": "Full name of the dependent volume, in the form of **catalog_name**.**schema_name**.**volume_name**."
               }
             ]
           }
@@ -517,7 +575,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "connection_name",
                 "type": "string",
-                "description": "Full name of the dependent connection, in the form of __connection_name__."
+                "description": "Full name of the dependent connection, in the form of **connection_name**."
               }
             ]
           },
@@ -529,7 +587,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "credential_name",
                 "type": "string",
-                "description": "Full name of the dependent credential, in the form of __credential_name__."
+                "description": "Full name of the dependent credential, in the form of **credential_name**."
               }
             ]
           },
@@ -541,7 +599,24 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "function_full_name",
                 "type": "string",
-                "description": "Full name of the dependent function, in the form of __catalog_name__.__schema_name__.__function_name__."
+                "description": "Full name of the dependent function, in the form of **catalog_name**.**schema_name**.**function_name**."
+              }
+            ]
+          },
+          {
+            "name": "metastore_name",
+            "type": "string",
+            "description": "Metastore context for the dependency. Global UC server responses currently populate this with the metastore UUID string so clients can disambiguate dependencies with identical names across metastores."
+          },
+          {
+            "name": "secret",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog secret.",
+            "children": [
+              {
+                "name": "secret_full_name",
+                "type": "string",
+                "description": "Full name of the dependent secret, in the form of **catalog_name**.**schema_name**.**secret_name**."
               }
             ]
           },
@@ -553,7 +628,19 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "table_full_name",
                 "type": "string",
-                "description": "Full name of the dependent table, in the form of __catalog_name__.__schema_name__.__table_name__."
+                "description": "Full name of the dependent table, in the form of **catalog_name**.**schema_name**.**table_name**."
+              }
+            ]
+          },
+          {
+            "name": "volume",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog volume.",
+            "children": [
+              {
+                "name": "volume_full_name",
+                "type": "string",
+                "description": "Full name of the dependent volume, in the form of **catalog_name**.**schema_name**.**volume_name**."
               }
             ]
           }

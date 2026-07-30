@@ -4,8 +4,8 @@
     "title": "Databricks Cleanrooms API (workspace)",
     "description": "OpenAPI specification for the Databricks cleanrooms service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.cleanrooms"
   },
   "servers": [
@@ -243,6 +243,8 @@
                         "type": "string",
                         "x-enum": [
                           "FOREIGN_TABLE",
+                          "GENIE_SPACE",
+                          "JAR_ANALYSIS",
                           "NOTEBOOK_FILE",
                           "TABLE",
                           "VIEW",
@@ -279,11 +281,106 @@
                         ],
                         "description": "Local details for a foreign that are only available to its owner. Present if and only if **asset_type** is **FOREIGN_TABLE**"
                       },
+                      "genie_space": {
+                        "type": "object",
+                        "properties": {},
+                        "description": "Genie space details. The space_id sub-field is only returned to the owner; other fields (e.g. prompts_limit_per_day) are visible to all collaborators. Present if and only if **asset_type** is **GENIE_SPACE**"
+                      },
+                      "jar_analysis": {
+                        "type": "object",
+                        "properties": {
+                          "central_jar_file_paths": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Optional description of the jar analysis shown to all collaborators."
+                          },
+                          "environment_version": {
+                            "type": "string",
+                            "description": "The serverless environment version used to execute the JAR analysis (e.g. \"4\"). Defaults to \"4-scala-preview\" if not specified."
+                          },
+                          "etag": {
+                            "type": "string",
+                            "description": "Server generated etag that represents the jar analysis version."
+                          },
+                          "main_class_name": {
+                            "type": "string",
+                            "description": "The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library The code must use ``SparkContext.getOrCreate`` to obtain a Spark context; otherwise, runs of the job fail"
+                          },
+                          "review_state": {
+                            "type": "string",
+                            "x-enum": [
+                              "APPROVED",
+                              "PENDING",
+                              "REJECTED"
+                            ],
+                            "description": "Top-level status derived from all reviews."
+                          },
+                          "reviews": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "comment": {
+                                  "type": "string",
+                                  "description": "review comment"
+                                },
+                                "created_at_millis": {
+                                  "type": "integer",
+                                  "description": "timestamp of when the review was submitted"
+                                },
+                                "review_state": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "APPROVED",
+                                    "PENDING",
+                                    "REJECTED"
+                                  ],
+                                  "description": "review outcome"
+                                },
+                                "review_sub_reason": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "AUTO_APPROVED"
+                                  ],
+                                  "description": "specified when the review was not explicitly made by a user"
+                                },
+                                "reviewer_collaborator_alias": {
+                                  "type": "string",
+                                  "description": "collaborator alias of the reviewer"
+                                }
+                              },
+                              "description": "This only applies to a JAR Analysis as a first-class asset in the Clean Room, and not to Volumes"
+                            },
+                            "description": "All existing approvals or rejections."
+                          },
+                          "runner_collaborator_aliases": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Collaborators that can run the jar."
+                          }
+                        },
+                        "description": "Jar analysis details available to all collaborators of the clean room. Present if and only if **asset_type** is **JAR_ANALYSIS**"
+                      },
                       "notebook": {
                         "type": "object",
                         "properties": {
                           "notebook_content": {
                             "type": "string"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Optional description of the notebook shown to all collaborators."
+                          },
+                          "environment_version": {
+                            "type": "string",
+                            "description": "The serverless environment version used to execute the notebook (e.g. \"4\"). Defaults to \"2\" if not specified."
                           },
                           "etag": {
                             "type": "string",
@@ -535,7 +632,7 @@
           "cleanrooms",
           "clean_room_assets"
         ],
-        "description": "Submit an asset review\n\n:param clean_room_name: str\n  Name of the clean room\n:param asset_type: :class:`CleanRoomAssetAssetType`\n  Asset type. Can either be NOTEBOOK_FILE or JAR_ANALYSIS.\n:param name: str\n  Name of the asset\n:param notebook_review: :class:`NotebookVersionReview` (optional)\n\n:returns: :class:`CreateCleanRoomAssetReviewResponse`",
+        "description": "Submit an asset review\n\n:param clean_room_name: str\n  Name of the clean room\n:param asset_type: :class:`CleanRoomAssetAssetType`\n  Asset type. Can either be NOTEBOOK_FILE or JAR_ANALYSIS.\n:param name: str\n  Name of the asset\n:param jar_analysis_review: :class:`JarAnalysisVersionReview` (optional)\n:param notebook_review: :class:`NotebookVersionReview` (optional)\n\n:returns: :class:`CreateCleanRoomAssetReviewResponse`",
         "parameters": [
           {
             "name": "clean_room_name",
@@ -574,12 +671,39 @@
                     "type": "string",
                     "x-enum": [
                       "FOREIGN_TABLE",
+                      "GENIE_SPACE",
+                      "JAR_ANALYSIS",
                       "NOTEBOOK_FILE",
                       "TABLE",
                       "VIEW",
                       "VOLUME"
                     ],
                     "description": "Asset type. Can either be NOTEBOOK_FILE or JAR_ANALYSIS."
+                  },
+                  "jar_analysis_review": {
+                    "type": "object",
+                    "properties": {
+                      "etag": {
+                        "type": "string"
+                      },
+                      "review_state": {
+                        "type": "string",
+                        "x-enum": [
+                          "APPROVED",
+                          "PENDING",
+                          "REJECTED"
+                        ],
+                        "description": "Review outcome"
+                      },
+                      "comment": {
+                        "type": "string",
+                        "description": "Review comment"
+                      }
+                    },
+                    "required": [
+                      "etag",
+                      "review_state"
+                    ]
                   },
                   "notebook_review": {
                     "type": "object",
@@ -802,7 +926,7 @@
           "cleanrooms",
           "clean_room_assets"
         ],
-        "description": "Update a clean room asset. For example, updating the content of a notebook; changing the shared\npartitions of a table; etc.\n\n:param clean_room_name: str\n  Name of the clean room.\n:param asset_type: :class:`CleanRoomAssetAssetType`\n  The type of the asset.\n:param name: str\n  A fully qualified name that uniquely identifies the asset within the clean room. This is also the\n  name displayed in the clean room UI.\n\n  For UC securable assets (tables, volumes, etc.), the format is\n  *shared_catalog*.*shared_schema*.*asset_name*\n\n  For notebooks, the name is the notebook file name. For jar analyses, the name is the jar analysis\n  name.\n:param asset: :class:`CleanRoomAsset`\n  The asset to update. The asset's `name` and `asset_type` fields are used to identify the asset to\n  update.\n\n:returns: :class:`CleanRoomAsset`",
+        "description": "Update a clean room asset. For example, updating the content of a notebook; changing the shared\npartitions of a table; etc.\n\n:param clean_room_name: str\n  Name of the clean room.\n:param asset_type: :class:`CleanRoomAssetAssetType`\n  The type of the asset.\n:param name: str\n  A fully qualified name that uniquely identifies the asset within the clean room. This is also the\n  name displayed in the clean room UI.\n\n  For UC securable assets (tables, volumes, etc.), the format is\n  *shared_catalog*.*shared_schema*.*asset_name*\n\n  For notebooks, the name is the notebook file name. For jar analyses, the name is the jar analysis\n  name.\n:param asset: :class:`CleanRoomAsset`\n  The asset to update. The asset's ``name`` and ``asset_type`` fields are used to identify the asset\n  to update.\n\n:returns: :class:`CleanRoomAsset`",
         "parameters": [
           {
             "name": "clean_room_name",
@@ -841,6 +965,8 @@
                     "type": "string",
                     "x-enum": [
                       "FOREIGN_TABLE",
+                      "GENIE_SPACE",
+                      "JAR_ANALYSIS",
                       "NOTEBOOK_FILE",
                       "TABLE",
                       "VIEW",
@@ -859,6 +985,8 @@
                         "type": "string",
                         "x-enum": [
                           "FOREIGN_TABLE",
+                          "GENIE_SPACE",
+                          "JAR_ANALYSIS",
                           "NOTEBOOK_FILE",
                           "TABLE",
                           "VIEW",
@@ -895,11 +1023,106 @@
                         ],
                         "description": "Local details for a foreign that are only available to its owner. Present if and only if **asset_type** is **FOREIGN_TABLE**"
                       },
+                      "genie_space": {
+                        "type": "object",
+                        "properties": {},
+                        "description": "Genie space details. The space_id sub-field is only returned to the owner; other fields (e.g. prompts_limit_per_day) are visible to all collaborators. Present if and only if **asset_type** is **GENIE_SPACE**"
+                      },
+                      "jar_analysis": {
+                        "type": "object",
+                        "properties": {
+                          "central_jar_file_paths": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Optional description of the jar analysis shown to all collaborators."
+                          },
+                          "environment_version": {
+                            "type": "string",
+                            "description": "The serverless environment version used to execute the JAR analysis (e.g. \"4\"). Defaults to \"4-scala-preview\" if not specified."
+                          },
+                          "etag": {
+                            "type": "string",
+                            "description": "Server generated etag that represents the jar analysis version."
+                          },
+                          "main_class_name": {
+                            "type": "string",
+                            "description": "The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library The code must use ``SparkContext.getOrCreate`` to obtain a Spark context; otherwise, runs of the job fail"
+                          },
+                          "review_state": {
+                            "type": "string",
+                            "x-enum": [
+                              "APPROVED",
+                              "PENDING",
+                              "REJECTED"
+                            ],
+                            "description": "Top-level status derived from all reviews."
+                          },
+                          "reviews": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "comment": {
+                                  "type": "string",
+                                  "description": "review comment"
+                                },
+                                "created_at_millis": {
+                                  "type": "integer",
+                                  "description": "timestamp of when the review was submitted"
+                                },
+                                "review_state": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "APPROVED",
+                                    "PENDING",
+                                    "REJECTED"
+                                  ],
+                                  "description": "review outcome"
+                                },
+                                "review_sub_reason": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "AUTO_APPROVED"
+                                  ],
+                                  "description": "specified when the review was not explicitly made by a user"
+                                },
+                                "reviewer_collaborator_alias": {
+                                  "type": "string",
+                                  "description": "collaborator alias of the reviewer"
+                                }
+                              },
+                              "description": "This only applies to a JAR Analysis as a first-class asset in the Clean Room, and not to Volumes"
+                            },
+                            "description": "All existing approvals or rejections."
+                          },
+                          "runner_collaborator_aliases": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "Collaborators that can run the jar."
+                          }
+                        },
+                        "description": "Jar analysis details available to all collaborators of the clean room. Present if and only if **asset_type** is **JAR_ANALYSIS**"
+                      },
                       "notebook": {
                         "type": "object",
                         "properties": {
                           "notebook_content": {
                             "type": "string"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Optional description of the notebook shown to all collaborators."
+                          },
+                          "environment_version": {
+                            "type": "string",
+                            "description": "The serverless environment version used to execute the notebook (e.g. \"4\"). Defaults to \"2\" if not specified."
                           },
                           "etag": {
                             "type": "string",
@@ -1040,7 +1263,7 @@
                       "name",
                       "asset_type"
                     ],
-                    "description": "The asset to update. The asset's `name` and `asset_type` fields are used to identify the asset to update."
+                    "description": "The asset to update. The asset's ``name`` and ``asset_type`` fields are used to identify the asset to update."
                   }
                 },
                 "required": [
@@ -1121,7 +1344,7 @@
                         "x-enum": [
                           "ANY_AUTHOR"
                         ],
-                        "description": "Scope of authors covered by the rule. Only one of `author_collaborator_alias` and `author_scope` can be set."
+                        "description": "Scope of authors covered by the rule. Only one of ``author_collaborator_alias`` and ``author_scope`` can be set."
                       },
                       "clean_room_name": {
                         "type": "string",
@@ -1409,7 +1632,7 @@
                         "x-enum": [
                           "ANY_AUTHOR"
                         ],
-                        "description": "Scope of authors covered by the rule. Only one of `author_collaborator_alias` and `author_scope` can be set."
+                        "description": "Scope of authors covered by the rule. Only one of ``author_collaborator_alias`` and ``author_scope`` can be set."
                       },
                       "clean_room_name": {
                         "type": "string",
@@ -1555,6 +1778,95 @@
         "x-stackql-sdk-source": "CleanRoomTaskRunsAPI"
       }
     },
+    "/api/2.0/clean-rooms/{clean_room_name}/task-runs": {
+      "get": {
+        "operationId": "clean_room_task_runs_list_clean_room_task_runs_handler",
+        "summary": "List all the historical task runs in a clean room.",
+        "tags": [
+          "cleanrooms",
+          "clean_room_task_runs"
+        ],
+        "description": "List all the historical task runs in a clean room.\n\n:param clean_room_name: str\n  Name of the clean room.\n:param name: str (optional)\n  Executable name.\n:param page_size: int (optional)\n  The maximum number of task runs to return. Maximum value of 100.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n:param task_type: :class:`CleanRoomTaskType` (optional)\n  Filter by the type of Clean Room task.\n\n:returns: Iterator over :class:`CleanRoomTaskRun`",
+        "parameters": [
+          {
+            "name": "clean_room_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the clean room."
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Executable name."
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The maximum number of task runs to return. Maximum value of 100."
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Opaque pagination token to go to next page based on previous query."
+          },
+          {
+            "name": "task_type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/CleanRoomTaskType"
+            },
+            "description": "Filter by the type of Clean Room task."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListCleanRoomTaskRunsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "CleanRoomTaskRunsAPI"
+      }
+    },
     "/api/2.0/clean-rooms": {
       "post": {
         "operationId": "clean_rooms_create",
@@ -1563,7 +1875,7 @@
           "cleanrooms",
           "clean_rooms"
         ],
-        "description": "Create a new clean room with the specified collaborators. This method is asynchronous; the returned\nname field inside the clean_room field can be used to poll the clean room status, using the\n:method:cleanrooms/get method. When this method returns, the clean room will be in a PROVISIONING\nstate, with only name, owner, comment, created_at and status populated. The clean room will be usable\nonce it enters an ACTIVE state.\n\nThe caller must be a metastore admin or have the **CREATE_CLEAN_ROOM** privilege on the metastore.\n\n:param clean_room: :class:`CleanRoom`\n\n:returns:\n  Long-running operation waiter for :class:`CleanRoom`.\n  See :method:wait_get_clean_room_active for more details.",
+        "description": "Create a new clean room with the specified collaborators. This method is asynchronous; the returned\nname field inside the clean_room field can be used to poll the clean room status, using the\n`cleanrooms/get <https://docs.databricks.com/api/workspace/cleanrooms/get>`__ method. When this method\nreturns, the clean room will be in a PROVISIONING state, with only name, owner, comment, created_at\nand status populated. The clean room will be usable once it enters an ACTIVE state.\n\nThe caller must be a metastore admin or have the **CREATE_CLEAN_ROOM** privilege on the metastore.\n\n:param clean_room: :class:`CleanRoom`\n\n:returns:\n  Long-running operation waiter for :class:`CleanRoom`.\n  See :method:wait_get_clean_room_active for more details.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1588,13 +1900,17 @@
                         "type": "integer",
                         "description": "When the clean room was created, in epoch milliseconds."
                       },
+                      "enable_shared_output": {
+                        "type": "boolean",
+                        "description": "Whether allow task to write to shared output schema. When enabled, clean room task runs triggered by the current collaborator can write to the run-scoped shared output schema which is accessible by all collaborators."
+                      },
                       "local_collaborator_alias": {
                         "type": "string",
                         "description": "The alias of the collaborator tied to the local clean room."
                       },
                       "name": {
                         "type": "string",
-                        "description": "The name of the clean room. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+                        "description": "The name of the clean room. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
                       },
                       "output_catalog": {
                         "type": "object",
@@ -1636,7 +1952,7 @@
                               "properties": {
                                 "collaborator_alias": {
                                   "type": "string",
-                                  "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+                                  "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
                                 },
                                 "display_name": {
                                   "type": "string",
@@ -1685,7 +2001,7 @@
                             "properties": {
                               "collaborator_alias": {
                                 "type": "string",
-                                "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+                                "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
                               },
                               "display_name": {
                                 "type": "string",
@@ -1717,12 +2033,46 @@
                             "type": "string",
                             "description": "Egress network policy to apply to the central clean room workspace."
                           },
+                          "enable_shared_output": {
+                            "type": "boolean",
+                            "description": "Whether to enable shared output for the central clean room. When enabled, clean room task runs can write to the run-scoped shared output schema which is accessible by all collaborators."
+                          },
+                          "package_provider_collaborator_alias": {
+                            "type": "string",
+                            "description": "Alias of the provider collaborator. If set, packaged clean rooms mode is enabled. The consumer's experience is restricted: they can view notebook names and READMEs, add their own data assets, and trigger runs, but cannot view notebook code, provider data assets, or notebook run output."
+                          },
                           "region": {
                             "type": "string",
                             "description": "Region of the central clean room."
                           }
                         },
                         "description": "Central clean room details. During creation, users need to specify cloud_vendor, region, and collaborators.global_metastore_id. This field will not be filled in the ListCleanRooms call."
+                      },
+                      "replication_config": {
+                        "type": "object",
+                        "properties": {
+                          "enabled": {
+                            "type": "boolean",
+                            "description": "Whether this collaborator's input share is replicated into the central clean-room region."
+                          },
+                          "schedule": {
+                            "type": "object",
+                            "properties": {
+                              "interval": {
+                                "type": "object",
+                                "properties": {
+                                  "duration": {
+                                    "type": "string",
+                                    "description": "How often the collaborator's input-share data should be replicated. When unset, the service-default interval applies."
+                                  }
+                                },
+                                "description": "Fixed-interval replication schedule."
+                              }
+                            },
+                            "description": "Optional schedule describing when replication runs. When unset, the service-default schedule (currently every hour) applies."
+                          }
+                        },
+                        "description": "Replication setting for the calling collaborator's input share. Set via UpdateCleanRoom before the collaborator adds their first asset (immutable thereafter), and read back on GetCleanRoom. When enabled, that collaborator's input data is replicated into the central clean-room region."
                       },
                       "status": {
                         "type": "string",
@@ -2027,7 +2377,7 @@
           "cleanrooms",
           "clean_rooms"
         ],
-        "description": "Update a clean room. The caller must be the owner of the clean room, have **MODIFY_CLEAN_ROOM**\nprivilege, or be metastore admin.\n\nWhen the caller is a metastore admin, only the __owner__ field can be updated.\n\n:param name: str\n  Name of the clean room.\n:param clean_room: :class:`CleanRoom` (optional)\n\n:returns: :class:`CleanRoom`",
+        "description": "Update a clean room. The caller must be the owner of the clean room, have **MODIFY_CLEAN_ROOM**\nprivilege, or be metastore admin.\n\nWhen the caller is a metastore admin, only the **owner** field can be updated.\n\n:param name: str\n  Name of the clean room.\n:param clean_room: :class:`CleanRoom` (optional)\n\n:returns: :class:`CleanRoom`",
         "parameters": [
           {
             "name": "name",
@@ -2063,13 +2413,17 @@
                         "type": "integer",
                         "description": "When the clean room was created, in epoch milliseconds."
                       },
+                      "enable_shared_output": {
+                        "type": "boolean",
+                        "description": "Whether allow task to write to shared output schema. When enabled, clean room task runs triggered by the current collaborator can write to the run-scoped shared output schema which is accessible by all collaborators."
+                      },
                       "local_collaborator_alias": {
                         "type": "string",
                         "description": "The alias of the collaborator tied to the local clean room."
                       },
                       "name": {
                         "type": "string",
-                        "description": "The name of the clean room. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+                        "description": "The name of the clean room. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
                       },
                       "output_catalog": {
                         "type": "object",
@@ -2111,7 +2465,7 @@
                               "properties": {
                                 "collaborator_alias": {
                                   "type": "string",
-                                  "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+                                  "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
                                 },
                                 "display_name": {
                                   "type": "string",
@@ -2160,7 +2514,7 @@
                             "properties": {
                               "collaborator_alias": {
                                 "type": "string",
-                                "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+                                "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
                               },
                               "display_name": {
                                 "type": "string",
@@ -2192,12 +2546,46 @@
                             "type": "string",
                             "description": "Egress network policy to apply to the central clean room workspace."
                           },
+                          "enable_shared_output": {
+                            "type": "boolean",
+                            "description": "Whether to enable shared output for the central clean room. When enabled, clean room task runs can write to the run-scoped shared output schema which is accessible by all collaborators."
+                          },
+                          "package_provider_collaborator_alias": {
+                            "type": "string",
+                            "description": "Alias of the provider collaborator. If set, packaged clean rooms mode is enabled. The consumer's experience is restricted: they can view notebook names and READMEs, add their own data assets, and trigger runs, but cannot view notebook code, provider data assets, or notebook run output."
+                          },
                           "region": {
                             "type": "string",
                             "description": "Region of the central clean room."
                           }
                         },
                         "description": "Central clean room details. During creation, users need to specify cloud_vendor, region, and collaborators.global_metastore_id. This field will not be filled in the ListCleanRooms call."
+                      },
+                      "replication_config": {
+                        "type": "object",
+                        "properties": {
+                          "enabled": {
+                            "type": "boolean",
+                            "description": "Whether this collaborator's input share is replicated into the central clean-room region."
+                          },
+                          "schedule": {
+                            "type": "object",
+                            "properties": {
+                              "interval": {
+                                "type": "object",
+                                "properties": {
+                                  "duration": {
+                                    "type": "string",
+                                    "description": "How often the collaborator's input-share data should be replicated. When unset, the service-default interval applies."
+                                  }
+                                },
+                                "description": "Fixed-interval replication schedule."
+                              }
+                            },
+                            "description": "Optional schedule describing when replication runs. When unset, the service-default schedule (currently every hour) applies."
+                          }
+                        },
+                        "description": "Replication setting for the calling collaborator's input share. Set via UpdateCleanRoom before the collaborator adds their first asset (immutable thereafter), and read back on GetCleanRoom. When enabled, that collaborator's input data is replicated into the central clean-room region."
                       },
                       "status": {
                         "type": "string",
@@ -2269,13 +2657,17 @@
             "type": "integer",
             "description": "When the clean room was created, in epoch milliseconds."
           },
+          "enable_shared_output": {
+            "type": "boolean",
+            "description": "Whether allow task to write to shared output schema. When enabled, clean room task runs triggered by the current collaborator can write to the run-scoped shared output schema which is accessible by all collaborators."
+          },
           "local_collaborator_alias": {
             "type": "string",
             "description": "The alias of the collaborator tied to the local clean room."
           },
           "name": {
             "type": "string",
-            "description": "The name of the clean room. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+            "description": "The name of the clean room. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
           },
           "output_catalog": {
             "$ref": "#/components/schemas/CleanRoomOutputCatalog",
@@ -2288,6 +2680,10 @@
           "remote_detailed_info": {
             "$ref": "#/components/schemas/CleanRoomRemoteDetail",
             "description": "Central clean room details. During creation, users need to specify cloud_vendor, region, and collaborators.global_metastore_id. This field will not be filled in the ListCleanRooms call."
+          },
+          "replication_config": {
+            "$ref": "#/components/schemas/ReplicationConfig",
+            "description": "Replication setting for the calling collaborator's input share. Set via UpdateCleanRoom before the collaborator adds their first asset (immutable thereafter), and read back on GetCleanRoom. When enabled, that collaborator's input data is replicated into the central clean-room region."
           },
           "status": {
             "$ref": "#/components/schemas/CleanRoomStatusEnum",
@@ -2325,6 +2721,14 @@
           "foreign_table_local_details": {
             "$ref": "#/components/schemas/CleanRoomAssetForeignTableLocalDetails",
             "description": "Local details for a foreign that are only available to its owner. Present if and only if **asset_type** is **FOREIGN_TABLE**"
+          },
+          "genie_space": {
+            "$ref": "#/components/schemas/CleanRoomAssetGenieSpace",
+            "description": "Genie space details. The space_id sub-field is only returned to the owner; other fields (e.g. prompts_limit_per_day) are visible to all collaborators. Present if and only if **asset_type** is **GENIE_SPACE**"
+          },
+          "jar_analysis": {
+            "$ref": "#/components/schemas/CleanRoomAssetJarAnalysis",
+            "description": "Jar analysis details available to all collaborators of the clean room. Present if and only if **asset_type** is **JAR_ANALYSIS**"
           },
           "notebook": {
             "$ref": "#/components/schemas/CleanRoomAssetNotebook",
@@ -2384,11 +2788,68 @@
           "local_name"
         ]
       },
+      "CleanRoomAssetGenieSpace": {
+        "type": "object",
+        "properties": {}
+      },
+      "CleanRoomAssetJarAnalysis": {
+        "type": "object",
+        "properties": {
+          "central_jar_file_paths": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description of the jar analysis shown to all collaborators."
+          },
+          "environment_version": {
+            "type": "string",
+            "description": "The serverless environment version used to execute the JAR analysis (e.g. \"4\"). Defaults to \"4-scala-preview\" if not specified."
+          },
+          "etag": {
+            "type": "string",
+            "description": "Server generated etag that represents the jar analysis version."
+          },
+          "main_class_name": {
+            "type": "string",
+            "description": "The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library The code must use ``SparkContext.getOrCreate`` to obtain a Spark context; otherwise, runs of the job fail"
+          },
+          "review_state": {
+            "$ref": "#/components/schemas/CleanRoomJarAnalysisReviewJarAnalysisReviewState",
+            "description": "Top-level status derived from all reviews."
+          },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CleanRoomJarAnalysisReview"
+            },
+            "description": "All existing approvals or rejections."
+          },
+          "runner_collaborator_aliases": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Collaborators that can run the jar."
+          }
+        }
+      },
       "CleanRoomAssetNotebook": {
         "type": "object",
         "properties": {
           "notebook_content": {
             "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "description": "Optional description of the notebook shown to all collaborators."
+          },
+          "environment_version": {
+            "type": "string",
+            "description": "The serverless environment version used to execute the notebook (e.g. \"4\"). Defaults to \"2\" if not specified."
           },
           "etag": {
             "type": "string",
@@ -2478,7 +2939,7 @@
           },
           "author_scope": {
             "$ref": "#/components/schemas/CleanRoomAutoApprovalRuleAuthorScope",
-            "description": "Scope of authors covered by the rule. Only one of `author_collaborator_alias` and `author_scope` can be set."
+            "description": "Scope of authors covered by the rule. Only one of ``author_collaborator_alias`` and ``author_scope`` can be set."
           },
           "clean_room_name": {
             "type": "string",
@@ -2507,7 +2968,7 @@
         "properties": {
           "collaborator_alias": {
             "type": "string",
-            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
           },
           "display_name": {
             "type": "string",
@@ -2534,6 +2995,32 @@
           "collaborator_alias"
         ],
         "description": "Publicly visible clean room collaborator."
+      },
+      "CleanRoomJarAnalysisReview": {
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "review comment"
+          },
+          "created_at_millis": {
+            "type": "integer",
+            "description": "timestamp of when the review was submitted"
+          },
+          "review_state": {
+            "$ref": "#/components/schemas/CleanRoomJarAnalysisReviewJarAnalysisReviewState",
+            "description": "review outcome"
+          },
+          "review_sub_reason": {
+            "$ref": "#/components/schemas/CleanRoomJarAnalysisReviewJarAnalysisReviewSubReason",
+            "description": "specified when the review was not explicitly made by a user"
+          },
+          "reviewer_collaborator_alias": {
+            "type": "string",
+            "description": "collaborator alias of the reviewer"
+          }
+        },
+        "description": "This only applies to a JAR Analysis as a first-class asset in the Clean Room, and not to Volumes"
       },
       "CleanRoomNotebookReview": {
         "type": "object",
@@ -2594,6 +3081,14 @@
             "type": "integer",
             "description": "Duration of the task run, in milliseconds."
           },
+          "shared_output_schema_expiration_time": {
+            "type": "integer",
+            "description": "Expiration time of the shared output schema of the task run (if any), in epoch milliseconds."
+          },
+          "shared_output_schema_name": {
+            "type": "string",
+            "description": "Name of the shared output schema associated with the clean rooms notebook task run. This schema is accessible by all collaborators when enable_shared_output is true."
+          },
           "start_time": {
             "type": "integer",
             "description": "When the task run started, in epoch milliseconds."
@@ -2641,12 +3136,86 @@
             "type": "string",
             "description": "Egress network policy to apply to the central clean room workspace."
           },
+          "enable_shared_output": {
+            "type": "boolean",
+            "description": "Whether to enable shared output for the central clean room. When enabled, clean room task runs can write to the run-scoped shared output schema which is accessible by all collaborators."
+          },
+          "package_provider_collaborator_alias": {
+            "type": "string",
+            "description": "Alias of the provider collaborator. If set, packaged clean rooms mode is enabled. The consumer's experience is restricted: they can view notebook names and READMEs, add their own data assets, and trigger runs, but cannot view notebook code, provider data assets, or notebook run output."
+          },
           "region": {
             "type": "string",
             "description": "Region of the central clean room."
           }
         },
         "description": "Publicly visible central clean room details."
+      },
+      "CleanRoomTaskRun": {
+        "type": "object",
+        "properties": {
+          "analysis_details": {
+            "$ref": "#/components/schemas/CleanRoomTaskRunCleanRoomTaskAnalysisDetails",
+            "description": "Information about the analysis run (etag, updated at)"
+          },
+          "collaborator_job_run_info": {
+            "$ref": "#/components/schemas/CollaboratorJobRunInfo",
+            "description": "Job run info of the task in the runner's local workspace. This field is only included in the LIST API if the task was run within the same workspace the API is being called. If the task run was in a different workspace under the same metastore, only the workspace_id is included."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the executable."
+          },
+          "output_info": {
+            "$ref": "#/components/schemas/CleanRoomTaskRunOutputInfo",
+            "description": "Information about run output"
+          },
+          "run_duration": {
+            "type": "integer",
+            "description": "Duration of the task run, in milliseconds."
+          },
+          "shared_output_info": {
+            "$ref": "#/components/schemas/CleanRoomTaskRunOutputInfo",
+            "description": "Information about shared output accessible by all collaborators. This field is only populated when enable_shared_output is true."
+          },
+          "start_time": {
+            "type": "integer",
+            "description": "When the task run started, in epoch milliseconds."
+          },
+          "task_run_state": {
+            "type": "string",
+            "description": "State of the task run."
+          },
+          "task_type": {
+            "$ref": "#/components/schemas/CleanRoomTaskType",
+            "description": "The type of Clean Room task."
+          }
+        },
+        "description": "Stores information about a single task run."
+      },
+      "CleanRoomTaskRunCleanRoomTaskAnalysisDetails": {
+        "type": "object",
+        "properties": {
+          "etag": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "integer",
+            "description": "The timestamp of when the asset was last updated."
+          }
+        }
+      },
+      "CleanRoomTaskRunOutputInfo": {
+        "type": "object",
+        "properties": {
+          "output_schema_expiration_time": {
+            "type": "integer"
+          },
+          "output_schema_name": {
+            "type": "string",
+            "description": "Name of the output schema associated with the clean room task run."
+          }
+        }
       },
       "CollaboratorJobRunInfo": {
         "type": "object",
@@ -2689,8 +3258,19 @@
       "CreateCleanRoomAssetReviewResponse": {
         "type": "object",
         "properties": {
+          "jar_analysis_review_state": {
+            "$ref": "#/components/schemas/CleanRoomJarAnalysisReviewJarAnalysisReviewState"
+          },
+          "jar_analysis_reviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CleanRoomJarAnalysisReview"
+            },
+            "description": "All existing jar analysis approvals or rejections"
+          },
           "notebook_review_state": {
-            "$ref": "#/components/schemas/CleanRoomNotebookReviewNotebookReviewState"
+            "$ref": "#/components/schemas/CleanRoomNotebookReviewNotebookReviewState",
+            "description": "Top-level status derived from all reviews"
           },
           "notebook_reviews": {
             "type": "array",
@@ -2716,6 +3296,26 @@
         "type": "object",
         "properties": {},
         "description": "Response for delete clean room request. Using an empty message since the generic Empty proto\n    does not externd UnshadedMessageMarker."
+      },
+      "JarAnalysisVersionReview": {
+        "type": "object",
+        "properties": {
+          "etag": {
+            "type": "string"
+          },
+          "review_state": {
+            "$ref": "#/components/schemas/CleanRoomJarAnalysisReviewJarAnalysisReviewState",
+            "description": "Review outcome"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Review comment"
+          }
+        },
+        "required": [
+          "etag",
+          "review_state"
+        ]
       },
       "ListCleanRoomAssetRevisionsResponse": {
         "type": "object",
@@ -2775,6 +3375,21 @@
           }
         }
       },
+      "ListCleanRoomTaskRunsResponse": {
+        "type": "object",
+        "properties": {
+          "next_page_token": {
+            "type": "string"
+          },
+          "runs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CleanRoomTaskRun"
+            },
+            "description": "Task runs in the clean room."
+          }
+        }
+      },
       "ListCleanRoomsResponse": {
         "type": "object",
         "properties": {
@@ -2810,6 +3425,40 @@
           "review_state"
         ]
       },
+      "ReplicationConfig": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether this collaborator's input share is replicated into the central clean-room region."
+          },
+          "schedule": {
+            "$ref": "#/components/schemas/ReplicationSchedule",
+            "description": "Optional schedule describing when replication runs. When unset, the service-default schedule (currently every hour) applies."
+          }
+        },
+        "description": "Replication setting for a collaborator's input share. When enabled, that collaborator's input\n    data is replicated into the central clean-room region so the clean room can run locally against\n    replicated data instead of reaching across regions to the source.\n\n    This is settable (via UpdateCleanRoom) until the collaborator adds their first asset, and is\n    immutable thereafter. Copied from (not imported) the managed-catalog share-level\n    ReplicationConfig."
+      },
+      "ReplicationInterval": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "string",
+            "description": "How often the collaborator's input-share data should be replicated. When unset, the service-default interval applies."
+          }
+        },
+        "description": "How often a collaborator's replicated input share is refreshed.\n\n    Copied from (not imported) the managed-catalog share-level ReplicationInterval so the clean-room\n    API and the Delta Sharing API stay independently evolvable."
+      },
+      "ReplicationSchedule": {
+        "type": "object",
+        "properties": {
+          "interval": {
+            "$ref": "#/components/schemas/ReplicationInterval",
+            "description": "Fixed-interval replication schedule."
+          }
+        },
+        "description": "Schedule describing when a collaborator's replicated input share is refreshed.\n\n    Copied from (not imported) the managed-catalog share-level ReplicationSchedule."
+      },
       "CleanRoomAccessRestricted": {
         "type": "string",
         "x-enum": [
@@ -2822,6 +3471,8 @@
         "type": "string",
         "x-enum": [
           "FOREIGN_TABLE",
+          "GENIE_SPACE",
+          "JAR_ANALYSIS",
           "NOTEBOOK_FILE",
           "TABLE",
           "VIEW",
@@ -2842,6 +3493,22 @@
         "type": "string",
         "x-enum": [
           "ANY_AUTHOR"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "CleanRoomJarAnalysisReviewJarAnalysisReviewState": {
+        "type": "string",
+        "x-enum": [
+          "APPROVED",
+          "PENDING",
+          "REJECTED"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "CleanRoomJarAnalysisReviewJarAnalysisReviewSubReason": {
+        "type": "string",
+        "x-enum": [
+          "AUTO_APPROVED"
         ],
         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
@@ -2878,6 +3545,14 @@
           "DELETED",
           "FAILED",
           "PROVISIONING"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "CleanRoomTaskType": {
+        "type": "string",
+        "x-enum": [
+          "JAR",
+          "NOTEBOOK"
         ],
         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       }

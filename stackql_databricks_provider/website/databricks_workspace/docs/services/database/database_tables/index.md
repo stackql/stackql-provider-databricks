@@ -56,6 +56,11 @@ The following fields are returned by `SELECT` queries:
     "name": "logical_database_name",
     "type": "string",
     "description": "Target Postgres database object (logical database) name for this table. When creating a table in a standard catalog, this field is required. In this scenario, specifying this field will allow targeting an arbitrary postgres database. Registration of database tables via /database/tables is currently only supported in standard catalogs."
+  },
+  {
+    "name": "table_serving_url",
+    "type": "string",
+    "description": "Data serving REST API URL for this table"
   }
 ]} />
 </TabItem>
@@ -142,7 +147,8 @@ Get a Database Table.
 SELECT
 name,
 database_instance_name,
-logical_database_name
+logical_database_name,
+table_serving_url
 FROM databricks_workspace.database.database_tables
 WHERE name = '{{ name }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
@@ -176,7 +182,8 @@ SELECT
 RETURNING
 name,
 database_instance_name,
-logical_database_name
+logical_database_name,
+table_serving_url
 ;
 ```
 </TabItem>
@@ -193,6 +200,7 @@ logical_database_name
         name: "{{ name }}"
         database_instance_name: "{{ database_instance_name }}"
         logical_database_name: "{{ logical_database_name }}"
+        table_serving_url: "{{ table_serving_url }}"
 `}</CodeBlock>
 
 </TabItem>

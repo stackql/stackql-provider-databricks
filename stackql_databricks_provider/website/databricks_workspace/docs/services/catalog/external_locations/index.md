@@ -86,46 +86,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "effective_enable_file_events",
     "type": "boolean",
-    "description": "The effective value of `enable_file_events` after applying server-side defaults."
+    "description": "The effective value of ``enable_file_events`` after applying server-side defaults."
   },
   {
-    "name": "enable_file_events",
-    "type": "boolean",
-    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events. The actual applied value may differ due to server-side defaults; check `effective_enable_file_events` for the effective state."
-  },
-  {
-    "name": "encryption_details",
+    "name": "effective_file_event_queue",
     "type": "object",
-    "description": "Encryption options that apply to clients connecting to cloud storage.",
-    "children": [
-      {
-        "name": "sse_encryption_details",
-        "type": "object",
-        "description": "Server-Side Encryption properties for clients communicating with AWS s3.",
-        "children": [
-          {
-            "name": "algorithm",
-            "type": "string",
-            "description": "Sets the value of the 'x-amz-server-side-encryption' header in S3 request. (AWS_SSE_KMS, AWS_SSE_S3)"
-          },
-          {
-            "name": "aws_kms_key_arn",
-            "type": "string",
-            "description": "Optional. The ARN of the SSE-KMS key used with the S3 location, when algorithm = \"SSE-KMS\". Sets the value of the 'x-amz-server-side-encryption-aws-kms-key-id' header."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "fallback",
-    "type": "boolean",
-    "description": "Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient."
-  },
-  {
-    "name": "file_event_queue",
-    "type": "object",
-    "description": "File event queue settings. If `enable_file_events` is not `false`, must be defined and have exactly one of the documented properties.",
+    "description": "The effective file event queue configuration after applying server-side defaults. Always populated when a queue is provisioned, regardless of whether the user explicitly set ``enable_file_events``. Use this field instead of ``file_event_queue`` for reading the actual queue state.",
     "children": [
       {
         "name": "managed_aqs",
@@ -151,6 +117,38 @@ The following fields are returned by `SELECT` queries:
             "name": "subscription_id",
             "type": "string",
             "description": "Optional subscription id for the queue, event grid subscription, and external location storage account. Required for locations with a service principal storage credential"
+          }
+        ]
+      },
+      {
+        "name": "managed_onelake",
+        "type": "object",
+        "description": "File event queue for OneLake (Microsoft Fabric) locations. Events flow through Fabric<br />    Eventstream in both arms; CSMS consumes from a user-provided Azure Event Hub (provided_onelake)<br />    or from a Fabric Eventstream that CSMS provisions in the user's workspace (managed_onelake).",
+        "children": [
+          {
+            "name": "consumer_group",
+            "type": "string",
+            "description": "Event Hubs consumer group used to consume file events. Defaults to \"$Default\" when unset. Recommended for provided_onelake: create a dedicated consumer group on the Event Hub for file events to avoid contending with the customer's other consumers."
+          },
+          {
+            "name": "event_hub_name",
+            "type": "string",
+            "description": "Event Hub entity name within the namespace. Only required for provided_onelake."
+          },
+          {
+            "name": "event_hub_url",
+            "type": "string",
+            "description": "The Event Hub URL in the format https://&#123;namespace&#125;.servicebus.windows.net/&#123;event_hub_name&#125;. Deprecated: use fully_qualified_namespace + event_hub_name instead."
+          },
+          {
+            "name": "fully_qualified_namespace",
+            "type": "string",
+            "description": "The fully qualified domain name of the Event Hubs namespace, e.g. &#123;yournamespace&#125;.servicebus.windows.net. Only required for provided_onelake."
+          },
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": "Unique identifier included in the name of the file events managed resources."
           }
         ]
       },
@@ -216,6 +214,265 @@ The following fields are returned by `SELECT` queries:
         ]
       },
       {
+        "name": "provided_onelake",
+        "type": "object",
+        "description": "File event queue for OneLake (Microsoft Fabric) locations. Events flow through Fabric<br />    Eventstream in both arms; CSMS consumes from a user-provided Azure Event Hub (provided_onelake)<br />    or from a Fabric Eventstream that CSMS provisions in the user's workspace (managed_onelake).",
+        "children": [
+          {
+            "name": "consumer_group",
+            "type": "string",
+            "description": "Event Hubs consumer group used to consume file events. Defaults to \"$Default\" when unset. Recommended for provided_onelake: create a dedicated consumer group on the Event Hub for file events to avoid contending with the customer's other consumers."
+          },
+          {
+            "name": "event_hub_name",
+            "type": "string",
+            "description": "Event Hub entity name within the namespace. Only required for provided_onelake."
+          },
+          {
+            "name": "event_hub_url",
+            "type": "string",
+            "description": "The Event Hub URL in the format https://&#123;namespace&#125;.servicebus.windows.net/&#123;event_hub_name&#125;. Deprecated: use fully_qualified_namespace + event_hub_name instead."
+          },
+          {
+            "name": "fully_qualified_namespace",
+            "type": "string",
+            "description": "The fully qualified domain name of the Event Hubs namespace, e.g. &#123;yournamespace&#125;.servicebus.windows.net. Only required for provided_onelake."
+          },
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": "Unique identifier included in the name of the file events managed resources."
+          }
+        ]
+      },
+      {
+        "name": "provided_pubsub",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "subscription_name",
+            "type": "string",
+            "description": "The Pub/Sub subscription name in the format projects/&#123;project&#125;/subscriptions/&#123;subscription name&#125;. Only required for provided_pubsub."
+          }
+        ]
+      },
+      {
+        "name": "provided_sqs",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "queue_url",
+            "type": "string",
+            "description": "The AQS queue url in the format https://sqs.&#123;region&#125;.amazonaws.com/&#123;account id&#125;/&#123;queue name&#125;. Only required for provided_sqs."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "enable_file_events",
+    "type": "boolean",
+    "description": "Whether to enable file events on this external location. Default to ``true``. Set to ``false`` to disable file events. The actual applied value may differ due to server-side defaults; check ``effective_enable_file_events`` for the effective state."
+  },
+  {
+    "name": "encryption_details",
+    "type": "object",
+    "description": "Encryption options that apply to clients connecting to cloud storage.",
+    "children": [
+      {
+        "name": "sse_encryption_details",
+        "type": "object",
+        "description": "Server-Side Encryption properties for clients communicating with AWS s3.",
+        "children": [
+          {
+            "name": "algorithm",
+            "type": "string",
+            "description": "Sets the value of the 'x-amz-server-side-encryption' header in S3 request. (AWS_SSE_KMS, AWS_SSE_S3)"
+          },
+          {
+            "name": "aws_kms_key_arn",
+            "type": "string",
+            "description": "Optional. The ARN of the SSE-KMS key used with the S3 location, when algorithm = \"SSE-KMS\". Sets the value of the 'x-amz-server-side-encryption-aws-kms-key-id' header."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "fallback",
+    "type": "boolean",
+    "description": "Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient."
+  },
+  {
+    "name": "file_event_queue",
+    "type": "object",
+    "description": "File event queue settings. If ``enable_file_events`` is not ``false``, must be defined and have exactly one of the documented properties.",
+    "children": [
+      {
+        "name": "managed_aqs",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "queue_url",
+            "type": "string",
+            "description": "The AQS queue url in the format https://&#123;storage account&#125;.queue.core.windows.net/&#123;queue name&#125; Only required for provided_aqs."
+          },
+          {
+            "name": "resource_group",
+            "type": "string",
+            "description": "Optional resource group for the queue, event grid subscription, and external location storage account. Only required for locations with a service principal storage credential"
+          },
+          {
+            "name": "subscription_id",
+            "type": "string",
+            "description": "Optional subscription id for the queue, event grid subscription, and external location storage account. Required for locations with a service principal storage credential"
+          }
+        ]
+      },
+      {
+        "name": "managed_onelake",
+        "type": "object",
+        "description": "File event queue for OneLake (Microsoft Fabric) locations. Events flow through Fabric<br />    Eventstream in both arms; CSMS consumes from a user-provided Azure Event Hub (provided_onelake)<br />    or from a Fabric Eventstream that CSMS provisions in the user's workspace (managed_onelake).",
+        "children": [
+          {
+            "name": "consumer_group",
+            "type": "string",
+            "description": "Event Hubs consumer group used to consume file events. Defaults to \"$Default\" when unset. Recommended for provided_onelake: create a dedicated consumer group on the Event Hub for file events to avoid contending with the customer's other consumers."
+          },
+          {
+            "name": "event_hub_name",
+            "type": "string",
+            "description": "Event Hub entity name within the namespace. Only required for provided_onelake."
+          },
+          {
+            "name": "event_hub_url",
+            "type": "string",
+            "description": "The Event Hub URL in the format https://&#123;namespace&#125;.servicebus.windows.net/&#123;event_hub_name&#125;. Deprecated: use fully_qualified_namespace + event_hub_name instead."
+          },
+          {
+            "name": "fully_qualified_namespace",
+            "type": "string",
+            "description": "The fully qualified domain name of the Event Hubs namespace, e.g. &#123;yournamespace&#125;.servicebus.windows.net. Only required for provided_onelake."
+          },
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": "Unique identifier included in the name of the file events managed resources."
+          }
+        ]
+      },
+      {
+        "name": "managed_pubsub",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "subscription_name",
+            "type": "string",
+            "description": "The Pub/Sub subscription name in the format projects/&#123;project&#125;/subscriptions/&#123;subscription name&#125;. Only required for provided_pubsub."
+          }
+        ]
+      },
+      {
+        "name": "managed_sqs",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "queue_url",
+            "type": "string",
+            "description": "The AQS queue url in the format https://sqs.&#123;region&#125;.amazonaws.com/&#123;account id&#125;/&#123;queue name&#125;. Only required for provided_sqs."
+          }
+        ]
+      },
+      {
+        "name": "provided_aqs",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "queue_url",
+            "type": "string",
+            "description": "The AQS queue url in the format https://&#123;storage account&#125;.queue.core.windows.net/&#123;queue name&#125; Only required for provided_aqs."
+          },
+          {
+            "name": "resource_group",
+            "type": "string",
+            "description": "Optional resource group for the queue, event grid subscription, and external location storage account. Only required for locations with a service principal storage credential"
+          },
+          {
+            "name": "subscription_id",
+            "type": "string",
+            "description": "Optional subscription id for the queue, event grid subscription, and external location storage account. Required for locations with a service principal storage credential"
+          }
+        ]
+      },
+      {
+        "name": "provided_onelake",
+        "type": "object",
+        "description": "File event queue for OneLake (Microsoft Fabric) locations. Events flow through Fabric<br />    Eventstream in both arms; CSMS consumes from a user-provided Azure Event Hub (provided_onelake)<br />    or from a Fabric Eventstream that CSMS provisions in the user's workspace (managed_onelake).",
+        "children": [
+          {
+            "name": "consumer_group",
+            "type": "string",
+            "description": "Event Hubs consumer group used to consume file events. Defaults to \"$Default\" when unset. Recommended for provided_onelake: create a dedicated consumer group on the Event Hub for file events to avoid contending with the customer's other consumers."
+          },
+          {
+            "name": "event_hub_name",
+            "type": "string",
+            "description": "Event Hub entity name within the namespace. Only required for provided_onelake."
+          },
+          {
+            "name": "event_hub_url",
+            "type": "string",
+            "description": "The Event Hub URL in the format https://&#123;namespace&#125;.servicebus.windows.net/&#123;event_hub_name&#125;. Deprecated: use fully_qualified_namespace + event_hub_name instead."
+          },
+          {
+            "name": "fully_qualified_namespace",
+            "type": "string",
+            "description": "The fully qualified domain name of the Event Hubs namespace, e.g. &#123;yournamespace&#125;.servicebus.windows.net. Only required for provided_onelake."
+          },
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": "Unique identifier included in the name of the file events managed resources."
+          }
+        ]
+      },
+      {
         "name": "provided_pubsub",
         "type": "object",
         "description": "",
@@ -254,7 +511,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN, ISOLATION_MODE_OPEN_IN_ACCOUNT)"
   },
   {
     "name": "owner",
@@ -329,46 +586,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "effective_enable_file_events",
     "type": "boolean",
-    "description": "The effective value of `enable_file_events` after applying server-side defaults."
+    "description": "The effective value of ``enable_file_events`` after applying server-side defaults."
   },
   {
-    "name": "enable_file_events",
-    "type": "boolean",
-    "description": "Whether to enable file events on this external location. Default to `true`. Set to `false` to disable file events. The actual applied value may differ due to server-side defaults; check `effective_enable_file_events` for the effective state."
-  },
-  {
-    "name": "encryption_details",
+    "name": "effective_file_event_queue",
     "type": "object",
-    "description": "Encryption options that apply to clients connecting to cloud storage.",
-    "children": [
-      {
-        "name": "sse_encryption_details",
-        "type": "object",
-        "description": "Server-Side Encryption properties for clients communicating with AWS s3.",
-        "children": [
-          {
-            "name": "algorithm",
-            "type": "string",
-            "description": "Sets the value of the 'x-amz-server-side-encryption' header in S3 request. (AWS_SSE_KMS, AWS_SSE_S3)"
-          },
-          {
-            "name": "aws_kms_key_arn",
-            "type": "string",
-            "description": "Optional. The ARN of the SSE-KMS key used with the S3 location, when algorithm = \"SSE-KMS\". Sets the value of the 'x-amz-server-side-encryption-aws-kms-key-id' header."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "name": "fallback",
-    "type": "boolean",
-    "description": "Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient."
-  },
-  {
-    "name": "file_event_queue",
-    "type": "object",
-    "description": "File event queue settings. If `enable_file_events` is not `false`, must be defined and have exactly one of the documented properties.",
+    "description": "The effective file event queue configuration after applying server-side defaults. Always populated when a queue is provisioned, regardless of whether the user explicitly set ``enable_file_events``. Use this field instead of ``file_event_queue`` for reading the actual queue state.",
     "children": [
       {
         "name": "managed_aqs",
@@ -394,6 +617,38 @@ The following fields are returned by `SELECT` queries:
             "name": "subscription_id",
             "type": "string",
             "description": "Optional subscription id for the queue, event grid subscription, and external location storage account. Required for locations with a service principal storage credential"
+          }
+        ]
+      },
+      {
+        "name": "managed_onelake",
+        "type": "object",
+        "description": "File event queue for OneLake (Microsoft Fabric) locations. Events flow through Fabric<br />    Eventstream in both arms; CSMS consumes from a user-provided Azure Event Hub (provided_onelake)<br />    or from a Fabric Eventstream that CSMS provisions in the user's workspace (managed_onelake).",
+        "children": [
+          {
+            "name": "consumer_group",
+            "type": "string",
+            "description": "Event Hubs consumer group used to consume file events. Defaults to \"$Default\" when unset. Recommended for provided_onelake: create a dedicated consumer group on the Event Hub for file events to avoid contending with the customer's other consumers."
+          },
+          {
+            "name": "event_hub_name",
+            "type": "string",
+            "description": "Event Hub entity name within the namespace. Only required for provided_onelake."
+          },
+          {
+            "name": "event_hub_url",
+            "type": "string",
+            "description": "The Event Hub URL in the format https://&#123;namespace&#125;.servicebus.windows.net/&#123;event_hub_name&#125;. Deprecated: use fully_qualified_namespace + event_hub_name instead."
+          },
+          {
+            "name": "fully_qualified_namespace",
+            "type": "string",
+            "description": "The fully qualified domain name of the Event Hubs namespace, e.g. &#123;yournamespace&#125;.servicebus.windows.net. Only required for provided_onelake."
+          },
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": "Unique identifier included in the name of the file events managed resources."
           }
         ]
       },
@@ -459,6 +714,265 @@ The following fields are returned by `SELECT` queries:
         ]
       },
       {
+        "name": "provided_onelake",
+        "type": "object",
+        "description": "File event queue for OneLake (Microsoft Fabric) locations. Events flow through Fabric<br />    Eventstream in both arms; CSMS consumes from a user-provided Azure Event Hub (provided_onelake)<br />    or from a Fabric Eventstream that CSMS provisions in the user's workspace (managed_onelake).",
+        "children": [
+          {
+            "name": "consumer_group",
+            "type": "string",
+            "description": "Event Hubs consumer group used to consume file events. Defaults to \"$Default\" when unset. Recommended for provided_onelake: create a dedicated consumer group on the Event Hub for file events to avoid contending with the customer's other consumers."
+          },
+          {
+            "name": "event_hub_name",
+            "type": "string",
+            "description": "Event Hub entity name within the namespace. Only required for provided_onelake."
+          },
+          {
+            "name": "event_hub_url",
+            "type": "string",
+            "description": "The Event Hub URL in the format https://&#123;namespace&#125;.servicebus.windows.net/&#123;event_hub_name&#125;. Deprecated: use fully_qualified_namespace + event_hub_name instead."
+          },
+          {
+            "name": "fully_qualified_namespace",
+            "type": "string",
+            "description": "The fully qualified domain name of the Event Hubs namespace, e.g. &#123;yournamespace&#125;.servicebus.windows.net. Only required for provided_onelake."
+          },
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": "Unique identifier included in the name of the file events managed resources."
+          }
+        ]
+      },
+      {
+        "name": "provided_pubsub",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "subscription_name",
+            "type": "string",
+            "description": "The Pub/Sub subscription name in the format projects/&#123;project&#125;/subscriptions/&#123;subscription name&#125;. Only required for provided_pubsub."
+          }
+        ]
+      },
+      {
+        "name": "provided_sqs",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "queue_url",
+            "type": "string",
+            "description": "The AQS queue url in the format https://sqs.&#123;region&#125;.amazonaws.com/&#123;account id&#125;/&#123;queue name&#125;. Only required for provided_sqs."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "enable_file_events",
+    "type": "boolean",
+    "description": "Whether to enable file events on this external location. Default to ``true``. Set to ``false`` to disable file events. The actual applied value may differ due to server-side defaults; check ``effective_enable_file_events`` for the effective state."
+  },
+  {
+    "name": "encryption_details",
+    "type": "object",
+    "description": "Encryption options that apply to clients connecting to cloud storage.",
+    "children": [
+      {
+        "name": "sse_encryption_details",
+        "type": "object",
+        "description": "Server-Side Encryption properties for clients communicating with AWS s3.",
+        "children": [
+          {
+            "name": "algorithm",
+            "type": "string",
+            "description": "Sets the value of the 'x-amz-server-side-encryption' header in S3 request. (AWS_SSE_KMS, AWS_SSE_S3)"
+          },
+          {
+            "name": "aws_kms_key_arn",
+            "type": "string",
+            "description": "Optional. The ARN of the SSE-KMS key used with the S3 location, when algorithm = \"SSE-KMS\". Sets the value of the 'x-amz-server-side-encryption-aws-kms-key-id' header."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "fallback",
+    "type": "boolean",
+    "description": "Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient."
+  },
+  {
+    "name": "file_event_queue",
+    "type": "object",
+    "description": "File event queue settings. If ``enable_file_events`` is not ``false``, must be defined and have exactly one of the documented properties.",
+    "children": [
+      {
+        "name": "managed_aqs",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "queue_url",
+            "type": "string",
+            "description": "The AQS queue url in the format https://&#123;storage account&#125;.queue.core.windows.net/&#123;queue name&#125; Only required for provided_aqs."
+          },
+          {
+            "name": "resource_group",
+            "type": "string",
+            "description": "Optional resource group for the queue, event grid subscription, and external location storage account. Only required for locations with a service principal storage credential"
+          },
+          {
+            "name": "subscription_id",
+            "type": "string",
+            "description": "Optional subscription id for the queue, event grid subscription, and external location storage account. Required for locations with a service principal storage credential"
+          }
+        ]
+      },
+      {
+        "name": "managed_onelake",
+        "type": "object",
+        "description": "File event queue for OneLake (Microsoft Fabric) locations. Events flow through Fabric<br />    Eventstream in both arms; CSMS consumes from a user-provided Azure Event Hub (provided_onelake)<br />    or from a Fabric Eventstream that CSMS provisions in the user's workspace (managed_onelake).",
+        "children": [
+          {
+            "name": "consumer_group",
+            "type": "string",
+            "description": "Event Hubs consumer group used to consume file events. Defaults to \"$Default\" when unset. Recommended for provided_onelake: create a dedicated consumer group on the Event Hub for file events to avoid contending with the customer's other consumers."
+          },
+          {
+            "name": "event_hub_name",
+            "type": "string",
+            "description": "Event Hub entity name within the namespace. Only required for provided_onelake."
+          },
+          {
+            "name": "event_hub_url",
+            "type": "string",
+            "description": "The Event Hub URL in the format https://&#123;namespace&#125;.servicebus.windows.net/&#123;event_hub_name&#125;. Deprecated: use fully_qualified_namespace + event_hub_name instead."
+          },
+          {
+            "name": "fully_qualified_namespace",
+            "type": "string",
+            "description": "The fully qualified domain name of the Event Hubs namespace, e.g. &#123;yournamespace&#125;.servicebus.windows.net. Only required for provided_onelake."
+          },
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": "Unique identifier included in the name of the file events managed resources."
+          }
+        ]
+      },
+      {
+        "name": "managed_pubsub",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "subscription_name",
+            "type": "string",
+            "description": "The Pub/Sub subscription name in the format projects/&#123;project&#125;/subscriptions/&#123;subscription name&#125;. Only required for provided_pubsub."
+          }
+        ]
+      },
+      {
+        "name": "managed_sqs",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "queue_url",
+            "type": "string",
+            "description": "The AQS queue url in the format https://sqs.&#123;region&#125;.amazonaws.com/&#123;account id&#125;/&#123;queue name&#125;. Only required for provided_sqs."
+          }
+        ]
+      },
+      {
+        "name": "provided_aqs",
+        "type": "object",
+        "description": "",
+        "children": [
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "queue_url",
+            "type": "string",
+            "description": "The AQS queue url in the format https://&#123;storage account&#125;.queue.core.windows.net/&#123;queue name&#125; Only required for provided_aqs."
+          },
+          {
+            "name": "resource_group",
+            "type": "string",
+            "description": "Optional resource group for the queue, event grid subscription, and external location storage account. Only required for locations with a service principal storage credential"
+          },
+          {
+            "name": "subscription_id",
+            "type": "string",
+            "description": "Optional subscription id for the queue, event grid subscription, and external location storage account. Required for locations with a service principal storage credential"
+          }
+        ]
+      },
+      {
+        "name": "provided_onelake",
+        "type": "object",
+        "description": "File event queue for OneLake (Microsoft Fabric) locations. Events flow through Fabric<br />    Eventstream in both arms; CSMS consumes from a user-provided Azure Event Hub (provided_onelake)<br />    or from a Fabric Eventstream that CSMS provisions in the user's workspace (managed_onelake).",
+        "children": [
+          {
+            "name": "consumer_group",
+            "type": "string",
+            "description": "Event Hubs consumer group used to consume file events. Defaults to \"$Default\" when unset. Recommended for provided_onelake: create a dedicated consumer group on the Event Hub for file events to avoid contending with the customer's other consumers."
+          },
+          {
+            "name": "event_hub_name",
+            "type": "string",
+            "description": "Event Hub entity name within the namespace. Only required for provided_onelake."
+          },
+          {
+            "name": "event_hub_url",
+            "type": "string",
+            "description": "The Event Hub URL in the format https://&#123;namespace&#125;.servicebus.windows.net/&#123;event_hub_name&#125;. Deprecated: use fully_qualified_namespace + event_hub_name instead."
+          },
+          {
+            "name": "fully_qualified_namespace",
+            "type": "string",
+            "description": "The fully qualified domain name of the Event Hubs namespace, e.g. &#123;yournamespace&#125;.servicebus.windows.net. Only required for provided_onelake."
+          },
+          {
+            "name": "managed_resource_id",
+            "type": "string",
+            "description": "Unique identifier included in the name of the file events managed resources."
+          }
+        ]
+      },
+      {
         "name": "provided_pubsub",
         "type": "object",
         "description": "",
@@ -497,7 +1011,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN, ISOLATION_MODE_OPEN_IN_ACCOUNT)"
   },
   {
     "name": "owner",
@@ -555,7 +1069,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-include_browse"><code>include_browse</code></a>, <a href="#parameter-include_unbound"><code>include_unbound</code></a>, <a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
-    <td>Gets an array of external locations (__ExternalLocationInfo__ objects) from the metastore. The caller</td>
+    <td>Gets an array of external locations (**ExternalLocationInfo** objects) from the metastore. The caller</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -656,6 +1170,7 @@ comment,
 created_at,
 created_by,
 effective_enable_file_events,
+effective_file_event_queue,
 enable_file_events,
 encryption_details,
 fallback,
@@ -675,7 +1190,7 @@ AND include_browse = '{{ include_browse }}'
 </TabItem>
 <TabItem value="list">
 
-Gets an array of external locations (__ExternalLocationInfo__ objects) from the metastore. The caller
+Gets an array of external locations (**ExternalLocationInfo** objects) from the metastore. The caller
 
 ```sql
 SELECT
@@ -688,6 +1203,7 @@ comment,
 created_at,
 created_by,
 effective_enable_file_events,
+effective_file_event_queue,
 enable_file_events,
 encryption_details,
 fallback,
@@ -730,6 +1246,7 @@ url,
 credential_name,
 comment,
 effective_enable_file_events,
+effective_file_event_queue,
 enable_file_events,
 encryption_details,
 fallback,
@@ -744,6 +1261,7 @@ SELECT
 '{{ credential_name }}' /* required */,
 '{{ comment }}',
 {{ effective_enable_file_events }},
+'{{ effective_file_event_queue }}',
 {{ enable_file_events }},
 '{{ encryption_details }}',
 {{ fallback }},
@@ -761,6 +1279,7 @@ comment,
 created_at,
 created_by,
 effective_enable_file_events,
+effective_file_event_queue,
 enable_file_events,
 encryption_details,
 fallback,
@@ -801,11 +1320,49 @@ url
     - name: effective_enable_file_events
       value: {{ effective_enable_file_events }}
       description: |
-        The effective value of \`enable_file_events\` after applying server-side defaults.
+        The effective value of \`\`enable_file_events\`\` after applying server-side defaults.
+    - name: effective_file_event_queue
+      description: |
+        The effective file event queue configuration after applying server-side defaults. Always populated when a queue is provisioned, regardless of whether the user explicitly set \`\`enable_file_events\`\`. Use this field instead of \`\`file_event_queue\`\` for reading the actual queue state.
+      value:
+        managed_aqs:
+          managed_resource_id: "{{ managed_resource_id }}"
+          queue_url: "{{ queue_url }}"
+          resource_group: "{{ resource_group }}"
+          subscription_id: "{{ subscription_id }}"
+        managed_onelake:
+          consumer_group: "{{ consumer_group }}"
+          event_hub_name: "{{ event_hub_name }}"
+          event_hub_url: "{{ event_hub_url }}"
+          fully_qualified_namespace: "{{ fully_qualified_namespace }}"
+          managed_resource_id: "{{ managed_resource_id }}"
+        managed_pubsub:
+          managed_resource_id: "{{ managed_resource_id }}"
+          subscription_name: "{{ subscription_name }}"
+        managed_sqs:
+          managed_resource_id: "{{ managed_resource_id }}"
+          queue_url: "{{ queue_url }}"
+        provided_aqs:
+          managed_resource_id: "{{ managed_resource_id }}"
+          queue_url: "{{ queue_url }}"
+          resource_group: "{{ resource_group }}"
+          subscription_id: "{{ subscription_id }}"
+        provided_onelake:
+          consumer_group: "{{ consumer_group }}"
+          event_hub_name: "{{ event_hub_name }}"
+          event_hub_url: "{{ event_hub_url }}"
+          fully_qualified_namespace: "{{ fully_qualified_namespace }}"
+          managed_resource_id: "{{ managed_resource_id }}"
+        provided_pubsub:
+          managed_resource_id: "{{ managed_resource_id }}"
+          subscription_name: "{{ subscription_name }}"
+        provided_sqs:
+          managed_resource_id: "{{ managed_resource_id }}"
+          queue_url: "{{ queue_url }}"
     - name: enable_file_events
       value: {{ enable_file_events }}
       description: |
-        Whether to enable file events on this external location. Default to \`true\`. Set to \`false\` to disable file events. The actual applied value may differ due to server-side defaults; check \`effective_enable_file_events\` for the effective state.
+        Whether to enable file events on this external location. Default to \`\`true\`\`. Set to \`\`false\`\` to disable file events. The actual applied value may differ due to server-side defaults; check \`\`effective_enable_file_events\`\` for the effective state.
     - name: encryption_details
       description: |
         Encryption options that apply to clients connecting to cloud storage.
@@ -819,13 +1376,19 @@ url
         Indicates whether fallback mode is enabled for this external location. When fallback mode is enabled, the access to the location falls back to cluster credentials if UC credentials are not sufficient.
     - name: file_event_queue
       description: |
-        File event queue settings. If \`enable_file_events\` is not \`false\`, must be defined and have exactly one of the documented properties.
+        File event queue settings. If \`\`enable_file_events\`\` is not \`\`false\`\`, must be defined and have exactly one of the documented properties.
       value:
         managed_aqs:
           managed_resource_id: "{{ managed_resource_id }}"
           queue_url: "{{ queue_url }}"
           resource_group: "{{ resource_group }}"
           subscription_id: "{{ subscription_id }}"
+        managed_onelake:
+          consumer_group: "{{ consumer_group }}"
+          event_hub_name: "{{ event_hub_name }}"
+          event_hub_url: "{{ event_hub_url }}"
+          fully_qualified_namespace: "{{ fully_qualified_namespace }}"
+          managed_resource_id: "{{ managed_resource_id }}"
         managed_pubsub:
           managed_resource_id: "{{ managed_resource_id }}"
           subscription_name: "{{ subscription_name }}"
@@ -837,6 +1400,12 @@ url
           queue_url: "{{ queue_url }}"
           resource_group: "{{ resource_group }}"
           subscription_id: "{{ subscription_id }}"
+        provided_onelake:
+          consumer_group: "{{ consumer_group }}"
+          event_hub_name: "{{ event_hub_name }}"
+          event_hub_url: "{{ event_hub_url }}"
+          fully_qualified_namespace: "{{ fully_qualified_namespace }}"
+          managed_resource_id: "{{ managed_resource_id }}"
         provided_pubsub:
           managed_resource_id: "{{ managed_resource_id }}"
           subscription_name: "{{ subscription_name }}"
@@ -875,6 +1444,7 @@ SET
 comment = '{{ comment }}',
 credential_name = '{{ credential_name }}',
 effective_enable_file_events = {{ effective_enable_file_events }},
+effective_file_event_queue = '{{ effective_file_event_queue }}',
 enable_file_events = {{ enable_file_events }},
 encryption_details = '{{ encryption_details }}',
 fallback = {{ fallback }},
@@ -899,6 +1469,7 @@ comment,
 created_at,
 created_by,
 effective_enable_file_events,
+effective_file_event_queue,
 enable_file_events,
 encryption_details,
 fallback,

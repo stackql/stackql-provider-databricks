@@ -73,12 +73,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "displayName",
     "type": "string",
-    "description": "String that represents a concatenation of given and family names. For example `John Smith`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update `displayName`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation"
+    "description": "String that represents a concatenation of given and family names. For example ``John Smith``. This field cannot be updated through the Workspace SCIM APIs when `identity federation is enabled <https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation>`__. Use Account SCIM APIs to update ``displayName``."
   },
   {
     "name": "emails",
     "type": "array",
-    "description": "All the emails associated with the Databricks user.",
+    "description": "All the emails associated with the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored.",
     "children": [
       {
         "name": "display",
@@ -110,7 +110,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "entitlements",
     "type": "array",
-    "description": "Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements",
+    "description": "Entitlements assigned to the user. See `assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__ for a full list of supported values.",
     "children": [
       {
         "name": "display",
@@ -216,7 +216,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "userName",
     "type": "string",
-    "description": "Email address of the Databricks user."
+    "description": "Email address of the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored."
   }
 ]} />
 </TabItem>
@@ -253,12 +253,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "displayName",
     "type": "string",
-    "description": "String that represents a concatenation of given and family names. For example `John Smith`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update `displayName`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation"
+    "description": "String that represents a concatenation of given and family names. For example ``John Smith``. This field cannot be updated through the Workspace SCIM APIs when `identity federation is enabled <https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation>`__. Use Account SCIM APIs to update ``displayName``."
   },
   {
     "name": "emails",
     "type": "array",
-    "description": "All the emails associated with the Databricks user.",
+    "description": "All the emails associated with the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored.",
     "children": [
       {
         "name": "display",
@@ -290,7 +290,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "entitlements",
     "type": "array",
-    "description": "Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements",
+    "description": "Entitlements assigned to the user. See `assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__ for a full list of supported values.",
     "children": [
       {
         "name": "display",
@@ -396,7 +396,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "userName",
     "type": "string",
-    "description": "Email address of the Databricks user."
+    "description": "Email address of the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored."
   }
 ]} />
 </TabItem>
@@ -443,7 +443,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-id"><code>id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Partially updates a user resource by applying the supplied operations on specific user attributes.</td>
+    <td>Partially updates a user resource by applying the supplied operations on specific user attributes. The</td>
 </tr>
 <tr>
     <td><a href="#replace"><CopyableCode code="replace" /></a></td>
@@ -503,12 +503,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-filter">
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Query by which the results have to be filtered. Supported operators are equals(`eq`), contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently only support simple expressions. [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2</td>
+    <td>Query by which the results have to be filtered. Supported operators are equals(``eq``), contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can be formed using logical operators - ``and`` and ``or``. The `SCIM RFC <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only support simple expressions.</td>
 </tr>
 <tr id="parameter-sort_by">
     <td><CopyableCode code="sort_by" /></td>
     <td><code>string</code></td>
-    <td>Attribute to sort the results. Multi-part paths are supported. For example, `userName`, `name.givenName`, and `emails`.</td>
+    <td>Attribute to sort the results. Multi-part paths are supported. For example, ``userName``, ``name.givenName``, and ``emails``.</td>
 </tr>
 <tr id="parameter-sort_order">
     <td><CopyableCode code="sort_order" /></td>
@@ -665,7 +665,7 @@ userName
     - name: displayName
       value: "{{ displayName }}"
       description: |
-        String that represents a concatenation of given and family names. For example \`John Smith\`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update \`displayName\`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation
+        String that represents a concatenation of given and family names. For example \`\`John Smith\`\`. This field cannot be updated through the Workspace SCIM APIs when \`identity federation is enabled <https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation>\`__. Use Account SCIM APIs to update \`\`displayName\`\`.
     - name: emails
       description: |
         All the emails associated with the Databricks user.
@@ -677,7 +677,7 @@ userName
           value: "{{ value }}"
     - name: entitlements
       description: |
-        Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+        Entitlements assigned to the user. See \`assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>\`__ for a full list of supported values.
       value:
         - display: "{{ display }}"
           primary: {{ primary }}
@@ -737,7 +737,7 @@ userName
 >
 <TabItem value="patch">
 
-Partially updates a user resource by applying the supplied operations on specific user attributes.
+Partially updates a user resource by applying the supplied operations on specific user attributes. The
 
 ```sql
 UPDATE databricks_workspace.iam.users_v2

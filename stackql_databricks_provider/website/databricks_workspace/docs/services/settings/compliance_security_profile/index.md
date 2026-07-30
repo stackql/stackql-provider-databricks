@@ -50,17 +50,17 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "compliance_security_profile_workspace",
     "type": "object",
-    "description": "SHIELD feature: CSP",
+    "description": "SHIELD feature: CSP Compliance Security Profile (CSP) enables enhanced compliance controls on<br />    the workspace.",
     "children": [
       {
         "name": "compliance_standards",
         "type": "array",
-        "description": "Set by customers when they request Compliance Security Profile (CSP)"
+        "description": "Compliance standards selected by the customer for this Compliance Security Profile."
       },
       {
         "name": "is_enabled",
         "type": "boolean",
-        "description": ""
+        "description": "Whether Compliance Security Profile (CSP) is enabled on the workspace."
       }
     ]
   },

@@ -49,9 +49,19 @@ The following fields are returned by `SELECT` queries:
     "description": "",
     "children": [
       {
-        "name": "comment",
+        "name": "autoscope_state",
         "type": "string",
         "description": ""
+      },
+      {
+        "name": "backfill_scopes",
+        "type": "array",
+        "description": "Output only. Scopes inferred from offline backfill processing."
+      },
+      {
+        "name": "comment",
+        "type": "string",
+        "description": "Comment that describes the purpose of the token, specified by the token creator."
       },
       {
         "name": "created_by_id",
@@ -74,6 +84,11 @@ The following fields are returned by `SELECT` queries:
         "description": "Timestamp when the token expires."
       },
       {
+        "name": "inferred_scopes",
+        "type": "array",
+        "description": "Output only. Inferred API path scopes collected for this token when autoscope is enabled."
+      },
+      {
         "name": "last_used_day",
         "type": "integer",
         "description": "Approximate timestamp for the day the token was last used. Accurate up to 1 day."
@@ -82,6 +97,11 @@ The following fields are returned by `SELECT` queries:
         "name": "owner_id",
         "type": "integer",
         "description": "User ID of the user that owns the token."
+      },
+      {
+        "name": "scopes",
+        "type": "array",
+        "description": "Scope of the token was created with, if applicable."
       },
       {
         "name": "token_id",
@@ -121,9 +141,19 @@ The following fields are returned by `SELECT` queries:
     "description": "If applicable, the ID of the workspace that the token was created in."
   },
   {
-    "name": "comment",
+    "name": "autoscope_state",
     "type": "string",
     "description": ""
+  },
+  {
+    "name": "backfill_scopes",
+    "type": "array",
+    "description": "Output only. Scopes inferred from offline backfill processing."
+  },
+  {
+    "name": "comment",
+    "type": "string",
+    "description": "Comment that describes the purpose of the token, specified by the token creator."
   },
   {
     "name": "created_by_username",
@@ -141,9 +171,19 @@ The following fields are returned by `SELECT` queries:
     "description": "Timestamp when the token expires."
   },
   {
+    "name": "inferred_scopes",
+    "type": "array",
+    "description": "Output only. Inferred API path scopes collected for this token when autoscope is enabled."
+  },
+  {
     "name": "last_used_day",
     "type": "integer",
     "description": "Approximate timestamp for the day the token was last used. Accurate up to 1 day."
+  },
+  {
+    "name": "scopes",
+    "type": "array",
+    "description": "Scope of the token was created with, if applicable."
   }
 ]} />
 </TabItem>
@@ -184,6 +224,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-application_id"><code>application_id</code></a></td>
     <td></td>
     <td>Creates a token on behalf of a service principal.</td>
+</tr>
+<tr>
+    <td><a href="#token_management_update_token_management"><CopyableCode code="token_management_update_token_management" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-token_id"><code>token_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-token"><code>token</code></a>, <a href="#parameter-update_mask"><code>update_mask</code></a></td>
+    <td></td>
+    <td>Updates a token, specified by its ID.</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -263,11 +310,15 @@ created_by_id,
 owner_id,
 token_id,
 workspace_id,
+autoscope_state,
+backfill_scopes,
 comment,
 created_by_username,
 creation_time,
 expiry_time,
-last_used_day
+inferred_scopes,
+last_used_day,
+scopes
 FROM databricks_workspace.settings.token_management
 WHERE deployment_name = '{{ deployment_name }}' -- required
 AND created_by_id = '{{ created_by_id }}'
@@ -294,14 +345,18 @@ Creates a token on behalf of a service principal.
 ```sql
 INSERT INTO databricks_workspace.settings.token_management (
 application_id,
+autoscope_enabled,
 comment,
 lifetime_seconds,
+scopes,
 deployment_name
 )
 SELECT 
 '{{ application_id }}' /* required */,
+{{ autoscope_enabled }},
 '{{ comment }}',
 {{ lifetime_seconds }},
+'{{ scopes }}',
 '{{ deployment_name }}'
 RETURNING
 token_info,
@@ -321,6 +376,10 @@ token_value
       value: "{{ application_id }}"
       description: |
         Application ID of the service principal.
+    - name: autoscope_enabled
+      value: {{ autoscope_enabled }}
+      description: |
+        Whether to enable autoscoping for this token.
     - name: comment
       value: "{{ comment }}"
       description: |
@@ -329,8 +388,52 @@ token_value
       value: {{ lifetime_seconds }}
       description: |
         The number of seconds before the token expires.
+    - name: scopes
+      value:
+        - "{{ scopes }}"
 `}</CodeBlock>
 
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="token_management_update_token_management"
+    values={[
+        { label: 'token_management_update_token_management', value: 'token_management_update_token_management' }
+    ]}
+>
+<TabItem value="token_management_update_token_management">
+
+Updates a token, specified by its ID.
+
+```sql
+UPDATE databricks_workspace.settings.token_management
+SET 
+token = '{{ token }}',
+update_mask = '{{ update_mask }}'
+WHERE 
+token_id = '{{ token_id }}' --required
+AND deployment_name = '{{ deployment_name }}' --required
+AND token = '{{ token }}' --required
+AND update_mask = '{{ update_mask }}' --required
+RETURNING
+created_by_id,
+owner_id,
+token_id,
+workspace_id,
+autoscope_state,
+backfill_scopes,
+comment,
+created_by_username,
+creation_time,
+expiry_time,
+inferred_scopes,
+last_used_day,
+scopes;
+```
 </TabItem>
 </Tabs>
 

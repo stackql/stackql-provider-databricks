@@ -52,11 +52,18 @@ The following methods are available for this resource:
 </thead>
 <tbody>
 <tr>
-    <td><a href="#vector_search_endpoints_patch_endpoint"><CopyableCode code="vector_search_endpoints_patch_endpoint" /></a></td>
+    <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-endpoint_name"><code>endpoint_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
     <td>Update an endpoint</td>
+</tr>
+<tr>
+    <td><a href="#patch_throughput"><CopyableCode code="patch_throughput" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-endpoint_name"><code>endpoint_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td></td>
+    <td>Update the throughput (concurrency) of an endpoint</td>
 </tr>
 </tbody>
 </table>
@@ -82,7 +89,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-endpoint_name">
     <td><CopyableCode code="endpoint_name" /></td>
     <td><code>string</code></td>
-    <td>Name of the vector search endpoint</td>
+    <td>Name of the AI Search endpoint</td>
 </tr>
 </tbody>
 </table>
@@ -90,25 +97,27 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 ## `UPDATE` examples
 
 <Tabs
-    defaultValue="vector_search_endpoints_patch_endpoint"
+    defaultValue="update"
     values={[
-        { label: 'vector_search_endpoints_patch_endpoint', value: 'vector_search_endpoints_patch_endpoint' }
+        { label: 'update', value: 'update' }
     ]}
 >
-<TabItem value="vector_search_endpoints_patch_endpoint">
+<TabItem value="update">
 
 Update an endpoint
 
 ```sql
 UPDATE databricks_workspace.vectorsearch.vector_search_endpoints
 SET 
-min_qps = {{ min_qps }}
+replication_factor = {{ replication_factor }},
+target_qps = {{ target_qps }}
 WHERE 
 endpoint_name = '{{ endpoint_name }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
 RETURNING
 id,
 name,
+budget_policy_id,
 effective_budget_policy_id,
 creation_timestamp,
 creator,
@@ -118,7 +127,38 @@ endpoint_type,
 last_updated_timestamp,
 last_updated_user,
 num_indexes,
-scaling_info;
+scaling_info,
+throughput_info;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="patch_throughput"
+    values={[
+        { label: 'patch_throughput', value: 'patch_throughput' }
+    ]}
+>
+<TabItem value="patch_throughput">
+
+Update the throughput (concurrency) of an endpoint
+
+```sql
+EXEC databricks_workspace.vectorsearch.vector_search_endpoints.patch_throughput 
+@endpoint_name='{{ endpoint_name }}' --required, 
+@deployment_name='{{ deployment_name }}' --required 
+@@json=
+'{
+"all_or_nothing": {{ all_or_nothing }}, 
+"concurrency": {{ concurrency }}, 
+"maximum_concurrency_allowed": {{ maximum_concurrency_allowed }}, 
+"minimal_concurrency_allowed": {{ minimal_concurrency_allowed }}, 
+"num_replicas": {{ num_replicas }}
+}'
+;
 ```
 </TabItem>
 </Tabs>

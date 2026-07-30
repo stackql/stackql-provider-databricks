@@ -27,8 +27,8 @@ For Databricks workspace operations use the [__`databricks_workspace`__](https:/
 
 :::info[Provider Summary]
 
-total services: __8__
-total resources: __75__
+total services: __9__
+total resources: __88__
 
 :::
 
@@ -76,6 +76,7 @@ stackql.exe shell --auth=$Auth
 <div class="providerDocColumn">
 <a href="/services/billing/">billing</a><br />
 <a href="/services/catalog/">catalog</a><br />
+<a href="/services/disasterrecovery/">disasterrecovery</a><br />
 <a href="/services/iam/">iam</a><br />
 <a href="/services/iamv2/">iamv2</a><br />
 </div>

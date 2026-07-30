@@ -184,7 +184,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-table_name">
     <td><CopyableCode code="table_name" /></td>
     <td><code>string</code></td>
-    <td>UC table name in format `catalog.schema.table_name`. table_name is case insensitive and spaces are disallowed.</td>
+    <td>UC table name in format ``catalog.schema.table_name``. table_name is case insensitive and spaces are disallowed.</td>
 </tr>
 </tbody>
 </table>

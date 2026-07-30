@@ -59,6 +59,11 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "git_cli_enabled",
+    "type": "boolean",
+    "description": "Whether the Git CLI is enabled for this Git folder (repo). When true, Git commands can be run directly against this Git folder using the Git CLI."
+  },
+  {
     "name": "path",
     "type": "string",
     "description": "Path of the Git folder (repo) in the workspace."
@@ -66,7 +71,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "provider",
     "type": "string",
-    "description": "Git provider of the linked Git repository."
+    "description": "Git provider of the linked Git repository, e.g. ``gitHub``, ``azureDevOpsServices``, ``bitbucketServer`` (Bitbucket Data Center), ``gitLabEnterpriseEdition`` (GitLab Self-Managed), or ``awsCodeCommit`` (deprecated)."
   },
   {
     "name": "sparse_checkout",
@@ -76,7 +81,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "patterns",
         "type": "array",
-        "description": "List of sparse checkout cone patterns, see [cone mode handling] for details. [cone mode handling]: https://git-scm.com/docs/git-sparse-checkout#_internalscone_mode_handling"
+        "description": "List of sparse checkout cone patterns, see `cone mode handling <https://git-scm.com/docs/git-sparse-checkout#_internalscone_mode_handling>`__ for details."
       }
     ]
   },
@@ -113,7 +118,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "provider",
     "type": "string",
-    "description": "Git provider of the remote git repository, e.g. `gitHub`."
+    "description": "Git provider of the remote git repository, e.g. ``gitHub``, ``azureDevOpsServices``, ``bitbucketServer`` (Bitbucket Data Center), ``gitLabEnterpriseEdition`` (GitLab Self-Managed), or ``awsCodeCommit`` (deprecated)."
   },
   {
     "name": "sparse_checkout",
@@ -123,7 +128,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "patterns",
         "type": "array",
-        "description": "List of sparse checkout cone patterns, see [cone mode handling] for details. [cone mode handling]: https://git-scm.com/docs/git-sparse-checkout#_internalscone_mode_handling"
+        "description": "List of sparse checkout cone patterns, see `cone mode handling <https://git-scm.com/docs/git-sparse-checkout#_internalscone_mode_handling>`__ for details."
       }
     ]
   },
@@ -163,7 +168,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-next_page_token"><code>next_page_token</code></a>, <a href="#parameter-path_prefix"><code>path_prefix</code></a></td>
-    <td>Returns repos that the calling user has Manage permissions on. Use `next_page_token` to iterate</td>
+    <td>Returns repos that the calling user has Manage permissions on. Use ``next_page_token`` to iterate</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -220,7 +225,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-path_prefix">
     <td><CopyableCode code="path_prefix" /></td>
     <td><code>string</code></td>
-    <td>Filters repos that have paths starting with the given path prefix. If not provided or when provided an effectively empty prefix (`/` or `/Workspace`) Git folders (repos) from `/Workspace/Repos` will be served.</td>
+    <td>Filters repos that have paths starting with the given path prefix. If not provided or when provided an effectively empty prefix (``/`` or ``/Workspace``) Git folders (repos) from ``/Workspace/Repos`` will be served.</td>
 </tr>
 </tbody>
 </table>
@@ -243,6 +248,7 @@ SELECT
 id,
 head_commit_id,
 branch,
+git_cli_enabled,
 path,
 provider,
 sparse_checkout,
@@ -255,7 +261,7 @@ AND deployment_name = '{{ deployment_name }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Returns repos that the calling user has Manage permissions on. Use `next_page_token` to iterate
+Returns repos that the calling user has Manage permissions on. Use ``next_page_token`` to iterate
 
 ```sql
 SELECT
@@ -293,6 +299,7 @@ Creates a repo in the workspace and links it to the remote Git repo specified. N
 INSERT INTO databricks_workspace.workspace.repos (
 url,
 provider,
+git_credential_id,
 path,
 sparse_checkout,
 deployment_name
@@ -300,6 +307,7 @@ deployment_name
 SELECT 
 '{{ url }}' /* required */,
 '{{ provider }}' /* required */,
+{{ git_credential_id }},
 '{{ path }}',
 '{{ sparse_checkout }}',
 '{{ deployment_name }}'
@@ -329,11 +337,15 @@ url
     - name: provider
       value: "{{ provider }}"
       description: |
-        Git provider. This field is case-insensitive. The available Git providers are \`gitHub\`, \`bitbucketCloud\`, \`gitLab\`, \`azureDevOpsServices\`, \`gitHubEnterprise\`, \`bitbucketServer\`, \`gitLabEnterpriseEdition\` and \`awsCodeCommit\`.
+        Git provider. This field is case-insensitive. The available Git providers are \`\`gitHub\`\`, \`\`bitbucketCloud\`\`, \`\`gitLab\`\`, \`\`azureDevOpsServices\`\` (Azure DevOps Services, including Microsoft Entra ID authentication), \`\`gitHubEnterprise\`\`, \`\`bitbucketServer\`\` (Bitbucket Data Center), \`\`gitLabEnterpriseEdition\`\` (GitLab Self-Managed), and \`\`awsCodeCommit\`\` (deprecated by AWS, not accepting new customers).
+    - name: git_credential_id
+      value: {{ git_credential_id }}
+      description: |
+        Git credential ID to use when cloning the repository. The Git credential must be configured for the current user.
     - name: path
       value: "{{ path }}"
       description: |
-        Desired path for the repo in the workspace. Almost any path in the workspace can be chosen. If repo is created in \`/Repos\`, path must be in the format \`/Repos/{folder}/{repo-name}\`.
+        Desired path for the repo in the workspace. Almost any path in the workspace can be chosen. If repo is created in \`\`/Repos\`\`, path must be in the format \`\`/Repos/{folder}/{repo-name}\`\`.
     - name: sparse_checkout
       description: |
         If specified, the repo will be created with sparse checkout enabled. You cannot enable/disable sparse checkout after the repo is created.
@@ -362,6 +374,8 @@ Updates the repo to a different branch or tag, or updates the repo to the latest
 UPDATE databricks_workspace.workspace.repos
 SET 
 branch = '{{ branch }}',
+dangerously_force_discard_all = {{ dangerously_force_discard_all }},
+git_credential_id = {{ git_credential_id }},
 sparse_checkout = '{{ sparse_checkout }}',
 tag = '{{ tag }}'
 WHERE 

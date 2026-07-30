@@ -46,7 +46,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "Resource name for the federation policy. Example values include `accounts/<account-id>/federationPolicies/my-federation-policy` for Account Federation Policies, and `accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
+    "description": "Resource name for the federation policy. Example values include ``accounts/&lt;account-id&gt;/federationPolicies/my-federation-policy`` for Account Federation Policies, and ``accounts/&lt;account-id&gt;/servicePrincipals/&lt;service-principal-id&gt;/federationPolicies/my-federation-policy`` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
   },
   {
     "name": "policy_id",
@@ -123,7 +123,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "Resource name for the federation policy. Example values include `accounts/<account-id>/federationPolicies/my-federation-policy` for Account Federation Policies, and `accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
+    "description": "Resource name for the federation policy. Example values include ``accounts/&lt;account-id&gt;/federationPolicies/my-federation-policy`` for Account Federation Policies, and ``accounts/&lt;account-id&gt;/servicePrincipals/&lt;service-principal-id&gt;/federationPolicies/my-federation-policy`` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
   },
   {
     "name": "policy_id",
@@ -410,6 +410,7 @@ update_time
         update_time: "{{ update_time }}"
     - name: policy_id
       value: "{{ policy_id }}"
+      description: The identifier for the federation policy. The identifier must contain only lowercase alphanumeric characters, numbers, hyphens, and slashes. If unspecified, the id will be assigned by Databricks.
       description: The identifier for the federation policy. The identifier must contain only lowercase alphanumeric characters, numbers, hyphens, and slashes. If unspecified, the id will be assigned by Databricks.
 `}</CodeBlock>
 

@@ -79,6 +79,18 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "catalog_federation_config",
+    "type": "object",
+    "description": "Federation-only configuration, present only for FOREIGN catalogs.",
+    "children": [
+      {
+        "name": "schema_filter_type",
+        "type": "string",
+        "description": "Controls how the catalog's schema filter items are treated. (SCHEMA_FILTER_TYPE_EXCLUDE, SCHEMA_FILTER_TYPE_INCLUDE, SCHEMA_FILTER_TYPE_INCLUDE_ALL)"
+      }
+    ]
+  },
+  {
     "name": "catalog_type",
     "type": "string",
     "description": "The type of the catalog. (DELTASHARING_CATALOG, FOREIGN_CATALOG, INTERNAL_CATALOG, MANAGED_CATALOG, MANAGED_ONLINE_CATALOG, SYSTEM_CATALOG)"
@@ -89,6 +101,18 @@ The following fields are returned by `SELECT` queries:
     "description": "User-provided free-form text description."
   },
   {
+    "name": "conversion_info",
+    "type": "object",
+    "description": "Status of conversion of FOREIGN catalog to UC Native catalog.",
+    "children": [
+      {
+        "name": "state",
+        "type": "string",
+        "description": "The conversion state of the resource. (COMPLETED, IN_PROGRESS)"
+      }
+    ]
+  },
+  {
     "name": "created_at",
     "type": "integer",
     "description": "Time at which this catalog was created, in epoch milliseconds."
@@ -97,6 +121,33 @@ The following fields are returned by `SELECT` queries:
     "name": "created_by",
     "type": "string",
     "description": "Username of catalog creator."
+  },
+  {
+    "name": "custom_max_retention_hours",
+    "type": "integer",
+    "description": "Custom maximum retention period in hours for the catalog"
+  },
+  {
+    "name": "dr_replication_info",
+    "type": "object",
+    "description": "Disaster Recovery replication state snapshot.",
+    "children": [
+      {
+        "name": "last_failover_time_ms",
+        "type": "integer",
+        "description": "Wall-clock epoch milliseconds when this catalog was last promoted to primary via failover or failback. Set by DR Manager. Used by Predictive Optimization to suppress operations until sufficient workload history accumulates."
+      },
+      {
+        "name": "replicated_entities",
+        "type": "string",
+        "description": "See https://docs.google.com/document/d/1X0A_3hMhzuS2V1E3zB0x5wxPsFx70bVYK5rHep2AjW8."
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DR_REPLICATION_STATUS_PRIMARY, DR_REPLICATION_STATUS_SECONDARY)"
+      }
+    ]
   },
   {
     "name": "effective_predictive_optimization_flag",
@@ -128,7 +179,46 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATED, OPEN)"
+    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATED, OPEN, OPEN_IN_ACCOUNT)"
+  },
+  {
+    "name": "managed_encryption_settings",
+    "type": "object",
+    "description": "Control CMK encryption for managed catalog data",
+    "children": [
+      {
+        "name": "azure_encryption_settings",
+        "type": "object",
+        "description": "optional Azure settings - only required if an Azure CMK is used.",
+        "children": [
+          {
+            "name": "azure_tenant_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "azure_cmk_access_connector_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "azure_cmk_managed_identity_id",
+            "type": "string",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "name": "azure_key_vault_key_id",
+        "type": "string",
+        "description": "the AKV URL in Azure, null otherwise."
+      },
+      {
+        "name": "customer_managed_key_id",
+        "type": "string",
+        "description": "the CMK uuid in AWS and GCP, null otherwise."
+      }
+    ]
   },
   {
     "name": "options",
@@ -223,6 +313,18 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "catalog_federation_config",
+    "type": "object",
+    "description": "Federation-only configuration, present only for FOREIGN catalogs.",
+    "children": [
+      {
+        "name": "schema_filter_type",
+        "type": "string",
+        "description": "Controls how the catalog's schema filter items are treated. (SCHEMA_FILTER_TYPE_EXCLUDE, SCHEMA_FILTER_TYPE_INCLUDE, SCHEMA_FILTER_TYPE_INCLUDE_ALL)"
+      }
+    ]
+  },
+  {
     "name": "catalog_type",
     "type": "string",
     "description": "The type of the catalog. (DELTASHARING_CATALOG, FOREIGN_CATALOG, INTERNAL_CATALOG, MANAGED_CATALOG, MANAGED_ONLINE_CATALOG, SYSTEM_CATALOG)"
@@ -233,6 +335,18 @@ The following fields are returned by `SELECT` queries:
     "description": "User-provided free-form text description."
   },
   {
+    "name": "conversion_info",
+    "type": "object",
+    "description": "Status of conversion of FOREIGN catalog to UC Native catalog.",
+    "children": [
+      {
+        "name": "state",
+        "type": "string",
+        "description": "The conversion state of the resource. (COMPLETED, IN_PROGRESS)"
+      }
+    ]
+  },
+  {
     "name": "created_at",
     "type": "integer",
     "description": "Time at which this catalog was created, in epoch milliseconds."
@@ -241,6 +355,33 @@ The following fields are returned by `SELECT` queries:
     "name": "created_by",
     "type": "string",
     "description": "Username of catalog creator."
+  },
+  {
+    "name": "custom_max_retention_hours",
+    "type": "integer",
+    "description": "Custom maximum retention period in hours for the catalog"
+  },
+  {
+    "name": "dr_replication_info",
+    "type": "object",
+    "description": "Disaster Recovery replication state snapshot.",
+    "children": [
+      {
+        "name": "last_failover_time_ms",
+        "type": "integer",
+        "description": "Wall-clock epoch milliseconds when this catalog was last promoted to primary via failover or failback. Set by DR Manager. Used by Predictive Optimization to suppress operations until sufficient workload history accumulates."
+      },
+      {
+        "name": "replicated_entities",
+        "type": "string",
+        "description": "See https://docs.google.com/document/d/1X0A_3hMhzuS2V1E3zB0x5wxPsFx70bVYK5rHep2AjW8."
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (DR_REPLICATION_STATUS_PRIMARY, DR_REPLICATION_STATUS_SECONDARY)"
+      }
+    ]
   },
   {
     "name": "effective_predictive_optimization_flag",
@@ -272,7 +413,46 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATED, OPEN)"
+    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATED, OPEN, OPEN_IN_ACCOUNT)"
+  },
+  {
+    "name": "managed_encryption_settings",
+    "type": "object",
+    "description": "Control CMK encryption for managed catalog data",
+    "children": [
+      {
+        "name": "azure_encryption_settings",
+        "type": "object",
+        "description": "optional Azure settings - only required if an Azure CMK is used.",
+        "children": [
+          {
+            "name": "azure_tenant_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "azure_cmk_access_connector_id",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "azure_cmk_managed_identity_id",
+            "type": "string",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "name": "azure_key_vault_key_id",
+        "type": "string",
+        "description": "the AKV URL in Azure, null otherwise."
+      },
+      {
+        "name": "customer_managed_key_id",
+        "type": "string",
+        "description": "the CMK uuid in AWS and GCP, null otherwise."
+      }
+    ]
   },
   {
     "name": "options",
@@ -456,13 +636,18 @@ full_name,
 provider_name,
 share_name,
 browse_only,
+catalog_federation_config,
 catalog_type,
 comment,
+conversion_info,
 created_at,
 created_by,
+custom_max_retention_hours,
+dr_replication_info,
 effective_predictive_optimization_flag,
 enable_predictive_optimization,
 isolation_mode,
+managed_encryption_settings,
 options,
 owner,
 properties,
@@ -492,13 +677,18 @@ full_name,
 provider_name,
 share_name,
 browse_only,
+catalog_federation_config,
 catalog_type,
 comment,
+conversion_info,
 created_at,
 created_by,
+custom_max_retention_hours,
+dr_replication_info,
 effective_predictive_optimization_flag,
 enable_predictive_optimization,
 isolation_mode,
+managed_encryption_settings,
 options,
 owner,
 properties,
@@ -536,8 +726,13 @@ Creates a new catalog instance in the parent metastore if the caller is a metast
 ```sql
 INSERT INTO databricks_workspace.catalog.catalogs (
 name,
+catalog_federation_config,
 comment,
 connection_name,
+conversion_info,
+custom_max_retention_hours,
+dr_replication_info,
+managed_encryption_settings,
 options,
 properties,
 provider_name,
@@ -547,8 +742,13 @@ deployment_name
 )
 SELECT 
 '{{ name }}' /* required */,
+'{{ catalog_federation_config }}',
 '{{ comment }}',
 '{{ connection_name }}',
+'{{ conversion_info }}',
+{{ custom_max_retention_hours }},
+'{{ dr_replication_info }}',
+'{{ managed_encryption_settings }}',
 '{{ options }}',
 '{{ properties }}',
 '{{ provider_name }}',
@@ -563,13 +763,18 @@ full_name,
 provider_name,
 share_name,
 browse_only,
+catalog_federation_config,
 catalog_type,
 comment,
+conversion_info,
 created_at,
 created_by,
+custom_max_retention_hours,
+dr_replication_info,
 effective_predictive_optimization_flag,
 enable_predictive_optimization,
 isolation_mode,
+managed_encryption_settings,
 options,
 owner,
 properties,
@@ -594,6 +799,11 @@ updated_by
       value: "{{ name }}"
       description: |
         Name of catalog.
+    - name: catalog_federation_config
+      description: |
+        Federation-only configuration, present only for FOREIGN catalogs.
+      value:
+        schema_filter_type: "{{ schema_filter_type }}"
     - name: comment
       value: "{{ comment }}"
       description: |
@@ -602,6 +812,32 @@ updated_by
       value: "{{ connection_name }}"
       description: |
         The name of the connection to an external data source.
+    - name: conversion_info
+      description: |
+        Status of conversion of FOREIGN catalog to UC Native catalog.
+      value:
+        state: "{{ state }}"
+    - name: custom_max_retention_hours
+      value: {{ custom_max_retention_hours }}
+      description: |
+        Custom maximum retention period in hours for the catalog
+    - name: dr_replication_info
+      description: |
+        Disaster Recovery replication state snapshot.
+      value:
+        last_failover_time_ms: {{ last_failover_time_ms }}
+        replicated_entities: "{{ replicated_entities }}"
+        status: "{{ status }}"
+    - name: managed_encryption_settings
+      description: |
+        Control CMK encryption for managed catalog data
+      value:
+        azure_encryption_settings:
+          azure_tenant_id: "{{ azure_tenant_id }}"
+          azure_cmk_access_connector_id: "{{ azure_cmk_access_connector_id }}"
+          azure_cmk_managed_identity_id: "{{ azure_cmk_managed_identity_id }}"
+        azure_key_vault_key_id: "{{ azure_key_vault_key_id }}"
+        customer_managed_key_id: "{{ customer_managed_key_id }}"
     - name: options
       value: "{{ options }}"
       description: |
@@ -643,9 +879,14 @@ Updates the catalog that matches the supplied name. The caller must be either th
 ```sql
 UPDATE databricks_workspace.catalog.catalogs
 SET 
+catalog_federation_config = '{{ catalog_federation_config }}',
 comment = '{{ comment }}',
+conversion_info = '{{ conversion_info }}',
+custom_max_retention_hours = {{ custom_max_retention_hours }},
+dr_replication_info = '{{ dr_replication_info }}',
 enable_predictive_optimization = '{{ enable_predictive_optimization }}',
 isolation_mode = '{{ isolation_mode }}',
+managed_encryption_settings = '{{ managed_encryption_settings }}',
 new_name = '{{ new_name }}',
 options = '{{ options }}',
 owner = '{{ owner }}',
@@ -661,13 +902,18 @@ full_name,
 provider_name,
 share_name,
 browse_only,
+catalog_federation_config,
 catalog_type,
 comment,
+conversion_info,
 created_at,
 created_by,
+custom_max_retention_hours,
+dr_replication_info,
 effective_predictive_optimization_flag,
 enable_predictive_optimization,
 isolation_mode,
+managed_encryption_settings,
 options,
 owner,
 properties,

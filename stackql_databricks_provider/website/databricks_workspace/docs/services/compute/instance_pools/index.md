@@ -51,7 +51,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "node_type_id",
     "type": "string",
-    "description": "This field encodes, through a single value, the resources available to each of the Spark nodes in this cluster. For example, the Spark nodes can be provisioned and optimized for memory or compute intensive workloads. A list of available node types can be retrieved by using the :method:clusters/listNodeTypes API call."
+    "description": "This field encodes, through a single value, the resources available to each of the Spark nodes in this cluster. For example, the Spark nodes can be provisioned and optimized for memory or compute intensive workloads. A list of available node types can be retrieved by using the `clusters/listNodeTypes <https://docs.databricks.com/api/workspace/clusters/listnodetypes>`__ API call."
   },
   {
     "name": "instance_pool_name",
@@ -76,12 +76,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "spot_bid_price_percent",
         "type": "integer",
-        "description": "Calculates the bid price for AWS spot instances, as a percentage of the corresponding instance type's on-demand price. For example, if this field is set to 50, and the cluster needs a new `r3.xlarge` spot instance, then the bid price is half of the price of on-demand `r3.xlarge` instances. Similarly, if this field is set to 200, the bid price is twice the price of on-demand `r3.xlarge` instances. If not specified, the default value is 100. When spot instances are requested for this cluster, only spot instances whose bid price percentage matches this field will be considered. Note that, for safety, we enforce this field to be no more than 10000."
+        "description": "Calculates the bid price for AWS spot instances, as a percentage of the corresponding instance type's on-demand price. For example, if this field is set to 50, and the cluster needs a new ``r3.xlarge`` spot instance, then the bid price is half of the price of on-demand ``r3.xlarge`` instances. Similarly, if this field is set to 200, the bid price is twice the price of on-demand ``r3.xlarge`` instances. If not specified, the default value is 100. When spot instances are requested for this cluster, only spot instances whose bid price percentage matches this field will be considered. Note that, for safety, we enforce this field to be no more than 10000."
       },
       {
         "name": "zone_id",
         "type": "string",
-        "description": "Identifier for the availability zone/datacenter in which the cluster resides. This string will be of a form like \"us-west-2a\". The provided availability zone must be in the same region as the Databricks deployment. For example, \"us-west-2a\" is not a valid zone id if the Databricks deployment resides in the \"us-east-1\" region. This is an optional field at cluster creation, and if not specified, a default zone will be used. The list of available zones as well as the default value can be found by using the `List Zones` method."
+        "description": "Identifier for the availability zone/datacenter in which the cluster resides. This string will be of a form like \"us-west-2a\". The provided availability zone must be in the same region as the Databricks deployment. For example, \"us-west-2a\" is not a valid zone id if the Databricks deployment resides in the \"us-east-1\" region. This is an optional field at cluster creation, and if not specified, a default zone will be used. The list of available zones as well as the default value can be found by using the ``List Zones`` method."
       }
     ]
   },
@@ -96,6 +96,11 @@ The following fields are returned by `SELECT` queries:
         "description": "Availability type used for the spot nodes. (ON_DEMAND_AZURE, SPOT_AZURE)"
       },
       {
+        "name": "capacity_reservation_group",
+        "type": "string",
+        "description": "The Azure capacity reservation group resource ID to use for launching VMs in this pool. When specified, VMs will be launched using the provided capacity reservation. NOTE: Omitting this field will clear any existing configured capacity reservation group on the pool. Capacity reservations can only be specified when the workspace uses injected vnet (i.e. customer defined vnet not managed by databricks). Ensure the databricks-login-prod Enterprise Application is granted the following four permissions: 1. Microsoft.Compute/capacityReservationGroups/read 2. Microsoft.Compute/capacityReservationGroups/deploy/action 3. Microsoft.Compute/capacityReservationGroups/capacityReservations/read 4. Microsoft.Compute/capacityReservationGroups/capacityReservations/deploy/action Format: ``/subscriptions/&#123;subscriptionId&#125;/resourceGroups/&#123;resourceGroupName&#125;/providers/Microsoft.Compute/capacityReservationGroups/&#123;capacityReservationGroupName&#125;``"
+      },
+      {
         "name": "spot_bid_max_price",
         "type": "number",
         "description": "With variable pricing, you have option to set a max price, in US dollars (USD) For example, the value 2 would be a max price of $2.00 USD per hour. If you set the max price to be -1, the VM won't be evicted based on price. The price for the VM will be the current price for spot or the price for a standard VM, which ever is less, as long as there is capacity and quota available."
@@ -105,7 +110,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "custom_tags",
     "type": "object",
-    "description": "Additional tags for pool resources. Databricks will tag all pool resources (e.g., AWS instances and EBS volumes) with these tags in addition to `default_tags`. Notes: - Currently, Databricks allows at most 45 custom tags"
+    "description": "Additional tags for pool resources. Databricks will tag all pool resources (e.g., AWS instances and EBS volumes) with these tags in addition to ``default_tags``. Notes: - Currently, Databricks allows at most 45 custom tags"
   },
   {
     "name": "default_tags",
@@ -120,7 +125,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "disk_count",
         "type": "integer",
-        "description": "The number of disks launched for each instance: - This feature is only enabled for supported node types. - Users can choose up to the limit of the disks supported by the node type. - For node types with no OS disk, at least one disk must be specified; otherwise, cluster creation will fail. If disks are attached, Databricks will configure Spark to use only the disks for scratch storage, because heterogenously sized scratch devices can lead to inefficient disk utilization. If no disks are attached, Databricks will configure Spark to use instance store disks. Note: If disks are specified, then the Spark configuration `spark.local.dir` will be overridden. Disks will be mounted at: - For AWS: `/ebs0`, `/ebs1`, and etc. - For Azure: `/remote_volume0`, `/remote_volume1`, and etc."
+        "description": "The number of disks launched for each instance: - This feature is only enabled for supported node types. - Users can choose up to the limit of the disks supported by the node type. - For node types with no OS disk, at least one disk must be specified; otherwise, cluster creation will fail. If disks are attached, Databricks will configure Spark to use only the disks for scratch storage, because heterogenously sized scratch devices can lead to inefficient disk utilization. If no disks are attached, Databricks will configure Spark to use instance store disks. Note: If disks are specified, then the Spark configuration ``spark.local.dir`` will be overridden. Disks will be mounted at: - For AWS: ``/ebs0``, ``/ebs1``, and etc. - For Azure: ``/remote_volume0``, ``/remote_volume1``, and etc."
       },
       {
         "name": "disk_iops",
@@ -157,6 +162,11 @@ The following fields are returned by `SELECT` queries:
     ]
   },
   {
+    "name": "enable_auto_alternate_node_types",
+    "type": "boolean",
+    "description": "For pools with node type flexibility (Fleet-V2), whether auto generated alternate node type ids are enabled. This field should not be true if node_type_flexibility is set. DEPRECATED: This field was deprecated before entering PuPr and should no longer be used. TODO(CJ-71514): Remove this field after sufficient time has passed for all clients to migrate."
+  },
+  {
     "name": "enable_elastic_disk",
     "type": "boolean",
     "description": "Autoscaling Local Storage: when enabled, this instances in this pool will dynamically acquire additional disk space when its Spark workers are running low on disk space. In AWS, this feature requires specific AWS permissions to function correctly - refer to the User Guide for more details."
@@ -174,7 +184,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "local_ssd_count",
         "type": "integer",
-        "description": "If provided, each node in the instance pool will have this number of local SSDs attached. Each local SSD is 375GB in size. Refer to [GCP documentation] for the supported number of local SSDs for each instance type. [GCP documentation]: https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds"
+        "description": "If provided, each node in the instance pool will have this number of local SSDs attached. Each local SSD is 375GB in size. Refer to `GCP documentation <https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds>`__ for the supported number of local SSDs for each instance type."
       },
       {
         "name": "zone_id",
@@ -242,7 +252,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "preloaded_spark_versions",
     "type": "array",
-    "description": "A list containing at most one preloaded Spark image version for the pool. Pool-backed clusters started with the preloaded Spark version will start faster. A list of available Spark versions can be retrieved by using the :method:clusters/sparkVersions API call."
+    "description": "A list containing at most one preloaded Spark image version for the pool. Pool-backed clusters started with the preloaded Spark version will start faster. A list of available Spark versions can be retrieved by using the `clusters/sparkVersions <https://docs.databricks.com/api/workspace/clusters/sparkversions>`__ API call."
   },
   {
     "name": "remote_disk_throughput",
@@ -323,7 +333,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "node_type_id",
     "type": "string",
-    "description": "This field encodes, through a single value, the resources available to each of the Spark nodes in this cluster. For example, the Spark nodes can be provisioned and optimized for memory or compute intensive workloads. A list of available node types can be retrieved by using the :method:clusters/listNodeTypes API call."
+    "description": "This field encodes, through a single value, the resources available to each of the Spark nodes in this cluster. For example, the Spark nodes can be provisioned and optimized for memory or compute intensive workloads. A list of available node types can be retrieved by using the `clusters/listNodeTypes <https://docs.databricks.com/api/workspace/clusters/listnodetypes>`__ API call."
   },
   {
     "name": "instance_pool_name",
@@ -348,12 +358,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "spot_bid_price_percent",
         "type": "integer",
-        "description": "Calculates the bid price for AWS spot instances, as a percentage of the corresponding instance type's on-demand price. For example, if this field is set to 50, and the cluster needs a new `r3.xlarge` spot instance, then the bid price is half of the price of on-demand `r3.xlarge` instances. Similarly, if this field is set to 200, the bid price is twice the price of on-demand `r3.xlarge` instances. If not specified, the default value is 100. When spot instances are requested for this cluster, only spot instances whose bid price percentage matches this field will be considered. Note that, for safety, we enforce this field to be no more than 10000."
+        "description": "Calculates the bid price for AWS spot instances, as a percentage of the corresponding instance type's on-demand price. For example, if this field is set to 50, and the cluster needs a new ``r3.xlarge`` spot instance, then the bid price is half of the price of on-demand ``r3.xlarge`` instances. Similarly, if this field is set to 200, the bid price is twice the price of on-demand ``r3.xlarge`` instances. If not specified, the default value is 100. When spot instances are requested for this cluster, only spot instances whose bid price percentage matches this field will be considered. Note that, for safety, we enforce this field to be no more than 10000."
       },
       {
         "name": "zone_id",
         "type": "string",
-        "description": "Identifier for the availability zone/datacenter in which the cluster resides. This string will be of a form like \"us-west-2a\". The provided availability zone must be in the same region as the Databricks deployment. For example, \"us-west-2a\" is not a valid zone id if the Databricks deployment resides in the \"us-east-1\" region. This is an optional field at cluster creation, and if not specified, a default zone will be used. The list of available zones as well as the default value can be found by using the `List Zones` method."
+        "description": "Identifier for the availability zone/datacenter in which the cluster resides. This string will be of a form like \"us-west-2a\". The provided availability zone must be in the same region as the Databricks deployment. For example, \"us-west-2a\" is not a valid zone id if the Databricks deployment resides in the \"us-east-1\" region. This is an optional field at cluster creation, and if not specified, a default zone will be used. The list of available zones as well as the default value can be found by using the ``List Zones`` method."
       }
     ]
   },
@@ -368,6 +378,11 @@ The following fields are returned by `SELECT` queries:
         "description": "Availability type used for the spot nodes. (ON_DEMAND_AZURE, SPOT_AZURE)"
       },
       {
+        "name": "capacity_reservation_group",
+        "type": "string",
+        "description": "The Azure capacity reservation group resource ID to use for launching VMs in this pool. When specified, VMs will be launched using the provided capacity reservation. NOTE: Omitting this field will clear any existing configured capacity reservation group on the pool. Capacity reservations can only be specified when the workspace uses injected vnet (i.e. customer defined vnet not managed by databricks). Ensure the databricks-login-prod Enterprise Application is granted the following four permissions: 1. Microsoft.Compute/capacityReservationGroups/read 2. Microsoft.Compute/capacityReservationGroups/deploy/action 3. Microsoft.Compute/capacityReservationGroups/capacityReservations/read 4. Microsoft.Compute/capacityReservationGroups/capacityReservations/deploy/action Format: ``/subscriptions/&#123;subscriptionId&#125;/resourceGroups/&#123;resourceGroupName&#125;/providers/Microsoft.Compute/capacityReservationGroups/&#123;capacityReservationGroupName&#125;``"
+      },
+      {
         "name": "spot_bid_max_price",
         "type": "number",
         "description": "With variable pricing, you have option to set a max price, in US dollars (USD) For example, the value 2 would be a max price of $2.00 USD per hour. If you set the max price to be -1, the VM won't be evicted based on price. The price for the VM will be the current price for spot or the price for a standard VM, which ever is less, as long as there is capacity and quota available."
@@ -377,7 +392,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "custom_tags",
     "type": "object",
-    "description": "Additional tags for pool resources. Databricks will tag all pool resources (e.g., AWS instances and EBS volumes) with these tags in addition to `default_tags`. Notes: - Currently, Databricks allows at most 45 custom tags"
+    "description": "Additional tags for pool resources. Databricks will tag all pool resources (e.g., AWS instances and EBS volumes) with these tags in addition to ``default_tags``. Notes: - Currently, Databricks allows at most 45 custom tags"
   },
   {
     "name": "default_tags",
@@ -392,7 +407,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "disk_count",
         "type": "integer",
-        "description": "The number of disks launched for each instance: - This feature is only enabled for supported node types. - Users can choose up to the limit of the disks supported by the node type. - For node types with no OS disk, at least one disk must be specified; otherwise, cluster creation will fail. If disks are attached, Databricks will configure Spark to use only the disks for scratch storage, because heterogenously sized scratch devices can lead to inefficient disk utilization. If no disks are attached, Databricks will configure Spark to use instance store disks. Note: If disks are specified, then the Spark configuration `spark.local.dir` will be overridden. Disks will be mounted at: - For AWS: `/ebs0`, `/ebs1`, and etc. - For Azure: `/remote_volume0`, `/remote_volume1`, and etc."
+        "description": "The number of disks launched for each instance: - This feature is only enabled for supported node types. - Users can choose up to the limit of the disks supported by the node type. - For node types with no OS disk, at least one disk must be specified; otherwise, cluster creation will fail. If disks are attached, Databricks will configure Spark to use only the disks for scratch storage, because heterogenously sized scratch devices can lead to inefficient disk utilization. If no disks are attached, Databricks will configure Spark to use instance store disks. Note: If disks are specified, then the Spark configuration ``spark.local.dir`` will be overridden. Disks will be mounted at: - For AWS: ``/ebs0``, ``/ebs1``, and etc. - For Azure: ``/remote_volume0``, ``/remote_volume1``, and etc."
       },
       {
         "name": "disk_iops",
@@ -429,6 +444,11 @@ The following fields are returned by `SELECT` queries:
     ]
   },
   {
+    "name": "enable_auto_alternate_node_types",
+    "type": "boolean",
+    "description": "For pools with node type flexibility (Fleet-V2), whether auto generated alternate node type ids are enabled. This field should not be true if node_type_flexibility is set. DEPRECATED: This field was deprecated before entering PuPr and should no longer be used. TODO(CJ-71514): Remove this field after sufficient time has passed for all clients to migrate."
+  },
+  {
     "name": "enable_elastic_disk",
     "type": "boolean",
     "description": "Autoscaling Local Storage: when enabled, this instances in this pool will dynamically acquire additional disk space when its Spark workers are running low on disk space. In AWS, this feature requires specific AWS permissions to function correctly - refer to the User Guide for more details."
@@ -446,7 +466,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "local_ssd_count",
         "type": "integer",
-        "description": "If provided, each node in the instance pool will have this number of local SSDs attached. Each local SSD is 375GB in size. Refer to [GCP documentation] for the supported number of local SSDs for each instance type. [GCP documentation]: https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds"
+        "description": "If provided, each node in the instance pool will have this number of local SSDs attached. Each local SSD is 375GB in size. Refer to `GCP documentation <https://cloud.google.com/compute/docs/disks/local-ssd#choose_number_local_ssds>`__ for the supported number of local SSDs for each instance type."
       },
       {
         "name": "zone_id",
@@ -514,7 +534,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "preloaded_spark_versions",
     "type": "array",
-    "description": "A list containing at most one preloaded Spark image version for the pool. Pool-backed clusters started with the preloaded Spark version will start faster. A list of available Spark versions can be retrieved by using the :method:clusters/sparkVersions API call."
+    "description": "A list containing at most one preloaded Spark image version for the pool. Pool-backed clusters started with the preloaded Spark version will start faster. A list of available Spark versions can be retrieved by using the `clusters/sparkVersions <https://docs.databricks.com/api/workspace/clusters/sparkversions>`__ API call."
   },
   {
     "name": "remote_disk_throughput",
@@ -688,6 +708,7 @@ azure_attributes,
 custom_tags,
 default_tags,
 disk_spec,
+enable_auto_alternate_node_types,
 enable_elastic_disk,
 gcp_attributes,
 idle_instance_autotermination_minutes,
@@ -721,6 +742,7 @@ azure_attributes,
 custom_tags,
 default_tags,
 disk_spec,
+enable_auto_alternate_node_types,
 enable_elastic_disk,
 gcp_attributes,
 idle_instance_autotermination_minutes,
@@ -763,6 +785,7 @@ aws_attributes,
 azure_attributes,
 custom_tags,
 disk_spec,
+enable_auto_alternate_node_types,
 enable_elastic_disk,
 gcp_attributes,
 idle_instance_autotermination_minutes,
@@ -782,6 +805,7 @@ SELECT
 '{{ azure_attributes }}',
 '{{ custom_tags }}',
 '{{ disk_spec }}',
+{{ enable_auto_alternate_node_types }},
 {{ enable_elastic_disk }},
 '{{ gcp_attributes }}',
 {{ idle_instance_autotermination_minutes }},
@@ -813,7 +837,7 @@ instance_pool_id
     - name: node_type_id
       value: "{{ node_type_id }}"
       description: |
-        This field encodes, through a single value, the resources available to each of the Spark nodes in this cluster. For example, the Spark nodes can be provisioned and optimized for memory or compute intensive workloads. A list of available node types can be retrieved by using the :method:clusters/listNodeTypes API call.
+        This field encodes, through a single value, the resources available to each of the Spark nodes in this cluster. For example, the Spark nodes can be provisioned and optimized for memory or compute intensive workloads. A list of available node types can be retrieved by using the \`clusters/listNodeTypes <https://docs.databricks.com/api/workspace/clusters/listnodetypes>\`__ API call.
     - name: aws_attributes
       description: |
         Attributes related to instance pools running on Amazon Web Services. If not specified at pool creation, a set of default values will be used.
@@ -827,11 +851,12 @@ instance_pool_id
         Attributes related to instance pools running on Azure. If not specified at pool creation, a set of default values will be used.
       value:
         availability: "{{ availability }}"
+        capacity_reservation_group: "{{ capacity_reservation_group }}"
         spot_bid_max_price: {{ spot_bid_max_price }}
     - name: custom_tags
       value: "{{ custom_tags }}"
       description: |
-        Additional tags for pool resources. Databricks will tag all pool resources (e.g., AWS instances and EBS volumes) with these tags in addition to \`default_tags\`. Notes: - Currently, Databricks allows at most 45 custom tags
+        Additional tags for pool resources. Databricks will tag all pool resources (e.g., AWS instances and EBS volumes) with these tags in addition to \`\`default_tags\`\`. Notes: - Currently, Databricks allows at most 45 custom tags
     - name: disk_spec
       description: |
         Defines the specification of the disks that will be attached to all spark containers.
@@ -843,6 +868,10 @@ instance_pool_id
         disk_type:
           azure_disk_volume_type: "{{ azure_disk_volume_type }}"
           ebs_volume_type: "{{ ebs_volume_type }}"
+    - name: enable_auto_alternate_node_types
+      value: {{ enable_auto_alternate_node_types }}
+      description: |
+        For pools with node type flexibility (Fleet-V2), whether auto generated alternate node type ids are enabled. This field should not be true if node_type_flexibility is set. DEPRECATED: This field was deprecated before entering PuPr and should no longer be used. TODO(CJ-71514): Remove this field after sufficient time has passed for all clients to migrate.
     - name: enable_elastic_disk
       value: {{ enable_elastic_disk }}
       description: |
@@ -884,7 +913,7 @@ instance_pool_id
       value:
         - "{{ preloaded_spark_versions }}"
       description: |
-        A list containing at most one preloaded Spark image version for the pool. Pool-backed clusters started with the preloaded Spark version will start faster. A list of available Spark versions can be retrieved by using the :method:clusters/sparkVersions API call.
+        A list containing at most one preloaded Spark image version for the pool. Pool-backed clusters started with the preloaded Spark version will start faster. A list of available Spark versions can be retrieved by using the \`clusters/sparkVersions <https://docs.databricks.com/api/workspace/clusters/sparkversions>\`__ API call.
     - name: remote_disk_throughput
       value: {{ remote_disk_throughput }}
       description: |
@@ -918,6 +947,7 @@ instance_pool_id = '{{ instance_pool_id }}',
 instance_pool_name = '{{ instance_pool_name }}',
 node_type_id = '{{ node_type_id }}',
 custom_tags = '{{ custom_tags }}',
+enable_auto_alternate_node_types = {{ enable_auto_alternate_node_types }},
 idle_instance_autotermination_minutes = {{ idle_instance_autotermination_minutes }},
 max_capacity = {{ max_capacity }},
 min_idle_instances = {{ min_idle_instances }},

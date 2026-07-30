@@ -76,12 +76,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "subject_claim",
         "type": "string",
-        "description": "The claim that contains the subject of the token. Depending on the identity provider and the use case (U2M or M2M), this can vary: - For Entra ID (AAD): * U2M flow (group access): Use `groups`. * U2M flow (user access): Use `oid`. * M2M flow (OAuth App access): Use `azp`. - For other IdPs, refer to the specific IdP documentation. Supported `subject_claim` values are: - `oid`: Object ID of the user. - `azp`: Client ID of the OAuth app. - `groups`: Object ID of the group. - `sub`: Subject identifier for other use cases."
+        "description": "The claim that contains the subject of the token. Depending on the identity provider and the use case (U2M or M2M), this can vary: - For Entra ID (AAD): - U2M flow (group access): Use ``groups``. - U2M flow (user access): Use ``oid``. - M2M flow (OAuth App access): Use ``azp``. - For other IdPs, refer to the specific IdP documentation. Supported ``subject_claim`` values are: - ``oid``: Object ID of the user. - ``azp``: Client ID of the OAuth app. - ``groups``: Object ID of the group. - ``sub``: Subject identifier for other use cases."
       },
       {
         "name": "subject",
         "type": "string",
-        "description": "The required token subject, as specified in the subject claim of federated tokens. The subject claim identifies the identity of the user or machine accessing the resource. Examples for Entra ID (AAD): - U2M flow (group access): If the subject claim is `groups`, this must be the Object ID of the group in Entra ID. - U2M flow (user access): If the subject claim is `oid`, this must be the Object ID of the user in Entra ID. - M2M flow (OAuth App access): If the subject claim is `azp`, this must be the client ID of the OAuth app registered in Entra ID."
+        "description": "The required token subject, as specified in the subject claim of federated tokens. The subject claim identifies the identity of the user or machine accessing the resource. Examples for Entra ID (AAD): - U2M flow (group access): If the subject claim is ``groups``, this must be the Object ID of the group in Entra ID. - U2M flow (user access): If the subject claim is ``oid``, this must be the Object ID of the user in Entra ID. - M2M flow (OAuth App access): If the subject claim is ``azp``, this must be the client ID of the OAuth app registered in Entra ID."
       },
       {
         "name": "audiences",
@@ -133,12 +133,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "subject_claim",
         "type": "string",
-        "description": "The claim that contains the subject of the token. Depending on the identity provider and the use case (U2M or M2M), this can vary: - For Entra ID (AAD): * U2M flow (group access): Use `groups`. * U2M flow (user access): Use `oid`. * M2M flow (OAuth App access): Use `azp`. - For other IdPs, refer to the specific IdP documentation. Supported `subject_claim` values are: - `oid`: Object ID of the user. - `azp`: Client ID of the OAuth app. - `groups`: Object ID of the group. - `sub`: Subject identifier for other use cases."
+        "description": "The claim that contains the subject of the token. Depending on the identity provider and the use case (U2M or M2M), this can vary: - For Entra ID (AAD): - U2M flow (group access): Use ``groups``. - U2M flow (user access): Use ``oid``. - M2M flow (OAuth App access): Use ``azp``. - For other IdPs, refer to the specific IdP documentation. Supported ``subject_claim`` values are: - ``oid``: Object ID of the user. - ``azp``: Client ID of the OAuth app. - ``groups``: Object ID of the group. - ``sub``: Subject identifier for other use cases."
       },
       {
         "name": "subject",
         "type": "string",
-        "description": "The required token subject, as specified in the subject claim of federated tokens. The subject claim identifies the identity of the user or machine accessing the resource. Examples for Entra ID (AAD): - U2M flow (group access): If the subject claim is `groups`, this must be the Object ID of the group in Entra ID. - U2M flow (user access): If the subject claim is `oid`, this must be the Object ID of the user in Entra ID. - M2M flow (OAuth App access): If the subject claim is `azp`, this must be the client ID of the OAuth app registered in Entra ID."
+        "description": "The required token subject, as specified in the subject claim of federated tokens. The subject claim identifies the identity of the user or machine accessing the resource. Examples for Entra ID (AAD): - U2M flow (group access): If the subject claim is ``groups``, this must be the Object ID of the group in Entra ID. - U2M flow (user access): If the subject claim is ``oid``, this must be the Object ID of the user in Entra ID. - M2M flow (OAuth App access): If the subject claim is ``azp``, this must be the client ID of the OAuth app registered in Entra ID."
       },
       {
         "name": "audiences",
@@ -193,6 +193,13 @@ The following methods are available for this resource:
     <td>Create a federation policy for an OIDC_FEDERATION recipient for sharing data from Databricks to</td>
 </tr>
 <tr>
+    <td><a href="#recipient_federation_policies_update"><CopyableCode code="recipient_federation_policies_update" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-recipient_name"><code>recipient_name</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-policy"><code>policy</code></a></td>
+    <td><a href="#parameter-update_mask"><code>update_mask</code></a></td>
+    <td>Updates an existing federation policy for an OIDC_RECIPIENT. The caller must be the owner of the</td>
+</tr>
+<tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-recipient_name"><code>recipient_name</code></a>, <a href="#parameter-name"><code>name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
@@ -239,6 +246,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
     <td></td>
+</tr>
+<tr id="parameter-update_mask">
+    <td><CopyableCode code="update_mask" /></td>
+    <td><code>string</code></td>
+    <td>The field mask specifies which fields of the policy to update. To specify multiple fields in the field mask, use comma as the separator (no space). The special value '*' indicates that all fields should be updated (full replacement). If unspecified, all fields that are set in the policy provided in the update request will overwrite the corresponding fields in the existing policy. Example value: 'comment,oidc_policy.audiences'.</td>
 </tr>
 </tbody>
 </table>
@@ -355,6 +367,40 @@ update_time
         update_time: "{{ update_time }}"
 `}</CodeBlock>
 
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="recipient_federation_policies_update"
+    values={[
+        { label: 'recipient_federation_policies_update', value: 'recipient_federation_policies_update' }
+    ]}
+>
+<TabItem value="recipient_federation_policies_update">
+
+Updates an existing federation policy for an OIDC_RECIPIENT. The caller must be the owner of the
+
+```sql
+UPDATE databricks_workspace.sharing.recipient_federation_policies
+SET 
+policy = '{{ policy }}'
+WHERE 
+recipient_name = '{{ recipient_name }}' --required
+AND name = '{{ name }}' --required
+AND deployment_name = '{{ deployment_name }}' --required
+AND policy = '{{ policy }}' --required
+AND update_mask = '{{ update_mask}}'
+RETURNING
+id,
+name,
+comment,
+create_time,
+oidc_policy,
+update_time;
+```
 </TabItem>
 </Tabs>
 

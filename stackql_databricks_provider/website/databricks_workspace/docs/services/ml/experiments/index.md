@@ -95,6 +95,40 @@ The following fields are returned by `SELECT` queries:
             "description": "The tag value."
           }
         ]
+      },
+      {
+        "name": "trace_location",
+        "type": "object",
+        "description": "The location where the experiment's traces are stored. Unset when traces are stored in the default MLflow backend. This field cannot be updated after the experiment is created.",
+        "children": [
+          {
+            "name": "uc_trace_location",
+            "type": "object",
+            "description": "A Unity Catalog schema where the experiment's traces are stored as Delta tables.",
+            "children": [
+              {
+                "name": "catalog",
+                "type": "string",
+                "description": "The name of the Unity Catalog catalog."
+              },
+              {
+                "name": "schema",
+                "type": "string",
+                "description": "The name of the Unity Catalog schema within ``catalog``."
+              },
+              {
+                "name": "effective_table_prefix",
+                "type": "string",
+                "description": "The trace-table prefix actually in effect: ``table_prefix`` if it was set on creation, otherwise the server-generated default."
+              },
+              {
+                "name": "table_prefix",
+                "type": "string",
+                "description": "The prefix for the trace tables, which are named ``&#123;catalog&#125;.&#123;schema&#125;.&#123;table_prefix&#125;_otel_*``. May only contain letters, digits, and underscores, and may be at most 238 characters. When unset, a server-generated prefix derived from the experiment ID is used and this field stays empty on read; the resolved value is always available in ``effective_table_prefix``."
+              }
+            ]
+          }
+        ]
       }
     ]
   }
@@ -154,6 +188,40 @@ The following fields are returned by `SELECT` queries:
             "description": "The tag value."
           }
         ]
+      },
+      {
+        "name": "trace_location",
+        "type": "object",
+        "description": "The location where the experiment's traces are stored. Unset when traces are stored in the default MLflow backend. This field cannot be updated after the experiment is created.",
+        "children": [
+          {
+            "name": "uc_trace_location",
+            "type": "object",
+            "description": "A Unity Catalog schema where the experiment's traces are stored as Delta tables.",
+            "children": [
+              {
+                "name": "catalog",
+                "type": "string",
+                "description": "The name of the Unity Catalog catalog."
+              },
+              {
+                "name": "schema",
+                "type": "string",
+                "description": "The name of the Unity Catalog schema within ``catalog``."
+              },
+              {
+                "name": "effective_table_prefix",
+                "type": "string",
+                "description": "The trace-table prefix actually in effect: ``table_prefix`` if it was set on creation, otherwise the server-generated default."
+              },
+              {
+                "name": "table_prefix",
+                "type": "string",
+                "description": "The prefix for the trace tables, which are named ``&#123;catalog&#125;.&#123;schema&#125;.&#123;table_prefix&#125;_otel_*``. May only contain letters, digits, and underscores, and may be at most 238 characters. When unset, a server-generated prefix derived from the experiment ID is used and this field stays empty on read; the resolved value is always available in ``effective_table_prefix``."
+              }
+            ]
+          }
+        ]
       }
     ]
   }
@@ -206,6 +274,40 @@ The following fields are returned by `SELECT` queries:
         "name": "value",
         "type": "string",
         "description": "The tag value."
+      }
+    ]
+  },
+  {
+    "name": "trace_location",
+    "type": "object",
+    "description": "The location where the experiment's traces are stored. Unset when traces are stored in the default MLflow backend. This field cannot be updated after the experiment is created.",
+    "children": [
+      {
+        "name": "uc_trace_location",
+        "type": "object",
+        "description": "A Unity Catalog schema where the experiment's traces are stored as Delta tables.",
+        "children": [
+          {
+            "name": "catalog",
+            "type": "string",
+            "description": "The name of the Unity Catalog catalog."
+          },
+          {
+            "name": "schema",
+            "type": "string",
+            "description": "The name of the Unity Catalog schema within ``catalog``."
+          },
+          {
+            "name": "effective_table_prefix",
+            "type": "string",
+            "description": "The trace-table prefix actually in effect: ``table_prefix`` if it was set on creation, otherwise the server-generated default."
+          },
+          {
+            "name": "table_prefix",
+            "type": "string",
+            "description": "The prefix for the trace tables, which are named ``&#123;catalog&#125;.&#123;schema&#125;.&#123;table_prefix&#125;_otel_*``. May only contain letters, digits, and underscores, and may be at most 238 characters. When unset, a server-generated prefix derived from the experiment ID is used and this field stays empty on read; the resolved value is always available in ``effective_table_prefix``."
+          }
+        ]
       }
     ]
   }
@@ -325,7 +427,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
     <td><code>integer</code></td>
-    <td>Maximum number of experiments desired. If `max_results` is unspecified, return all experiments. If `max_results` is too large, it'll be automatically capped at 1000. Callers of this endpoint are encouraged to pass max_results explicitly and leverage page_token to iterate through experiments.</td>
+    <td>Maximum number of experiments desired. If ``max_results`` is unspecified, return all experiments. If ``max_results`` is too large, it'll be automatically capped at 1000. Callers of this endpoint are encouraged to pass max_results explicitly and leverage page_token to iterate through experiments.</td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -388,7 +490,8 @@ artifact_location,
 creation_time,
 last_update_time,
 lifecycle_stage,
-tags
+tags,
+trace_location
 FROM databricks_workspace.ml.experiments
 WHERE deployment_name = '{{ deployment_name }}' -- required
 AND max_results = '{{ max_results }}'
@@ -418,12 +521,14 @@ INSERT INTO databricks_workspace.ml.experiments (
 name,
 artifact_location,
 tags,
+trace_location,
 deployment_name
 )
 SELECT 
 '{{ name }}' /* required */,
 '{{ artifact_location }}',
 '{{ tags }}',
+'{{ trace_location }}',
 '{{ deployment_name }}'
 RETURNING
 experiment_id
@@ -452,6 +557,15 @@ experiment_id
       value:
         - key: "{{ key }}"
           value: "{{ value }}"
+    - name: trace_location
+      description: |
+        The location where the experiment's traces are stored. When set, the underlying storage is provisioned and the experiment's traces are routed to it. When unset, traces are stored in the default MLflow backend. This field cannot be updated after the experiment is created.
+      value:
+        uc_trace_location:
+          catalog: "{{ catalog }}"
+          schema: "{{ schema }}"
+          effective_table_prefix: "{{ effective_table_prefix }}"
+          table_prefix: "{{ table_prefix }}"
 `}</CodeBlock>
 
 </TabItem>

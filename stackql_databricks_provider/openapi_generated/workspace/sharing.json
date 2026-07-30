@@ -4,8 +4,8 @@
     "title": "Databricks Sharing API (workspace)",
     "description": "OpenAPI specification for the Databricks sharing service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.sharing"
   },
   "servers": [
@@ -29,7 +29,7 @@
           "sharing",
           "providers"
         ],
-        "description": "Creates a new authentication provider minimally based on a name and authentication type. The caller\nmust be an admin on the metastore.\n\n:param name: str\n  The name of the Provider.\n:param authentication_type: :class:`AuthenticationType`\n:param comment: str (optional)\n  Description about the provider.\n:param recipient_profile_str: str (optional)\n  This field is required when the __authentication_type__ is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS**\n  or not provided.\n\n:returns: :class:`ProviderInfo`",
+        "description": "Creates a new authentication provider minimally based on a name and authentication type. The caller\nmust be an admin on the metastore.\n\n:param name: str\n  The name of the Provider.\n:param authentication_type: :class:`AuthenticationType`\n:param comment: str (optional)\n  Description about the provider.\n:param email_recipient_id: str (optional)\n  The ID of the email recipient this provider is being created to accept. Only valid on DATABRICKS\n  CreateProvider when accepting an email invite.\n:param recipient_profile_str: str (optional)\n  This field is required when the **authentication_type** is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS**\n  or not provided.\n\n:returns: :class:`ProviderInfo`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -44,6 +44,7 @@
                     "type": "string",
                     "x-enum": [
                       "DATABRICKS",
+                      "EMAIL",
                       "OAUTH_CLIENT_CREDENTIALS",
                       "OIDC_FEDERATION",
                       "TOKEN"
@@ -54,9 +55,13 @@
                     "type": "string",
                     "description": "Description about the provider."
                   },
+                  "email_recipient_id": {
+                    "type": "string",
+                    "description": "The ID of the email recipient this provider is being created to accept. Only valid on DATABRICKS CreateProvider when accepting an email invite."
+                  },
                   "recipient_profile_str": {
                     "type": "string",
-                    "description": "This field is required when the __authentication_type__ is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
+                    "description": "This field is required when the **authentication_type** is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
                   }
                 },
                 "required": [
@@ -106,7 +111,7 @@
           "sharing",
           "providers"
         ],
-        "description": "Gets an array of available authentication providers. The caller must either be a metastore admin, have\nthe **USE_PROVIDER** privilege on the providers, or be the owner of the providers. Providers not owned\nby the caller and for which the caller does not have the **USE_PROVIDER** privilege are not included\nin the response. There is no guarantee of a specific ordering of the elements in the array.\n\n:param data_provider_global_metastore_id: str (optional)\n  If not provided, all providers will be returned. If no providers exist with this ID, no results will\n  be returned.\n:param max_results: int (optional)\n  Maximum number of providers to return. - when set to 0, the page length is set to a server\n  configured value (recommended); - when set to a value greater than 0, the page length is the minimum\n  of this value and a server configured value; - when set to a value less than 0, an invalid parameter\n  error is returned; - If not set, all valid providers are returned (not recommended). - Note: The\n  number of returned providers might be less than the specified max_results size, even zero. The only\n  definitive indication that no further providers can be fetched is when the next_page_token is unset\n  from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: Iterator over :class:`ProviderInfo`",
+        "description": "Gets an array of available authentication providers. The caller must either be a metastore admin, have\nthe **USE_PROVIDER** privilege on the providers, or be the owner of the providers. Providers not owned\nby the caller and for which the caller does not have the **USE_PROVIDER** privilege are not included\nin the response. There is no guarantee of a specific ordering of the elements in the array.\n\n:param data_provider_global_metastore_id: str (optional)\n  If not provided, all providers will be returned. If no providers exist with this ID, no results will\n  be returned.\n:param max_results: int (optional)\n  Maximum number of providers to return.\n\n  - when set to 0, the page length is set to a server configured value (recommended);\n  - when set to a value greater than 0, the page length is the minimum of this value and a server\n    configured value;\n  - when set to a value less than 0, an invalid parameter error is returned;\n  - If not set, all valid providers are returned (not recommended).\n  - Note: The number of returned providers might be less than the specified max_results size, even\n    zero. The only definitive indication that no further providers can be fetched is when the\n    next_page_token is unset from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: Iterator over :class:`ProviderInfo`",
         "parameters": [
           {
             "name": "data_provider_global_metastore_id",
@@ -272,7 +277,7 @@
           "sharing",
           "providers"
         ],
-        "description": "Updates the information for an authentication provider, if the caller is a metastore admin or is the\nowner of the provider. If the update changes the provider name, the caller must be both a metastore\nadmin and the owner of the provider.\n\n:param name: str\n  Name of the provider.\n:param comment: str (optional)\n  Description about the provider.\n:param new_name: str (optional)\n  New name for the provider.\n:param owner: str (optional)\n  Username of Provider owner.\n:param recipient_profile_str: str (optional)\n  This field is required when the __authentication_type__ is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS**\n  or not provided.\n\n:returns: :class:`ProviderInfo`",
+        "description": "Updates the information for an authentication provider, if the caller is a metastore admin or is the\nowner of the provider. If the update changes the provider name, the caller must be both a metastore\nadmin and the owner of the provider.\n\n:param name: str\n  Name of the provider.\n:param comment: str (optional)\n  Description about the provider.\n:param new_name: str (optional)\n  New name for the provider.\n:param owner: str (optional)\n  Username of Provider owner.\n:param recipient_profile_str: str (optional)\n  This field is required when the **authentication_type** is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS**\n  or not provided.\n\n:returns: :class:`ProviderInfo`",
         "parameters": [
           {
             "name": "name",
@@ -304,7 +309,7 @@
                   },
                   "recipient_profile_str": {
                     "type": "string",
-                    "description": "This field is required when the __authentication_type__ is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
+                    "description": "This field is required when the **authentication_type** is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
                   }
                 }
               }
@@ -450,7 +455,7 @@
           "sharing",
           "providers"
         ],
-        "description": "Gets an array of a specified provider's shares within the metastore where:\n\n* the caller is a metastore admin, or * the caller is the owner.\n\n:param name: str\n  Name of the provider in which to list shares.\n:param max_results: int (optional)\n  Maximum number of shares to return. - when set to 0, the page length is set to a server configured\n  value (recommended); - when set to a value greater than 0, the page length is the minimum of this\n  value and a server configured value; - when set to a value less than 0, an invalid parameter error\n  is returned; - If not set, all valid shares are returned (not recommended). - Note: The number of\n  returned shares might be less than the specified max_results size, even zero. The only definitive\n  indication that no further shares can be fetched is when the next_page_token is unset from the\n  response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: Iterator over :class:`ProviderShare`",
+        "description": "Gets an array of a specified provider's shares within the metastore where:\n\n- the caller is a metastore admin, or\n- the caller is the owner.\n\n:param name: str\n  Name of the provider in which to list shares.\n:param max_results: int (optional)\n  Maximum number of shares to return.\n\n  - when set to 0, the page length is set to a server configured value (recommended);\n  - when set to a value greater than 0, the page length is the minimum of this value and a server\n    configured value;\n  - when set to a value less than 0, an invalid parameter error is returned;\n  - If not set, all valid shares are returned (not recommended).\n  - Note: The number of returned shares might be less than the specified max_results size, even zero.\n    The only definitive indication that no further shares can be fetched is when the next_page_token\n    is unset from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: Iterator over :class:`ProviderShare`",
         "parameters": [
           {
             "name": "name",
@@ -521,7 +526,7 @@
           "sharing",
           "recipient_activation"
         ],
-        "description": "Gets an activation URL for a share.\n\n:param activation_url: str\n  The one time activation url. It also accepts activation token.",
+        "description": "Gets an activation URL for a share.\n\n:param activation_url: str\n  The one time activation url. It also accepts activation token.\n:param metastore_id: str (optional)\n  The provider metastore ID. Optional for now; used as a routing hint when present and principal\n  context",
         "parameters": [
           {
             "name": "activation_url",
@@ -531,6 +536,15 @@
               "type": "string"
             },
             "description": "The one time activation url. It also accepts activation token."
+          },
+          {
+            "name": "metastore_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The provider metastore ID. Optional for now; used as a routing hint when present and principal context"
           }
         ],
         "responses": {
@@ -567,7 +581,7 @@
           "sharing",
           "recipient_activation"
         ],
-        "description": "Retrieve access token with an activation url. This is a public API without any authentication.\n\n:param activation_url: str\n  The one time activation url. It also accepts activation token.\n\n:returns: :class:`RetrieveTokenResponse`",
+        "description": "Retrieve access token with an activation url. This is a public API without any authentication.\n\n:param activation_url: str\n  The one time activation url. It also accepts activation token.\n:param metastore_id: str (optional)\n  The provider metastore ID. Optional for now; used as a routing hint when present and principal\n  context\n\n:returns: :class:`RetrieveTokenResponse`",
         "parameters": [
           {
             "name": "activation_url",
@@ -577,6 +591,15 @@
               "type": "string"
             },
             "description": "The one time activation url. It also accepts activation token."
+          },
+          {
+            "name": "metastore_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The provider metastore ID. Optional for now; used as a routing hint when present and principal context"
           }
         ],
         "responses": {
@@ -620,7 +643,7 @@
           "sharing",
           "recipient_federation_policies"
         ],
-        "description": "Create a federation policy for an OIDC_FEDERATION recipient for sharing data from Databricks to\nnon-Databricks recipients. The caller must be the owner of the recipient. When sharing data from\nDatabricks to non-Databricks clients, you can define a federation policy to authenticate\nnon-Databricks recipients. The federation policy validates OIDC claims in federated tokens and is\ndefined at the recipient level. This enables secretless sharing clients to authenticate using OIDC\ntokens.\n\nSupported scenarios for federation policies: 1. **User-to-Machine (U2M) flow** (e.g., PowerBI): A user\naccesses a resource using their own identity. 2. **Machine-to-Machine (M2M) flow** (e.g., OAuth App):\nAn OAuth App accesses a resource using its own identity, typically for tasks like running nightly\njobs.\n\nFor an overview, refer to: - Blog post: Overview of feature:\nhttps://www.databricks.com/blog/announcing-oidc-token-federation-enhanced-delta-sharing-security\n\nFor detailed configuration guides based on your use case: - Creating a Federation Policy as a\nprovider: https://docs.databricks.com/en/delta-sharing/create-recipient-oidc-fed - Configuration and\nusage for Machine-to-Machine (M2M) applications (e.g., Python Delta Sharing Client):\nhttps://docs.databricks.com/aws/en/delta-sharing/sharing-over-oidc-m2m - Configuration and usage for\nUser-to-Machine (U2M) applications (e.g., PowerBI):\nhttps://docs.databricks.com/aws/en/delta-sharing/sharing-over-oidc-u2m\n\n:param recipient_name: str\n  Name of the recipient. This is the name of the recipient for which the policy is being created.\n:param policy: :class:`FederationPolicy`\n  Name of the policy. This is the name of the policy to be created.\n\n:returns: :class:`FederationPolicy`",
+        "description": "Create a federation policy for an OIDC_FEDERATION recipient for sharing data from Databricks to\nnon-Databricks recipients. The caller must be the owner of the recipient. When sharing data from\nDatabricks to non-Databricks clients, you can define a federation policy to authenticate\nnon-Databricks recipients. The federation policy validates OIDC claims in federated tokens and is\ndefined at the recipient level. This enables secretless sharing clients to authenticate using OIDC\ntokens.\n\nSupported scenarios for federation policies:\n\n1. **User-to-Machine (U2M) flow** (e.g., PowerBI): A user accesses a resource using their own\n   identity.\n2. **Machine-to-Machine (M2M) flow** (e.g., OAuth App): An OAuth App accesses a resource using its own\n   identity, typically for tasks like running nightly jobs.\n\nFor an overview, refer to:\n\n- Blog post: Overview of feature:\n  https://www.databricks.com/blog/announcing-oidc-token-federation-enhanced-delta-sharing-security\n\nFor detailed configuration guides based on your use case:\n\n- Creating a Federation Policy as a provider:\n  https://docs.databricks.com/en/delta-sharing/create-recipient-oidc-fed\n- Configuration and usage for Machine-to-Machine (M2M) applications (e.g., Python Delta Sharing\n  Client): https://docs.databricks.com/aws/en/delta-sharing/sharing-over-oidc-m2m\n- Configuration and usage for User-to-Machine (U2M) applications (e.g., PowerBI):\n  https://docs.databricks.com/aws/en/delta-sharing/sharing-over-oidc-u2m\n\n:param recipient_name: str\n  Name of the recipient. This is the name of the recipient for which the policy is being created.\n:param policy: :class:`FederationPolicy`\n  Name of the policy. This is the name of the policy to be created.\n\n:returns: :class:`FederationPolicy`",
         "parameters": [
           {
             "name": "recipient_name",
@@ -665,11 +688,11 @@
                           },
                           "subject_claim": {
                             "type": "string",
-                            "description": "The claim that contains the subject of the token. Depending on the identity provider and the use case (U2M or M2M), this can vary: - For Entra ID (AAD): * U2M flow (group access): Use `groups`. * U2M flow (user access): Use `oid`. * M2M flow (OAuth App access): Use `azp`. - For other IdPs, refer to the specific IdP documentation. Supported `subject_claim` values are: - `oid`: Object ID of the user. - `azp`: Client ID of the OAuth app. - `groups`: Object ID of the group. - `sub`: Subject identifier for other use cases."
+                            "description": "The claim that contains the subject of the token. Depending on the identity provider and the use case (U2M or M2M), this can vary: - For Entra ID (AAD): - U2M flow (group access): Use ``groups``. - U2M flow (user access): Use ``oid``. - M2M flow (OAuth App access): Use ``azp``. - For other IdPs, refer to the specific IdP documentation. Supported ``subject_claim`` values are: - ``oid``: Object ID of the user. - ``azp``: Client ID of the OAuth app. - ``groups``: Object ID of the group. - ``sub``: Subject identifier for other use cases."
                           },
                           "subject": {
                             "type": "string",
-                            "description": "The required token subject, as specified in the subject claim of federated tokens. The subject claim identifies the identity of the user or machine accessing the resource. Examples for Entra ID (AAD): - U2M flow (group access): If the subject claim is `groups`, this must be the Object ID of the group in Entra ID. - U2M flow (user access): If the subject claim is `oid`, this must be the Object ID of the user in Entra ID. - M2M flow (OAuth App access): If the subject claim is `azp`, this must be the client ID of the OAuth app registered in Entra ID."
+                            "description": "The required token subject, as specified in the subject claim of federated tokens. The subject claim identifies the identity of the user or machine accessing the resource. Examples for Entra ID (AAD): - U2M flow (group access): If the subject claim is ``groups``, this must be the Object ID of the group in Entra ID. - U2M flow (user access): If the subject claim is ``oid``, this must be the Object ID of the user in Entra ID. - M2M flow (OAuth App access): If the subject claim is ``azp``, this must be the client ID of the OAuth app registered in Entra ID."
                           },
                           "audiences": {
                             "type": "array",
@@ -914,6 +937,143 @@
           }
         },
         "x-stackql-sdk-source": "RecipientFederationPoliciesAPI"
+      },
+      "patch": {
+        "operationId": "recipient_federation_policies_update",
+        "summary": "Updates an existing federation policy for an OIDC_RECIPIENT. The caller must be the owner of the",
+        "tags": [
+          "sharing",
+          "recipient_federation_policies"
+        ],
+        "description": "Updates an existing federation policy for an OIDC_RECIPIENT. The caller must be the owner of the\nrecipient.\n\n:param recipient_name: str\n  Name of the recipient. This is the name of the recipient for which the policy is being updated.\n:param name: str\n  Name of the policy. This is the name of the current name of the policy.\n:param policy: :class:`FederationPolicy`\n:param update_mask: str (optional)\n  The field mask specifies which fields of the policy to update. To specify multiple fields in the\n  field mask, use comma as the separator (no space). The special value '*' indicates that all fields\n  should be updated (full replacement). If unspecified, all fields that are set in the policy provided\n  in the update request will overwrite the corresponding fields in the existing policy. Example value:\n  'comment,oidc_policy.audiences'.\n\n:returns: :class:`FederationPolicy`",
+        "parameters": [
+          {
+            "name": "recipient_name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the recipient. This is the name of the recipient for which the policy is being updated."
+          },
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Name of the policy. This is the name of the current name of the policy."
+          },
+          {
+            "name": "update_mask",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The field mask specifies which fields of the policy to update. To specify multiple fields in the field mask, use comma as the separator (no space). The special value '*' indicates that all fields should be updated (full replacement). If unspecified, all fields that are set in the policy provided in the update request will overwrite the corresponding fields in the existing policy. Example value: 'comment,oidc_policy.audiences'."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "object",
+                    "properties": {
+                      "comment": {
+                        "type": "string"
+                      },
+                      "create_time": {
+                        "type": "string",
+                        "description": "System-generated timestamp indicating when the policy was created."
+                      },
+                      "id": {
+                        "type": "string",
+                        "description": "Unique, immutable system-generated identifier for the federation policy."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the federation policy. A recipient can have multiple policies with different names. The name must contain only lowercase alphanumeric characters, numbers, and hyphens."
+                      },
+                      "oidc_policy": {
+                        "type": "object",
+                        "properties": {
+                          "issuer": {
+                            "type": "string",
+                            "description": "The required token issuer, as specified in the 'iss' claim of federated tokens."
+                          },
+                          "subject_claim": {
+                            "type": "string",
+                            "description": "The claim that contains the subject of the token. Depending on the identity provider and the use case (U2M or M2M), this can vary: - For Entra ID (AAD): - U2M flow (group access): Use ``groups``. - U2M flow (user access): Use ``oid``. - M2M flow (OAuth App access): Use ``azp``. - For other IdPs, refer to the specific IdP documentation. Supported ``subject_claim`` values are: - ``oid``: Object ID of the user. - ``azp``: Client ID of the OAuth app. - ``groups``: Object ID of the group. - ``sub``: Subject identifier for other use cases."
+                          },
+                          "subject": {
+                            "type": "string",
+                            "description": "The required token subject, as specified in the subject claim of federated tokens. The subject claim identifies the identity of the user or machine accessing the resource. Examples for Entra ID (AAD): - U2M flow (group access): If the subject claim is ``groups``, this must be the Object ID of the group in Entra ID. - U2M flow (user access): If the subject claim is ``oid``, this must be the Object ID of the user in Entra ID. - M2M flow (OAuth App access): If the subject claim is ``azp``, this must be the client ID of the OAuth app registered in Entra ID."
+                          },
+                          "audiences": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "The allowed token audiences, as specified in the 'aud' claim of federated tokens. The audience identifier is intended to represent the recipient of the token. Can be any non-empty string value. As long as the audience in the token matches at least one audience in the policy,"
+                          }
+                        },
+                        "required": [
+                          "issuer",
+                          "subject_claim",
+                          "subject"
+                        ],
+                        "description": "Specifies the policy to use for validating OIDC claims in the federated tokens."
+                      },
+                      "update_time": {
+                        "type": "string",
+                        "description": "System-generated timestamp indicating when the policy was last updated."
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "policy"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FederationPolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "RecipientFederationPoliciesAPI"
       }
     },
     "/api/2.1/unity-catalog/recipients": {
@@ -924,7 +1084,7 @@
           "sharing",
           "recipients"
         ],
-        "description": "Creates a new recipient with the delta sharing authentication type in the metastore. The caller must\nbe a metastore admin or have the **CREATE_RECIPIENT** privilege on the metastore.\n\n:param name: str\n  Name of Recipient.\n:param authentication_type: :class:`AuthenticationType`\n:param comment: str (optional)\n  Description about the recipient.\n:param data_recipient_global_metastore_id: str (optional)\n  The global Unity Catalog metastore id provided by the data recipient. This field is only present\n  when the __authentication_type__ is **DATABRICKS**. The identifier is of format\n  __cloud__:__region__:__metastore-uuid__.\n:param expiration_time: int (optional)\n  Expiration timestamp of the token, in epoch milliseconds.\n:param id: str (optional)\n  [Create,Update:IGN] common - id of the recipient\n:param ip_access_list: :class:`IpAccessList` (optional)\n  IP Access List\n:param owner: str (optional)\n  Username of the recipient owner.\n:param properties_kvpairs: :class:`SecurablePropertiesKvPairs` (optional)\n  Recipient properties as map of string key-value pairs. When provided in update request, the\n  specified properties will override the existing properties. To add and remove properties, one would\n  need to perform a read-modify-write.\n:param sharing_code: str (optional)\n  The one-time sharing code provided by the data recipient. This field is only present when the\n  __authentication_type__ is **DATABRICKS**.\n\n:returns: :class:`RecipientInfo`",
+        "description": "Creates a new recipient with the delta sharing authentication type in the metastore. The caller must\nbe a metastore admin or have the **CREATE_RECIPIENT** privilege on the metastore.\n\n:param name: str\n  Name of Recipient.\n:param authentication_type: :class:`AuthenticationType`\n:param allowed_acceptance_types: List[:class:`AuthenticationType`] (optional)\n  Authentication types the invitee may choose from when activating. Each value must be TOKEN or\n  DATABRICKS. Empty means all supported types are allowed. This field is only present when the\n  **authentication_type** is **EMAIL**.\n:param allowed_data_recipient_global_metastore_ids: List[str] (optional)\n  Optional allowlist of the data recipient's global metastore IDs permitted to accept the invite with\n  the DATABRICKS acceptance type. Each ID is of the form **cloud**:**region**:**metastore-uuid**.\n  Empty means any metastore is allowed. If non-empty, **allowed_acceptance_types** must include\n  **DATABRICKS**. This field is only present when the **authentication_type** is **EMAIL**.\n:param comment: str (optional)\n  Description about the recipient.\n:param data_recipient_global_metastore_id: str (optional)\n  The global Unity Catalog metastore id provided by the data recipient. This field is only present\n  when the **authentication_type** is **DATABRICKS**. The identifier is of format\n  **cloud**:**region**:**metastore-uuid**.\n:param email: str (optional)\n  The invited email address. This field is only present when the **authentication_type** is **EMAIL**.\n  The 320-character cap follows RFC 5321 (64-octet local-part + ``@`` + 255-octet domain).\n:param expiration_time: int (optional)\n  Expiration timestamp of the token, in epoch milliseconds.\n:param id: str (optional)\n  [Create,Update:IGN] common - id of the recipient\n:param ip_access_list: :class:`IpAccessList` (optional)\n  IP Access List\n:param owner: str (optional)\n  Username of the recipient owner.\n:param properties_kvpairs: :class:`SecurablePropertiesKvPairs` (optional)\n  Recipient properties as map of string key-value pairs. When provided in update request, the\n  specified properties will override the existing properties. To add and remove properties, one would\n  need to perform a read-modify-write.\n:param sharing_code: str (optional)\n  The one-time sharing code provided by the data recipient. This field is only present when the\n  **authentication_type** is **DATABRICKS**.\n\n:returns: :class:`RecipientInfo`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -939,11 +1099,34 @@
                     "type": "string",
                     "x-enum": [
                       "DATABRICKS",
+                      "EMAIL",
                       "OAUTH_CLIENT_CREDENTIALS",
                       "OIDC_FEDERATION",
                       "TOKEN"
                     ],
                     "description": "The delta sharing authentication type."
+                  },
+                  "allowed_acceptance_types": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "x-enum": [
+                        "DATABRICKS",
+                        "EMAIL",
+                        "OAUTH_CLIENT_CREDENTIALS",
+                        "OIDC_FEDERATION",
+                        "TOKEN"
+                      ],
+                      "description": "The delta sharing authentication type."
+                    },
+                    "description": "Authentication types the invitee may choose from when activating. Each value must be TOKEN or DATABRICKS. Empty means all supported types are allowed. This field is only present when the **authentication_type** is **EMAIL**."
+                  },
+                  "allowed_data_recipient_global_metastore_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Optional allowlist of the data recipient's global metastore IDs permitted to accept the invite with the DATABRICKS acceptance type. Each ID is of the form **cloud**:**region**:**metastore-uuid**. Empty means any metastore is allowed. If non-empty, **allowed_acceptance_types** must include **DATABRICKS**. This field is only present when the **authentication_type** is **EMAIL**."
                   },
                   "comment": {
                     "type": "string",
@@ -951,7 +1134,11 @@
                   },
                   "data_recipient_global_metastore_id": {
                     "type": "string",
-                    "description": "The global Unity Catalog metastore id provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**. The identifier is of format __cloud__:__region__:__metastore-uuid__."
+                    "description": "The global Unity Catalog metastore id provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**. The identifier is of format **cloud**:**region**:**metastore-uuid**."
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "The invited email address. This field is only present when the **authentication_type** is **EMAIL**. The 320-character cap follows RFC 5321 (64-octet local-part + ``@`` + 255-octet domain)."
                   },
                   "expiration_time": {
                     "type": "integer",
@@ -992,7 +1179,7 @@
                   },
                   "sharing_code": {
                     "type": "string",
-                    "description": "The one-time sharing code provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**."
+                    "description": "The one-time sharing code provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**."
                   }
                 },
                 "required": [
@@ -1042,7 +1229,7 @@
           "sharing",
           "recipients"
         ],
-        "description": "Gets an array of all share recipients within the current metastore where:\n\n* the caller is a metastore admin, or * the caller is the owner. There is no guarantee of a specific\nordering of the elements in the array.\n\n:param data_recipient_global_metastore_id: str (optional)\n  If not provided, all recipients will be returned. If no recipients exist with this ID, no results\n  will be returned.\n:param max_results: int (optional)\n  Maximum number of recipients to return. - when set to 0, the page length is set to a server\n  configured value (recommended); - when set to a value greater than 0, the page length is the minimum\n  of this value and a server configured value; - when set to a value less than 0, an invalid parameter\n  error is returned; - If not set, all valid recipients are returned (not recommended). - Note: The\n  number of returned recipients might be less than the specified max_results size, even zero. The only\n  definitive indication that no further recipients can be fetched is when the next_page_token is unset\n  from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: Iterator over :class:`RecipientInfo`",
+        "description": "Gets an array of all share recipients within the current metastore where:\n\n- the caller is a metastore admin, or\n- the caller is the owner. There is no guarantee of a specific ordering of the elements in the array.\n\n:param data_recipient_global_metastore_id: str (optional)\n  If not provided, all recipients will be returned. If no recipients exist with this ID, no results\n  will be returned.\n:param max_results: int (optional)\n  Maximum number of recipients to return.\n\n  - when set to 0, the page length is set to a server configured value (recommended);\n  - when set to a value greater than 0, the page length is the minimum of this value and a server\n    configured value;\n  - when set to a value less than 0, an invalid parameter error is returned;\n  - If not set, all valid recipients are returned (not recommended).\n  - Note: The number of returned recipients might be less than the specified max_results size, even\n    zero. The only definitive indication that no further recipients can be fetched is when the\n    next_page_token is unset from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n:param parent_recipient_name: str (optional)\n  If set, the response is scoped to the child recipients of the named parent recipient. Child\n  recipients are otherwise hidden from the default list response. Only applicable to email recipient\n  parents \u2014 non-email recipients have no children to scope to.\n\n:returns: Iterator over :class:`RecipientInfo`",
         "parameters": [
           {
             "name": "data_recipient_global_metastore_id",
@@ -1070,6 +1257,15 @@
               "type": "string"
             },
             "description": "Opaque pagination token to go to next page based on previous query."
+          },
+          {
+            "name": "parent_recipient_name",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "If set, the response is scoped to the child recipients of the named parent recipient. Child recipients are otherwise hidden from the default list response. Only applicable to email recipient parents \u2014 non-email recipients have no children to scope to."
           }
         ],
         "responses": {
@@ -1152,12 +1348,12 @@
       },
       "get": {
         "operationId": "recipients_get",
-        "summary": "Gets a share recipient from the metastore. The caller must be one of: * A user with **USE_RECIPIENT**",
+        "summary": "Gets a share recipient from the metastore. The caller must be one of:",
         "tags": [
           "sharing",
           "recipients"
         ],
-        "description": "Gets a share recipient from the metastore. The caller must be one of: * A user with **USE_RECIPIENT**\nprivilege on the metastore * The owner of the share recipient * A metastore admin\n\n:param name: str\n  Name of the recipient.\n\n:returns: :class:`RecipientInfo`",
+        "description": "Gets a share recipient from the metastore. The caller must be one of:\n\n- A user with **USE_RECIPIENT** privilege on the metastore\n- The owner of the share recipient\n- A metastore admin\n\n:param name: str\n  Name of the recipient.\n\n:returns: :class:`RecipientInfo`",
         "parameters": [
           {
             "name": "name",
@@ -1208,7 +1404,7 @@
           "sharing",
           "recipients"
         ],
-        "description": "Updates an existing recipient in the metastore. The caller must be a metastore admin or the owner of\nthe recipient. If the recipient name will be updated, the user must be both a metastore admin and the\nowner of the recipient.\n\n:param name: str\n  Name of the recipient.\n:param comment: str (optional)\n  Description about the recipient.\n:param expiration_time: int (optional)\n  Expiration timestamp of the token, in epoch milliseconds.\n:param id: str (optional)\n  [Create,Update:IGN] common - id of the recipient\n:param ip_access_list: :class:`IpAccessList` (optional)\n  IP Access List\n:param new_name: str (optional)\n  New name for the recipient. .\n:param owner: str (optional)\n  Username of the recipient owner.\n:param properties_kvpairs: :class:`SecurablePropertiesKvPairs` (optional)\n  Recipient properties as map of string key-value pairs. When provided in update request, the\n  specified properties will override the existing properties. To add and remove properties, one would\n  need to perform a read-modify-write.\n\n:returns: :class:`RecipientInfo`",
+        "description": "Updates an existing recipient in the metastore. The caller must be a metastore admin or the owner of\nthe recipient. If the recipient name will be updated, the user must be both a metastore admin and the\nowner of the recipient.\n\n:param name: str\n  Name of the recipient.\n:param allowed_acceptance_types: List[:class:`AuthenticationType`] (optional)\n  Authentication types the invitee may choose from when activating. Each value must be TOKEN or\n  DATABRICKS. Empty means all supported types are allowed. This field is only present when the\n  **authentication_type** is **EMAIL**.\n:param allowed_data_recipient_global_metastore_ids: List[str] (optional)\n  Optional allowlist of the data recipient's global metastore IDs permitted to accept the invite with\n  the DATABRICKS acceptance type. Each ID is of the form **cloud**:**region**:**metastore-uuid**.\n  Empty means any metastore is allowed. If non-empty, **allowed_acceptance_types** must include\n  **DATABRICKS**. This field is only present when the **authentication_type** is **EMAIL**.\n:param comment: str (optional)\n  Description about the recipient.\n:param email: str (optional)\n  The invited email address. This field is only present when the **authentication_type** is **EMAIL**.\n  The 320-character cap follows RFC 5321 (64-octet local-part + ``@`` + 255-octet domain).\n:param expiration_time: int (optional)\n  Expiration timestamp of the token, in epoch milliseconds.\n:param id: str (optional)\n  [Create,Update:IGN] common - id of the recipient\n:param ip_access_list: :class:`IpAccessList` (optional)\n  IP Access List\n:param new_name: str (optional)\n  New name for the recipient. .\n:param owner: str (optional)\n  Username of the recipient owner.\n:param properties_kvpairs: :class:`SecurablePropertiesKvPairs` (optional)\n  Recipient properties as map of string key-value pairs. When provided in update request, the\n  specified properties will override the existing properties. To add and remove properties, one would\n  need to perform a read-modify-write.\n\n:returns: :class:`RecipientInfo`",
         "parameters": [
           {
             "name": "name",
@@ -1226,9 +1422,35 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "allowed_acceptance_types": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "x-enum": [
+                        "DATABRICKS",
+                        "EMAIL",
+                        "OAUTH_CLIENT_CREDENTIALS",
+                        "OIDC_FEDERATION",
+                        "TOKEN"
+                      ],
+                      "description": "The delta sharing authentication type."
+                    },
+                    "description": "Authentication types the invitee may choose from when activating. Each value must be TOKEN or DATABRICKS. Empty means all supported types are allowed. This field is only present when the **authentication_type** is **EMAIL**."
+                  },
+                  "allowed_data_recipient_global_metastore_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Optional allowlist of the data recipient's global metastore IDs permitted to accept the invite with the DATABRICKS acceptance type. Each ID is of the form **cloud**:**region**:**metastore-uuid**. Empty means any metastore is allowed. If non-empty, **allowed_acceptance_types** must include **DATABRICKS**. This field is only present when the **authentication_type** is **EMAIL**."
+                  },
                   "comment": {
                     "type": "string",
                     "description": "Description about the recipient."
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "The invited email address. This field is only present when the **authentication_type** is **EMAIL**. The 320-character cap follows RFC 5321 (64-octet local-part + ``@`` + 255-octet domain)."
                   },
                   "expiration_time": {
                     "type": "integer",
@@ -1388,7 +1610,7 @@
           "sharing",
           "recipients"
         ],
-        "description": "Gets the share permissions for the specified Recipient. The caller must have the **USE_RECIPIENT**\nprivilege on the metastore or be the owner of the Recipient.\n\n:param name: str\n  The name of the Recipient.\n:param max_results: int (optional)\n  Maximum number of permissions to return. - when set to 0, the page length is set to a server\n  configured value (recommended); - when set to a value greater than 0, the page length is the minimum\n  of this value and a server configured value; - when set to a value less than 0, an invalid parameter\n  error is returned; - If not set, all valid permissions are returned (not recommended). - Note: The\n  number of returned permissions might be less than the specified max_results size, even zero. The\n  only definitive indication that no further permissions can be fetched is when the next_page_token is\n  unset from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: :class:`GetRecipientSharePermissionsResponse`",
+        "description": "Gets the share permissions for the specified Recipient. The caller must have the **USE_RECIPIENT**\nprivilege on the metastore or be the owner of the Recipient.\n\n:param name: str\n  The name of the Recipient.\n:param max_results: int (optional)\n  Maximum number of permissions to return.\n\n  - when set to 0, the page length is set to a server configured value (recommended);\n  - when set to a value greater than 0, the page length is the minimum of this value and a server\n    configured value;\n  - when set to a value less than 0, an invalid parameter error is returned;\n  - If not set, all valid permissions are returned (not recommended).\n  - Note: The number of returned permissions might be less than the specified max_results size, even\n    zero. The only definitive indication that no further permissions can be fetched is when the\n    next_page_token is unset from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: :class:`GetRecipientSharePermissionsResponse`",
         "parameters": [
           {
             "name": "name",
@@ -1459,7 +1681,7 @@
           "sharing",
           "shares"
         ],
-        "description": "Creates a new share for data objects. Data objects can be added after creation with **update**. The\ncaller must be a metastore admin or have the **CREATE_SHARE** privilege on the metastore.\n\n:param name: str\n  Name of the share.\n:param comment: str (optional)\n  User-provided free-form text description.\n:param storage_root: str (optional)\n  Storage root URL for the share.\n\n:returns: :class:`ShareInfo`",
+        "description": "Creates a new share for data objects. Data objects can be added after creation with **update**. The\ncaller must be a metastore admin or have the **CREATE_SHARE** privilege on the metastore.\n\n:param name: str\n  Name of the share.\n:param comment: str (optional)\n  User-provided free-form text description.\n:param replication_config: :class:`ReplicationConfig` (optional)\n  Configuration for share replication.\n:param serverless_budget_policy_id: str (optional)\n  Serverless budget policy id (can only be created/updated when calling data-sharing service)\n  [Create,Update:IGN]\n:param storage_root: str (optional)\n  Storage root URL for the share.\n\n:returns: :class:`ShareInfo`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1473,6 +1695,36 @@
                   "comment": {
                     "type": "string",
                     "description": "User-provided free-form text description."
+                  },
+                  "replication_config": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean",
+                        "description": "Whether replication is enabled for the share."
+                      },
+                      "schedule": {
+                        "type": "object",
+                        "properties": {
+                          "interval": {
+                            "type": "object",
+                            "properties": {
+                              "duration": {
+                                "type": "string",
+                                "description": "How often the share's data should be replicated."
+                              }
+                            },
+                            "description": "Fixed-interval replication schedule."
+                          }
+                        },
+                        "description": "Optional schedule describing how often replication runs for this share. When unset, replication runs on a service-default schedule."
+                      }
+                    },
+                    "description": "Configuration for share replication."
+                  },
+                  "serverless_budget_policy_id": {
+                    "type": "string",
+                    "description": "Serverless budget policy id (can only be created/updated when calling data-sharing service) [Create,Update:IGN]"
                   },
                   "storage_root": {
                     "type": "string",
@@ -1525,8 +1777,17 @@
           "sharing",
           "shares"
         ],
-        "description": "Gets an array of data object shares from the metastore. If the caller has the USE_SHARE privilege on\nthe metastore, all shares are returned. Otherwise, only shares owned by the caller are returned. There\nis no guarantee of a specific ordering of the elements in the array.\n\n:param max_results: int (optional)\n  Maximum number of shares to return. - when set to 0, the page length is set to a server configured\n  value (recommended); - when set to a value greater than 0, the page length is the minimum of this\n  value and a server configured value; - when set to a value less than 0, an invalid parameter error\n  is returned; - If not set, all valid shares are returned (not recommended). - Note: The number of\n  returned shares might be less than the specified max_results size, even zero. The only definitive\n  indication that no further shares can be fetched is when the next_page_token is unset from the\n  response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: Iterator over :class:`ShareInfo`",
+        "description": "Gets an array of data object shares from the metastore. If the caller has the USE_SHARE privilege on\nthe metastore, all shares are returned. Otherwise, only shares owned by the caller are returned. There\nis no guarantee of a specific ordering of the elements in the array.\n\n:param filter_by_genie_space_id: str (optional)\n  When set, only shares that contain the Genie space with this id are returned. The filter is applied\n  at the data-sharing layer after MC returns the page, so the resulting page may be smaller than\n  ``max_results``. Intended for the provider Genie space page's \"Shared with N recipients\" lookup; not\n  optimized for providers with many shares.\n:param max_results: int (optional)\n  Maximum number of shares to return.\n\n  - when set to 0, the page length is set to a server configured value (recommended);\n  - when set to a value greater than 0, the page length is the minimum of this value and a server\n    configured value;\n  - when set to a value less than 0, an invalid parameter error is returned;\n  - If not set, all valid shares are returned (not recommended).\n  - Note: The number of returned shares might be less than the specified max_results size, even zero.\n    The only definitive indication that no further shares can be fetched is when the next_page_token\n    is unset from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: Iterator over :class:`ShareInfo`",
         "parameters": [
+          {
+            "name": "filter_by_genie_space_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "When set, only shares that contain the Genie space with this id are returned. The filter is applied at the data-sharing layer after MC returns the page, so the resulting page may be smaller than ``max_results``. Intended for the provider Genie space page's \"Shared with N recipients\" lookup; not optimized for providers with many shares."
+          },
           {
             "name": "max_results",
             "in": "query",
@@ -1691,7 +1952,7 @@
           "sharing",
           "shares"
         ],
-        "description": "Updates the share with the changes and data objects in the request. The caller must be the owner of\nthe share or a metastore admin.\n\nWhen the caller is a metastore admin, only the __owner__ field can be updated.\n\nIn the case the share name is changed, **updateShare** requires that the caller is the owner of the\nshare and has the CREATE_SHARE privilege.\n\nIf there are notebook files in the share, the __storage_root__ field cannot be updated.\n\nFor each table that is added through this method, the share owner must also have **SELECT** privilege\non the table. This privilege must be maintained indefinitely for recipients to be able to access the\ntable. Typically, you should use a group as the share owner.\n\nTable removals through **update** do not require additional privileges.\n\n:param name: str\n  The name of the share.\n:param comment: str (optional)\n  User-provided free-form text description.\n:param new_name: str (optional)\n  New name for the share.\n:param owner: str (optional)\n  Username of current owner of share.\n:param storage_root: str (optional)\n  Storage root URL for the share.\n:param updates: List[:class:`SharedDataObjectUpdate`] (optional)\n  Array of shared data object updates.\n\n:returns: :class:`ShareInfo`",
+        "description": "Updates the share with the changes and data objects in the request. The caller must be the owner of\nthe share or a metastore admin.\n\nWhen the caller is a metastore admin, only the **owner** field can be updated.\n\nIn the case the share name is changed, **updateShare** requires that the caller is the owner of the\nshare and has the CREATE_SHARE privilege.\n\nIf there are notebook files in the share, the **storage_root** field cannot be updated.\n\nFor each table that is added through this method, the share owner must also have **SELECT** privilege\non the table. This privilege must be maintained indefinitely for recipients to be able to access the\ntable. Typically, you should use a group as the share owner.\n\nTable removals through **update** do not require additional privileges.\n\n:param name: str\n  The name of the share.\n:param comment: str (optional)\n  User-provided free-form text description.\n:param new_name: str (optional)\n  New name for the share.\n:param owner: str (optional)\n  Username of current owner of share.\n:param serverless_budget_policy_id: str (optional)\n  Serverless budget policy id (can only be created/updated when calling data-sharing service)\n  [Create,Update:IGN]\n:param storage_root: str (optional)\n  Storage root URL for the share.\n:param updates: List[:class:`SharedDataObjectUpdate`] (optional)\n  Array of shared data object updates.\n\n:returns: :class:`ShareInfo`",
         "parameters": [
           {
             "name": "name",
@@ -1720,6 +1981,10 @@
                   "owner": {
                     "type": "string",
                     "description": "Username of current owner of share."
+                  },
+                  "serverless_budget_policy_id": {
+                    "type": "string",
+                    "description": "Serverless budget policy id (can only be created/updated when calling data-sharing service) [Create,Update:IGN]"
                   },
                   "storage_root": {
                     "type": "string",
@@ -1782,6 +2047,24 @@
                               ],
                               "description": "The type of the data object."
                             },
+                            "global_distribution_status": {
+                              "type": "object",
+                              "properties": {
+                                "eligible": {
+                                  "type": "boolean",
+                                  "description": "Whether this asset meets the structural requirements for global distribution (e.g. asset type, history sharing mode, storage scheme)."
+                                },
+                                "status": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "DISABLED",
+                                    "ENABLED"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "description": "Global Distribution status for the shared asset. Output only. Only set for TABLE objects; absent for all other data object types."
+                            },
                             "history_data_sharing_status": {
                               "type": "string",
                               "x-enum": [
@@ -1813,11 +2096,11 @@
                                         },
                                         "recipient_property_key": {
                                           "type": "string",
-                                          "description": "The key of a Delta Sharing recipient's property. For example \"databricks-account-id\". When this field is set, field `value` can not be set."
+                                          "description": "The key of a Delta Sharing recipient's property. For example \"databricks-account-id\". When this field is set, field ``value`` can not be set."
                                         },
                                         "value": {
                                           "type": "string",
-                                          "description": "The value of the partition column. When this value is not set, it means `null` value. When this field is set, field `recipient_property_key` can not be set."
+                                          "description": "The value of the partition column. When this value is not set, it means ``null`` value. When this field is set, field ``recipient_property_key`` can not be set."
                                         }
                                       }
                                     }
@@ -1828,11 +2111,11 @@
                             },
                             "shared_as": {
                               "type": "string",
-                              "description": "A user-provided alias name for table-like data objects within the share. Use this field for table-like objects (for example: TABLE, VIEW, MATERIALIZED_VIEW, STREAMING_TABLE, FOREIGN_TABLE). For non-table objects (for example: VOLUME, MODEL, NOTEBOOK_FILE, FUNCTION), use `string_shared_as` instead. Important: For non-table objects, this field must be omitted entirely. Format: Must be a 2-part name `<schema_name>.<table_name>` (e.g., \"sales_schema.orders_table\") - Both schema and table names must contain only alphanumeric characters and underscores - No periods, spaces, forward slashes, or control characters are allowed within each part - Do not include the catalog name (use 2 parts, not 3) Behavior: - If not provided, the service automatically generates the alias as `<schema>.<table>` from the object's original name - If you don't want to specify this field, omit it entirely from the request (do not pass an empty string) - The `shared_as` name must be unique within the share Examples: - Valid: \"analytics_schema.customer_view\" - Invalid: \"catalog.analytics_schema.customer_view\" (3 parts not allowed) - Invalid: \"analytics-schema.customer-view\" (hyphens not allowed)"
+                              "description": "A user-provided alias name for table-like data objects within the share. Use this field for table-like objects (for example: TABLE, VIEW, MATERIALIZED_VIEW, STREAMING_TABLE, FOREIGN_TABLE). For non-table objects (for example: VOLUME, MODEL, NOTEBOOK_FILE, FUNCTION), use ``string_shared_as`` instead. Important: For non-table objects, this field must be omitted entirely. Format: Must be a 2-part name ``<schema_name>.<table_name>`` (e.g., \"sales_schema.orders_table\") - Both schema and table names must contain only alphanumeric characters and underscores - No periods, spaces, forward slashes, or control characters are allowed within each part - Do not include the catalog name (use 2 parts, not 3) Behavior: - If not provided, the service automatically generates the alias as ``<schema>.<table>`` from the object's original name - If you don't want to specify this field, omit it entirely from the request (do not pass an empty string) - The ``shared_as`` name must be unique within the share Examples: - Valid: \"analytics_schema.customer_view\" - Invalid: \"catalog.analytics_schema.customer_view\" (3 parts not allowed) - Invalid: \"analytics-schema.customer-view\" (hyphens not allowed)"
                             },
                             "start_version": {
                               "type": "integer",
-                              "description": "The start version associated with the object. This allows data providers to control the lowest object version that is accessible by clients. If specified, clients can query snapshots or changes for versions >= start_version. If not specified, clients can only query starting from the version of the object at the time it was added to the share. NOTE: The start_version should be <= the `current` version of the object."
+                              "description": "The start version associated with the object. This allows data providers to control the lowest object version that is accessible by clients. If specified, clients can query snapshots or changes for versions >= start_version. If not specified, clients can only query starting from the version of the object at the time it was added to the share. NOTE: The start_version should be <= the ``current`` version of the object."
                             },
                             "status": {
                               "type": "string",
@@ -1844,7 +2127,7 @@
                             },
                             "string_shared_as": {
                               "type": "string",
-                              "description": "A user-provided alias name for non-table data objects within the share. Use this field for non-table objects (for example: VOLUME, MODEL, NOTEBOOK_FILE, FUNCTION). For table-like objects (for example: TABLE, VIEW, MATERIALIZED_VIEW, STREAMING_TABLE, FOREIGN_TABLE), use `shared_as` instead. Important: For table-like objects, this field must be omitted entirely. Format: - For VOLUME: Must be a 2-part name `<schema_name>.<volume_name>` (e.g., \"data_schema.ml_models\") - For FUNCTION: Must be a 2-part name `<schema_name>.<function_name>` (e.g., \"udf_schema.calculate_tax\") - For MODEL: Must be a 2-part name `<schema_name>.<model_name>` (e.g., \"models.prediction_model\") - For NOTEBOOK_FILE: Should be the notebook file name (e.g., \"analysis_notebook.py\") - All names must contain only alphanumeric characters and underscores - No periods, spaces, forward slashes, or control characters are allowed within each part Behavior: - If not provided, the service automatically generates the alias from the object's original name - If you don't want to specify this field, omit it entirely from the request (do not pass an empty string) - The `string_shared_as` name must be unique for objects of the same type within the share Examples: - Valid for VOLUME: \"data_schema.training_data\" - Valid for FUNCTION: \"analytics.calculate_revenue\" - Invalid: \"catalog.data_schema.training_data\" (3 parts not allowed for volumes) - Invalid: \"data-schema.training-data\" (hyphens not allowed)"
+                              "description": "A user-provided alias name for non-table data objects within the share. Use this field for non-table objects (for example: VOLUME, MODEL, NOTEBOOK_FILE, FUNCTION). For table-like objects (for example: TABLE, VIEW, MATERIALIZED_VIEW, STREAMING_TABLE, FOREIGN_TABLE), use ``shared_as`` instead. Important: For table-like objects, this field must be omitted entirely. Format: - For VOLUME: Must be a 2-part name ``<schema_name>.<volume_name>`` (e.g., \"data_schema.ml_models\") - For FUNCTION: Must be a 2-part name ``<schema_name>.<function_name>`` (e.g., \"udf_schema.calculate_tax\") - For MODEL: Must be a 2-part name ``<schema_name>.<model_name>`` (e.g., \"models.prediction_model\") - For NOTEBOOK_FILE: Should be the notebook file name (e.g., \"analysis_notebook.py\") - All names must contain only alphanumeric characters and underscores - No periods, spaces, forward slashes, or control characters are allowed within each part Behavior: - If not provided, the service automatically generates the alias from the object's original name - If you don't want to specify this field, omit it entirely from the request (do not pass an empty string) - The ``string_shared_as`` name must be unique for objects of the same type within the share Examples: - Valid for VOLUME: \"data_schema.training_data\" - Valid for FUNCTION: \"analytics.calculate_revenue\" - Invalid: \"catalog.data_schema.training_data\" (3 parts not allowed for volumes) - Invalid: \"data-schema.training-data\" (hyphens not allowed)"
                             }
                           },
                           "required": [
@@ -1902,7 +2185,7 @@
           "sharing",
           "shares"
         ],
-        "description": "Gets the permissions for a data share from the metastore. The caller must have the USE_SHARE privilege\non the metastore or be the owner of the share.\n\n:param name: str\n  The name of the Recipient.\n:param max_results: int (optional)\n  Maximum number of permissions to return. - when set to 0, the page length is set to a server\n  configured value (recommended); - when set to a value greater than 0, the page length is the minimum\n  of this value and a server configured value; - when set to a value less than 0, an invalid parameter\n  error is returned; - If not set, all valid permissions are returned (not recommended). - Note: The\n  number of returned permissions might be less than the specified max_results size, even zero. The\n  only definitive indication that no further permissions can be fetched is when the next_page_token is\n  unset from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: :class:`GetSharePermissionsResponse`",
+        "description": "Gets the permissions for a data share from the metastore. The caller must have the USE_SHARE privilege\non the metastore or be the owner of the share.\n\n:param name: str\n  The name of the Recipient.\n:param max_results: int (optional)\n  Maximum number of permissions to return.\n\n  - when set to 0, the page length is set to a server configured value (recommended);\n  - when set to a value greater than 0, the page length is the minimum of this value and a server\n    configured value;\n  - when set to a value less than 0, an invalid parameter error is returned;\n  - If not set, all valid permissions are returned (not recommended).\n  - Note: The number of returned permissions might be less than the specified max_results size, even\n    zero. The only definitive indication that no further permissions can be fetched is when the\n    next_page_token is unset from the response.\n:param page_token: str (optional)\n  Opaque pagination token to go to next page based on previous query.\n\n:returns: :class:`GetSharePermissionsResponse`",
         "parameters": [
           {
             "name": "name",
@@ -2003,6 +2286,10 @@
                         "principal": {
                           "type": "string",
                           "description": "The principal whose privileges we are changing. Only one of principal or principal_id should be specified, never both at the same time."
+                        },
+                        "principal_id": {
+                          "type": "integer",
+                          "description": "An opaque internal ID that identifies the principal whose privileges should be removed. This field is intended for removing privileges associated with a deleted user. When set, only the entries specified in the remove field are processed; any entries in the add field will be rejected. Only one of principal or principal_id should be specified, never both at the same time."
                         },
                         "remove": {
                           "type": "array",
@@ -2307,6 +2594,19 @@
           }
         }
       },
+      "GlobalDistributionStatus": {
+        "type": "object",
+        "properties": {
+          "eligible": {
+            "type": "boolean",
+            "description": "Whether this asset meets the structural requirements for global distribution (e.g. asset type, history sharing mode, storage scheme)."
+          },
+          "status": {
+            "$ref": "#/components/schemas/GlobalDistributionStatusStatus"
+          }
+        },
+        "description": "Status of Global Distribution for a shared asset."
+      },
       "IpAccessList": {
         "type": "object",
         "properties": {
@@ -2467,11 +2767,11 @@
           },
           "subject_claim": {
             "type": "string",
-            "description": "The claim that contains the subject of the token. Depending on the identity provider and the use case (U2M or M2M), this can vary: - For Entra ID (AAD): * U2M flow (group access): Use `groups`. * U2M flow (user access): Use `oid`. * M2M flow (OAuth App access): Use `azp`. - For other IdPs, refer to the specific IdP documentation. Supported `subject_claim` values are: - `oid`: Object ID of the user. - `azp`: Client ID of the OAuth app. - `groups`: Object ID of the group. - `sub`: Subject identifier for other use cases."
+            "description": "The claim that contains the subject of the token. Depending on the identity provider and the use case (U2M or M2M), this can vary: - For Entra ID (AAD): - U2M flow (group access): Use ``groups``. - U2M flow (user access): Use ``oid``. - M2M flow (OAuth App access): Use ``azp``. - For other IdPs, refer to the specific IdP documentation. Supported ``subject_claim`` values are: - ``oid``: Object ID of the user. - ``azp``: Client ID of the OAuth app. - ``groups``: Object ID of the group. - ``sub``: Subject identifier for other use cases."
           },
           "subject": {
             "type": "string",
-            "description": "The required token subject, as specified in the subject claim of federated tokens. The subject claim identifies the identity of the user or machine accessing the resource. Examples for Entra ID (AAD): - U2M flow (group access): If the subject claim is `groups`, this must be the Object ID of the group in Entra ID. - U2M flow (user access): If the subject claim is `oid`, this must be the Object ID of the user in Entra ID. - M2M flow (OAuth App access): If the subject claim is `azp`, this must be the client ID of the OAuth app registered in Entra ID."
+            "description": "The required token subject, as specified in the subject claim of federated tokens. The subject claim identifies the identity of the user or machine accessing the resource. Examples for Entra ID (AAD): - U2M flow (group access): If the subject claim is ``groups``, this must be the Object ID of the group in Entra ID. - U2M flow (user access): If the subject claim is ``oid``, this must be the Object ID of the user in Entra ID. - M2M flow (OAuth App access): If the subject claim is ``azp``, this must be the client ID of the OAuth app registered in Entra ID."
           },
           "audiences": {
             "type": "array",
@@ -2511,11 +2811,11 @@
           },
           "recipient_property_key": {
             "type": "string",
-            "description": "The key of a Delta Sharing recipient's property. For example \"databricks-account-id\". When this field is set, field `value` can not be set."
+            "description": "The key of a Delta Sharing recipient's property. For example \"databricks-account-id\". When this field is set, field ``value`` can not be set."
           },
           "value": {
             "type": "string",
-            "description": "The value of the partition column. When this value is not set, it means `null` value. When this field is set, field `recipient_property_key` can not be set."
+            "description": "The value of the partition column. When this value is not set, it means ``null`` value. When this field is set, field ``recipient_property_key`` can not be set."
           }
         }
       },
@@ -2532,6 +2832,10 @@
             "type": "string",
             "description": "The principal whose privileges we are changing. Only one of principal or principal_id should be specified, never both at the same time."
           },
+          "principal_id": {
+            "type": "integer",
+            "description": "An opaque internal ID that identifies the principal whose privileges should be removed. This field is intended for removing privileges associated with a deleted user. When set, only the entries specified in the remove field are processed; any entries in the add field will be rejected. Only one of principal or principal_id should be specified, never both at the same time."
+          },
           "remove": {
             "type": "array",
             "items": {
@@ -2546,6 +2850,10 @@
         "properties": {
           "principal": {
             "type": "string"
+          },
+          "principal_id": {
+            "type": "integer",
+            "description": "Unique identifier of the principal. For active principals, both ``principal`` and ``principal_id`` are present."
           },
           "privileges": {
             "type": "array",
@@ -2564,7 +2872,7 @@
           },
           "cloud": {
             "type": "string",
-            "description": "Cloud vendor of the provider's UC metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+            "description": "Cloud vendor of the provider's UC metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
           },
           "comment": {
             "type": "string",
@@ -2580,11 +2888,15 @@
           },
           "data_provider_global_metastore_id": {
             "type": "string",
-            "description": "The global UC metastore id of the data provider. This field is only present when the __authentication_type__ is **DATABRICKS**. The identifier is of format __cloud__:__region__:__metastore-uuid__."
+            "description": "The global UC metastore id of the data provider. This field is only present when the **authentication_type** is **DATABRICKS**. The identifier is of format **cloud**:**region**:**metastore-uuid**."
+          },
+          "email_recipient_id": {
+            "type": "string",
+            "description": "The ID of the email recipient this provider is being created to accept. Only valid on DATABRICKS CreateProvider when accepting an email invite."
           },
           "metastore_id": {
             "type": "string",
-            "description": "UUID of the provider's UC metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+            "description": "UUID of the provider's UC metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
           },
           "name": {
             "type": "string",
@@ -2596,15 +2908,15 @@
           },
           "recipient_profile": {
             "$ref": "#/components/schemas/RecipientProfile",
-            "description": "The recipient profile. This field is only present when the authentication_type is `TOKEN` or `OAUTH_CLIENT_CREDENTIALS`."
+            "description": "The recipient profile. This field is only present when the authentication_type is ``TOKEN`` or ``OAUTH_CLIENT_CREDENTIALS``."
           },
           "recipient_profile_str": {
             "type": "string",
-            "description": "This field is required when the __authentication_type__ is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
+            "description": "This field is required when the **authentication_type** is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
           },
           "region": {
             "type": "string",
-            "description": "Cloud region of the provider's UC metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+            "description": "Cloud region of the provider's UC metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
           },
           "updated_at": {
             "type": "integer",
@@ -2634,12 +2946,26 @@
             "type": "string",
             "description": "Full activation url to retrieve the access token. It will be empty if the token is already retrieved."
           },
+          "allowed_acceptance_types": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthenticationType"
+            },
+            "description": "Authentication types the invitee may choose from when activating. Each value must be TOKEN or DATABRICKS. Empty means all supported types are allowed. This field is only present when the **authentication_type** is **EMAIL**."
+          },
+          "allowed_data_recipient_global_metastore_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Optional allowlist of the data recipient's global metastore IDs permitted to accept the invite with the DATABRICKS acceptance type. Each ID is of the form **cloud**:**region**:**metastore-uuid**. Empty means any metastore is allowed. If non-empty, **allowed_acceptance_types** must include **DATABRICKS**. This field is only present when the **authentication_type** is **EMAIL**."
+          },
           "authentication_type": {
             "$ref": "#/components/schemas/AuthenticationType"
           },
           "cloud": {
             "type": "string",
-            "description": "Cloud vendor of the recipient's Unity Catalog Metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+            "description": "Cloud vendor of the recipient's Unity Catalog Metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
           },
           "comment": {
             "type": "string",
@@ -2655,7 +2981,11 @@
           },
           "data_recipient_global_metastore_id": {
             "type": "string",
-            "description": "The global Unity Catalog metastore id provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**. The identifier is of format __cloud__:__region__:__metastore-uuid__."
+            "description": "The global Unity Catalog metastore id provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**. The identifier is of format **cloud**:**region**:**metastore-uuid**."
+          },
+          "email": {
+            "type": "string",
+            "description": "The invited email address. This field is only present when the **authentication_type** is **EMAIL**. The 320-character cap follows RFC 5321 (64-octet local-part + ``@`` + 255-octet domain)."
           },
           "expiration_time": {
             "type": "integer",
@@ -2671,7 +3001,7 @@
           },
           "metastore_id": {
             "type": "string",
-            "description": "Unique identifier of recipient's Unity Catalog Metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+            "description": "Unique identifier of recipient's Unity Catalog Metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
           },
           "name": {
             "type": "string",
@@ -2687,18 +3017,18 @@
           },
           "region": {
             "type": "string",
-            "description": "Cloud region of the recipient's Unity Catalog Metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+            "description": "Cloud region of the recipient's Unity Catalog Metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
           },
           "sharing_code": {
             "type": "string",
-            "description": "The one-time sharing code provided by the data recipient. This field is only present when the __authentication_type__ is **DATABRICKS**."
+            "description": "The one-time sharing code provided by the data recipient. This field is only present when the **authentication_type** is **DATABRICKS**."
           },
           "tokens": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/RecipientTokenInfo"
             },
-            "description": "This field is only present when the __authentication_type__ is **TOKEN**."
+            "description": "This field is only present when the **authentication_type** is **TOKEN**."
           },
           "updated_at": {
             "type": "integer",
@@ -2770,6 +3100,40 @@
           }
         }
       },
+      "ReplicationConfig": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether replication is enabled for the share."
+          },
+          "schedule": {
+            "$ref": "#/components/schemas/ReplicationSchedule",
+            "description": "Optional schedule describing how often replication runs for this share. When unset, replication runs on a service-default schedule."
+          }
+        },
+        "description": "Configuration for Delta Sharing replication on a share. When enabled, the share's data is copied\n    into each recipient's region so recipients can query the share locally."
+      },
+      "ReplicationInterval": {
+        "type": "object",
+        "properties": {
+          "duration": {
+            "type": "string",
+            "description": "How often the share's data should be replicated."
+          }
+        },
+        "description": "Fixed-interval replication schedule variant. The duration must be between 30 minutes and 24\n    hours; values outside that range are rejected at the API boundary."
+      },
+      "ReplicationSchedule": {
+        "type": "object",
+        "properties": {
+          "interval": {
+            "$ref": "#/components/schemas/ReplicationInterval",
+            "description": "Fixed-interval replication schedule."
+          }
+        },
+        "description": "Schedule for share replication. Today only a fixed ``interval`` variant is supported; the\n    ``variant`` oneof leaves room for future variants (e.g. cron) without API churn. Each arm is\n    wrapped in a sub-message so variant-specific metadata (e.g. jitter, drift tolerance, timezone)\n    can be added later without breaking the wire format."
+      },
       "RetrieveTokenResponse": {
         "type": "object",
         "properties": {
@@ -2801,7 +3165,7 @@
         "required": [
           "properties"
         ],
-        "description": "An object with __properties__ containing map of key-value properties attached to the securable."
+        "description": "An object with **properties** containing map of key-value properties attached to the securable."
       },
       "Share": {
         "type": "object",
@@ -2842,6 +3206,14 @@
           "owner": {
             "type": "string",
             "description": "Username of current owner of share."
+          },
+          "replication_config": {
+            "$ref": "#/components/schemas/ReplicationConfig",
+            "description": "Configuration for share replication."
+          },
+          "serverless_budget_policy_id": {
+            "type": "string",
+            "description": "Serverless budget policy id (can only be created/updated when calling data-sharing service) [Create,Update:IGN]"
           },
           "storage_location": {
             "type": "string",
@@ -2906,6 +3278,10 @@
             "$ref": "#/components/schemas/SharedDataObjectDataObjectType",
             "description": "The type of the data object."
           },
+          "global_distribution_status": {
+            "$ref": "#/components/schemas/GlobalDistributionStatus",
+            "description": "Global Distribution status for the shared asset. Output only. Only set for TABLE objects; absent for all other data object types."
+          },
           "history_data_sharing_status": {
             "$ref": "#/components/schemas/SharedDataObjectHistoryDataSharingStatus",
             "description": "Whether to enable or disable sharing of data history. If not specified, the default is **DISABLED**."
@@ -2919,11 +3295,11 @@
           },
           "shared_as": {
             "type": "string",
-            "description": "A user-provided alias name for table-like data objects within the share. Use this field for table-like objects (for example: TABLE, VIEW, MATERIALIZED_VIEW, STREAMING_TABLE, FOREIGN_TABLE). For non-table objects (for example: VOLUME, MODEL, NOTEBOOK_FILE, FUNCTION), use `string_shared_as` instead. Important: For non-table objects, this field must be omitted entirely. Format: Must be a 2-part name `<schema_name>.<table_name>` (e.g., \"sales_schema.orders_table\") - Both schema and table names must contain only alphanumeric characters and underscores - No periods, spaces, forward slashes, or control characters are allowed within each part - Do not include the catalog name (use 2 parts, not 3) Behavior: - If not provided, the service automatically generates the alias as `<schema>.<table>` from the object's original name - If you don't want to specify this field, omit it entirely from the request (do not pass an empty string) - The `shared_as` name must be unique within the share Examples: - Valid: \"analytics_schema.customer_view\" - Invalid: \"catalog.analytics_schema.customer_view\" (3 parts not allowed) - Invalid: \"analytics-schema.customer-view\" (hyphens not allowed)"
+            "description": "A user-provided alias name for table-like data objects within the share. Use this field for table-like objects (for example: TABLE, VIEW, MATERIALIZED_VIEW, STREAMING_TABLE, FOREIGN_TABLE). For non-table objects (for example: VOLUME, MODEL, NOTEBOOK_FILE, FUNCTION), use ``string_shared_as`` instead. Important: For non-table objects, this field must be omitted entirely. Format: Must be a 2-part name ``<schema_name>.<table_name>`` (e.g., \"sales_schema.orders_table\") - Both schema and table names must contain only alphanumeric characters and underscores - No periods, spaces, forward slashes, or control characters are allowed within each part - Do not include the catalog name (use 2 parts, not 3) Behavior: - If not provided, the service automatically generates the alias as ``<schema>.<table>`` from the object's original name - If you don't want to specify this field, omit it entirely from the request (do not pass an empty string) - The ``shared_as`` name must be unique within the share Examples: - Valid: \"analytics_schema.customer_view\" - Invalid: \"catalog.analytics_schema.customer_view\" (3 parts not allowed) - Invalid: \"analytics-schema.customer-view\" (hyphens not allowed)"
           },
           "start_version": {
             "type": "integer",
-            "description": "The start version associated with the object. This allows data providers to control the lowest object version that is accessible by clients. If specified, clients can query snapshots or changes for versions >= start_version. If not specified, clients can only query starting from the version of the object at the time it was added to the share. NOTE: The start_version should be <= the `current` version of the object."
+            "description": "The start version associated with the object. This allows data providers to control the lowest object version that is accessible by clients. If specified, clients can query snapshots or changes for versions >= start_version. If not specified, clients can only query starting from the version of the object at the time it was added to the share. NOTE: The start_version should be <= the ``current`` version of the object."
           },
           "status": {
             "$ref": "#/components/schemas/SharedDataObjectStatus",
@@ -2931,7 +3307,7 @@
           },
           "string_shared_as": {
             "type": "string",
-            "description": "A user-provided alias name for non-table data objects within the share. Use this field for non-table objects (for example: VOLUME, MODEL, NOTEBOOK_FILE, FUNCTION). For table-like objects (for example: TABLE, VIEW, MATERIALIZED_VIEW, STREAMING_TABLE, FOREIGN_TABLE), use `shared_as` instead. Important: For table-like objects, this field must be omitted entirely. Format: - For VOLUME: Must be a 2-part name `<schema_name>.<volume_name>` (e.g., \"data_schema.ml_models\") - For FUNCTION: Must be a 2-part name `<schema_name>.<function_name>` (e.g., \"udf_schema.calculate_tax\") - For MODEL: Must be a 2-part name `<schema_name>.<model_name>` (e.g., \"models.prediction_model\") - For NOTEBOOK_FILE: Should be the notebook file name (e.g., \"analysis_notebook.py\") - All names must contain only alphanumeric characters and underscores - No periods, spaces, forward slashes, or control characters are allowed within each part Behavior: - If not provided, the service automatically generates the alias from the object's original name - If you don't want to specify this field, omit it entirely from the request (do not pass an empty string) - The `string_shared_as` name must be unique for objects of the same type within the share Examples: - Valid for VOLUME: \"data_schema.training_data\" - Valid for FUNCTION: \"analytics.calculate_revenue\" - Invalid: \"catalog.data_schema.training_data\" (3 parts not allowed for volumes) - Invalid: \"data-schema.training-data\" (hyphens not allowed)"
+            "description": "A user-provided alias name for non-table data objects within the share. Use this field for non-table objects (for example: VOLUME, MODEL, NOTEBOOK_FILE, FUNCTION). For table-like objects (for example: TABLE, VIEW, MATERIALIZED_VIEW, STREAMING_TABLE, FOREIGN_TABLE), use ``shared_as`` instead. Important: For table-like objects, this field must be omitted entirely. Format: - For VOLUME: Must be a 2-part name ``<schema_name>.<volume_name>`` (e.g., \"data_schema.ml_models\") - For FUNCTION: Must be a 2-part name ``<schema_name>.<function_name>`` (e.g., \"udf_schema.calculate_tax\") - For MODEL: Must be a 2-part name ``<schema_name>.<model_name>`` (e.g., \"models.prediction_model\") - For NOTEBOOK_FILE: Should be the notebook file name (e.g., \"analysis_notebook.py\") - All names must contain only alphanumeric characters and underscores - No periods, spaces, forward slashes, or control characters are allowed within each part Behavior: - If not provided, the service automatically generates the alias from the object's original name - If you don't want to specify this field, omit it entirely from the request (do not pass an empty string) - The ``string_shared_as`` name must be unique for objects of the same type within the share Examples: - Valid for VOLUME: \"data_schema.training_data\" - Valid for FUNCTION: \"analytics.calculate_revenue\" - Invalid: \"catalog.data_schema.training_data\" (3 parts not allowed for volumes) - Invalid: \"data-schema.training-data\" (hyphens not allowed)"
           }
         },
         "required": [
@@ -2953,12 +3329,23 @@
       "Table": {
         "type": "object",
         "properties": {
+          "accessModes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "comment": {
-            "type": "string"
+            "type": "string",
+            "description": "The comment of the table."
           },
           "id": {
             "type": "string",
             "description": "The id of the table."
+          },
+          "location": {
+            "type": "string",
+            "description": "The cloud storage location of the table for open sharing."
           },
           "materialization_namespace": {
             "type": "string",
@@ -3037,6 +3424,7 @@
         "type": "string",
         "x-enum": [
           "DATABRICKS",
+          "EMAIL",
           "OAUTH_CLIENT_CREDENTIALS",
           "OIDC_FEDERATION",
           "TOKEN"
@@ -3055,6 +3443,8 @@
           "DECIMAL",
           "DOUBLE",
           "FLOAT",
+          "GEOGRAPHY",
+          "GEOMETRY",
           "INT",
           "INTERVAL",
           "LONG",
@@ -3085,6 +3475,14 @@
         "x-enum": [
           "COLUMN",
           "PARAM"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "GlobalDistributionStatusStatus": {
+        "type": "string",
+        "x-enum": [
+          "DISABLED",
+          "ENABLED"
         ],
         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },

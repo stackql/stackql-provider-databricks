@@ -71,7 +71,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "private_access_settings_id",
     "type": "string",
-    "description": "ID of the workspace's private access settings object. Only used for PrivateLink. You must specify this ID if you are using [AWS PrivateLink] for either front-end (user-to-workspace connection), back-end (data plane to control plane connection), or both connection types. Before configuring PrivateLink, read the [Databricks article about PrivateLink].\", [AWS PrivateLink]: https://aws.amazon.com/privatelink/ [Databricks article about PrivateLink]: https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html"
+    "description": "ID of the workspace's private access settings object. Only used for PrivateLink. You must specify this ID if you are using `AWS PrivateLink <https://aws.amazon.com/privatelink/>`__ for either front-end (user-to-workspace connection), back-end (data plane to control plane connection), or both connection types. Before configuring PrivateLink, read the `Databricks article about PrivateLink <https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html>`__.\","
   },
   {
     "name": "storage_configuration_id",
@@ -123,7 +123,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "cloud",
     "type": "string",
-    "description": "The cloud name. This field can have values like `azure`, `gcp`."
+    "description": "The cloud name. This field can have values like ``azure``, ``gcp``."
   },
   {
     "name": "cloud_resource_container",
@@ -206,12 +206,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "location",
     "type": "string",
-    "description": "The Google Cloud region of the workspace data plane in your Google account (for example, `us-east4`)."
+    "description": "The Google Cloud region of the workspace data plane in your Google account (for example, ``us-east4``)."
   },
   {
     "name": "network",
     "type": "object",
-    "description": "The network configuration for the workspace. DEPRECATED. Use `network_id` instead.",
+    "description": "The network configuration for the workspace. DEPRECATED. Use ``network_id`` instead.",
     "children": [
       {
         "name": "gcp_common_network_config",
@@ -312,7 +312,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "private_access_settings_id",
     "type": "string",
-    "description": "ID of the workspace's private access settings object. Only used for PrivateLink. You must specify this ID if you are using [AWS PrivateLink] for either front-end (user-to-workspace connection), back-end (data plane to control plane connection), or both connection types. Before configuring PrivateLink, read the [Databricks article about PrivateLink].\", [AWS PrivateLink]: https://aws.amazon.com/privatelink/ [Databricks article about PrivateLink]: https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html"
+    "description": "ID of the workspace's private access settings object. Only used for PrivateLink. You must specify this ID if you are using `AWS PrivateLink <https://aws.amazon.com/privatelink/>`__ for either front-end (user-to-workspace connection), back-end (data plane to control plane connection), or both connection types. Before configuring PrivateLink, read the `Databricks article about PrivateLink <https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html>`__.\","
   },
   {
     "name": "storage_configuration_id",
@@ -364,7 +364,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "cloud",
     "type": "string",
-    "description": "The cloud name. This field can have values like `azure`, `gcp`."
+    "description": "The cloud name. This field can have values like ``azure``, ``gcp``."
   },
   {
     "name": "cloud_resource_container",
@@ -447,12 +447,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "location",
     "type": "string",
-    "description": "The Google Cloud region of the workspace data plane in your Google account (for example, `us-east4`)."
+    "description": "The Google Cloud region of the workspace data plane in your Google account (for example, ``us-east4``)."
   },
   {
     "name": "network",
     "type": "object",
-    "description": "The network configuration for the workspace. DEPRECATED. Use `network_id` instead.",
+    "description": "The network configuration for the workspace. DEPRECATED. Use ``network_id`` instead.",
     "children": [
       {
         "name": "gcp_common_network_config",
@@ -603,7 +603,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future.</td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of ``*`` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the API changes in the future.</td>
 </tr>
 </tbody>
 </table>
@@ -713,6 +713,7 @@ Creates a new workspace using a credential configuration and a storage configura
 ```sql
 INSERT INTO databricks_account.provisioning.workspaces (
 aws_region,
+azure_workspace_info,
 cloud,
 cloud_resource_container,
 compute_mode,
@@ -734,6 +735,7 @@ account_id
 )
 SELECT 
 '{{ aws_region }}',
+'{{ azure_workspace_info }}',
 '{{ cloud }}',
 '{{ cloud_resource_container }}',
 '{{ compute_mode }}',
@@ -793,10 +795,14 @@ workspace_status_message
       description: Required parameter for the workspaces resource.
     - name: aws_region
       value: "{{ aws_region }}"
+    - name: azure_workspace_info
+      value:
+        resource_group: "{{ resource_group }}"
+        subscription_id: "{{ subscription_id }}"
     - name: cloud
       value: "{{ cloud }}"
       description: |
-        DEPRECATED: This field is being ignored by the server and will be removed in the future. The cloud name. This field always has the value \`gcp\`.
+        DEPRECATED: This field is being ignored by the server and will be removed in the future. The cloud name. This field always has the value \`\`gcp\`\`.
     - name: cloud_resource_container
       value:
         gcp:
@@ -804,7 +810,7 @@ workspace_status_message
     - name: compute_mode
       value: "{{ compute_mode }}"
       description: |
-        If the compute mode is \`SERVERLESS\`, a serverless workspace is created that comes pre-configured with serverless compute and default storage, providing a fully-managed, enterprise-ready SaaS experience. This means you don't need to provide any resources managed by you, such as credentials, storage, or network. If the compute mode is \`HYBRID\` (which is the default option), a classic workspace is created that uses customer-managed resources.
+        If the compute mode is \`\`SERVERLESS\`\`, a serverless workspace is created that comes pre-configured with serverless compute and default storage, providing a fully-managed, enterprise-ready SaaS experience. This means you don't need to provide any resources managed by you, such as credentials, storage, or network. If the compute mode is \`\`HYBRID\`\` (which is the default option), a classic workspace is created that uses customer-managed resources.
     - name: credentials_id
       value: "{{ credentials_id }}"
       description: |
@@ -833,7 +839,7 @@ workspace_status_message
     - name: location
       value: "{{ location }}"
       description: |
-        The Google Cloud region of the workspace data plane in your Google account (for example, \`us-east4\`).
+        The Google Cloud region of the workspace data plane in your Google account (for example, \`\`us-east4\`\`).
     - name: managed_services_customer_managed_key_id
       value: "{{ managed_services_customer_managed_key_id }}"
       description: |
@@ -875,7 +881,7 @@ workspace_status_message
     - name: private_access_settings_id
       value: "{{ private_access_settings_id }}"
       description: |
-        ID of the workspace's private access settings object. Only used for PrivateLink. You must specify this ID if you are using [AWS PrivateLink] for either front-end (user-to-workspace connection), back-end (data plane to control plane connection), or both connection types. Before configuring PrivateLink, read the [Databricks article about PrivateLink].", [AWS PrivateLink]: https://aws.amazon.com/privatelink/ [Databricks article about PrivateLink]: https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html
+        ID of the workspace's private access settings object. Only used for PrivateLink. You must specify this ID if you are using \`AWS PrivateLink <https://aws.amazon.com/privatelink/>\`__ for either front-end (user-to-workspace connection), back-end (data plane to control plane connection), or both connection types. Before configuring PrivateLink, read the \`Databricks article about PrivateLink <https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html>\`__.",
     - name: storage_configuration_id
       value: "{{ storage_configuration_id }}"
       description: |

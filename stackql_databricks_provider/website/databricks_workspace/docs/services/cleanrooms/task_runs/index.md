@@ -53,6 +53,11 @@ The following fields are returned by `SELECT` queries:
     "description": "Name of the output schema associated with the clean rooms notebook task run."
   },
   {
+    "name": "shared_output_schema_name",
+    "type": "string",
+    "description": "Name of the shared output schema associated with the clean rooms notebook task run. This schema is accessible by all collaborators when enable_shared_output is true."
+  },
+  {
     "name": "collaborator_job_run_info",
     "type": "object",
     "description": "Job run info of the task in the runner's local workspace. This field is only included in the LIST API. if the task was run within the same workspace the API is being called. If the task run was in a different workspace under the same metastore, only the workspace_id is included.",
@@ -108,6 +113,11 @@ The following fields are returned by `SELECT` queries:
     "name": "run_duration",
     "type": "integer",
     "description": "Duration of the task run, in milliseconds."
+  },
+  {
+    "name": "shared_output_schema_expiration_time",
+    "type": "integer",
+    "description": "Expiration time of the shared output schema of the task run (if any), in epoch milliseconds."
   },
   {
     "name": "start_time",
@@ -200,12 +210,14 @@ List all the historical notebook task runs in a clean room.
 SELECT
 notebook_name,
 output_schema_name,
+shared_output_schema_name,
 collaborator_job_run_info,
 notebook_etag,
 notebook_job_run_state,
 notebook_updated_at,
 output_schema_expiration_time,
 run_duration,
+shared_output_schema_expiration_time,
 start_time
 FROM databricks_workspace.cleanrooms.task_runs
 WHERE clean_room_name = '{{ clean_room_name }}' -- required

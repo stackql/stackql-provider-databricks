@@ -93,7 +93,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "access_connector_id",
         "type": "string",
-        "description": "The Azure resource ID of the Azure Databricks Access Connector. Use the format `/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.Databricks/accessConnectors/&#123;connector-name&#125;`."
+        "description": "The Azure resource ID of the Azure Databricks Access Connector. Use the format ``/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.Databricks/accessConnectors/&#123;connector-name&#125;``."
       },
       {
         "name": "credential_id",
@@ -103,7 +103,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "managed_identity_id",
         "type": "string",
-        "description": "The Azure resource ID of the managed identity. Use the format, `/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/&#123;identity-name&#125;` This is only available for user-assgined identities. For system-assigned identities, the access_connector_id is used to identify the identity. If this field is not provided, then we assume the AzureManagedIdentity is using the system-assigned identity."
+        "description": "The Azure resource ID of the managed identity. Use the format, ``/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/&#123;identity-name&#125;`` This is only available for user-assgined identities. For system-assigned identities, the access_connector_id is used to identify the identity. If this field is not provided, then we assume the AzureManagedIdentity is using the system-assigned identity."
       }
     ]
   },
@@ -186,7 +186,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN, ISOLATION_MODE_OPEN_IN_ACCOUNT)"
   },
   {
     "name": "owner",
@@ -268,7 +268,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "access_connector_id",
         "type": "string",
-        "description": "The Azure resource ID of the Azure Databricks Access Connector. Use the format `/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.Databricks/accessConnectors/&#123;connector-name&#125;`."
+        "description": "The Azure resource ID of the Azure Databricks Access Connector. Use the format ``/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.Databricks/accessConnectors/&#123;connector-name&#125;``."
       },
       {
         "name": "credential_id",
@@ -278,7 +278,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "managed_identity_id",
         "type": "string",
-        "description": "The Azure resource ID of the managed identity. Use the format, `/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/&#123;identity-name&#125;` This is only available for user-assgined identities. For system-assigned identities, the access_connector_id is used to identify the identity. If this field is not provided, then we assume the AzureManagedIdentity is using the system-assigned identity."
+        "description": "The Azure resource ID of the managed identity. Use the format, ``/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/&#123;identity-name&#125;`` This is only available for user-assgined identities. For system-assigned identities, the access_connector_id is used to identify the identity. If this field is not provided, then we assume the AzureManagedIdentity is using the system-assigned identity."
       }
     ]
   },
@@ -361,7 +361,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN, ISOLATION_MODE_OPEN_IN_ACCOUNT)"
   },
   {
     "name": "owner",
@@ -426,7 +426,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-account_id"><code>account_id</code></a>, <a href="#parameter-metastore_id"><code>metastore_id</code></a></td>
     <td></td>
-    <td>Creates a new storage credential. The request object is specific to the cloud: - **AwsIamRole** for</td>
+    <td>Creates a new storage credential. The request object is specific to the cloud:</td>
 </tr>
 <tr>
     <td><a href="#account_storage_credentials_update"><CopyableCode code="account_storage_credentials_update" /></a></td>
@@ -565,7 +565,7 @@ AND metastore_id = '{{ metastore_id }}' -- required
 >
 <TabItem value="account_storage_credentials_create">
 
-Creates a new storage credential. The request object is specific to the cloud: - **AwsIamRole** for
+Creates a new storage credential. The request object is specific to the cloud:
 
 ```sql
 INSERT INTO databricks_account.catalog.account_storage_credentials (

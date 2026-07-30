@@ -36,7 +36,8 @@ The following fields are returned by `SELECT` queries:
 <Tabs
     defaultValue="get"
     values={[
-        { label: 'get', value: 'get' }
+        { label: 'get', value: 'get' },
+        { label: 'get_batch', value: 'get_batch' }
     ]}
 >
 <TabItem value="get">
@@ -201,6 +202,161 @@ The following fields are returned by `SELECT` queries:
   }
 ]} />
 </TabItem>
+<TabItem value="get_batch">
+
+<SchemaTable fields={[
+  {
+    "name": "data",
+    "type": "object",
+    "description": "The params and metrics attached to the logged model.",
+    "children": [
+      {
+        "name": "metrics",
+        "type": "array",
+        "description": "Performance metrics linked to the model.",
+        "children": [
+          {
+            "name": "dataset_digest",
+            "type": "string",
+            "description": "The dataset digest of the dataset associated with the metric, e.g. an md5 hash of the dataset that uniquely identifies it within datasets of the same name."
+          },
+          {
+            "name": "dataset_name",
+            "type": "string",
+            "description": "The name of the dataset associated with the metric. E.g. “my.uc.table@2” “nyc-taxi-dataset”, “fantastic-elk-3”"
+          },
+          {
+            "name": "key",
+            "type": "string",
+            "description": "The key identifying the metric."
+          },
+          {
+            "name": "model_id",
+            "type": "string",
+            "description": "The ID of the logged model or registered model version associated with the metric, if applicable."
+          },
+          {
+            "name": "run_id",
+            "type": "string",
+            "description": "The ID of the run containing the metric."
+          },
+          {
+            "name": "step",
+            "type": "integer",
+            "description": "The step at which the metric was logged."
+          },
+          {
+            "name": "timestamp",
+            "type": "integer",
+            "description": "The timestamp at which the metric was recorded."
+          },
+          {
+            "name": "value",
+            "type": "number",
+            "description": "The value of the metric."
+          }
+        ]
+      },
+      {
+        "name": "params",
+        "type": "array",
+        "description": "Immutable string key-value pairs of the model.",
+        "children": [
+          {
+            "name": "key",
+            "type": "string",
+            "description": "The key identifying this param."
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The value of this param."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "info",
+    "type": "object",
+    "description": "The logged model attributes such as model ID, status, tags, etc.",
+    "children": [
+      {
+        "name": "artifact_uri",
+        "type": "string",
+        "description": "The URI of the directory where model artifacts are stored."
+      },
+      {
+        "name": "creation_timestamp_ms",
+        "type": "integer",
+        "description": "The timestamp when the model was created in milliseconds since the UNIX epoch."
+      },
+      {
+        "name": "creator_id",
+        "type": "integer",
+        "description": "The ID of the user or principal that created the model."
+      },
+      {
+        "name": "experiment_id",
+        "type": "string",
+        "description": "The ID of the experiment that owns the model."
+      },
+      {
+        "name": "last_updated_timestamp_ms",
+        "type": "integer",
+        "description": "The timestamp when the model was last updated in milliseconds since the UNIX epoch."
+      },
+      {
+        "name": "model_id",
+        "type": "string",
+        "description": "The unique identifier for the logged model."
+      },
+      {
+        "name": "model_type",
+        "type": "string",
+        "description": "The type of model, such as ``\"Agent\"``, ``\"Classifier\"``, ``\"LLM\"``."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "description": "The name of the model."
+      },
+      {
+        "name": "source_run_id",
+        "type": "string",
+        "description": "The ID of the run that created the model."
+      },
+      {
+        "name": "status",
+        "type": "string",
+        "description": "The status of whether or not the model is ready for use. (LOGGED_MODEL_PENDING, LOGGED_MODEL_READY, LOGGED_MODEL_UPLOAD_FAILED)"
+      },
+      {
+        "name": "status_message",
+        "type": "string",
+        "description": "Details on the current model status."
+      },
+      {
+        "name": "tags",
+        "type": "array",
+        "description": "Mutable string key-value pairs set on the model.",
+        "children": [
+          {
+            "name": "key",
+            "type": "string",
+            "description": "The tag key."
+          },
+          {
+            "name": "value",
+            "type": "string",
+            "description": "The tag value."
+          }
+        ]
+      }
+    ]
+  }
+]} />
+</TabItem>
 </Tabs>
 
 ## Methods
@@ -224,6 +380,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-model_id"><code>model_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
     <td>Get a logged model.</td>
+</tr>
+<tr>
+    <td><a href="#get_batch"><CopyableCode code="get_batch" /></a></td>
+    <td><CopyableCode code="select" /></td>
+    <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td><a href="#parameter-model_ids"><code>model_ids</code></a></td>
+    <td>Batch endpoint for getting logged models from a list of model IDs</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -305,6 +468,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>The tag key.</td>
 </tr>
+<tr id="parameter-model_ids">
+    <td><CopyableCode code="model_ids" /></td>
+    <td><code>array</code></td>
+    <td>The IDs of the logged models to retrieve. Max threshold is 100.</td>
+</tr>
 </tbody>
 </table>
 
@@ -313,7 +481,8 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <Tabs
     defaultValue="get"
     values={[
-        { label: 'get', value: 'get' }
+        { label: 'get', value: 'get' },
+        { label: 'get_batch', value: 'get_batch' }
     ]}
 >
 <TabItem value="get">
@@ -326,6 +495,20 @@ model
 FROM databricks_workspace.ml.logged_models
 WHERE model_id = '{{ model_id }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
+;
+```
+</TabItem>
+<TabItem value="get_batch">
+
+Batch endpoint for getting logged models from a list of model IDs
+
+```sql
+SELECT
+data,
+info
+FROM databricks_workspace.ml.logged_models
+WHERE deployment_name = '{{ deployment_name }}' -- required
+AND model_ids = '{{ model_ids }}'
 ;
 ```
 </TabItem>

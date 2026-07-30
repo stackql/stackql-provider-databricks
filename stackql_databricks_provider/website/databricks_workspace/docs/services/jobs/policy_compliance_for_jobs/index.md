@@ -111,7 +111,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-job_id"><code>job_id</code></a></td>
     <td></td>
-    <td>Updates a job so the job clusters that are created when running the job (specified in `new_cluster`)</td>
+    <td>Updates a job so the job clusters that are created when running the job (specified in ``new_cluster``)</td>
 </tr>
 </tbody>
 </table>
@@ -152,7 +152,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>A page token that can be used to navigate to the next page or previous page as returned by `next_page_token` or `prev_page_token`.</td>
+    <td>A page token that can be used to navigate to the next page or previous page as returned by ``next_page_token`` or ``prev_page_token``.</td>
 </tr>
 </tbody>
 </table>
@@ -211,7 +211,7 @@ AND page_token = '{{ page_token }}'
 >
 <TabItem value="enforce">
 
-Updates a job so the job clusters that are created when running the job (specified in `new_cluster`)
+Updates a job so the job clusters that are created when running the job (specified in ``new_cluster``)
 
 ```sql
 INSERT INTO databricks_workspace.jobs.policy_compliance_for_jobs (

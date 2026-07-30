@@ -66,7 +66,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "private_access_level",
     "type": "string",
-    "description": "The private access level controls which VPC endpoints can connect to the UI or API of any workspace that attaches this private access settings object. `ACCOUNT` level access (the default) allows only VPC endpoints that are registered in your Databricks account connect to your workspace. `ENDPOINT` level access allows only specified VPC endpoints connect to your workspace. For details, see allowed_vpc_endpoint_ids. (ACCOUNT, ENDPOINT)"
+    "description": "The private access level controls which VPC endpoints can connect to the UI or API of any workspace that attaches this private access settings object. ``ACCOUNT`` level access (the default) allows only VPC endpoints that are registered in your Databricks account connect to your workspace. ``ENDPOINT`` level access allows only specified VPC endpoints connect to your workspace. For details, see allowed_vpc_endpoint_ids. (ACCOUNT, ENDPOINT)"
   },
   {
     "name": "public_access_enabled",
@@ -106,7 +106,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "private_access_level",
     "type": "string",
-    "description": "The private access level controls which VPC endpoints can connect to the UI or API of any workspace that attaches this private access settings object. `ACCOUNT` level access (the default) allows only VPC endpoints that are registered in your Databricks account connect to your workspace. `ENDPOINT` level access allows only specified VPC endpoints connect to your workspace. For details, see allowed_vpc_endpoint_ids. (ACCOUNT, ENDPOINT)"
+    "description": "The private access level controls which VPC endpoints can connect to the UI or API of any workspace that attaches this private access settings object. ``ACCOUNT`` level access (the default) allows only VPC endpoints that are registered in your Databricks account connect to your workspace. ``ENDPOINT`` level access allows only specified VPC endpoints connect to your workspace. For details, see allowed_vpc_endpoint_ids. (ACCOUNT, ENDPOINT)"
   },
   {
     "name": "public_access_enabled",
@@ -306,7 +306,7 @@ region
     - name: private_access_level
       value: "{{ private_access_level }}"
       description: |
-        The private access level controls which VPC endpoints can connect to the UI or API of any workspace that attaches this private access settings object. \`ACCOUNT\` level access (the default) allows only VPC endpoints that are registered in your Databricks account connect to your workspace. \`ENDPOINT\` level access allows only specified VPC endpoints connect to your workspace. For details, see allowed_vpc_endpoint_ids.
+        The private access level controls which VPC endpoints can connect to the UI or API of any workspace that attaches this private access settings object. \`\`ACCOUNT\`\` level access (the default) allows only VPC endpoints that are registered in your Databricks account connect to your workspace. \`\`ENDPOINT\`\` level access allows only specified VPC endpoints connect to your workspace. For details, see allowed_vpc_endpoint_ids.
     - name: private_access_settings_name
       value: "{{ private_access_settings_name }}"
       description: |

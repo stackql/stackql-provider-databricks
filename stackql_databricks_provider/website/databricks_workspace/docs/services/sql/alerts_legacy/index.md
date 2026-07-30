@@ -76,7 +76,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "op",
         "type": "string",
-        "description": "Operator used to compare in alert evaluation: `>`, `>=`, `<`, `<=`, `==`, `!=`"
+        "description": "Operator used to compare in alert evaluation: ``&gt;``, ``&gt;=``, ``&lt;``, ``&lt;=``, ``==``, ``!=``"
       },
       {
         "name": "value",
@@ -86,12 +86,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "custom_body",
         "type": "string",
-        "description": "Custom body of alert notification, if it exists. See [here] for custom templating instructions. [here]: https://docs.databricks.com/sql/user/alerts/index.html"
+        "description": "Custom body of alert notification, if it exists. See `here <https://docs.databricks.com/sql/user/alerts/index.html>`__ for custom templating instructions."
       },
       {
         "name": "custom_subject",
         "type": "string",
-        "description": "Custom subject of alert notification, if it exists. This includes email subject, Slack notification header, etc. See [here] for custom templating instructions. [here]: https://docs.databricks.com/sql/user/alerts/index.html"
+        "description": "Custom subject of alert notification, if it exists. This includes email subject, Slack notification header, etc. See `here <https://docs.databricks.com/sql/user/alerts/index.html>`__ for custom templating instructions."
       },
       {
         "name": "empty_result_state",
@@ -123,7 +123,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "data_source_id",
         "type": "string",
-        "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+        "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. `Learn more <https://docs.databricks.com/api/workspace/datasources/list>`__"
       },
       {
         "name": "description",
@@ -138,7 +138,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "is_archived",
         "type": "boolean",
-        "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is `true`, the `options` property for this query includes a `moved_to_trash_at` timestamp. Trashed queries are permanently deleted after 30 days."
+        "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is ``true``, the ``options`` property for this query includes a ``moved_to_trash_at`` timestamp. Trashed queries are permanently deleted after 30 days."
       },
       {
         "name": "is_draft",
@@ -148,7 +148,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "is_safe",
         "type": "boolean",
-        "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to `true` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
+        "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to ``true`` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
       },
       {
         "name": "name",
@@ -168,7 +168,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "moved_to_trash_at",
             "type": "string",
-            "description": "The timestamp when this query was moved to trash. Only present when the `is_archived` property is `true`. Trashed items are deleted after thirty days."
+            "description": "The timestamp when this query was moved to trash. Only present when the ``is_archived`` property is ``true``. Trashed items are deleted after thirty days."
           },
           {
             "name": "parameters",
@@ -244,12 +244,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "rearm",
     "type": "integer",
-    "description": "Number of seconds after being triggered before the alert rearms itself and can be triggered again. If `null`, alert will never be triggered again."
+    "description": "Number of seconds after being triggered before the alert rearms itself and can be triggered again. If ``null``, alert will never be triggered again."
   },
   {
     "name": "state",
     "type": "string",
-    "description": "State of the alert. Possible values are: `unknown` (yet to be evaluated), `triggered` (evaluated and fulfilled trigger conditions), or `ok` (evaluated and did not fulfill trigger conditions). (ok, triggered, unknown)"
+    "description": "State of the alert. Possible values are: ``unknown`` (yet to be evaluated), ``triggered`` (evaluated and fulfilled trigger conditions), or ``ok`` (evaluated and did not fulfill trigger conditions). (ok, triggered, unknown)"
   },
   {
     "name": "updated_at",
@@ -316,7 +316,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "op",
         "type": "string",
-        "description": "Operator used to compare in alert evaluation: `>`, `>=`, `<`, `<=`, `==`, `!=`"
+        "description": "Operator used to compare in alert evaluation: ``&gt;``, ``&gt;=``, ``&lt;``, ``&lt;=``, ``==``, ``!=``"
       },
       {
         "name": "value",
@@ -326,12 +326,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "custom_body",
         "type": "string",
-        "description": "Custom body of alert notification, if it exists. See [here] for custom templating instructions. [here]: https://docs.databricks.com/sql/user/alerts/index.html"
+        "description": "Custom body of alert notification, if it exists. See `here <https://docs.databricks.com/sql/user/alerts/index.html>`__ for custom templating instructions."
       },
       {
         "name": "custom_subject",
         "type": "string",
-        "description": "Custom subject of alert notification, if it exists. This includes email subject, Slack notification header, etc. See [here] for custom templating instructions. [here]: https://docs.databricks.com/sql/user/alerts/index.html"
+        "description": "Custom subject of alert notification, if it exists. This includes email subject, Slack notification header, etc. See `here <https://docs.databricks.com/sql/user/alerts/index.html>`__ for custom templating instructions."
       },
       {
         "name": "empty_result_state",
@@ -363,7 +363,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "data_source_id",
         "type": "string",
-        "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+        "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. `Learn more <https://docs.databricks.com/api/workspace/datasources/list>`__"
       },
       {
         "name": "description",
@@ -378,7 +378,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "is_archived",
         "type": "boolean",
-        "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is `true`, the `options` property for this query includes a `moved_to_trash_at` timestamp. Trashed queries are permanently deleted after 30 days."
+        "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is ``true``, the ``options`` property for this query includes a ``moved_to_trash_at`` timestamp. Trashed queries are permanently deleted after 30 days."
       },
       {
         "name": "is_draft",
@@ -388,7 +388,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "is_safe",
         "type": "boolean",
-        "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to `true` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
+        "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to ``true`` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
       },
       {
         "name": "name",
@@ -408,7 +408,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "moved_to_trash_at",
             "type": "string",
-            "description": "The timestamp when this query was moved to trash. Only present when the `is_archived` property is `true`. Trashed items are deleted after thirty days."
+            "description": "The timestamp when this query was moved to trash. Only present when the ``is_archived`` property is ``true``. Trashed items are deleted after thirty days."
           },
           {
             "name": "parameters",
@@ -484,12 +484,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "rearm",
     "type": "integer",
-    "description": "Number of seconds after being triggered before the alert rearms itself and can be triggered again. If `null`, alert will never be triggered again."
+    "description": "Number of seconds after being triggered before the alert rearms itself and can be triggered again. If ``null``, alert will never be triggered again."
   },
   {
     "name": "state",
     "type": "string",
-    "description": "State of the alert. Possible values are: `unknown` (yet to be evaluated), `triggered` (evaluated and fulfilled trigger conditions), or `ok` (evaluated and did not fulfill trigger conditions). (ok, triggered, unknown)"
+    "description": "State of the alert. Possible values are: ``unknown`` (yet to be evaluated), ``triggered`` (evaluated and fulfilled trigger conditions), or ``ok`` (evaluated and did not fulfill trigger conditions). (ok, triggered, unknown)"
   },
   {
     "name": "updated_at",
@@ -736,7 +736,7 @@ user
     - name: rearm
       value: {{ rearm }}
       description: |
-        Number of seconds after being triggered before the alert rearms itself and can be triggered again. If \`null\`, alert will never be triggered again.
+        Number of seconds after being triggered before the alert rearms itself and can be triggered again. If \`\`null\`\`, alert will never be triggered again.
 `}</CodeBlock>
 
 </TabItem>

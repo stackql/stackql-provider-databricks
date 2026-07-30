@@ -49,6 +49,11 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "account_id",
+    "type": "string",
+    "description": "The account ID that owns this tag policy."
+  },
+  {
     "name": "create_time",
     "type": "string",
     "description": "Timestamp when the tag policy was created"
@@ -57,6 +62,37 @@ The following fields are returned by `SELECT` queries:
     "name": "description",
     "type": "string",
     "description": ""
+  },
+  {
+    "name": "propagation_config",
+    "type": "object",
+    "description": "Configuration that controls how tags are automatically propagated through data lineage.",
+    "children": [
+      {
+        "name": "conflict_resolution",
+        "type": "object",
+        "description": "Policy that determines how to resolve conflicts when multiple upstream sources have different tag values.",
+        "children": [
+          {
+            "name": "default_value_override",
+            "type": "object",
+            "description": "Uses a specified default value to override when conflicts happen.",
+            "children": [
+              {
+                "name": "default_value",
+                "type": "string",
+                "description": "The tag value to apply when conflicts are detected. This value must be one of the allowed values defined in the tag policy."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "enabled",
+        "type": "boolean",
+        "description": "Determines whether this tag should automatically propagate through lineage."
+      }
+    ]
   },
   {
     "name": "tag_key",
@@ -91,6 +127,11 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "account_id",
+    "type": "string",
+    "description": "The account ID that owns this tag policy."
+  },
+  {
     "name": "create_time",
     "type": "string",
     "description": "Timestamp when the tag policy was created"
@@ -99,6 +140,37 @@ The following fields are returned by `SELECT` queries:
     "name": "description",
     "type": "string",
     "description": ""
+  },
+  {
+    "name": "propagation_config",
+    "type": "object",
+    "description": "Configuration that controls how tags are automatically propagated through data lineage.",
+    "children": [
+      {
+        "name": "conflict_resolution",
+        "type": "object",
+        "description": "Policy that determines how to resolve conflicts when multiple upstream sources have different tag values.",
+        "children": [
+          {
+            "name": "default_value_override",
+            "type": "object",
+            "description": "Uses a specified default value to override when conflicts happen.",
+            "children": [
+              {
+                "name": "default_value",
+                "type": "string",
+                "description": "The tag value to apply when conflicts are detected. This value must be one of the allowed values defined in the tag policy."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "enabled",
+        "type": "boolean",
+        "description": "Determines whether this tag should automatically propagate through lineage."
+      }
+    ]
   },
   {
     "name": "tag_key",
@@ -146,28 +218,28 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-tag_key"><code>tag_key</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Gets a single tag policy by its associated governed tag's key. For Terraform usage, see the [Tag</td>
+    <td>Gets a single tag policy by its associated governed tag's key. For Terraform usage, see the `Tag</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
-    <td>Lists the tag policies for all governed tags in the account. For Terraform usage, see the [Tag Policy</td>
+    <td>Lists the tag policies for all governed tags in the account. For Terraform usage, see the `Tag Policy</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-tag_policy"><code>tag_policy</code></a></td>
     <td></td>
-    <td>Creates a new tag policy, making the associated tag key governed. For Terraform usage, see the [Tag</td>
+    <td>Creates a new tag policy, making the associated tag key governed. For Terraform usage, see the `Tag</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-tag_key"><code>tag_key</code></a>, <a href="#parameter-update_mask"><code>update_mask</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-tag_policy"><code>tag_policy</code></a></td>
     <td></td>
-    <td>Updates an existing tag policy for a single governed tag. For Terraform usage, see the [Tag Policy</td>
+    <td>Updates an existing tag policy for a single governed tag. For Terraform usage, see the `Tag Policy</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
@@ -205,7 +277,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future.</td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of ``*`` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the API changes in the future.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -231,13 +303,15 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets a single tag policy by its associated governed tag's key. For Terraform usage, see the [Tag
+Gets a single tag policy by its associated governed tag's key. For Terraform usage, see the `Tag
 
 ```sql
 SELECT
 id,
+account_id,
 create_time,
 description,
+propagation_config,
 tag_key,
 update_time,
 values
@@ -249,13 +323,15 @@ AND deployment_name = '{{ deployment_name }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Lists the tag policies for all governed tags in the account. For Terraform usage, see the [Tag Policy
+Lists the tag policies for all governed tags in the account. For Terraform usage, see the `Tag Policy
 
 ```sql
 SELECT
 id,
+account_id,
 create_time,
 description,
+propagation_config,
 tag_key,
 update_time,
 values
@@ -280,7 +356,7 @@ AND page_token = '{{ page_token }}'
 >
 <TabItem value="create">
 
-Creates a new tag policy, making the associated tag key governed. For Terraform usage, see the [Tag
+Creates a new tag policy, making the associated tag key governed. For Terraform usage, see the `Tag
 
 ```sql
 INSERT INTO databricks_workspace.tags.tag_policies (
@@ -292,8 +368,10 @@ SELECT
 '{{ deployment_name }}'
 RETURNING
 id,
+account_id,
 create_time,
 description,
+propagation_config,
 tag_key,
 update_time,
 values
@@ -311,9 +389,15 @@ values
     - name: tag_policy
       value:
         tag_key: "{{ tag_key }}"
+        account_id: "{{ account_id }}"
         create_time: "{{ create_time }}"
         description: "{{ description }}"
         id: "{{ id }}"
+        propagation_config:
+          conflict_resolution:
+            default_value_override:
+              default_value: "{{ default_value }}"
+          enabled: {{ enabled }}
         update_time: "{{ update_time }}"
         values:
           - name: "{{ name }}"
@@ -333,7 +417,7 @@ values
 >
 <TabItem value="update">
 
-Updates an existing tag policy for a single governed tag. For Terraform usage, see the [Tag Policy
+Updates an existing tag policy for a single governed tag. For Terraform usage, see the `Tag Policy
 
 ```sql
 UPDATE databricks_workspace.tags.tag_policies
@@ -346,8 +430,10 @@ AND deployment_name = '{{ deployment_name }}' --required
 AND tag_policy = '{{ tag_policy }}' --required
 RETURNING
 id,
+account_id,
 create_time,
 description,
+propagation_config,
 tag_key,
 update_time,
 values;

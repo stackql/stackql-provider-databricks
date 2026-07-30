@@ -77,12 +77,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "jar",
         "type": "string",
-        "description": "URI of the JAR library to install. Supported URIs include Workspace paths, Unity Catalog Volumes paths, and S3 URIs. For example: `&#123; \"jar\": \"/Workspace/path/to/library.jar\" &#125;`, `&#123; \"jar\" : \"/Volumes/path/to/library.jar\" &#125;` or `&#123; \"jar\": \"s3://my-bucket/library.jar\" &#125;`. If S3 is used, please make sure the cluster has read access on the library. You may need to launch the cluster with an IAM role to access the S3 URI."
+        "description": "URI of the JAR library to install. Supported URIs include Workspace paths, Unity Catalog Volumes paths, and S3 URIs. For example: ``&#123; \"jar\": \"/Workspace/path/to/library.jar\" &#125;``, ``&#123; \"jar\" : \"/Volumes/path/to/library.jar\" &#125;`` or ``&#123; \"jar\": \"s3://my-bucket/library.jar\" &#125;``. If S3 is used, please make sure the cluster has read access on the library. You may need to launch the cluster with an IAM role to access the S3 URI."
       },
       {
         "name": "maven",
         "type": "object",
-        "description": "Specification of a maven library to be installed. For example: `&#123; \"coordinates\": \"org.jsoup:jsoup:1.7.2\" &#125;`",
+        "description": "Specification of a maven library to be installed. For example: ``&#123; \"coordinates\": \"org.jsoup:jsoup:1.7.2\" &#125;``",
         "children": [
           {
             "name": "coordinates",
@@ -92,7 +92,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "exclusions",
             "type": "array",
-            "description": "List of dependences to exclude. For example: `[\"slf4j:slf4j\", \"*:hadoop-client\"]`. Maven dependency exclusions: https://maven.apache.org/guides/introduction/introduction-to-optional-and-excludes-dependencies.html."
+            "description": "List of dependences to exclude. For example: ``[\"slf4j:slf4j\", \"*:hadoop-client\"]``. Maven dependency exclusions: https://maven.apache.org/guides/introduction/introduction-to-optional-and-excludes-dependencies.html."
           },
           {
             "name": "repo",
@@ -104,7 +104,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "pypi",
         "type": "object",
-        "description": "Specification of a PyPi library to be installed. For example: `&#123; \"package\": \"simplejson\" &#125;`",
+        "description": "Specification of a PyPi library to be installed. For example: ``&#123; \"package\": \"simplejson\" &#125;``",
         "children": [
           {
             "name": "package",
@@ -121,12 +121,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "requirements",
         "type": "string",
-        "description": "URI of the requirements.txt file to install. Only Workspace paths and Unity Catalog Volumes paths are supported. For example: `&#123; \"requirements\": \"/Workspace/path/to/requirements.txt\" &#125;` or `&#123; \"requirements\" : \"/Volumes/path/to/requirements.txt\" &#125;`"
+        "description": "URI of the requirements.txt file to install. Only Workspace paths and Unity Catalog Volumes paths are supported. For example: ``&#123; \"requirements\": \"/Workspace/path/to/requirements.txt\" &#125;`` or ``&#123; \"requirements\" : \"/Volumes/path/to/requirements.txt\" &#125;``"
       },
       {
         "name": "whl",
         "type": "string",
-        "description": "URI of the wheel library to install. Supported URIs include Workspace paths, Unity Catalog Volumes paths, and S3 URIs. For example: `&#123; \"whl\": \"/Workspace/path/to/library.whl\" &#125;`, `&#123; \"whl\" : \"/Volumes/path/to/library.whl\" &#125;` or `&#123; \"whl\": \"s3://my-bucket/library.whl\" &#125;`. If S3 is used, please make sure the cluster has read access on the library. You may need to launch the cluster with an IAM role to access the S3 URI."
+        "description": "URI of the wheel library to install. Supported URIs include Workspace paths, Unity Catalog Volumes paths, and S3 URIs. For example: ``&#123; \"whl\": \"/Workspace/path/to/library.whl\" &#125;``, ``&#123; \"whl\" : \"/Volumes/path/to/library.whl\" &#125;`` or ``&#123; \"whl\": \"s3://my-bucket/library.whl\" &#125;``. If S3 is used, please make sure the cluster has read access on the library. You may need to launch the cluster with an IAM role to access the S3 URI."
       }
     ]
   },

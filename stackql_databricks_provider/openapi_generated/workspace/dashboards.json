@@ -4,8 +4,8 @@
     "title": "Databricks Dashboards API (workspace)",
     "description": "OpenAPI specification for the Databricks dashboards service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.dashboards"
   },
   "servers": [
@@ -29,7 +29,7 @@
           "dashboards",
           "genie"
         ],
-        "description": "Create new message in a [conversation](:method:genie/startconversation). The AI response uses all\npreviously created messages in the conversation to respond.\n\n:param space_id: str\n  The ID associated with the Genie space where the conversation is started.\n:param conversation_id: str\n  The ID associated with the conversation.\n:param content: str\n  User message content.\n\n:returns:\n  Long-running operation waiter for :class:`GenieMessage`.\n  See :method:wait_get_message_genie_completed for more details.",
+        "description": "Create new message in a [conversation](:method:genie/startconversation). The AI response uses all\npreviously created messages in the conversation to respond.\n\n:param space_id: str\n  The ID associated with the Genie space where the conversation is started.\n:param conversation_id: str\n  The ID associated with the conversation.\n:param content: str\n  User message content.\n:param enable_visualization: bool (optional)\n  Enable visualization generation.\n\n:returns:\n  Long-running operation waiter for :class:`GenieMessage`.\n  See :method:wait_get_message_genie_completed for more details.",
         "parameters": [
           {
             "name": "space_id",
@@ -59,6 +59,10 @@
                   "content": {
                     "type": "string",
                     "description": "User message content."
+                  },
+                  "enable_visualization": {
+                    "type": "boolean",
+                    "description": "Enable visualization generation."
                   }
                 },
                 "required": [
@@ -179,6 +183,182 @@
         "x-stackql-sdk-source": "GenieAPI"
       }
     },
+    "/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/comments": {
+      "post": {
+        "operationId": "genie_create_message_comment",
+        "summary": "Create a comment on a conversation message.",
+        "tags": [
+          "dashboards",
+          "genie"
+        ],
+        "description": "Create a comment on a conversation message.\n\n:param space_id: str\n  The ID associated with the Genie space.\n:param conversation_id: str\n  The ID associated with the conversation.\n:param message_id: str\n  The ID associated with the message.\n:param content: str\n  Comment text content.\n\n:returns: :class:`GenieMessageComment`",
+        "parameters": [
+          {
+            "name": "space_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the Genie space."
+          },
+          {
+            "name": "conversation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the conversation."
+          },
+          {
+            "name": "message_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the message."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string",
+                    "description": "Comment text content."
+                  }
+                },
+                "required": [
+                  "content"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenieMessageComment"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "GenieAPI"
+      },
+      "get": {
+        "operationId": "genie_list_message_comments",
+        "summary": "List comments on a specific conversation message.",
+        "tags": [
+          "dashboards",
+          "genie"
+        ],
+        "description": "List comments on a specific conversation message.\n\n:param space_id: str\n  The ID associated with the Genie space.\n:param conversation_id: str\n  The ID associated with the conversation.\n:param message_id: str\n  The ID associated with the message.\n:param page_size: int (optional)\n  Maximum number of comments to return per page.\n:param page_token: str (optional)\n  Pagination token for getting the next page of results.\n\n:returns: :class:`GenieListMessageCommentsResponse`",
+        "parameters": [
+          {
+            "name": "space_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the Genie space."
+          },
+          {
+            "name": "conversation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the conversation."
+          },
+          {
+            "name": "message_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the message."
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Maximum number of comments to return per page."
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Pagination token for getting the next page of results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenieListMessageCommentsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "GenieAPI"
+      }
+    },
     "/api/2.0/genie/spaces": {
       "post": {
         "operationId": "genie_create_space",
@@ -187,7 +367,7 @@
           "dashboards",
           "genie"
         ],
-        "description": "Creates a Genie space from a serialized payload.\n\n:param warehouse_id: str\n  Warehouse to associate with the new space\n:param serialized_space: str\n  The contents of the Genie Space in serialized string form. Use the [Get Genie\n  Space](:method:genie/getspace) API to retrieve an example response, which includes the\n  `serialized_space` field. This field provides the structure of the JSON string that represents the\n  space's layout and components.\n:param description: str (optional)\n  Optional description\n:param parent_path: str (optional)\n  Parent folder path where the space will be registered\n:param title: str (optional)\n  Optional title override\n\n:returns: :class:`GenieSpace`",
+        "description": "Creates a Genie space from a serialized payload.\n\n:param warehouse_id: str\n  Warehouse to associate with the new space\n:param serialized_space: str\n  The contents of the Genie Space in serialized string form. Use the [Get Genie\n  Space](:method:genie/getspace) API to retrieve an example response, which includes the\n  ``serialized_space`` field. This field provides the structure of the JSON string that represents the\n  space's layout and components.\n:param description: str (optional)\n  Optional description\n:param parent_path: str (optional)\n  Parent folder path where the space will be registered\n:param title: str (optional)\n  Optional title override\n\n:returns: :class:`GenieSpace`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -200,7 +380,7 @@
                   },
                   "serialized_space": {
                     "type": "string",
-                    "description": "The contents of the Genie Space in serialized string form. Use the [Get Genie Space](:method:genie/getspace) API to retrieve an example response, which includes the `serialized_space` field. This field provides the structure of the JSON string that represents the space's layout and components."
+                    "description": "The contents of the Genie Space in serialized string form. Use the [Get Genie Space](:method:genie/getspace) API to retrieve an example response, which includes the ``serialized_space`` field. This field provides the structure of the JSON string that represents the space's layout and components."
                   },
                   "description": {
                     "type": "string",
@@ -504,6 +684,60 @@
         "x-stackql-sdk-source": "GenieAPI"
       }
     },
+    "/api/2.0/genie/{name}/download-visualization": {
+      "get": {
+        "operationId": "genie_download_message_attachment_visualization",
+        "summary": "Download a rendered image of a message visualization attachment. The response body is the raw PNG",
+        "tags": [
+          "dashboards",
+          "genie"
+        ],
+        "description": "Download a rendered image of a message visualization attachment. The response body is the raw PNG\nimage, not a JSON payload. This is only available if the attachment is a visualization and the message\nstatus is ``COMPLETED``. This endpoint is not supported for Private Link workspaces.\n\n:param name: str\n  The resource name of the attachment to render, in the format\n  ``spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}``.\n\n:returns: :class:`DownloadMessageAttachmentVisualizationResponse`",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The resource name of the attachment to render, in the format ``spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}``."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "GenieAPI"
+      }
+    },
     "/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/execute-query": {
       "post": {
         "operationId": "genie_execute_message_attachment_query",
@@ -658,12 +892,12 @@
     "/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/messages/{message_id}/attachments/{attachment_id}/downloads": {
       "post": {
         "operationId": "genie_generate_download_full_query_result",
-        "summary": "Initiates a new SQL execution and returns a `download_id` and `download_id_signature` that you can use",
+        "summary": "Initiates a new SQL execution and returns a ``download_id`` and ``download_id_signature`` that you can",
         "tags": [
           "dashboards",
           "genie"
         ],
-        "description": "Initiates a new SQL execution and returns a `download_id` and `download_id_signature` that you can use\nto track the progress of the download. The query result is stored in an external link and can be\nretrieved using the [Get Download Full Query Result](:method:genie/getdownloadfullqueryresult) API.\nBoth `download_id` and `download_id_signature` must be provided when calling the Get endpoint.\n\n----\n\n### **Warning: Databricks strongly recommends that you protect the URLs that are returned by the\n`EXTERNAL_LINKS` disposition.**\n\nWhen you use the `EXTERNAL_LINKS` disposition, a short-lived, URL is generated, which can be used to\ndownload the results directly from . As a short-lived is embedded in this URL, you should protect the\nURL.\n\nBecause URLs are already generated with embedded temporary s, you must not set an `Authorization`\nheader in the download requests.\n\nSee [Execute Statement](:method:statementexecution/executestatement) for more details.\n\n----\n\n:param space_id: str\n  Genie space ID\n:param conversation_id: str\n  Conversation ID\n:param message_id: str\n  Message ID\n:param attachment_id: str\n  Attachment ID\n\n:returns: :class:`GenieGenerateDownloadFullQueryResultResponse`",
+        "description": "Initiates a new SQL execution and returns a ``download_id`` and ``download_id_signature`` that you can\nuse to track the progress of the download. The query result is stored in an external link and can be\nretrieved using the [Get Download Full Query Result](:method:genie/getdownloadfullqueryresult) API.\nBoth ``download_id`` and ``download_id_signature`` must be provided when calling the Get endpoint.\n\n**Warning: Databricks strongly recommends that you protect the URLs that are returned by the\n``EXTERNAL_LINKS`` disposition.**\n\nWhen you use the ``EXTERNAL_LINKS`` disposition, a short-lived, URL is generated, which can be used to\ndownload the results directly from . As a short-lived is embedded in this URL, you should protect the\nURL.\n\nBecause URLs are already generated with embedded temporary s, you must not set an ``Authorization``\nheader in the download requests.\n\nSee [Execute Statement](:method:statementexecution/executestatement) for more details.\n\n:param space_id: str\n  Genie space ID\n:param conversation_id: str\n  Conversation ID\n:param message_id: str\n  Message ID\n:param attachment_id: str\n  Attachment ID\n\n:returns: :class:`GenieGenerateDownloadFullQueryResultResponse`",
         "parameters": [
           {
             "name": "space_id",
@@ -1095,7 +1329,7 @@
           "dashboards",
           "genie"
         ],
-        "description": "After [Generating a Full Query Result Download](:method:genie/generatedownloadfullqueryresult) and\nsuccessfully receiving a `download_id` and `download_id_signature`, use this API to poll the download\nprogress. Both `download_id` and `download_id_signature` are required to call this endpoint. When the\ndownload is complete, the API returns the result in the `EXTERNAL_LINKS` disposition, containing one\nor more external links to the query result files.\n\n----\n\n### **Warning: Databricks strongly recommends that you protect the URLs that are returned by the\n`EXTERNAL_LINKS` disposition.**\n\nWhen you use the `EXTERNAL_LINKS` disposition, a short-lived, URL is generated, which can be used to\ndownload the results directly from . As a short-lived is embedded in this URL, you should protect the\nURL.\n\nBecause URLs are already generated with embedded temporary s, you must not set an `Authorization`\nheader in the download requests.\n\nSee [Execute Statement](:method:statementexecution/executestatement) for more details.\n\n----\n\n:param space_id: str\n  Genie space ID\n:param conversation_id: str\n  Conversation ID\n:param message_id: str\n  Message ID\n:param attachment_id: str\n  Attachment ID\n:param download_id: str\n  Download ID. This ID is provided by the [Generate Download\n  endpoint](:method:genie/generateDownloadFullQueryResult)\n:param download_id_signature: str\n  JWT signature for the download_id to ensure secure access to query results\n\n:returns: :class:`GenieGetDownloadFullQueryResultResponse`",
+        "description": "After [Generating a Full Query Result Download](:method:genie/generatedownloadfullqueryresult) and\nsuccessfully receiving a ``download_id`` and ``download_id_signature``, use this API to poll the\ndownload progress. Both ``download_id`` and ``download_id_signature`` are required to call this\nendpoint. When the download is complete, the API returns the result in the ``EXTERNAL_LINKS``\ndisposition, containing one or more external links to the query result files.\n\n**Warning: Databricks strongly recommends that you protect the URLs that are returned by the\n``EXTERNAL_LINKS`` disposition.**\n\nWhen you use the ``EXTERNAL_LINKS`` disposition, a short-lived, URL is generated, which can be used to\ndownload the results directly from . As a short-lived is embedded in this URL, you should protect the\nURL.\n\nBecause URLs are already generated with embedded temporary s, you must not set an ``Authorization``\nheader in the download requests.\n\nSee [Execute Statement](:method:statementexecution/executestatement) for more details.\n\n:param space_id: str\n  Genie space ID\n:param conversation_id: str\n  Conversation ID\n:param message_id: str\n  Message ID\n:param attachment_id: str\n  Attachment ID\n:param download_id: str\n  Download ID. This ID is provided by the [Generate Download\n  endpoint](:method:genie/generateDownloadFullQueryResult)\n:param download_id_signature: str\n  JWT signature for the download_id to ensure secure access to query results\n\n:returns: :class:`GenieGetDownloadFullQueryResultResponse`",
         "parameters": [
           {
             "name": "space_id",
@@ -1193,7 +1427,7 @@
           "dashboards",
           "genie"
         ],
-        "description": "Get the result of SQL query if the message has a query attachment. This is only available if a message\nhas a query attachment and the message status is `EXECUTING_QUERY` OR `COMPLETED`.\n\n:param space_id: str\n  Genie space ID\n:param conversation_id: str\n  Conversation ID\n:param message_id: str\n  Message ID\n:param attachment_id: str\n  Attachment ID\n\n:returns: :class:`GenieGetMessageQueryResultResponse`",
+        "description": "Get the result of SQL query if the message has a query attachment. This is only available if a message\nhas a query attachment and the message status is ``EXECUTING_QUERY`` OR ``COMPLETED``.\n\n:param space_id: str\n  Genie space ID\n:param conversation_id: str\n  Conversation ID\n:param message_id: str\n  Message ID\n:param attachment_id: str\n  Attachment ID\n\n:returns: :class:`GenieGetMessageQueryResultResponse`",
         "parameters": [
           {
             "name": "space_id",
@@ -1528,7 +1762,7 @@
           "dashboards",
           "genie"
         ],
-        "description": "Updates a Genie space with a serialized payload.\n\n:param space_id: str\n  Genie space ID\n:param description: str (optional)\n  Optional description\n:param serialized_space: str (optional)\n  The contents of the Genie Space in serialized string form (full replacement). Use the [Get Genie\n  Space](:method:genie/getspace) API to retrieve an example response, which includes the\n  `serialized_space` field. This field provides the structure of the JSON string that represents the\n  space's layout and components.\n:param title: str (optional)\n  Optional title override\n:param warehouse_id: str (optional)\n  Optional warehouse override\n\n:returns: :class:`GenieSpace`",
+        "description": "Updates a Genie space with a serialized payload.\n\n:param space_id: str\n  Genie space ID\n:param description: str (optional)\n  Optional description\n:param etag: str (optional)\n  ETag returned by a previous GET or UPDATE. When set, the update will fail if the space has been\n  modified since. Omit to apply the update unconditionally.\n:param parent_path: str (optional)\n  Parent workspace folder path to move this Genie space under.\n:param serialized_space: str (optional)\n  The contents of the Genie Space in serialized string form (full replacement). Use the [Get Genie\n  Space](:method:genie/getspace) API to retrieve an example response, which includes the\n  ``serialized_space`` field. This field provides the structure of the JSON string that represents the\n  space's layout and components.\n:param title: str (optional)\n  Optional title override\n:param warehouse_id: str (optional)\n  Optional warehouse override\n\n:returns: :class:`GenieSpace`",
         "parameters": [
           {
             "name": "space_id",
@@ -1550,9 +1784,17 @@
                     "type": "string",
                     "description": "Optional description"
                   },
+                  "etag": {
+                    "type": "string",
+                    "description": "ETag returned by a previous GET or UPDATE. When set, the update will fail if the space has been modified since. Omit to apply the update unconditionally."
+                  },
+                  "parent_path": {
+                    "type": "string",
+                    "description": "Parent workspace folder path to move this Genie space under."
+                  },
                   "serialized_space": {
                     "type": "string",
-                    "description": "The contents of the Genie Space in serialized string form (full replacement). Use the [Get Genie Space](:method:genie/getspace) API to retrieve an example response, which includes the `serialized_space` field. This field provides the structure of the JSON string that represents the space's layout and components."
+                    "description": "The contents of the Genie Space in serialized string form (full replacement). Use the [Get Genie Space](:method:genie/getspace) API to retrieve an example response, which includes the ``serialized_space`` field. This field provides the structure of the JSON string that represents the space's layout and components."
                   },
                   "title": {
                     "type": "string",
@@ -1574,6 +1816,86 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/GenieSpace"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "GenieAPI"
+      }
+    },
+    "/api/2.0/genie/spaces/{space_id}/conversations/{conversation_id}/list-comments": {
+      "get": {
+        "operationId": "genie_list_conversation_comments",
+        "summary": "List all comments across all messages in a conversation.",
+        "tags": [
+          "dashboards",
+          "genie"
+        ],
+        "description": "List all comments across all messages in a conversation.\n\n:param space_id: str\n  The ID associated with the Genie space.\n:param conversation_id: str\n  The ID associated with the conversation.\n:param page_size: int (optional)\n  Maximum number of comments to return per page.\n:param page_token: str (optional)\n  Pagination token for getting the next page of results.\n\n:returns: :class:`GenieListConversationCommentsResponse`",
+        "parameters": [
+          {
+            "name": "space_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the Genie space."
+          },
+          {
+            "name": "conversation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID associated with the conversation."
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Maximum number of comments to return per page."
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Pagination token for getting the next page of results."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenieListConversationCommentsResponse"
                 }
               }
             }
@@ -1688,7 +2010,7 @@
           "dashboards",
           "genie"
         ],
-        "description": "Send feedback for a message.\n\n:param space_id: str\n  The ID associated with the Genie space where the message is located.\n:param conversation_id: str\n  The ID associated with the conversation.\n:param message_id: str\n  The ID associated with the message to provide feedback for.\n:param rating: :class:`GenieFeedbackRating`\n  The rating (POSITIVE, NEGATIVE, or NONE).",
+        "description": "Send feedback for a message.\n\n:param space_id: str\n  The ID associated with the Genie space where the message is located.\n:param conversation_id: str\n  The ID associated with the conversation.\n:param message_id: str\n  The ID associated with the message to provide feedback for.\n:param rating: :class:`GenieFeedbackRating`\n  The rating (POSITIVE, NEGATIVE, or NONE).\n:param comment: str (optional)\n  Optional text feedback that will be stored as a comment.",
         "parameters": [
           {
             "name": "space_id",
@@ -1732,6 +2054,10 @@
                       "POSITIVE"
                     ],
                     "description": "The rating (POSITIVE, NEGATIVE, or NONE)."
+                  },
+                  "comment": {
+                    "type": "string",
+                    "description": "Optional text feedback that will be stored as a comment."
                   }
                 },
                 "required": [
@@ -1775,7 +2101,7 @@
           "dashboards",
           "genie"
         ],
-        "description": "Start a new conversation.\n\n:param space_id: str\n  The ID associated with the Genie space where you want to start a conversation.\n:param content: str\n  The text of the message that starts the conversation.\n\n:returns:\n  Long-running operation waiter for :class:`GenieMessage`.\n  See :method:wait_get_message_genie_completed for more details.",
+        "description": "Start a new conversation.\n\n:param space_id: str\n  The ID associated with the Genie space where you want to start a conversation.\n:param content: str\n  The text of the message that starts the conversation.\n:param enable_visualization: bool (optional)\n  Enable visualization generation.\n\n:returns:\n  Long-running operation waiter for :class:`GenieMessage`.\n  See :method:wait_get_message_genie_completed for more details.",
         "parameters": [
           {
             "name": "space_id",
@@ -1796,6 +2122,10 @@
                   "content": {
                     "type": "string",
                     "description": "The text of the message that starts the conversation."
+                  },
+                  "enable_visualization": {
+                    "type": "boolean",
+                    "description": "Enable visualization generation."
                   }
                 },
                 "required": [
@@ -1905,11 +2235,11 @@
                       },
                       "path": {
                         "type": "string",
-                        "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension `.lvdash.json`. This field is excluded in List Dashboards responses."
+                        "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension ``.lvdash.json``. This field is excluded in List Dashboards responses."
                       },
                       "serialized_dashboard": {
                         "type": "string",
-                        "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the [get dashboard API] to retrieve an example response, which includes the `serialized_dashboard` field. This field provides the structure of the JSON string that represents the dashboard's layout and components. [get dashboard API]: https://docs.databricks.com/api/workspace/lakeview/get"
+                        "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the `get dashboard API <https://docs.databricks.com/api/workspace/lakeview/get>`__ to retrieve an example response, which includes the ``serialized_dashboard`` field. This field provides the structure of the JSON string that represents the dashboard's layout and components."
                       },
                       "update_time": {
                         "type": "string",
@@ -1968,7 +2298,7 @@
           "dashboards",
           "lakeview"
         ],
-        "description": "List dashboards.\n\n:param page_size: int (optional)\n  The number of dashboards to return per page.\n:param page_token: str (optional)\n  A page token, received from a previous `ListDashboards` call. This token can be used to retrieve the\n  subsequent page.\n:param show_trashed: bool (optional)\n  The flag to include dashboards located in the trash. If unspecified, only active dashboards will be\n  returned.\n:param view: :class:`DashboardView` (optional)\n  `DASHBOARD_VIEW_BASIC`only includes summary metadata from the dashboard.\n\n:returns: Iterator over :class:`Dashboard`",
+        "description": "List dashboards.\n\n:param page_size: int (optional)\n  The number of dashboards to return per page.\n:param page_token: str (optional)\n  A page token, received from a previous ``ListDashboards`` call. This token can be used to retrieve\n  the subsequent page.\n:param show_trashed: bool (optional)\n  The flag to include dashboards located in the trash. If unspecified, only active dashboards will be\n  returned.\n:param view: :class:`DashboardView` (optional)\n  ``DASHBOARD_VIEW_BASIC`` only includes summary metadata from the dashboard.\n\n:returns: Iterator over :class:`Dashboard`",
         "parameters": [
           {
             "name": "page_size",
@@ -1986,7 +2316,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "A page token, received from a previous `ListDashboards` call. This token can be used to retrieve the subsequent page."
+            "description": "A page token, received from a previous ``ListDashboards`` call. This token can be used to retrieve the subsequent page."
           },
           {
             "name": "show_trashed",
@@ -2004,7 +2334,7 @@
             "schema": {
               "$ref": "#/components/schemas/DashboardView"
             },
-            "description": "`DASHBOARD_VIEW_BASIC`only includes summary metadata from the dashboard."
+            "description": "``DASHBOARD_VIEW_BASIC`` only includes summary metadata from the dashboard."
           }
         ],
         "responses": {
@@ -2077,7 +2407,7 @@
                           },
                           "timezone_id": {
                             "type": "string",
-                            "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See [Java TimeZone] for details. [Java TimeZone]: https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html"
+                            "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See `Java TimeZone <https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html>`__ for details."
                           }
                         },
                         "required": [
@@ -2174,7 +2504,7 @@
           "dashboards",
           "lakeview"
         ],
-        "description": "List dashboard schedules.\n\n:param dashboard_id: str\n  UUID identifying the dashboard to which the schedules belongs.\n:param page_size: int (optional)\n  The number of schedules to return per page.\n:param page_token: str (optional)\n  A page token, received from a previous `ListSchedules` call. Use this to retrieve the subsequent\n  page.\n\n:returns: Iterator over :class:`Schedule`",
+        "description": "List dashboard schedules.\n\n:param dashboard_id: str\n  UUID identifying the dashboard to which the schedules belongs.\n:param page_size: int (optional)\n  The number of schedules to return per page.\n:param page_token: str (optional)\n  A page token, received from a previous ``ListSchedules`` call. Use this to retrieve the subsequent\n  page.\n\n:returns: Iterator over :class:`Schedule`",
         "parameters": [
           {
             "name": "dashboard_id",
@@ -2201,7 +2531,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "A page token, received from a previous `ListSchedules` call. Use this to retrieve the subsequent page."
+            "description": "A page token, received from a previous ``ListSchedules`` call. Use this to retrieve the subsequent page."
           }
         ],
         "responses": {
@@ -2299,7 +2629,7 @@
                             "required": [
                               "user_id"
                             ],
-                            "description": "The user to receive the subscription email. This parameter is mutually exclusive with `destination_subscriber`."
+                            "description": "The user to receive the subscription email. This parameter is mutually exclusive with ``destination_subscriber``."
                           }
                         }
                       },
@@ -2388,7 +2718,7 @@
           "dashboards",
           "lakeview"
         ],
-        "description": "List schedule subscriptions.\n\n:param dashboard_id: str\n  UUID identifying the dashboard which the subscriptions belongs.\n:param schedule_id: str\n  UUID identifying the schedule which the subscriptions belongs.\n:param page_size: int (optional)\n  The number of subscriptions to return per page.\n:param page_token: str (optional)\n  A page token, received from a previous `ListSubscriptions` call. Use this to retrieve the subsequent\n  page.\n\n:returns: Iterator over :class:`Subscription`",
+        "description": "List schedule subscriptions.\n\n:param dashboard_id: str\n  UUID identifying the dashboard which the subscriptions belongs.\n:param schedule_id: str\n  UUID identifying the schedule which the subscriptions belongs.\n:param page_size: int (optional)\n  The number of subscriptions to return per page.\n:param page_token: str (optional)\n  A page token, received from a previous ``ListSubscriptions`` call. Use this to retrieve the\n  subsequent page.\n\n:returns: Iterator over :class:`Subscription`",
         "parameters": [
           {
             "name": "dashboard_id",
@@ -2424,7 +2754,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "A page token, received from a previous `ListSubscriptions` call. Use this to retrieve the subsequent page."
+            "description": "A page token, received from a previous ``ListSubscriptions`` call. Use this to retrieve the subsequent page."
           }
         ],
         "responses": {
@@ -2628,7 +2958,7 @@
                           },
                           "timezone_id": {
                             "type": "string",
-                            "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See [Java TimeZone] for details. [Java TimeZone]: https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html"
+                            "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See `Java TimeZone <https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html>`__ for details."
                           }
                         },
                         "required": [
@@ -3032,11 +3362,11 @@
                       },
                       "path": {
                         "type": "string",
-                        "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension `.lvdash.json`. This field is excluded in List Dashboards responses."
+                        "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension ``.lvdash.json``. This field is excluded in List Dashboards responses."
                       },
                       "serialized_dashboard": {
                         "type": "string",
-                        "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the [get dashboard API] to retrieve an example response, which includes the `serialized_dashboard` field. This field provides the structure of the JSON string that represents the dashboard's layout and components. [get dashboard API]: https://docs.databricks.com/api/workspace/lakeview/get"
+                        "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the `get dashboard API <https://docs.databricks.com/api/workspace/lakeview/get>`__ to retrieve an example response, which includes the ``serialized_dashboard`` field. This field provides the structure of the JSON string that represents the dashboard's layout and components."
                       },
                       "update_time": {
                         "type": "string",
@@ -3328,6 +3658,120 @@
         "x-stackql-sdk-source": "LakeviewAPI"
       }
     },
+    "/api/2.0/lakeview/dashboards/{dashboard_id}/revert": {
+      "post": {
+        "operationId": "lakeview_revert",
+        "summary": "Revert a dashboard's definition in draft mode to the last published version.",
+        "tags": [
+          "dashboards",
+          "lakeview"
+        ],
+        "description": "Revert a dashboard's definition in draft mode to the last published version.\n\n:param dashboard_id: str\n  UUID identifying the dashboard.\n:param etag: str (optional)\n  The etag for the dashboard. Optionally, it can be provided to verify that the dashboard has not been\n  modified from its last retrieval.\n\n:returns: :class:`RevertDashboardResponse`",
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "UUID identifying the dashboard."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "etag": {
+                    "type": "string",
+                    "description": "The etag for the dashboard. Optionally, it can be provided to verify that the dashboard has not been modified from its last retrieval."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevertDashboardResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "LakeviewAPI"
+      }
+    },
+    "/api/2.0/lakeview/dashboards/{dashboard_id}/published/embedded": {
+      "get": {
+        "operationId": "lakeview_embedded_get_published_dashboard_embedded",
+        "summary": "Get the current published dashboard within an embedded context.",
+        "tags": [
+          "dashboards",
+          "lakeview_embedded"
+        ],
+        "description": "Get the current published dashboard within an embedded context.\n\n:param dashboard_id: str\n  UUID identifying the published dashboard.",
+        "parameters": [
+          {
+            "name": "dashboard_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "UUID identifying the published dashboard."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "LakeviewEmbeddedAPI"
+      }
+    },
     "/api/2.0/lakeview/dashboards/{dashboard_id}/published/tokeninfo": {
       "get": {
         "operationId": "lakeview_embedded_get_published_dashboard_token_info",
@@ -3417,11 +3861,11 @@
           },
           "resource_name": {
             "type": "string",
-            "description": "The resource name to which the authorization rule applies. This field is specific to `workspace_rule_set` constraint. Format: `workspaces/{workspace_id}/dashboards/{dashboard_id}`"
+            "description": "The resource name to which the authorization rule applies. This field is specific to ``workspace_rule_set`` constraint. Format: ``workspaces/{workspace_id}/dashboards/{dashboard_id}``"
           },
           "type": {
             "type": "string",
-            "description": "The type of authorization downscoping policy. Ex: `workspace_rule_set` defines access rules for a specific workspace resource"
+            "description": "The type of authorization downscoping policy. Ex: ``workspace_rule_set`` defines access rules for a specific workspace resource"
           }
         }
       },
@@ -3441,7 +3885,7 @@
           },
           "timezone_id": {
             "type": "string",
-            "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See [Java TimeZone] for details. [Java TimeZone]: https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html"
+            "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See `Java TimeZone <https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html>`__ for details."
           }
         },
         "required": [
@@ -3477,11 +3921,11 @@
           },
           "path": {
             "type": "string",
-            "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension `.lvdash.json`. This field is excluded in List Dashboards responses."
+            "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension ``.lvdash.json``. This field is excluded in List Dashboards responses."
           },
           "serialized_dashboard": {
             "type": "string",
-            "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the [get dashboard API] to retrieve an example response, which includes the `serialized_dashboard` field. This field provides the structure of the JSON string that represents the dashboard's layout and components. [get dashboard API]: https://docs.databricks.com/api/workspace/lakeview/get"
+            "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the `get dashboard API <https://docs.databricks.com/api/workspace/lakeview/get>`__ to retrieve an example response, which includes the ``serialized_dashboard`` field. This field provides the structure of the JSON string that represents the dashboard's layout and components."
           },
           "update_time": {
             "type": "string",
@@ -3490,6 +3934,15 @@
           "warehouse_id": {
             "type": "string",
             "description": "The warehouse ID used to run the dashboard."
+          }
+        }
+      },
+      "DownloadMessageAttachmentVisualizationResponse": {
+        "type": "object",
+        "properties": {
+          "contents": {
+            "type": "string",
+            "format": "binary"
           }
         }
       },
@@ -3511,6 +3964,10 @@
           "text": {
             "$ref": "#/components/schemas/TextAttachment",
             "description": "Text Attachment if Genie responds with text This also contains the final summary when available."
+          },
+          "viz": {
+            "$ref": "#/components/schemas/GenieVizAttachment",
+            "description": "Visualization generated by Genie, if requested via ``enable_visualization``"
           }
         },
         "description": "Genie AI Response"
@@ -3655,7 +4112,7 @@
             "items": {
               "$ref": "#/components/schemas/ScoreReason"
             },
-            "description": "Reasons for the assessment score."
+            "description": "Reasons for the assessment score. Assessment reasons describe why a Genie response was scored as BAD. Deterministic values (compared against the ground truth result): - EMPTY_RESULT: Genie's generated SQL results were empty for this benchmark question. - RESULT_MISSING_ROWS: Genie's generated SQL response is missing rows from the provided ground truth SQL. - RESULT_EXTRA_ROWS: Genie's generated SQL response has more rows than the provided ground truth SQL. - RESULT_MISSING_COLUMNS: Genie's generated SQL response is missing columns from the provided ground truth SQL. - RESULT_EXTRA_COLUMNS: Genie's generated SQL response has more columns than the provided ground truth SQL. - SINGLE_CELL_DIFFERENCE: Single value result was produced but differs from ground truth result. - EMPTY_GOOD_SQL: The benchmark SQL returned an empty result. - COLUMN_TYPE_DIFFERENCE: The values between the results match but the column type is different. LLM judge ratings explain the factors driving BAD results: - LLM_JUDGE_MISSING_OR_INCORRECT_FILTER: Genie's generated SQL is missing a WHERE clause condition or has incorrect filter logic that excludes/includes wrong data. - LLM_JUDGE_INCOMPLETE_OR_PARTIAL_OUTPUT: Genie's generated SQL returns only some of the requested data or columns, missing parts of what the ground truth SQL returns. - LLM_JUDGE_MISINTERPRETATION_OF_USER_REQUEST: Genie's generated SQL fundamentally misunderstands what the user is asking for, addressing the wrong question or goal. - LLM_JUDGE_INSTRUCTION_COMPLIANCE_OR_MISSING_BUSINESS_LOGIC: Genie's generated SQL fails to apply specified instructions or business logic that should be followed. - LLM_JUDGE_INCORRECT_METRIC_CALCULATION: Genie's generated SQL uses incorrect logic or makes wrong assumptions when calculating metrics. - LLM_JUDGE_INCORRECT_TABLE_OR_FIELD_USAGE: Genie's generated SQL references wrong tables, columns, or uses fields that don't match the ground truth SQL's intent. - LLM_JUDGE_INCORRECT_FUNCTION_USAGE: Genie's generated SQL uses SQL functions incorrectly or inappropriately (wrong parameters, wrong function for the task, etc.). - LLM_JUDGE_MISSING_OR_INCORRECT_JOIN: Genie's generated SQL is missing necessary joins between tables or has incorrect join conditions/types that produce wrong results. - LLM_JUDGE_MISSING_OR_INCORRECT_AGGREGATION: Genie's generated SQL is missing GROUP BY clauses or has incorrect grouping that doesn't match the requested aggregation level. - LLM_JUDGE_FORMATTING_ERROR: Genie's generated SQL output has incorrect formatting, ordering (ORDER BY), or presentation issues that don't match expectations. - LLM_JUDGE_OTHER: LLM judge identified an error that doesn't fall into other categories. Deprecated LLM judge values (kept for backward compatibility, do not use): - LLM_JUDGE_MISSING_JOIN (deprecated) - LLM_JUDGE_WRONG_FILTER (deprecated) - LLM_JUDGE_WRONG_AGGREGATION (deprecated) - LLM_JUDGE_WRONG_COLUMNS (deprecated) - LLM_JUDGE_SYNTAX_ERROR (deprecated) - LLM_JUDGE_SEMANTIC_ERROR (deprecated)"
           },
           "eval_run_status": {
             "$ref": "#/components/schemas/EvaluationStatusType",
@@ -3726,6 +4183,10 @@
       "GenieFeedback": {
         "type": "object",
         "properties": {
+          "comment": {
+            "type": "string",
+            "description": "Optional feedback comment text"
+          },
           "rating": {
             "$ref": "#/components/schemas/GenieFeedbackRating",
             "description": "The feedback rating"
@@ -3758,6 +4219,21 @@
         "properties": {
           "statement_response": {
             "type": "string"
+          }
+        }
+      },
+      "GenieListConversationCommentsResponse": {
+        "type": "object",
+        "properties": {
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenieMessageComment"
+            }
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "Token to get the next page of results."
           }
         }
       },
@@ -3818,6 +4294,21 @@
           "next_page_token": {
             "type": "string",
             "description": "The token to use for retrieving the next page of results."
+          }
+        }
+      },
+      "GenieListMessageCommentsResponse": {
+        "type": "object",
+        "properties": {
+          "comments": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GenieMessageComment"
+            }
+          },
+          "next_page_token": {
+            "type": "string",
+            "description": "Token to get the next page of results."
           }
         }
       },
@@ -3883,7 +4374,7 @@
           },
           "query_result": {
             "$ref": "#/components/schemas/Result",
-            "description": "The result of SQL query if the message includes a query attachment. Deprecated. Use `query_result_metadata` in `GenieQueryAttachment` instead."
+            "description": "The result of SQL query if the message includes a query attachment. Deprecated. Use ``query_result_metadata`` in ``GenieQueryAttachment`` instead."
           },
           "status": {
             "$ref": "#/components/schemas/MessageStatus"
@@ -3899,6 +4390,47 @@
           "content",
           "message_id"
         ]
+      },
+      "GenieMessageComment": {
+        "type": "object",
+        "properties": {
+          "space_id": {
+            "type": "string",
+            "description": "Genie space ID"
+          },
+          "conversation_id": {
+            "type": "string",
+            "description": "Conversation ID"
+          },
+          "message_id": {
+            "type": "string",
+            "description": "Message ID"
+          },
+          "message_comment_id": {
+            "type": "string",
+            "description": "Comment ID"
+          },
+          "content": {
+            "type": "string",
+            "description": "Comment text content"
+          },
+          "created_timestamp": {
+            "type": "integer",
+            "description": "Timestamp when the comment was created"
+          },
+          "user_id": {
+            "type": "integer",
+            "description": "ID of the user who created the comment"
+          }
+        },
+        "required": [
+          "space_id",
+          "conversation_id",
+          "message_id",
+          "message_comment_id",
+          "content"
+        ],
+        "description": "A comment on a Genie conversation message."
       },
       "GenieQueryAttachment": {
         "type": "object",
@@ -3930,6 +4462,13 @@
           "statement_id": {
             "type": "string",
             "description": "Statement Execution API statement id. Use [Get status, manifest, and result first chunk](:method:statementexecution/getstatement) to get the full result data."
+          },
+          "thoughts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Thought"
+            },
+            "description": "Insights into how Genie came to generate the SQL."
           },
           "title": {
             "type": "string",
@@ -3963,13 +4502,17 @@
             "type": "string",
             "description": "Description of the Genie Space"
           },
+          "etag": {
+            "type": "string",
+            "description": "ETag for this space. Pass this value back in the update request to prevent overwriting concurrent changes."
+          },
           "parent_path": {
             "type": "string",
             "description": "Parent folder path of the Genie Space"
           },
           "serialized_space": {
             "type": "string",
-            "description": "The contents of the Genie Space in serialized string form. This field is excluded in List Genie spaces responses. Use the [Get Genie Space](:method:genie/getspace) API to retrieve an example response, which includes the `serialized_space` field. This field provides the structure of the JSON string that represents the space's layout and components."
+            "description": "The contents of the Genie Space in serialized string form. This field is excluded in List Genie spaces responses. Use the [Get Genie Space](:method:genie/getspace) API to retrieve an example response, which includes the ``serialized_space`` field. This field provides the structure of the JSON string that represents the space's layout and components."
           },
           "warehouse_id": {
             "type": "string",
@@ -4016,6 +4559,24 @@
         },
         "description": "Follow-up questions suggested by Genie"
       },
+      "GenieVizAttachment": {
+        "type": "object",
+        "properties": {
+          "query_attachment_id": {
+            "type": "string",
+            "description": "The ID of the query attachment the visualization was generated from"
+          },
+          "title": {
+            "type": "string",
+            "description": "Name of the visualization"
+          }
+        },
+        "description": "Visualization generated by Genie for a query result. Use the attachment ID with the download\n    visualization API to retrieve the rendered image."
+      },
+      "GetPublishedDashboardEmbeddedResponse": {
+        "type": "object",
+        "properties": {}
+      },
       "GetPublishedDashboardTokenInfoResponse": {
         "type": "object",
         "properties": {
@@ -4027,7 +4588,7 @@
           },
           "custom_claim": {
             "type": "string",
-            "description": "Custom claim generated from external_value and external_viewer_id. Format: `urn:aibi:external_data:<external_value>:<external_viewer_id>:<dashboard_id>`"
+            "description": "Custom claim generated from external_value and external_viewer_id. Format: ``urn:aibi:external_data:<external_value>:<external_viewer_id>:<dashboard_id>``"
           },
           "scope": {
             "type": "string",
@@ -4046,7 +4607,7 @@
           },
           "next_page_token": {
             "type": "string",
-            "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent dashboards."
+            "description": "A token, which can be sent as ``page_token`` to retrieve the next page. If this field is omitted, there are no subsequent dashboards."
           }
         }
       },
@@ -4143,6 +4704,16 @@
           }
         }
       },
+      "RevertDashboardResponse": {
+        "type": "object",
+        "properties": {
+          "dashboard": {
+            "$ref": "#/components/schemas/Dashboard",
+            "description": "The reverted dashboard."
+          }
+        },
+        "description": "Response to revert a dashboard draft to its last published state."
+      },
       "Schedule": {
         "type": "object",
         "properties": {
@@ -4194,7 +4765,7 @@
           },
           "user_subscriber": {
             "$ref": "#/components/schemas/SubscriptionSubscriberUser",
-            "description": "The user to receive the subscription email. This parameter is mutually exclusive with `destination_subscriber`."
+            "description": "The user to receive the subscription email. This parameter is mutually exclusive with ``destination_subscriber``."
           }
         }
       },
@@ -4272,11 +4843,32 @@
           "id": {
             "type": "string"
           },
+          "phase": {
+            "$ref": "#/components/schemas/ResponsePhase"
+          },
           "purpose": {
             "$ref": "#/components/schemas/TextAttachmentPurpose",
             "description": "Purpose/intent of this text attachment"
+          },
+          "verification_metadata": {
+            "$ref": "#/components/schemas/VerificationMetadata",
+            "description": "Metadata for verification phase attachments. Only set when phase = RESPONSE_PHASE_VERIFYING."
           }
         }
+      },
+      "Thought": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "type": "string",
+            "description": "The md formatted content for this thought."
+          },
+          "thought_type": {
+            "$ref": "#/components/schemas/ThoughtType",
+            "description": "The category of this thought. The possible values are: - ``THOUGHT_TYPE_DESCRIPTION``: A high-level description of how the question was interpreted. - ``THOUGHT_TYPE_UNDERSTANDING``: How ambiguous parts of the question were resolved. - ``THOUGHT_TYPE_DATA_SOURCING``: Which tables or datasets were identified as relevant. - ``THOUGHT_TYPE_INSTRUCTIONS``: Which author-defined instructions were referenced. - ``THOUGHT_TYPE_STEPS``: The logical steps taken to compute the answer."
+          }
+        },
+        "description": "A single thought in the AI's reasoning process for a query."
       },
       "TrashDashboardResponse": {
         "type": "object",
@@ -4285,6 +4877,19 @@
       "UnpublishDashboardResponse": {
         "type": "object",
         "properties": {}
+      },
+      "VerificationMetadata": {
+        "type": "object",
+        "properties": {
+          "index": {
+            "type": "integer",
+            "description": "Optional index to help order attachments within the same section"
+          },
+          "section": {
+            "$ref": "#/components/schemas/VerificationSection"
+          }
+        },
+        "description": "Metadata for verification phase attachments"
       },
       "DashboardView": {
         "type": "string",
@@ -4343,6 +4948,8 @@
         "type": "string",
         "x-enum": [
           "BLOCK_MULTIPLE_EXECUTIONS_EXCEPTION",
+          "BUDGET_EXCEEDED_EXCEPTION",
+          "CERTIFIED_ANSWERS_MISSING_EXCEPTION",
           "CHAT_COMPLETION_CLIENT_EXCEPTION",
           "CHAT_COMPLETION_CLIENT_TIMEOUT_EXCEPTION",
           "CHAT_COMPLETION_NETWORK_EXCEPTION",
@@ -4351,6 +4958,8 @@
           "COULD_NOT_GET_DASHBOARD_SCHEMA_EXCEPTION",
           "COULD_NOT_GET_MODEL_DEPLOYMENTS_EXCEPTION",
           "COULD_NOT_GET_UC_SCHEMA_EXCEPTION",
+          "DASHBOARD_PERMISSION_DENIED_EXCEPTION",
+          "DELEGATION_NOT_FOUND_EXCEPTION",
           "DEPLOYMENT_NOT_FOUND_EXCEPTION",
           "DESCRIBE_QUERY_INVALID_SQL_ERROR",
           "DESCRIBE_QUERY_TIMEOUT",
@@ -4373,6 +4982,7 @@
           "INTERNAL_CATALOG_PATH_OVERLAP_EXCEPTION",
           "INVALID_CERTIFIED_ANSWER_FUNCTION_EXCEPTION",
           "INVALID_CERTIFIED_ANSWER_IDENTIFIER_EXCEPTION",
+          "INVALID_CHAT_COMPLETION_ARGUMENTS_JSON_EXCEPTION",
           "INVALID_CHAT_COMPLETION_JSON_EXCEPTION",
           "INVALID_COMPLETION_REQUEST_EXCEPTION",
           "INVALID_FUNCTION_CALL_EXCEPTION",
@@ -4389,6 +4999,7 @@
           "NO_DEPLOYMENTS_AVAILABLE_TO_WORKSPACE",
           "NO_QUERY_TO_VISUALIZE_EXCEPTION",
           "NO_TABLES_TO_QUERY_EXCEPTION",
+          "PAY_PER_TOKEN_DISABLED_EXCEPTION",
           "RATE_LIMIT_EXCEEDED_GENERIC_EXCEPTION",
           "RATE_LIMIT_EXCEEDED_SPECIFIED_WAIT_EXCEPTION",
           "REPLY_PROCESS_TIMEOUT_EXCEPTION",
@@ -4420,7 +5031,15 @@
           "QUERY_RESULT_EXPIRED",
           "SUBMITTED"
         ],
-        "description": "MessageStatus. The possible values are: * `FETCHING_METADATA`: Fetching metadata from the data\nsources. * `FILTERING_CONTEXT`: Running smart context step to determine relevant context. *\n`ASKING_AI`: Waiting for the LLM to respond to the user's question. * `PENDING_WAREHOUSE`:\nWaiting for warehouse before the SQL query can start executing. * `EXECUTING_QUERY`: Executing a\ngenerated SQL query. Get the SQL query result by calling\n[getMessageAttachmentQueryResult](:method:genie/getMessageAttachmentQueryResult) API. *\n`FAILED`: The response generation or query execution failed. See `error` field. * `COMPLETED`:\nMessage processing is completed. Results are in the `attachments` field. Get the SQL query\nresult by calling\n[getMessageAttachmentQueryResult](:method:genie/getMessageAttachmentQueryResult) API. *\n`SUBMITTED`: Message has been submitted. * `QUERY_RESULT_EXPIRED`: SQL result is not available\nanymore. The user needs to rerun the query. Rerun the SQL query result by calling\n[executeMessageAttachmentQuery](:method:genie/executeMessageAttachmentQuery) API. * `CANCELLED`:\nMessage has been cancelled."
+        "description": "MessageStatus. The possible values are:\n\n- ``FETCHING_METADATA``: Fetching metadata from the data sources.\n- ``FILTERING_CONTEXT``: Running smart context step to determine relevant context.\n- ``ASKING_AI``: Waiting for the LLM to respond to the user's question.\n- ``PENDING_WAREHOUSE``: Waiting for warehouse before the SQL query can start executing.\n- ``EXECUTING_QUERY``: Executing a generated SQL query. Get the SQL query result by calling\n  [getMessageAttachmentQueryResult](:method:genie/getMessageAttachmentQueryResult) API.\n- ``FAILED``: The response generation or query execution failed. See ``error`` field.\n- ``COMPLETED``: Message processing is completed. Results are in the ``attachments`` field. Get\n  the SQL query result by calling\n  [getMessageAttachmentQueryResult](:method:genie/getMessageAttachmentQueryResult) API.\n- ``SUBMITTED``: Message has been submitted.\n- ``QUERY_RESULT_EXPIRED``: SQL result is not available anymore. The user needs to rerun the\n  query. Rerun the SQL query result by calling\n  [executeMessageAttachmentQuery](:method:genie/executeMessageAttachmentQuery) API.\n- ``CANCELLED``: Message has been cancelled."
+      },
+      "ResponsePhase": {
+        "type": "string",
+        "x-enum": [
+          "RESPONSE_PHASE_THINKING",
+          "RESPONSE_PHASE_VERIFYING"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "SchedulePauseStatus": {
         "type": "string",
@@ -4457,7 +5076,8 @@
           "RESULT_EXTRA_ROWS",
           "RESULT_MISSING_COLUMNS",
           "RESULT_MISSING_ROWS",
-          "SINGLE_CELL_DIFFERENCE"
+          "SINGLE_CELL_DIFFERENCE",
+          "TRANSIENT_ERROR"
         ],
         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
@@ -4467,6 +5087,27 @@
           "FOLLOW_UP_QUESTION"
         ],
         "description": "Purpose/intent of a text attachment"
+      },
+      "ThoughtType": {
+        "type": "string",
+        "x-enum": [
+          "THOUGHT_TYPE_DATA_SOURCING",
+          "THOUGHT_TYPE_DESCRIPTION",
+          "THOUGHT_TYPE_INSTRUCTIONS",
+          "THOUGHT_TYPE_STEPS",
+          "THOUGHT_TYPE_UNDERSTANDING"
+        ],
+        "description": "ThoughtType. The possible values are:\n\n- ``THOUGHT_TYPE_UNSPECIFIED``: Default value that should not be used.\n- ``THOUGHT_TYPE_DESCRIPTION``: A high-level description of how the question was interpreted.\n- ``THOUGHT_TYPE_UNDERSTANDING``: How ambiguous parts of the question were resolved.\n- ``THOUGHT_TYPE_DATA_SOURCING``: Which tables or datasets were identified as relevant.\n- ``THOUGHT_TYPE_INSTRUCTIONS``: Which author-defined instructions were referenced.\n- ``THOUGHT_TYPE_STEPS``: The logical steps taken to compute the answer. The category of a\n  Thought. Additional values may be added in the future."
+      },
+      "VerificationSection": {
+        "type": "string",
+        "x-enum": [
+          "VERIFICATION_SECTION_FINAL_DECISION",
+          "VERIFICATION_SECTION_PROPOSED_IMPROVEMENT",
+          "VERIFICATION_SECTION_SQL_EXAMPLES_VALIDATION",
+          "VERIFICATION_SECTION_VERIFICATION_QUERIES"
+        ],
+        "description": "Verification workflow section - indicates which stage of verification this attachment belongs to\nThese sections are used for grouping and ordering attachments in the frontend UI"
       }
     }
   }

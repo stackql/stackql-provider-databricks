@@ -45,7 +45,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "channel",
     "type": "object",
-    "description": "Configures the channel name and DBSQL version of the warehouse. CHANNEL_NAME_CUSTOM should be<br />    chosen only when `dbsql_version` is specified.",
+    "description": "Configures the channel name and DBSQL version of the warehouse. CHANNEL_NAME_CUSTOM should be<br />    chosen only when ``dbsql_version`` is specified.",
     "children": [
       {
         "name": "dbsql_version",
@@ -130,12 +130,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "enabled",
         "type": "boolean",
-        "description": "If set to false the specific warehouse type will not be be allowed as a value for warehouse_type in CreateWarehouse and EditWarehouse"
+        "description": "If set to false the specific warehouse type will not be allowed as a value for warehouse_type in CreateWarehouse and EditWarehouse"
       },
       {
         "name": "warehouse_type",
         "type": "string",
-        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (CLASSIC, PRO, TYPE_UNSPECIFIED)"
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (CLASSIC, PRO, REALTIME, REYDEN, TYPE_UNSPECIFIED)"
       }
     ]
   },

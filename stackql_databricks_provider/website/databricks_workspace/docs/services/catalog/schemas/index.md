@@ -66,12 +66,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "full_name",
     "type": "string",
-    "description": "Full name of schema, in form of __catalog_name__.__schema_name__."
+    "description": "Full name of schema, in form of **catalog_name**.**schema_name**."
   },
   {
     "name": "browse_only",
     "type": "boolean",
-    "description": "Indicates whether the principal is limited to retrieving metadata for the associated object through the BROWSE privilege when include_browse is enabled in the request."
+    "description": ""
   },
   {
     "name": "catalog_type",
@@ -92,6 +92,11 @@ The following fields are returned by `SELECT` queries:
     "name": "created_by",
     "type": "string",
     "description": "Username of schema creator."
+  },
+  {
+    "name": "custom_max_retention_hours",
+    "type": "integer",
+    "description": "Custom maximum retention period in hours for the schema."
   },
   {
     "name": "effective_predictive_optimization_flag",
@@ -178,12 +183,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "full_name",
     "type": "string",
-    "description": "Full name of schema, in form of __catalog_name__.__schema_name__."
+    "description": "Full name of schema, in form of **catalog_name**.**schema_name**."
   },
   {
     "name": "browse_only",
     "type": "boolean",
-    "description": "Indicates whether the principal is limited to retrieving metadata for the associated object through the BROWSE privilege when include_browse is enabled in the request."
+    "description": ""
   },
   {
     "name": "catalog_type",
@@ -204,6 +209,11 @@ The following fields are returned by `SELECT` queries:
     "name": "created_by",
     "type": "string",
     "description": "Username of schema creator."
+  },
+  {
+    "name": "custom_max_retention_hours",
+    "type": "integer",
+    "description": "Custom maximum retention period in hours for the schema."
   },
   {
     "name": "effective_predictive_optimization_flag",
@@ -395,6 +405,7 @@ catalog_type,
 comment,
 created_at,
 created_by,
+custom_max_retention_hours,
 effective_predictive_optimization_flag,
 enable_predictive_optimization,
 owner,
@@ -426,6 +437,7 @@ catalog_type,
 comment,
 created_at,
 created_by,
+custom_max_retention_hours,
 effective_predictive_optimization_flag,
 enable_predictive_optimization,
 owner,
@@ -464,6 +476,7 @@ INSERT INTO databricks_workspace.catalog.schemas (
 name,
 catalog_name,
 comment,
+custom_max_retention_hours,
 properties,
 storage_root,
 deployment_name
@@ -472,6 +485,7 @@ SELECT
 '{{ name }}' /* required */,
 '{{ catalog_name }}' /* required */,
 '{{ comment }}',
+{{ custom_max_retention_hours }},
 '{{ properties }}',
 '{{ storage_root }}',
 '{{ deployment_name }}'
@@ -486,6 +500,7 @@ catalog_type,
 comment,
 created_at,
 created_by,
+custom_max_retention_hours,
 effective_predictive_optimization_flag,
 enable_predictive_optimization,
 owner,
@@ -517,6 +532,10 @@ updated_by
       value: "{{ comment }}"
       description: |
         User-provided free-form text description.
+    - name: custom_max_retention_hours
+      value: {{ custom_max_retention_hours }}
+      description: |
+        Custom maximum retention period in hours for the schema.
     - name: properties
       value: "{{ properties }}"
       description: |
@@ -547,6 +566,7 @@ Updates a schema for a catalog. The caller must be the owner of the schema or a 
 UPDATE databricks_workspace.catalog.schemas
 SET 
 comment = '{{ comment }}',
+custom_max_retention_hours = {{ custom_max_retention_hours }},
 enable_predictive_optimization = '{{ enable_predictive_optimization }}',
 new_name = '{{ new_name }}',
 owner = '{{ owner }}',
@@ -565,6 +585,7 @@ catalog_type,
 comment,
 created_at,
 created_by,
+custom_max_retention_hours,
 effective_predictive_optimization_flag,
 enable_predictive_optimization,
 owner,

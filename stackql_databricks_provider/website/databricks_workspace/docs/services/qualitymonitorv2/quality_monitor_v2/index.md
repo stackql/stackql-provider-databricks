@@ -54,9 +54,48 @@ The following fields are returned by `SELECT` queries:
     "description": "",
     "children": [
       {
+        "name": "custom_check_configurations",
+        "type": "array",
+        "description": "",
+        "children": [
+          {
+            "name": "scalar_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "check_name",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "column_matchers",
+                "type": "array",
+                "description": "Column matchers to determine which tables to apply this check to"
+              },
+              {
+                "name": "sql_query",
+                "type": "string",
+                "description": "Templated SQL query for this check"
+              },
+              {
+                "name": "thresholds",
+                "type": "object",
+                "description": "Upper/lower thresholds for the output of the query"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "excluded_table_full_names",
         "type": "array",
-        "description": ""
+        "description": "List of fully qualified table names to exclude from anomaly detection."
+      },
+      {
+        "name": "job_type",
+        "type": "string",
+        "description": "The type of the last run of the workflow. (ANOMALY_DETECTION_JOB_TYPE_BACKGROUND_COMPUTE_WORKER, ANOMALY_DETECTION_JOB_TYPE_INTERNAL_HIDDEN, ANOMALY_DETECTION_JOB_TYPE_NORMAL)"
       },
       {
         "name": "last_run_id",
@@ -67,6 +106,88 @@ The following fields are returned by `SELECT` queries:
         "name": "latest_run_status",
         "type": "string",
         "description": "The status of the last run of the workflow. (ANOMALY_DETECTION_RUN_STATUS_CANCELED, ANOMALY_DETECTION_RUN_STATUS_FAILED, ANOMALY_DETECTION_RUN_STATUS_JOB_DELETED, ANOMALY_DETECTION_RUN_STATUS_PENDING, ANOMALY_DETECTION_RUN_STATUS_RUNNING, ANOMALY_DETECTION_RUN_STATUS_SUCCESS, ANOMALY_DETECTION_RUN_STATUS_UNKNOWN, ANOMALY_DETECTION_RUN_STATUS_WORKSPACE_MISMATCH_ERROR)"
+      },
+      {
+        "name": "slicing_config",
+        "type": "object",
+        "description": "Per-schema completeness slicing configuration.",
+        "children": [
+          {
+            "name": "slice_specs",
+            "type": "array",
+            "description": "The set of slice dimensions to monitor.",
+            "children": [
+              {
+                "name": "column_group",
+                "type": "array",
+                "description": "The columns to group by for slicing."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "validity_check_configurations",
+        "type": "array",
+        "description": "",
+        "children": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "percent_null_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              },
+              {
+                "name": "upper_bound",
+                "type": "number",
+                "description": "Optional upper bound; we should use auto determined bounds for now"
+              }
+            ]
+          },
+          {
+            "name": "range_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              },
+              {
+                "name": "lower_bound",
+                "type": "number",
+                "description": "Lower bound for the range"
+              },
+              {
+                "name": "upper_bound",
+                "type": "number",
+                "description": "Upper bound for the range"
+              }
+            ]
+          },
+          {
+            "name": "uniqueness_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -154,9 +275,48 @@ The following fields are returned by `SELECT` queries:
     "description": "",
     "children": [
       {
+        "name": "custom_check_configurations",
+        "type": "array",
+        "description": "",
+        "children": [
+          {
+            "name": "scalar_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "check_name",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "column_matchers",
+                "type": "array",
+                "description": "Column matchers to determine which tables to apply this check to"
+              },
+              {
+                "name": "sql_query",
+                "type": "string",
+                "description": "Templated SQL query for this check"
+              },
+              {
+                "name": "thresholds",
+                "type": "object",
+                "description": "Upper/lower thresholds for the output of the query"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "excluded_table_full_names",
         "type": "array",
-        "description": ""
+        "description": "List of fully qualified table names to exclude from anomaly detection."
+      },
+      {
+        "name": "job_type",
+        "type": "string",
+        "description": "The type of the last run of the workflow. (ANOMALY_DETECTION_JOB_TYPE_BACKGROUND_COMPUTE_WORKER, ANOMALY_DETECTION_JOB_TYPE_INTERNAL_HIDDEN, ANOMALY_DETECTION_JOB_TYPE_NORMAL)"
       },
       {
         "name": "last_run_id",
@@ -167,6 +327,88 @@ The following fields are returned by `SELECT` queries:
         "name": "latest_run_status",
         "type": "string",
         "description": "The status of the last run of the workflow. (ANOMALY_DETECTION_RUN_STATUS_CANCELED, ANOMALY_DETECTION_RUN_STATUS_FAILED, ANOMALY_DETECTION_RUN_STATUS_JOB_DELETED, ANOMALY_DETECTION_RUN_STATUS_PENDING, ANOMALY_DETECTION_RUN_STATUS_RUNNING, ANOMALY_DETECTION_RUN_STATUS_SUCCESS, ANOMALY_DETECTION_RUN_STATUS_UNKNOWN, ANOMALY_DETECTION_RUN_STATUS_WORKSPACE_MISMATCH_ERROR)"
+      },
+      {
+        "name": "slicing_config",
+        "type": "object",
+        "description": "Per-schema completeness slicing configuration.",
+        "children": [
+          {
+            "name": "slice_specs",
+            "type": "array",
+            "description": "The set of slice dimensions to monitor.",
+            "children": [
+              {
+                "name": "column_group",
+                "type": "array",
+                "description": "The columns to group by for slicing."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "validity_check_configurations",
+        "type": "array",
+        "description": "",
+        "children": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "percent_null_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              },
+              {
+                "name": "upper_bound",
+                "type": "number",
+                "description": "Optional upper bound; we should use auto determined bounds for now"
+              }
+            ]
+          },
+          {
+            "name": "range_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              },
+              {
+                "name": "lower_bound",
+                "type": "number",
+                "description": "Lower bound for the range"
+              },
+              {
+                "name": "upper_bound",
+                "type": "number",
+                "description": "Upper bound for the range"
+              }
+            ]
+          },
+          {
+            "name": "uniqueness_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -424,10 +666,38 @@ validity_check_configurations
         object_type: "{{ object_type }}"
         object_id: "{{ object_id }}"
         anomaly_detection_config:
+          custom_check_configurations:
+            - scalar_check:
+                check_name: "{{ check_name }}"
+                column_matchers:
+                  - column_names: "{{ column_names }}"
+                    variable_name: "{{ variable_name }}"
+                sql_query: "{{ sql_query }}"
+                thresholds:
+                  lower_bound: "{{ lower_bound }}"
+                  upper_bound: "{{ upper_bound }}"
           excluded_table_full_names:
             - "{{ excluded_table_full_names }}"
+          job_type: "{{ job_type }}"
           last_run_id: "{{ last_run_id }}"
           latest_run_status: "{{ latest_run_status }}"
+          slicing_config:
+            slice_specs:
+              - column_group: "{{ column_group }}"
+          validity_check_configurations:
+            - name: "{{ name }}"
+              percent_null_validity_check:
+                column_names:
+                  - "{{ column_names }}"
+                upper_bound: {{ upper_bound }}
+              range_validity_check:
+                column_names:
+                  - "{{ column_names }}"
+                lower_bound: {{ lower_bound }}
+                upper_bound: {{ upper_bound }}
+              uniqueness_validity_check:
+                column_names:
+                  - "{{ column_names }}"
         validity_check_configurations:
           - name: "{{ name }}"
             percent_null_validity_check:

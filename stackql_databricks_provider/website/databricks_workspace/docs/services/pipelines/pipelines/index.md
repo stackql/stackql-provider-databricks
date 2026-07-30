@@ -46,7 +46,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "A human friendly identifier for the pipeline, taken from the `spec`."
+    "description": "A human friendly identifier for the pipeline, taken from the ``spec``."
   },
   {
     "name": "cluster_id",
@@ -57,6 +57,11 @@ The following fields are returned by `SELECT` queries:
     "name": "effective_budget_policy_id",
     "type": "string",
     "description": "Serverless budget policy ID of this pipeline."
+  },
+  {
+    "name": "effective_usage_policy_id",
+    "type": "string",
+    "description": "Serverless usage policy ID of the pipeline."
   },
   {
     "name": "pipeline_id",
@@ -77,6 +82,11 @@ The following fields are returned by `SELECT` queries:
     "name": "cause",
     "type": "string",
     "description": ""
+  },
+  {
+    "name": "effective_environment_version",
+    "type": "string",
+    "description": "The effective environment version resolved for the pipeline."
   },
   {
     "name": "effective_publishing_mode",
@@ -116,14 +126,19 @@ The following fields are returned by `SELECT` queries:
     ]
   },
   {
+    "name": "parameters",
+    "type": "object",
+    "description": "Key/value map of default parameters to use for pipeline execution. Maximum total size: 10k characters (JSON format)"
+  },
+  {
     "name": "run_as",
     "type": "object",
-    "description": "The user or service principal that the pipeline runs as, if specified in the request. This field indicates the explicit configuration of `run_as` for the pipeline. To find the value in all cases, explicit or implicit, use `run_as_user_name`.",
+    "description": "The user or service principal that the pipeline runs as, if specified in the request. This field indicates the explicit configuration of ``run_as`` for the pipeline. To find the value in all cases, explicit or implicit, use ``run_as_user_name``.",
     "children": [
       {
         "name": "service_principal_name",
         "type": "string",
-        "description": "Application ID of an active service principal. Setting this field requires the `servicePrincipal/user` role."
+        "description": "Application ID of an active service principal. Setting this field requires the ``servicePrincipal/user`` role."
       },
       {
         "name": "user_name",
@@ -135,7 +150,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "spec",
     "type": "object",
-    "description": "The pipeline specification. This field is not returned when called by `ListPipelines`.",
+    "description": "The pipeline specification. This field is not returned when called by ``ListPipelines``.",
     "children": [
       {
         "name": "budget_policy_id",
@@ -145,12 +160,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "catalog",
         "type": "string",
-        "description": "A catalog in Unity Catalog to publish data from this pipeline to. If `target` is specified, tables in this pipeline are published to a `target` schema inside `catalog` (for example, `catalog`.`target`.`table`). If `target` is not specified, no data is published to Unity Catalog."
+        "description": "A catalog in Unity Catalog to publish data from this pipeline to. If ``target`` is specified, tables in this pipeline are published to a ``target`` schema inside ``catalog`` (for example, ``catalog``.``target``.``table``). If ``target`` is not specified, no data is published to Unity Catalog."
       },
       {
         "name": "channel",
         "type": "string",
-        "description": "DLT Release Channel that specifies which version to use."
+        "description": "SDP Release Channel that specifies which version to use."
       },
       {
         "name": "clusters",
@@ -175,12 +190,12 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "max_workers",
                 "type": "integer",
-                "description": "The maximum number of workers to which the cluster can scale up when overloaded. `max_workers` must be strictly greater than `min_workers`."
+                "description": "The maximum number of workers to which the cluster can scale up when overloaded. ``max_workers`` must be strictly greater than ``min_workers``."
               },
               {
                 "name": "mode",
                 "type": "string",
-                "description": "Databricks Enhanced Autoscaling optimizes cluster utilization by automatically allocating cluster resources based on workload volume, with minimal impact to the data processing latency of your pipelines. Enhanced Autoscaling is available for `updates` clusters only. The legacy autoscaling feature is used for `maintenance` clusters. (ENHANCED, LEGACY)"
+                "description": "Databricks Enhanced Autoscaling optimizes cluster utilization by automatically allocating cluster resources based on workload volume, with minimal impact to the data processing latency of your pipelines. Enhanced Autoscaling is available for ``updates`` clusters only. The legacy autoscaling feature is used for ``maintenance`` clusters. (ENHANCED, LEGACY)"
               }
             ]
           },
@@ -197,12 +212,12 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "cluster_log_conf",
             "type": "string",
-            "description": "The configuration for delivering spark logs to a long-term storage destination. Only dbfs destinations are supported. Only one destination can be specified for one cluster. If the conf is given, the logs will be delivered to the destination every `5 mins`. The destination of driver logs is `$destination/$clusterId/driver`, while the destination of executor logs is `$destination/$clusterId/executor`."
+            "description": "The configuration for delivering spark logs to a long-term storage destination. Only dbfs destinations are supported. Only one destination can be specified for one cluster. If the conf is given, the logs will be delivered to the destination every ``5 mins``. The destination of driver logs is ``$destination/$clusterId/driver``, while the destination of executor logs is ``$destination/$clusterId/executor``."
           },
           {
             "name": "custom_tags",
             "type": "object",
-            "description": "Additional tags for cluster resources. Databricks will tag all cluster resources (e.g., AWS instances and EBS volumes) with these tags in addition to `default_tags`. Notes: - Currently, Databricks allows at most 45 custom tags - Clusters can only reuse cloud resources if the resources' tags are a subset of the cluster tags"
+            "description": "Additional tags for cluster resources. Databricks will tag all cluster resources (e.g., AWS instances and EBS volumes) with these tags in addition to ``default_tags``. Notes: - Currently, Databricks allows at most 45 custom tags - Clusters can only reuse cloud resources if the resources' tags are a subset of the cluster tags"
           },
           {
             "name": "driver_instance_pool_id",
@@ -212,7 +227,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "driver_node_type_id",
             "type": "string",
-            "description": "The node type of the Spark driver. Note that this field is optional; if unset, the driver node type will be set as the same value as `node_type_id` defined above."
+            "description": "The node type of the Spark driver. Note that this field is optional; if unset, the driver node type will be set as the same value as ``node_type_id`` defined above."
           },
           {
             "name": "enable_local_disk_encryption",
@@ -227,7 +242,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "init_scripts",
             "type": "string",
-            "description": "The configuration for storing init scripts. Any number of destinations can be specified. The scripts are executed sequentially in the order provided. If `cluster_log_conf` is specified, init script logs are sent to `<destination>/<cluster-ID>/init_scripts`."
+            "description": "The configuration for storing init scripts. Any number of destinations can be specified. The scripts are executed sequentially in the order provided. If ``cluster_log_conf`` is specified, init script logs are sent to ``&lt;destination&gt;/&lt;cluster-ID&gt;/init_scripts``."
           },
           {
             "name": "instance_pool_id",
@@ -237,7 +252,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "label",
             "type": "string",
-            "description": "A label for the cluster specification, either `default` to configure the default cluster, or `maintenance` to configure the maintenance cluster. This field is optional. The default value is `default`."
+            "description": "A label for the cluster specification, either ``default`` to configure the default cluster, or ``maintenance`` to configure the maintenance cluster. This field is optional. The default value is ``default``."
           },
           {
             "name": "node_type_id",
@@ -247,7 +262,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "num_workers",
             "type": "integer",
-            "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver and `num_workers` Executors for a total of `num_workers` + 1 Spark nodes. Note: When reading the properties of a cluster, this field reflects the desired number of workers rather than the actual current number of workers. For instance, if a cluster is resized from 5 to 10 workers, this field will immediately be updated to reflect the target size of 10 workers, whereas the workers listed in `spark_info` will gradually increase from 5 to 10 as the new nodes are provisioned."
+            "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver and ``num_workers`` Executors for a total of ``num_workers`` + 1 Spark nodes. Note: When reading the properties of a cluster, this field reflects the desired number of workers rather than the actual current number of workers. For instance, if a cluster is resized from 5 to 10 workers, this field will immediately be updated to reflect the target size of 10 workers, whereas the workers listed in ``spark_info`` will gradually increase from 5 to 10 as the new nodes are provisioned."
           },
           {
             "name": "policy_id",
@@ -262,12 +277,12 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "spark_env_vars",
             "type": "object",
-            "description": "An object containing a set of optional, user-specified environment variable key-value pairs. Please note that key-value pair of the form (X,Y) will be exported as is (i.e., `export X='Y'`) while launching the driver and workers. In order to specify an additional set of `SPARK_DAEMON_JAVA_OPTS`, we recommend appending them to `$SPARK_DAEMON_JAVA_OPTS` as shown in the example below. This ensures that all default databricks managed environmental variables are included as well. Example Spark environment variables: `&#123;\"SPARK_WORKER_MEMORY\": \"28000m\", \"SPARK_LOCAL_DIRS\": \"/local_disk0\"&#125;` or `&#123;\"SPARK_DAEMON_JAVA_OPTS\": \"$SPARK_DAEMON_JAVA_OPTS -Dspark.shuffle.service.enabled=true\"&#125;`"
+            "description": "An object containing a set of optional, user-specified environment variable key-value pairs. Please note that key-value pair of the form (X,Y) will be exported as is (i.e., ``export X='Y'``) while launching the driver and workers. In order to specify an additional set of ``SPARK_DAEMON_JAVA_OPTS``, we recommend appending them to ``$SPARK_DAEMON_JAVA_OPTS`` as shown in the example below. This ensures that all default databricks managed environmental variables are included as well. Example Spark environment variables: ``&#123;\"SPARK_WORKER_MEMORY\": \"28000m\", \"SPARK_LOCAL_DIRS\": \"/local_disk0\"&#125;`` or ``&#123;\"SPARK_DAEMON_JAVA_OPTS\": \"$SPARK_DAEMON_JAVA_OPTS -Dspark.shuffle.service.enabled=true\"&#125;``"
           },
           {
             "name": "ssh_public_keys",
             "type": "array",
-            "description": "SSH public key contents that will be added to each Spark node in this cluster. The corresponding private keys can be used to login with the user name `ubuntu` on port `2200`. Up to 10 keys can be specified."
+            "description": "SSH public key contents that will be added to each Spark node in this cluster. The corresponding private keys can be used to login with the user name ``ubuntu`` on port ``2200``. Up to 10 keys can be specified."
           }
         ]
       },
@@ -279,7 +294,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "continuous",
         "type": "boolean",
-        "description": "Whether the pipeline is continuous or triggered. This replaces `trigger`."
+        "description": "Whether the pipeline is continuous or triggered. This replaces ``trigger``."
       },
       {
         "name": "deployment",
@@ -289,12 +304,22 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "kind",
             "type": "string",
-            "description": "The deployment method that manages the pipeline: - BUNDLE: The pipeline is managed by a<br />Databricks Asset Bundle. (BUNDLE)"
+            "description": "The deployment method that manages the pipeline:<br /><br />- BUNDLE: The pipeline is managed by a Databricks Asset Bundle. (BUNDLE)"
+          },
+          {
+            "name": "deployment_id",
+            "type": "string",
+            "description": "ID of the deployment that manages this pipeline. Only set when ``kind`` is ``BUNDLE``. Used to look up deployment metadata from the Deployment Metadata service."
           },
           {
             "name": "metadata_file_path",
             "type": "string",
             "description": "The path to the file containing metadata about the deployment."
+          },
+          {
+            "name": "version_id",
+            "type": "string",
+            "description": "ID of the version of the deployment that produced this pipeline. Only set when ``kind`` is ``BUNDLE``. Identifies a specific snapshot of the deployment in the Deployment Metadata service."
           }
         ]
       },
@@ -321,7 +346,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "environment_version",
             "type": "string",
-            "description": "The environment version of the serverless Python environment used to execute customer Python code. Each environment version includes a specific Python version and a curated set of pre-installed libraries with defined versions, providing a stable and reproducible execution environment. Databricks supports a three-year lifecycle for each environment version. For available versions and their included packages, see https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/ The value should be a string representing the environment version number, for example: `\"4\"`."
+            "description": "The environment version of the serverless Python environment used to execute customer Python code. Each environment version includes a specific Python version and a curated set of pre-installed libraries with defined versions, providing a stable and reproducible execution environment. Databricks supports a three-year lifecycle for each environment version. For available versions and their included packages, see https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/ The value should be a string representing the environment version number, for example: ``\"4\"``."
           }
         ]
       },
@@ -475,7 +500,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "ingest_from_uc_foreign_catalog",
             "type": "boolean",
-            "description": "Immutable. If set to true, the pipeline will ingest tables from the UC foreign catalogs directly without the need to specify a UC connection or ingestion gateway. The `source_catalog` fields in objects of IngestionConfig are interpreted as the UC foreign catalogs to ingest from."
+            "description": "Immutable. If set to true, the pipeline will ingest tables from the UC foreign catalogs directly without the need to specify a UC connection or ingestion gateway. The ``source_catalog`` fields in objects of IngestionConfig are interpreted as the UC foreign catalogs to ingest from."
           },
           {
             "name": "ingestion_gateway_id",
@@ -515,16 +540,26 @@ The following fields are returned by `SELECT` queries:
             "description": "Top-level source configurations",
             "children": [
               {
+                "name": "api_source_connector_config",
+                "type": "object",
+                "description": "Top-level configuration for API Source connectors with arbitrary configuration."
+              },
+              {
                 "name": "catalog",
                 "type": "object",
-                "description": "SourceCatalogConfig contains catalog-level custom configuration parameters for each source"
+                "description": "Catalog-level source configuration parameters"
+              },
+              {
+                "name": "google_ads_config",
+                "type": "object",
+                "description": ""
               }
             ]
           },
           {
             "name": "source_type",
             "type": "string",
-            "description": "The type of the foreign source. The source type will be inferred from the source connection or ingestion gateway. This field is output only and will be ignored if provided. (BIGQUERY, DYNAMICS365, FOREIGN_CATALOG, GA4_RAW_DATA, MANAGED_POSTGRESQL, MYSQL, NETSUITE, ORACLE, POSTGRESQL, SALESFORCE, SERVICENOW, SHAREPOINT, SQLSERVER, TERADATA, WORKDAY_RAAS)"
+            "description": "The type of the foreign source. The source type will be inferred from the source connection or ingestion gateway. This field is output only and will be ignored if provided. (ADOBE_CAMPAIGNS, ADOBE_COMMERCE, ADP_WORKFORCE_NOW, AHA, AIRTABLE, AKAMAI_WAF, AMPLITUDE, API_SOURCE, APPFIGURES, APPLE_APP_STORE, APPLE_SEARCH_ADS, ATLASSIAN_ORGANIZATION, AWIN, AZURE_MONITOR_LOGS, BIGQUERY, BING_ADS, CERIDIAN_DAYFORCE, COMMUNITY, CONFLUENCE, CROWDSTRIKE_EVENT_STREAM, DELIGHTED, DYNAMICS365, EPIC_CLARITY, FOREIGN_CATALOG, FRESHSERVICE, FRONT, GA4_RAW_DATA, GENESYS, GITHUB, GITLAB, GMAIL, GONG, GOOGLE_ADS, GOOGLE_ANALYTICS, GOOGLE_CALENDAR, GOOGLE_DRIVE, GOOGLE_SEARCH_CONSOLE, GOOGLE_WORKSPACE, GUIDEWIRE, GURU, HIBOB, HUBSPOT, IRONCLAD, JIRA, KAFKA, LINEAR, LINKEDIN_ADS, M365_AUDIT_LOGS, MANAGED_POSTGRESQL, MARKETO, META_MARKETING, MICROSOFT_ENTRA_ID, MICROSOFT_TEAMS, MONDAY_COM, MYSQL, NETSKOPE_LOGS, NETSUITE, NOTION, OKTA_SYSTEM_LOGS, ONE_PASSWORD_EVENT_LOGS, ORACLE, ORACLE_ELOQUA, ORACLE_FUSION_CLOUD, OUTLOOK, PAGERDUTY, PARTNERSTACK, PENDO, PINTEREST_ADS, POSTGRESQL, PROOFPOINT_SIEM, QUICKBOOKS, RABBITMQ, REDDIT_ADS, REDSHIFT, SALESFORCE, SALESFORCE_MARKETING_CLOUD, SALESLOFT, SAP_SUCCESSFACTORS, SAS, SENDGRID, SERVICENOW, SHAREPOINT, SHOPIFY, SLACK_ACCESS_AND_INTEGRATION_LOGS, SLACK_AUDIT_LOGS, SMARTSHEET, SNAPCHAT_ADS, SPLUNK, SQLDW, SQLSERVER, SQUARE, TERADATA, TIKTOK_ADS, VEEVA, VEEVA_VAULT, VERKADA, WIZ_AUDIT_LOGS, WORKDAY_ACTIVITY_LOGGING, WORKDAY_HCM, WORKDAY_RAAS, X_ADS, YOUTUBE_ANALYTICS, ZENDESK, ZIP, ZOHO_BOOKS, ZOOM, ZOOM_LOGS)"
           },
           {
             "name": "table_configuration",
@@ -537,14 +572,24 @@ The following fields are returned by `SELECT` queries:
                 "description": "Policy for auto full refresh."
               },
               {
+                "name": "clustering_columns",
+                "type": "array",
+                "description": "List of column names to use for clustering the destination table. When specified, the destination Delta table will be clustered by these columns. This can improve query performance when filtering on these columns. Note: clustering_columns in table specific configuration will override the pipeline definition. Note: we can only provide enable_auto_clustering or clustering_columns, added as separate fields as we cannot have repeated field in oneof."
+              },
+              {
+                "name": "enable_auto_clustering",
+                "type": "boolean",
+                "description": "Whether to enable auto clustering on the destination table. When enabled, Delta will automatically optimize the data layout based on the clustering columns for improved query performance. Note: enable_auto_clustering in table specific configuration will override the pipeline definition. Note: we can only provide enable_auto_clustering or clustering_columns, added as separate fields as we cannot have repeated field in oneof."
+              },
+              {
                 "name": "exclude_columns",
                 "type": "array",
-                "description": "A list of column names to be excluded for the ingestion. When not specified, include_columns fully controls what columns to be ingested. When specified, all other columns including future ones will be automatically included for ingestion. This field in mutually exclusive with `include_columns`."
+                "description": "A list of column names to be excluded for the ingestion. When not specified, include_columns fully controls what columns to be ingested. When specified, all other columns including future ones will be automatically included for ingestion. This field in mutually exclusive with ``include_columns``."
               },
               {
                 "name": "include_columns",
                 "type": "array",
-                "description": "A list of column names to be included for the ingestion. When not specified, all columns except ones in exclude_columns will be included. Future columns will be automatically included. When specified, all other future columns will be automatically excluded from ingestion. This field in mutually exclusive with `exclude_columns`."
+                "description": "A list of column names to be included for the ingestion. When not specified, all columns except ones in exclude_columns will be included. Future columns will be automatically included. When specified, all other future columns will be automatically excluded from ingestion. This field in mutually exclusive with ``exclude_columns``."
               },
               {
                 "name": "primary_keys",
@@ -577,6 +622,21 @@ The following fields are returned by `SELECT` queries:
                 "description": "The column names specifying the logical order of events in the source data. Spark Declarative Pipelines uses this sequencing to handle change events that arrive out of order."
               },
               {
+                "name": "source_metadata_column",
+                "type": "string",
+                "description": "(Optional) Name of the struct column added to each ingested record to hold per row source metadata."
+              },
+              {
+                "name": "storage_mode",
+                "type": "string",
+                "description": "(Optional) Defines how ingested data is written and maintained in the destination table. Mutually exclusive with scd_type — a 400 error is returned if both are set. (APPEND_ONLY, SCD_TYPE_1, SCD_TYPE_2)"
+              },
+              {
+                "name": "table_properties",
+                "type": "object",
+                "description": "Table properties to set on the destination table. These are key-value pairs that configure various Delta table behaviors or any user defined properties. Example: &#123;\"delta.feature.variantType\": \"supported\", \"delta.enableTypeWidening\": \"true\"&#125; Note: table_properties in table specific configuration will override the table_properties of the pipeline definition."
+              },
+              {
                 "name": "workday_report_parameters",
                 "type": "object",
                 "description": "(Optional) Additional custom parameters for Workday Report"
@@ -605,7 +665,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "glob",
             "type": "object",
-            "description": "The unified field to include source codes. Each entry can be a notebook path, a file path, or a folder path that ends `/**`. This field cannot be used together with `notebook` or `file`.",
+            "description": "The unified field to include source codes. Each entry can be a notebook path, a file path, or a folder path that ends ``/**``. This field cannot be used together with ``notebook`` or ``file``.",
             "children": [
               {
                 "name": "include",
@@ -693,6 +753,23 @@ The following fields are returned by `SELECT` queries:
         ]
       },
       {
+        "name": "rewind_generation_interval",
+        "type": "object",
+        "description": "Interval at which rewind points are generated during pipeline execution.",
+        "children": [
+          {
+            "name": "interval",
+            "type": "integer",
+            "description": "An integer value representing the interval quantity for the schedule."
+          },
+          {
+            "name": "unit",
+            "type": "string",
+            "description": "A time unit for the schedule. (DAYS, HOURS, WEEKS)"
+          }
+        ]
+      },
+      {
         "name": "root_path",
         "type": "string",
         "description": "Root path for this pipeline. This is used as the root directory when editing the pipeline in the Databricks user interface and it is added to sys.path when executing Python sources during pipeline execution."
@@ -708,6 +785,11 @@ The following fields are returned by `SELECT` queries:
         "description": "Whether serverless compute is enabled for this pipeline."
       },
       {
+        "name": "serverless_compute_id",
+        "type": "string",
+        "description": "Serverless compute ID specified by the user for serverless pipelines."
+      },
+      {
         "name": "storage",
         "type": "string",
         "description": "DBFS root directory for storing checkpoints and tables."
@@ -720,12 +802,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "target",
         "type": "string",
-        "description": "Target schema (database) to add tables in this pipeline to. Exactly one of `schema` or `target` must be specified. To publish to Unity Catalog, also specify `catalog`. This legacy field is deprecated for pipeline creation in favor of the `schema` field."
+        "description": "Target schema (database) to add tables in this pipeline to. Exactly one of ``schema`` or ``target`` must be specified. To publish to Unity Catalog, also specify ``catalog``. This legacy field is deprecated for pipeline creation in favor of the ``schema`` field."
       },
       {
         "name": "trigger",
         "type": "object",
-        "description": "Which pipeline trigger to use. Deprecated: Use `continuous` instead.",
+        "description": "Which pipeline trigger to use. Deprecated: Use ``continuous`` instead.",
         "children": [
           {
             "name": "cron",
@@ -876,8 +958,15 @@ The following methods are available for this resource:
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-pipeline_id"><code>pipeline_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td><a href="#parameter-force"><code>force</code></a></td>
+    <td><a href="#parameter-cascade"><code>cascade</code></a>, <a href="#parameter-delete_datasets"><code>delete_datasets</code></a>, <a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes a pipeline. If the pipeline publishes to Unity Catalog, pipeline deletion will cascade to all</td>
+</tr>
+<tr>
+    <td><a href="#apply_environment"><CopyableCode code="apply_environment" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-pipeline_id"><code>pipeline_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td></td>
+    <td>Applies the current pipeline environment onto the pipeline compute. The environment applied can be</td>
 </tr>
 <tr>
     <td><a href="#clone"><CopyableCode code="clone" /></a></td>
@@ -885,6 +974,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-pipeline_id"><code>pipeline_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
     <td>Creates a new pipeline using Unity Catalog from a pipeline using Hive Metastore. This method returns</td>
+</tr>
+<tr>
+    <td><a href="#restore"><CopyableCode code="restore" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-pipeline_id"><code>pipeline_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td></td>
+    <td>Restores a pipeline that was previously deleted, if within the restoration window. All tables deleted</td>
 </tr>
 <tr>
     <td><a href="#stop"><CopyableCode code="stop" /></a></td>
@@ -919,10 +1015,20 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-cascade">
+    <td><CopyableCode code="cascade" /></td>
+    <td><code>boolean</code></td>
+    <td>If false, pipeline deletion will not cascade to its datasets (MVs, STs, Views). By default, this parameter will be true and all tables will be deleted with the pipeline.</td>
+</tr>
+<tr id="parameter-delete_datasets">
+    <td><CopyableCode code="delete_datasets" /></td>
+    <td><code>boolean</code></td>
+    <td>Deprecated: Use ``cascade`` instead.</td>
+</tr>
 <tr id="parameter-filter">
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Select a subset of results based on the specified criteria. The supported filters are: * `notebook='<path>'` to select pipelines that reference the provided notebook path. * `name LIKE '[pattern]'` to select pipelines with a name that matches pattern. Wildcards are supported, for example: `name LIKE '%shopping%'` Composite filters are not supported. This field is optional.</td>
+    <td>Select a subset of results based on the specified criteria. The supported filters are: - ``notebook='&lt;path&gt;'`` to select pipelines that reference the provided notebook path. - ``name LIKE '[pattern]'`` to select pipelines with a name that matches pattern. Wildcards are supported, for example: ``name LIKE '%shopping%'`` Composite filters are not supported. This field is optional.</td>
 </tr>
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
@@ -965,14 +1071,17 @@ SELECT
 name,
 cluster_id,
 effective_budget_policy_id,
+effective_usage_policy_id,
 pipeline_id,
 creator_user_name,
 run_as_user_name,
 cause,
+effective_environment_version,
 effective_publishing_mode,
 health,
 last_modified,
 latest_updates,
+parameters,
 run_as,
 spec,
 state
@@ -1043,12 +1152,15 @@ ingestion_definition,
 libraries,
 name,
 notifications,
+parameters,
 photon,
 restart_window,
+rewind_generation_interval,
 root_path,
 run_as,
 schema,
 serverless,
+serverless_compute_id,
 storage,
 tags,
 target,
@@ -1077,12 +1189,15 @@ SELECT
 '{{ libraries }}',
 '{{ name }}',
 '{{ notifications }}',
+'{{ parameters }}',
 {{ photon }},
 '{{ restart_window }}',
+'{{ rewind_generation_interval }}',
 '{{ root_path }}',
 '{{ run_as }}',
 '{{ schema }}',
 {{ serverless }},
+'{{ serverless_compute_id }}',
 '{{ storage }}',
 '{{ tags }}',
 '{{ target }}',
@@ -1114,11 +1229,11 @@ effective_settings
     - name: catalog
       value: "{{ catalog }}"
       description: |
-        A catalog in Unity Catalog to publish data from this pipeline to. If \`target\` is specified, tables in this pipeline are published to a \`target\` schema inside \`catalog\` (for example, \`catalog\`.\`target\`.\`table\`). If \`target\` is not specified, no data is published to Unity Catalog.
+        A catalog in Unity Catalog to publish data from this pipeline to. If \`\`target\`\` is specified, tables in this pipeline are published to a \`\`target\`\` schema inside \`\`catalog\`\` (for example, \`\`catalog\`\`.\`\`target\`\`.\`\`table\`\`). If \`\`target\`\` is not specified, no data is published to Unity Catalog.
     - name: channel
       value: "{{ channel }}"
       description: |
-        DLT Release Channel that specifies which version to use.
+        SDP Release Channel that specifies which version to use.
     - name: clusters
       description: |
         Cluster settings for this pipeline deployment.
@@ -1152,13 +1267,15 @@ effective_settings
     - name: continuous
       value: {{ continuous }}
       description: |
-        Whether the pipeline is continuous or triggered. This replaces \`trigger\`.
+        Whether the pipeline is continuous or triggered. This replaces \`\`trigger\`\`.
     - name: deployment
       description: |
         Deployment type of this pipeline.
       value:
         kind: "{{ kind }}"
+        deployment_id: "{{ deployment_id }}"
         metadata_file_path: "{{ metadata_file_path }}"
+        version_id: "{{ version_id }}"
     - name: development
       value: {{ development }}
       description: |
@@ -1234,6 +1351,9 @@ effective_settings
                 auto_full_refresh_policy:
                   enabled: {{ enabled }}
                   min_interval_hours: {{ min_interval_hours }}
+                clustering_columns:
+                  - "{{ clustering_columns }}"
+                enable_auto_clustering: {{ enable_auto_clustering }}
                 exclude_columns:
                   - "{{ exclude_columns }}"
                 include_columns:
@@ -1249,6 +1369,9 @@ effective_settings
                 scd_type: "{{ scd_type }}"
                 sequence_by:
                   - "{{ sequence_by }}"
+                source_metadata_column: "{{ source_metadata_column }}"
+                storage_mode: "{{ storage_mode }}"
+                table_properties: "{{ table_properties }}"
                 workday_report_parameters:
                   incremental: {{ incremental }}
                   parameters: "{{ parameters }}"
@@ -1257,11 +1380,130 @@ effective_settings
               source_schema: "{{ source_schema }}"
               destination_catalog: "{{ destination_catalog }}"
               destination_schema: "{{ destination_schema }}"
+              confluence_options:
+                include_confluence_spaces:
+                  - "{{ include_confluence_spaces }}"
+              connector_options:
+                akamai_options:
+                  config_ids: "{{ config_ids }}"
+                api_source_connector_options:
+                  options: "{{ options }}"
+                bing_ads_options:
+                  custom_report_options: "{{ custom_report_options }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  sync_start_date: "{{ sync_start_date }}"
+                community_connector_options:
+                  options: "{{ options }}"
+                confluence_options:
+                  include_confluence_spaces: "{{ include_confluence_spaces }}"
+                gdrive_options:
+                  entity_type: "{{ entity_type }}"
+                  file_ingestion_options: "{{ file_ingestion_options }}"
+                  scope: "{{ scope }}"
+                  url: "{{ url }}"
+                github_options:
+                  repository_branch_selections: "{{ repository_branch_selections }}"
+                google_ads_options:
+                  manager_account_id: "{{ manager_account_id }}"
+                  custom_report_options: "{{ custom_report_options }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  sync_start_date: "{{ sync_start_date }}"
+                jira_options:
+                  include_jira_spaces: "{{ include_jira_spaces }}"
+                  use_audit_logs: {{ use_audit_logs }}
+                kafka_options:
+                  client_config: "{{ client_config }}"
+                  key_transformer: "{{ key_transformer }}"
+                  max_offsets_per_trigger: {{ max_offsets_per_trigger }}
+                  max_partitions: "{{ max_partitions }}"
+                  starting_offset: "{{ starting_offset }}"
+                  topic_pattern: "{{ topic_pattern }}"
+                  topics: "{{ topics }}"
+                  value_transformer: "{{ value_transformer }}"
+                linkedin_ads_options:
+                  custom_report_options: "{{ custom_report_options }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  sync_start_date: "{{ sync_start_date }}"
+                marketo_options:
+                  sync_start_date: "{{ sync_start_date }}"
+                meta_ads_options:
+                  action_attribution_windows: "{{ action_attribution_windows }}"
+                  action_breakdowns: "{{ action_breakdowns }}"
+                  action_report_time: "{{ action_report_time }}"
+                  breakdowns: "{{ breakdowns }}"
+                  custom_insights_lookback_window: {{ custom_insights_lookback_window }}
+                  custom_report_options: "{{ custom_report_options }}"
+                  level: "{{ level }}"
+                  start_date: "{{ start_date }}"
+                  time_increment: "{{ time_increment }}"
+                outlook_options:
+                  attachment_mode: "{{ attachment_mode }}"
+                  body_format: "{{ body_format }}"
+                  folder_filter: "{{ folder_filter }}"
+                  include_folders: "{{ include_folders }}"
+                  include_mailboxes: "{{ include_mailboxes }}"
+                  include_senders: "{{ include_senders }}"
+                  include_subjects: "{{ include_subjects }}"
+                  sender_filter: "{{ sender_filter }}"
+                  start_date: "{{ start_date }}"
+                  subject_filter: "{{ subject_filter }}"
+                rabbitmq_options:
+                  queue: "{{ queue }}"
+                reddit_ads_options:
+                  custom_report_options: "{{ custom_report_options }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  sync_start_date: "{{ sync_start_date }}"
+                sharepoint_options:
+                  entity_type: "{{ entity_type }}"
+                  file_ingestion_options: "{{ file_ingestion_options }}"
+                  url: "{{ url }}"
+                smartsheet_options:
+                  enforce_schema: {{ enforce_schema }}
+                tiktok_ads_options:
+                  custom_report_options: "{{ custom_report_options }}"
+                  data_level: "{{ data_level }}"
+                  dimensions: "{{ dimensions }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  metrics: "{{ metrics }}"
+                  query_lifetime: {{ query_lifetime }}
+                  report_type: "{{ report_type }}"
+                  sync_start_date: "{{ sync_start_date }}"
+                zendesk_support_options:
+                  start_date: "{{ start_date }}"
+              fanout_options:
+                fanout_by: "{{ fanout_by }}"
+                transforms:
+                  - avro_options:
+                      parse_mode: "{{ parse_mode }}"
+                      schema: "{{ schema }}"
+                      schema_file_path: "{{ schema_file_path }}"
+                      schema_registry: "{{ schema_registry }}"
+                    format: "{{ format }}"
+                    input_column: "{{ input_column }}"
+                    json_options:
+                      as_variant: {{ as_variant }}
+                      schema: "{{ schema }}"
+                      schema_evolution_mode: "{{ schema_evolution_mode }}"
+                      schema_file_path: "{{ schema_file_path }}"
+                      schema_hints: "{{ schema_hints }}"
+                    output_column: "{{ output_column }}"
+                    protobuf_options:
+                      desc_file_path: "{{ desc_file_path }}"
+                      message_name: "{{ message_name }}"
+                      parse_mode: "{{ parse_mode }}"
+                      recursive_fields_max_depth: {{ recursive_fields_max_depth }}
+                      schema_registry: "{{ schema_registry }}"
+              jira_options:
+                include_jira_spaces:
+                  - "{{ include_jira_spaces }}"
               source_catalog: "{{ source_catalog }}"
               table_configuration:
                 auto_full_refresh_policy:
                   enabled: {{ enabled }}
                   min_interval_hours: {{ min_interval_hours }}
+                clustering_columns:
+                  - "{{ clustering_columns }}"
+                enable_auto_clustering: {{ enable_auto_clustering }}
                 exclude_columns:
                   - "{{ exclude_columns }}"
                 include_columns:
@@ -1277,6 +1519,9 @@ effective_settings
                 scd_type: "{{ scd_type }}"
                 sequence_by:
                   - "{{ sequence_by }}"
+                source_metadata_column: "{{ source_metadata_column }}"
+                storage_mode: "{{ storage_mode }}"
+                table_properties: "{{ table_properties }}"
                 workday_report_parameters:
                   incremental: {{ incremental }}
                   parameters: "{{ parameters }}"
@@ -1285,13 +1530,109 @@ effective_settings
               source_table: "{{ source_table }}"
               destination_catalog: "{{ destination_catalog }}"
               destination_schema: "{{ destination_schema }}"
+              confluence_options:
+                include_confluence_spaces:
+                  - "{{ include_confluence_spaces }}"
+              connector_options:
+                akamai_options:
+                  config_ids: "{{ config_ids }}"
+                api_source_connector_options:
+                  options: "{{ options }}"
+                bing_ads_options:
+                  custom_report_options: "{{ custom_report_options }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  sync_start_date: "{{ sync_start_date }}"
+                community_connector_options:
+                  options: "{{ options }}"
+                confluence_options:
+                  include_confluence_spaces: "{{ include_confluence_spaces }}"
+                gdrive_options:
+                  entity_type: "{{ entity_type }}"
+                  file_ingestion_options: "{{ file_ingestion_options }}"
+                  scope: "{{ scope }}"
+                  url: "{{ url }}"
+                github_options:
+                  repository_branch_selections: "{{ repository_branch_selections }}"
+                google_ads_options:
+                  manager_account_id: "{{ manager_account_id }}"
+                  custom_report_options: "{{ custom_report_options }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  sync_start_date: "{{ sync_start_date }}"
+                jira_options:
+                  include_jira_spaces: "{{ include_jira_spaces }}"
+                  use_audit_logs: {{ use_audit_logs }}
+                kafka_options:
+                  client_config: "{{ client_config }}"
+                  key_transformer: "{{ key_transformer }}"
+                  max_offsets_per_trigger: {{ max_offsets_per_trigger }}
+                  max_partitions: "{{ max_partitions }}"
+                  starting_offset: "{{ starting_offset }}"
+                  topic_pattern: "{{ topic_pattern }}"
+                  topics: "{{ topics }}"
+                  value_transformer: "{{ value_transformer }}"
+                linkedin_ads_options:
+                  custom_report_options: "{{ custom_report_options }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  sync_start_date: "{{ sync_start_date }}"
+                marketo_options:
+                  sync_start_date: "{{ sync_start_date }}"
+                meta_ads_options:
+                  action_attribution_windows: "{{ action_attribution_windows }}"
+                  action_breakdowns: "{{ action_breakdowns }}"
+                  action_report_time: "{{ action_report_time }}"
+                  breakdowns: "{{ breakdowns }}"
+                  custom_insights_lookback_window: {{ custom_insights_lookback_window }}
+                  custom_report_options: "{{ custom_report_options }}"
+                  level: "{{ level }}"
+                  start_date: "{{ start_date }}"
+                  time_increment: "{{ time_increment }}"
+                outlook_options:
+                  attachment_mode: "{{ attachment_mode }}"
+                  body_format: "{{ body_format }}"
+                  folder_filter: "{{ folder_filter }}"
+                  include_folders: "{{ include_folders }}"
+                  include_mailboxes: "{{ include_mailboxes }}"
+                  include_senders: "{{ include_senders }}"
+                  include_subjects: "{{ include_subjects }}"
+                  sender_filter: "{{ sender_filter }}"
+                  start_date: "{{ start_date }}"
+                  subject_filter: "{{ subject_filter }}"
+                rabbitmq_options:
+                  queue: "{{ queue }}"
+                reddit_ads_options:
+                  custom_report_options: "{{ custom_report_options }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  sync_start_date: "{{ sync_start_date }}"
+                sharepoint_options:
+                  entity_type: "{{ entity_type }}"
+                  file_ingestion_options: "{{ file_ingestion_options }}"
+                  url: "{{ url }}"
+                smartsheet_options:
+                  enforce_schema: {{ enforce_schema }}
+                tiktok_ads_options:
+                  custom_report_options: "{{ custom_report_options }}"
+                  data_level: "{{ data_level }}"
+                  dimensions: "{{ dimensions }}"
+                  lookback_window_days: {{ lookback_window_days }}
+                  metrics: "{{ metrics }}"
+                  query_lifetime: {{ query_lifetime }}
+                  report_type: "{{ report_type }}"
+                  sync_start_date: "{{ sync_start_date }}"
+                zendesk_support_options:
+                  start_date: "{{ start_date }}"
               destination_table: "{{ destination_table }}"
+              jira_options:
+                include_jira_spaces:
+                  - "{{ include_jira_spaces }}"
               source_catalog: "{{ source_catalog }}"
               source_schema: "{{ source_schema }}"
               table_configuration:
                 auto_full_refresh_policy:
                   enabled: {{ enabled }}
                   min_interval_hours: {{ min_interval_hours }}
+                clustering_columns:
+                  - "{{ clustering_columns }}"
+                enable_auto_clustering: {{ enable_auto_clustering }}
                 exclude_columns:
                   - "{{ exclude_columns }}"
                 include_columns:
@@ -1307,22 +1648,32 @@ effective_settings
                 scd_type: "{{ scd_type }}"
                 sequence_by:
                   - "{{ sequence_by }}"
+                source_metadata_column: "{{ source_metadata_column }}"
+                storage_mode: "{{ storage_mode }}"
+                table_properties: "{{ table_properties }}"
                 workday_report_parameters:
                   incremental: {{ incremental }}
                   parameters: "{{ parameters }}"
                   report_parameters: "{{ report_parameters }}"
         source_configurations:
-          - catalog:
+          - api_source_connector_config:
+              configs: "{{ configs }}"
+            catalog:
               postgres:
                 slot_config:
                   publication_name: "{{ publication_name }}"
                   slot_name: "{{ slot_name }}"
               source_catalog: "{{ source_catalog }}"
+            google_ads_config:
+              manager_account_id: "{{ manager_account_id }}"
         source_type: "{{ source_type }}"
         table_configuration:
           auto_full_refresh_policy:
             enabled: {{ enabled }}
             min_interval_hours: {{ min_interval_hours }}
+          clustering_columns:
+            - "{{ clustering_columns }}"
+          enable_auto_clustering: {{ enable_auto_clustering }}
           exclude_columns:
             - "{{ exclude_columns }}"
           include_columns:
@@ -1339,6 +1690,9 @@ effective_settings
           scd_type: "{{ scd_type }}"
           sequence_by:
             - "{{ sequence_by }}"
+          source_metadata_column: "{{ source_metadata_column }}"
+          storage_mode: "{{ storage_mode }}"
+          table_properties: "{{ table_properties }}"
           workday_report_parameters:
             incremental: {{ incremental }}
             parameters: "{{ parameters }}"
@@ -1368,6 +1722,10 @@ effective_settings
       value:
         - alerts: "{{ alerts }}"
           email_recipients: "{{ email_recipients }}"
+    - name: parameters
+      value: "{{ parameters }}"
+      description: |
+        Key/value map of default parameters to use for pipeline execution. Maximum total size: 10k characters (JSON format)
     - name: photon
       value: {{ photon }}
       description: |
@@ -1380,6 +1738,12 @@ effective_settings
         days_of_week:
           - "{{ days_of_week }}"
         time_zone_id: "{{ time_zone_id }}"
+    - name: rewind_generation_interval
+      description: |
+        Interval at which rewind points are generated during pipeline execution.
+      value:
+        interval: {{ interval }}
+        unit: "{{ unit }}"
     - name: root_path
       value: "{{ root_path }}"
       description: |
@@ -1389,8 +1753,8 @@ effective_settings
         Write-only setting, available only in Create/Update calls. Specifies the user or service
         principal that the pipeline runs as. If not specified, the pipeline runs as the user who created
         the pipeline.
-        Only \`user_name\` or \`service_principal_name\` can be specified. If both are specified, an error
-        is thrown.
+        Only \`\`user_name\`\` or \`\`service_principal_name\`\` can be specified. If both are specified, an
+        error is thrown.
       value:
         service_principal_name: "{{ service_principal_name }}"
         user_name: "{{ user_name }}"
@@ -1402,6 +1766,10 @@ effective_settings
       value: {{ serverless }}
       description: |
         Whether serverless compute is enabled for this pipeline.
+    - name: serverless_compute_id
+      value: "{{ serverless_compute_id }}"
+      description: |
+        Serverless compute ID specified by the user for serverless pipelines.
     - name: storage
       value: "{{ storage }}"
       description: |
@@ -1413,10 +1781,10 @@ effective_settings
     - name: target
       value: "{{ target }}"
       description: |
-        Target schema (database) to add tables in this pipeline to. Exactly one of \`schema\` or \`target\` must be specified. To publish to Unity Catalog, also specify \`catalog\`. This legacy field is deprecated for pipeline creation in favor of the \`schema\` field.
+        Target schema (database) to add tables in this pipeline to. Exactly one of \`\`schema\`\` or \`\`target\`\` must be specified. To publish to Unity Catalog, also specify \`\`catalog\`\`. This legacy field is deprecated for pipeline creation in favor of the \`\`schema\`\` field.
     - name: trigger
       description: |
-        Which pipeline trigger to use. Deprecated: Use \`continuous\` instead.
+        Which pipeline trigger to use. Deprecated: Use \`\`continuous\`\` instead.
       value:
         cron:
           quartz_cron_schedule: "{{ quartz_cron_schedule }}"
@@ -1467,12 +1835,15 @@ ingestion_definition = '{{ ingestion_definition }}',
 libraries = '{{ libraries }}',
 name = '{{ name }}',
 notifications = '{{ notifications }}',
+parameters = '{{ parameters }}',
 photon = {{ photon }},
 restart_window = '{{ restart_window }}',
+rewind_generation_interval = '{{ rewind_generation_interval }}',
 root_path = '{{ root_path }}',
 run_as = '{{ run_as }}',
 schema = '{{ schema }}',
 serverless = {{ serverless }},
+serverless_compute_id = '{{ serverless_compute_id }}',
 storage = '{{ storage }}',
 tags = '{{ tags }}',
 target = '{{ target }}',
@@ -1502,6 +1873,8 @@ Deletes a pipeline. If the pipeline publishes to Unity Catalog, pipeline deletio
 DELETE FROM databricks_workspace.pipelines.pipelines
 WHERE pipeline_id = '{{ pipeline_id }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
+AND cascade = '{{ cascade }}'
+AND delete_datasets = '{{ delete_datasets }}'
 AND force = '{{ force }}'
 ;
 ```
@@ -1512,12 +1885,25 @@ AND force = '{{ force }}'
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="clone"
+    defaultValue="apply_environment"
     values={[
+        { label: 'apply_environment', value: 'apply_environment' },
         { label: 'clone', value: 'clone' },
+        { label: 'restore', value: 'restore' },
         { label: 'stop', value: 'stop' }
     ]}
 >
+<TabItem value="apply_environment">
+
+Applies the current pipeline environment onto the pipeline compute. The environment applied can be
+
+```sql
+EXEC databricks_workspace.pipelines.pipelines.apply_environment 
+@pipeline_id='{{ pipeline_id }}' --required, 
+@deployment_name='{{ deployment_name }}' --required
+;
+```
+</TabItem>
 <TabItem value="clone">
 
 Creates a new pipeline using Unity Catalog from a pipeline using Hive Metastore. This method returns
@@ -1551,15 +1937,28 @@ EXEC databricks_workspace.pipelines.pipelines.clone
 "notifications": "{{ notifications }}", 
 "photon": {{ photon }}, 
 "restart_window": "{{ restart_window }}", 
+"rewind_generation_interval": "{{ rewind_generation_interval }}", 
 "root_path": "{{ root_path }}", 
 "schema": "{{ schema }}", 
 "serverless": {{ serverless }}, 
+"serverless_compute_id": "{{ serverless_compute_id }}", 
 "storage": "{{ storage }}", 
 "tags": "{{ tags }}", 
 "target": "{{ target }}", 
 "trigger": "{{ trigger }}", 
 "usage_policy_id": "{{ usage_policy_id }}"
 }'
+;
+```
+</TabItem>
+<TabItem value="restore">
+
+Restores a pipeline that was previously deleted, if within the restoration window. All tables deleted
+
+```sql
+EXEC databricks_workspace.pipelines.pipelines.restore 
+@pipeline_id='{{ pipeline_id }}' --required, 
+@deployment_name='{{ deployment_name }}' --required
 ;
 ```
 </TabItem>

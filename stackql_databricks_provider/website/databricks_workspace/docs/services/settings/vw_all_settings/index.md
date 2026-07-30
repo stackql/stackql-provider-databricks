@@ -43,7 +43,7 @@ The following fields are returned by this view:
 </thead>
 <tbody>
 <tr>
-    <td><CopyableCode code="property" /></td>
+    <td><CopyableCode code="key" /></td>
     <td><CopyableCode code="string" /></td>
     <td>The name of the workspace setting (only non-null values are included).</td>
 </tr>
@@ -80,7 +80,7 @@ The following parameters are required by this view:
 
 ```sql
 SELECT
-  property,
+  key,
   value
 FROM databricks_workspace.settings.vw_all_settings
 WHERE deployment_name = '{{ deployment_name }}';
@@ -144,7 +144,6 @@ FROM (
       'enableJobsEmailsV2', enableJobsEmailsV2,
       'enableProjectTypeInWorkspace', enableProjectTypeInWorkspace,
       'mlflowModelRegistryEmailNotificationsEnabled', mlflowModelRegistryEmailNotificationsEnabled,
-      'heapAnalyticsAdminConsent', heapAnalyticsAdminConsent,
       'jobsListBackendPaginationEnabled', jobsListBackendPaginationEnabled,
       'jobsListBackendPaginationOptOut', jobsListBackendPaginationOptOut
     ) AS settings_object,
@@ -152,7 +151,7 @@ FROM (
     json_each.value
   FROM databricks_workspace.settings.workspace_config c,
       json_each(settings_object)
-  WHERE keys='enableWebTerminal,enableTokensConfig,maxTokenLifetimeDays,enableWorkspaceFilesystem,enableExportNotebook,enableNotebookTableClipboard,enableResultsDownloading,enableDcs,enableGp3,mlflowRunArtifactDownloadEnabled,enableUploadDataUis,storeInteractiveNotebookResultsInCustomerAccount,enableDeprecatedGlobalInitScripts,rStudioUserDefaultHomeBase,enforceUserIsolation,enableProjectsAllowList,projectsAllowListPermissions,projectsAllowList,reposIpynbResultsExportPermissions,enableDbfsFileBrowser,enableDatabricksAutologgingAdminConf,mlflowModelServingEndpointCreationEnabled,enableVerboseAuditLogs,enableFileStoreEndpoint,loginLogo,productName,homePageLogo,homePageLogoWidth,homePageWelcomeMessage,sidebarLogoText,sidebarLogoActive,sidebarLogoInactive,customReferences,loginLogoWidth,enforceWorkspaceViewAcls,enforceClusterViewAcls,enableJobViewAcls,enableHlsRuntime,enableEnforceImdsV2,enableJobsEmailsV2,enableProjectTypeInWorkspace,mlflowModelRegistryEmailNotificationsEnabled,heapAnalyticsAdminConsent,jobsListBackendPaginationEnabled,jobsListBackendPaginationOptOut'
+  WHERE keys='enableWebTerminal,enableTokensConfig,maxTokenLifetimeDays,enableWorkspaceFilesystem,enableExportNotebook,enableNotebookTableClipboard,enableResultsDownloading,enableDcs,enableGp3,mlflowRunArtifactDownloadEnabled,enableUploadDataUis,storeInteractiveNotebookResultsInCustomerAccount,enableDeprecatedGlobalInitScripts,rStudioUserDefaultHomeBase,enforceUserIsolation,enableProjectsAllowList,projectsAllowListPermissions,projectsAllowList,reposIpynbResultsExportPermissions,enableDbfsFileBrowser,enableDatabricksAutologgingAdminConf,mlflowModelServingEndpointCreationEnabled,enableVerboseAuditLogs,enableFileStoreEndpoint,loginLogo,productName,homePageLogo,homePageLogoWidth,homePageWelcomeMessage,sidebarLogoText,sidebarLogoActive,sidebarLogoInactive,customReferences,loginLogoWidth,enforceWorkspaceViewAcls,enforceClusterViewAcls,enableJobViewAcls,enableHlsRuntime,enableEnforceImdsV2,enableJobsEmailsV2,enableProjectTypeInWorkspace,mlflowModelRegistryEmailNotificationsEnabled,jobsListBackendPaginationEnabled,jobsListBackendPaginationOptOut'
     AND deployment_name='{{ deployment_name }}'
 ) t WHERE value IS NOT NULL;
 ```
@@ -207,12 +206,11 @@ FROM (
       'enableJobsEmailsV2', enableJobsEmailsV2,
       'enableProjectTypeInWorkspace', enableProjectTypeInWorkspace,
       'mlflowModelRegistryEmailNotificationsEnabled', mlflowModelRegistryEmailNotificationsEnabled,
-      'heapAnalyticsAdminConsent', heapAnalyticsAdminConsent,
-      'jobsListBackendPaginationEnabled', jobsListBackendPaginationEnabled,
+        'jobsListBackendPaginationEnabled', jobsListBackendPaginationEnabled,
       'jobsListBackendPaginationOptOut', jobsListBackendPaginationOptOut
     )) AS settings_object
   FROM databricks_workspace.settings.workspace_config c
-  WHERE keys='enableWebTerminal,enableTokensConfig,maxTokenLifetimeDays,enableWorkspaceFilesystem,enableExportNotebook,enableNotebookTableClipboard,enableResultsDownloading,enableDcs,enableGp3,mlflowRunArtifactDownloadEnabled,enableUploadDataUis,storeInteractiveNotebookResultsInCustomerAccount,enableDeprecatedGlobalInitScripts,rStudioUserDefaultHomeBase,enforceUserIsolation,enableProjectsAllowList,projectsAllowListPermissions,projectsAllowList,reposIpynbResultsExportPermissions,enableDbfsFileBrowser,enableDatabricksAutologgingAdminConf,mlflowModelServingEndpointCreationEnabled,enableVerboseAuditLogs,enableFileStoreEndpoint,loginLogo,productName,homePageLogo,homePageLogoWidth,homePageWelcomeMessage,sidebarLogoText,sidebarLogoActive,sidebarLogoInactive,customReferences,loginLogoWidth,enforceWorkspaceViewAcls,enforceClusterViewAcls,enableJobViewAcls,enableHlsRuntime,enableEnforceImdsV2,enableJobsEmailsV2,enableProjectTypeInWorkspace,mlflowModelRegistryEmailNotificationsEnabled,heapAnalyticsAdminConsent,jobsListBackendPaginationEnabled,jobsListBackendPaginationOptOut'
+  WHERE keys='enableWebTerminal,enableTokensConfig,maxTokenLifetimeDays,enableWorkspaceFilesystem,enableExportNotebook,enableNotebookTableClipboard,enableResultsDownloading,enableDcs,enableGp3,mlflowRunArtifactDownloadEnabled,enableUploadDataUis,storeInteractiveNotebookResultsInCustomerAccount,enableDeprecatedGlobalInitScripts,rStudioUserDefaultHomeBase,enforceUserIsolation,enableProjectsAllowList,projectsAllowListPermissions,projectsAllowList,reposIpynbResultsExportPermissions,enableDbfsFileBrowser,enableDatabricksAutologgingAdminConf,mlflowModelServingEndpointCreationEnabled,enableVerboseAuditLogs,enableFileStoreEndpoint,loginLogo,productName,homePageLogo,homePageLogoWidth,homePageWelcomeMessage,sidebarLogoText,sidebarLogoActive,sidebarLogoInactive,customReferences,loginLogoWidth,enforceWorkspaceViewAcls,enforceClusterViewAcls,enableJobViewAcls,enableHlsRuntime,enableEnforceImdsV2,enableJobsEmailsV2,enableProjectTypeInWorkspace,mlflowModelRegistryEmailNotificationsEnabled,jobsListBackendPaginationEnabled,jobsListBackendPaginationOptOut'
     AND deployment_name='{{ deployment_name }}'
 ) t, LATERAL jsonb_each_text(t.settings_object)
 WHERE value IS NOT NULL;

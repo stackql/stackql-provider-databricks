@@ -78,7 +78,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-space_id"><code>space_id</code></a>, <a href="#parameter-conversation_id"><code>conversation_id</code></a>, <a href="#parameter-message_id"><code>message_id</code></a>, <a href="#parameter-attachment_id"><code>attachment_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Initiates a new SQL execution and returns a `download_id` and `download_id_signature` that you can use</td>
+    <td>Initiates a new SQL execution and returns a ``download_id`` and ``download_id_signature`` that you can</td>
 </tr>
 </tbody>
 </table>
@@ -173,7 +173,7 @@ AND deployment_name = '{{ deployment_name }}' -- required
 >
 <TabItem value="generate_download">
 
-Initiates a new SQL execution and returns a `download_id` and `download_id_signature` that you can use
+Initiates a new SQL execution and returns a ``download_id`` and ``download_id_signature`` that you can
 
 ```sql
 EXEC databricks_workspace.dashboards.genie_message_attachment_downloads.generate_download 

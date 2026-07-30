@@ -4,8 +4,8 @@
     "title": "Databricks Tags API (workspace)",
     "description": "OpenAPI specification for the Databricks tags service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.tags"
   },
   "servers": [
@@ -24,12 +24,12 @@
     "/api/2.1/tag-policies": {
       "post": {
         "operationId": "tag_policies_create_tag_policy",
-        "summary": "Creates a new tag policy, making the associated tag key governed. For Terraform usage, see the [Tag",
+        "summary": "Creates a new tag policy, making the associated tag key governed. For Terraform usage, see the `Tag",
         "tags": [
           "tags",
           "tag_policies"
         ],
-        "description": "Creates a new tag policy, making the associated tag key governed. For Terraform usage, see the [Tag\nPolicy Terraform documentation]. To manage permissions for tag policies, use the [Account Access\nControl Proxy API].\n\n[Account Access Control Proxy API]: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy\n[Tag Policy Terraform documentation]: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/tag_policy\n\n:param tag_policy: :class:`TagPolicy`\n\n:returns: :class:`TagPolicy`",
+        "description": "Creates a new tag policy, making the associated tag key governed. For Terraform usage, see the `Tag\nPolicy Terraform documentation\n<https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/tag_policy>`__.\nTo manage permissions for tag policies, use the `Account Access Control Proxy API\n<https://docs.databricks.com/api/workspace/accountaccesscontrolproxy>`__.\n\n:param tag_policy: :class:`TagPolicy`\n\n:returns: :class:`TagPolicy`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -42,6 +42,10 @@
                       "tag_key": {
                         "type": "string"
                       },
+                      "account_id": {
+                        "type": "string",
+                        "description": "The account ID that owns this tag policy."
+                      },
                       "create_time": {
                         "type": "string",
                         "description": "Timestamp when the tag policy was created"
@@ -51,6 +55,32 @@
                       },
                       "id": {
                         "type": "string"
+                      },
+                      "propagation_config": {
+                        "type": "object",
+                        "properties": {
+                          "conflict_resolution": {
+                            "type": "object",
+                            "properties": {
+                              "default_value_override": {
+                                "type": "object",
+                                "properties": {
+                                  "default_value": {
+                                    "type": "string",
+                                    "description": "The tag value to apply when conflicts are detected. This value must be one of the allowed values defined in the tag policy."
+                                  }
+                                },
+                                "description": "Uses a specified default value to override when conflicts happen."
+                              }
+                            },
+                            "description": "Policy that determines how to resolve conflicts when multiple upstream sources have different tag values."
+                          },
+                          "enabled": {
+                            "type": "boolean",
+                            "description": "Determines whether this tag should automatically propagate through lineage."
+                          }
+                        },
+                        "description": "Configuration that controls how tags are automatically propagated through data lineage."
                       },
                       "update_time": {
                         "type": "string",
@@ -117,12 +147,12 @@
       },
       "get": {
         "operationId": "tag_policies_list_tag_policies",
-        "summary": "Lists the tag policies for all governed tags in the account. For Terraform usage, see the [Tag Policy",
+        "summary": "Lists the tag policies for all governed tags in the account. For Terraform usage, see the `Tag Policy",
         "tags": [
           "tags",
           "tag_policies"
         ],
-        "description": "Lists the tag policies for all governed tags in the account. For Terraform usage, see the [Tag Policy\nTerraform documentation]. To list granted permissions for tag policies, use the [Account Access\nControl Proxy API].\n\n[Account Access Control Proxy API]: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy\n[Tag Policy Terraform documentation]: https://registry.terraform.io/providers/databricks/databricks/latest/docs/data-sources/tag_policies\n\n:param page_size: int (optional)\n  The maximum number of results to return in this request. Fewer results may be returned than\n  requested. If unspecified or set to 0, this defaults to 1000. The maximum value is 1000; values\n  above 1000 will be coerced down to 1000.\n:param page_token: str (optional)\n  An optional page token received from a previous list tag policies call.\n\n:returns: Iterator over :class:`TagPolicy`",
+        "description": "Lists the tag policies for all governed tags in the account. For Terraform usage, see the `Tag Policy\nTerraform documentation\n<https://registry.terraform.io/providers/databricks/databricks/latest/docs/data-sources/tag_policies>`__.\nTo list granted permissions for tag policies, use the `Account Access Control Proxy API\n<https://docs.databricks.com/api/workspace/accountaccesscontrolproxy>`__.\n\n:param page_size: int (optional)\n  The maximum number of results to return in this request. Fewer results may be returned than\n  requested. If unspecified or set to 0, this defaults to 1000. The maximum value is 1000; values\n  above 1000 will be coerced down to 1000.\n:param page_token: str (optional)\n  An optional page token received from a previous list tag policies call.\n\n:returns: Iterator over :class:`TagPolicy`",
         "parameters": [
           {
             "name": "page_size",
@@ -184,7 +214,7 @@
           "tags",
           "tag_policies"
         ],
-        "description": "Deletes a tag policy by its associated governed tag's key, leaving that tag key ungoverned. For\nTerraform usage, see the [Tag Policy Terraform documentation].\n\n[Tag Policy Terraform documentation]: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/tag_policy\n\n:param tag_key: str",
+        "description": "Deletes a tag policy by its associated governed tag's key, leaving that tag key ungoverned. For\nTerraform usage, see the `Tag Policy Terraform documentation\n<https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/tag_policy>`__.\n\n:param tag_key: str",
         "parameters": [
           {
             "name": "tag_key",
@@ -222,12 +252,12 @@
       },
       "get": {
         "operationId": "tag_policies_get_tag_policy",
-        "summary": "Gets a single tag policy by its associated governed tag's key. For Terraform usage, see the [Tag",
+        "summary": "Gets a single tag policy by its associated governed tag's key. For Terraform usage, see the `Tag",
         "tags": [
           "tags",
           "tag_policies"
         ],
-        "description": "Gets a single tag policy by its associated governed tag's key. For Terraform usage, see the [Tag\nPolicy Terraform documentation]. To list granted permissions for tag policies, use the [Account Access\nControl Proxy API].\n\n[Account Access Control Proxy API]: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy\n[Tag Policy Terraform documentation]: https://registry.terraform.io/providers/databricks/databricks/latest/docs/data-sources/tag_policy\n\n:param tag_key: str\n\n:returns: :class:`TagPolicy`",
+        "description": "Gets a single tag policy by its associated governed tag's key. For Terraform usage, see the `Tag\nPolicy Terraform documentation\n<https://registry.terraform.io/providers/databricks/databricks/latest/docs/data-sources/tag_policy>`__.\nTo list granted permissions for tag policies, use the `Account Access Control Proxy API\n<https://docs.databricks.com/api/workspace/accountaccesscontrolproxy>`__.\n\n:param tag_key: str\n\n:returns: :class:`TagPolicy`",
         "parameters": [
           {
             "name": "tag_key",
@@ -272,12 +302,12 @@
       },
       "patch": {
         "operationId": "tag_policies_update_tag_policy",
-        "summary": "Updates an existing tag policy for a single governed tag. For Terraform usage, see the [Tag Policy",
+        "summary": "Updates an existing tag policy for a single governed tag. For Terraform usage, see the `Tag Policy",
         "tags": [
           "tags",
           "tag_policies"
         ],
-        "description": "Updates an existing tag policy for a single governed tag. For Terraform usage, see the [Tag Policy\nTerraform documentation]. To manage permissions for tag policies, use the [Account Access Control\nProxy API].\n\n[Account Access Control Proxy API]: https://docs.databricks.com/api/workspace/accountaccesscontrolproxy\n[Tag Policy Terraform documentation]: https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/tag_policy\n\n:param tag_key: str\n:param tag_policy: :class:`TagPolicy`\n:param update_mask: str\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g.,\n  `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API\n  changes in the future.\n\n:returns: :class:`TagPolicy`",
+        "description": "Updates an existing tag policy for a single governed tag. For Terraform usage, see the `Tag Policy\nTerraform documentation\n<https://registry.terraform.io/providers/databricks/databricks/latest/docs/resources/tag_policy>`__.\nTo manage permissions for tag policies, use the `Account Access Control Proxy API\n<https://docs.databricks.com/api/workspace/accountaccesscontrolproxy>`__.\n\n:param tag_key: str\n:param tag_policy: :class:`TagPolicy`\n:param update_mask: str\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g.,\n  ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of ``*`` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the\n  API changes in the future.\n\n:returns: :class:`TagPolicy`",
         "parameters": [
           {
             "name": "tag_key",
@@ -294,7 +324,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of ``*`` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the API changes in the future."
           }
         ],
         "requestBody": {
@@ -309,6 +339,10 @@
                       "tag_key": {
                         "type": "string"
                       },
+                      "account_id": {
+                        "type": "string",
+                        "description": "The account ID that owns this tag policy."
+                      },
                       "create_time": {
                         "type": "string",
                         "description": "Timestamp when the tag policy was created"
@@ -318,6 +352,32 @@
                       },
                       "id": {
                         "type": "string"
+                      },
+                      "propagation_config": {
+                        "type": "object",
+                        "properties": {
+                          "conflict_resolution": {
+                            "type": "object",
+                            "properties": {
+                              "default_value_override": {
+                                "type": "object",
+                                "properties": {
+                                  "default_value": {
+                                    "type": "string",
+                                    "description": "The tag value to apply when conflicts are detected. This value must be one of the allowed values defined in the tag policy."
+                                  }
+                                },
+                                "description": "Uses a specified default value to override when conflicts happen."
+                              }
+                            },
+                            "description": "Policy that determines how to resolve conflicts when multiple upstream sources have different tag values."
+                          },
+                          "enabled": {
+                            "type": "boolean",
+                            "description": "Determines whether this tag should automatically propagate through lineage."
+                          }
+                        },
+                        "description": "Configuration that controls how tags are automatically propagated through data lineage."
                       },
                       "update_time": {
                         "type": "string",
@@ -603,7 +663,7 @@
           "tags",
           "workspace_entity_tag_assignments"
         ],
-        "description": "Update a tag assignment\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,\n  notebooks\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name\n:param tag_key: str\n  The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed\n:param tag_assignment: :class:`TagAssignment`\n:param update_mask: str\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g.,\n  `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API\n  changes in the future.\n\n:returns: :class:`TagAssignment`",
+        "description": "Update a tag assignment\n\n:param entity_type: str\n  The type of entity to which the tag is assigned. Allowed values are apps, dashboards, geniespaces,\n  notebooks\n:param entity_id: str\n  The identifier of the entity to which the tag is assigned. For apps, the entity_id is the app name\n:param tag_key: str\n  The key of the tag. The characters , . : / - = and leading/trailing spaces are not allowed\n:param tag_assignment: :class:`TagAssignment`\n:param update_mask: str\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g.,\n  ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of ``*`` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the\n  API changes in the future.\n\n:returns: :class:`TagAssignment`",
         "parameters": [
           {
             "name": "entity_type",
@@ -639,7 +699,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of ``*`` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the API changes in the future."
           }
         ],
         "requestBody": {
@@ -797,6 +857,26 @@
   },
   "components": {
     "schemas": {
+      "ConflictResolutionPolicy": {
+        "type": "object",
+        "properties": {
+          "default_value_override": {
+            "$ref": "#/components/schemas/DefaultValueOverridePolicy",
+            "description": "Uses a specified default value to override when conflicts happen."
+          }
+        },
+        "description": "Policy that determines how to resolve conflicts when multiple upstream sources have different\n    tag values."
+      },
+      "DefaultValueOverridePolicy": {
+        "type": "object",
+        "properties": {
+          "default_value": {
+            "type": "string",
+            "description": "The tag value to apply when conflicts are detected. This value must be one of the allowed values defined in the tag policy."
+          }
+        },
+        "description": "Policy that specifies a default value to use when resolving tag conflicts during propagation."
+      },
       "ListTagAssignmentsResponse": {
         "type": "object",
         "properties": {
@@ -824,6 +904,20 @@
             }
           }
         }
+      },
+      "PropagationConfig": {
+        "type": "object",
+        "properties": {
+          "conflict_resolution": {
+            "$ref": "#/components/schemas/ConflictResolutionPolicy",
+            "description": "Policy that determines how to resolve conflicts when multiple upstream sources have different tag values."
+          },
+          "enabled": {
+            "type": "boolean",
+            "description": "Determines whether this tag should automatically propagate through lineage."
+          }
+        },
+        "description": "Configuration that controls how tags are automatically propagated through data lineage."
       },
       "TagAssignment": {
         "type": "object",
@@ -856,6 +950,10 @@
           "tag_key": {
             "type": "string"
           },
+          "account_id": {
+            "type": "string",
+            "description": "The account ID that owns this tag policy."
+          },
           "create_time": {
             "type": "string",
             "description": "Timestamp when the tag policy was created"
@@ -865,6 +963,10 @@
           },
           "id": {
             "type": "string"
+          },
+          "propagation_config": {
+            "$ref": "#/components/schemas/PropagationConfig",
+            "description": "Configuration that controls how tags are automatically propagated through data lineage."
           },
           "update_time": {
             "type": "string",

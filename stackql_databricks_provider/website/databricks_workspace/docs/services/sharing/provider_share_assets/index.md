@@ -72,7 +72,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "data_type",
         "type": "string",
-        "description": "The data type of the function. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+        "description": "The data type of the function. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
       },
       {
         "name": "dependency_list",
@@ -161,7 +161,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "type_name",
                 "type": "string",
-                "description": "The type of the parameter in Enum format. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+                "description": "The type of the parameter in Enum format. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
               },
               {
                 "name": "type_precision",
@@ -289,14 +289,24 @@ The following fields are returned by `SELECT` queries:
     "description": "The list of tables in the share.",
     "children": [
       {
+        "name": "accessModes",
+        "type": "array",
+        "description": ""
+      },
+      {
         "name": "comment",
         "type": "string",
-        "description": ""
+        "description": "The comment of the table."
       },
       {
         "name": "id",
         "type": "string",
         "description": "The id of the table."
+      },
+      {
+        "name": "location",
+        "type": "string",
+        "description": "The cloud storage location of the table for open sharing."
       },
       {
         "name": "materialization_namespace",

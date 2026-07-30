@@ -46,7 +46,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "materialized_feature_id",
     "type": "string",
-    "description": "Unique identifier for the materialized feature."
+    "description": "Server-assigned unique identifier for the materialized feature."
   },
   {
     "name": "feature_name",
@@ -61,7 +61,24 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "cron_schedule",
     "type": "string",
-    "description": "The quartz cron expression that defines the schedule of the materialization pipeline. The schedule is evaluated in the UTC timezone."
+    "description": "The quartz cron expression that defines the schedule of the materialization pipeline. The schedule is evaluated in the UTC timezone. Hidden from GraphQL: superseded by the ``trigger`` oneof (cron_schedule_trigger), so not exposed to Catalog Explorer."
+  },
+  {
+    "name": "cron_schedule_trigger",
+    "type": "object",
+    "description": "A cron-based schedule trigger for the materialization pipeline.",
+    "children": [
+      {
+        "name": "cron_expression",
+        "type": "string",
+        "description": "The cron expression defining the schedule (e.g., \"0 0 * * *\" for daily at midnight)."
+      }
+    ]
+  },
+  {
+    "name": "is_online",
+    "type": "boolean",
+    "description": "True if this is an online materialized feature. False if it is an offline materialized feature."
   },
   {
     "name": "last_materialization_time",
@@ -71,7 +88,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "offline_store_config",
     "type": "object",
-    "description": "Configuration for offline store destination.",
+    "description": "Destination for writing feature values to an offline Delta table.",
     "children": [
       {
         "name": "catalog_name",
@@ -93,7 +110,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "online_store_config",
     "type": "object",
-    "description": "Configuration for online store destination.",
+    "description": "Destination for writing feature values to an online Lakebase table.",
     "children": [
       {
         "name": "catalog_name",
@@ -120,7 +137,29 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "pipeline_schedule_state",
     "type": "string",
-    "description": "The schedule state of the materialization pipeline. (ACTIVE, PAUSED, SNAPSHOT)"
+    "description": "The schedule state of the materialization pipeline. Hidden from GraphQL: being deprecated, so not exposed to Catalog Explorer. (ACTIVE, PAUSED, SNAPSHOT)"
+  },
+  {
+    "name": "streaming_mode",
+    "type": "object",
+    "description": "The Structured Streaming trigger mode used for materialization. Real-time mode (RTM) targets sub-second latency for operational workloads; micro-batch mode (MBM) favors cost efficiency for ETL and analytics workloads.",
+    "children": [
+      {
+        "name": "freshness_target",
+        "type": "string",
+        "description": "The desired data freshness for feature materialization, expressed as a duration string (e.g. \"1 minute\")."
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "The type of streaming mode used by the materialization pipeline. (STREAMING_MODE_TYPE_MBM, STREAMING_MODE_TYPE_RTM)"
+      }
+    ]
+  },
+  {
+    "name": "table_trigger",
+    "type": "object",
+    "description": "A trigger that fires when the upstream source table changes."
   }
 ]} />
 </TabItem>
@@ -130,7 +169,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "materialized_feature_id",
     "type": "string",
-    "description": "Unique identifier for the materialized feature."
+    "description": "Server-assigned unique identifier for the materialized feature."
   },
   {
     "name": "feature_name",
@@ -145,7 +184,24 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "cron_schedule",
     "type": "string",
-    "description": "The quartz cron expression that defines the schedule of the materialization pipeline. The schedule is evaluated in the UTC timezone."
+    "description": "The quartz cron expression that defines the schedule of the materialization pipeline. The schedule is evaluated in the UTC timezone. Hidden from GraphQL: superseded by the ``trigger`` oneof (cron_schedule_trigger), so not exposed to Catalog Explorer."
+  },
+  {
+    "name": "cron_schedule_trigger",
+    "type": "object",
+    "description": "A cron-based schedule trigger for the materialization pipeline.",
+    "children": [
+      {
+        "name": "cron_expression",
+        "type": "string",
+        "description": "The cron expression defining the schedule (e.g., \"0 0 * * *\" for daily at midnight)."
+      }
+    ]
+  },
+  {
+    "name": "is_online",
+    "type": "boolean",
+    "description": "True if this is an online materialized feature. False if it is an offline materialized feature."
   },
   {
     "name": "last_materialization_time",
@@ -155,7 +211,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "offline_store_config",
     "type": "object",
-    "description": "Configuration for offline store destination.",
+    "description": "Destination for writing feature values to an offline Delta table.",
     "children": [
       {
         "name": "catalog_name",
@@ -177,7 +233,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "online_store_config",
     "type": "object",
-    "description": "Configuration for online store destination.",
+    "description": "Destination for writing feature values to an online Lakebase table.",
     "children": [
       {
         "name": "catalog_name",
@@ -204,7 +260,29 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "pipeline_schedule_state",
     "type": "string",
-    "description": "The schedule state of the materialization pipeline. (ACTIVE, PAUSED, SNAPSHOT)"
+    "description": "The schedule state of the materialization pipeline. Hidden from GraphQL: being deprecated, so not exposed to Catalog Explorer. (ACTIVE, PAUSED, SNAPSHOT)"
+  },
+  {
+    "name": "streaming_mode",
+    "type": "object",
+    "description": "The Structured Streaming trigger mode used for materialization. Real-time mode (RTM) targets sub-second latency for operational workloads; micro-batch mode (MBM) favors cost efficiency for ETL and analytics workloads.",
+    "children": [
+      {
+        "name": "freshness_target",
+        "type": "string",
+        "description": "The desired data freshness for feature materialization, expressed as a duration string (e.g. \"1 minute\")."
+      },
+      {
+        "name": "mode",
+        "type": "string",
+        "description": "The type of streaming mode used by the materialization pipeline. (STREAMING_MODE_TYPE_MBM, STREAMING_MODE_TYPE_RTM)"
+      }
+    ]
+  },
+  {
+    "name": "table_trigger",
+    "type": "object",
+    "description": "A trigger that fires when the upstream source table changes."
   }
 ]} />
 </TabItem>
@@ -335,10 +413,14 @@ materialized_feature_id,
 feature_name,
 table_name,
 cron_schedule,
+cron_schedule_trigger,
+is_online,
 last_materialization_time,
 offline_store_config,
 online_store_config,
-pipeline_schedule_state
+pipeline_schedule_state,
+streaming_mode,
+table_trigger
 FROM databricks_workspace.ml.feature_materialized
 WHERE materialized_feature_id = '{{ materialized_feature_id }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
@@ -355,10 +437,14 @@ materialized_feature_id,
 feature_name,
 table_name,
 cron_schedule,
+cron_schedule_trigger,
+is_online,
 last_materialization_time,
 offline_store_config,
 online_store_config,
-pipeline_schedule_state
+pipeline_schedule_state,
+streaming_mode,
+table_trigger
 FROM databricks_workspace.ml.feature_materialized
 WHERE deployment_name = '{{ deployment_name }}' -- required
 AND feature_name = '{{ feature_name }}'
@@ -396,10 +482,14 @@ materialized_feature_id,
 feature_name,
 table_name,
 cron_schedule,
+cron_schedule_trigger,
+is_online,
 last_materialization_time,
 offline_store_config,
 online_store_config,
-pipeline_schedule_state
+pipeline_schedule_state,
+streaming_mode,
+table_trigger
 ;
 ```
 </TabItem>
@@ -417,6 +507,9 @@ pipeline_schedule_state
       value:
         feature_name: "{{ feature_name }}"
         cron_schedule: "{{ cron_schedule }}"
+        cron_schedule_trigger:
+          cron_expression: "{{ cron_expression }}"
+        is_online: {{ is_online }}
         last_materialization_time: "{{ last_materialization_time }}"
         materialized_feature_id: "{{ materialized_feature_id }}"
         offline_store_config:
@@ -429,7 +522,11 @@ pipeline_schedule_state
           table_name_prefix: "{{ table_name_prefix }}"
           online_store_name: "{{ online_store_name }}"
         pipeline_schedule_state: "{{ pipeline_schedule_state }}"
+        streaming_mode:
+          freshness_target: "{{ freshness_target }}"
+          mode: "{{ mode }}"
         table_name: "{{ table_name }}"
+        table_trigger: "{{ table_trigger }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -462,10 +559,14 @@ materialized_feature_id,
 feature_name,
 table_name,
 cron_schedule,
+cron_schedule_trigger,
+is_online,
 last_materialization_time,
 offline_store_config,
 online_store_config,
-pipeline_schedule_state;
+pipeline_schedule_state,
+streaming_mode,
+table_trigger;
 ```
 </TabItem>
 </Tabs>

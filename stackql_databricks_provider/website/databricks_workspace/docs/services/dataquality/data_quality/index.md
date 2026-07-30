@@ -46,24 +46,102 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_id",
     "type": "string",
-    "description": "The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`. Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog Explorer] &gt; select the `schema` &gt; go to the `Details` tab &gt; the `Schema ID` field. Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog Explorer] &gt; select the `table` &gt; go to the `Details` tab &gt; the `Table ID` field. [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/ [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id"
+    "description": "The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``. Find the ``schema_id`` from either: 1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the ``Schemas`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``schema`` &gt; go to the ``Details`` tab &gt; the ``Schema ID`` field. Find the ``table_id`` from either: 1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the ``Tables`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``table`` &gt; go to the ``Details`` tab &gt; the ``Table ID`` field."
   },
   {
     "name": "anomaly_detection_config",
     "type": "object",
-    "description": "Anomaly Detection Configuration, applicable to `schema` object types.",
+    "description": "Anomaly Detection Configuration, applicable to ``schema`` object types.",
     "children": [
+      {
+        "name": "anomaly_detection_workflow_id",
+        "type": "integer",
+        "description": "The id of the workflow that detects the anomaly. This field will only be returned in the Get/Update response, if the request comes from the workspace where this anomaly detection job is created."
+      },
       {
         "name": "excluded_table_full_names",
         "type": "array",
         "description": "List of fully qualified table names to exclude from anomaly detection."
+      },
+      {
+        "name": "job_type",
+        "type": "string",
+        "description": "The type of the last run of the workflow. (ANOMALY_DETECTION_JOB_TYPE_INTERNAL_HIDDEN, ANOMALY_DETECTION_JOB_TYPE_NORMAL)"
+      },
+      {
+        "name": "publish_health_indicator",
+        "type": "boolean",
+        "description": "If the health indicator should be shown."
+      },
+      {
+        "name": "validity_check_configurations",
+        "type": "array",
+        "description": "Validity check configurations for anomaly detection.",
+        "children": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "percent_null_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              },
+              {
+                "name": "upper_bound",
+                "type": "number",
+                "description": "Optional upper bound; we should use auto determined bounds for now"
+              }
+            ]
+          },
+          {
+            "name": "range_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              },
+              {
+                "name": "lower_bound",
+                "type": "number",
+                "description": "Lower bound for the range"
+              },
+              {
+                "name": "upper_bound",
+                "type": "number",
+                "description": "Upper bound for the range"
+              }
+            ]
+          },
+          {
+            "name": "uniqueness_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              }
+            ]
+          }
+        ]
       }
     ]
   },
   {
     "name": "data_profiling_config",
     "type": "object",
-    "description": "Data Profiling Configuration, applicable to `table` object types. Exactly one `Analysis Configuration` must be present.",
+    "description": "Data Profiling Configuration, applicable to ``table`` object types. Exactly one ``Analysis Configuration`` must be present.",
     "children": [
       {
         "name": "output_schema_id",
@@ -78,7 +156,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "baseline_table_name",
         "type": "string",
-        "description": "Baseline table name. Baseline data is used to compute drift from the data in the monitored `table_name`. The baseline table and the monitored table shall have the same schema."
+        "description": "Baseline table name. Baseline data is used to compute drift from the data in the monitored ``table_name``. The baseline table and the monitored table shall have the same schema."
       },
       {
         "name": "custom_metrics",
@@ -93,7 +171,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "definition",
             "type": "string",
-            "description": "Jinja template for a SQL expression that specifies how to compute the metric. See [create metric definition]. [create metric definition]: https://docs.databricks.com/en/lakehouse-monitoring/custom-metrics.html#create-definition"
+            "description": "Jinja template for a SQL expression that specifies how to compute the metric. See `create metric definition <https://docs.databricks.com/en/lakehouse-monitoring/custom-metrics.html#create-definition>`__."
           },
           {
             "name": "input_columns",
@@ -120,7 +198,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "drift_metrics_table_name",
         "type": "string",
-        "description": "Table that stores drift metrics data. Format: `catalog.schema.table_name`."
+        "description": "Table that stores drift metrics data. Format: ``catalog.schema.table_name``."
       },
       {
         "name": "effective_warehouse_id",
@@ -130,7 +208,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "inference_log",
         "type": "object",
-        "description": "`Analysis Configuration` for monitoring inference log tables.",
+        "description": "``Analysis Configuration`` for monitoring inference log tables.",
         "children": [
           {
             "name": "problem_type",
@@ -161,6 +239,11 @@ The following fields are returned by `SELECT` queries:
             "name": "label_column",
             "type": "string",
             "description": "Column for the label."
+          },
+          {
+            "name": "prediction_probability_column",
+            "type": "string",
+            "description": "Column for prediction probabilities"
           }
         ]
       },
@@ -177,7 +260,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "monitored_table_name",
         "type": "string",
-        "description": "Unity Catalog table to monitor. Format: `catalog.schema.table_name`"
+        "description": "Unity Catalog table to monitor. Format: ``catalog.schema.table_name``"
       },
       {
         "name": "notification_settings",
@@ -201,7 +284,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "profile_metrics_table_name",
         "type": "string",
-        "description": "Table that stores profile metrics data. Format: `catalog.schema.table_name`."
+        "description": "Table that stores profile metrics data. Format: ``catalog.schema.table_name``."
       },
       {
         "name": "schedule",
@@ -211,7 +294,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "quartz_cron_expression",
             "type": "string",
-            "description": "The expression that determines when to run the monitor. See [examples]. [examples]: https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html"
+            "description": "The expression that determines when to run the monitor. See `examples <https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html>`__."
           },
           {
             "name": "timezone_id",
@@ -233,12 +316,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "slicing_exprs",
         "type": "array",
-        "description": "List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example `slicing_exprs=[“col_1”, “col_2 > 10”]` will generate the following slices: two slices for `col_2 > 10` (True and False), and one slice per unique value in `col1`. For high-cardinality columns, only the top 100 unique values by frequency will generate slices."
+        "description": "List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example ``slicing_exprs=[“col_1”, “col_2 &gt; 10”]`` will generate the following slices: two slices for ``col_2 &gt; 10`` (True and False), and one slice per unique value in ``col1``. For high-cardinality columns, only the top 100 unique values by frequency will generate slices."
       },
       {
         "name": "snapshot",
         "type": "object",
-        "description": "`Analysis Configuration` for monitoring snapshot tables."
+        "description": "``Analysis Configuration`` for monitoring snapshot tables."
       },
       {
         "name": "status",
@@ -248,7 +331,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "time_series",
         "type": "object",
-        "description": "`Analysis Configuration` for monitoring time series tables.",
+        "description": "``Analysis Configuration`` for monitoring time series tables.",
         "children": [
           {
             "name": "timestamp_column",
@@ -272,7 +355,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_type",
     "type": "string",
-    "description": "The type of the monitored object. Can be one of the following: `schema` or `table`."
+    "description": "The type of the monitored object. Can be one of the following: ``schema`` or ``table``."
   }
 ]} />
 </TabItem>
@@ -282,24 +365,102 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_id",
     "type": "string",
-    "description": "The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`. Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog Explorer] &gt; select the `schema` &gt; go to the `Details` tab &gt; the `Schema ID` field. Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog Explorer] &gt; select the `table` &gt; go to the `Details` tab &gt; the `Table ID` field. [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/ [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id"
+    "description": "The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``. Find the ``schema_id`` from either: 1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the ``Schemas`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``schema`` &gt; go to the ``Details`` tab &gt; the ``Schema ID`` field. Find the ``table_id`` from either: 1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the ``Tables`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``table`` &gt; go to the ``Details`` tab &gt; the ``Table ID`` field."
   },
   {
     "name": "anomaly_detection_config",
     "type": "object",
-    "description": "Anomaly Detection Configuration, applicable to `schema` object types.",
+    "description": "Anomaly Detection Configuration, applicable to ``schema`` object types.",
     "children": [
+      {
+        "name": "anomaly_detection_workflow_id",
+        "type": "integer",
+        "description": "The id of the workflow that detects the anomaly. This field will only be returned in the Get/Update response, if the request comes from the workspace where this anomaly detection job is created."
+      },
       {
         "name": "excluded_table_full_names",
         "type": "array",
         "description": "List of fully qualified table names to exclude from anomaly detection."
+      },
+      {
+        "name": "job_type",
+        "type": "string",
+        "description": "The type of the last run of the workflow. (ANOMALY_DETECTION_JOB_TYPE_INTERNAL_HIDDEN, ANOMALY_DETECTION_JOB_TYPE_NORMAL)"
+      },
+      {
+        "name": "publish_health_indicator",
+        "type": "boolean",
+        "description": "If the health indicator should be shown."
+      },
+      {
+        "name": "validity_check_configurations",
+        "type": "array",
+        "description": "Validity check configurations for anomaly detection.",
+        "children": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "percent_null_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              },
+              {
+                "name": "upper_bound",
+                "type": "number",
+                "description": "Optional upper bound; we should use auto determined bounds for now"
+              }
+            ]
+          },
+          {
+            "name": "range_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              },
+              {
+                "name": "lower_bound",
+                "type": "number",
+                "description": "Lower bound for the range"
+              },
+              {
+                "name": "upper_bound",
+                "type": "number",
+                "description": "Upper bound for the range"
+              }
+            ]
+          },
+          {
+            "name": "uniqueness_validity_check",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "column_names",
+                "type": "array",
+                "description": ""
+              }
+            ]
+          }
+        ]
       }
     ]
   },
   {
     "name": "data_profiling_config",
     "type": "object",
-    "description": "Data Profiling Configuration, applicable to `table` object types. Exactly one `Analysis Configuration` must be present.",
+    "description": "Data Profiling Configuration, applicable to ``table`` object types. Exactly one ``Analysis Configuration`` must be present.",
     "children": [
       {
         "name": "output_schema_id",
@@ -314,7 +475,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "baseline_table_name",
         "type": "string",
-        "description": "Baseline table name. Baseline data is used to compute drift from the data in the monitored `table_name`. The baseline table and the monitored table shall have the same schema."
+        "description": "Baseline table name. Baseline data is used to compute drift from the data in the monitored ``table_name``. The baseline table and the monitored table shall have the same schema."
       },
       {
         "name": "custom_metrics",
@@ -329,7 +490,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "definition",
             "type": "string",
-            "description": "Jinja template for a SQL expression that specifies how to compute the metric. See [create metric definition]. [create metric definition]: https://docs.databricks.com/en/lakehouse-monitoring/custom-metrics.html#create-definition"
+            "description": "Jinja template for a SQL expression that specifies how to compute the metric. See `create metric definition <https://docs.databricks.com/en/lakehouse-monitoring/custom-metrics.html#create-definition>`__."
           },
           {
             "name": "input_columns",
@@ -356,7 +517,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "drift_metrics_table_name",
         "type": "string",
-        "description": "Table that stores drift metrics data. Format: `catalog.schema.table_name`."
+        "description": "Table that stores drift metrics data. Format: ``catalog.schema.table_name``."
       },
       {
         "name": "effective_warehouse_id",
@@ -366,7 +527,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "inference_log",
         "type": "object",
-        "description": "`Analysis Configuration` for monitoring inference log tables.",
+        "description": "``Analysis Configuration`` for monitoring inference log tables.",
         "children": [
           {
             "name": "problem_type",
@@ -397,6 +558,11 @@ The following fields are returned by `SELECT` queries:
             "name": "label_column",
             "type": "string",
             "description": "Column for the label."
+          },
+          {
+            "name": "prediction_probability_column",
+            "type": "string",
+            "description": "Column for prediction probabilities"
           }
         ]
       },
@@ -413,7 +579,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "monitored_table_name",
         "type": "string",
-        "description": "Unity Catalog table to monitor. Format: `catalog.schema.table_name`"
+        "description": "Unity Catalog table to monitor. Format: ``catalog.schema.table_name``"
       },
       {
         "name": "notification_settings",
@@ -437,7 +603,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "profile_metrics_table_name",
         "type": "string",
-        "description": "Table that stores profile metrics data. Format: `catalog.schema.table_name`."
+        "description": "Table that stores profile metrics data. Format: ``catalog.schema.table_name``."
       },
       {
         "name": "schedule",
@@ -447,7 +613,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "quartz_cron_expression",
             "type": "string",
-            "description": "The expression that determines when to run the monitor. See [examples]. [examples]: https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html"
+            "description": "The expression that determines when to run the monitor. See `examples <https://www.quartz-scheduler.org/documentation/quartz-2.3.0/tutorials/crontrigger.html>`__."
           },
           {
             "name": "timezone_id",
@@ -469,12 +635,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "slicing_exprs",
         "type": "array",
-        "description": "List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example `slicing_exprs=[“col_1”, “col_2 > 10”]` will generate the following slices: two slices for `col_2 > 10` (True and False), and one slice per unique value in `col1`. For high-cardinality columns, only the top 100 unique values by frequency will generate slices."
+        "description": "List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example ``slicing_exprs=[“col_1”, “col_2 &gt; 10”]`` will generate the following slices: two slices for ``col_2 &gt; 10`` (True and False), and one slice per unique value in ``col1``. For high-cardinality columns, only the top 100 unique values by frequency will generate slices."
       },
       {
         "name": "snapshot",
         "type": "object",
-        "description": "`Analysis Configuration` for monitoring snapshot tables."
+        "description": "``Analysis Configuration`` for monitoring snapshot tables."
       },
       {
         "name": "status",
@@ -484,7 +650,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "time_series",
         "type": "object",
-        "description": "`Analysis Configuration` for monitoring time series tables.",
+        "description": "``Analysis Configuration`` for monitoring time series tables.",
         "children": [
           {
             "name": "timestamp_column",
@@ -508,7 +674,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_type",
     "type": "string",
-    "description": "The type of the monitored object. Can be one of the following: `schema` or `table`."
+    "description": "The type of the monitored object. Can be one of the following: ``schema`` or ``table``."
   }
 ]} />
 </TabItem>
@@ -588,17 +754,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-object_id">
     <td><CopyableCode code="object_id" /></td>
     <td><code>string</code></td>
-    <td>The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`. Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog Explorer] &gt; select the `schema` &gt; go to the `Details` tab &gt; the `Schema ID` field. Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog Explorer] &gt; select the `table` &gt; go to the `Details` tab &gt; the `Table ID` field. [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/ [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id</td>
+    <td>The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``. Find the ``schema_id`` from either: 1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the ``Schemas`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``schema`` &gt; go to the ``Details`` tab &gt; the ``Schema ID`` field. Find the ``table_id`` from either: 1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the ``Tables`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``table`` &gt; go to the ``Details`` tab &gt; the ``Table ID`` field.</td>
 </tr>
 <tr id="parameter-object_type">
     <td><CopyableCode code="object_type" /></td>
     <td><code>string</code></td>
-    <td>The type of the monitored object. Can be one of the following: `schema` or `table`.</td>
+    <td>The type of the monitored object. Can be one of the following: ``schema`` or ``table``.</td>
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td>The field mask to specify which fields to update as a comma-separated list. Example value: `data_profiling_config.custom_metrics,data_profiling_config.schedule.quartz_cron_expression`</td>
+    <td>The field mask to specify which fields to update as a comma-separated list. Example value: ``data_profiling_config.custom_metrics,data_profiling_config.schedule.quartz_cron_expression``</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -703,8 +869,25 @@ object_type
         object_type: "{{ object_type }}"
         object_id: "{{ object_id }}"
         anomaly_detection_config:
+          anomaly_detection_workflow_id: {{ anomaly_detection_workflow_id }}
           excluded_table_full_names:
             - "{{ excluded_table_full_names }}"
+          job_type: "{{ job_type }}"
+          publish_health_indicator: {{ publish_health_indicator }}
+          validity_check_configurations:
+            - name: "{{ name }}"
+              percent_null_validity_check:
+                column_names:
+                  - "{{ column_names }}"
+                upper_bound: {{ upper_bound }}
+              range_validity_check:
+                column_names:
+                  - "{{ column_names }}"
+                lower_bound: {{ lower_bound }}
+                upper_bound: {{ upper_bound }}
+              uniqueness_validity_check:
+                column_names:
+                  - "{{ column_names }}"
         data_profiling_config:
           output_schema_id: "{{ output_schema_id }}"
           assets_dir: "{{ assets_dir }}"
@@ -726,6 +909,7 @@ object_type
             prediction_column: "{{ prediction_column }}"
             model_id_column: "{{ model_id_column }}"
             label_column: "{{ label_column }}"
+            prediction_probability_column: "{{ prediction_probability_column }}"
           latest_monitor_failure_message: "{{ latest_monitor_failure_message }}"
           monitor_version: {{ monitor_version }}
           monitored_table_name: "{{ monitored_table_name }}"

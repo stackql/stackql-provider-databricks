@@ -18,7 +18,7 @@ cleanrooms service documentation.
 
 :::info[Service Summary]
 
-total resources: __5__  
+total resources: __6__  
 
 :::
 
@@ -30,6 +30,7 @@ total resources: __5__
 <a href="/services/cleanrooms/auto_approval_rules/">auto_approval_rules</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/cleanrooms/clean_room_task_runs/">clean_room_task_runs</a><br />
 <a href="/services/cleanrooms/clean_rooms/">clean_rooms</a><br />
 <a href="/services/cleanrooms/task_runs/">task_runs</a>
 </div>

@@ -4,8 +4,8 @@
     "title": "Databricks Apps API (workspace)",
     "description": "OpenAPI specification for the Databricks apps service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.apps"
   },
   "servers": [
@@ -123,6 +123,14 @@
                                   "provider": {
                                     "type": "string",
                                     "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                                  },
+                                  "auto_deploy": {
+                                    "type": "boolean",
+                                    "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                                  },
+                                  "caller_credential_id": {
+                                    "type": "integer",
+                                    "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                                   }
                                 },
                                 "required": [
@@ -156,7 +164,7 @@
                           },
                           "source_code_path": {
                             "type": "string",
-                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
                           },
                           "status": {
                             "type": "object",
@@ -190,6 +198,10 @@
                           "message": {
                             "type": "string"
                           },
+                          "running_instances": {
+                            "type": "integer",
+                            "description": "The number of running instances of this application."
+                          },
                           "state": {
                             "type": "string",
                             "x-enum": [
@@ -205,11 +217,28 @@
                       "budget_policy_id": {
                         "type": "string"
                       },
+                      "compatibility_flags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Compatibility flags the customer is requesting for the app's runtime environment. On update, the submitted set must be a subset of ``effective_compatibility_flags`` (flags may only be removed, never added). Supported flags: \"PREINSTALLED_PACKAGES_LEGACY\"."
+                      },
+                      "compute_max_instances": {
+                        "type": "integer",
+                        "description": "Maximum number of app instances. Must be set together with ``compute_min_instances``."
+                      },
+                      "compute_min_instances": {
+                        "type": "integer",
+                        "description": "Minimum number of app instances. Must be set together with ``compute_max_instances``."
+                      },
                       "compute_size": {
                         "type": "string",
                         "x-enum": [
                           "LARGE",
-                          "MEDIUM"
+                          "LIQUID",
+                          "MEDIUM",
+                          "XLARGE"
                         ],
                         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
@@ -246,6 +275,58 @@
                         "type": "string",
                         "description": "The email of the user that created the app."
                       },
+                      "default_git_source": {
+                        "type": "object",
+                        "properties": {
+                          "branch": {
+                            "type": "string",
+                            "description": "Git branch to checkout."
+                          },
+                          "commit": {
+                            "type": "string",
+                            "description": "Git commit SHA to checkout."
+                          },
+                          "git_repository": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "description": "URL of the Git repository."
+                              },
+                              "provider": {
+                                "type": "string",
+                                "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                              },
+                              "auto_deploy": {
+                                "type": "boolean",
+                                "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                              },
+                              "caller_credential_id": {
+                                "type": "integer",
+                                "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
+                              }
+                            },
+                            "required": [
+                              "url",
+                              "provider"
+                            ],
+                            "description": "Git repository configuration. Populated from the app's git_repository configuration."
+                          },
+                          "resolved_commit": {
+                            "type": "string",
+                            "description": "The resolved commit SHA that was actually used for the deployment. This is populated by the system after resolving the reference (branch, tag, or commit). If commit is specified directly, this will match commit. If a branch or tag is specified, this contains the commit SHA that the branch or tag pointed to at deployment time."
+                          },
+                          "source_code_path": {
+                            "type": "string",
+                            "description": "Relative path to the app source code within the Git repository. If not specified, the root of the repository is used."
+                          },
+                          "tag": {
+                            "type": "string",
+                            "description": "Git tag to checkout."
+                          }
+                        },
+                        "description": "Complete git source specification including repository location and reference."
+                      },
                       "default_source_code_path": {
                         "type": "string",
                         "description": "The default workspace file system path of the source code from which app deployment are created. This field tracks the workspace source code path of the last active deployment."
@@ -256,6 +337,264 @@
                       },
                       "effective_budget_policy_id": {
                         "type": "string"
+                      },
+                      "effective_compatibility_flags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "The compatibility flags currently applied to the app."
+                      },
+                      "effective_resources": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "app": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_USE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
+                            },
+                            "database": {
+                              "type": "object",
+                              "properties": {
+                                "instance_name": {
+                                  "type": "string"
+                                },
+                                "database_name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_CONNECT_AND_CREATE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "required": [
+                                "instance_name",
+                                "database_name",
+                                "permission"
+                              ]
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Description of the App Resource."
+                            },
+                            "experiment": {
+                              "type": "object",
+                              "properties": {
+                                "experiment_id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_EDIT",
+                                    "CAN_MANAGE",
+                                    "CAN_READ"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "required": [
+                                "experiment_id",
+                                "permission"
+                              ]
+                            },
+                            "genie_space": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "space_id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_EDIT",
+                                    "CAN_MANAGE",
+                                    "CAN_RUN",
+                                    "CAN_VIEW"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "space_id",
+                                "permission"
+                              ]
+                            },
+                            "job": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_MANAGE",
+                                    "CAN_MANAGE_RUN",
+                                    "CAN_VIEW",
+                                    "IS_OWNER"
+                                  ],
+                                  "description": "Permissions to grant on the Job. Supported permissions are: \"CAN_MANAGE\", \"IS_OWNER\", \"CAN_MANAGE_RUN\", \"CAN_VIEW\"."
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "permission"
+                              ]
+                            },
+                            "postgres": {
+                              "type": "object",
+                              "properties": {
+                                "branch": {
+                                  "type": "string"
+                                },
+                                "database": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_CONNECT_AND_CREATE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
+                            },
+                            "secret": {
+                              "type": "object",
+                              "properties": {
+                                "scope": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string",
+                                  "description": "Key of the secret to grant permission on."
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "MANAGE",
+                                    "READ",
+                                    "WRITE"
+                                  ],
+                                  "description": "Permission to grant on the secret scope. For secrets, only one permission is allowed. Permission must be one of: \"READ\", \"WRITE\", \"MANAGE\"."
+                                }
+                              },
+                              "required": [
+                                "scope",
+                                "key",
+                                "permission"
+                              ]
+                            },
+                            "serving_endpoint": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_MANAGE",
+                                    "CAN_QUERY",
+                                    "CAN_VIEW"
+                                  ],
+                                  "description": "Permission to grant on the serving endpoint. Supported permissions are: \"CAN_MANAGE\", \"CAN_QUERY\", \"CAN_VIEW\"."
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "permission"
+                              ]
+                            },
+                            "sql_warehouse": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_MANAGE",
+                                    "CAN_USE",
+                                    "IS_OWNER"
+                                  ],
+                                  "description": "Permission to grant on the SQL warehouse. Supported permissions are: \"CAN_MANAGE\", \"CAN_USE\", \"IS_OWNER\"."
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "permission"
+                              ]
+                            },
+                            "uc_securable": {
+                              "type": "object",
+                              "properties": {
+                                "securable_full_name": {
+                                  "type": "string"
+                                },
+                                "securable_type": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CONNECTION",
+                                    "FUNCTION",
+                                    "TABLE",
+                                    "VOLUME"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "EXECUTE",
+                                    "MODIFY",
+                                    "READ_VOLUME",
+                                    "SELECT",
+                                    "USE_CONNECTION",
+                                    "WRITE_VOLUME"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                },
+                                "securable_kind": {
+                                  "type": "string",
+                                  "description": "The securable kind from Unity Catalog. See https://docs.databricks.com/api/workspace/tables/get#securable_kind_manifest-securable_kind."
+                                }
+                              },
+                              "required": [
+                                "securable_full_name",
+                                "securable_type",
+                                "permission"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ]
+                        },
+                        "description": "Union of the app's own resources and the resources inherited from its space. Only populated when the app belongs to a space that uses the group identity model."
                       },
                       "effective_usage_policy_id": {
                         "type": "string"
@@ -277,6 +616,14 @@
                           "provider": {
                             "type": "string",
                             "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                          },
+                          "auto_deploy": {
+                            "type": "boolean",
+                            "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                          },
+                          "caller_credential_id": {
+                            "type": "integer",
+                            "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                           }
                         },
                         "required": [
@@ -285,9 +632,65 @@
                         ],
                         "description": "Git repository configuration for app deployments. When specified, deployments can reference code from this repository by providing only the git reference (branch, tag, or commit)."
                       },
+                      "git_source": {
+                        "type": "object",
+                        "properties": {
+                          "branch": {
+                            "type": "string",
+                            "description": "Git branch to checkout."
+                          },
+                          "commit": {
+                            "type": "string",
+                            "description": "Git commit SHA to checkout."
+                          },
+                          "git_repository": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "description": "URL of the Git repository."
+                              },
+                              "provider": {
+                                "type": "string",
+                                "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                              },
+                              "auto_deploy": {
+                                "type": "boolean",
+                                "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                              },
+                              "caller_credential_id": {
+                                "type": "integer",
+                                "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
+                              }
+                            },
+                            "required": [
+                              "url",
+                              "provider"
+                            ],
+                            "description": "Git repository configuration. Populated from the app's git_repository configuration."
+                          },
+                          "resolved_commit": {
+                            "type": "string",
+                            "description": "The resolved commit SHA that was actually used for the deployment. This is populated by the system after resolving the reference (branch, tag, or commit). If commit is specified directly, this will match commit. If a branch or tag is specified, this contains the commit SHA that the branch or tag pointed to at deployment time."
+                          },
+                          "source_code_path": {
+                            "type": "string",
+                            "description": "Relative path to the app source code within the Git repository. If not specified, the root of the repository is used."
+                          },
+                          "tag": {
+                            "type": "string",
+                            "description": "Git tag to checkout."
+                          }
+                        },
+                        "description": "Complete git source specification including repository location and reference."
+                      },
                       "id": {
                         "type": "string",
                         "description": "The unique identifier of the app."
+                      },
+                      "last_deployment_id": {
+                        "type": "string",
+                        "description": "The ID of the last deployment created for this app."
                       },
                       "oauth2_app_client_id": {
                         "type": "string"
@@ -366,6 +769,14 @@
                                   "provider": {
                                     "type": "string",
                                     "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                                  },
+                                  "auto_deploy": {
+                                    "type": "boolean",
+                                    "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                                  },
+                                  "caller_credential_id": {
+                                    "type": "integer",
+                                    "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                                   }
                                 },
                                 "required": [
@@ -399,7 +810,7 @@
                           },
                           "source_code_path": {
                             "type": "string",
-                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
                           },
                           "status": {
                             "type": "object",
@@ -437,7 +848,18 @@
                             },
                             "app": {
                               "type": "object",
-                              "properties": {}
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_USE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
                             },
                             "database": {
                               "type": "object",
@@ -676,9 +1098,16 @@
                       "service_principal_name": {
                         "type": "string"
                       },
+                      "source_code_path": {
+                        "type": "string"
+                      },
                       "space": {
                         "type": "string",
                         "description": "Name of the space this app belongs to."
+                      },
+                      "space_id": {
+                        "type": "string",
+                        "description": "The ID of the app space this app belongs to. None if app does not belong to a space."
                       },
                       "telemetry_export_destinations": {
                         "type": "array",
@@ -711,6 +1140,10 @@
                           },
                           "description": "A single telemetry export destination with its configuration and status."
                         }
+                      },
+                      "thumbnail_url": {
+                        "type": "string",
+                        "description": "The URL of the thumbnail image for the app."
                       },
                       "update_time": {
                         "type": "string",
@@ -891,6 +1324,10 @@
                         },
                         "description": "The effective api scopes granted to the user access token."
                       },
+                      "group_id": {
+                        "type": "string",
+                        "description": "The ID of the group attached to the app space. ASPs minted for apps in this space are added as members of this group at create time, so the group's resource permissions flow through to every app in the space."
+                      },
                       "id": {
                         "type": "string",
                         "description": "The unique identifier of the app space."
@@ -905,7 +1342,18 @@
                             },
                             "app": {
                               "type": "object",
-                              "properties": {}
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_USE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
                             },
                             "database": {
                               "type": "object",
@@ -1168,6 +1616,39 @@
                         },
                         "description": "The status of the app space."
                       },
+                      "telemetry_export_destinations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "unity_catalog": {
+                              "type": "object",
+                              "properties": {
+                                "logs_table": {
+                                  "type": "string",
+                                  "description": "Unity Catalog table for OTEL logs."
+                                },
+                                "metrics_table": {
+                                  "type": "string",
+                                  "description": "Unity Catalog table for OTEL metrics."
+                                },
+                                "traces_table": {
+                                  "type": "string",
+                                  "description": "Unity Catalog table for OTEL traces (spans)."
+                                }
+                              },
+                              "required": [
+                                "logs_table",
+                                "metrics_table",
+                                "traces_table"
+                              ],
+                              "description": "Unity Catalog Destinations for OTEL telemetry export."
+                            }
+                          },
+                          "description": "A single telemetry export destination with its configuration and status."
+                        },
+                        "description": "Telemetry export destinations for all apps in this space. When configured, all apps in the space export OTEL telemetry (logs, metrics, traces) to the specified Unity Catalog tables."
+                      },
                       "update_time": {
                         "type": "string",
                         "format": "date-time",
@@ -1300,7 +1781,7 @@
         "tags": [
           "apps"
         ],
-        "description": "Creates an app update and starts the update process. The update process is asynchronous and the status\nof the update can be checked with the GetAppUpdate method.\n\n:param app_name: str\n:param update_mask: str\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g.,\n  `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API\n  changes in the future.\n:param app: :class:`App` (optional)\n\n:returns:\n  Long-running operation waiter for :class:`AppUpdate`.\n  See :method:wait_get_update_app_succeeded for more details.",
+        "description": "Creates an app update and starts the update process. The update process is asynchronous and the status\nof the update can be checked with the GetAppUpdate method.\n\n:param app_name: str\n:param update_mask: str\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g.,\n  ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of ``*`` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the\n  API changes in the future.\n:param app: :class:`App` (optional)\n\n:returns:\n  Long-running operation waiter for :class:`AppUpdate`.\n  See :method:wait_get_update_app_succeeded for more details.",
         "parameters": [
           {
             "name": "app_name",
@@ -1319,7 +1800,7 @@
                 "properties": {
                   "update_mask": {
                     "type": "string",
-                    "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+                    "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of ``*`` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the API changes in the future."
                   },
                   "app": {
                     "type": "object",
@@ -1398,6 +1879,14 @@
                                   "provider": {
                                     "type": "string",
                                     "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                                  },
+                                  "auto_deploy": {
+                                    "type": "boolean",
+                                    "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                                  },
+                                  "caller_credential_id": {
+                                    "type": "integer",
+                                    "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                                   }
                                 },
                                 "required": [
@@ -1431,7 +1920,7 @@
                           },
                           "source_code_path": {
                             "type": "string",
-                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
                           },
                           "status": {
                             "type": "object",
@@ -1465,6 +1954,10 @@
                           "message": {
                             "type": "string"
                           },
+                          "running_instances": {
+                            "type": "integer",
+                            "description": "The number of running instances of this application."
+                          },
                           "state": {
                             "type": "string",
                             "x-enum": [
@@ -1480,11 +1973,28 @@
                       "budget_policy_id": {
                         "type": "string"
                       },
+                      "compatibility_flags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Compatibility flags the customer is requesting for the app's runtime environment. On update, the submitted set must be a subset of ``effective_compatibility_flags`` (flags may only be removed, never added). Supported flags: \"PREINSTALLED_PACKAGES_LEGACY\"."
+                      },
+                      "compute_max_instances": {
+                        "type": "integer",
+                        "description": "Maximum number of app instances. Must be set together with ``compute_min_instances``."
+                      },
+                      "compute_min_instances": {
+                        "type": "integer",
+                        "description": "Minimum number of app instances. Must be set together with ``compute_max_instances``."
+                      },
                       "compute_size": {
                         "type": "string",
                         "x-enum": [
                           "LARGE",
-                          "MEDIUM"
+                          "LIQUID",
+                          "MEDIUM",
+                          "XLARGE"
                         ],
                         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
@@ -1521,6 +2031,58 @@
                         "type": "string",
                         "description": "The email of the user that created the app."
                       },
+                      "default_git_source": {
+                        "type": "object",
+                        "properties": {
+                          "branch": {
+                            "type": "string",
+                            "description": "Git branch to checkout."
+                          },
+                          "commit": {
+                            "type": "string",
+                            "description": "Git commit SHA to checkout."
+                          },
+                          "git_repository": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "description": "URL of the Git repository."
+                              },
+                              "provider": {
+                                "type": "string",
+                                "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                              },
+                              "auto_deploy": {
+                                "type": "boolean",
+                                "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                              },
+                              "caller_credential_id": {
+                                "type": "integer",
+                                "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
+                              }
+                            },
+                            "required": [
+                              "url",
+                              "provider"
+                            ],
+                            "description": "Git repository configuration. Populated from the app's git_repository configuration."
+                          },
+                          "resolved_commit": {
+                            "type": "string",
+                            "description": "The resolved commit SHA that was actually used for the deployment. This is populated by the system after resolving the reference (branch, tag, or commit). If commit is specified directly, this will match commit. If a branch or tag is specified, this contains the commit SHA that the branch or tag pointed to at deployment time."
+                          },
+                          "source_code_path": {
+                            "type": "string",
+                            "description": "Relative path to the app source code within the Git repository. If not specified, the root of the repository is used."
+                          },
+                          "tag": {
+                            "type": "string",
+                            "description": "Git tag to checkout."
+                          }
+                        },
+                        "description": "Complete git source specification including repository location and reference."
+                      },
                       "default_source_code_path": {
                         "type": "string",
                         "description": "The default workspace file system path of the source code from which app deployment are created. This field tracks the workspace source code path of the last active deployment."
@@ -1531,6 +2093,264 @@
                       },
                       "effective_budget_policy_id": {
                         "type": "string"
+                      },
+                      "effective_compatibility_flags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "The compatibility flags currently applied to the app."
+                      },
+                      "effective_resources": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "app": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_USE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
+                            },
+                            "database": {
+                              "type": "object",
+                              "properties": {
+                                "instance_name": {
+                                  "type": "string"
+                                },
+                                "database_name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_CONNECT_AND_CREATE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "required": [
+                                "instance_name",
+                                "database_name",
+                                "permission"
+                              ]
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Description of the App Resource."
+                            },
+                            "experiment": {
+                              "type": "object",
+                              "properties": {
+                                "experiment_id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_EDIT",
+                                    "CAN_MANAGE",
+                                    "CAN_READ"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "required": [
+                                "experiment_id",
+                                "permission"
+                              ]
+                            },
+                            "genie_space": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "space_id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_EDIT",
+                                    "CAN_MANAGE",
+                                    "CAN_RUN",
+                                    "CAN_VIEW"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "space_id",
+                                "permission"
+                              ]
+                            },
+                            "job": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_MANAGE",
+                                    "CAN_MANAGE_RUN",
+                                    "CAN_VIEW",
+                                    "IS_OWNER"
+                                  ],
+                                  "description": "Permissions to grant on the Job. Supported permissions are: \"CAN_MANAGE\", \"IS_OWNER\", \"CAN_MANAGE_RUN\", \"CAN_VIEW\"."
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "permission"
+                              ]
+                            },
+                            "postgres": {
+                              "type": "object",
+                              "properties": {
+                                "branch": {
+                                  "type": "string"
+                                },
+                                "database": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_CONNECT_AND_CREATE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
+                            },
+                            "secret": {
+                              "type": "object",
+                              "properties": {
+                                "scope": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string",
+                                  "description": "Key of the secret to grant permission on."
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "MANAGE",
+                                    "READ",
+                                    "WRITE"
+                                  ],
+                                  "description": "Permission to grant on the secret scope. For secrets, only one permission is allowed. Permission must be one of: \"READ\", \"WRITE\", \"MANAGE\"."
+                                }
+                              },
+                              "required": [
+                                "scope",
+                                "key",
+                                "permission"
+                              ]
+                            },
+                            "serving_endpoint": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_MANAGE",
+                                    "CAN_QUERY",
+                                    "CAN_VIEW"
+                                  ],
+                                  "description": "Permission to grant on the serving endpoint. Supported permissions are: \"CAN_MANAGE\", \"CAN_QUERY\", \"CAN_VIEW\"."
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "permission"
+                              ]
+                            },
+                            "sql_warehouse": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_MANAGE",
+                                    "CAN_USE",
+                                    "IS_OWNER"
+                                  ],
+                                  "description": "Permission to grant on the SQL warehouse. Supported permissions are: \"CAN_MANAGE\", \"CAN_USE\", \"IS_OWNER\"."
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "permission"
+                              ]
+                            },
+                            "uc_securable": {
+                              "type": "object",
+                              "properties": {
+                                "securable_full_name": {
+                                  "type": "string"
+                                },
+                                "securable_type": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CONNECTION",
+                                    "FUNCTION",
+                                    "TABLE",
+                                    "VOLUME"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "EXECUTE",
+                                    "MODIFY",
+                                    "READ_VOLUME",
+                                    "SELECT",
+                                    "USE_CONNECTION",
+                                    "WRITE_VOLUME"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                },
+                                "securable_kind": {
+                                  "type": "string",
+                                  "description": "The securable kind from Unity Catalog. See https://docs.databricks.com/api/workspace/tables/get#securable_kind_manifest-securable_kind."
+                                }
+                              },
+                              "required": [
+                                "securable_full_name",
+                                "securable_type",
+                                "permission"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ]
+                        },
+                        "description": "Union of the app's own resources and the resources inherited from its space. Only populated when the app belongs to a space that uses the group identity model."
                       },
                       "effective_usage_policy_id": {
                         "type": "string"
@@ -1552,6 +2372,14 @@
                           "provider": {
                             "type": "string",
                             "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                          },
+                          "auto_deploy": {
+                            "type": "boolean",
+                            "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                          },
+                          "caller_credential_id": {
+                            "type": "integer",
+                            "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                           }
                         },
                         "required": [
@@ -1560,9 +2388,65 @@
                         ],
                         "description": "Git repository configuration for app deployments. When specified, deployments can reference code from this repository by providing only the git reference (branch, tag, or commit)."
                       },
+                      "git_source": {
+                        "type": "object",
+                        "properties": {
+                          "branch": {
+                            "type": "string",
+                            "description": "Git branch to checkout."
+                          },
+                          "commit": {
+                            "type": "string",
+                            "description": "Git commit SHA to checkout."
+                          },
+                          "git_repository": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "description": "URL of the Git repository."
+                              },
+                              "provider": {
+                                "type": "string",
+                                "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                              },
+                              "auto_deploy": {
+                                "type": "boolean",
+                                "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                              },
+                              "caller_credential_id": {
+                                "type": "integer",
+                                "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
+                              }
+                            },
+                            "required": [
+                              "url",
+                              "provider"
+                            ],
+                            "description": "Git repository configuration. Populated from the app's git_repository configuration."
+                          },
+                          "resolved_commit": {
+                            "type": "string",
+                            "description": "The resolved commit SHA that was actually used for the deployment. This is populated by the system after resolving the reference (branch, tag, or commit). If commit is specified directly, this will match commit. If a branch or tag is specified, this contains the commit SHA that the branch or tag pointed to at deployment time."
+                          },
+                          "source_code_path": {
+                            "type": "string",
+                            "description": "Relative path to the app source code within the Git repository. If not specified, the root of the repository is used."
+                          },
+                          "tag": {
+                            "type": "string",
+                            "description": "Git tag to checkout."
+                          }
+                        },
+                        "description": "Complete git source specification including repository location and reference."
+                      },
                       "id": {
                         "type": "string",
                         "description": "The unique identifier of the app."
+                      },
+                      "last_deployment_id": {
+                        "type": "string",
+                        "description": "The ID of the last deployment created for this app."
                       },
                       "oauth2_app_client_id": {
                         "type": "string"
@@ -1641,6 +2525,14 @@
                                   "provider": {
                                     "type": "string",
                                     "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                                  },
+                                  "auto_deploy": {
+                                    "type": "boolean",
+                                    "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                                  },
+                                  "caller_credential_id": {
+                                    "type": "integer",
+                                    "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                                   }
                                 },
                                 "required": [
@@ -1674,7 +2566,7 @@
                           },
                           "source_code_path": {
                             "type": "string",
-                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
                           },
                           "status": {
                             "type": "object",
@@ -1712,7 +2604,18 @@
                             },
                             "app": {
                               "type": "object",
-                              "properties": {}
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_USE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
                             },
                             "database": {
                               "type": "object",
@@ -1951,9 +2854,16 @@
                       "service_principal_name": {
                         "type": "string"
                       },
+                      "source_code_path": {
+                        "type": "string"
+                      },
                       "space": {
                         "type": "string",
                         "description": "Name of the space this app belongs to."
+                      },
+                      "space_id": {
+                        "type": "string",
+                        "description": "The ID of the app space this app belongs to. None if app does not belong to a space."
                       },
                       "telemetry_export_destinations": {
                         "type": "array",
@@ -1986,6 +2896,10 @@
                           },
                           "description": "A single telemetry export destination with its configuration and status."
                         }
+                      },
+                      "thumbnail_url": {
+                        "type": "string",
+                        "description": "The URL of the thumbnail image for the app."
                       },
                       "update_time": {
                         "type": "string",
@@ -2306,6 +3220,14 @@
                                   "provider": {
                                     "type": "string",
                                     "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                                  },
+                                  "auto_deploy": {
+                                    "type": "boolean",
+                                    "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                                  },
+                                  "caller_credential_id": {
+                                    "type": "integer",
+                                    "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                                   }
                                 },
                                 "required": [
@@ -2339,7 +3261,7 @@
                           },
                           "source_code_path": {
                             "type": "string",
-                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
                           },
                           "status": {
                             "type": "object",
@@ -2373,6 +3295,10 @@
                           "message": {
                             "type": "string"
                           },
+                          "running_instances": {
+                            "type": "integer",
+                            "description": "The number of running instances of this application."
+                          },
                           "state": {
                             "type": "string",
                             "x-enum": [
@@ -2388,11 +3314,28 @@
                       "budget_policy_id": {
                         "type": "string"
                       },
+                      "compatibility_flags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "Compatibility flags the customer is requesting for the app's runtime environment. On update, the submitted set must be a subset of ``effective_compatibility_flags`` (flags may only be removed, never added). Supported flags: \"PREINSTALLED_PACKAGES_LEGACY\"."
+                      },
+                      "compute_max_instances": {
+                        "type": "integer",
+                        "description": "Maximum number of app instances. Must be set together with ``compute_min_instances``."
+                      },
+                      "compute_min_instances": {
+                        "type": "integer",
+                        "description": "Minimum number of app instances. Must be set together with ``compute_max_instances``."
+                      },
                       "compute_size": {
                         "type": "string",
                         "x-enum": [
                           "LARGE",
-                          "MEDIUM"
+                          "LIQUID",
+                          "MEDIUM",
+                          "XLARGE"
                         ],
                         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
@@ -2429,6 +3372,58 @@
                         "type": "string",
                         "description": "The email of the user that created the app."
                       },
+                      "default_git_source": {
+                        "type": "object",
+                        "properties": {
+                          "branch": {
+                            "type": "string",
+                            "description": "Git branch to checkout."
+                          },
+                          "commit": {
+                            "type": "string",
+                            "description": "Git commit SHA to checkout."
+                          },
+                          "git_repository": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "description": "URL of the Git repository."
+                              },
+                              "provider": {
+                                "type": "string",
+                                "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                              },
+                              "auto_deploy": {
+                                "type": "boolean",
+                                "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                              },
+                              "caller_credential_id": {
+                                "type": "integer",
+                                "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
+                              }
+                            },
+                            "required": [
+                              "url",
+                              "provider"
+                            ],
+                            "description": "Git repository configuration. Populated from the app's git_repository configuration."
+                          },
+                          "resolved_commit": {
+                            "type": "string",
+                            "description": "The resolved commit SHA that was actually used for the deployment. This is populated by the system after resolving the reference (branch, tag, or commit). If commit is specified directly, this will match commit. If a branch or tag is specified, this contains the commit SHA that the branch or tag pointed to at deployment time."
+                          },
+                          "source_code_path": {
+                            "type": "string",
+                            "description": "Relative path to the app source code within the Git repository. If not specified, the root of the repository is used."
+                          },
+                          "tag": {
+                            "type": "string",
+                            "description": "Git tag to checkout."
+                          }
+                        },
+                        "description": "Complete git source specification including repository location and reference."
+                      },
                       "default_source_code_path": {
                         "type": "string",
                         "description": "The default workspace file system path of the source code from which app deployment are created. This field tracks the workspace source code path of the last active deployment."
@@ -2439,6 +3434,264 @@
                       },
                       "effective_budget_policy_id": {
                         "type": "string"
+                      },
+                      "effective_compatibility_flags": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "description": "The compatibility flags currently applied to the app."
+                      },
+                      "effective_resources": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "app": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_USE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
+                            },
+                            "database": {
+                              "type": "object",
+                              "properties": {
+                                "instance_name": {
+                                  "type": "string"
+                                },
+                                "database_name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_CONNECT_AND_CREATE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "required": [
+                                "instance_name",
+                                "database_name",
+                                "permission"
+                              ]
+                            },
+                            "description": {
+                              "type": "string",
+                              "description": "Description of the App Resource."
+                            },
+                            "experiment": {
+                              "type": "object",
+                              "properties": {
+                                "experiment_id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_EDIT",
+                                    "CAN_MANAGE",
+                                    "CAN_READ"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "required": [
+                                "experiment_id",
+                                "permission"
+                              ]
+                            },
+                            "genie_space": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "space_id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_EDIT",
+                                    "CAN_MANAGE",
+                                    "CAN_RUN",
+                                    "CAN_VIEW"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "space_id",
+                                "permission"
+                              ]
+                            },
+                            "job": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_MANAGE",
+                                    "CAN_MANAGE_RUN",
+                                    "CAN_VIEW",
+                                    "IS_OWNER"
+                                  ],
+                                  "description": "Permissions to grant on the Job. Supported permissions are: \"CAN_MANAGE\", \"IS_OWNER\", \"CAN_MANAGE_RUN\", \"CAN_VIEW\"."
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "permission"
+                              ]
+                            },
+                            "postgres": {
+                              "type": "object",
+                              "properties": {
+                                "branch": {
+                                  "type": "string"
+                                },
+                                "database": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_CONNECT_AND_CREATE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
+                            },
+                            "secret": {
+                              "type": "object",
+                              "properties": {
+                                "scope": {
+                                  "type": "string"
+                                },
+                                "key": {
+                                  "type": "string",
+                                  "description": "Key of the secret to grant permission on."
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "MANAGE",
+                                    "READ",
+                                    "WRITE"
+                                  ],
+                                  "description": "Permission to grant on the secret scope. For secrets, only one permission is allowed. Permission must be one of: \"READ\", \"WRITE\", \"MANAGE\"."
+                                }
+                              },
+                              "required": [
+                                "scope",
+                                "key",
+                                "permission"
+                              ]
+                            },
+                            "serving_endpoint": {
+                              "type": "object",
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_MANAGE",
+                                    "CAN_QUERY",
+                                    "CAN_VIEW"
+                                  ],
+                                  "description": "Permission to grant on the serving endpoint. Supported permissions are: \"CAN_MANAGE\", \"CAN_QUERY\", \"CAN_VIEW\"."
+                                }
+                              },
+                              "required": [
+                                "name",
+                                "permission"
+                              ]
+                            },
+                            "sql_warehouse": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_MANAGE",
+                                    "CAN_USE",
+                                    "IS_OWNER"
+                                  ],
+                                  "description": "Permission to grant on the SQL warehouse. Supported permissions are: \"CAN_MANAGE\", \"CAN_USE\", \"IS_OWNER\"."
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "permission"
+                              ]
+                            },
+                            "uc_securable": {
+                              "type": "object",
+                              "properties": {
+                                "securable_full_name": {
+                                  "type": "string"
+                                },
+                                "securable_type": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CONNECTION",
+                                    "FUNCTION",
+                                    "TABLE",
+                                    "VOLUME"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "EXECUTE",
+                                    "MODIFY",
+                                    "READ_VOLUME",
+                                    "SELECT",
+                                    "USE_CONNECTION",
+                                    "WRITE_VOLUME"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                },
+                                "securable_kind": {
+                                  "type": "string",
+                                  "description": "The securable kind from Unity Catalog. See https://docs.databricks.com/api/workspace/tables/get#securable_kind_manifest-securable_kind."
+                                }
+                              },
+                              "required": [
+                                "securable_full_name",
+                                "securable_type",
+                                "permission"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "name"
+                          ]
+                        },
+                        "description": "Union of the app's own resources and the resources inherited from its space. Only populated when the app belongs to a space that uses the group identity model."
                       },
                       "effective_usage_policy_id": {
                         "type": "string"
@@ -2460,6 +3713,14 @@
                           "provider": {
                             "type": "string",
                             "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                          },
+                          "auto_deploy": {
+                            "type": "boolean",
+                            "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                          },
+                          "caller_credential_id": {
+                            "type": "integer",
+                            "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                           }
                         },
                         "required": [
@@ -2468,9 +3729,65 @@
                         ],
                         "description": "Git repository configuration for app deployments. When specified, deployments can reference code from this repository by providing only the git reference (branch, tag, or commit)."
                       },
+                      "git_source": {
+                        "type": "object",
+                        "properties": {
+                          "branch": {
+                            "type": "string",
+                            "description": "Git branch to checkout."
+                          },
+                          "commit": {
+                            "type": "string",
+                            "description": "Git commit SHA to checkout."
+                          },
+                          "git_repository": {
+                            "type": "object",
+                            "properties": {
+                              "url": {
+                                "type": "string",
+                                "description": "URL of the Git repository."
+                              },
+                              "provider": {
+                                "type": "string",
+                                "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                              },
+                              "auto_deploy": {
+                                "type": "boolean",
+                                "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                              },
+                              "caller_credential_id": {
+                                "type": "integer",
+                                "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
+                              }
+                            },
+                            "required": [
+                              "url",
+                              "provider"
+                            ],
+                            "description": "Git repository configuration. Populated from the app's git_repository configuration."
+                          },
+                          "resolved_commit": {
+                            "type": "string",
+                            "description": "The resolved commit SHA that was actually used for the deployment. This is populated by the system after resolving the reference (branch, tag, or commit). If commit is specified directly, this will match commit. If a branch or tag is specified, this contains the commit SHA that the branch or tag pointed to at deployment time."
+                          },
+                          "source_code_path": {
+                            "type": "string",
+                            "description": "Relative path to the app source code within the Git repository. If not specified, the root of the repository is used."
+                          },
+                          "tag": {
+                            "type": "string",
+                            "description": "Git tag to checkout."
+                          }
+                        },
+                        "description": "Complete git source specification including repository location and reference."
+                      },
                       "id": {
                         "type": "string",
                         "description": "The unique identifier of the app."
+                      },
+                      "last_deployment_id": {
+                        "type": "string",
+                        "description": "The ID of the last deployment created for this app."
                       },
                       "oauth2_app_client_id": {
                         "type": "string"
@@ -2549,6 +3866,14 @@
                                   "provider": {
                                     "type": "string",
                                     "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                                  },
+                                  "auto_deploy": {
+                                    "type": "boolean",
+                                    "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                                  },
+                                  "caller_credential_id": {
+                                    "type": "integer",
+                                    "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                                   }
                                 },
                                 "required": [
@@ -2582,7 +3907,7 @@
                           },
                           "source_code_path": {
                             "type": "string",
-                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+                            "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
                           },
                           "status": {
                             "type": "object",
@@ -2620,7 +3945,18 @@
                             },
                             "app": {
                               "type": "object",
-                              "properties": {}
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_USE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
                             },
                             "database": {
                               "type": "object",
@@ -2859,9 +4195,16 @@
                       "service_principal_name": {
                         "type": "string"
                       },
+                      "source_code_path": {
+                        "type": "string"
+                      },
                       "space": {
                         "type": "string",
                         "description": "Name of the space this app belongs to."
+                      },
+                      "space_id": {
+                        "type": "string",
+                        "description": "The ID of the app space this app belongs to. None if app does not belong to a space."
                       },
                       "telemetry_export_destinations": {
                         "type": "array",
@@ -2894,6 +4237,10 @@
                           },
                           "description": "A single telemetry export destination with its configuration and status."
                         }
+                      },
+                      "thumbnail_url": {
+                        "type": "string",
+                        "description": "The URL of the thumbnail image for the app."
                       },
                       "update_time": {
                         "type": "string",
@@ -2936,6 +4283,122 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/App"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "AppsAPI"
+      }
+    },
+    "/api/2.0/apps/{name}/thumbnail": {
+      "delete": {
+        "operationId": "apps_delete_app_thumbnail",
+        "summary": "Deletes the thumbnail for an app.",
+        "tags": [
+          "apps"
+        ],
+        "description": "Deletes the thumbnail for an app.\n\n:param name: str\n  The name of the app.",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The name of the app."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "AppsAPI"
+      },
+      "patch": {
+        "operationId": "apps_update_app_thumbnail",
+        "summary": "Updates the thumbnail for an app.",
+        "tags": [
+          "apps"
+        ],
+        "description": "Updates the thumbnail for an app.\n\n:param name: str\n  The name of the app.\n:param app_thumbnail: :class:`AppThumbnail` (optional)\n  The app thumbnail to set.\n\n:returns: :class:`AppThumbnail`",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The name of the app."
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "app_thumbnail": {
+                    "type": "object",
+                    "properties": {
+                      "thumbnail": {
+                        "type": "string",
+                        "description": "The thumbnail image bytes."
+                      }
+                    },
+                    "description": "The app thumbnail to set."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppThumbnail"
                 }
               }
             }
@@ -3069,7 +4532,7 @@
         "tags": [
           "apps"
         ],
-        "description": "Updates an app space. The update process is asynchronous and the status of the update can be checked\nwith the GetSpaceOperation method.\n\n:param name: str\n  The name of the app space. The name must contain only lowercase alphanumeric characters and hyphens.\n  It must be unique within the workspace.\n:param space: :class:`Space`\n:param update_mask: FieldMask\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g.,\n  `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API\n  changes in the future.\n\n:returns: :class:`Operation`",
+        "description": "Updates an app space. The update process is asynchronous and the status of the update can be checked\nwith the GetSpaceOperation method.\n\n:param name: str\n  The name of the app space. The name must contain only lowercase alphanumeric characters and hyphens.\n  It must be unique within the workspace.\n:param space: :class:`Space`\n:param update_mask: FieldMask\n  The field mask must be a single string, with multiple fields separated by commas (no spaces). The\n  field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g.,\n  ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only\n  the entire collection field can be specified. Field names must exactly match the resource field\n  names.\n\n  A field mask of ``*`` indicates full replacement. It\u2019s recommended to always explicitly list the\n  fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the\n  API changes in the future.\n\n:returns: :class:`Operation`",
         "parameters": [
           {
             "name": "name",
@@ -3087,7 +4550,7 @@
             "schema": {
               "type": "object"
             },
-            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future."
+            "description": "The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of ``*`` indicates full replacement. It\u2019s recommended to always explicitly list the fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the API changes in the future."
           }
         ],
         "requestBody": {
@@ -3126,6 +4589,10 @@
                         },
                         "description": "The effective api scopes granted to the user access token."
                       },
+                      "group_id": {
+                        "type": "string",
+                        "description": "The ID of the group attached to the app space. ASPs minted for apps in this space are added as members of this group at create time, so the group's resource permissions flow through to every app in the space."
+                      },
                       "id": {
                         "type": "string",
                         "description": "The unique identifier of the app space."
@@ -3140,7 +4607,18 @@
                             },
                             "app": {
                               "type": "object",
-                              "properties": {}
+                              "properties": {
+                                "name": {
+                                  "type": "string"
+                                },
+                                "permission": {
+                                  "type": "string",
+                                  "x-enum": [
+                                    "CAN_USE"
+                                  ],
+                                  "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                }
+                              }
                             },
                             "database": {
                               "type": "object",
@@ -3403,6 +4881,39 @@
                         },
                         "description": "The status of the app space."
                       },
+                      "telemetry_export_destinations": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "unity_catalog": {
+                              "type": "object",
+                              "properties": {
+                                "logs_table": {
+                                  "type": "string",
+                                  "description": "Unity Catalog table for OTEL logs."
+                                },
+                                "metrics_table": {
+                                  "type": "string",
+                                  "description": "Unity Catalog table for OTEL metrics."
+                                },
+                                "traces_table": {
+                                  "type": "string",
+                                  "description": "Unity Catalog table for OTEL traces (spans)."
+                                }
+                              },
+                              "required": [
+                                "logs_table",
+                                "metrics_table",
+                                "traces_table"
+                              ],
+                              "description": "Unity Catalog Destinations for OTEL telemetry export."
+                            }
+                          },
+                          "description": "A single telemetry export destination with its configuration and status."
+                        },
+                        "description": "Telemetry export destinations for all apps in this space. When configured, all apps in the space export OTEL telemetry (logs, metrics, traces) to the specified Unity Catalog tables."
+                      },
                       "update_time": {
                         "type": "string",
                         "format": "date-time",
@@ -3565,6 +5076,14 @@
                               "provider": {
                                 "type": "string",
                                 "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+                              },
+                              "auto_deploy": {
+                                "type": "boolean",
+                                "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+                              },
+                              "caller_credential_id": {
+                                "type": "integer",
+                                "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
                               }
                             },
                             "required": [
@@ -3598,7 +5117,7 @@
                       },
                       "source_code_path": {
                         "type": "string",
-                        "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+                        "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
                       },
                       "status": {
                         "type": "object",
@@ -4285,6 +5804,21 @@
                                   "type": "string",
                                   "description": "Name of the App Resource."
                                 },
+                                "app_spec": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "permission": {
+                                      "type": "string",
+                                      "x-enum": [
+                                        "CAN_USE"
+                                      ],
+                                      "description": "Permission to grant on the app. Supported permission: \"CAN_USE\"."
+                                    }
+                                  }
+                                },
                                 "description": {
                                   "type": "string",
                                   "description": "Description of the App Resource."
@@ -4323,6 +5857,24 @@
                                   "required": [
                                     "permission"
                                   ]
+                                },
+                                "postgres_spec": {
+                                  "type": "object",
+                                  "properties": {
+                                    "branch": {
+                                      "type": "string"
+                                    },
+                                    "database": {
+                                      "type": "string"
+                                    },
+                                    "permission": {
+                                      "type": "string",
+                                      "x-enum": [
+                                        "CAN_CONNECT_AND_CREATE"
+                                      ],
+                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                    }
+                                  }
                                 },
                                 "secret_spec": {
                                   "type": "object",
@@ -4393,6 +5945,7 @@
                                       "x-enum": [
                                         "EXECUTE",
                                         "MANAGE",
+                                        "MODIFY",
                                         "READ_VOLUME",
                                         "SELECT",
                                         "USE_CONNECTION",
@@ -4707,6 +6260,21 @@
                                   "type": "string",
                                   "description": "Name of the App Resource."
                                 },
+                                "app_spec": {
+                                  "type": "object",
+                                  "properties": {
+                                    "name": {
+                                      "type": "string"
+                                    },
+                                    "permission": {
+                                      "type": "string",
+                                      "x-enum": [
+                                        "CAN_USE"
+                                      ],
+                                      "description": "Permission to grant on the app. Supported permission: \"CAN_USE\"."
+                                    }
+                                  }
+                                },
                                 "description": {
                                   "type": "string",
                                   "description": "Description of the App Resource."
@@ -4745,6 +6313,24 @@
                                   "required": [
                                     "permission"
                                   ]
+                                },
+                                "postgres_spec": {
+                                  "type": "object",
+                                  "properties": {
+                                    "branch": {
+                                      "type": "string"
+                                    },
+                                    "database": {
+                                      "type": "string"
+                                    },
+                                    "permission": {
+                                      "type": "string",
+                                      "x-enum": [
+                                        "CAN_CONNECT_AND_CREATE"
+                                      ],
+                                      "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                    }
+                                  }
                                 },
                                 "secret_spec": {
                                   "type": "object",
@@ -4815,6 +6401,7 @@
                                       "x-enum": [
                                         "EXECUTE",
                                         "MANAGE",
+                                        "MODIFY",
                                         "READ_VOLUME",
                                         "SELECT",
                                         "USE_CONNECTION",
@@ -4922,6 +6509,21 @@
           "budget_policy_id": {
             "type": "string"
           },
+          "compatibility_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Compatibility flags the customer is requesting for the app's runtime environment. On update, the submitted set must be a subset of ``effective_compatibility_flags`` (flags may only be removed, never added). Supported flags: \"PREINSTALLED_PACKAGES_LEGACY\"."
+          },
+          "compute_max_instances": {
+            "type": "integer",
+            "description": "Maximum number of app instances. Must be set together with ``compute_min_instances``."
+          },
+          "compute_min_instances": {
+            "type": "integer",
+            "description": "Minimum number of app instances. Must be set together with ``compute_max_instances``."
+          },
           "compute_size": {
             "$ref": "#/components/schemas/ComputeSize"
           },
@@ -4936,6 +6538,9 @@
             "type": "string",
             "description": "The email of the user that created the app."
           },
+          "default_git_source": {
+            "$ref": "#/components/schemas/GitSource"
+          },
           "default_source_code_path": {
             "type": "string",
             "description": "The default workspace file system path of the source code from which app deployment are created. This field tracks the workspace source code path of the last active deployment."
@@ -4946,6 +6551,20 @@
           },
           "effective_budget_policy_id": {
             "type": "string"
+          },
+          "effective_compatibility_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The compatibility flags currently applied to the app."
+          },
+          "effective_resources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AppResource"
+            },
+            "description": "Union of the app's own resources and the resources inherited from its space. Only populated when the app belongs to a space that uses the group identity model."
           },
           "effective_usage_policy_id": {
             "type": "string"
@@ -4961,9 +6580,16 @@
             "$ref": "#/components/schemas/GitRepository",
             "description": "Git repository configuration for app deployments. When specified, deployments can reference code from this repository by providing only the git reference (branch, tag, or commit)."
           },
+          "git_source": {
+            "$ref": "#/components/schemas/GitSource"
+          },
           "id": {
             "type": "string",
             "description": "The unique identifier of the app."
+          },
+          "last_deployment_id": {
+            "type": "string",
+            "description": "The ID of the last deployment created for this app."
           },
           "oauth2_app_client_id": {
             "type": "string"
@@ -4991,15 +6617,26 @@
           "service_principal_name": {
             "type": "string"
           },
+          "source_code_path": {
+            "type": "string"
+          },
           "space": {
             "type": "string",
             "description": "Name of the space this app belongs to."
+          },
+          "space_id": {
+            "type": "string",
+            "description": "The ID of the app space this app belongs to. None if app does not belong to a space."
           },
           "telemetry_export_destinations": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/TelemetryExportDestination"
             }
+          },
+          "thumbnail_url": {
+            "type": "string",
+            "description": "The URL of the thumbnail image for the app."
           },
           "update_time": {
             "type": "string",
@@ -5115,7 +6752,7 @@
           },
           "source_code_path": {
             "type": "string",
-            "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+            "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
           },
           "status": {
             "$ref": "#/components/schemas/AppDeploymentStatus",
@@ -5175,6 +6812,18 @@
         ],
         "description": "App manifest definition"
       },
+      "AppManifestAppResourceAppSpec": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/AppManifestAppResourceAppSpecAppPermission",
+            "description": "Permission to grant on the app. Supported permission: \"CAN_USE\"."
+          }
+        }
+      },
       "AppManifestAppResourceExperimentSpec": {
         "type": "object",
         "properties": {
@@ -5196,6 +6845,20 @@
         "required": [
           "permission"
         ]
+      },
+      "AppManifestAppResourcePostgresSpec": {
+        "type": "object",
+        "properties": {
+          "branch": {
+            "type": "string"
+          },
+          "database": {
+            "type": "string"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/AppManifestAppResourcePostgresSpecPostgresPermission"
+          }
+        }
       },
       "AppManifestAppResourceSecretSpec": {
         "type": "object",
@@ -5226,6 +6889,9 @@
             "type": "string",
             "description": "Name of the App Resource."
           },
+          "app_spec": {
+            "$ref": "#/components/schemas/AppManifestAppResourceAppSpec"
+          },
           "description": {
             "type": "string",
             "description": "Description of the App Resource."
@@ -5235,6 +6901,9 @@
           },
           "job_spec": {
             "$ref": "#/components/schemas/AppManifestAppResourceJobSpec"
+          },
+          "postgres_spec": {
+            "$ref": "#/components/schemas/AppManifestAppResourcePostgresSpec"
           },
           "secret_spec": {
             "$ref": "#/components/schemas/AppManifestAppResourceSecretSpec"
@@ -5372,7 +7041,14 @@
       },
       "AppResourceApp": {
         "type": "object",
-        "properties": {}
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/AppResourceAppAppPermission"
+          }
+        }
       },
       "AppResourceDatabase": {
         "type": "object",
@@ -5533,11 +7209,36 @@
           "permission"
         ]
       },
+      "AppThumbnail": {
+        "type": "object",
+        "properties": {
+          "thumbnail": {
+            "type": "string",
+            "description": "The thumbnail image bytes."
+          }
+        },
+        "description": "The thumbnail for an app."
+      },
       "AppUpdate": {
         "type": "object",
         "properties": {
           "budget_policy_id": {
             "type": "string"
+          },
+          "compatibility_flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Echoes the compatibility flags submitted on the most recent update (the input set from ``App.compatibility_flags``). To see the flags currently in effect on the app, read ``App.effective_compatibility_flags`` via GetApp."
+          },
+          "compute_max_instances": {
+            "type": "integer",
+            "description": "Maximum number of app instances. Must be set together with ``compute_min_instances``."
+          },
+          "compute_min_instances": {
+            "type": "integer",
+            "description": "Minimum number of app instances. Must be set together with ``compute_max_instances``."
           },
           "compute_size": {
             "$ref": "#/components/schemas/ComputeSize"
@@ -5556,6 +7257,12 @@
           },
           "status": {
             "$ref": "#/components/schemas/AppUpdateUpdateStatus"
+          },
+          "telemetry_export_destinations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TelemetryExportDestination"
+            }
           },
           "usage_policy_id": {
             "type": "string"
@@ -5584,6 +7291,10 @@
         "properties": {
           "message": {
             "type": "string"
+          },
+          "running_instances": {
+            "type": "integer",
+            "description": "The number of running instances of this application."
           },
           "state": {
             "$ref": "#/components/schemas/ApplicationState",
@@ -5703,6 +7414,14 @@
           "provider": {
             "type": "string",
             "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+          },
+          "auto_deploy": {
+            "type": "boolean",
+            "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+          },
+          "caller_credential_id": {
+            "type": "integer",
+            "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
           }
         },
         "required": [
@@ -5804,7 +7523,7 @@
         "properties": {
           "done": {
             "type": "boolean",
-            "description": "If the value is `false`, it means the operation is still in progress. If `true`, the operation is completed, and either `error` or `response` is available."
+            "description": "If the value is ``false``, it means the operation is still in progress. If ``true``, the operation is completed, and either ``error`` or ``response`` is available."
           },
           "error": {
             "$ref": "#/components/schemas/DatabricksServiceExceptionWithDetailsProto",
@@ -5816,7 +7535,7 @@
           },
           "name": {
             "type": "string",
-            "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the `name` should be a resource name ending with `operations/{unique_id}`."
+            "description": "The server-assigned name, which is only unique within the same service that originally returns it. If you use the default HTTP mapping, the ``name`` should be a resource name ending with ``operations/{unique_id}``."
           },
           "response": {
             "type": "object",
@@ -5855,6 +7574,10 @@
             },
             "description": "The effective api scopes granted to the user access token."
           },
+          "group_id": {
+            "type": "string",
+            "description": "The ID of the group attached to the app space. ASPs minted for apps in this space are added as members of this group at create time, so the group's resource permissions flow through to every app in the space."
+          },
           "id": {
             "type": "string",
             "description": "The unique identifier of the app space."
@@ -5881,6 +7604,13 @@
           "status": {
             "$ref": "#/components/schemas/SpaceStatus",
             "description": "The status of the app space."
+          },
+          "telemetry_export_destinations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TelemetryExportDestination"
+            },
+            "description": "Telemetry export destinations for all apps in this space. When configured, all apps in the space export OTEL telemetry (logs, metrics, traces) to the specified Unity Catalog tables."
           },
           "update_time": {
             "type": "string",
@@ -5923,6 +7653,9 @@
         "type": "object",
         "properties": {
           "description": {
+            "type": "string"
+          },
+          "group_id": {
             "type": "string"
           },
           "resources": {
@@ -6008,6 +7741,13 @@
         ],
         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
+      "AppManifestAppResourceAppSpecAppPermission": {
+        "type": "string",
+        "x-enum": [
+          "CAN_USE"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
       "AppManifestAppResourceExperimentSpecExperimentPermission": {
         "type": "string",
         "x-enum": [
@@ -6024,6 +7764,13 @@
           "CAN_MANAGE_RUN",
           "CAN_VIEW",
           "IS_OWNER"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+      },
+      "AppManifestAppResourcePostgresSpecPostgresPermission": {
+        "type": "string",
+        "x-enum": [
+          "CAN_CONNECT_AND_CREATE"
         ],
         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
@@ -6059,6 +7806,7 @@
         "x-enum": [
           "EXECUTE",
           "MANAGE",
+          "MODIFY",
           "READ_VOLUME",
           "SELECT",
           "USE_CONNECTION",
@@ -6083,6 +7831,13 @@
           "CAN_USE"
         ],
         "description": "Permission level"
+      },
+      "AppResourceAppAppPermission": {
+        "type": "string",
+        "x-enum": [
+          "CAN_USE"
+        ],
+        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },
       "AppResourceDatabaseDatabasePermission": {
         "type": "string",
@@ -6200,7 +7955,9 @@
         "type": "string",
         "x-enum": [
           "LARGE",
-          "MEDIUM"
+          "LIQUID",
+          "MEDIUM",
+          "XLARGE"
         ],
         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },

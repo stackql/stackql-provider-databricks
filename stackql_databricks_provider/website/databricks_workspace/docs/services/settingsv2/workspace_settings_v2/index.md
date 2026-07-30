@@ -73,6 +73,18 @@ The following fields are returned by `SELECT` queries:
     ]
   },
   {
+    "name": "allowed_apps_user_api_scopes",
+    "type": "object",
+    "description": "Setting value for allowed_apps_user_api_scopes setting. This is the setting value set by consumers, check effective_allowed_apps_user_api_scopes for final setting value.",
+    "children": [
+      {
+        "name": "allowed_scopes",
+        "type": "array",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "automatic_cluster_update_workspace",
     "type": "object",
     "description": "Setting value for automatic_cluster_update_workspace setting. This is the setting value set by consumers, check effective_automatic_cluster_update_workspace for final setting value.",
@@ -158,6 +170,18 @@ The following fields are returned by `SELECT` queries:
     ]
   },
   {
+    "name": "collaboration_platform_connectivity",
+    "type": "object",
+    "description": "Setting value for collaboration_platform_connectivity setting. This is the setting value set by consumers, check effective_collaboration_platform_connectivity for final setting value.",
+    "children": [
+      {
+        "name": "connectivity",
+        "type": "string",
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ALLOW_ALL, ALLOW_SLACK, ALLOW_TEAMS, DENY_ALL)"
+      }
+    ]
+  },
+  {
     "name": "effective_aibi_dashboard_embedding_access_policy",
     "type": "object",
     "description": "Effective setting value for aibi_dashboard_embedding_access_policy setting. This is the final effective value of setting. To set a value use aibi_dashboard_embedding_access_policy.",
@@ -176,6 +200,18 @@ The following fields are returned by `SELECT` queries:
     "children": [
       {
         "name": "approved_domains",
+        "type": "array",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "effective_allowed_apps_user_api_scopes",
+    "type": "object",
+    "description": "Effective setting value for allowed_apps_user_api_scopes setting. This is the final effective value of setting. To set a value use allowed_apps_user_api_scopes.",
+    "children": [
+      {
+        "name": "allowed_scopes",
         "type": "array",
         "description": ""
       }
@@ -267,6 +303,35 @@ The following fields are returned by `SELECT` queries:
     ]
   },
   {
+    "name": "effective_collaboration_platform_connectivity",
+    "type": "object",
+    "description": "Effective setting value for collaboration_platform_connectivity setting. This is the final effective value of setting. To set a value use collaboration_platform_connectivity.",
+    "children": [
+      {
+        "name": "connectivity",
+        "type": "string",
+        "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (ALLOW_ALL, ALLOW_SLACK, ALLOW_TEAMS, DENY_ALL)"
+      }
+    ]
+  },
+  {
+    "name": "effective_genie_chat_share_policy",
+    "type": "object",
+    "description": "Effective setting value for genie_chat_share_policy setting. This is the final effective value of setting. To set a value use genie_chat_share_policy.",
+    "children": [
+      {
+        "name": "disable_make_chat_private",
+        "type": "boolean",
+        "description": ""
+      },
+      {
+        "name": "disable_share_with_account_users",
+        "type": "boolean",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "effective_integer_val",
     "type": "object",
     "description": "Effective setting value for integer type setting. This is the final effective value of setting. To set a value use integer_val.",
@@ -274,6 +339,18 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "value",
         "type": "integer",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "effective_operational_email_custom_recipient",
+    "type": "object",
+    "description": "Effective setting value for operational_email_custom_recipient setting. This is the final effective value of setting. To set a value use operational_email_custom_recipient.",
+    "children": [
+      {
+        "name": "email",
+        "type": "string",
         "description": ""
       }
     ]
@@ -320,6 +397,23 @@ The following fields are returned by `SELECT` queries:
     ]
   },
   {
+    "name": "genie_chat_share_policy",
+    "type": "object",
+    "description": "Setting value for genie_chat_share_policy setting. This is the setting value set by consumers, check effective_genie_chat_share_policy for final setting value.",
+    "children": [
+      {
+        "name": "disable_make_chat_private",
+        "type": "boolean",
+        "description": ""
+      },
+      {
+        "name": "disable_share_with_account_users",
+        "type": "boolean",
+        "description": ""
+      }
+    ]
+  },
+  {
     "name": "integer_val",
     "type": "object",
     "description": "Setting value for integer type setting. This is the setting value set by consumers, check effective_integer_val for final setting value.",
@@ -327,6 +421,18 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "value",
         "type": "integer",
+        "description": ""
+      }
+    ]
+  },
+  {
+    "name": "operational_email_custom_recipient",
+    "type": "object",
+    "description": "Setting value for operational_email_custom_recipient setting. This is the setting value set by consumers, check effective_operational_email_custom_recipient for final setting value.",
+    "children": [
+      {
+        "name": "email",
+        "type": "string",
         "description": ""
       }
     ]
@@ -383,6 +489,11 @@ The following fields are returned by `SELECT` queries:
     "description": "Name of the setting."
   },
   {
+    "name": "display_name",
+    "type": "string",
+    "description": "Human-readable display name for the setting or feature preview. This field may be unset if no display name is available."
+  },
+  {
     "name": "description",
     "type": "string",
     "description": ""
@@ -391,6 +502,11 @@ The following fields are returned by `SELECT` queries:
     "name": "docs_link",
     "type": "string",
     "description": "Link to databricks documentation for the setting"
+  },
+  {
+    "name": "preview_phase",
+    "type": "string",
+    "description": "Preview phase for feature preview settings. This field is not set for non-preview settings. (BETA, GA, GA_SOON, PRIVATE_PREVIEW, PUBLIC_PREVIEW)"
   },
   {
     "name": "type",
@@ -471,7 +587,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>A page token, received from a previous `ListWorkspaceSettingsMetadataRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListWorkspaceSettingsMetadataRequest` must match the call that provided the page token.</td>
+    <td>A page token, received from a previous ``ListWorkspaceSettingsMetadataRequest`` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ``ListWorkspaceSettingsMetadataRequest`` must match the call that provided the page token.</td>
 </tr>
 </tbody>
 </table>
@@ -494,17 +610,25 @@ SELECT
 name,
 aibi_dashboard_embedding_access_policy,
 aibi_dashboard_embedding_approved_domains,
+allowed_apps_user_api_scopes,
 automatic_cluster_update_workspace,
 boolean_val,
+collaboration_platform_connectivity,
 effective_aibi_dashboard_embedding_access_policy,
 effective_aibi_dashboard_embedding_approved_domains,
+effective_allowed_apps_user_api_scopes,
 effective_automatic_cluster_update_workspace,
 effective_boolean_val,
+effective_collaboration_platform_connectivity,
+effective_genie_chat_share_policy,
 effective_integer_val,
+effective_operational_email_custom_recipient,
 effective_personal_compute,
 effective_restrict_workspace_admins,
 effective_string_val,
+genie_chat_share_policy,
 integer_val,
+operational_email_custom_recipient,
 personal_compute,
 restrict_workspace_admins,
 string_val
@@ -521,8 +645,10 @@ List valid setting keys and metadata. These settings are available to be referen
 ```sql
 SELECT
 name,
+display_name,
 description,
 docs_link,
+preview_phase,
 type
 FROM databricks_workspace.settingsv2.workspace_settings_v2
 WHERE deployment_name = '{{ deployment_name }}' -- required
@@ -558,17 +684,25 @@ RETURNING
 name,
 aibi_dashboard_embedding_access_policy,
 aibi_dashboard_embedding_approved_domains,
+allowed_apps_user_api_scopes,
 automatic_cluster_update_workspace,
 boolean_val,
+collaboration_platform_connectivity,
 effective_aibi_dashboard_embedding_access_policy,
 effective_aibi_dashboard_embedding_approved_domains,
+effective_allowed_apps_user_api_scopes,
 effective_automatic_cluster_update_workspace,
 effective_boolean_val,
+effective_collaboration_platform_connectivity,
+effective_genie_chat_share_policy,
 effective_integer_val,
+effective_operational_email_custom_recipient,
 effective_personal_compute,
 effective_restrict_workspace_admins,
 effective_string_val,
+genie_chat_share_policy,
 integer_val,
+operational_email_custom_recipient,
 personal_compute,
 restrict_workspace_admins,
 string_val;

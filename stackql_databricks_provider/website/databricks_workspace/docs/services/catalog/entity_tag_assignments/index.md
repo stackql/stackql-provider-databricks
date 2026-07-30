@@ -51,7 +51,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "entity_type",
     "type": "string",
-    "description": "The type of the entity to which the tag is assigned. Allowed values are: catalogs, schemas, tables, columns, volumes."
+    "description": "The type of the entity to which the tag is assigned."
+  },
+  {
+    "name": "inherited",
+    "type": "boolean",
+    "description": "Boolean which indicates whether this tag is inherited."
   },
   {
     "name": "source_type",
@@ -91,7 +96,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "entity_type",
     "type": "string",
-    "description": "The type of the entity to which the tag is assigned. Allowed values are: catalogs, schemas, tables, columns, volumes."
+    "description": "The type of the entity to which the tag is assigned."
+  },
+  {
+    "name": "inherited",
+    "type": "boolean",
+    "description": "Boolean which indicates whether this tag is inherited."
   },
   {
     "name": "source_type",
@@ -141,14 +151,14 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-entity_type"><code>entity_type</code></a>, <a href="#parameter-entity_name"><code>entity_name</code></a>, <a href="#parameter-tag_key"><code>tag_key</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td></td>
+    <td><a href="#parameter-include_inherited"><code>include_inherited</code></a></td>
     <td>Gets a tag assignment for an Unity Catalog entity by tag key.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-entity_type"><code>entity_type</code></a>, <a href="#parameter-entity_name"><code>entity_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td><a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
+    <td><a href="#parameter-include_inherited"><code>include_inherited</code></a>, <a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
     <td>List tag assignments for an Unity Catalog entity</td>
 </tr>
 <tr>
@@ -201,7 +211,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-entity_type">
     <td><CopyableCode code="entity_type" /></td>
     <td><code>string</code></td>
-    <td>The type of the entity to which the tag is assigned. Allowed values are: catalogs, schemas, tables, columns, volumes.</td>
+    <td>The type of the entity to which the tag is assigned.</td>
 </tr>
 <tr id="parameter-tag_key">
     <td><CopyableCode code="tag_key" /></td>
@@ -211,7 +221,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future.</td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of ``*`` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the API changes in the future.</td>
+</tr>
+<tr id="parameter-include_inherited">
+    <td><CopyableCode code="include_inherited" /></td>
+    <td><code>boolean</code></td>
+    <td>Boolean which indicates whether this tag is inherited.</td>
 </tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
@@ -243,6 +258,7 @@ Gets a tag assignment for an Unity Catalog entity by tag key.
 SELECT
 entity_name,
 entity_type,
+inherited,
 source_type,
 tag_key,
 tag_value,
@@ -253,6 +269,7 @@ WHERE entity_type = '{{ entity_type }}' -- required
 AND entity_name = '{{ entity_name }}' -- required
 AND tag_key = '{{ tag_key }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
+AND include_inherited = '{{ include_inherited }}'
 ;
 ```
 </TabItem>
@@ -264,6 +281,7 @@ List tag assignments for an Unity Catalog entity
 SELECT
 entity_name,
 entity_type,
+inherited,
 source_type,
 tag_key,
 tag_value,
@@ -273,6 +291,7 @@ FROM databricks_workspace.catalog.entity_tag_assignments
 WHERE entity_type = '{{ entity_type }}' -- required
 AND entity_name = '{{ entity_name }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
+AND include_inherited = '{{ include_inherited }}'
 AND max_results = '{{ max_results }}'
 AND page_token = '{{ page_token }}'
 ;
@@ -305,6 +324,7 @@ SELECT
 RETURNING
 entity_name,
 entity_type,
+inherited,
 source_type,
 tag_key,
 tag_value,
@@ -328,6 +348,7 @@ updated_by
         entity_name: "{{ entity_name }}"
         tag_key: "{{ tag_key }}"
         entity_type: "{{ entity_type }}"
+        inherited: {{ inherited }}
         source_type: "{{ source_type }}"
         tag_value: "{{ tag_value }}"
         update_time: "{{ update_time }}"
@@ -364,6 +385,7 @@ AND tag_assignment = '{{ tag_assignment }}' --required
 RETURNING
 entity_name,
 entity_type,
+inherited,
 source_type,
 tag_key,
 tag_value,

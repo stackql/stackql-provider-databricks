@@ -159,6 +159,11 @@ The following fields are returned by `SELECT` queries:
         "description": "The name of the flow. Not unique."
       },
       {
+        "name": "graph_id",
+        "type": "string",
+        "description": "The UUID of the graph associated with this event, corresponding to a GRAPH_UPDATED event."
+      },
+      {
         "name": "host",
         "type": "string",
         "description": "The optional host name where the event was triggered"

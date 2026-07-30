@@ -98,7 +98,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "user_subscriber",
         "type": "object",
-        "description": "The user to receive the subscription email. This parameter is mutually exclusive with `destination_subscriber`.",
+        "description": "The user to receive the subscription email. This parameter is mutually exclusive with ``destination_subscriber``.",
         "children": [
           {
             "name": "user_id",
@@ -174,7 +174,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "user_subscriber",
         "type": "object",
-        "description": "The user to receive the subscription email. This parameter is mutually exclusive with `destination_subscriber`.",
+        "description": "The user to receive the subscription email. This parameter is mutually exclusive with ``destination_subscriber``.",
         "children": [
           {
             "name": "user_id",
@@ -286,7 +286,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>A page token, received from a previous `ListSubscriptions` call. Use this to retrieve the subsequent page.</td>
+    <td>A page token, received from a previous ``ListSubscriptions`` call. Use this to retrieve the subsequent page.</td>
 </tr>
 </tbody>
 </table>

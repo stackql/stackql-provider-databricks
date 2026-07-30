@@ -49,6 +49,16 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "database_branch_id",
+    "type": "string",
+    "description": "The branch_id of the database branch associated with the catalog."
+  },
+  {
+    "name": "database_project_id",
+    "type": "string",
+    "description": "The project_id of the database project associated with the catalog."
+  },
+  {
     "name": "database_instance_name",
     "type": "string",
     "description": "The name of the DatabaseInstance housing the database."
@@ -56,7 +66,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "database_name",
     "type": "string",
-    "description": "The name of the database (in a instance) associated with the catalog."
+    "description": "The name of the database (in an instance) associated with the catalog."
   },
   {
     "name": "create_database_if_not_exists",
@@ -79,6 +89,16 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "database_branch_id",
+    "type": "string",
+    "description": "The branch_id of the database branch associated with the catalog."
+  },
+  {
+    "name": "database_project_id",
+    "type": "string",
+    "description": "The project_id of the database project associated with the catalog."
+  },
+  {
     "name": "database_instance_name",
     "type": "string",
     "description": "The name of the DatabaseInstance housing the database."
@@ -86,7 +106,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "database_name",
     "type": "string",
-    "description": "The name of the database (in a instance) associated with the catalog."
+    "description": "The name of the database (in an instance) associated with the catalog."
   },
   {
     "name": "create_database_if_not_exists",
@@ -217,6 +237,8 @@ Get a Database Catalog.
 ```sql
 SELECT
 name,
+database_branch_id,
+database_project_id,
 database_instance_name,
 database_name,
 create_database_if_not_exists,
@@ -234,6 +256,8 @@ This API is currently unimplemented, but exposed for Terraform support.
 ```sql
 SELECT
 name,
+database_branch_id,
+database_project_id,
 database_instance_name,
 database_name,
 create_database_if_not_exists,
@@ -272,6 +296,8 @@ SELECT
 '{{ deployment_name }}'
 RETURNING
 name,
+database_branch_id,
+database_project_id,
 database_instance_name,
 database_name,
 create_database_if_not_exists,
@@ -293,6 +319,8 @@ uid
         database_instance_name: "{{ database_instance_name }}"
         database_name: "{{ database_name }}"
         create_database_if_not_exists: {{ create_database_if_not_exists }}
+        database_branch_id: "{{ database_branch_id }}"
+        database_project_id: "{{ database_project_id }}"
         uid: "{{ uid }}"
 `}</CodeBlock>
 
@@ -323,6 +351,8 @@ AND deployment_name = '{{ deployment_name }}' --required
 AND database_catalog = '{{ database_catalog }}' --required
 RETURNING
 name,
+database_branch_id,
+database_project_id,
 database_instance_name,
 database_name,
 create_database_if_not_exists,

@@ -50,12 +50,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "baseline_table_name",
     "type": "string",
-    "description": "[Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in the monitored `table_name`. The baseline table and the monitored table shall have the same schema."
+    "description": "[Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in the monitored ``table_name``. The baseline table and the monitored table shall have the same schema."
   },
   {
     "name": "drift_metrics_table_name",
     "type": "string",
-    "description": "[Create:ERR Update:IGN] Table that stores drift metrics data. Format: `catalog.schema.table_name`."
+    "description": "[Create:ERR Update:IGN] Table that stores drift metrics data. Format: ``catalog.schema.table_name``."
   },
   {
     "name": "output_schema_name",
@@ -65,12 +65,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "profile_metrics_table_name",
     "type": "string",
-    "description": "[Create:ERR Update:IGN] Table that stores profile metrics data. Format: `catalog.schema.table_name`."
+    "description": "[Create:ERR Update:IGN] Table that stores profile metrics data. Format: ``catalog.schema.table_name``."
   },
   {
     "name": "table_name",
     "type": "string",
-    "description": "[Create:ERR Update:IGN] UC table to monitor. Format: `catalog.schema.table_name`"
+    "description": "[Create:ERR Update:IGN] UC table to monitor. Format: ``catalog.schema.table_name``"
   },
   {
     "name": "assets_dir",
@@ -90,7 +90,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "definition",
         "type": "string",
-        "description": "Jinja template for a SQL expression that specifies how to compute the metric. See [create metric definition]. [create metric definition]: https://docs.databricks.com/en/lakehouse-monitoring/custom-metrics.html#create-definition"
+        "description": "Jinja template for a SQL expression that specifies how to compute the metric. See `create metric definition <https://docs.databricks.com/en/lakehouse-monitoring/custom-metrics.html#create-definition>`__."
       },
       {
         "name": "input_columns",
@@ -229,7 +229,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "slicing_exprs",
     "type": "array",
-    "description": "[Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example `slicing_exprs=[“col_1”, “col_2 > 10”]` will generate the following slices: two slices for `col_2 > 10` (True and False), and one slice per unique value in `col1`. For high-cardinality columns, only the top 100 unique values by frequency will generate slices."
+    "description": "[Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example ``slicing_exprs=[“col_1”, “col_2 &gt; 10”]`` will generate the following slices: two slices for ``col_2 &gt; 10`` (True and False), and one slice per unique value in ``col1``. For high-cardinality columns, only the top 100 unique values by frequency will generate slices."
   },
   {
     "name": "snapshot",
@@ -348,7 +348,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-table_name">
     <td><CopyableCode code="table_name" /></td>
     <td><code>string</code></td>
-    <td>UC table name in format `catalog.schema.table_name`. This field corresponds to the &#123;full_table_name_arg&#125; arg in the endpoint path.</td>
+    <td>UC table name in format ``catalog.schema.table_name``. This field corresponds to the &#123;full_table_name_arg&#125; arg in the endpoint path.</td>
 </tr>
 </tbody>
 </table>
@@ -487,7 +487,7 @@ time_series
     - name: baseline_table_name
       value: "{{ baseline_table_name }}"
       description: |
-        [Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in the monitored \`table_name\`. The baseline table and the monitored table shall have the same schema.
+        [Create:OPT Update:OPT] Baseline table name. Baseline data is used to compute drift from the data in the monitored \`\`table_name\`\`. The baseline table and the monitored table shall have the same schema.
     - name: custom_metrics
       description: |
         [Create:OPT Update:OPT] Custom metrics.
@@ -541,7 +541,7 @@ time_series
       value:
         - "{{ slicing_exprs }}"
       description: |
-        [Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example \`slicing_exprs=[“col_1”, “col_2 > 10”]\` will generate the following slices: two slices for \`col_2 > 10\` (True and False), and one slice per unique value in \`col1\`. For high-cardinality columns, only the top 100 unique values by frequency will generate slices.
+        [Create:OPT Update:OPT] List of column expressions to slice data with for targeted analysis. The data is grouped by each expression independently, resulting in a separate slice for each predicate and its complements. For example \`\`slicing_exprs=[“col_1”, “col_2 > 10”]\`\` will generate the following slices: two slices for \`\`col_2 > 10\`\` (True and False), and one slice per unique value in \`\`col1\`\`. For high-cardinality columns, only the top 100 unique values by frequency will generate slices.
     - name: snapshot
       value: "{{ snapshot }}"
       description: |

@@ -60,7 +60,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "permission_level",
         "type": "string",
-        "description": "* `CAN_VIEW`: Can view the query * `CAN_RUN`: Can run the query * `CAN_EDIT`: Can edit the query * `CAN_MANAGE`: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
+        "description": "- ``CAN_VIEW``: Can view the query - ``CAN_RUN``: Can run the query - ``CAN_EDIT``: Can edit the query - ``CAN_MANAGE``: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
       },
       {
         "name": "user_name",

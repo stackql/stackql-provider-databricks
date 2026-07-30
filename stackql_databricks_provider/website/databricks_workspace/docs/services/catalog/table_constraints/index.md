@@ -149,7 +149,7 @@ primary_key_constraint
     - name: constraint
       description: |
         A table constraint, as defined by *one* of the following fields being set:
-        __primary_key_constraint__, __foreign_key_constraint__, __named_table_constraint__.
+        **primary_key_constraint**, **foreign_key_constraint**, **named_table_constraint**.
       value:
         foreign_key_constraint:
           name: "{{ name }}"

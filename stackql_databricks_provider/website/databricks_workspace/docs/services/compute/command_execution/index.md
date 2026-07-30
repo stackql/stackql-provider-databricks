@@ -65,7 +65,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "fileName",
         "type": "string",
-        "description": "The image data in one of the following formats: 1. A Data URL with base64-encoded image data: `data:image/&#123;type&#125;;base64,&#123;base64-data&#125;`. Example: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...` 2. A FileStore file path for large images: `/plots/&#123;filename&#125;.png`. Example: `/plots/b6a7ad70-fb2c-4353-8aed-3f1e015174a4.png`"
+        "description": "The image data in one of the following formats: 1. A Data URL with base64-encoded image data: ``data:image/&#123;type&#125;;base64,&#123;base64-data&#125;``. Example: ``data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA...`` 2. A FileStore file path for large images: ``/plots/&#123;filename&#125;.png``. Example: ``/plots/b6a7ad70-fb2c-4353-8aed-3f1e015174a4.png``"
       },
       {
         "name": "fileNames",

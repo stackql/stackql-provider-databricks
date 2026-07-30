@@ -149,7 +149,7 @@ SELECT
   wa.account_id,
   wa.workspace_id,
   p.value AS permission
-FROM databricks_workspace.iamv2.workspace_iam_v2 wa,
+FROM databricks_workspace.iamv2.workspace_access_details wa,
      JSON_EACH(wa.permissions) p
 WHERE wa.deployment_name = '{{ deployment_name }}'
 AND wa.principal_id = '{{ principal_id }}'
@@ -168,7 +168,7 @@ SELECT
   wa.account_id,
   wa.workspace_id,
   p.value AS permission
-FROM databricks_workspace.iamv2.workspace_iam_v2 wa,
+FROM databricks_workspace.iamv2.workspace_access_details wa,
      jsonb_array_elements(wa.permissions::jsonb) AS p
 WHERE wa.deployment_name = '{{ deployment_name }}'
 AND wa.principal_id = '{{ principal_id }}'

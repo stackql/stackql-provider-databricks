@@ -95,14 +95,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-allow_missing"><code>allow_missing</code></a>, <a href="#parameter-setting"><code>setting</code></a>, <a href="#parameter-field_mask"><code>field_mask</code></a></td>
     <td></td>
-    <td>Updates the default namespace setting for the workspace. A fresh etag needs to be provided in `PATCH`</td>
+    <td>Updates the default namespace setting for the workspace. A fresh etag needs to be provided in</td>
 </tr>
 <tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-etag"><code>etag</code></a></td>
-    <td>Deletes the default namespace setting for the workspace. A fresh etag needs to be provided in `DELETE`</td>
+    <td>Deletes the default namespace setting for the workspace. A fresh etag needs to be provided in</td>
 </tr>
 </tbody>
 </table>
@@ -169,7 +169,7 @@ AND etag = '{{ etag }}'
 >
 <TabItem value="update">
 
-Updates the default namespace setting for the workspace. A fresh etag needs to be provided in `PATCH`
+Updates the default namespace setting for the workspace. A fresh etag needs to be provided in
 
 ```sql
 UPDATE databricks_workspace.settings.default_namespace
@@ -201,7 +201,7 @@ namespace;
 >
 <TabItem value="delete">
 
-Deletes the default namespace setting for the workspace. A fresh etag needs to be provided in `DELETE`
+Deletes the default namespace setting for the workspace. A fresh etag needs to be provided in
 
 ```sql
 DELETE FROM databricks_workspace.settings.default_namespace

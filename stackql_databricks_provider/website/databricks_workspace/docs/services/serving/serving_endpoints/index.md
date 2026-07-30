@@ -217,12 +217,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "auto_capture_config",
         "type": "object",
-        "description": "",
+        "description": "Deprecated: legacy inference table configuration. Please use AI Gateway inference tables<br />    instead. See https://docs.databricks.com/aws/en/ai-gateway/inference-tables.",
         "children": [
           {
             "name": "catalog_name",
             "type": "string",
-            "description": ""
+            "description": "The name of the catalog in Unity Catalog. NOTE: On update, you cannot change the catalog name if the inference table is already enabled."
           },
           {
             "name": "enabled",
@@ -291,7 +291,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "environment_vars",
             "type": "object",
-            "description": "An object containing a set of optional, user-specified environment variable key-value pairs used for serving this entity. Note: this is an experimental feature and subject to change. Example entity environment variables that refer to Databricks secrets: `&#123;\"OPENAI_API_KEY\": \"&#123;&#123;secrets/my_scope/my_key&#125;&#125;\", \"DATABRICKS_TOKEN\": \"&#123;&#123;secrets/my_scope2/my_key2&#125;&#125;\"&#125;`"
+            "description": "An object containing a set of optional, user-specified environment variable key-value pairs used for serving this entity. Note: this is an experimental feature and subject to change. Example entity environment variables that refer to Databricks secrets: ``&#123;\"OPENAI_API_KEY\": \"&#123;&#123;secrets/my_scope/my_key&#125;&#125;\", \"DATABRICKS_TOKEN\": \"&#123;&#123;secrets/my_scope2/my_key2&#125;&#125;\"&#125;``"
           },
           {
             "name": "external_model",
@@ -452,7 +452,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "workload_type",
             "type": "string",
-            "description": "The workload type of the served entity. The workload type selects which type of compute to use in the endpoint. The default value for this parameter is \"CPU\". For deep learning workloads, GPU acceleration is available by selecting workload types like GPU_SMALL and others. See the available [GPU types]. [GPU types]: https://docs.databricks.com/en/machine-learning/model-serving/create-manage-serving-endpoints.html#gpu-workload-types (CPU, GPU_LARGE, GPU_MEDIUM, GPU_SMALL, MULTIGPU_MEDIUM)"
+            "description": "The workload type of the served entity. The workload type selects which type of compute to use in the endpoint. The default value for this parameter is \"CPU\". For deep learning workloads, GPU acceleration is available by selecting workload types like GPU_SMALL and others. See the available `GPU types <https://docs.databricks.com/en/machine-learning/model-serving/create-manage-serving-endpoints.html#gpu-workload-types>`__. (CPU, CPU_LARGE, CPU_MEDIUM, GPU_LARGE, GPU_MEDIUM, GPU_SMALL, GPU_XLARGE, GPU_XLARGE_8, MULTIGPU_MEDIUM)"
           }
         ]
       },
@@ -479,7 +479,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "environment_vars",
             "type": "object",
-            "description": "An object containing a set of optional, user-specified environment variable key-value pairs used for serving this entity. Note: this is an experimental feature and subject to change. Example entity environment variables that refer to Databricks secrets: `&#123;\"OPENAI_API_KEY\": \"&#123;&#123;secrets/my_scope/my_key&#125;&#125;\", \"DATABRICKS_TOKEN\": \"&#123;&#123;secrets/my_scope2/my_key2&#125;&#125;\"&#125;`"
+            "description": "An object containing a set of optional, user-specified environment variable key-value pairs used for serving this entity. Note: this is an experimental feature and subject to change. Example entity environment variables that refer to Databricks secrets: ``&#123;\"OPENAI_API_KEY\": \"&#123;&#123;secrets/my_scope/my_key&#125;&#125;\", \"DATABRICKS_TOKEN\": \"&#123;&#123;secrets/my_scope2/my_key2&#125;&#125;\"&#125;``"
           },
           {
             "name": "instance_profile_arn",
@@ -546,7 +546,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "workload_type",
             "type": "string",
-            "description": "The workload type of the served entity. The workload type selects which type of compute to use in the endpoint. The default value for this parameter is \"CPU\". For deep learning workloads, GPU acceleration is available by selecting workload types like GPU_SMALL and others. See the available [GPU types]. [GPU types]: https://docs.databricks.com/en/machine-learning/model-serving/create-manage-serving-endpoints.html#gpu-workload-types (CPU, GPU_LARGE, GPU_MEDIUM, GPU_SMALL, MULTIGPU_MEDIUM)"
+            "description": "The workload type of the served entity. The workload type selects which type of compute to use in the endpoint. The default value for this parameter is \"CPU\". For deep learning workloads, GPU acceleration is available by selecting workload types like GPU_SMALL and others. See the available `GPU types <https://docs.databricks.com/en/machine-learning/model-serving/create-manage-serving-endpoints.html#gpu-workload-types>`__. (CPU, CPU_LARGE, CPU_MEDIUM, GPU_LARGE, GPU_MEDIUM, GPU_SMALL, GPU_XLARGE, GPU_XLARGE_8, MULTIGPU_MEDIUM)"
           }
         ]
       },
@@ -655,12 +655,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "auto_capture_config",
         "type": "object",
-        "description": "",
+        "description": "Deprecated: legacy inference table configuration. Please use AI Gateway inference tables<br />    instead. See https://docs.databricks.com/aws/en/ai-gateway/inference-tables.",
         "children": [
           {
             "name": "catalog_name",
             "type": "string",
-            "description": ""
+            "description": "The name of the catalog in Unity Catalog. NOTE: On update, you cannot change the catalog name if the inference table is already enabled."
           },
           {
             "name": "enabled",
@@ -729,7 +729,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "environment_vars",
             "type": "object",
-            "description": "An object containing a set of optional, user-specified environment variable key-value pairs used for serving this entity. Note: this is an experimental feature and subject to change. Example entity environment variables that refer to Databricks secrets: `&#123;\"OPENAI_API_KEY\": \"&#123;&#123;secrets/my_scope/my_key&#125;&#125;\", \"DATABRICKS_TOKEN\": \"&#123;&#123;secrets/my_scope2/my_key2&#125;&#125;\"&#125;`"
+            "description": "An object containing a set of optional, user-specified environment variable key-value pairs used for serving this entity. Note: this is an experimental feature and subject to change. Example entity environment variables that refer to Databricks secrets: ``&#123;\"OPENAI_API_KEY\": \"&#123;&#123;secrets/my_scope/my_key&#125;&#125;\", \"DATABRICKS_TOKEN\": \"&#123;&#123;secrets/my_scope2/my_key2&#125;&#125;\"&#125;``"
           },
           {
             "name": "external_model",
@@ -890,7 +890,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "workload_type",
             "type": "string",
-            "description": "The workload type of the served entity. The workload type selects which type of compute to use in the endpoint. The default value for this parameter is \"CPU\". For deep learning workloads, GPU acceleration is available by selecting workload types like GPU_SMALL and others. See the available [GPU types]. [GPU types]: https://docs.databricks.com/en/machine-learning/model-serving/create-manage-serving-endpoints.html#gpu-workload-types (CPU, GPU_LARGE, GPU_MEDIUM, GPU_SMALL, MULTIGPU_MEDIUM)"
+            "description": "The workload type of the served entity. The workload type selects which type of compute to use in the endpoint. The default value for this parameter is \"CPU\". For deep learning workloads, GPU acceleration is available by selecting workload types like GPU_SMALL and others. See the available `GPU types <https://docs.databricks.com/en/machine-learning/model-serving/create-manage-serving-endpoints.html#gpu-workload-types>`__. (CPU, CPU_LARGE, CPU_MEDIUM, GPU_LARGE, GPU_MEDIUM, GPU_SMALL, GPU_XLARGE, GPU_XLARGE_8, MULTIGPU_MEDIUM)"
           }
         ]
       },
@@ -917,7 +917,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "environment_vars",
             "type": "object",
-            "description": "An object containing a set of optional, user-specified environment variable key-value pairs used for serving this entity. Note: this is an experimental feature and subject to change. Example entity environment variables that refer to Databricks secrets: `&#123;\"OPENAI_API_KEY\": \"&#123;&#123;secrets/my_scope/my_key&#125;&#125;\", \"DATABRICKS_TOKEN\": \"&#123;&#123;secrets/my_scope2/my_key2&#125;&#125;\"&#125;`"
+            "description": "An object containing a set of optional, user-specified environment variable key-value pairs used for serving this entity. Note: this is an experimental feature and subject to change. Example entity environment variables that refer to Databricks secrets: ``&#123;\"OPENAI_API_KEY\": \"&#123;&#123;secrets/my_scope/my_key&#125;&#125;\", \"DATABRICKS_TOKEN\": \"&#123;&#123;secrets/my_scope2/my_key2&#125;&#125;\"&#125;``"
           },
           {
             "name": "instance_profile_arn",
@@ -984,7 +984,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "workload_type",
             "type": "string",
-            "description": "The workload type of the served entity. The workload type selects which type of compute to use in the endpoint. The default value for this parameter is \"CPU\". For deep learning workloads, GPU acceleration is available by selecting workload types like GPU_SMALL and others. See the available [GPU types]. [GPU types]: https://docs.databricks.com/en/machine-learning/model-serving/create-manage-serving-endpoints.html#gpu-workload-types (CPU, GPU_LARGE, GPU_MEDIUM, GPU_SMALL, MULTIGPU_MEDIUM)"
+            "description": "The workload type of the served entity. The workload type selects which type of compute to use in the endpoint. The default value for this parameter is \"CPU\". For deep learning workloads, GPU acceleration is available by selecting workload types like GPU_SMALL and others. See the available `GPU types <https://docs.databricks.com/en/machine-learning/model-serving/create-manage-serving-endpoints.html#gpu-workload-types>`__. (CPU, CPU_LARGE, CPU_MEDIUM, GPU_LARGE, GPU_MEDIUM, GPU_SMALL, GPU_XLARGE, GPU_XLARGE_8, MULTIGPU_MEDIUM)"
           }
         ]
       },
@@ -1045,6 +1045,60 @@ The following fields are returned by `SELECT` queries:
         "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (IN_PROGRESS, NOT_UPDATING, UPDATE_CANCELED, UPDATE_FAILED)"
       },
       {
+        "name": "pt_state",
+        "type": "object",
+        "description": "The Provisioned Throughput state of the endpoint, including its capacity commitments.",
+        "children": [
+          {
+            "name": "commitments",
+            "type": "array",
+            "description": "The list of capacity commitments backing the endpoint.",
+            "children": [
+              {
+                "name": "auto_renew",
+                "type": "boolean",
+                "description": "Whether the commitment automatically renews at the end of its term."
+              },
+              {
+                "name": "auto_renew_editable",
+                "type": "boolean",
+                "description": "Whether auto_renew can still be toggled. Derived at read time, gated on the lockout window: true while more than the auto-renew lockout window remains before expiry. The server enforces the same rule on write."
+              },
+              {
+                "name": "expire_time",
+                "type": "string (date-time)",
+                "description": "The commitment's expiry (start_time + the term, in UTC calendar months/years). Stored on the commitment and returned verbatim, so clients, the billing meter, and the purge agree on the exact instant."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "description": "System-generated ID of the commitment."
+              },
+              {
+                "name": "provisioned_model_units",
+                "type": "integer",
+                "description": "The number of model units reserved by this commitment."
+              },
+              {
+                "name": "start_time",
+                "type": "string (date-time)",
+                "description": "The time at which the commitment becomes active."
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "description": "The lifecycle status of the commitment. (ACTIVE, EXPIRED)"
+              },
+              {
+                "name": "term",
+                "type": "string",
+                "description": "The commitment term length. (COMMITMENT_TERM_1_MONTH, COMMITMENT_TERM_3_MONTHS)"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "ready",
         "type": "string",
         "description": "The state of an endpoint, indicating whether or not the endpoint is queryable. An endpoint is READY if all of the served entities in its active configuration are ready. If any of the actively served entities are in a non-ready state, the endpoint state will be NOT_READY. (NOT_READY, READY)"
@@ -1072,6 +1126,67 @@ The following fields are returned by `SELECT` queries:
     "name": "task",
     "type": "string",
     "description": "The task type of the serving endpoint."
+  },
+  {
+    "name": "telemetry_config",
+    "type": "object",
+    "description": "Telemetry configuration for the endpoint, including inference-table payload logging.",
+    "children": [
+      {
+        "name": "inference_table_config",
+        "type": "object",
+        "description": "Inference table payload logging configuration",
+        "children": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The full name of the inference table created for this endpoint."
+          },
+          {
+            "name": "sampling_fraction",
+            "type": "number",
+            "description": "Fraction of requests sampled for payload logging, in the range [0.0, 1.0], where 1.0 logs all requests."
+          }
+        ]
+      },
+      {
+        "name": "table_names",
+        "type": "object",
+        "description": "The Unity Catalog tables to which endpoint telemetry (logs, traces, and metrics) is exported. Provide this to create a new telemetry profile for the endpoint from the given tables.",
+        "children": [
+          {
+            "name": "annotations_table",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "logs_table",
+            "type": "string",
+            "description": "The full three-level Unity Catalog name (catalog.schema.table) of the table that receives exported logs."
+          },
+          {
+            "name": "metrics_table",
+            "type": "string",
+            "description": "The full three-level Unity Catalog name (catalog.schema.table) of the table that receives exported metrics."
+          },
+          {
+            "name": "traces_table",
+            "type": "string",
+            "description": "The full three-level Unity Catalog name (catalog.schema.table) of the table that receives exported traces (spans)."
+          }
+        ]
+      },
+      {
+        "name": "telemetry_profile_id",
+        "type": "string",
+        "description": "The ID of an existing telemetry profile to apply to this endpoint. Provide this to reuse a telemetry profile that has already been created, instead of specifying table_names."
+      }
+    ]
+  },
+  {
+    "name": "uc_system_metrics_export_state",
+    "type": "string",
+    "description": "Whether this endpoint's system metrics are exported to the system.telemetry.otel_metrics Unity Catalog table. Endpoint-level property (not part of the per-version config). (FIRST_PARTY_EXPORT_DISABLED, FIRST_PARTY_EXPORT_ENABLED)"
   }
 ]} />
 </TabItem>
@@ -1425,6 +1540,60 @@ The following fields are returned by `SELECT` queries:
         "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (IN_PROGRESS, NOT_UPDATING, UPDATE_CANCELED, UPDATE_FAILED)"
       },
       {
+        "name": "pt_state",
+        "type": "object",
+        "description": "The Provisioned Throughput state of the endpoint, including its capacity commitments.",
+        "children": [
+          {
+            "name": "commitments",
+            "type": "array",
+            "description": "The list of capacity commitments backing the endpoint.",
+            "children": [
+              {
+                "name": "auto_renew",
+                "type": "boolean",
+                "description": "Whether the commitment automatically renews at the end of its term."
+              },
+              {
+                "name": "auto_renew_editable",
+                "type": "boolean",
+                "description": "Whether auto_renew can still be toggled. Derived at read time, gated on the lockout window: true while more than the auto-renew lockout window remains before expiry. The server enforces the same rule on write."
+              },
+              {
+                "name": "expire_time",
+                "type": "string (date-time)",
+                "description": "The commitment's expiry (start_time + the term, in UTC calendar months/years). Stored on the commitment and returned verbatim, so clients, the billing meter, and the purge agree on the exact instant."
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "description": "System-generated ID of the commitment."
+              },
+              {
+                "name": "provisioned_model_units",
+                "type": "integer",
+                "description": "The number of model units reserved by this commitment."
+              },
+              {
+                "name": "start_time",
+                "type": "string (date-time)",
+                "description": "The time at which the commitment becomes active."
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "description": "The lifecycle status of the commitment. (ACTIVE, EXPIRED)"
+              },
+              {
+                "name": "term",
+                "type": "string",
+                "description": "The commitment term length. (COMMITMENT_TERM_1_MONTH, COMMITMENT_TERM_3_MONTHS)"
+              }
+            ]
+          }
+        ]
+      },
+      {
         "name": "ready",
         "type": "string",
         "description": "The state of an endpoint, indicating whether or not the endpoint is queryable. An endpoint is READY if all of the served entities in its active configuration are ready. If any of the actively served entities are in a non-ready state, the endpoint state will be NOT_READY. (NOT_READY, READY)"
@@ -1452,6 +1621,67 @@ The following fields are returned by `SELECT` queries:
     "name": "task",
     "type": "string",
     "description": "The task type of the serving endpoint."
+  },
+  {
+    "name": "telemetry_config",
+    "type": "object",
+    "description": "Telemetry configuration for the endpoint, including inference-table payload logging.",
+    "children": [
+      {
+        "name": "inference_table_config",
+        "type": "object",
+        "description": "Inference table payload logging configuration",
+        "children": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "The full name of the inference table created for this endpoint."
+          },
+          {
+            "name": "sampling_fraction",
+            "type": "number",
+            "description": "Fraction of requests sampled for payload logging, in the range [0.0, 1.0], where 1.0 logs all requests."
+          }
+        ]
+      },
+      {
+        "name": "table_names",
+        "type": "object",
+        "description": "The Unity Catalog tables to which endpoint telemetry (logs, traces, and metrics) is exported. Provide this to create a new telemetry profile for the endpoint from the given tables.",
+        "children": [
+          {
+            "name": "annotations_table",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "logs_table",
+            "type": "string",
+            "description": "The full three-level Unity Catalog name (catalog.schema.table) of the table that receives exported logs."
+          },
+          {
+            "name": "metrics_table",
+            "type": "string",
+            "description": "The full three-level Unity Catalog name (catalog.schema.table) of the table that receives exported metrics."
+          },
+          {
+            "name": "traces_table",
+            "type": "string",
+            "description": "The full three-level Unity Catalog name (catalog.schema.table) of the table that receives exported traces (spans)."
+          }
+        ]
+      },
+      {
+        "name": "telemetry_profile_id",
+        "type": "string",
+        "description": "The ID of an existing telemetry profile to apply to this endpoint. Provide this to reuse a telemetry profile that has already been created, instead of specifying table_names."
+      }
+    ]
+  },
+  {
+    "name": "uc_system_metrics_export_state",
+    "type": "string",
+    "description": "Whether this endpoint's system metrics are exported to the system.telemetry.otel_metrics Unity Catalog table. Endpoint-level property (not part of the per-version config). (FIRST_PARTY_EXPORT_DISABLED, FIRST_PARTY_EXPORT_ENABLED)"
   }
 ]} />
 </TabItem>
@@ -1513,6 +1743,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
     <td>Delete a serving endpoint.</td>
+</tr>
+<tr>
+    <td><a href="#patch_system_metrics_export_state"><CopyableCode code="patch_system_metrics_export_state" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td></td>
+    <td>Updates the system-metrics-export state of a serving endpoint, independently of the endpoint config</td>
+</tr>
+<tr>
+    <td><a href="#patch_telemetry_config"><CopyableCode code="patch_telemetry_config" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-name"><code>name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td></td>
+    <td>Updates the telemetry configuration of a serving endpoint.</td>
 </tr>
 <tr>
     <td><a href="#query"><CopyableCode code="query" /></a></td>
@@ -1582,7 +1826,9 @@ permission_level,
 route_optimized,
 state,
 tags,
-task
+task,
+telemetry_config,
+uc_system_metrics_export_state
 FROM databricks_workspace.serving.serving_endpoints
 WHERE name = '{{ name }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
@@ -1607,7 +1853,9 @@ description,
 last_updated_timestamp,
 state,
 tags,
-task
+task,
+telemetry_config,
+uc_system_metrics_export_state
 FROM databricks_workspace.serving.serving_endpoints
 WHERE deployment_name = '{{ deployment_name }}' -- required
 ;
@@ -1640,6 +1888,8 @@ email_notifications,
 rate_limits,
 route_optimized,
 tags,
+telemetry_config,
+uc_system_metrics_export_state,
 deployment_name
 )
 SELECT 
@@ -1652,6 +1902,8 @@ SELECT
 '{{ rate_limits }}',
 {{ route_optimized }},
 '{{ tags }}',
+'{{ telemetry_config }}',
+'{{ uc_system_metrics_export_state }}',
 '{{ deployment_name }}'
 RETURNING
 id,
@@ -1671,7 +1923,9 @@ permission_level,
 route_optimized,
 state,
 tags,
-task
+task,
+telemetry_config,
+uc_system_metrics_export_state
 ;
 ```
 </TabItem>
@@ -1757,6 +2011,7 @@ task
                 aws_secret_access_key: "{{ aws_secret_access_key }}"
                 aws_secret_access_key_plaintext: "{{ aws_secret_access_key_plaintext }}"
                 instance_profile_arn: "{{ instance_profile_arn }}"
+                uc_service_credential_name: "{{ uc_service_credential_name }}"
               anthropic_config:
                 anthropic_api_key: "{{ anthropic_api_key }}"
                 anthropic_api_key_plaintext: "{{ anthropic_api_key_plaintext }}"
@@ -1854,6 +2109,23 @@ task
       value:
         - key: "{{ key }}"
           value: "{{ value }}"
+    - name: telemetry_config
+      description: |
+        Configuration for persisting endpoint telemetry (logs, traces, and metrics) to Unity Catalog tables.
+      value:
+        inference_table_config:
+          name: "{{ name }}"
+          sampling_fraction: {{ sampling_fraction }}
+        table_names:
+          annotations_table: "{{ annotations_table }}"
+          logs_table: "{{ logs_table }}"
+          metrics_table: "{{ metrics_table }}"
+          traces_table: "{{ traces_table }}"
+        telemetry_profile_id: "{{ telemetry_profile_id }}"
+    - name: uc_system_metrics_export_state
+      value: "{{ uc_system_metrics_export_state }}"
+      description: |
+        Whether this endpoint's system metrics are exported to the system.telemetry.otel_metrics Unity Catalog table. Endpoint-level property (not part of the per-version config).
 `}</CodeBlock>
 
 </TabItem>
@@ -1927,7 +2199,9 @@ permission_level,
 route_optimized,
 state,
 tags,
-task;
+task,
+telemetry_config,
+uc_system_metrics_export_state;
 ```
 </TabItem>
 </Tabs>
@@ -1958,11 +2232,43 @@ AND deployment_name = '{{ deployment_name }}' --required
 ## Lifecycle Methods
 
 <Tabs
-    defaultValue="query"
+    defaultValue="patch_system_metrics_export_state"
     values={[
+        { label: 'patch_system_metrics_export_state', value: 'patch_system_metrics_export_state' },
+        { label: 'patch_telemetry_config', value: 'patch_telemetry_config' },
         { label: 'query', value: 'query' }
     ]}
 >
+<TabItem value="patch_system_metrics_export_state">
+
+Updates the system-metrics-export state of a serving endpoint, independently of the endpoint config
+
+```sql
+EXEC databricks_workspace.serving.serving_endpoints.patch_system_metrics_export_state 
+@name='{{ name }}' --required, 
+@deployment_name='{{ deployment_name }}' --required 
+@@json=
+'{
+"uc_system_metrics_export_state": "{{ uc_system_metrics_export_state }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="patch_telemetry_config">
+
+Updates the telemetry configuration of a serving endpoint.
+
+```sql
+EXEC databricks_workspace.serving.serving_endpoints.patch_telemetry_config 
+@name='{{ name }}' --required, 
+@deployment_name='{{ deployment_name }}' --required 
+@@json=
+'{
+"telemetry_config": "{{ telemetry_config }}"
+}'
+;
+```
+</TabItem>
 <TabItem value="query">
 
 Query a serving endpoint

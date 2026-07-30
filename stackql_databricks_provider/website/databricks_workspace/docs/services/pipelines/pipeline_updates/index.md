@@ -71,12 +71,12 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "catalog",
             "type": "string",
-            "description": "A catalog in Unity Catalog to publish data from this pipeline to. If `target` is specified, tables in this pipeline are published to a `target` schema inside `catalog` (for example, `catalog`.`target`.`table`). If `target` is not specified, no data is published to Unity Catalog."
+            "description": "A catalog in Unity Catalog to publish data from this pipeline to. If ``target`` is specified, tables in this pipeline are published to a ``target`` schema inside ``catalog`` (for example, ``catalog``.``target``.``table``). If ``target`` is not specified, no data is published to Unity Catalog."
           },
           {
             "name": "channel",
             "type": "string",
-            "description": "DLT Release Channel that specifies which version to use."
+            "description": "SDP Release Channel that specifies which version to use."
           },
           {
             "name": "clusters",
@@ -106,12 +106,12 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "cluster_log_conf",
                 "type": "string",
-                "description": "The configuration for delivering spark logs to a long-term storage destination. Only dbfs destinations are supported. Only one destination can be specified for one cluster. If the conf is given, the logs will be delivered to the destination every `5 mins`. The destination of driver logs is `$destination/$clusterId/driver`, while the destination of executor logs is `$destination/$clusterId/executor`."
+                "description": "The configuration for delivering spark logs to a long-term storage destination. Only dbfs destinations are supported. Only one destination can be specified for one cluster. If the conf is given, the logs will be delivered to the destination every ``5 mins``. The destination of driver logs is ``$destination/$clusterId/driver``, while the destination of executor logs is ``$destination/$clusterId/executor``."
               },
               {
                 "name": "custom_tags",
                 "type": "object",
-                "description": "Additional tags for cluster resources. Databricks will tag all cluster resources (e.g., AWS instances and EBS volumes) with these tags in addition to `default_tags`. Notes: - Currently, Databricks allows at most 45 custom tags - Clusters can only reuse cloud resources if the resources' tags are a subset of the cluster tags"
+                "description": "Additional tags for cluster resources. Databricks will tag all cluster resources (e.g., AWS instances and EBS volumes) with these tags in addition to ``default_tags``. Notes: - Currently, Databricks allows at most 45 custom tags - Clusters can only reuse cloud resources if the resources' tags are a subset of the cluster tags"
               },
               {
                 "name": "driver_instance_pool_id",
@@ -121,7 +121,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "driver_node_type_id",
                 "type": "string",
-                "description": "The node type of the Spark driver. Note that this field is optional; if unset, the driver node type will be set as the same value as `node_type_id` defined above."
+                "description": "The node type of the Spark driver. Note that this field is optional; if unset, the driver node type will be set as the same value as ``node_type_id`` defined above."
               },
               {
                 "name": "enable_local_disk_encryption",
@@ -136,7 +136,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "init_scripts",
                 "type": "string",
-                "description": "The configuration for storing init scripts. Any number of destinations can be specified. The scripts are executed sequentially in the order provided. If `cluster_log_conf` is specified, init script logs are sent to `<destination>/<cluster-ID>/init_scripts`."
+                "description": "The configuration for storing init scripts. Any number of destinations can be specified. The scripts are executed sequentially in the order provided. If ``cluster_log_conf`` is specified, init script logs are sent to ``&lt;destination&gt;/&lt;cluster-ID&gt;/init_scripts``."
               },
               {
                 "name": "instance_pool_id",
@@ -146,7 +146,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "label",
                 "type": "string",
-                "description": "A label for the cluster specification, either `default` to configure the default cluster, or `maintenance` to configure the maintenance cluster. This field is optional. The default value is `default`."
+                "description": "A label for the cluster specification, either ``default`` to configure the default cluster, or ``maintenance`` to configure the maintenance cluster. This field is optional. The default value is ``default``."
               },
               {
                 "name": "node_type_id",
@@ -156,7 +156,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "num_workers",
                 "type": "integer",
-                "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver and `num_workers` Executors for a total of `num_workers` + 1 Spark nodes. Note: When reading the properties of a cluster, this field reflects the desired number of workers rather than the actual current number of workers. For instance, if a cluster is resized from 5 to 10 workers, this field will immediately be updated to reflect the target size of 10 workers, whereas the workers listed in `spark_info` will gradually increase from 5 to 10 as the new nodes are provisioned."
+                "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver and ``num_workers`` Executors for a total of ``num_workers`` + 1 Spark nodes. Note: When reading the properties of a cluster, this field reflects the desired number of workers rather than the actual current number of workers. For instance, if a cluster is resized from 5 to 10 workers, this field will immediately be updated to reflect the target size of 10 workers, whereas the workers listed in ``spark_info`` will gradually increase from 5 to 10 as the new nodes are provisioned."
               },
               {
                 "name": "policy_id",
@@ -171,12 +171,12 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "spark_env_vars",
                 "type": "object",
-                "description": "An object containing a set of optional, user-specified environment variable key-value pairs. Please note that key-value pair of the form (X,Y) will be exported as is (i.e., `export X='Y'`) while launching the driver and workers. In order to specify an additional set of `SPARK_DAEMON_JAVA_OPTS`, we recommend appending them to `$SPARK_DAEMON_JAVA_OPTS` as shown in the example below. This ensures that all default databricks managed environmental variables are included as well. Example Spark environment variables: `&#123;\"SPARK_WORKER_MEMORY\": \"28000m\", \"SPARK_LOCAL_DIRS\": \"/local_disk0\"&#125;` or `&#123;\"SPARK_DAEMON_JAVA_OPTS\": \"$SPARK_DAEMON_JAVA_OPTS -Dspark.shuffle.service.enabled=true\"&#125;`"
+                "description": "An object containing a set of optional, user-specified environment variable key-value pairs. Please note that key-value pair of the form (X,Y) will be exported as is (i.e., ``export X='Y'``) while launching the driver and workers. In order to specify an additional set of ``SPARK_DAEMON_JAVA_OPTS``, we recommend appending them to ``$SPARK_DAEMON_JAVA_OPTS`` as shown in the example below. This ensures that all default databricks managed environmental variables are included as well. Example Spark environment variables: ``&#123;\"SPARK_WORKER_MEMORY\": \"28000m\", \"SPARK_LOCAL_DIRS\": \"/local_disk0\"&#125;`` or ``&#123;\"SPARK_DAEMON_JAVA_OPTS\": \"$SPARK_DAEMON_JAVA_OPTS -Dspark.shuffle.service.enabled=true\"&#125;``"
               },
               {
                 "name": "ssh_public_keys",
                 "type": "array",
-                "description": "SSH public key contents that will be added to each Spark node in this cluster. The corresponding private keys can be used to login with the user name `ubuntu` on port `2200`. Up to 10 keys can be specified."
+                "description": "SSH public key contents that will be added to each Spark node in this cluster. The corresponding private keys can be used to login with the user name ``ubuntu`` on port ``2200``. Up to 10 keys can be specified."
               }
             ]
           },
@@ -188,7 +188,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "continuous",
             "type": "boolean",
-            "description": "Whether the pipeline is continuous or triggered. This replaces `trigger`."
+            "description": "Whether the pipeline is continuous or triggered. This replaces ``trigger``."
           },
           {
             "name": "deployment",
@@ -198,12 +198,22 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "kind",
                 "type": "string",
-                "description": "The deployment method that manages the pipeline: - BUNDLE: The pipeline is managed by a<br />Databricks Asset Bundle. (BUNDLE)"
+                "description": "The deployment method that manages the pipeline:<br /><br />- BUNDLE: The pipeline is managed by a Databricks Asset Bundle. (BUNDLE)"
+              },
+              {
+                "name": "deployment_id",
+                "type": "string",
+                "description": "ID of the deployment that manages this pipeline. Only set when ``kind`` is ``BUNDLE``. Used to look up deployment metadata from the Deployment Metadata service."
               },
               {
                 "name": "metadata_file_path",
                 "type": "string",
                 "description": "The path to the file containing metadata about the deployment."
+              },
+              {
+                "name": "version_id",
+                "type": "string",
+                "description": "ID of the version of the deployment that produced this pipeline. Only set when ``kind`` is ``BUNDLE``. Identifies a specific snapshot of the deployment in the Deployment Metadata service."
               }
             ]
           },
@@ -230,7 +240,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "environment_version",
                 "type": "string",
-                "description": "The environment version of the serverless Python environment used to execute customer Python code. Each environment version includes a specific Python version and a curated set of pre-installed libraries with defined versions, providing a stable and reproducible execution environment. Databricks supports a three-year lifecycle for each environment version. For available versions and their included packages, see https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/ The value should be a string representing the environment version number, for example: `\"4\"`."
+                "description": "The environment version of the serverless Python environment used to execute customer Python code. Each environment version includes a specific Python version and a curated set of pre-installed libraries with defined versions, providing a stable and reproducible execution environment. Databricks supports a three-year lifecycle for each environment version. For available versions and their included packages, see https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/ The value should be a string representing the environment version number, for example: ``\"4\"``."
               }
             ]
           },
@@ -343,7 +353,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "ingest_from_uc_foreign_catalog",
                 "type": "boolean",
-                "description": "Immutable. If set to true, the pipeline will ingest tables from the UC foreign catalogs directly without the need to specify a UC connection or ingestion gateway. The `source_catalog` fields in objects of IngestionConfig are interpreted as the UC foreign catalogs to ingest from."
+                "description": "Immutable. If set to true, the pipeline will ingest tables from the UC foreign catalogs directly without the need to specify a UC connection or ingestion gateway. The ``source_catalog`` fields in objects of IngestionConfig are interpreted as the UC foreign catalogs to ingest from."
               },
               {
                 "name": "ingestion_gateway_id",
@@ -368,7 +378,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "source_type",
                 "type": "string",
-                "description": "The type of the foreign source. The source type will be inferred from the source connection or ingestion gateway. This field is output only and will be ignored if provided. (BIGQUERY, DYNAMICS365, FOREIGN_CATALOG, GA4_RAW_DATA, MANAGED_POSTGRESQL, MYSQL, NETSUITE, ORACLE, POSTGRESQL, SALESFORCE, SERVICENOW, SHAREPOINT, SQLSERVER, TERADATA, WORKDAY_RAAS)"
+                "description": "The type of the foreign source. The source type will be inferred from the source connection or ingestion gateway. This field is output only and will be ignored if provided. (ADOBE_CAMPAIGNS, ADOBE_COMMERCE, ADP_WORKFORCE_NOW, AHA, AIRTABLE, AKAMAI_WAF, AMPLITUDE, API_SOURCE, APPFIGURES, APPLE_APP_STORE, APPLE_SEARCH_ADS, ATLASSIAN_ORGANIZATION, AWIN, AZURE_MONITOR_LOGS, BIGQUERY, BING_ADS, CERIDIAN_DAYFORCE, COMMUNITY, CONFLUENCE, CROWDSTRIKE_EVENT_STREAM, DELIGHTED, DYNAMICS365, EPIC_CLARITY, FOREIGN_CATALOG, FRESHSERVICE, FRONT, GA4_RAW_DATA, GENESYS, GITHUB, GITLAB, GMAIL, GONG, GOOGLE_ADS, GOOGLE_ANALYTICS, GOOGLE_CALENDAR, GOOGLE_DRIVE, GOOGLE_SEARCH_CONSOLE, GOOGLE_WORKSPACE, GUIDEWIRE, GURU, HIBOB, HUBSPOT, IRONCLAD, JIRA, KAFKA, LINEAR, LINKEDIN_ADS, M365_AUDIT_LOGS, MANAGED_POSTGRESQL, MARKETO, META_MARKETING, MICROSOFT_ENTRA_ID, MICROSOFT_TEAMS, MONDAY_COM, MYSQL, NETSKOPE_LOGS, NETSUITE, NOTION, OKTA_SYSTEM_LOGS, ONE_PASSWORD_EVENT_LOGS, ORACLE, ORACLE_ELOQUA, ORACLE_FUSION_CLOUD, OUTLOOK, PAGERDUTY, PARTNERSTACK, PENDO, PINTEREST_ADS, POSTGRESQL, PROOFPOINT_SIEM, QUICKBOOKS, RABBITMQ, REDDIT_ADS, REDSHIFT, SALESFORCE, SALESFORCE_MARKETING_CLOUD, SALESLOFT, SAP_SUCCESSFACTORS, SAS, SENDGRID, SERVICENOW, SHAREPOINT, SHOPIFY, SLACK_ACCESS_AND_INTEGRATION_LOGS, SLACK_AUDIT_LOGS, SMARTSHEET, SNAPCHAT_ADS, SPLUNK, SQLDW, SQLSERVER, SQUARE, TERADATA, TIKTOK_ADS, VEEVA, VEEVA_VAULT, VERKADA, WIZ_AUDIT_LOGS, WORKDAY_ACTIVITY_LOGGING, WORKDAY_HCM, WORKDAY_RAAS, X_ADS, YOUTUBE_ANALYTICS, ZENDESK, ZIP, ZOHO_BOOKS, ZOOM, ZOOM_LOGS)"
               },
               {
                 "name": "table_configuration",
@@ -390,7 +400,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "glob",
                 "type": "object",
-                "description": "The unified field to include source codes. Each entry can be a notebook path, a file path, or a folder path that ends `/**`. This field cannot be used together with `notebook` or `file`."
+                "description": "The unified field to include source codes. Each entry can be a notebook path, a file path, or a folder path that ends ``/**``. This field cannot be used together with ``notebook`` or ``file``."
               },
               {
                 "name": "jar",
@@ -464,6 +474,23 @@ The following fields are returned by `SELECT` queries:
             ]
           },
           {
+            "name": "rewind_generation_interval",
+            "type": "object",
+            "description": "Interval at which rewind points are generated during pipeline execution.",
+            "children": [
+              {
+                "name": "interval",
+                "type": "integer",
+                "description": "An integer value representing the interval quantity for the schedule."
+              },
+              {
+                "name": "unit",
+                "type": "string",
+                "description": "A time unit for the schedule. (DAYS, HOURS, WEEKS)"
+              }
+            ]
+          },
+          {
             "name": "root_path",
             "type": "string",
             "description": "Root path for this pipeline. This is used as the root directory when editing the pipeline in the Databricks user interface and it is added to sys.path when executing Python sources during pipeline execution."
@@ -479,6 +506,11 @@ The following fields are returned by `SELECT` queries:
             "description": "Whether serverless compute is enabled for this pipeline."
           },
           {
+            "name": "serverless_compute_id",
+            "type": "string",
+            "description": "Serverless compute ID specified by the user for serverless pipelines."
+          },
+          {
             "name": "storage",
             "type": "string",
             "description": "DBFS root directory for storing checkpoints and tables."
@@ -491,12 +523,12 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "target",
             "type": "string",
-            "description": "Target schema (database) to add tables in this pipeline to. Exactly one of `schema` or `target` must be specified. To publish to Unity Catalog, also specify `catalog`. This legacy field is deprecated for pipeline creation in favor of the `schema` field."
+            "description": "Target schema (database) to add tables in this pipeline to. Exactly one of ``schema`` or ``target`` must be specified. To publish to Unity Catalog, also specify ``catalog``. This legacy field is deprecated for pipeline creation in favor of the ``schema`` field."
           },
           {
             "name": "trigger",
             "type": "object",
-            "description": "Which pipeline trigger to use. Deprecated: Use `continuous` instead.",
+            "description": "Which pipeline trigger to use. Deprecated: Use ``continuous`` instead.",
             "children": [
               {
                 "name": "cron",
@@ -533,6 +565,11 @@ The following fields are returned by `SELECT` queries:
         "description": "A list of tables to update with fullRefresh. If both refresh_selection and full_refresh_selection are empty, this is a full graph update. Full Refresh on a table means that the states of the table will be reset before the refresh."
       },
       {
+        "name": "mode",
+        "type": "string",
+        "description": "Indicates whether the update is either part of a continuous job run, or running in legacy continuous pipeline mode. Returned only for GetUpdate; not populated in ListUpdates responses. (CONTINUOUS, DEFAULT)"
+      },
+      {
         "name": "parameters",
         "type": "object",
         "description": "Key/value map of parameters used to initiate the update"
@@ -543,9 +580,58 @@ The following fields are returned by `SELECT` queries:
         "description": "The ID of the pipeline."
       },
       {
+        "name": "refresh_flow_selection",
+        "type": "array",
+        "description": "Flow names to selectively refresh. These are unioned with other selective refresh options (refresh_selection, full_refresh_selection, etc.) to determine the final set of flows to refresh."
+      },
+      {
         "name": "refresh_selection",
         "type": "array",
         "description": "A list of tables to update without fullRefresh. If both refresh_selection and full_refresh_selection are empty, this is a full graph update. Full Refresh on a table means that the states of the table will be reset before the refresh."
+      },
+      {
+        "name": "rewind_spec",
+        "type": "object",
+        "description": "The rewind specification for this update. If set, this update is a rewind execution (the update will rewind the targeted datasets to the requested timestamp instead of running a normal refresh).",
+        "children": [
+          {
+            "name": "datasets",
+            "type": "array",
+            "description": "List of datasets to rewind with specific configuration for each. When not specified, all datasets will be rewound with cascade = true and reset_checkpoints = true.",
+            "children": [
+              {
+                "name": "cascade",
+                "type": "boolean",
+                "description": "Whether to cascade the rewind to dependent datasets. Must be specified."
+              },
+              {
+                "name": "identifier",
+                "type": "string",
+                "description": "The identifier of the dataset (e.g., \"main.foo.tbl1\")."
+              },
+              {
+                "name": "reset_checkpoints",
+                "type": "boolean",
+                "description": "Whether to reset checkpoints for this dataset."
+              }
+            ]
+          },
+          {
+            "name": "dry_run",
+            "type": "boolean",
+            "description": "If true, this is a dry run and we should emit the RewindSummary but not perform the rewind."
+          },
+          {
+            "name": "rewind_point_id",
+            "type": "string",
+            "description": "The ID of a previously generated rewind point to rewind to (same as the originating event log ID). Exactly one of rewind_timestamp or rewind_point_id must be specified."
+          },
+          {
+            "name": "rewind_timestamp",
+            "type": "string",
+            "description": "The base timestamp to rewind to. Exactly one of rewind_timestamp or rewind_point_id must be specified."
+          }
+        ]
       },
       {
         "name": "state",
@@ -607,12 +693,12 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "catalog",
             "type": "string",
-            "description": "A catalog in Unity Catalog to publish data from this pipeline to. If `target` is specified, tables in this pipeline are published to a `target` schema inside `catalog` (for example, `catalog`.`target`.`table`). If `target` is not specified, no data is published to Unity Catalog."
+            "description": "A catalog in Unity Catalog to publish data from this pipeline to. If ``target`` is specified, tables in this pipeline are published to a ``target`` schema inside ``catalog`` (for example, ``catalog``.``target``.``table``). If ``target`` is not specified, no data is published to Unity Catalog."
           },
           {
             "name": "channel",
             "type": "string",
-            "description": "DLT Release Channel that specifies which version to use."
+            "description": "SDP Release Channel that specifies which version to use."
           },
           {
             "name": "clusters",
@@ -642,12 +728,12 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "cluster_log_conf",
                 "type": "string",
-                "description": "The configuration for delivering spark logs to a long-term storage destination. Only dbfs destinations are supported. Only one destination can be specified for one cluster. If the conf is given, the logs will be delivered to the destination every `5 mins`. The destination of driver logs is `$destination/$clusterId/driver`, while the destination of executor logs is `$destination/$clusterId/executor`."
+                "description": "The configuration for delivering spark logs to a long-term storage destination. Only dbfs destinations are supported. Only one destination can be specified for one cluster. If the conf is given, the logs will be delivered to the destination every ``5 mins``. The destination of driver logs is ``$destination/$clusterId/driver``, while the destination of executor logs is ``$destination/$clusterId/executor``."
               },
               {
                 "name": "custom_tags",
                 "type": "object",
-                "description": "Additional tags for cluster resources. Databricks will tag all cluster resources (e.g., AWS instances and EBS volumes) with these tags in addition to `default_tags`. Notes: - Currently, Databricks allows at most 45 custom tags - Clusters can only reuse cloud resources if the resources' tags are a subset of the cluster tags"
+                "description": "Additional tags for cluster resources. Databricks will tag all cluster resources (e.g., AWS instances and EBS volumes) with these tags in addition to ``default_tags``. Notes: - Currently, Databricks allows at most 45 custom tags - Clusters can only reuse cloud resources if the resources' tags are a subset of the cluster tags"
               },
               {
                 "name": "driver_instance_pool_id",
@@ -657,7 +743,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "driver_node_type_id",
                 "type": "string",
-                "description": "The node type of the Spark driver. Note that this field is optional; if unset, the driver node type will be set as the same value as `node_type_id` defined above."
+                "description": "The node type of the Spark driver. Note that this field is optional; if unset, the driver node type will be set as the same value as ``node_type_id`` defined above."
               },
               {
                 "name": "enable_local_disk_encryption",
@@ -672,7 +758,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "init_scripts",
                 "type": "string",
-                "description": "The configuration for storing init scripts. Any number of destinations can be specified. The scripts are executed sequentially in the order provided. If `cluster_log_conf` is specified, init script logs are sent to `<destination>/<cluster-ID>/init_scripts`."
+                "description": "The configuration for storing init scripts. Any number of destinations can be specified. The scripts are executed sequentially in the order provided. If ``cluster_log_conf`` is specified, init script logs are sent to ``&lt;destination&gt;/&lt;cluster-ID&gt;/init_scripts``."
               },
               {
                 "name": "instance_pool_id",
@@ -682,7 +768,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "label",
                 "type": "string",
-                "description": "A label for the cluster specification, either `default` to configure the default cluster, or `maintenance` to configure the maintenance cluster. This field is optional. The default value is `default`."
+                "description": "A label for the cluster specification, either ``default`` to configure the default cluster, or ``maintenance`` to configure the maintenance cluster. This field is optional. The default value is ``default``."
               },
               {
                 "name": "node_type_id",
@@ -692,7 +778,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "num_workers",
                 "type": "integer",
-                "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver and `num_workers` Executors for a total of `num_workers` + 1 Spark nodes. Note: When reading the properties of a cluster, this field reflects the desired number of workers rather than the actual current number of workers. For instance, if a cluster is resized from 5 to 10 workers, this field will immediately be updated to reflect the target size of 10 workers, whereas the workers listed in `spark_info` will gradually increase from 5 to 10 as the new nodes are provisioned."
+                "description": "Number of worker nodes that this cluster should have. A cluster has one Spark Driver and ``num_workers`` Executors for a total of ``num_workers`` + 1 Spark nodes. Note: When reading the properties of a cluster, this field reflects the desired number of workers rather than the actual current number of workers. For instance, if a cluster is resized from 5 to 10 workers, this field will immediately be updated to reflect the target size of 10 workers, whereas the workers listed in ``spark_info`` will gradually increase from 5 to 10 as the new nodes are provisioned."
               },
               {
                 "name": "policy_id",
@@ -707,12 +793,12 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "spark_env_vars",
                 "type": "object",
-                "description": "An object containing a set of optional, user-specified environment variable key-value pairs. Please note that key-value pair of the form (X,Y) will be exported as is (i.e., `export X='Y'`) while launching the driver and workers. In order to specify an additional set of `SPARK_DAEMON_JAVA_OPTS`, we recommend appending them to `$SPARK_DAEMON_JAVA_OPTS` as shown in the example below. This ensures that all default databricks managed environmental variables are included as well. Example Spark environment variables: `&#123;\"SPARK_WORKER_MEMORY\": \"28000m\", \"SPARK_LOCAL_DIRS\": \"/local_disk0\"&#125;` or `&#123;\"SPARK_DAEMON_JAVA_OPTS\": \"$SPARK_DAEMON_JAVA_OPTS -Dspark.shuffle.service.enabled=true\"&#125;`"
+                "description": "An object containing a set of optional, user-specified environment variable key-value pairs. Please note that key-value pair of the form (X,Y) will be exported as is (i.e., ``export X='Y'``) while launching the driver and workers. In order to specify an additional set of ``SPARK_DAEMON_JAVA_OPTS``, we recommend appending them to ``$SPARK_DAEMON_JAVA_OPTS`` as shown in the example below. This ensures that all default databricks managed environmental variables are included as well. Example Spark environment variables: ``&#123;\"SPARK_WORKER_MEMORY\": \"28000m\", \"SPARK_LOCAL_DIRS\": \"/local_disk0\"&#125;`` or ``&#123;\"SPARK_DAEMON_JAVA_OPTS\": \"$SPARK_DAEMON_JAVA_OPTS -Dspark.shuffle.service.enabled=true\"&#125;``"
               },
               {
                 "name": "ssh_public_keys",
                 "type": "array",
-                "description": "SSH public key contents that will be added to each Spark node in this cluster. The corresponding private keys can be used to login with the user name `ubuntu` on port `2200`. Up to 10 keys can be specified."
+                "description": "SSH public key contents that will be added to each Spark node in this cluster. The corresponding private keys can be used to login with the user name ``ubuntu`` on port ``2200``. Up to 10 keys can be specified."
               }
             ]
           },
@@ -724,7 +810,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "continuous",
             "type": "boolean",
-            "description": "Whether the pipeline is continuous or triggered. This replaces `trigger`."
+            "description": "Whether the pipeline is continuous or triggered. This replaces ``trigger``."
           },
           {
             "name": "deployment",
@@ -734,12 +820,22 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "kind",
                 "type": "string",
-                "description": "The deployment method that manages the pipeline: - BUNDLE: The pipeline is managed by a<br />Databricks Asset Bundle. (BUNDLE)"
+                "description": "The deployment method that manages the pipeline:<br /><br />- BUNDLE: The pipeline is managed by a Databricks Asset Bundle. (BUNDLE)"
+              },
+              {
+                "name": "deployment_id",
+                "type": "string",
+                "description": "ID of the deployment that manages this pipeline. Only set when ``kind`` is ``BUNDLE``. Used to look up deployment metadata from the Deployment Metadata service."
               },
               {
                 "name": "metadata_file_path",
                 "type": "string",
                 "description": "The path to the file containing metadata about the deployment."
+              },
+              {
+                "name": "version_id",
+                "type": "string",
+                "description": "ID of the version of the deployment that produced this pipeline. Only set when ``kind`` is ``BUNDLE``. Identifies a specific snapshot of the deployment in the Deployment Metadata service."
               }
             ]
           },
@@ -766,7 +862,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "environment_version",
                 "type": "string",
-                "description": "The environment version of the serverless Python environment used to execute customer Python code. Each environment version includes a specific Python version and a curated set of pre-installed libraries with defined versions, providing a stable and reproducible execution environment. Databricks supports a three-year lifecycle for each environment version. For available versions and their included packages, see https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/ The value should be a string representing the environment version number, for example: `\"4\"`."
+                "description": "The environment version of the serverless Python environment used to execute customer Python code. Each environment version includes a specific Python version and a curated set of pre-installed libraries with defined versions, providing a stable and reproducible execution environment. Databricks supports a three-year lifecycle for each environment version. For available versions and their included packages, see https://docs.databricks.com/aws/en/release-notes/serverless/environment-version/ The value should be a string representing the environment version number, for example: ``\"4\"``."
               }
             ]
           },
@@ -879,7 +975,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "ingest_from_uc_foreign_catalog",
                 "type": "boolean",
-                "description": "Immutable. If set to true, the pipeline will ingest tables from the UC foreign catalogs directly without the need to specify a UC connection or ingestion gateway. The `source_catalog` fields in objects of IngestionConfig are interpreted as the UC foreign catalogs to ingest from."
+                "description": "Immutable. If set to true, the pipeline will ingest tables from the UC foreign catalogs directly without the need to specify a UC connection or ingestion gateway. The ``source_catalog`` fields in objects of IngestionConfig are interpreted as the UC foreign catalogs to ingest from."
               },
               {
                 "name": "ingestion_gateway_id",
@@ -904,7 +1000,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "source_type",
                 "type": "string",
-                "description": "The type of the foreign source. The source type will be inferred from the source connection or ingestion gateway. This field is output only and will be ignored if provided. (BIGQUERY, DYNAMICS365, FOREIGN_CATALOG, GA4_RAW_DATA, MANAGED_POSTGRESQL, MYSQL, NETSUITE, ORACLE, POSTGRESQL, SALESFORCE, SERVICENOW, SHAREPOINT, SQLSERVER, TERADATA, WORKDAY_RAAS)"
+                "description": "The type of the foreign source. The source type will be inferred from the source connection or ingestion gateway. This field is output only and will be ignored if provided. (ADOBE_CAMPAIGNS, ADOBE_COMMERCE, ADP_WORKFORCE_NOW, AHA, AIRTABLE, AKAMAI_WAF, AMPLITUDE, API_SOURCE, APPFIGURES, APPLE_APP_STORE, APPLE_SEARCH_ADS, ATLASSIAN_ORGANIZATION, AWIN, AZURE_MONITOR_LOGS, BIGQUERY, BING_ADS, CERIDIAN_DAYFORCE, COMMUNITY, CONFLUENCE, CROWDSTRIKE_EVENT_STREAM, DELIGHTED, DYNAMICS365, EPIC_CLARITY, FOREIGN_CATALOG, FRESHSERVICE, FRONT, GA4_RAW_DATA, GENESYS, GITHUB, GITLAB, GMAIL, GONG, GOOGLE_ADS, GOOGLE_ANALYTICS, GOOGLE_CALENDAR, GOOGLE_DRIVE, GOOGLE_SEARCH_CONSOLE, GOOGLE_WORKSPACE, GUIDEWIRE, GURU, HIBOB, HUBSPOT, IRONCLAD, JIRA, KAFKA, LINEAR, LINKEDIN_ADS, M365_AUDIT_LOGS, MANAGED_POSTGRESQL, MARKETO, META_MARKETING, MICROSOFT_ENTRA_ID, MICROSOFT_TEAMS, MONDAY_COM, MYSQL, NETSKOPE_LOGS, NETSUITE, NOTION, OKTA_SYSTEM_LOGS, ONE_PASSWORD_EVENT_LOGS, ORACLE, ORACLE_ELOQUA, ORACLE_FUSION_CLOUD, OUTLOOK, PAGERDUTY, PARTNERSTACK, PENDO, PINTEREST_ADS, POSTGRESQL, PROOFPOINT_SIEM, QUICKBOOKS, RABBITMQ, REDDIT_ADS, REDSHIFT, SALESFORCE, SALESFORCE_MARKETING_CLOUD, SALESLOFT, SAP_SUCCESSFACTORS, SAS, SENDGRID, SERVICENOW, SHAREPOINT, SHOPIFY, SLACK_ACCESS_AND_INTEGRATION_LOGS, SLACK_AUDIT_LOGS, SMARTSHEET, SNAPCHAT_ADS, SPLUNK, SQLDW, SQLSERVER, SQUARE, TERADATA, TIKTOK_ADS, VEEVA, VEEVA_VAULT, VERKADA, WIZ_AUDIT_LOGS, WORKDAY_ACTIVITY_LOGGING, WORKDAY_HCM, WORKDAY_RAAS, X_ADS, YOUTUBE_ANALYTICS, ZENDESK, ZIP, ZOHO_BOOKS, ZOOM, ZOOM_LOGS)"
               },
               {
                 "name": "table_configuration",
@@ -926,7 +1022,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "glob",
                 "type": "object",
-                "description": "The unified field to include source codes. Each entry can be a notebook path, a file path, or a folder path that ends `/**`. This field cannot be used together with `notebook` or `file`."
+                "description": "The unified field to include source codes. Each entry can be a notebook path, a file path, or a folder path that ends ``/**``. This field cannot be used together with ``notebook`` or ``file``."
               },
               {
                 "name": "jar",
@@ -1000,6 +1096,23 @@ The following fields are returned by `SELECT` queries:
             ]
           },
           {
+            "name": "rewind_generation_interval",
+            "type": "object",
+            "description": "Interval at which rewind points are generated during pipeline execution.",
+            "children": [
+              {
+                "name": "interval",
+                "type": "integer",
+                "description": "An integer value representing the interval quantity for the schedule."
+              },
+              {
+                "name": "unit",
+                "type": "string",
+                "description": "A time unit for the schedule. (DAYS, HOURS, WEEKS)"
+              }
+            ]
+          },
+          {
             "name": "root_path",
             "type": "string",
             "description": "Root path for this pipeline. This is used as the root directory when editing the pipeline in the Databricks user interface and it is added to sys.path when executing Python sources during pipeline execution."
@@ -1015,6 +1128,11 @@ The following fields are returned by `SELECT` queries:
             "description": "Whether serverless compute is enabled for this pipeline."
           },
           {
+            "name": "serverless_compute_id",
+            "type": "string",
+            "description": "Serverless compute ID specified by the user for serverless pipelines."
+          },
+          {
             "name": "storage",
             "type": "string",
             "description": "DBFS root directory for storing checkpoints and tables."
@@ -1027,12 +1145,12 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "target",
             "type": "string",
-            "description": "Target schema (database) to add tables in this pipeline to. Exactly one of `schema` or `target` must be specified. To publish to Unity Catalog, also specify `catalog`. This legacy field is deprecated for pipeline creation in favor of the `schema` field."
+            "description": "Target schema (database) to add tables in this pipeline to. Exactly one of ``schema`` or ``target`` must be specified. To publish to Unity Catalog, also specify ``catalog``. This legacy field is deprecated for pipeline creation in favor of the ``schema`` field."
           },
           {
             "name": "trigger",
             "type": "object",
-            "description": "Which pipeline trigger to use. Deprecated: Use `continuous` instead.",
+            "description": "Which pipeline trigger to use. Deprecated: Use ``continuous`` instead.",
             "children": [
               {
                 "name": "cron",
@@ -1069,6 +1187,11 @@ The following fields are returned by `SELECT` queries:
         "description": "A list of tables to update with fullRefresh. If both refresh_selection and full_refresh_selection are empty, this is a full graph update. Full Refresh on a table means that the states of the table will be reset before the refresh."
       },
       {
+        "name": "mode",
+        "type": "string",
+        "description": "Indicates whether the update is either part of a continuous job run, or running in legacy continuous pipeline mode. Returned only for GetUpdate; not populated in ListUpdates responses. (CONTINUOUS, DEFAULT)"
+      },
+      {
         "name": "parameters",
         "type": "object",
         "description": "Key/value map of parameters used to initiate the update"
@@ -1079,9 +1202,58 @@ The following fields are returned by `SELECT` queries:
         "description": "The ID of the pipeline."
       },
       {
+        "name": "refresh_flow_selection",
+        "type": "array",
+        "description": "Flow names to selectively refresh. These are unioned with other selective refresh options (refresh_selection, full_refresh_selection, etc.) to determine the final set of flows to refresh."
+      },
+      {
         "name": "refresh_selection",
         "type": "array",
         "description": "A list of tables to update without fullRefresh. If both refresh_selection and full_refresh_selection are empty, this is a full graph update. Full Refresh on a table means that the states of the table will be reset before the refresh."
+      },
+      {
+        "name": "rewind_spec",
+        "type": "object",
+        "description": "The rewind specification for this update. If set, this update is a rewind execution (the update will rewind the targeted datasets to the requested timestamp instead of running a normal refresh).",
+        "children": [
+          {
+            "name": "datasets",
+            "type": "array",
+            "description": "List of datasets to rewind with specific configuration for each. When not specified, all datasets will be rewound with cascade = true and reset_checkpoints = true.",
+            "children": [
+              {
+                "name": "cascade",
+                "type": "boolean",
+                "description": "Whether to cascade the rewind to dependent datasets. Must be specified."
+              },
+              {
+                "name": "identifier",
+                "type": "string",
+                "description": "The identifier of the dataset (e.g., \"main.foo.tbl1\")."
+              },
+              {
+                "name": "reset_checkpoints",
+                "type": "boolean",
+                "description": "Whether to reset checkpoints for this dataset."
+              }
+            ]
+          },
+          {
+            "name": "dry_run",
+            "type": "boolean",
+            "description": "If true, this is a dry run and we should emit the RewindSummary but not perform the rewind."
+          },
+          {
+            "name": "rewind_point_id",
+            "type": "string",
+            "description": "The ID of a previously generated rewind point to rewind to (same as the originating event log ID). Exactly one of rewind_timestamp or rewind_point_id must be specified."
+          },
+          {
+            "name": "rewind_timestamp",
+            "type": "string",
+            "description": "The base timestamp to rewind to. Exactly one of rewind_timestamp or rewind_point_id must be specified."
+          }
+        ]
       },
       {
         "name": "state",
@@ -1255,6 +1427,7 @@ EXEC databricks_workspace.pipelines.pipeline_updates.start
 "full_refresh": {{ full_refresh }}, 
 "full_refresh_selection": "{{ full_refresh_selection }}", 
 "parameters": "{{ parameters }}", 
+"refresh_flow_selection": "{{ refresh_flow_selection }}", 
 "refresh_selection": "{{ refresh_selection }}", 
 "replace_where_overrides": "{{ replace_where_overrides }}", 
 "reset_checkpoint_selection": "{{ reset_checkpoint_selection }}", 

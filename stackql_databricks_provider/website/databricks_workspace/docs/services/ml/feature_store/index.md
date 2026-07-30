@@ -362,6 +362,7 @@ state
         online_store: "{{ online_store }}"
         online_table_name: "{{ online_table_name }}"
         publish_mode: "{{ publish_mode }}"
+        full_feature_name: "{{ full_feature_name }}"
     - name: online_store
       description: |
         Online store to create.

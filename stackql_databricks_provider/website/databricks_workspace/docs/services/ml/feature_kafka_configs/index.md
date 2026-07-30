@@ -54,9 +54,82 @@ The following fields are returned by `SELECT` queries:
     "description": "Authentication configuration for connection to topics.",
     "children": [
       {
+        "name": "mtls_config",
+        "type": "object",
+        "description": "Mutual-TLS (mTLS) authentication configuration. The keystore (client certificate + private key)<br />    and truststore (CAs trusted to verify the broker) live as JKS files on Unity Catalog volumes,<br />    with their passwords stored in Databricks secret scopes. This matches the SSL setup pattern<br />    documented at<br />    https://docs.databricks.com/en/connect/streaming/kafka/authentication#use-ssl-to-connect-databricks-to-kafka.<br /><br />    At materialization time, the generated PySpark code passes the JKS file paths and resolved<br />    passwords through to the Kafka SSL options (kafka.ssl.keystore.location,<br />    kafka.ssl.keystore.password, kafka.ssl.key.password, kafka.ssl.truststore.location,<br />    kafka.ssl.truststore.password). Passwords are resolved on the Spark cluster via<br />    dbutils.secrets.get; this message stores only references, never password values.",
+        "children": [
+          {
+            "name": "keystore_location",
+            "type": "string",
+            "description": "Unity Catalog volume path to the JKS keystore file containing the client certificate and private key. e.g. \"/Volumes/&lt;catalog&gt;/&lt;schema&gt;/&lt;volume&gt;/client.jks\". The materialization compute must have read permission on this volume."
+          },
+          {
+            "name": "keystore_password_ref",
+            "type": "object",
+            "description": "Secret-scope reference for the JKS keystore password.",
+            "children": [
+              {
+                "name": "scope",
+                "type": "string",
+                "description": "The Databricks secret scope name."
+              },
+              {
+                "name": "key",
+                "type": "string",
+                "description": "The key within the scope."
+              }
+            ]
+          },
+          {
+            "name": "key_password_ref",
+            "type": "object",
+            "description": "Secret-scope reference for the private key password. Often the same value as the keystore password (keytool's default), but provided as a separate field because Apache Kafka requires it as a distinct option (kafka.ssl.key.password).",
+            "children": [
+              {
+                "name": "scope",
+                "type": "string",
+                "description": "The Databricks secret scope name."
+              },
+              {
+                "name": "key",
+                "type": "string",
+                "description": "The key within the scope."
+              }
+            ]
+          },
+          {
+            "name": "truststore_location",
+            "type": "string",
+            "description": "Unity Catalog volume path to the JKS truststore file containing the CA certificate(s) trusted to verify the Kafka broker's server certificate. e.g. \"/Volumes/&lt;catalog&gt;/&lt;schema&gt;/&lt;volume&gt;/truststore.jks\"."
+          },
+          {
+            "name": "truststore_password_ref",
+            "type": "object",
+            "description": "Secret-scope reference for the JKS truststore password.",
+            "children": [
+              {
+                "name": "scope",
+                "type": "string",
+                "description": "The Databricks secret scope name."
+              },
+              {
+                "name": "key",
+                "type": "string",
+                "description": "The key within the scope."
+              }
+            ]
+          },
+          {
+            "name": "disable_hostname_verification",
+            "type": "boolean",
+            "description": "Set to true only when the broker certificate's SAN intentionally does not match the connection endpoint — for example when reaching the cluster through a PrivateLink endpoint whose DNS name is not in the broker certificate. Skipping the hostname check removes a defense against man-in-the-middle attacks; do not enable casually. mTLS client authentication is unaffected by this option. See the Apache Kafka SSL security guide for background on this check: https://kafka.apache.org/42/security/encryption-and-authentication-using-ssl/#host-name-verification"
+          }
+        ]
+      },
+      {
         "name": "uc_service_credential_name",
         "type": "string",
-        "description": ""
+        "description": "Name of the Unity Catalog service credential. This value will be set under the option databricks.serviceCredential"
       }
     ]
   },
@@ -66,9 +139,14 @@ The following fields are returned by `SELECT` queries:
     "description": "A user-provided and managed source for backfilling data. Historical data is used when creating a training set from streaming features linked to this Kafka config. In the future, a separate table will be maintained by Databricks for forward filling data. The schema for this source must match exactly that of the key and value schemas specified for this Kafka config.",
     "children": [
       {
+        "name": "delta_table_name",
+        "type": "string",
+        "description": ""
+      },
+      {
         "name": "delta_table_source",
         "type": "object",
-        "description": "",
+        "description": "Deprecated: Use delta_table_name instead. Kept for backwards compatibility. The Delta table source containing the historical data to backfill. Only the delta table name is used for backfill, other fields are ignored.",
         "children": [
           {
             "name": "full_name",
@@ -98,7 +176,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "transformation_sql",
             "type": "string",
-            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
+            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have ``transformation_sql`` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
           }
         ]
       }
@@ -115,14 +193,124 @@ The following fields are returned by `SELECT` queries:
     "description": "Catch-all for miscellaneous options. Keys should be source options or Kafka consumer options (kafka.*)"
   },
   {
+    "name": "ingestion_config",
+    "type": "object",
+    "description": "Configuration for ingesting Kafka data into a Databricks-managed Delta table.",
+    "children": [
+      {
+        "name": "ingestion_destination",
+        "type": "object",
+        "description": "Destination for the Databricks-managed Delta table that holds an offline copy of the streaming data for querying and training. This table contains both 1) forward-filled data from the Stream and 2) backfilled data from the BackfillSource (if provided). This table is created and managed by Databricks and is deleted when the Stream is deleted.",
+        "children": [
+          {
+            "name": "delta_table_name",
+            "type": "string",
+            "description": "The full three-part name (catalog, schema, name) of the Delta table to be created for ingestion."
+          }
+        ]
+      },
+      {
+        "name": "backfill_job_id",
+        "type": "integer",
+        "description": "The ID of the Databricks Job that performs the historical backfill of the ingestion Delta table."
+      },
+      {
+        "name": "backfill_source",
+        "type": "object",
+        "description": "A user-provided source for backfilling data. Historical data is used when creating a training set from streaming features linked to this Stream. The backfill data stored in this location will be copied into the ingestion table for offline querying and training. The schema for this source must match exactly that of the key and payload schemas specified for this Stream.",
+        "children": [
+          {
+            "name": "delta_table_name",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "delta_table_source",
+            "type": "object",
+            "description": "Deprecated: Use delta_table_name instead. Kept for backwards compatibility. The Delta table source containing the historical data to backfill. Only the delta table name is used for backfill, other fields are ignored.",
+            "children": [
+              {
+                "name": "full_name",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "dataframe_schema",
+                "type": "string",
+                "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: &#123;\"type\":\"struct\",\"fields\":[&#123;\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;,&#123;\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;]&#125;"
+              },
+              {
+                "name": "entity_columns",
+                "type": "array",
+                "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+              },
+              {
+                "name": "filter_condition",
+                "type": "string",
+                "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
+              },
+              {
+                "name": "timeseries_column",
+                "type": "string",
+                "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+              },
+              {
+                "name": "transformation_sql",
+                "type": "string",
+                "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have ``transformation_sql`` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "deduplication_columns",
+        "type": "array",
+        "description": "Column paths used to identify duplicate rows during ingestion; only one row per distinct combination of these values is kept. Use dot notation for nested fields (e.g. ``value.user_id``). Empty list means every column is compared."
+      },
+      {
+        "name": "ingestion_job_id",
+        "type": "integer",
+        "description": "The ID of the Databricks Job that performs the forward-fill ingestion."
+      },
+      {
+        "name": "ingestion_pipeline_id",
+        "type": "string",
+        "description": "The ID of the SDP pipeline that continuously copies new events from the streaming source into the ingestion Delta table."
+      }
+    ]
+  },
+  {
     "name": "key_schema",
     "type": "object",
     "description": "Schema configuration for extracting message keys from topics. At least one of key_schema and value_schema must be provided.",
     "children": [
       {
-        "name": "json_schema",
+        "name": "avro_schema",
         "type": "string",
         "description": ""
+      },
+      {
+        "name": "json_schema",
+        "type": "string",
+        "description": "Schema of the JSON object in standard IETF JSON schema format (https://json-schema.org/)."
+      },
+      {
+        "name": "proto_schema",
+        "type": "object",
+        "description": "Protocol Buffer schema with its payload message name.",
+        "children": [
+          {
+            "name": "schema_text",
+            "type": "string",
+            "description": "The raw .proto file text (proto2 and proto3 syntax supported, see https://protobuf.dev/programming-guides/proto3/ and https://protobuf.dev/programming-guides/proto2/)."
+          },
+          {
+            "name": "message_name",
+            "type": "string",
+            "description": "The fully-qualified name of the message within schema_text that describes the Kafka payload (e.g. \"Event\" or \"com.example.Event\" if schema_text declares a package). Identifies which message is used to decode each Kafka record — a .proto file may declare multiple messages but only one represents the payload. Must not be empty."
+          }
+        ]
       }
     ]
   },
@@ -134,7 +322,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "assign",
         "type": "string",
-        "description": ""
+        "description": "A JSON string that contains the specific topic-partitions to consume from. For example, for '&#123;\"topicA\":[0,1],\"topicB\":[2,4]&#125;', topicA's 0'th and 1st partitions will be consumed from."
       },
       {
         "name": "subscribe",
@@ -154,9 +342,31 @@ The following fields are returned by `SELECT` queries:
     "description": "Schema configuration for extracting message values from topics. At least one of key_schema and value_schema must be provided.",
     "children": [
       {
-        "name": "json_schema",
+        "name": "avro_schema",
         "type": "string",
         "description": ""
+      },
+      {
+        "name": "json_schema",
+        "type": "string",
+        "description": "Schema of the JSON object in standard IETF JSON schema format (https://json-schema.org/)."
+      },
+      {
+        "name": "proto_schema",
+        "type": "object",
+        "description": "Protocol Buffer schema with its payload message name.",
+        "children": [
+          {
+            "name": "schema_text",
+            "type": "string",
+            "description": "The raw .proto file text (proto2 and proto3 syntax supported, see https://protobuf.dev/programming-guides/proto3/ and https://protobuf.dev/programming-guides/proto2/)."
+          },
+          {
+            "name": "message_name",
+            "type": "string",
+            "description": "The fully-qualified name of the message within schema_text that describes the Kafka payload (e.g. \"Event\" or \"com.example.Event\" if schema_text declares a package). Identifies which message is used to decode each Kafka record — a .proto file may declare multiple messages but only one represents the payload. Must not be empty."
+          }
+        ]
       }
     ]
   }
@@ -176,9 +386,82 @@ The following fields are returned by `SELECT` queries:
     "description": "Authentication configuration for connection to topics.",
     "children": [
       {
+        "name": "mtls_config",
+        "type": "object",
+        "description": "Mutual-TLS (mTLS) authentication configuration. The keystore (client certificate + private key)<br />    and truststore (CAs trusted to verify the broker) live as JKS files on Unity Catalog volumes,<br />    with their passwords stored in Databricks secret scopes. This matches the SSL setup pattern<br />    documented at<br />    https://docs.databricks.com/en/connect/streaming/kafka/authentication#use-ssl-to-connect-databricks-to-kafka.<br /><br />    At materialization time, the generated PySpark code passes the JKS file paths and resolved<br />    passwords through to the Kafka SSL options (kafka.ssl.keystore.location,<br />    kafka.ssl.keystore.password, kafka.ssl.key.password, kafka.ssl.truststore.location,<br />    kafka.ssl.truststore.password). Passwords are resolved on the Spark cluster via<br />    dbutils.secrets.get; this message stores only references, never password values.",
+        "children": [
+          {
+            "name": "keystore_location",
+            "type": "string",
+            "description": "Unity Catalog volume path to the JKS keystore file containing the client certificate and private key. e.g. \"/Volumes/&lt;catalog&gt;/&lt;schema&gt;/&lt;volume&gt;/client.jks\". The materialization compute must have read permission on this volume."
+          },
+          {
+            "name": "keystore_password_ref",
+            "type": "object",
+            "description": "Secret-scope reference for the JKS keystore password.",
+            "children": [
+              {
+                "name": "scope",
+                "type": "string",
+                "description": "The Databricks secret scope name."
+              },
+              {
+                "name": "key",
+                "type": "string",
+                "description": "The key within the scope."
+              }
+            ]
+          },
+          {
+            "name": "key_password_ref",
+            "type": "object",
+            "description": "Secret-scope reference for the private key password. Often the same value as the keystore password (keytool's default), but provided as a separate field because Apache Kafka requires it as a distinct option (kafka.ssl.key.password).",
+            "children": [
+              {
+                "name": "scope",
+                "type": "string",
+                "description": "The Databricks secret scope name."
+              },
+              {
+                "name": "key",
+                "type": "string",
+                "description": "The key within the scope."
+              }
+            ]
+          },
+          {
+            "name": "truststore_location",
+            "type": "string",
+            "description": "Unity Catalog volume path to the JKS truststore file containing the CA certificate(s) trusted to verify the Kafka broker's server certificate. e.g. \"/Volumes/&lt;catalog&gt;/&lt;schema&gt;/&lt;volume&gt;/truststore.jks\"."
+          },
+          {
+            "name": "truststore_password_ref",
+            "type": "object",
+            "description": "Secret-scope reference for the JKS truststore password.",
+            "children": [
+              {
+                "name": "scope",
+                "type": "string",
+                "description": "The Databricks secret scope name."
+              },
+              {
+                "name": "key",
+                "type": "string",
+                "description": "The key within the scope."
+              }
+            ]
+          },
+          {
+            "name": "disable_hostname_verification",
+            "type": "boolean",
+            "description": "Set to true only when the broker certificate's SAN intentionally does not match the connection endpoint — for example when reaching the cluster through a PrivateLink endpoint whose DNS name is not in the broker certificate. Skipping the hostname check removes a defense against man-in-the-middle attacks; do not enable casually. mTLS client authentication is unaffected by this option. See the Apache Kafka SSL security guide for background on this check: https://kafka.apache.org/42/security/encryption-and-authentication-using-ssl/#host-name-verification"
+          }
+        ]
+      },
+      {
         "name": "uc_service_credential_name",
         "type": "string",
-        "description": ""
+        "description": "Name of the Unity Catalog service credential. This value will be set under the option databricks.serviceCredential"
       }
     ]
   },
@@ -188,9 +471,14 @@ The following fields are returned by `SELECT` queries:
     "description": "A user-provided and managed source for backfilling data. Historical data is used when creating a training set from streaming features linked to this Kafka config. In the future, a separate table will be maintained by Databricks for forward filling data. The schema for this source must match exactly that of the key and value schemas specified for this Kafka config.",
     "children": [
       {
+        "name": "delta_table_name",
+        "type": "string",
+        "description": ""
+      },
+      {
         "name": "delta_table_source",
         "type": "object",
-        "description": "",
+        "description": "Deprecated: Use delta_table_name instead. Kept for backwards compatibility. The Delta table source containing the historical data to backfill. Only the delta table name is used for backfill, other fields are ignored.",
         "children": [
           {
             "name": "full_name",
@@ -220,7 +508,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "transformation_sql",
             "type": "string",
-            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have `transformation_sql` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
+            "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have ``transformation_sql`` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
           }
         ]
       }
@@ -237,14 +525,124 @@ The following fields are returned by `SELECT` queries:
     "description": "Catch-all for miscellaneous options. Keys should be source options or Kafka consumer options (kafka.*)"
   },
   {
+    "name": "ingestion_config",
+    "type": "object",
+    "description": "Configuration for ingesting Kafka data into a Databricks-managed Delta table.",
+    "children": [
+      {
+        "name": "ingestion_destination",
+        "type": "object",
+        "description": "Destination for the Databricks-managed Delta table that holds an offline copy of the streaming data for querying and training. This table contains both 1) forward-filled data from the Stream and 2) backfilled data from the BackfillSource (if provided). This table is created and managed by Databricks and is deleted when the Stream is deleted.",
+        "children": [
+          {
+            "name": "delta_table_name",
+            "type": "string",
+            "description": "The full three-part name (catalog, schema, name) of the Delta table to be created for ingestion."
+          }
+        ]
+      },
+      {
+        "name": "backfill_job_id",
+        "type": "integer",
+        "description": "The ID of the Databricks Job that performs the historical backfill of the ingestion Delta table."
+      },
+      {
+        "name": "backfill_source",
+        "type": "object",
+        "description": "A user-provided source for backfilling data. Historical data is used when creating a training set from streaming features linked to this Stream. The backfill data stored in this location will be copied into the ingestion table for offline querying and training. The schema for this source must match exactly that of the key and payload schemas specified for this Stream.",
+        "children": [
+          {
+            "name": "delta_table_name",
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "delta_table_source",
+            "type": "object",
+            "description": "Deprecated: Use delta_table_name instead. Kept for backwards compatibility. The Delta table source containing the historical data to backfill. Only the delta table name is used for backfill, other fields are ignored.",
+            "children": [
+              {
+                "name": "full_name",
+                "type": "string",
+                "description": ""
+              },
+              {
+                "name": "dataframe_schema",
+                "type": "string",
+                "description": "Schema of the resulting dataframe after transformations, in Spark StructType JSON format (from df.schema.json()). Required if transformation_sql is specified. Example: &#123;\"type\":\"struct\",\"fields\":[&#123;\"name\":\"col_a\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;,&#123;\"name\":\"col_c\",\"type\":\"integer\",\"nullable\":true,\"metadata\":&#123;&#125;&#125;]&#125;"
+              },
+              {
+                "name": "entity_columns",
+                "type": "array",
+                "description": "Deprecated: Use Feature.entity instead. Kept for backwards compatibility. The entity columns of the Delta table."
+              },
+              {
+                "name": "filter_condition",
+                "type": "string",
+                "description": "Single WHERE clause to filter delta table before applying transformations. Will be row-wise evaluated, so should only include conditionals and projections."
+              },
+              {
+                "name": "timeseries_column",
+                "type": "string",
+                "description": "Deprecated: Use Feature.timeseries_column instead. Kept for backwards compatibility. The timeseries column of the Delta table."
+              },
+              {
+                "name": "transformation_sql",
+                "type": "string",
+                "description": "A single SQL SELECT expression applied after filter_condition. Should contains all the columns needed (eg. \"SELECT *, col_a + col_b AS col_c FROM x.y.z WHERE col_a &gt; 0\" would have ``transformation_sql`` \"*, col_a + col_b AS col_c\") If transformation_sql is not provided, all columns of the delta table are present in the DataSource dataframe."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "deduplication_columns",
+        "type": "array",
+        "description": "Column paths used to identify duplicate rows during ingestion; only one row per distinct combination of these values is kept. Use dot notation for nested fields (e.g. ``value.user_id``). Empty list means every column is compared."
+      },
+      {
+        "name": "ingestion_job_id",
+        "type": "integer",
+        "description": "The ID of the Databricks Job that performs the forward-fill ingestion."
+      },
+      {
+        "name": "ingestion_pipeline_id",
+        "type": "string",
+        "description": "The ID of the SDP pipeline that continuously copies new events from the streaming source into the ingestion Delta table."
+      }
+    ]
+  },
+  {
     "name": "key_schema",
     "type": "object",
     "description": "Schema configuration for extracting message keys from topics. At least one of key_schema and value_schema must be provided.",
     "children": [
       {
-        "name": "json_schema",
+        "name": "avro_schema",
         "type": "string",
         "description": ""
+      },
+      {
+        "name": "json_schema",
+        "type": "string",
+        "description": "Schema of the JSON object in standard IETF JSON schema format (https://json-schema.org/)."
+      },
+      {
+        "name": "proto_schema",
+        "type": "object",
+        "description": "Protocol Buffer schema with its payload message name.",
+        "children": [
+          {
+            "name": "schema_text",
+            "type": "string",
+            "description": "The raw .proto file text (proto2 and proto3 syntax supported, see https://protobuf.dev/programming-guides/proto3/ and https://protobuf.dev/programming-guides/proto2/)."
+          },
+          {
+            "name": "message_name",
+            "type": "string",
+            "description": "The fully-qualified name of the message within schema_text that describes the Kafka payload (e.g. \"Event\" or \"com.example.Event\" if schema_text declares a package). Identifies which message is used to decode each Kafka record — a .proto file may declare multiple messages but only one represents the payload. Must not be empty."
+          }
+        ]
       }
     ]
   },
@@ -256,7 +654,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "assign",
         "type": "string",
-        "description": ""
+        "description": "A JSON string that contains the specific topic-partitions to consume from. For example, for '&#123;\"topicA\":[0,1],\"topicB\":[2,4]&#125;', topicA's 0'th and 1st partitions will be consumed from."
       },
       {
         "name": "subscribe",
@@ -276,9 +674,31 @@ The following fields are returned by `SELECT` queries:
     "description": "Schema configuration for extracting message values from topics. At least one of key_schema and value_schema must be provided.",
     "children": [
       {
-        "name": "json_schema",
+        "name": "avro_schema",
         "type": "string",
         "description": ""
+      },
+      {
+        "name": "json_schema",
+        "type": "string",
+        "description": "Schema of the JSON object in standard IETF JSON schema format (https://json-schema.org/)."
+      },
+      {
+        "name": "proto_schema",
+        "type": "object",
+        "description": "Protocol Buffer schema with its payload message name.",
+        "children": [
+          {
+            "name": "schema_text",
+            "type": "string",
+            "description": "The raw .proto file text (proto2 and proto3 syntax supported, see https://protobuf.dev/programming-guides/proto3/ and https://protobuf.dev/programming-guides/proto2/)."
+          },
+          {
+            "name": "message_name",
+            "type": "string",
+            "description": "The fully-qualified name of the message within schema_text that describes the Kafka payload (e.g. \"Event\" or \"com.example.Event\" if schema_text declares a package). Identifies which message is used to decode each Kafka record — a .proto file may declare multiple messages but only one represents the payload. Must not be empty."
+          }
+        ]
       }
     ]
   }
@@ -400,6 +820,7 @@ auth_config,
 backfill_source,
 bootstrap_servers,
 extra_options,
+ingestion_config,
 key_schema,
 subscription_mode,
 value_schema
@@ -420,6 +841,7 @@ auth_config,
 backfill_source,
 bootstrap_servers,
 extra_options,
+ingestion_config,
 key_schema,
 subscription_mode,
 value_schema
@@ -460,6 +882,7 @@ auth_config,
 backfill_source,
 bootstrap_servers,
 extra_options,
+ingestion_config,
 key_schema,
 subscription_mode,
 value_schema
@@ -483,8 +906,22 @@ value_schema
           subscribe: "{{ subscribe }}"
           subscribe_pattern: "{{ subscribe_pattern }}"
         auth_config:
+          mtls_config:
+            keystore_location: "{{ keystore_location }}"
+            keystore_password_ref:
+              scope: "{{ scope }}"
+              key: "{{ key }}"
+            key_password_ref:
+              scope: "{{ scope }}"
+              key: "{{ key }}"
+            truststore_location: "{{ truststore_location }}"
+            truststore_password_ref:
+              scope: "{{ scope }}"
+              key: "{{ key }}"
+            disable_hostname_verification: {{ disable_hostname_verification }}
           uc_service_credential_name: "{{ uc_service_credential_name }}"
         backfill_source:
+          delta_table_name: "{{ delta_table_name }}"
           delta_table_source:
             full_name: "{{ full_name }}"
             dataframe_schema: "{{ dataframe_schema }}"
@@ -494,10 +931,36 @@ value_schema
             timeseries_column: "{{ timeseries_column }}"
             transformation_sql: "{{ transformation_sql }}"
         extra_options: "{{ extra_options }}"
+        ingestion_config:
+          ingestion_destination:
+            delta_table_name: "{{ delta_table_name }}"
+          backfill_job_id: {{ backfill_job_id }}
+          backfill_source:
+            delta_table_name: "{{ delta_table_name }}"
+            delta_table_source:
+              full_name: "{{ full_name }}"
+              dataframe_schema: "{{ dataframe_schema }}"
+              entity_columns:
+                - "{{ entity_columns }}"
+              filter_condition: "{{ filter_condition }}"
+              timeseries_column: "{{ timeseries_column }}"
+              transformation_sql: "{{ transformation_sql }}"
+          deduplication_columns:
+            - "{{ deduplication_columns }}"
+          ingestion_job_id: {{ ingestion_job_id }}
+          ingestion_pipeline_id: "{{ ingestion_pipeline_id }}"
         key_schema:
+          avro_schema: "{{ avro_schema }}"
           json_schema: "{{ json_schema }}"
+          proto_schema:
+            schema_text: "{{ schema_text }}"
+            message_name: "{{ message_name }}"
         value_schema:
+          avro_schema: "{{ avro_schema }}"
           json_schema: "{{ json_schema }}"
+          proto_schema:
+            schema_text: "{{ schema_text }}"
+            message_name: "{{ message_name }}"
 `}</CodeBlock>
 
 </TabItem>
@@ -531,6 +994,7 @@ auth_config,
 backfill_source,
 bootstrap_servers,
 extra_options,
+ingestion_config,
 key_schema,
 subscription_mode,
 value_schema;

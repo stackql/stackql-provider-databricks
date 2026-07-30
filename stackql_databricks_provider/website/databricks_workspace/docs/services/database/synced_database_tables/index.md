@@ -49,6 +49,26 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "database_branch_id",
+    "type": "string",
+    "description": "The branch_id of the database branch associated with the table."
+  },
+  {
+    "name": "database_project_id",
+    "type": "string",
+    "description": "The project_id of the database project associated with the table."
+  },
+  {
+    "name": "effective_database_branch_id",
+    "type": "string",
+    "description": "The branch_id of the database branch associated with the table. This is an output only field that contains the value computed from the input field combined with server side defaults. Use the field without the effective_ prefix to set the value."
+  },
+  {
+    "name": "effective_database_project_id",
+    "type": "string",
+    "description": "The project_id of the database project associated with the table. This is an output only field that contains the value computed from the input field combined with server side defaults. Use the field without the effective_ prefix to set the value."
+  },
+  {
     "name": "database_instance_name",
     "type": "string",
     "description": "Name of the target database instance. This is required when creating synced database tables in standard catalogs. This is optional when creating synced database tables in registered catalogs. If this field is specified when creating synced database tables in registered catalogs, the database instance name MUST match that of the registered catalog (or the request will be rejected)."
@@ -66,7 +86,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "logical_database_name",
     "type": "string",
-    "description": "Target Postgres database object (logical database) name for this table. When creating a synced table in a registered Postgres catalog, the target Postgres database name is inferred to be that of the registered catalog. If this field is specified in this scenario, the Postgres database name MUST match that of the registered catalog (or the request will be rejected). When creating a synced table in a standard catalog, this field is required. In this scenario, specifying this field will allow targeting an arbitrary postgres database. Note that this has implications for the `create_database_objects_is_missing` field in `spec`."
+    "description": "Target Postgres database object (logical database) name for this table. When creating a synced table in a registered Postgres catalog, the target Postgres database name is inferred to be that of the registered catalog. If this field is specified in this scenario, the Postgres database name MUST match that of the registered catalog (or the request will be rejected). When creating a synced table in a standard catalog, this field is required. In this scenario, specifying this field will allow targeting an arbitrary postgres database. Note that this has implications for the ``create_database_objects_is_missing`` field in ``spec``."
   },
   {
     "name": "data_synchronization_status",
@@ -299,6 +319,11 @@ The following fields are returned by `SELECT` queries:
     "description": "Specification of a synced database table.",
     "children": [
       {
+        "name": "accelerated_sync",
+        "type": "boolean",
+        "description": "When true, enables accelerated sync mode for the initial data load. This significantly improves performance for large tables. Requires workspace-level enablement."
+      },
+      {
         "name": "create_database_objects_if_missing",
         "type": "boolean",
         "description": "If true, the synced table's logical database and schema resources in PG will be created if they do not already exist."
@@ -309,6 +334,55 @@ The following fields are returned by `SELECT` queries:
         "description": "At most one of existing_pipeline_id and new_pipeline_spec should be defined. If existing_pipeline_id is defined, the synced table will be bin packed into the existing pipeline referenced. This avoids creating a new pipeline and allows sharing existing compute. In this case, the scheduling_policy of this synced table must match the scheduling policy of the existing pipeline."
       },
       {
+        "name": "extra_columns",
+        "type": "array",
+        "description": "Extra PostgreSQL-only columns to add to the synced table.",
+        "children": [
+          {
+            "name": "column_name",
+            "type": "string",
+            "description": "Name of the column."
+          },
+          {
+            "name": "column_type",
+            "type": "string",
+            "description": "PostgreSQL type of the column, for example \"tsvector\" or \"vector(1024)\"."
+          },
+          {
+            "name": "compute",
+            "type": "string",
+            "description": "SQL expression used to compute the column's value, for example \"to_tsvector('english', content)\"."
+          },
+          {
+            "name": "maintenance",
+            "type": "string",
+            "description": "How the column's value is populated and kept up to date. (DEFAULT_VALUE, STORED_GENERATED)"
+          }
+        ]
+      },
+      {
+        "name": "extra_index_definitions",
+        "type": "array",
+        "description": "Secondary indexes to create on the synced table.",
+        "children": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "Name of the index as it will appear in PostgreSQL."
+          },
+          {
+            "name": "definition",
+            "type": "string",
+            "description": "The definition portion of a CREATE INDEX statement, placed after ON table_name. For example: USING hnsw (embedding vector_cosine_ops) WITH (m = 16, ef_construction = 64)."
+          },
+          {
+            "name": "creation_point",
+            "type": "string",
+            "description": "When the index should be created relative to the initial data load. (CREATION_POINT_AFTER_DATA_LOAD)"
+          }
+        ]
+      },
+      {
         "name": "new_pipeline_spec",
         "type": "object",
         "description": "At most one of existing_pipeline_id and new_pipeline_spec should be defined. If new_pipeline_spec is defined, a new pipeline is created for this synced table. The location pointed to is used to store intermediate files (checkpoints, event logs etc). The caller must have write permissions to create Delta tables in the specified catalog and schema. Again, note this requires write permissions, whereas the source table only requires read permissions.",
@@ -317,6 +391,11 @@ The following fields are returned by `SELECT` queries:
             "name": "budget_policy_id",
             "type": "string",
             "description": "Budget policy to set on the newly created pipeline."
+          },
+          {
+            "name": "pipeline_channel",
+            "type": "string",
+            "description": "Release channel of the underlying pipeline's runtime. Some source table configurations (e.g., read-time CDF) require PREVIEW. Defaults to CURRENT if not specified. (CURRENT, PREVIEW)"
           },
           {
             "name": "storage_catalog",
@@ -349,8 +428,35 @@ The following fields are returned by `SELECT` queries:
         "name": "timeseries_key",
         "type": "string",
         "description": "Time series key to deduplicate (tie-break) rows with the same primary key."
+      },
+      {
+        "name": "type_overrides",
+        "type": "array",
+        "description": "Override the default Delta-&gt;PG type mapping for specific columns. A TypeOverride with PG_SPECIFIC_TYPE_UNSPECIFIED is rejected; a valid pg_type must be set.",
+        "children": [
+          {
+            "name": "column_name",
+            "type": "string",
+            "description": "Name of the source column whose target PostgreSQL type should be overridden."
+          },
+          {
+            "name": "pg_type",
+            "type": "string",
+            "description": "PostgreSQL-specific target type to use for the column. (PG_SPECIFIC_TYPE_HALFVEC, PG_SPECIFIC_TYPE_VARCHAR, PG_SPECIFIC_TYPE_VECTOR)"
+          },
+          {
+            "name": "size",
+            "type": "integer",
+            "description": "Size parameter for the target type, for types that take one (e.g. vector dimension, varchar length). Required when the chosen pg_type needs a size."
+          }
+        ]
       }
     ]
+  },
+  {
+    "name": "table_serving_url",
+    "type": "string",
+    "description": "Data serving REST API URL for this table"
   },
   {
     "name": "unity_catalog_provisioning_state",
@@ -368,6 +474,26 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "database_branch_id",
+    "type": "string",
+    "description": "The branch_id of the database branch associated with the table."
+  },
+  {
+    "name": "database_project_id",
+    "type": "string",
+    "description": "The project_id of the database project associated with the table."
+  },
+  {
+    "name": "effective_database_branch_id",
+    "type": "string",
+    "description": "The branch_id of the database branch associated with the table. This is an output only field that contains the value computed from the input field combined with server side defaults. Use the field without the effective_ prefix to set the value."
+  },
+  {
+    "name": "effective_database_project_id",
+    "type": "string",
+    "description": "The project_id of the database project associated with the table. This is an output only field that contains the value computed from the input field combined with server side defaults. Use the field without the effective_ prefix to set the value."
+  },
+  {
     "name": "database_instance_name",
     "type": "string",
     "description": "Name of the target database instance. This is required when creating synced database tables in standard catalogs. This is optional when creating synced database tables in registered catalogs. If this field is specified when creating synced database tables in registered catalogs, the database instance name MUST match that of the registered catalog (or the request will be rejected)."
@@ -385,7 +511,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "logical_database_name",
     "type": "string",
-    "description": "Target Postgres database object (logical database) name for this table. When creating a synced table in a registered Postgres catalog, the target Postgres database name is inferred to be that of the registered catalog. If this field is specified in this scenario, the Postgres database name MUST match that of the registered catalog (or the request will be rejected). When creating a synced table in a standard catalog, this field is required. In this scenario, specifying this field will allow targeting an arbitrary postgres database. Note that this has implications for the `create_database_objects_is_missing` field in `spec`."
+    "description": "Target Postgres database object (logical database) name for this table. When creating a synced table in a registered Postgres catalog, the target Postgres database name is inferred to be that of the registered catalog. If this field is specified in this scenario, the Postgres database name MUST match that of the registered catalog (or the request will be rejected). When creating a synced table in a standard catalog, this field is required. In this scenario, specifying this field will allow targeting an arbitrary postgres database. Note that this has implications for the ``create_database_objects_is_missing`` field in ``spec``."
   },
   {
     "name": "data_synchronization_status",
@@ -618,6 +744,11 @@ The following fields are returned by `SELECT` queries:
     "description": "Specification of a synced database table.",
     "children": [
       {
+        "name": "accelerated_sync",
+        "type": "boolean",
+        "description": "When true, enables accelerated sync mode for the initial data load. This significantly improves performance for large tables. Requires workspace-level enablement."
+      },
+      {
         "name": "create_database_objects_if_missing",
         "type": "boolean",
         "description": "If true, the synced table's logical database and schema resources in PG will be created if they do not already exist."
@@ -628,6 +759,55 @@ The following fields are returned by `SELECT` queries:
         "description": "At most one of existing_pipeline_id and new_pipeline_spec should be defined. If existing_pipeline_id is defined, the synced table will be bin packed into the existing pipeline referenced. This avoids creating a new pipeline and allows sharing existing compute. In this case, the scheduling_policy of this synced table must match the scheduling policy of the existing pipeline."
       },
       {
+        "name": "extra_columns",
+        "type": "array",
+        "description": "Extra PostgreSQL-only columns to add to the synced table.",
+        "children": [
+          {
+            "name": "column_name",
+            "type": "string",
+            "description": "Name of the column."
+          },
+          {
+            "name": "column_type",
+            "type": "string",
+            "description": "PostgreSQL type of the column, for example \"tsvector\" or \"vector(1024)\"."
+          },
+          {
+            "name": "compute",
+            "type": "string",
+            "description": "SQL expression used to compute the column's value, for example \"to_tsvector('english', content)\"."
+          },
+          {
+            "name": "maintenance",
+            "type": "string",
+            "description": "How the column's value is populated and kept up to date. (DEFAULT_VALUE, STORED_GENERATED)"
+          }
+        ]
+      },
+      {
+        "name": "extra_index_definitions",
+        "type": "array",
+        "description": "Secondary indexes to create on the synced table.",
+        "children": [
+          {
+            "name": "name",
+            "type": "string",
+            "description": "Name of the index as it will appear in PostgreSQL."
+          },
+          {
+            "name": "definition",
+            "type": "string",
+            "description": "The definition portion of a CREATE INDEX statement, placed after ON table_name. For example: USING hnsw (embedding vector_cosine_ops) WITH (m = 16, ef_construction = 64)."
+          },
+          {
+            "name": "creation_point",
+            "type": "string",
+            "description": "When the index should be created relative to the initial data load. (CREATION_POINT_AFTER_DATA_LOAD)"
+          }
+        ]
+      },
+      {
         "name": "new_pipeline_spec",
         "type": "object",
         "description": "At most one of existing_pipeline_id and new_pipeline_spec should be defined. If new_pipeline_spec is defined, a new pipeline is created for this synced table. The location pointed to is used to store intermediate files (checkpoints, event logs etc). The caller must have write permissions to create Delta tables in the specified catalog and schema. Again, note this requires write permissions, whereas the source table only requires read permissions.",
@@ -636,6 +816,11 @@ The following fields are returned by `SELECT` queries:
             "name": "budget_policy_id",
             "type": "string",
             "description": "Budget policy to set on the newly created pipeline."
+          },
+          {
+            "name": "pipeline_channel",
+            "type": "string",
+            "description": "Release channel of the underlying pipeline's runtime. Some source table configurations (e.g., read-time CDF) require PREVIEW. Defaults to CURRENT if not specified. (CURRENT, PREVIEW)"
           },
           {
             "name": "storage_catalog",
@@ -668,8 +853,35 @@ The following fields are returned by `SELECT` queries:
         "name": "timeseries_key",
         "type": "string",
         "description": "Time series key to deduplicate (tie-break) rows with the same primary key."
+      },
+      {
+        "name": "type_overrides",
+        "type": "array",
+        "description": "Override the default Delta-&gt;PG type mapping for specific columns. A TypeOverride with PG_SPECIFIC_TYPE_UNSPECIFIED is rejected; a valid pg_type must be set.",
+        "children": [
+          {
+            "name": "column_name",
+            "type": "string",
+            "description": "Name of the source column whose target PostgreSQL type should be overridden."
+          },
+          {
+            "name": "pg_type",
+            "type": "string",
+            "description": "PostgreSQL-specific target type to use for the column. (PG_SPECIFIC_TYPE_HALFVEC, PG_SPECIFIC_TYPE_VARCHAR, PG_SPECIFIC_TYPE_VECTOR)"
+          },
+          {
+            "name": "size",
+            "type": "integer",
+            "description": "Size parameter for the target type, for types that take one (e.g. vector dimension, varchar length). Required when the chosen pg_type needs a size."
+          }
+        ]
       }
     ]
+  },
+  {
+    "name": "table_serving_url",
+    "type": "string",
+    "description": "Data serving REST API URL for this table"
   },
   {
     "name": "unity_catalog_provisioning_state",
@@ -800,12 +1012,17 @@ Get a Synced Database Table.
 ```sql
 SELECT
 name,
+database_branch_id,
+database_project_id,
+effective_database_branch_id,
+effective_database_project_id,
 database_instance_name,
 effective_database_instance_name,
 effective_logical_database_name,
 logical_database_name,
 data_synchronization_status,
 spec,
+table_serving_url,
 unity_catalog_provisioning_state
 FROM databricks_workspace.database.synced_database_tables
 WHERE name = '{{ name }}' -- required
@@ -820,12 +1037,17 @@ This API is currently unimplemented, but exposed for Terraform support.
 ```sql
 SELECT
 name,
+database_branch_id,
+database_project_id,
+effective_database_branch_id,
+effective_database_project_id,
 database_instance_name,
 effective_database_instance_name,
 effective_logical_database_name,
 logical_database_name,
 data_synchronization_status,
 spec,
+table_serving_url,
 unity_catalog_provisioning_state
 FROM databricks_workspace.database.synced_database_tables
 WHERE instance_name = '{{ instance_name }}' -- required
@@ -861,12 +1083,17 @@ SELECT
 '{{ deployment_name }}'
 RETURNING
 name,
+database_branch_id,
+database_project_id,
+effective_database_branch_id,
+effective_database_project_id,
 database_instance_name,
 effective_database_instance_name,
 effective_logical_database_name,
 logical_database_name,
 data_synchronization_status,
 spec,
+table_serving_url,
 unity_catalog_provisioning_state
 ;
 ```
@@ -923,15 +1150,30 @@ unity_catalog_provisioning_state
               sync_progress_completion: {{ sync_progress_completion }}
               synced_row_count: {{ synced_row_count }}
               total_row_count: {{ total_row_count }}
+        database_branch_id: "{{ database_branch_id }}"
         database_instance_name: "{{ database_instance_name }}"
+        database_project_id: "{{ database_project_id }}"
+        effective_database_branch_id: "{{ effective_database_branch_id }}"
         effective_database_instance_name: "{{ effective_database_instance_name }}"
+        effective_database_project_id: "{{ effective_database_project_id }}"
         effective_logical_database_name: "{{ effective_logical_database_name }}"
         logical_database_name: "{{ logical_database_name }}"
         spec:
+          accelerated_sync: {{ accelerated_sync }}
           create_database_objects_if_missing: {{ create_database_objects_if_missing }}
           existing_pipeline_id: "{{ existing_pipeline_id }}"
+          extra_columns:
+            - column_name: "{{ column_name }}"
+              column_type: "{{ column_type }}"
+              compute: "{{ compute }}"
+              maintenance: "{{ maintenance }}"
+          extra_index_definitions:
+            - name: "{{ name }}"
+              definition: "{{ definition }}"
+              creation_point: "{{ creation_point }}"
           new_pipeline_spec:
             budget_policy_id: "{{ budget_policy_id }}"
+            pipeline_channel: "{{ pipeline_channel }}"
             storage_catalog: "{{ storage_catalog }}"
             storage_schema: "{{ storage_schema }}"
           primary_key_columns:
@@ -939,6 +1181,11 @@ unity_catalog_provisioning_state
           scheduling_policy: "{{ scheduling_policy }}"
           source_table_full_name: "{{ source_table_full_name }}"
           timeseries_key: "{{ timeseries_key }}"
+          type_overrides:
+            - column_name: "{{ column_name }}"
+              pg_type: "{{ pg_type }}"
+              size: {{ size }}
+        table_serving_url: "{{ table_serving_url }}"
         unity_catalog_provisioning_state: "{{ unity_catalog_provisioning_state }}"
 `}</CodeBlock>
 
@@ -969,12 +1216,17 @@ AND deployment_name = '{{ deployment_name }}' --required
 AND synced_table = '{{ synced_table }}' --required
 RETURNING
 name,
+database_branch_id,
+database_project_id,
+effective_database_branch_id,
+effective_database_project_id,
 database_instance_name,
 effective_database_instance_name,
 effective_logical_database_name,
 logical_database_name,
 data_synchronization_status,
 spec,
+table_serving_url,
 unity_catalog_provisioning_state;
 ```
 </TabItem>

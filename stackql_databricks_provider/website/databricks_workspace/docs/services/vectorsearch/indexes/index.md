@@ -49,6 +49,11 @@ The following fields are returned by `SELECT` queries:
     "description": "Name of the index"
   },
   {
+    "name": "endpoint_id",
+    "type": "string",
+    "description": "ID of the endpoint associated with the index."
+  },
+  {
     "name": "endpoint_name",
     "type": "string",
     "description": "Name of the endpoint associated with the index"
@@ -64,9 +69,29 @@ The following fields are returned by `SELECT` queries:
     "description": "",
     "children": [
       {
+        "name": "columns_to_index",
+        "type": "array",
+        "description": ""
+      },
+      {
+        "name": "columns_to_sync",
+        "type": "array",
+        "description": "[Optional] Select the columns to sync with the vector index. If you leave this field blank, all columns from the source table are synced with the index. The primary key column and embedding source column or embedding vector column are always synced."
+      },
+      {
+        "name": "effective_budget_policy_id",
+        "type": "string",
+        "description": "The budget policy id applied to the AI Search index"
+      },
+      {
+        "name": "effective_usage_policy_id",
+        "type": "string",
+        "description": ""
+      },
+      {
         "name": "embedding_source_columns",
         "type": "array",
-        "description": "",
+        "description": "The columns that contain the embedding source.",
         "children": [
           {
             "name": "embedding_model_endpoint_name",
@@ -115,7 +140,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "pipeline_type",
         "type": "string",
-        "description": "Pipeline execution mode. - `TRIGGERED`: If the pipeline uses the triggered execution mode, the system stops processing after successfully refreshing the source table in the pipeline once, ensuring the table is updated based on the data available when the update started. - `CONTINUOUS`: If the pipeline uses continuous execution, the pipeline processes new data as it arrives in the source table to keep vector index fresh. (CONTINUOUS, TRIGGERED)"
+        "description": "Pipeline execution mode. - ``TRIGGERED``: If the pipeline uses the triggered execution mode, the system stops processing after successfully refreshing the source table in the pipeline once, ensuring the table is updated based on the data available when the update started. - ``CONTINUOUS``: If the pipeline uses continuous execution, the pipeline processes new data as it arrives in the source table to keep vector index fresh. (CONTINUOUS, TRIGGERED)"
       },
       {
         "name": "source_table",
@@ -169,16 +194,26 @@ The following fields are returned by `SELECT` queries:
         ]
       },
       {
+        "name": "requested_schema_json",
+        "type": "string",
+        "description": "The index schema exactly as the user supplied it on create, preserving the original type spellings (e.g. ``integer``) rather than Unity Catalog's canonical names (e.g. ``int``) that ``schema_json`` returns."
+      },
+      {
         "name": "schema_json",
         "type": "string",
-        "description": "The schema of the index in JSON format. Supported types are `integer`, `long`, `float`, `double`, `boolean`, `string`, `date`, `timestamp`. Supported types for vector column: `array<float>`, `array<double>`,`."
+        "description": "The schema of the index in JSON format. Supported types are ``integer``, ``long``, ``float``, ``double``, ``boolean``, ``string``, ``date``, ``timestamp``. Supported types for vector column: ``array&lt;float&gt;``, ``array&lt;double&gt;``,`."
       }
     ]
   },
   {
+    "name": "index_subtype",
+    "type": "string",
+    "description": "The subtype of the index. (FULL_TEXT, HYBRID, VECTOR)"
+  },
+  {
     "name": "index_type",
     "type": "string",
-    "description": "There are 2 types of Vector Search indexes: - `DELTA_SYNC`: An index that automatically syncs<br />with a source Delta Table, automatically and incrementally updating the index as the underlying<br />data in the Delta Table changes. - `DIRECT_ACCESS`: An index that supports direct read and write<br />of vectors and metadata through our REST and SDK APIs. With this model, the user manages index<br />updates. (DELTA_SYNC, DIRECT_ACCESS)"
+    "description": "There are 2 types of AI Search indexes:<br /><br />- ``DELTA_SYNC``: An index that automatically syncs with a source Delta Table, automatically and<br />  incrementally updating the index as the underlying data in the Delta Table changes.<br />- ``DIRECT_ACCESS``: An index that supports direct read and write of vectors and metadata<br />  through our REST and SDK APIs. With this model, the user manages index updates. (DELTA_SYNC, DIRECT_ACCESS)"
   },
   {
     "name": "primary_key",
@@ -223,6 +258,11 @@ The following fields are returned by `SELECT` queries:
     "description": "Name of the index"
   },
   {
+    "name": "endpoint_id",
+    "type": "string",
+    "description": "ID of the endpoint associated with the index."
+  },
+  {
     "name": "endpoint_name",
     "type": "string",
     "description": "Name of the endpoint associated with the index"
@@ -233,9 +273,14 @@ The following fields are returned by `SELECT` queries:
     "description": ""
   },
   {
+    "name": "index_subtype",
+    "type": "string",
+    "description": "The subtype of the index. (FULL_TEXT, HYBRID, VECTOR)"
+  },
+  {
     "name": "index_type",
     "type": "string",
-    "description": "There are 2 types of Vector Search indexes: - `DELTA_SYNC`: An index that automatically syncs<br />with a source Delta Table, automatically and incrementally updating the index as the underlying<br />data in the Delta Table changes. - `DIRECT_ACCESS`: An index that supports direct read and write<br />of vectors and metadata through our REST and SDK APIs. With this model, the user manages index<br />updates. (DELTA_SYNC, DIRECT_ACCESS)"
+    "description": "There are 2 types of AI Search indexes:<br /><br />- ``DELTA_SYNC``: An index that automatically syncs with a source Delta Table, automatically and<br />  incrementally updating the index as the underlying data in the Delta Table changes.<br />- ``DIRECT_ACCESS``: An index that supports direct read and write of vectors and metadata<br />  through our REST and SDK APIs. With this model, the user manages index updates. (DELTA_SYNC, DIRECT_ACCESS)"
   },
   {
     "name": "primary_key",
@@ -308,14 +353,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-index_name"><code>index_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Use `next_page_token` returned from previous `QueryVectorIndex` or `QueryVectorIndexNextPage` request</td>
+    <td>Use ``next_page_token`` returned from previous ``QueryVectorIndex`` or ``QueryVectorIndexNextPage``</td>
 </tr>
 <tr>
     <td><a href="#scan_index"><CopyableCode code="scan_index" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-index_name"><code>index_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Scan the specified vector index and return the first `num_results` entries after the exclusive</td>
+    <td>Scan the specified vector index and return the first ``num_results`` entries after the exclusive</td>
 </tr>
 <tr>
     <td><a href="#sync_index"><CopyableCode code="sync_index" /></a></td>
@@ -396,10 +441,12 @@ Get an index.
 ```sql
 SELECT
 name,
+endpoint_id,
 endpoint_name,
 creator,
 delta_sync_index_spec,
 direct_access_index_spec,
+index_subtype,
 index_type,
 primary_key,
 status
@@ -417,8 +464,10 @@ List all indexes in the given endpoint.
 ```sql
 SELECT
 name,
+endpoint_id,
 endpoint_name,
 creator,
+index_subtype,
 index_type,
 primary_key
 FROM databricks_workspace.vectorsearch.indexes
@@ -452,6 +501,7 @@ primary_key,
 index_type,
 delta_sync_index_spec,
 direct_access_index_spec,
+index_subtype,
 deployment_name
 )
 SELECT 
@@ -461,13 +511,16 @@ SELECT
 '{{ index_type }}' /* required */,
 '{{ delta_sync_index_spec }}',
 '{{ direct_access_index_spec }}',
+'{{ index_subtype }}',
 '{{ deployment_name }}'
 RETURNING
 name,
+endpoint_id,
 endpoint_name,
 creator,
 delta_sync_index_spec,
 direct_access_index_spec,
+index_subtype,
 index_type,
 primary_key,
 status
@@ -497,17 +550,21 @@ status
     - name: index_type
       value: "{{ index_type }}"
       description: |
-        There are 2 types of Vector Search indexes: - \`DELTA_SYNC\`: An index that automatically syncs
-        with a source Delta Table, automatically and incrementally updating the index as the underlying
-        data in the Delta Table changes. - \`DIRECT_ACCESS\`: An index that supports direct read and write
-        of vectors and metadata through our REST and SDK APIs. With this model, the user manages index
-        updates.
+        There are 2 types of AI Search indexes:
+        - \`\`DELTA_SYNC\`\`: An index that automatically syncs with a source Delta Table, automatically and
+        incrementally updating the index as the underlying data in the Delta Table changes.
+        - \`\`DIRECT_ACCESS\`\`: An index that supports direct read and write of vectors and metadata
+        through our REST and SDK APIs. With this model, the user manages index updates.
     - name: delta_sync_index_spec
       description: |
-        Specification for Delta Sync Index. Required if \`index_type\` is \`DELTA_SYNC\`.
+        Specification for Delta Sync Index. Required if \`\`index_type\`\` is \`\`DELTA_SYNC\`\`.
       value:
+        columns_to_index:
+          - "{{ columns_to_index }}"
         columns_to_sync:
           - "{{ columns_to_sync }}"
+        effective_budget_policy_id: "{{ effective_budget_policy_id }}"
+        effective_usage_policy_id: "{{ effective_usage_policy_id }}"
         embedding_source_columns:
           - embedding_model_endpoint_name: "{{ embedding_model_endpoint_name }}"
             model_endpoint_name_for_query: "{{ model_endpoint_name_for_query }}"
@@ -520,7 +577,7 @@ status
         source_table: "{{ source_table }}"
     - name: direct_access_index_spec
       description: |
-        Specification for Direct Vector Access Index. Required if \`index_type\` is \`DIRECT_ACCESS\`.
+        Specification for Direct Vector Access Index. Required if \`\`index_type\`\` is \`\`DIRECT_ACCESS\`\`.
       value:
         embedding_source_columns:
           - embedding_model_endpoint_name: "{{ embedding_model_endpoint_name }}"
@@ -529,7 +586,12 @@ status
         embedding_vector_columns:
           - embedding_dimension: {{ embedding_dimension }}
             name: "{{ name }}"
+        requested_schema_json: "{{ requested_schema_json }}"
         schema_json: "{{ schema_json }}"
+    - name: index_subtype
+      value: "{{ index_subtype }}"
+      description: |
+        The subtype of the index. Use \`\`HYBRID\`\` or \`\`FULL_TEXT\`\`. \`\`VECTOR\`\` is not supported.
 `}</CodeBlock>
 
 </TabItem>
@@ -595,20 +657,23 @@ EXEC databricks_workspace.vectorsearch.indexes.query_index
 '{
 "columns": "{{ columns }}", 
 "columns_to_rerank": "{{ columns_to_rerank }}", 
+"facets": "{{ facets }}", 
 "filters_json": "{{ filters_json }}", 
 "num_results": {{ num_results }}, 
+"query_columns": "{{ query_columns }}", 
 "query_text": "{{ query_text }}", 
 "query_type": "{{ query_type }}", 
 "query_vector": "{{ query_vector }}", 
 "reranker": "{{ reranker }}", 
-"score_threshold": {{ score_threshold }}
+"score_threshold": {{ score_threshold }}, 
+"sort_columns": "{{ sort_columns }}"
 }'
 ;
 ```
 </TabItem>
 <TabItem value="query_next_page">
 
-Use `next_page_token` returned from previous `QueryVectorIndex` or `QueryVectorIndexNextPage` request
+Use ``next_page_token`` returned from previous ``QueryVectorIndex`` or ``QueryVectorIndexNextPage``
 
 ```sql
 EXEC databricks_workspace.vectorsearch.indexes.query_next_page 
@@ -624,7 +689,7 @@ EXEC databricks_workspace.vectorsearch.indexes.query_next_page
 </TabItem>
 <TabItem value="scan_index">
 
-Scan the specified vector index and return the first `num_results` entries after the exclusive
+Scan the specified vector index and return the first ``num_results`` entries after the exclusive
 
 ```sql
 EXEC databricks_workspace.vectorsearch.indexes.scan_index 

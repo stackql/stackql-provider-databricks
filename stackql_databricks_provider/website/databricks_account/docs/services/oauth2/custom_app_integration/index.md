@@ -59,6 +59,11 @@ The following fields are returned by `SELECT` queries:
     "description": "ID of this custom app"
   },
   {
+    "name": "principal_id",
+    "type": "integer",
+    "description": "The principal id of the service principal associated with this OAuth app."
+  },
+  {
     "name": "confidential",
     "type": "boolean",
     "description": "This field indicates whether an OAuth client secret is required to authenticate this client."
@@ -139,6 +144,11 @@ The following fields are returned by `SELECT` queries:
     "name": "integration_id",
     "type": "string",
     "description": "ID of this custom app"
+  },
+  {
+    "name": "principal_id",
+    "type": "integer",
+    "description": "The principal id of the service principal associated with this OAuth app."
   },
   {
     "name": "confidential",
@@ -232,7 +242,7 @@ The following methods are available for this resource:
     <td><a href="#custom_app_integration_list"><CopyableCode code="custom_app_integration_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-account_id"><code>account_id</code></a></td>
-    <td><a href="#parameter-include_creator_username"><code>include_creator_username</code></a>, <a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
+    <td><a href="#parameter-include_creator_username"><code>include_creator_username</code></a>, <a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a>, <a href="#parameter-search_keyword"><code>search_keyword</code></a></td>
     <td>Get the list of custom OAuth app integrations for the specified Databricks account</td>
 </tr>
 <tr>
@@ -297,6 +307,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-search_keyword">
+    <td><CopyableCode code="search_keyword" /></td>
+    <td><code>string</code></td>
+    <td>Search term to filter app integrations (case-insensitive substring match). Matches if the display name, the OAuth client_id (a UUID for custom apps or a stable string like "databricks-cli" for published apps), or the integration id contains the term.</td>
+</tr>
 </tbody>
 </table>
 
@@ -318,6 +333,7 @@ SELECT
 name,
 client_id,
 integration_id,
+principal_id,
 confidential,
 create_time,
 created_by,
@@ -341,6 +357,7 @@ SELECT
 name,
 client_id,
 integration_id,
+principal_id,
 confidential,
 create_time,
 created_by,
@@ -354,6 +371,7 @@ WHERE account_id = '{{ account_id }}' -- required
 AND include_creator_username = '{{ include_creator_username }}'
 AND page_size = '{{ page_size }}'
 AND page_token = '{{ page_token }}'
+AND search_keyword = '{{ search_keyword }}'
 ;
 ```
 </TabItem>
@@ -376,6 +394,7 @@ Create Custom OAuth App Integration.
 ```sql
 INSERT INTO databricks_account.oauth2.custom_app_integration (
 confidential,
+is_agent,
 name,
 redirect_urls,
 scopes,
@@ -385,6 +404,7 @@ account_id
 )
 SELECT 
 {{ confidential }},
+{{ is_agent }},
 '{{ name }}',
 '{{ redirect_urls }}',
 '{{ scopes }}',
@@ -394,7 +414,9 @@ SELECT
 RETURNING
 client_id,
 integration_id,
-client_secret
+principal_id,
+client_secret,
+client_secret_expire_time
 ;
 ```
 </TabItem>
@@ -410,6 +432,10 @@ client_secret
       value: {{ confidential }}
       description: |
         This field indicates whether an OAuth client secret is required to authenticate this client.
+    - name: is_agent
+      value: {{ is_agent }}
+      description: |
+        When true, the custom OAuth app integration is backed by an agent service principal instead of a standard application service principal. The public surface stays a simple boolean; the server maps it to the internal OAuthClientApp.agent message.
     - name: name
       value: "{{ name }}"
       description: |

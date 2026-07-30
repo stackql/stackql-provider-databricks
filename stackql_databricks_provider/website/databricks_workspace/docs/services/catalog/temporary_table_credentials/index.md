@@ -112,6 +112,7 @@ azure_user_delegation_sas,
 expiration_time,
 gcp_oauth_token,
 r2_temp_credentials,
+uc_encrypted_token,
 url
 ;
 ```

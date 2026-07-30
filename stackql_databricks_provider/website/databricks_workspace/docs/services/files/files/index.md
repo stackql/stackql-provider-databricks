@@ -96,7 +96,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-directory_path"><code>directory_path</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
-    <td>Returns the contents of a directory. If there is no directory at the specified path, the API returns a</td>
+    <td>Returns the contents of a directory. If there is no directory at the specified path, the API returns</td>
 </tr>
 <tr>
     <td><a href="#download"><CopyableCode code="download" /></a></td>
@@ -172,12 +172,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
     <td><code>integer</code></td>
-    <td>The maximum number of directory entries to return. The response may contain fewer entries. If the response contains a `next_page_token`, there may be more entries, even if fewer than `page_size` entries are in the response. We recommend not to set this value unless you are intentionally listing less than the complete directory contents. If unspecified, at most 1000 directory entries will be returned. The maximum value is 1000. Values above 1000 will be coerced to 1000.</td>
+    <td>The maximum number of directory entries to return. The response may contain fewer entries. If the response contains a ``next_page_token``, there may be more entries, even if fewer than ``page_size`` entries are in the response. We recommend not to set this value unless you are intentionally listing less than the complete directory contents. If unspecified, at most 1000 directory entries will be returned. The maximum value is 1000. Values above 1000 will be coerced to 1000.</td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>An opaque page token which was the `next_page_token` in the response of the previous request to list the contents of this directory. Provide this token to retrieve the next page of directory entries. When providing a `page_token`, all other parameters provided to the request must match the previous request. To list all of the entries in a directory, it is necessary to continue requesting pages of entries until the response contains no `next_page_token`. Note that the number of entries returned must not be used to determine when the listing is complete.</td>
+    <td>An opaque page token which was the ``next_page_token`` in the response of the previous request to list the contents of this directory. Provide this token to retrieve the next page of directory entries. When providing a ``page_token``, all other parameters provided to the request must match the previous request. To list all of the entries in a directory, it is necessary to continue requesting pages of entries until the response contains no ``next_page_token``. Note that the number of entries returned must not be used to determine when the listing is complete.</td>
 </tr>
 </tbody>
 </table>
@@ -193,7 +193,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list_directory_contents">
 
-Returns the contents of a directory. If there is no directory at the specified path, the API returns a
+Returns the contents of a directory. If there is no directory at the specified path, the API returns
 
 ```sql
 SELECT

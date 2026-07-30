@@ -18,7 +18,7 @@ ml service documentation.
 
 :::info[Service Summary]
 
-total resources: __22__  
+total resources: __23__  
 
 :::
 
@@ -32,6 +32,7 @@ total resources: __22__
 <a href="/services/ml/experiment_runs/">experiment_runs</a><br />
 <a href="/services/ml/experiments/">experiments</a><br />
 <a href="/services/ml/feature_engineering/">feature_engineering</a><br />
+<a href="/services/ml/feature_engineering_streams/">feature_engineering_streams</a><br />
 <a href="/services/ml/feature_kafka_configs/">feature_kafka_configs</a><br />
 <a href="/services/ml/feature_lineage/">feature_lineage</a><br />
 <a href="/services/ml/feature_materialized/">feature_materialized</a><br />

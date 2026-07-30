@@ -58,9 +58,21 @@ The following fields are returned by `SELECT` queries:
     "description": "Only applicable to files. The creation UTC timestamp."
   },
   {
+    "name": "directory_info",
+    "type": "object",
+    "description": "Additional metadata about the directory. Only set for objects of type ``DIRECTORY``.",
+    "children": [
+      {
+        "name": "is_git_folder",
+        "type": "boolean",
+        "description": "Whether the directory is a Git folder, whose contents are version-controlled by a remote Git repository. How a Git folder is represented depends on whether it has Git CLI access: - A Git folder with Git CLI access has an object type of ``DIRECTORY``, with this field set to ``true``. - A standard Git folder, which does not have Git CLI access, has an object type of ``REPO`` and does not include this field. - A directory that is not Git-backed has this field set to ``false``. Use this field together with ``object_type`` to identify every Git folder in a workspace."
+      }
+    ]
+  },
+  {
     "name": "language",
     "type": "string",
-    "description": "The language of the object. This value is set only if the object type is ``NOTEBOOK``. (PYTHON, R, SCALA, SQL)"
+    "description": "The language of the object. This value is set only if the object type is ``NOTEBOOK``. For Jupyter (.ipynb) notebooks, this is always ``PYTHON``. (PYTHON, R, SCALA, SQL)"
   },
   {
     "name": "modified_at",
@@ -70,7 +82,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_type",
     "type": "string",
-    "description": "The type of the object in workspace. - `NOTEBOOK`: document that contains runnable code, visualizations, and explanatory text. - `DIRECTORY`: directory - `LIBRARY`: library - `FILE`: file - `REPO`: repository - `DASHBOARD`: Lakeview dashboard (DASHBOARD, DIRECTORY, FILE, LIBRARY, NOTEBOOK, REPO)"
+    "description": "The type of the object in workspace. - ``NOTEBOOK``: document that contains runnable code, visualizations, and explanatory text. - ``DIRECTORY``: directory - ``LIBRARY``: library - ``FILE``: file - ``REPO``: repository - ``DASHBOARD``: Lakeview dashboard (DASHBOARD, DIRECTORY, FILE, LIBRARY, NOTEBOOK, REPO)"
   },
   {
     "name": "path",
@@ -113,13 +125,13 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-path"><code>path</code></a></td>
     <td></td>
-    <td>Deletes an object or a directory (and optionally recursively deletes all objects in the directory). *</td>
+    <td>Deletes an object or a directory (and optionally recursively deletes all objects in the directory).</td>
 </tr>
 <tr>
     <td><a href="#export"><CopyableCode code="export" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-path"><code>path</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td><a href="#parameter-format"><code>format</code></a></td>
+    <td><a href="#parameter-format"><code>format</code></a>, <a href="#parameter-outputs"><code>outputs</code></a></td>
     <td>Exports an object or the contents of an entire directory.</td>
 </tr>
 <tr>
@@ -160,17 +172,22 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-path">
     <td><CopyableCode code="path" /></td>
     <td><code>string</code></td>
-    <td>The absolute path of the object or directory. Exporting a directory is only supported for the `DBC`, `SOURCE`, and `AUTO` format.</td>
+    <td>The absolute path of the object or directory. Exporting a directory is only supported for the ``DBC``, ``SOURCE``, and ``AUTO`` format.</td>
 </tr>
 <tr id="parameter-format">
     <td><CopyableCode code="format" /></td>
     <td><code>string</code></td>
-    <td>This specifies the format of the exported file. By default, this is `SOURCE`. The value is case sensitive. - `SOURCE`: The notebook is exported as source code. Directory exports will not include non-notebook entries. - `HTML`: The notebook is exported as an HTML file. - `JUPYTER`: The notebook is exported as a Jupyter/IPython Notebook file. - `DBC`: The notebook is exported in Databricks archive format. Directory exports will not include non-notebook entries. - `R_MARKDOWN`: The notebook is exported to R Markdown format. - `AUTO`: The object or directory is exported depending on the objects type. Directory exports will include notebooks and workspace files.</td>
+    <td>This specifies the format of the exported file. By default, this is ``SOURCE``. The value is case sensitive. - ``SOURCE``: The notebook is exported as source code. Directory exports will not include non-notebook entries. - ``HTML``: The notebook is exported as an HTML file. - ``JUPYTER``: The notebook is exported as a Jupyter/IPython Notebook file. - ``DBC``: The notebook is exported in Databricks archive format. Directory exports will not include non-notebook entries. - ``R_MARKDOWN``: The notebook is exported to R Markdown format. - ``AUTO``: The object or directory is exported depending on the objects type. Directory exports will include notebooks and workspace files.</td>
 </tr>
 <tr id="parameter-notebooks_modified_after">
     <td><CopyableCode code="notebooks_modified_after" /></td>
     <td><code>integer</code></td>
     <td>UTC timestamp in milliseconds</td>
+</tr>
+<tr id="parameter-outputs">
+    <td><CopyableCode code="outputs" /></td>
+    <td><code>string</code></td>
+    <td>This specifies which cell outputs should be included in the export (if the export format allows it). If not specified, the behavior is determined by the format. For JUPYTER format, the default is to include all outputs. This is a public endpoint, but only ALL or NONE is documented publically, DATABRICKS is internal only</td>
 </tr>
 </tbody>
 </table>
@@ -192,6 +209,7 @@ SELECT
 object_id,
 resource_id,
 created_at,
+directory_info,
 language,
 modified_at,
 object_type,
@@ -220,7 +238,7 @@ AND notebooks_modified_after = '{{ notebooks_modified_after }}'
 >
 <TabItem value="delete">
 
-Deletes an object or a directory (and optionally recursively deletes all objects in the directory). *
+Deletes an object or a directory (and optionally recursively deletes all objects in the directory).
 
 ```sql
 EXEC databricks_workspace.workspace.workspace.delete 
@@ -241,7 +259,8 @@ Exports an object or the contents of an entire directory.
 EXEC databricks_workspace.workspace.workspace.export 
 @path='{{ path }}' --required, 
 @deployment_name='{{ deployment_name }}' --required, 
-@format='{{ format }}'
+@format='{{ format }}', 
+@outputs='{{ outputs }}'
 ;
 ```
 </TabItem>

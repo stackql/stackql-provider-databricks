@@ -76,9 +76,59 @@ The following fields are returned by `SELECT` queries:
         "description": "",
         "children": [
           {
-            "name": "password",
+            "name": "oauth_audience",
             "type": "string",
             "description": ""
+          },
+          {
+            "name": "oauth_audience_set",
+            "type": "boolean",
+            "description": "[Output-Only] Whether OAuth2 audience is set."
+          },
+          {
+            "name": "oauth_client_id",
+            "type": "string",
+            "description": "[Input-Only][Optional] OAuth2 client ID for the client_credentials grant."
+          },
+          {
+            "name": "oauth_client_id_set",
+            "type": "boolean",
+            "description": "[Output-Only] Whether OAuth2 client ID is set."
+          },
+          {
+            "name": "oauth_client_secret",
+            "type": "string",
+            "description": "[Input-Only][Optional] OAuth2 client secret for the client_credentials grant."
+          },
+          {
+            "name": "oauth_client_secret_set",
+            "type": "boolean",
+            "description": "[Output-Only] Whether OAuth2 client secret is set."
+          },
+          {
+            "name": "oauth_scopes",
+            "type": "array",
+            "description": "[Input-Only][Optional] OAuth2 scopes requested at token mint (required by some IdPs)."
+          },
+          {
+            "name": "oauth_scopes_set",
+            "type": "boolean",
+            "description": "[Output-Only] Whether OAuth2 scopes are set."
+          },
+          {
+            "name": "oauth_token_url",
+            "type": "string",
+            "description": "[Input-Only][Optional] OAuth2 token endpoint URL (customer IdP) where access tokens are minted."
+          },
+          {
+            "name": "oauth_token_url_set",
+            "type": "boolean",
+            "description": "[Output-Only] Whether OAuth2 token URL is set."
+          },
+          {
+            "name": "password",
+            "type": "string",
+            "description": "[Input-Only][Optional] Password for webhook."
           },
           {
             "name": "password_set",
@@ -429,6 +479,17 @@ destination_type
           addresses:
             - "{{ addresses }}"
         generic_webhook:
+          oauth_audience: "{{ oauth_audience }}"
+          oauth_audience_set: {{ oauth_audience_set }}
+          oauth_client_id: "{{ oauth_client_id }}"
+          oauth_client_id_set: {{ oauth_client_id_set }}
+          oauth_client_secret: "{{ oauth_client_secret }}"
+          oauth_client_secret_set: {{ oauth_client_secret_set }}
+          oauth_scopes:
+            - "{{ oauth_scopes }}"
+          oauth_scopes_set: {{ oauth_scopes_set }}
+          oauth_token_url: "{{ oauth_token_url }}"
+          oauth_token_url_set: {{ oauth_token_url_set }}
           password: "{{ password }}"
           password_set: {{ password_set }}
           url: "{{ url }}"

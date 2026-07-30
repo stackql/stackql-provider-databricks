@@ -58,6 +58,11 @@ The following fields are returned by `SELECT` queries:
         "description": ""
       },
       {
+        "name": "principal_id",
+        "type": "integer",
+        "description": "Unique identifier of the principal. For active principals, both ``principal`` and ``principal_id`` are present."
+      },
+      {
         "name": "privileges",
         "type": "array",
         "description": "The privileges assigned to the principal."

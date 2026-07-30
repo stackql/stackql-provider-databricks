@@ -56,7 +56,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "entitlements",
     "type": "array",
-    "description": "Entitlements assigned to the group. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements",
+    "description": "Entitlements assigned to the group. See `assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__ for a full list of supported values.",
     "children": [
       {
         "name": "display",
@@ -221,7 +221,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "entitlements",
     "type": "array",
-    "description": "Entitlements assigned to the group. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements",
+    "description": "Entitlements assigned to the group. See `assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__ for a full list of supported values.",
     "children": [
       {
         "name": "display",
@@ -473,7 +473,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-filter">
     <td><CopyableCode code="filter" /></td>
     <td><code>string</code></td>
-    <td>Query by which the results have to be filtered. Supported operators are equals(`eq`), contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently only support simple expressions. [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2</td>
+    <td>Query by which the results have to be filtered. Supported operators are equals(``eq``), contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can be formed using logical operators - ``and`` and ``or``. The `SCIM RFC <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only support simple expressions.</td>
 </tr>
 <tr id="parameter-sort_by">
     <td><CopyableCode code="sort_by" /></td>
@@ -617,7 +617,7 @@ schemas
         String that represents a human-readable group name
     - name: entitlements
       description: |
-        Entitlements assigned to the group. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements
+        Entitlements assigned to the group. See \`assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>\`__ for a full list of supported values.
       value:
         - display: "{{ display }}"
           primary: {{ primary }}

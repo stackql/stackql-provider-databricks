@@ -182,7 +182,7 @@ The following methods are available for this resource:
     <td><a href="#published_app_integration_list"><CopyableCode code="published_app_integration_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-account_id"><code>account_id</code></a></td>
-    <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
+    <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a>, <a href="#parameter-search_keyword"><code>search_keyword</code></a></td>
     <td>Get the list of published OAuth app integrations for the specified Databricks account</td>
 </tr>
 <tr>
@@ -242,6 +242,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td></td>
 </tr>
+<tr id="parameter-search_keyword">
+    <td><CopyableCode code="search_keyword" /></td>
+    <td><code>string</code></td>
+    <td>Search term to filter app integrations (case-insensitive substring match). Matches if the display name, the OAuth client_id, or the integration id contains the term.</td>
+</tr>
 </tbody>
 </table>
 
@@ -288,6 +293,7 @@ FROM databricks_account.oauth2.published_app_integration
 WHERE account_id = '{{ account_id }}' -- required
 AND page_size = '{{ page_size }}'
 AND page_token = '{{ page_token }}'
+AND search_keyword = '{{ search_keyword }}'
 ;
 ```
 </TabItem>

@@ -81,12 +81,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "path",
     "type": "string",
-    "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension `.lvdash.json`. This field is excluded in List Dashboards responses."
+    "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension ``.lvdash.json``. This field is excluded in List Dashboards responses."
   },
   {
     "name": "serialized_dashboard",
     "type": "string",
-    "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the [get dashboard API] to retrieve an example response, which includes the `serialized_dashboard` field. This field provides the structure of the JSON string that represents the dashboard's layout and components. [get dashboard API]: https://docs.databricks.com/api/workspace/lakeview/get"
+    "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the `get dashboard API <https://docs.databricks.com/api/workspace/lakeview/get>`__ to retrieve an example response, which includes the ``serialized_dashboard`` field. This field provides the structure of the JSON string that represents the dashboard's layout and components."
   },
   {
     "name": "update_time",
@@ -136,12 +136,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "path",
     "type": "string",
-    "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension `.lvdash.json`. This field is excluded in List Dashboards responses."
+    "description": "The workspace path of the dashboard asset, including the file name. Exported dashboards always have the file extension ``.lvdash.json``. This field is excluded in List Dashboards responses."
   },
   {
     "name": "serialized_dashboard",
     "type": "string",
-    "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the [get dashboard API] to retrieve an example response, which includes the `serialized_dashboard` field. This field provides the structure of the JSON string that represents the dashboard's layout and components. [get dashboard API]: https://docs.databricks.com/api/workspace/lakeview/get"
+    "description": "The contents of the dashboard in serialized string form. This field is excluded in List Dashboards responses. Use the `get dashboard API <https://docs.databricks.com/api/workspace/lakeview/get>`__ to retrieve an example response, which includes the ``serialized_dashboard`` field. This field provides the structure of the JSON string that represents the dashboard's layout and components."
   },
   {
     "name": "update_time",
@@ -180,6 +180,13 @@ The following methods are available for this resource:
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a>, <a href="#parameter-show_trashed"><code>show_trashed</code></a>, <a href="#parameter-view"><code>view</code></a></td>
     <td>List dashboards.</td>
+</tr>
+<tr>
+    <td><a href="#lakeview_revert"><CopyableCode code="lakeview_revert" /></a></td>
+    <td><CopyableCode code="insert" /></td>
+    <td><a href="#parameter-dashboard_id"><code>dashboard_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
+    <td></td>
+    <td>Revert a dashboard's definition in draft mode to the last published version.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -260,7 +267,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>A page token, received from a previous `ListDashboards` call. This token can be used to retrieve the subsequent page.</td>
+    <td>A page token, received from a previous ``ListDashboards`` call. This token can be used to retrieve the subsequent page.</td>
 </tr>
 <tr id="parameter-show_trashed">
     <td><CopyableCode code="show_trashed" /></td>
@@ -270,7 +277,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-view">
     <td><CopyableCode code="view" /></td>
     <td><code>string</code></td>
-    <td>`DASHBOARD_VIEW_BASIC`only includes summary metadata from the dashboard.</td>
+    <td>``DASHBOARD_VIEW_BASIC`` only includes summary metadata from the dashboard.</td>
 </tr>
 </tbody>
 </table>
@@ -337,12 +344,32 @@ AND view = '{{ view }}'
 ## `INSERT` examples
 
 <Tabs
-    defaultValue="create"
+    defaultValue="lakeview_revert"
     values={[
+        { label: 'lakeview_revert', value: 'lakeview_revert' },
         { label: 'create', value: 'create' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
+<TabItem value="lakeview_revert">
+
+Revert a dashboard's definition in draft mode to the last published version.
+
+```sql
+INSERT INTO databricks_workspace.dashboards.lakeview (
+etag,
+dashboard_id,
+deployment_name
+)
+SELECT 
+'{{ etag }}',
+'{{ dashboard_id }}',
+'{{ deployment_name }}'
+RETURNING
+dashboard
+;
+```
+</TabItem>
 <TabItem value="create">
 
 Create a draft dashboard.
@@ -378,9 +405,16 @@ update_time
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
 - name: lakeview
   props:
+    - name: dashboard_id
+      value: "{{ dashboard_id }}"
+      description: Required parameter for the lakeview resource.
     - name: deployment_name
       value: "{{ deployment_name }}"
       description: Required parameter for the lakeview resource.
+    - name: etag
+      value: "{{ etag }}"
+      description: |
+        The etag for the dashboard. Optionally, it can be provided to verify that the dashboard has not been modified from its last retrieval.
     - name: dashboard
       value:
         create_time: "{{ create_time }}"
@@ -396,8 +430,10 @@ update_time
     - name: dataset_catalog
       value: "{{ dataset_catalog }}"
       description: Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.
+      description: Sets the default catalog for all datasets in this dashboard. Does not impact table references that use fully qualified catalog names (ex: samples.nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.
     - name: dataset_schema
       value: "{{ dataset_schema }}"
+      description: Sets the default schema for all datasets in this dashboard. Does not impact table references that use fully qualified schema names (ex: nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.
       description: Sets the default schema for all datasets in this dashboard. Does not impact table references that use fully qualified schema names (ex: nyctaxi.trips). Leave blank to keep each dataset’s existing configuration.
 `}</CodeBlock>
 

@@ -240,7 +240,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "state",
     "type": "string",
-    "description": "The current state of the instance. (AVAILABLE, DELETING, FAILING_OVER, STARTING, STOPPED, UPDATING)"
+    "description": "The current state of the instance. (AVAILABLE, DELETING, FAILING_OVER, STARTING, STOPPED, UPDATING, UPGRADING)"
   },
   {
     "name": "stopped",
@@ -453,7 +453,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "state",
     "type": "string",
-    "description": "The current state of the instance. (AVAILABLE, DELETING, FAILING_OVER, STARTING, STOPPED, UPDATING)"
+    "description": "The current state of the instance. (AVAILABLE, DELETING, FAILING_OVER, STARTING, STOPPED, UPDATING, UPGRADING)"
   },
   {
     "name": "stopped",
@@ -666,7 +666,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "state",
     "type": "string",
-    "description": "The current state of the instance. (AVAILABLE, DELETING, FAILING_OVER, STARTING, STOPPED, UPDATING)"
+    "description": "The current state of the instance. (AVAILABLE, DELETING, FAILING_OVER, STARTING, STOPPED, UPDATING, UPGRADING)"
   },
   {
     "name": "stopped",
@@ -778,7 +778,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-force">
     <td><CopyableCode code="force" /></td>
     <td><code>boolean</code></td>
-    <td>By default, a instance cannot be deleted if it has descendant instances created via PITR. If this flag is specified as true, all descendent instances will be deleted as well.</td>
+    <td>By default, an instance cannot be deleted if it has descendant instances created via PITR. If this flag is specified as true, all descendent instances will be deleted as well.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>

@@ -97,12 +97,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-end_month">
     <td><CopyableCode code="end_month" /></td>
     <td><code>string</code></td>
-    <td>Format: `YYYY-MM`. Last month to return billable usage logs for. This field is required.</td>
+    <td>Format: ``YYYY-MM``. Last month to return billable usage logs for. This field is required.</td>
 </tr>
 <tr id="parameter-start_month">
     <td><CopyableCode code="start_month" /></td>
     <td><code>string</code></td>
-    <td>Format specification for month in the format `YYYY-MM`. This is used to specify billable usage `start_month` and `end_month` properties. **Note**: Billable usage logs are unavailable before March 2019 (`2019-03`).</td>
+    <td>Format specification for month in the format ``YYYY-MM``. This is used to specify billable usage ``start_month`` and ``end_month`` properties. **Note**: Billable usage logs are unavailable before March 2019 (``2019-03``).</td>
 </tr>
 <tr id="parameter-personal_data">
     <td><CopyableCode code="personal_data" /></td>

@@ -66,12 +66,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "comment",
     "type": "string",
-    "description": "User-provided free-form text description."
+    "description": ""
   },
   {
     "name": "connection_type",
     "type": "string",
-    "description": "The type of connection. (BIGQUERY, DATABRICKS, GA4_RAW_DATA, GLUE, HIVE_METASTORE, HTTP, MYSQL, ORACLE, POSTGRESQL, POWER_BI, REDSHIFT, SALESFORCE, SALESFORCE_DATA_CLOUD, SERVICENOW, SNOWFLAKE, SQLDW, SQLSERVER, TERADATA, UNKNOWN_CONNECTION_TYPE, WORKDAY_RAAS)"
+    "description": "The type of connection. (ADOBE_COMMERCE, ADP_WORKFORCE_NOW, AHA, AIRTABLE, AMPLITUDE, APPFIGURES, APPLE_APP_STORE, APPLE_SEARCH_ADS, ATLASSIAN_ORGANIZATION, AWIN, AZURE_MONITOR_LOGS, BIGLAKE, BIGQUERY, CERIDIAN_DAYFORCE, CONFLUENCE, DATABRICKS, DELIGHTED, DYNAMICS365, EPIC_CLARITY, FRESHSERVICE, FRONT, GA4_RAW_DATA, GENESYS, GITHUB, GITLAB, GLUE, GMAIL, GONG, GOOGLE_ANALYTICS, GOOGLE_CALENDAR, GOOGLE_CLOUD_LAKEHOUSE, GOOGLE_WORKSPACE, GURU, HIBOB, HIVE_METASTORE, HTTP, HUBSPOT, ICEBERG_REST, IRONCLAD, JDBC, KINESIS, LINEAR, MARKETO, META_MARKETING, MICROSOFT_ENTRA_ID, MONDAY_COM, MYSQL, NETSKOPE_LOGS, NOTION, ORACLE, ORACLE_ELOQUA, ORACLE_FUSION_CLOUD, OUTLOOK, PAGERDUTY, PALANTIR, PARTNERSTACK, PENDO, POSTGRESQL, POWER_BI, PUBSUB, QUICKBOOKS, REDSHIFT, SALESFORCE, SALESFORCE_DATA_CLOUD, SALESLOFT, SAP_SUCCESSFACTORS, SAS, SENDGRID, SERVICENOW, SHOPIFY, SLACK_ACCESS_AND_INTEGRATION_LOGS, SMARTSHEET, SNAPCHAT_ADS, SNOWFLAKE, SPLUNK, SQLDW, SQLSERVER, SQUARE, TERADATA, UNKNOWN_CONNECTION_TYPE, VERKADA, WORKDAY_RAAS, YOUTUBE_ANALYTICS, ZENDESK, ZIP, ZOHO_BOOKS, ZOOM, ZOOM_LOGS)"
   },
   {
     "name": "created_at",
@@ -86,7 +86,24 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "credential_type",
     "type": "string",
-    "description": "The type of credential. (ANY_STATIC_CREDENTIAL, BEARER_TOKEN, EDGEGRID_AKAMAI, OAUTH_ACCESS_TOKEN, OAUTH_M2M, OAUTH_MTLS, OAUTH_REFRESH_TOKEN, OAUTH_RESOURCE_OWNER_PASSWORD, OAUTH_U2M, OAUTH_U2M_MAPPING, OIDC_TOKEN, PEM_PRIVATE_KEY, SERVICE_CREDENTIAL, SSWS_TOKEN, UNKNOWN_CREDENTIAL_TYPE, USERNAME_PASSWORD)"
+    "description": "The type of credential. (ANY_STATIC_CREDENTIAL, BEARER_TOKEN, EDGEGRID_AKAMAI, GENERIC_TOKEN_EXCHANGE, INLINE_YAML, OAUTH_ACCESS_TOKEN, OAUTH_DCR, OAUTH_GOOGLE_SERVICE_ACCOUNT, OAUTH_M2M, OAUTH_MTLS, OAUTH_REFRESH_TOKEN, OAUTH_RESOURCE_OWNER_PASSWORD, OAUTH_U2M, OAUTH_U2M_MAPPING, OIDC_TOKEN, PEM_PRIVATE_KEY, SERVICE_CREDENTIAL, SSWS_TOKEN, UNKNOWN_CREDENTIAL_TYPE, USERNAME_PASSWORD)"
+  },
+  {
+    "name": "environment_settings",
+    "type": "object",
+    "description": "[Create,Update:OPT] Connection environment settings as EnvironmentSettings object.",
+    "children": [
+      {
+        "name": "environment_version",
+        "type": "string",
+        "description": ""
+      },
+      {
+        "name": "java_dependencies",
+        "type": "array",
+        "description": ""
+      }
+    ]
   },
   {
     "name": "options",
@@ -119,6 +136,11 @@ The following fields are returned by `SELECT` queries:
     "name": "read_only",
     "type": "boolean",
     "description": "If the connection is read only."
+  },
+  {
+    "name": "secrets",
+    "type": "object",
+    "description": "A map of option names to UC Secret references. Keys are connection option names (same as in OptionsKVPairs) and values are UC Secret fully qualified names."
   },
   {
     "name": "securable_type",
@@ -168,12 +190,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "comment",
     "type": "string",
-    "description": "User-provided free-form text description."
+    "description": ""
   },
   {
     "name": "connection_type",
     "type": "string",
-    "description": "The type of connection. (BIGQUERY, DATABRICKS, GA4_RAW_DATA, GLUE, HIVE_METASTORE, HTTP, MYSQL, ORACLE, POSTGRESQL, POWER_BI, REDSHIFT, SALESFORCE, SALESFORCE_DATA_CLOUD, SERVICENOW, SNOWFLAKE, SQLDW, SQLSERVER, TERADATA, UNKNOWN_CONNECTION_TYPE, WORKDAY_RAAS)"
+    "description": "The type of connection. (ADOBE_COMMERCE, ADP_WORKFORCE_NOW, AHA, AIRTABLE, AMPLITUDE, APPFIGURES, APPLE_APP_STORE, APPLE_SEARCH_ADS, ATLASSIAN_ORGANIZATION, AWIN, AZURE_MONITOR_LOGS, BIGLAKE, BIGQUERY, CERIDIAN_DAYFORCE, CONFLUENCE, DATABRICKS, DELIGHTED, DYNAMICS365, EPIC_CLARITY, FRESHSERVICE, FRONT, GA4_RAW_DATA, GENESYS, GITHUB, GITLAB, GLUE, GMAIL, GONG, GOOGLE_ANALYTICS, GOOGLE_CALENDAR, GOOGLE_CLOUD_LAKEHOUSE, GOOGLE_WORKSPACE, GURU, HIBOB, HIVE_METASTORE, HTTP, HUBSPOT, ICEBERG_REST, IRONCLAD, JDBC, KINESIS, LINEAR, MARKETO, META_MARKETING, MICROSOFT_ENTRA_ID, MONDAY_COM, MYSQL, NETSKOPE_LOGS, NOTION, ORACLE, ORACLE_ELOQUA, ORACLE_FUSION_CLOUD, OUTLOOK, PAGERDUTY, PALANTIR, PARTNERSTACK, PENDO, POSTGRESQL, POWER_BI, PUBSUB, QUICKBOOKS, REDSHIFT, SALESFORCE, SALESFORCE_DATA_CLOUD, SALESLOFT, SAP_SUCCESSFACTORS, SAS, SENDGRID, SERVICENOW, SHOPIFY, SLACK_ACCESS_AND_INTEGRATION_LOGS, SMARTSHEET, SNAPCHAT_ADS, SNOWFLAKE, SPLUNK, SQLDW, SQLSERVER, SQUARE, TERADATA, UNKNOWN_CONNECTION_TYPE, VERKADA, WORKDAY_RAAS, YOUTUBE_ANALYTICS, ZENDESK, ZIP, ZOHO_BOOKS, ZOOM, ZOOM_LOGS)"
   },
   {
     "name": "created_at",
@@ -188,7 +210,24 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "credential_type",
     "type": "string",
-    "description": "The type of credential. (ANY_STATIC_CREDENTIAL, BEARER_TOKEN, EDGEGRID_AKAMAI, OAUTH_ACCESS_TOKEN, OAUTH_M2M, OAUTH_MTLS, OAUTH_REFRESH_TOKEN, OAUTH_RESOURCE_OWNER_PASSWORD, OAUTH_U2M, OAUTH_U2M_MAPPING, OIDC_TOKEN, PEM_PRIVATE_KEY, SERVICE_CREDENTIAL, SSWS_TOKEN, UNKNOWN_CREDENTIAL_TYPE, USERNAME_PASSWORD)"
+    "description": "The type of credential. (ANY_STATIC_CREDENTIAL, BEARER_TOKEN, EDGEGRID_AKAMAI, GENERIC_TOKEN_EXCHANGE, INLINE_YAML, OAUTH_ACCESS_TOKEN, OAUTH_DCR, OAUTH_GOOGLE_SERVICE_ACCOUNT, OAUTH_M2M, OAUTH_MTLS, OAUTH_REFRESH_TOKEN, OAUTH_RESOURCE_OWNER_PASSWORD, OAUTH_U2M, OAUTH_U2M_MAPPING, OIDC_TOKEN, PEM_PRIVATE_KEY, SERVICE_CREDENTIAL, SSWS_TOKEN, UNKNOWN_CREDENTIAL_TYPE, USERNAME_PASSWORD)"
+  },
+  {
+    "name": "environment_settings",
+    "type": "object",
+    "description": "[Create,Update:OPT] Connection environment settings as EnvironmentSettings object.",
+    "children": [
+      {
+        "name": "environment_version",
+        "type": "string",
+        "description": ""
+      },
+      {
+        "name": "java_dependencies",
+        "type": "array",
+        "description": ""
+      }
+    ]
   },
   {
     "name": "options",
@@ -221,6 +260,11 @@ The following fields are returned by `SELECT` queries:
     "name": "read_only",
     "type": "boolean",
     "description": "If the connection is read only."
+  },
+  {
+    "name": "secrets",
+    "type": "object",
+    "description": "A map of option names to UC Secret references. Keys are connection option names (same as in OptionsKVPairs) and values are UC Secret fully qualified names."
   },
   {
     "name": "securable_type",
@@ -272,7 +316,7 @@ The following methods are available for this resource:
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td><a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
+    <td><a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a>, <a href="#parameter-parent"><code>parent</code></a></td>
     <td>List all connections.</td>
 </tr>
 <tr>
@@ -332,6 +376,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>Opaque pagination token to go to next page based on previous query.</td>
 </tr>
+<tr id="parameter-parent">
+    <td><CopyableCode code="parent" /></td>
+    <td><code>string</code></td>
+    <td>Optional. Parent schema filter for listing schema-level connections, in format "schemas/&#123;catalog&#125;.&#123;schema&#125;".</td>
+</tr>
 </tbody>
 </table>
 
@@ -359,11 +408,13 @@ connection_type,
 created_at,
 created_by,
 credential_type,
+environment_settings,
 options,
 owner,
 properties,
 provisioning_info,
 read_only,
+secrets,
 securable_type,
 updated_at,
 updated_by,
@@ -389,11 +440,13 @@ connection_type,
 created_at,
 created_by,
 credential_type,
+environment_settings,
 options,
 owner,
 properties,
 provisioning_info,
 read_only,
+secrets,
 securable_type,
 updated_at,
 updated_by,
@@ -402,6 +455,7 @@ FROM databricks_workspace.catalog.connections
 WHERE deployment_name = '{{ deployment_name }}' -- required
 AND max_results = '{{ max_results }}'
 AND page_token = '{{ page_token }}'
+AND parent = '{{ parent }}'
 ;
 ```
 </TabItem>
@@ -427,8 +481,11 @@ name,
 connection_type,
 options,
 comment,
+environment_settings,
+parent,
 properties,
 read_only,
+secrets,
 deployment_name
 )
 SELECT 
@@ -436,8 +493,11 @@ SELECT
 '{{ connection_type }}' /* required */,
 '{{ options }}' /* required */,
 '{{ comment }}',
+'{{ environment_settings }}',
+'{{ parent }}',
 '{{ properties }}',
 {{ read_only }},
+'{{ secrets }}',
 '{{ deployment_name }}'
 RETURNING
 name,
@@ -449,11 +509,13 @@ connection_type,
 created_at,
 created_by,
 credential_type,
+environment_settings,
 options,
 owner,
 properties,
 provisioning_info,
 read_only,
+secrets,
 securable_type,
 updated_at,
 updated_by,
@@ -485,6 +547,17 @@ url
       value: "{{ comment }}"
       description: |
         User-provided free-form text description.
+    - name: environment_settings
+      description: |
+        [Create,Update:OPT] Connection environment settings as EnvironmentSettings object.
+      value:
+        environment_version: "{{ environment_version }}"
+        java_dependencies:
+          - "{{ java_dependencies }}"
+    - name: parent
+      value: "{{ parent }}"
+      description: |
+        Parent schema for schema-level connections, in format "schemas/{catalog}.{schema}". Absent for metastore-level (L1) connections.
     - name: properties
       value: "{{ properties }}"
       description: |
@@ -493,6 +566,10 @@ url
       value: {{ read_only }}
       description: |
         If the connection is read only.
+    - name: secrets
+      value: "{{ secrets }}"
+      description: |
+        A map of option names to UC Secret references. Keys are connection option names (same as in OptionsKVPairs) and values are UC Secret fully qualified names.
 `}</CodeBlock>
 
 </TabItem>
@@ -515,8 +592,10 @@ Updates the connection that matches the supplied name.
 UPDATE databricks_workspace.catalog.connections
 SET 
 options = '{{ options }}',
+environment_settings = '{{ environment_settings }}',
 new_name = '{{ new_name }}',
-owner = '{{ owner }}'
+owner = '{{ owner }}',
+secrets = '{{ secrets }}'
 WHERE 
 name = '{{ name }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
@@ -531,11 +610,13 @@ connection_type,
 created_at,
 created_by,
 credential_type,
+environment_settings,
 options,
 owner,
 properties,
 provisioning_info,
 read_only,
+secrets,
 securable_type,
 updated_at,
 updated_by,

@@ -232,7 +232,7 @@ SELECT
   JSON_EXTRACT(status, '$.hosts.read_write_pooled_host') AS read_write_pooled_host,
   uid,
   update_time
-FROM databricks_workspace.postgres.endpoints
+FROM databricks_workspace.postgres.postgres_endpoints
 WHERE project_id = '{{ project_id }}'
 AND branch_id = '{{ branch_id }}'
 AND deployment_name = '{{ deployment_name }}'
@@ -262,7 +262,7 @@ SELECT
   (status::jsonb)#>>'{hosts,read_write_pooled_host}' AS read_write_pooled_host,
   uid,
   update_time
-FROM databricks_workspace.postgres.endpoints
+FROM databricks_workspace.postgres.postgres_endpoints
 WHERE project_id = '{{ project_id }}'
 AND branch_id = '{{ branch_id }}'
 AND deployment_name = '{{ deployment_name }}'

@@ -190,7 +190,7 @@ SELECT
   JSON_EXTRACT(status, '$.membership_roles') AS membership_roles,
   JSON_EXTRACT(status, '$.postgres_role') AS postgres_role,
   update_time
-FROM databricks_workspace.postgres.roles
+FROM databricks_workspace.postgres.postgres_roles
 WHERE project_id = '{{ project_id }}'
 AND branch_id = '{{ branch_id }}'
 AND deployment_name = '{{ deployment_name }}'
@@ -214,7 +214,7 @@ SELECT
   (status::jsonb)->>'membership_roles' AS membership_roles,
   (status::jsonb)->>'postgres_role' AS postgres_role,
   update_time
-FROM databricks_workspace.postgres.roles
+FROM databricks_workspace.postgres.postgres_roles
 WHERE project_id = '{{ project_id }}'
 AND branch_id = '{{ branch_id }}'
 AND deployment_name = '{{ deployment_name }}'

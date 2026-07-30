@@ -58,6 +58,11 @@ The following fields are returned by `SELECT` queries:
     "description": "UTC time when the secret will expire. If the field is not present, the secret does not expire."
   },
   {
+    "name": "scopes",
+    "type": "array",
+    "description": "OAuth API scopes bound to this secret. Empty = unrestricted (all-apis)."
+  },
+  {
     "name": "secret_hash",
     "type": "string",
     "description": "Secret Hash"
@@ -151,7 +156,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>An opaque page token which was the `next_page_token` in the response of the previous request to list the secrets for this service principal. Provide this token to retrieve the next page of secret entries. When providing a `page_token`, all other parameters provided to the request must match the previous request. To list all of the secrets for a service principal, it is necessary to continue requesting pages of entries until the response contains no `next_page_token`. Note that the number of entries returned must not be used to determine when the listing is complete.</td>
+    <td>An opaque page token which was the ``next_page_token`` in the response of the previous request to list the secrets for this service principal. Provide this token to retrieve the next page of secret entries. When providing a ``page_token``, all other parameters provided to the request must match the previous request. To list all of the secrets for a service principal, it is necessary to continue requesting pages of entries until the response contains no ``next_page_token``. Note that the number of entries returned must not be used to determine when the listing is complete.</td>
 </tr>
 </tbody>
 </table>
@@ -173,6 +178,7 @@ SELECT
 id,
 create_time,
 expire_time,
+scopes,
 secret_hash,
 status,
 update_time
@@ -203,17 +209,20 @@ Create a secret for the given service principal.
 ```sql
 INSERT INTO databricks_account.oauth2.service_principal_secrets (
 lifetime,
+scopes,
 account_id,
 service_principal_id
 )
 SELECT 
 '{{ lifetime }}',
+'{{ scopes }}',
 '{{ account_id }}',
 '{{ service_principal_id }}'
 RETURNING
 id,
 create_time,
 expire_time,
+scopes,
 secret,
 secret_hash,
 status,
@@ -236,6 +245,11 @@ update_time
       value: "{{ lifetime }}"
       description: |
         The lifetime of the secret in seconds. If this parameter is not provided, the secret will have a default lifetime of 730 days (63072000s).
+    - name: scopes
+      value:
+        - "{{ scopes }}"
+      description: |
+        OAuth API scopes to bind to the secret; a minted token cannot exceed them. Empty = unrestricted (all-apis). E.g. all-apis, sql, iam.groups:read.
 `}</CodeBlock>
 
 </TabItem>

@@ -476,6 +476,7 @@ Install payload associated with a Databricks Marketplace listing.
 INSERT INTO databricks_workspace.marketplace.consumer_installations (
 accepted_consumer_terms,
 catalog_name,
+mcp_connection_detail,
 recipient_type,
 repo_detail,
 share_name,
@@ -485,6 +486,7 @@ deployment_name
 SELECT 
 '{{ accepted_consumer_terms }}',
 '{{ catalog_name }}',
+'{{ mcp_connection_detail }}',
 '{{ recipient_type }}',
 '{{ repo_detail }}',
 '{{ share_name }}',
@@ -511,6 +513,21 @@ installation
         version: "{{ version }}"
     - name: catalog_name
       value: "{{ catalog_name }}"
+    - name: mcp_connection_detail
+      description: |
+        Consumer-supplied details for creating the Unity Catalog HTTP connection when installing an MCP
+        listing. Values the provider configures on the listing (port, credential type, OAuth
+        token/authorization endpoints, scope, exchange method) are not repeated here.
+      value:
+        connection_name: "{{ connection_name }}"
+        base_path: "{{ base_path }}"
+        bearer_token: "{{ bearer_token }}"
+        catalog: "{{ catalog }}"
+        host: "{{ host }}"
+        oauth_credentials:
+          client_id: "{{ client_id }}"
+          client_secret: "{{ client_secret }}"
+        schema: "{{ schema }}"
     - name: recipient_type
       value: "{{ recipient_type }}"
       description: |

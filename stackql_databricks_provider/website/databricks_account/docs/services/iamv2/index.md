@@ -18,16 +18,24 @@ iamv2 service documentation.
 
 :::info[Service Summary]
 
-total resources: __1__  
+total resources: __10__  
 
 :::
 
 ## Resources
 <div class="row">
 <div class="providerDocColumn">
-<a href="/services/iamv2/account_iam/">account_iam</a>
+<a href="/services/iamv2/account_access_identity_rules/">account_access_identity_rules</a><br />
+<a href="/services/iamv2/attribute_control_entries/">attribute_control_entries</a><br />
+<a href="/services/iamv2/direct_group_members/">direct_group_members</a><br />
+<a href="/services/iamv2/external_users/">external_users</a><br />
+<a href="/services/iamv2/groups/">groups</a>
 </div>
 <div class="providerDocColumn">
-
+<a href="/services/iamv2/service_principals/">service_principals</a><br />
+<a href="/services/iamv2/transitive_parent_groups/">transitive_parent_groups</a><br />
+<a href="/services/iamv2/users/">users</a><br />
+<a href="/services/iamv2/workspace_access_details/">workspace_access_details</a><br />
+<a href="/services/iamv2/workspace_assignment_details/">workspace_assignment_details</a>
 </div>
 </div>

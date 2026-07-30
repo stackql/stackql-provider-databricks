@@ -110,7 +110,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-listing_id"><code>listing_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
-    <td>Get all listings fulfillments associated with a listing. A _fulfillment_ is a potential installation.</td>
+    <td>Get all listings fulfillments associated with a listing. A *fulfillment* is a potential installation.</td>
 </tr>
 </tbody>
 </table>
@@ -161,7 +161,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="list">
 
-Get all listings fulfillments associated with a listing. A _fulfillment_ is a potential installation.
+Get all listings fulfillments associated with a listing. A *fulfillment* is a potential installation.
 
 ```sql
 SELECT

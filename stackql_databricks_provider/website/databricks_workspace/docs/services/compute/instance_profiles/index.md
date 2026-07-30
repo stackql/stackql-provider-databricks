@@ -45,7 +45,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "iam_role_arn",
     "type": "string",
-    "description": "The AWS IAM role ARN of the role associated with the instance profile. This field is required if your role name and instance profile name do not match and you want to use the instance profile with [Databricks SQL Serverless]. Otherwise, this field is optional. [Databricks SQL Serverless]: https://docs.databricks.com/sql/admin/serverless.html"
+    "description": "The AWS IAM role ARN of the role associated with the instance profile. This field is required if your role name and instance profile name do not match and you want to use the instance profile with `Databricks SQL Serverless <https://docs.databricks.com/sql/admin/serverless.html>`__. Otherwise, this field is optional."
   },
   {
     "name": "instance_profile_arn",
@@ -55,7 +55,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "is_meta_instance_profile",
     "type": "boolean",
-    "description": "Boolean flag indicating whether the instance profile should only be used in credential passthrough scenarios. If true, it means the instance profile contains an meta IAM role which could assume a wide range of roles. Therefore it should always be used with authorization. This field is optional, the default value is `false`."
+    "description": "Boolean flag indicating whether the instance profile should only be used in credential passthrough scenarios. If true, it means the instance profile contains an meta IAM role which could assume a wide range of roles. Therefore it should always be used with authorization. This field is optional, the default value is ``false``."
   }
 ]} />
 </TabItem>
@@ -198,11 +198,11 @@ SELECT
     - name: iam_role_arn
       value: "{{ iam_role_arn }}"
       description: |
-        The AWS IAM role ARN of the role associated with the instance profile. This field is required if your role name and instance profile name do not match and you want to use the instance profile with [Databricks SQL Serverless]. Otherwise, this field is optional. [Databricks SQL Serverless]: https://docs.databricks.com/sql/admin/serverless.html
+        The AWS IAM role ARN of the role associated with the instance profile. This field is required if your role name and instance profile name do not match and you want to use the instance profile with \`Databricks SQL Serverless <https://docs.databricks.com/sql/admin/serverless.html>\`__. Otherwise, this field is optional.
     - name: is_meta_instance_profile
       value: {{ is_meta_instance_profile }}
       description: |
-        Boolean flag indicating whether the instance profile should only be used in credential passthrough scenarios. If true, it means the instance profile contains an meta IAM role which could assume a wide range of roles. Therefore it should always be used with authorization. This field is optional, the default value is \`false\`.
+        Boolean flag indicating whether the instance profile should only be used in credential passthrough scenarios. If true, it means the instance profile contains an meta IAM role which could assume a wide range of roles. Therefore it should always be used with authorization. This field is optional, the default value is \`\`false\`\`.
     - name: skip_validation
       value: {{ skip_validation }}
       description: |

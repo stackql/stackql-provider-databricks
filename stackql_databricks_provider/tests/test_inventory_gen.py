@@ -302,10 +302,10 @@ class TestGenerateInventoryForSpec:
     def test_creates_csv(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             spec_path = os.path.join(tmpdir, "test.json")
-            with open(spec_path, "w") as f:
+            with open(spec_path, "w", encoding="utf-8") as f:
                 json.dump(SAMPLE_SPEC, f)
 
-            csv_path, new_count, existing_count = generate_inventory_for_spec(
+            csv_path, new_count, existing_count, _ = generate_inventory_for_spec(
                 spec_path, tmpdir, "workspace"
             )
             assert os.path.exists(csv_path)
@@ -315,18 +315,18 @@ class TestGenerateInventoryForSpec:
     def test_csv_has_correct_columns(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             spec_path = os.path.join(tmpdir, "test.json")
-            with open(spec_path, "w") as f:
+            with open(spec_path, "w", encoding="utf-8") as f:
                 json.dump(SAMPLE_SPEC, f)
 
-            csv_path, _, _ = generate_inventory_for_spec(spec_path, tmpdir, "workspace")
-            with open(csv_path) as f:
+            csv_path, _, _, _ = generate_inventory_for_spec(spec_path, tmpdir, "workspace")
+            with open(csv_path, encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 assert list(reader.fieldnames) == CSV_COLUMNS
 
     def test_preserves_existing_rows(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             spec_path = os.path.join(tmpdir, "test.json")
-            with open(spec_path, "w") as f:
+            with open(spec_path, "w", encoding="utf-8") as f:
                 json.dump(SAMPLE_SPEC, f)
 
             # First run
@@ -335,25 +335,25 @@ class TestGenerateInventoryForSpec:
             # Modify a row - change stackql_verb to exec
             csv_path = os.path.join(tmpdir, "workspace", "test.csv")
             rows = []
-            with open(csv_path) as f:
+            with open(csv_path, encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
                     if row["operationId"] == "widgets_get":
                         row["stackql_verb"] = "exec"
                     rows.append(row)
-            with open(csv_path, "w", newline="") as f:
+            with open(csv_path, "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS)
                 writer.writeheader()
                 writer.writerows(rows)
 
             # Second run - should preserve the modification
-            csv_path2, new_count, existing_count = generate_inventory_for_spec(
+            csv_path2, new_count, existing_count, _ = generate_inventory_for_spec(
                 spec_path, tmpdir, "workspace"
             )
             assert new_count == 0
             assert existing_count == 6
 
-            with open(csv_path2) as f:
+            with open(csv_path2, encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
                     if row["operationId"] == "widgets_get":
@@ -374,7 +374,7 @@ class TestGenerateInventoryForSpec:
                 }
             }
             spec_path = os.path.join(tmpdir, "test.json")
-            with open(spec_path, "w") as f:
+            with open(spec_path, "w", encoding="utf-8") as f:
                 json.dump(small_spec, f)
 
             # First run
@@ -386,11 +386,11 @@ class TestGenerateInventoryForSpec:
                 "tags": ["svc"],
                 "responses": {},
             }
-            with open(spec_path, "w") as f:
+            with open(spec_path, "w", encoding="utf-8") as f:
                 json.dump(small_spec, f)
 
             # Second run
-            _, new_count, existing_count = generate_inventory_for_spec(
+            _, new_count, existing_count, _ = generate_inventory_for_spec(
                 spec_path, tmpdir, "workspace"
             )
             assert existing_count == 1  # test_get preserved
@@ -401,7 +401,7 @@ class TestGenerateAllInventories:
     def test_generates_from_real_specs(self):
         with tempfile.TemporaryDirectory() as tmpdir:
             summary = generate_all_inventories(output_dir=tmpdir)
-            assert summary["files_generated"] == 34
+            assert summary["files_generated"] == 38
             assert summary["total_new"] > 500
 
             # Check directory structure
@@ -411,7 +411,7 @@ class TestGenerateAllInventories:
             # Spot check a file
             csv_path = os.path.join(tmpdir, "workspace", "agentbricks.csv")
             assert os.path.exists(csv_path)
-            with open(csv_path) as f:
+            with open(csv_path, encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 rows = list(reader)
             assert len(rows) > 0
@@ -425,7 +425,7 @@ class TestGenerateAllInventories:
             for scope in ("account", "workspace"):
                 all_csv = os.path.join(tmpdir, scope, "all_services.csv")
                 assert os.path.exists(all_csv), f"Missing {scope}/all_services.csv"
-                with open(all_csv) as f:
+                with open(all_csv, encoding="utf-8") as f:
                     reader = csv.DictReader(f)
                     rows = list(reader)
                 assert len(rows) > 0
@@ -434,7 +434,7 @@ class TestGenerateAllInventories:
         with tempfile.TemporaryDirectory() as tmpdir:
             generate_all_inventories(output_dir=tmpdir)
             all_csv = os.path.join(tmpdir, "workspace", "all_services.csv")
-            with open(all_csv) as f:
+            with open(all_csv, encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 assert list(reader.fieldnames) == CSV_COLUMNS
 
@@ -457,12 +457,12 @@ class TestObjectKeyPopulation:
             # Manually set one objectKey so we can verify it's preserved
             csv_path = os.path.join(tmpdir, "workspace", "compute.csv")
             rows = []
-            with open(csv_path) as f:
+            with open(csv_path, encoding="utf-8") as f:
                 for row in csv.DictReader(f):
                     if row["operationId"] == "clusters_list":
                         row["stackql_object_key"] = "$.custom_key"
                     rows.append(row)
-            with open(csv_path, "w", newline="") as f:
+            with open(csv_path, "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction="ignore")
                 writer.writeheader()
                 writer.writerows(rows)
@@ -472,7 +472,7 @@ class TestObjectKeyPopulation:
             assert summary["workspace"] > 0
 
             # Verify the manual key was preserved
-            with open(csv_path) as f:
+            with open(csv_path, encoding="utf-8") as f:
                 for row in csv.DictReader(f):
                     if row["operationId"] == "clusters_list":
                         assert row["stackql_object_key"] == "$.custom_key"

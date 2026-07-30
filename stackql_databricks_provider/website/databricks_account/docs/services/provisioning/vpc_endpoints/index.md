@@ -46,7 +46,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "account_id",
     "type": "string",
-    "description": "The Databricks account ID that hosts the VPC endpoint configuration. TODO - This may signal an OpenAPI diff; it does not show up in the generated spec"
+    "description": "The Databricks account ID that hosts the VPC endpoint configuration."
   },
   {
     "name": "aws_account_id",
@@ -56,7 +56,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "aws_endpoint_service_id",
     "type": "string",
-    "description": "The ID of the Databricks [endpoint service] that this VPC endpoint is connected to. For a list of endpoint service IDs for each supported AWS region, see the [Databricks PrivateLink documentation]. [Databricks PrivateLink documentation]: https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html [endpoint service]: https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-service.html"
+    "description": "The ID of the Databricks `endpoint service <https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-service.html>`__ that this VPC endpoint is connected to. For a list of endpoint service IDs for each supported AWS region, see the `Databricks PrivateLink documentation <https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html>`__."
   },
   {
     "name": "aws_vpc_endpoint_id",
@@ -66,7 +66,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "vpc_endpoint_id",
     "type": "string",
-    "description": "Databricks VPC endpoint ID. This is the Databricks-specific name of the VPC endpoint. Do not confuse this with the `aws_vpc_endpoint_id`, which is the ID within AWS of the VPC endpoint."
+    "description": "Databricks VPC endpoint ID. This is the Databricks-specific name of the VPC endpoint. Do not confuse this with the ``aws_vpc_endpoint_id``, which is the ID within AWS of the VPC endpoint."
   },
   {
     "name": "vpc_endpoint_name",
@@ -113,7 +113,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "state",
     "type": "string",
-    "description": "The current state (such as `available` or `rejected`) of the VPC endpoint. Derived from AWS. For the full set of values, see [AWS DescribeVpcEndpoint documentation]. [AWS DescribeVpcEndpoint documentation]: https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoints.html"
+    "description": "The current state (such as ``available`` or ``rejected``) of the VPC endpoint. Derived from AWS. For the full set of values, see `AWS DescribeVpcEndpoint documentation <https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoints.html>`__."
   },
   {
     "name": "use_case",
@@ -128,7 +128,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "account_id",
     "type": "string",
-    "description": "The Databricks account ID that hosts the VPC endpoint configuration. TODO - This may signal an OpenAPI diff; it does not show up in the generated spec"
+    "description": "The Databricks account ID that hosts the VPC endpoint configuration."
   },
   {
     "name": "aws_account_id",
@@ -138,7 +138,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "aws_endpoint_service_id",
     "type": "string",
-    "description": "The ID of the Databricks [endpoint service] that this VPC endpoint is connected to. For a list of endpoint service IDs for each supported AWS region, see the [Databricks PrivateLink documentation]. [Databricks PrivateLink documentation]: https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html [endpoint service]: https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-service.html"
+    "description": "The ID of the Databricks `endpoint service <https://docs.aws.amazon.com/vpc/latest/privatelink/endpoint-service.html>`__ that this VPC endpoint is connected to. For a list of endpoint service IDs for each supported AWS region, see the `Databricks PrivateLink documentation <https://docs.databricks.com/administration-guide/cloud-configurations/aws/privatelink.html>`__."
   },
   {
     "name": "aws_vpc_endpoint_id",
@@ -148,7 +148,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "vpc_endpoint_id",
     "type": "string",
-    "description": "Databricks VPC endpoint ID. This is the Databricks-specific name of the VPC endpoint. Do not confuse this with the `aws_vpc_endpoint_id`, which is the ID within AWS of the VPC endpoint."
+    "description": "Databricks VPC endpoint ID. This is the Databricks-specific name of the VPC endpoint. Do not confuse this with the ``aws_vpc_endpoint_id``, which is the ID within AWS of the VPC endpoint."
   },
   {
     "name": "vpc_endpoint_name",
@@ -195,7 +195,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "state",
     "type": "string",
-    "description": "The current state (such as `available` or `rejected`) of the VPC endpoint. Derived from AWS. For the full set of values, see [AWS DescribeVpcEndpoint documentation]. [AWS DescribeVpcEndpoint documentation]: https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoints.html"
+    "description": "The current state (such as ``available`` or ``rejected``) of the VPC endpoint. Derived from AWS. For the full set of values, see `AWS DescribeVpcEndpoint documentation <https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-vpc-endpoints.html>`__."
   },
   {
     "name": "use_case",
@@ -226,7 +226,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-account_id"><code>account_id</code></a>, <a href="#parameter-vpc_endpoint_id"><code>vpc_endpoint_id</code></a></td>
     <td></td>
-    <td>Gets a VPC endpoint configuration, which represents a [VPC endpoint] object in AWS used to communicate</td>
+    <td>Gets a VPC endpoint configuration, which represents a `VPC endpoint</td>
 </tr>
 <tr>
     <td><a href="#vpc_endpoints_list"><CopyableCode code="vpc_endpoints_list" /></a></td>
@@ -240,7 +240,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-account_id"><code>account_id</code></a></td>
     <td></td>
-    <td>Creates a VPC endpoint configuration, which represents a [VPC endpoint] object in AWS used to</td>
+    <td>Creates a VPC endpoint configuration, which represents a `VPC endpoint</td>
 </tr>
 <tr>
     <td><a href="#vpc_endpoints_delete"><CopyableCode code="vpc_endpoints_delete" /></a></td>
@@ -289,7 +289,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="vpc_endpoints_get">
 
-Gets a VPC endpoint configuration, which represents a [VPC endpoint] object in AWS used to communicate
+Gets a VPC endpoint configuration, which represents a `VPC endpoint
 
 ```sql
 SELECT
@@ -344,7 +344,7 @@ WHERE account_id = '{{ account_id }}' -- required
 >
 <TabItem value="vpc_endpoints_create">
 
-Creates a VPC endpoint configuration, which represents a [VPC endpoint] object in AWS used to
+Creates a VPC endpoint configuration, which represents a `VPC endpoint
 
 ```sql
 INSERT INTO databricks_account.provisioning.vpc_endpoints (

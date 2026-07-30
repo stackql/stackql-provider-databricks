@@ -177,7 +177,7 @@ SELECT
   JSON_EXTRACT(status, '$.state_change_time') AS state_change_time,
   uid,
   update_time
-FROM databricks_workspace.postgres.branches
+FROM databricks_workspace.postgres.postgres_branches
 WHERE project_id = '{{ project_id }}'
 AND deployment_name = '{{ deployment_name }}'
 ```
@@ -199,7 +199,7 @@ SELECT
   (status::jsonb)->>'state_change_time' AS state_change_time,
   uid,
   update_time
-FROM databricks_workspace.postgres.branches
+FROM databricks_workspace.postgres.postgres_branches
 WHERE project_id = '{{ project_id }}'
 AND deployment_name = '{{ deployment_name }}'
 ```

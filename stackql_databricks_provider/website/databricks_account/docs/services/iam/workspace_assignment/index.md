@@ -107,7 +107,7 @@ The following methods are available for this resource:
     <td><a href="#workspace_assignment_list"><CopyableCode code="workspace_assignment_list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-account_id"><code>account_id</code></a>, <a href="#parameter-workspace_id"><code>workspace_id</code></a></td>
-    <td></td>
+    <td><a href="#parameter-filter"><code>filter</code></a>, <a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
     <td>Get the permission assignments for the specified Databricks account and Databricks workspace.</td>
 </tr>
 <tr>
@@ -155,6 +155,21 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>integer</code></td>
     <td>The workspace ID for the account.</td>
 </tr>
+<tr id="parameter-filter">
+    <td><CopyableCode code="filter" /></td>
+    <td><code>string</code></td>
+    <td>Filter string to search principals.</td>
+</tr>
+<tr id="parameter-max_results">
+    <td><CopyableCode code="max_results" /></td>
+    <td><code>integer</code></td>
+    <td>Maximum number of permission assignments to return.</td>
+</tr>
+<tr id="parameter-page_token">
+    <td><CopyableCode code="page_token" /></td>
+    <td><code>string</code></td>
+    <td>Page token returned by previous call to retrieve the next page of results.</td>
+</tr>
 </tbody>
 </table>
 
@@ -179,6 +194,9 @@ principal
 FROM databricks_account.iam.workspace_assignment
 WHERE account_id = '{{ account_id }}' -- required
 AND workspace_id = '{{ workspace_id }}' -- required
+AND filter = '{{ filter }}'
+AND max_results = '{{ max_results }}'
+AND page_token = '{{ page_token }}'
 ;
 ```
 </TabItem>

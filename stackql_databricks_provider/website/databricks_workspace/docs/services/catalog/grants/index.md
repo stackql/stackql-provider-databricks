@@ -58,6 +58,11 @@ The following fields are returned by `SELECT` queries:
         "description": ""
       },
       {
+        "name": "principal_id",
+        "type": "integer",
+        "description": "Unique identifier of the principal. For active principals, both ``principal`` and ``principal_id`` are present."
+      },
+      {
         "name": "privileges",
         "type": "array",
         "description": "The privileges assigned to the principal."
@@ -87,7 +92,7 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-securable_type"><code>securable_type</code></a>, <a href="#parameter-full_name"><code>full_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td><a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a>, <a href="#parameter-principal"><code>principal</code></a></td>
+    <td><a href="#parameter-include_deleted_principals"><code>include_deleted_principals</code></a>, <a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a>, <a href="#parameter-principal"><code>principal</code></a></td>
     <td>Gets the permissions for a securable. Does not include inherited permissions.</td>
 </tr>
 <tr>
@@ -128,6 +133,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>Type of securable.</td>
 </tr>
+<tr id="parameter-include_deleted_principals">
+    <td><CopyableCode code="include_deleted_principals" /></td>
+    <td><code>boolean</code></td>
+    <td>Optional. If true, also return privilege assignments whose principals have been deleted.</td>
+</tr>
 <tr id="parameter-max_results">
     <td><CopyableCode code="max_results" /></td>
     <td><code>integer</code></td>
@@ -166,6 +176,7 @@ FROM databricks_workspace.catalog.grants
 WHERE securable_type = '{{ securable_type }}' -- required
 AND full_name = '{{ full_name }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
+AND include_deleted_principals = '{{ include_deleted_principals }}'
 AND max_results = '{{ max_results }}'
 AND page_token = '{{ page_token }}'
 AND principal = '{{ principal }}'
@@ -190,7 +201,8 @@ Updates the permissions for a securable.
 ```sql
 UPDATE databricks_workspace.catalog.grants
 SET 
-changes = '{{ changes }}'
+changes = '{{ changes }}',
+omit_permissions_in_response = {{ omit_permissions_in_response }}
 WHERE 
 securable_type = '{{ securable_type }}' --required
 AND full_name = '{{ full_name }}' --required

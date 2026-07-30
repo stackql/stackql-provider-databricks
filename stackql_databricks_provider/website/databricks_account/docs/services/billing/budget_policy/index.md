@@ -51,7 +51,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "policy_name",
     "type": "string",
-    "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as `databricks:default-policy`."
+    "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as ``databricks:default-policy``."
   },
   {
     "name": "binding_workspace_ids",
@@ -76,7 +76,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "policy_name",
     "type": "string",
-    "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as `databricks:default-policy`."
+    "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as ``databricks:default-policy``."
   },
   {
     "name": "binding_workspace_ids",
@@ -132,7 +132,7 @@ The following methods are available for this resource:
     <td><a href="#budget_policy_update"><CopyableCode code="budget_policy_update" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-account_id"><code>account_id</code></a>, <a href="#parameter-policy_id"><code>policy_id</code></a>, <a href="#parameter-policy"><code>policy</code></a></td>
-    <td><a href="#parameter-limit_config"><code>limit_config</code></a></td>
+    <td><a href="#parameter-limit_config"><code>limit_config</code></a>, <a href="#parameter-update_mask"><code>update_mask</code></a></td>
     <td>Updates a policy</td>
 </tr>
 <tr>
@@ -186,12 +186,17 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>A page token, received from a previous `ListServerlessPolicies` call. Provide this to retrieve the subsequent page. If unspecified, the first page will be returned. When paginating, all other parameters provided to `ListServerlessPoliciesRequest` must match the call that provided the page token.</td>
+    <td>A page token, received from a previous ``ListServerlessPolicies`` call. Provide this to retrieve the subsequent page. If unspecified, the first page will be returned. When paginating, all other parameters provided to ``ListServerlessPoliciesRequest`` must match the call that provided the page token.</td>
 </tr>
 <tr id="parameter-sort_spec">
     <td><CopyableCode code="sort_spec" /></td>
     <td><code>object</code></td>
     <td>The sort specification.</td>
+</tr>
+<tr id="parameter-update_mask">
+    <td><CopyableCode code="update_mask" /></td>
+    <td><code>string</code></td>
+    <td>Field mask specifying which fields to update. When not provided, all fields are updated.</td>
 </tr>
 </tbody>
 </table>
@@ -284,7 +289,7 @@ custom_tags
       description: Required parameter for the budget_policy resource.
     - name: policy
       description: |
-        The policy to create. \`policy_id\` needs to be empty as it will be generated \`policy_name\` must be provided, custom_tags may need to be provided depending on the cloud provider. All other fields are optional.
+        The policy to create. \`\`policy_id\`\` needs to be empty as it will be generated \`\`policy_name\`\` must be provided, custom_tags may need to be provided depending on the cloud provider. All other fields are optional.
       value:
         binding_workspace_ids:
           - {{ binding_workspace_ids }}
@@ -294,7 +299,7 @@ custom_tags
     - name: request_id
       value: "{{ request_id }}"
       description: |
-        A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is only idempotent if a \`request_id\` is provided.
+        A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is only idempotent if a \`\`request_id\`\` is provided.
 `}</CodeBlock>
 
 </TabItem>
@@ -322,6 +327,7 @@ account_id = '{{ account_id }}' --required
 AND policy_id = '{{ policy_id }}' --required
 AND policy = '{{ policy }}' --required
 AND limit_config = '{{ limit_config}}'
+AND update_mask = '{{ update_mask}}'
 RETURNING
 policy_id,
 policy_name,

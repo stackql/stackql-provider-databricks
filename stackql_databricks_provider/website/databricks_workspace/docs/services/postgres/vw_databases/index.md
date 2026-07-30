@@ -141,7 +141,7 @@ SELECT
   spec,
   JSON_EXTRACT(status, '$.postgres_database') AS postgres_database,
   SPLIT_PART(JSON_EXTRACT(status, '$.role'), '/', -1) AS role
-FROM databricks_workspace.postgres.databases
+FROM databricks_workspace.postgres.postgres_databases
 WHERE deployment_name = '{{ deployment_name }}'
 AND project_id = '{{ project_id }}'
 AND branch_id = '{{ branch_id }}'
@@ -158,7 +158,7 @@ SELECT
   spec,
   (status::jsonb)->>'postgres_database' AS postgres_database,
   SPLIT_PART((status::jsonb)->>'role', '/', -1) AS role
-FROM databricks_workspace.postgres.databases
+FROM databricks_workspace.postgres.postgres_databases
 WHERE deployment_name = '{{ deployment_name }}'
 AND project_id = '{{ project_id }}'
 AND branch_id = '{{ branch_id }}'

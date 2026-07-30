@@ -46,7 +46,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_id",
     "type": "string",
-    "description": "The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`. Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog Explorer] &gt; select the `schema` &gt; go to the `Details` tab &gt; the `Schema ID` field. Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog Explorer] &gt; select the `table` &gt; go to the `Details` tab &gt; the `Table ID` field. [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/ [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id"
+    "description": "The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``. Find the ``schema_id`` from either: 1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the ``Schemas`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``schema`` &gt; go to the ``Details`` tab &gt; the ``Schema ID`` field. Find the ``table_id`` from either: 1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the ``Tables`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``table`` &gt; go to the ``Details`` tab &gt; the ``Table ID`` field."
   },
   {
     "name": "refresh_id",
@@ -66,7 +66,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_type",
     "type": "string",
-    "description": "The type of the monitored object. Can be one of the following: `schema`or `table`."
+    "description": "The type of the monitored object. Can be one of the following: ``schema`` or ``table``."
   },
   {
     "name": "start_time_ms",
@@ -91,7 +91,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_id",
     "type": "string",
-    "description": "The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`. Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog Explorer] &gt; select the `schema` &gt; go to the `Details` tab &gt; the `Schema ID` field. Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog Explorer] &gt; select the `table` &gt; go to the `Details` tab &gt; the `Table ID` field. [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/ [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id"
+    "description": "The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``. Find the ``schema_id`` from either: 1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the ``Schemas`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``schema`` &gt; go to the ``Details`` tab &gt; the ``Schema ID`` field. Find the ``table_id`` from either: 1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the ``Tables`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``table`` &gt; go to the ``Details`` tab &gt; the ``Table ID`` field."
   },
   {
     "name": "refresh_id",
@@ -111,7 +111,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_type",
     "type": "string",
-    "description": "The type of the monitored object. Can be one of the following: `schema`or `table`."
+    "description": "The type of the monitored object. Can be one of the following: ``schema`` or ``table``."
   },
   {
     "name": "start_time_ms",
@@ -166,7 +166,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-object_type"><code>object_type</code></a>, <a href="#parameter-object_id"><code>object_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-refresh"><code>refresh</code></a></td>
     <td></td>
-    <td>Creates a refresh. Currently only supported for the `table` `object_type`. The call must be made in</td>
+    <td>Creates a refresh. Currently only supported for the ``table`` ``object_type``. The call must be made</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
@@ -187,7 +187,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-object_type"><code>object_type</code></a>, <a href="#parameter-object_id"><code>object_id</code></a>, <a href="#parameter-refresh_id"><code>refresh_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Cancels a data quality monitor refresh. Currently only supported for the `table` `object_type`. The</td>
+    <td>Cancels a data quality monitor refresh. Currently only supported for the ``table`` ``object_type``.</td>
 </tr>
 </tbody>
 </table>
@@ -213,12 +213,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-object_id">
     <td><CopyableCode code="object_id" /></td>
     <td><code>string</code></td>
-    <td>The UUID of the request object. It is `schema_id` for `schema`, and `table_id` for `table`. Find the `schema_id` from either: 1. The [schema_id] of the `Schemas` resource. 2. In [Catalog Explorer] &gt; select the `schema` &gt; go to the `Details` tab &gt; the `Schema ID` field. Find the `table_id` from either: 1. The [table_id] of the `Tables` resource. 2. In [Catalog Explorer] &gt; select the `table` &gt; go to the `Details` tab &gt; the `Table ID` field. [Catalog Explorer]: https://docs.databricks.com/aws/en/catalog-explorer/ [schema_id]: https://docs.databricks.com/api/workspace/schemas/get#schema_id [table_id]: https://docs.databricks.com/api/workspace/tables/get#table_id</td>
+    <td>The UUID of the request object. It is ``schema_id`` for ``schema``, and ``table_id`` for ``table``. Find the ``schema_id`` from either: 1. The `schema_id <https://docs.databricks.com/api/workspace/schemas/get#schema_id>`__ of the ``Schemas`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``schema`` &gt; go to the ``Details`` tab &gt; the ``Schema ID`` field. Find the ``table_id`` from either: 1. The `table_id <https://docs.databricks.com/api/workspace/tables/get#table_id>`__ of the ``Tables`` resource. 2. In `Catalog Explorer <https://docs.databricks.com/aws/en/catalog-explorer/>`__ &gt; select the ``table`` &gt; go to the ``Details`` tab &gt; the ``Table ID`` field.</td>
 </tr>
 <tr id="parameter-object_type">
     <td><CopyableCode code="object_type" /></td>
     <td><code>string</code></td>
-    <td>The type of the monitored object. Can be one of the following: `schema` or `table`.</td>
+    <td>The type of the monitored object. Can be one of the following: ``schema`` or ``table``.</td>
 </tr>
 <tr id="parameter-refresh_id">
     <td><CopyableCode code="refresh_id" /></td>
@@ -311,7 +311,7 @@ AND page_token = '{{ page_token }}'
 >
 <TabItem value="create">
 
-Creates a refresh. Currently only supported for the `table` `object_type`. The call must be made in
+Creates a refresh. Currently only supported for the ``table`` ``object_type``. The call must be made
 
 ```sql
 INSERT INTO databricks_workspace.dataquality.data_quality_refreshes (
@@ -440,7 +440,7 @@ AND deployment_name = '{{ deployment_name }}' --required
 >
 <TabItem value="cancel">
 
-Cancels a data quality monitor refresh. Currently only supported for the `table` `object_type`. The
+Cancels a data quality monitor refresh. Currently only supported for the ``table`` ``object_type``.
 
 ```sql
 EXEC databricks_workspace.dataquality.data_quality_refreshes.cancel 

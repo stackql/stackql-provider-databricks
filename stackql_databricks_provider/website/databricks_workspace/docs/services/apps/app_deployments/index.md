@@ -126,6 +126,16 @@ The following fields are returned by `SELECT` queries:
             "name": "provider",
             "type": "string",
             "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+          },
+          {
+            "name": "auto_deploy",
+            "type": "boolean",
+            "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+          },
+          {
+            "name": "caller_credential_id",
+            "type": "integer",
+            "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
           }
         ]
       },
@@ -154,7 +164,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "source_code_path",
     "type": "string",
-    "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+    "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
   },
   {
     "name": "status",
@@ -266,6 +276,16 @@ The following fields are returned by `SELECT` queries:
             "name": "provider",
             "type": "string",
             "description": "Git provider. Case insensitive. Supported values: gitHub, gitHubEnterprise, bitbucketCloud, bitbucketServer, azureDevOpsServices, gitLab, gitLabEnterpriseEdition, awsCodeCommit."
+          },
+          {
+            "name": "auto_deploy",
+            "type": "boolean",
+            "description": "When true, automatically deploys the app on push events to the branch configured in the app's deployment_source.git_source."
+          },
+          {
+            "name": "caller_credential_id",
+            "type": "integer",
+            "description": "ID of a personal access token Git credential owned by the caller, used to grant the app's service principal access to this repository."
           }
         ]
       },
@@ -294,7 +314,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "source_code_path",
     "type": "string",
-    "description": "The workspace file system path of the source code used to create the app deployment. This is different from `deployment_artifacts.source_code_path`, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
+    "description": "The workspace file system path of the source code used to create the app deployment. This is different from ``deployment_artifacts.source_code_path``, which is the path used by the deployed app. The former refers to the original source code location of the app in the workspace during deployment creation, whereas the latter provides a system generated stable snapshotted source code path used by the deployment."
   },
   {
     "name": "status",
@@ -533,6 +553,8 @@ update_time
           git_repository:
             url: "{{ url }}"
             provider: "{{ provider }}"
+            auto_deploy: {{ auto_deploy }}
+            caller_credential_id: {{ caller_credential_id }}
           resolved_commit: "{{ resolved_commit }}"
           source_code_path: "{{ source_code_path }}"
           tag: "{{ tag }}"

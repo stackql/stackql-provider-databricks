@@ -152,7 +152,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-run_uuid">
     <td><CopyableCode code="run_uuid" /></td>
     <td><code>string</code></td>
-    <td>[Deprecated, use `run_id` instead] ID of the run from which to fetch metric values. This field will be removed in a future MLflow version.</td>
+    <td>[Deprecated, use ``run_id`` instead] ID of the run from which to fetch metric values. This field will be removed in a future MLflow version.</td>
 </tr>
 </tbody>
 </table>

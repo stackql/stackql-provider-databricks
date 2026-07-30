@@ -104,7 +104,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-resource">
     <td><CopyableCode code="resource" /></td>
     <td><code>string</code></td>
-    <td>The resource name for which assignable roles will be listed. Examples | Summary :--- | :--- `resource=accounts/<ACCOUNT_ID>` | A resource name for the account. `resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>` | A resource name for the group. `resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SP_ID>` | A resource name for the service principal. `resource=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>` | A resource name for the tag policy.</td>
+    <td>The resource name for which assignable roles will be listed. Examples | Summary :--- | :--- ``resource=accounts/&lt;ACCOUNT_ID&gt;`` | A resource name for the account. ``resource=accounts/&lt;ACCOUNT_ID&gt;/groups/&lt;GROUP_ID&gt;`` | A resource name for the group. ``resource=accounts/&lt;ACCOUNT_ID&gt;/servicePrincipals/&lt;SP_ID&gt;`` | A resource name for the service principal. ``resource=accounts/&lt;ACCOUNT_ID&gt;/tagPolicies/&lt;TAG_POLICY_ID&gt;`` | A resource name for the tag policy.</td>
 </tr>
 </tbody>
 </table>

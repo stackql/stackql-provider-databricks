@@ -93,7 +93,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "access_connector_id",
         "type": "string",
-        "description": "The Azure resource ID of the Azure Databricks Access Connector. Use the format `/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.Databricks/accessConnectors/&#123;connector-name&#125;`."
+        "description": "The Azure resource ID of the Azure Databricks Access Connector. Use the format ``/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.Databricks/accessConnectors/&#123;connector-name&#125;``."
       },
       {
         "name": "credential_id",
@@ -103,7 +103,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "managed_identity_id",
         "type": "string",
-        "description": "The Azure resource ID of the managed identity. Use the format, `/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/&#123;identity-name&#125;` This is only available for user-assgined identities. For system-assigned identities, the access_connector_id is used to identify the identity. If this field is not provided, then we assume the AzureManagedIdentity is using the system-assigned identity."
+        "description": "The Azure resource ID of the managed identity. Use the format, ``/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/&#123;identity-name&#125;`` This is only available for user-assgined identities. For system-assigned identities, the access_connector_id is used to identify the identity. If this field is not provided, then we assume the AzureManagedIdentity is using the system-assigned identity."
       }
     ]
   },
@@ -169,7 +169,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN, ISOLATION_MODE_OPEN_IN_ACCOUNT)"
   },
   {
     "name": "owner",
@@ -256,7 +256,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "access_connector_id",
         "type": "string",
-        "description": "The Azure resource ID of the Azure Databricks Access Connector. Use the format `/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.Databricks/accessConnectors/&#123;connector-name&#125;`."
+        "description": "The Azure resource ID of the Azure Databricks Access Connector. Use the format ``/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.Databricks/accessConnectors/&#123;connector-name&#125;``."
       },
       {
         "name": "credential_id",
@@ -266,7 +266,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "managed_identity_id",
         "type": "string",
-        "description": "The Azure resource ID of the managed identity. Use the format, `/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/&#123;identity-name&#125;` This is only available for user-assgined identities. For system-assigned identities, the access_connector_id is used to identify the identity. If this field is not provided, then we assume the AzureManagedIdentity is using the system-assigned identity."
+        "description": "The Azure resource ID of the managed identity. Use the format, ``/subscriptions/&#123;guid&#125;/resourceGroups/&#123;rg-name&#125;/providers/Microsoft.ManagedIdentity/userAssignedIdentities/&#123;identity-name&#125;`` This is only available for user-assgined identities. For system-assigned identities, the access_connector_id is used to identify the identity. If this field is not provided, then we assume the AzureManagedIdentity is using the system-assigned identity."
       }
     ]
   },
@@ -332,7 +332,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "isolation_mode",
     "type": "string",
-    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN)"
+    "description": "Whether the current securable is accessible from all workspaces or a specific set of workspaces. (ISOLATION_MODE_ISOLATED, ISOLATION_MODE_OPEN, ISOLATION_MODE_OPEN_IN_ACCOUNT)"
   },
   {
     "name": "owner",
@@ -395,7 +395,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td></td>
     <td><a href="#parameter-include_unbound"><code>include_unbound</code></a>, <a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a>, <a href="#parameter-purpose"><code>purpose</code></a></td>
-    <td>Gets an array of credentials (as __CredentialInfo__ objects).</td>
+    <td>Gets an array of credentials (as **CredentialInfo** objects).</td>
 </tr>
 <tr>
     <td><a href="#create_credential"><CopyableCode code="create_credential" /></a></td>
@@ -403,20 +403,6 @@ The following methods are available for this resource:
     <td><a href="#parameter-name"><code>name</code></a></td>
     <td></td>
     <td>Creates a new credential. The type of credential to be created is determined by the **purpose** field,</td>
-</tr>
-<tr>
-    <td><a href="#credentials_generate_temporary_service_credential"><CopyableCode code="credentials_generate_temporary_service_credential" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td><a href="#parameter-credential_name"><code>credential_name</code></a></td>
-    <td></td>
-    <td>Returns a set of temporary credentials generated using the specified service credential. The caller</td>
-</tr>
-<tr>
-    <td><a href="#credentials_validate_credential"><CopyableCode code="credentials_validate_credential" /></a></td>
-    <td><CopyableCode code="insert" /></td>
-    <td></td>
-    <td></td>
-    <td>Validates a credential.</td>
 </tr>
 <tr>
     <td><a href="#update_credential"><CopyableCode code="update_credential" /></a></td>
@@ -431,6 +417,20 @@ The following methods are available for this resource:
     <td><a href="#parameter-name_arg"><code>name_arg</code></a></td>
     <td><a href="#parameter-force"><code>force</code></a></td>
     <td>Deletes a service or storage credential from the metastore. The caller must be an owner of the</td>
+</tr>
+<tr>
+    <td><a href="#generate_temporary_service_credential"><CopyableCode code="generate_temporary_service_credential" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td><a href="#parameter-credential_name"><code>credential_name</code></a></td>
+    <td></td>
+    <td>Returns a set of temporary credentials generated using the specified service credential. The caller</td>
+</tr>
+<tr>
+    <td><a href="#validate"><CopyableCode code="validate" /></a></td>
+    <td><CopyableCode code="exec" /></td>
+    <td></td>
+    <td></td>
+    <td>Validates a credential.</td>
 </tr>
 </tbody>
 </table>
@@ -521,7 +521,7 @@ WHERE name_arg = '{{ name_arg }}' -- required
 </TabItem>
 <TabItem value="list_credentials">
 
-Gets an array of credentials (as __CredentialInfo__ objects).
+Gets an array of credentials (as **CredentialInfo** objects).
 
 ```sql
 SELECT
@@ -560,8 +560,6 @@ AND purpose = '{{ purpose }}'
     defaultValue="create_credential"
     values={[
         { label: 'create_credential', value: 'create_credential' },
-        { label: 'credentials_generate_temporary_service_credential', value: 'credentials_generate_temporary_service_credential' },
-        { label: 'credentials_validate_credential', value: 'credentials_validate_credential' },
         { label: 'Manifest', value: 'manifest' }
     ]}
 >
@@ -613,58 +611,6 @@ used_for_managed_storage
 ;
 ```
 </TabItem>
-<TabItem value="credentials_generate_temporary_service_credential">
-
-Returns a set of temporary credentials generated using the specified service credential. The caller
-
-```sql
-INSERT INTO databricks_account.catalog.credentials (
-credential_name,
-azure_options,
-gcp_options
-)
-SELECT 
-'{{ credential_name }}' /* required */,
-'{{ azure_options }}',
-'{{ gcp_options }}'
-RETURNING
-aws_temp_credentials,
-azure_aad,
-expiration_time,
-gcp_oauth_token
-;
-```
-</TabItem>
-<TabItem value="credentials_validate_credential">
-
-Validates a credential.
-
-```sql
-INSERT INTO databricks_account.catalog.credentials (
-aws_iam_role,
-azure_managed_identity,
-credential_name,
-databricks_gcp_service_account,
-external_location_name,
-purpose,
-read_only,
-url
-)
-SELECT 
-'{{ aws_iam_role }}',
-'{{ azure_managed_identity }}',
-'{{ credential_name }}',
-'{{ databricks_gcp_service_account }}',
-'{{ external_location_name }}',
-'{{ purpose }}',
-{{ read_only }},
-'{{ url }}'
-RETURNING
-isDir,
-results
-;
-```
-</TabItem>
 <TabItem value="manifest">
 
 <CodeBlock language="yaml">{`# Description fields are for documentation purposes
@@ -676,7 +622,7 @@ results
         The credential name. The name must be unique among storage and service credentials within the metastore.
     - name: aws_iam_role
       description: |
-        The AWS IAM role configuration
+        The AWS IAM role configuration.
       value:
         external_id: "{{ external_id }}"
         role_arn: "{{ role_arn }}"
@@ -701,7 +647,7 @@ results
         Comment associated with the credential.
     - name: databricks_gcp_service_account
       description: |
-        GCP long-lived credential. Databricks-created Google Cloud Storage service account.
+        The Databricks managed GCP service account configuration.
       value:
         credential_id: "{{ credential_id }}"
         email: "{{ email }}"
@@ -709,39 +655,15 @@ results
     - name: purpose
       value: "{{ purpose }}"
       description: |
-        The purpose of the credential. This should only be used when the credential is specified.
+        Indicates the purpose of the credential.
     - name: read_only
       value: {{ read_only }}
       description: |
-        Whether the credential is only usable for read operations. Only applicable for storage credentials (purpose is **STORAGE**.)
+        Whether the credential is usable only for read operations. Only applicable when purpose is **STORAGE**.
     - name: skip_validation
       value: {{ skip_validation }}
       description: |
         Optional. Supplying true to this argument skips validation of the created set of credentials.
-    - name: credential_name
-      value: "{{ credential_name }}"
-      description: |
-        Required. The name of an existing credential or long-lived cloud credential to validate.
-    - name: azure_options
-      description: |
-        The Azure cloud options to customize the requested temporary credential
-      value:
-        resources:
-          - "{{ resources }}"
-    - name: gcp_options
-      description: |
-        The GCP cloud options to customize the requested temporary credential
-      value:
-        scopes:
-          - "{{ scopes }}"
-    - name: external_location_name
-      value: "{{ external_location_name }}"
-      description: |
-        The name of an existing external location to validate. Only applicable for storage credentials (purpose is **STORAGE**.)
-    - name: url
-      value: "{{ url }}"
-      description: |
-        The external location url to validate. Only applicable when purpose is **STORAGE**.
 `}</CodeBlock>
 
 </TabItem>
@@ -816,6 +738,53 @@ Deletes a service or storage credential from the metastore. The caller must be a
 DELETE FROM databricks_account.catalog.credentials
 WHERE name_arg = '{{ name_arg }}' --required
 AND force = '{{ force }}'
+;
+```
+</TabItem>
+</Tabs>
+
+
+## Lifecycle Methods
+
+<Tabs
+    defaultValue="generate_temporary_service_credential"
+    values={[
+        { label: 'generate_temporary_service_credential', value: 'generate_temporary_service_credential' },
+        { label: 'validate', value: 'validate' }
+    ]}
+>
+<TabItem value="generate_temporary_service_credential">
+
+Returns a set of temporary credentials generated using the specified service credential. The caller
+
+```sql
+EXEC databricks_account.catalog.credentials.generate_temporary_service_credential 
+@@json=
+'{
+"credential_name": "{{ credential_name }}", 
+"azure_options": "{{ azure_options }}", 
+"gcp_options": "{{ gcp_options }}"
+}'
+;
+```
+</TabItem>
+<TabItem value="validate">
+
+Validates a credential.
+
+```sql
+EXEC databricks_account.catalog.credentials.validate 
+@@json=
+'{
+"aws_iam_role": "{{ aws_iam_role }}", 
+"azure_managed_identity": "{{ azure_managed_identity }}", 
+"credential_name": "{{ credential_name }}", 
+"databricks_gcp_service_account": "{{ databricks_gcp_service_account }}", 
+"external_location_name": "{{ external_location_name }}", 
+"purpose": "{{ purpose }}", 
+"read_only": {{ read_only }}, 
+"url": "{{ url }}"
+}'
 ;
 ```
 </TabItem>

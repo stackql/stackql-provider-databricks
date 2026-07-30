@@ -56,7 +56,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "data_source_id",
     "type": "string",
-    "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+    "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. `Learn more <https://docs.databricks.com/api/workspace/datasources/list>`__"
   },
   {
     "name": "last_modified_by_id",
@@ -91,7 +91,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "is_archived",
     "type": "boolean",
-    "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is `true`, the `options` property for this query includes a `moved_to_trash_at` timestamp. Trashed queries are permanently deleted after 30 days."
+    "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is ``true``, the ``options`` property for this query includes a ``moved_to_trash_at`` timestamp. Trashed queries are permanently deleted after 30 days."
   },
   {
     "name": "is_draft",
@@ -106,7 +106,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "is_safe",
     "type": "boolean",
-    "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to `true` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
+    "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to ``true`` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
   },
   {
     "name": "last_modified_by",
@@ -143,7 +143,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "moved_to_trash_at",
         "type": "string",
-        "description": "The timestamp when this query was moved to trash. Only present when the `is_archived` property is `true`. Trashed items are deleted after thirty days."
+        "description": "The timestamp when this query was moved to trash. Only present when the ``is_archived`` property is ``true``. Trashed items are deleted after thirty days."
       },
       {
         "name": "parameters",
@@ -219,7 +219,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "permission_tier",
     "type": "string",
-    "description": "* `CAN_VIEW`: Can view the query * `CAN_RUN`: Can run the query * `CAN_EDIT`: Can edit the query * `CAN_MANAGE`: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
+    "description": "- ``CAN_VIEW``: Can view the query - ``CAN_RUN``: Can run the query - ``CAN_EDIT``: Can edit the query - ``CAN_MANAGE``: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
   },
   {
     "name": "query",
@@ -234,7 +234,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "run_as_role",
     "type": "string",
-    "description": "Sets the **Run as** role for the object. Must be set to one of `\"viewer\"` (signifying \"run as viewer\" behavior) or `\"owner\"` (signifying \"run as owner\" behavior) (owner, viewer)"
+    "description": "Sets the **Run as** role for the object. Must be set to one of ``\"viewer\"`` (signifying \"run as viewer\" behavior) or ``\"owner\"`` (signifying \"run as owner\" behavior) (owner, viewer)"
   },
   {
     "name": "tags",
@@ -316,7 +316,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "data_source_id",
             "type": "string",
-            "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+            "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. `Learn more <https://docs.databricks.com/api/workspace/datasources/list>`__"
           },
           {
             "name": "description",
@@ -331,7 +331,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "is_archived",
             "type": "boolean",
-            "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is `true`, the `options` property for this query includes a `moved_to_trash_at` timestamp. Trashed queries are permanently deleted after 30 days."
+            "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is ``true``, the ``options`` property for this query includes a ``moved_to_trash_at`` timestamp. Trashed queries are permanently deleted after 30 days."
           },
           {
             "name": "is_draft",
@@ -346,7 +346,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "is_safe",
             "type": "boolean",
-            "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to `true` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
+            "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to ``true`` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
           },
           {
             "name": "last_modified_by",
@@ -398,7 +398,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "moved_to_trash_at",
                 "type": "string",
-                "description": "The timestamp when this query was moved to trash. Only present when the `is_archived` property is `true`. Trashed items are deleted after thirty days."
+                "description": "The timestamp when this query was moved to trash. Only present when the ``is_archived`` property is ``true``. Trashed items are deleted after thirty days."
               },
               {
                 "name": "parameters",
@@ -420,7 +420,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "permission_tier",
             "type": "string",
-            "description": "* `CAN_VIEW`: Can view the query * `CAN_RUN`: Can run the query * `CAN_EDIT`: Can edit the query * `CAN_MANAGE`: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
+            "description": "- ``CAN_VIEW``: Can view the query - ``CAN_RUN``: Can run the query - ``CAN_EDIT``: Can edit the query - ``CAN_MANAGE``: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
           },
           {
             "name": "query",
@@ -435,7 +435,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "run_as_role",
             "type": "string",
-            "description": "Sets the **Run as** role for the object. Must be set to one of `\"viewer\"` (signifying \"run as viewer\" behavior) or `\"owner\"` (signifying \"run as owner\" behavior) (owner, viewer)"
+            "description": "Sets the **Run as** role for the object. Must be set to one of ``\"viewer\"`` (signifying \"run as viewer\" behavior) or ``\"owner\"`` (signifying \"run as owner\" behavior) (owner, viewer)"
           },
           {
             "name": "tags",
@@ -553,7 +553,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "data_source_id",
     "type": "string",
-    "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+    "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. `Learn more <https://docs.databricks.com/api/workspace/datasources/list>`__"
   },
   {
     "name": "last_modified_by_id",
@@ -588,7 +588,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "is_archived",
     "type": "boolean",
-    "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is `true`, the `options` property for this query includes a `moved_to_trash_at` timestamp. Trashed queries are permanently deleted after 30 days."
+    "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is ``true``, the ``options`` property for this query includes a ``moved_to_trash_at`` timestamp. Trashed queries are permanently deleted after 30 days."
   },
   {
     "name": "is_draft",
@@ -603,7 +603,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "is_safe",
     "type": "boolean",
-    "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to `true` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
+    "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to ``true`` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
   },
   {
     "name": "last_modified_by",
@@ -640,7 +640,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "moved_to_trash_at",
         "type": "string",
-        "description": "The timestamp when this query was moved to trash. Only present when the `is_archived` property is `true`. Trashed items are deleted after thirty days."
+        "description": "The timestamp when this query was moved to trash. Only present when the ``is_archived`` property is ``true``. Trashed items are deleted after thirty days."
       },
       {
         "name": "parameters",
@@ -716,7 +716,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "permission_tier",
     "type": "string",
-    "description": "* `CAN_VIEW`: Can view the query * `CAN_RUN`: Can run the query * `CAN_EDIT`: Can edit the query * `CAN_MANAGE`: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
+    "description": "- ``CAN_VIEW``: Can view the query - ``CAN_RUN``: Can run the query - ``CAN_EDIT``: Can edit the query - ``CAN_MANAGE``: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
   },
   {
     "name": "query",
@@ -731,7 +731,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "run_as_role",
     "type": "string",
-    "description": "Sets the **Run as** role for the object. Must be set to one of `\"viewer\"` (signifying \"run as viewer\" behavior) or `\"owner\"` (signifying \"run as owner\" behavior) (owner, viewer)"
+    "description": "Sets the **Run as** role for the object. Must be set to one of ``\"viewer\"`` (signifying \"run as viewer\" behavior) or ``\"owner\"`` (signifying \"run as owner\" behavior) (owner, viewer)"
   },
   {
     "name": "tags",
@@ -813,7 +813,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "data_source_id",
             "type": "string",
-            "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+            "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. `Learn more <https://docs.databricks.com/api/workspace/datasources/list>`__"
           },
           {
             "name": "description",
@@ -828,7 +828,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "is_archived",
             "type": "boolean",
-            "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is `true`, the `options` property for this query includes a `moved_to_trash_at` timestamp. Trashed queries are permanently deleted after 30 days."
+            "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is ``true``, the ``options`` property for this query includes a ``moved_to_trash_at`` timestamp. Trashed queries are permanently deleted after 30 days."
           },
           {
             "name": "is_draft",
@@ -843,7 +843,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "is_safe",
             "type": "boolean",
-            "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to `true` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
+            "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to ``true`` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
           },
           {
             "name": "last_modified_by",
@@ -895,7 +895,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "moved_to_trash_at",
                 "type": "string",
-                "description": "The timestamp when this query was moved to trash. Only present when the `is_archived` property is `true`. Trashed items are deleted after thirty days."
+                "description": "The timestamp when this query was moved to trash. Only present when the ``is_archived`` property is ``true``. Trashed items are deleted after thirty days."
               },
               {
                 "name": "parameters",
@@ -917,7 +917,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "permission_tier",
             "type": "string",
-            "description": "* `CAN_VIEW`: Can view the query * `CAN_RUN`: Can run the query * `CAN_EDIT`: Can edit the query * `CAN_MANAGE`: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
+            "description": "- ``CAN_VIEW``: Can view the query - ``CAN_RUN``: Can run the query - ``CAN_EDIT``: Can edit the query - ``CAN_MANAGE``: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
           },
           {
             "name": "query",
@@ -932,7 +932,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "run_as_role",
             "type": "string",
-            "description": "Sets the **Run as** role for the object. Must be set to one of `\"viewer\"` (signifying \"run as viewer\" behavior) or `\"owner\"` (signifying \"run as owner\" behavior) (owner, viewer)"
+            "description": "Sets the **Run as** role for the object. Must be set to one of ``\"viewer\"`` (signifying \"run as viewer\" behavior) or ``\"owner\"`` (signifying \"run as owner\" behavior) (owner, viewer)"
           },
           {
             "name": "tags",
@@ -1122,7 +1122,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-order">
     <td><CopyableCode code="order" /></td>
     <td><code>string</code></td>
-    <td>Name of query attribute to order by. Default sort order is ascending. Append a dash (`-`) to order descending instead. - `name`: The name of the query. - `created_at`: The timestamp the query was created. - `runtime`: The time it took to run this query. This is blank for parameterized queries. A blank value is treated as the highest value for sorting. - `executed_at`: The timestamp when the query was last run. - `created_by`: The user name of the user that created the query.</td>
+    <td>Name of query attribute to order by. Default sort order is ascending. Append a dash (``-``) to order descending instead. - ``name``: The name of the query. - ``created_at``: The timestamp the query was created. - ``runtime``: The time it took to run this query. This is blank for parameterized queries. A blank value is treated as the highest value for sorting. - ``executed_at``: The timestamp when the query was last run. - ``created_by``: The user name of the user that created the query.</td>
 </tr>
 <tr id="parameter-page">
     <td><CopyableCode code="page" /></td>
@@ -1303,7 +1303,7 @@ visualizations
     - name: data_source_id
       value: "{{ data_source_id }}"
       description: |
-        Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list
+        Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. \`Learn more <https://docs.databricks.com/api/workspace/datasources/list>\`__
     - name: description
       value: "{{ description }}"
       description: |
@@ -1315,7 +1315,7 @@ visualizations
     - name: options
       value: "{{ options }}"
       description: |
-        Exclusively used for storing a list parameter definitions. A parameter is an object with \`title\`, \`name\`, \`type\`, and \`value\` properties. The \`value\` field here is the default value. It can be overridden at runtime.
+        Exclusively used for storing a list parameter definitions. A parameter is an object with \`\`title\`\`, \`\`name\`\`, \`\`type\`\`, and \`\`value\`\` properties. The \`\`value\`\` field here is the default value. It can be overridden at runtime.
     - name: parent
       value: "{{ parent }}"
       description: |
@@ -1327,7 +1327,7 @@ visualizations
     - name: run_as_role
       value: "{{ run_as_role }}"
       description: |
-        Sets the **Run as** role for the object. Must be set to one of \`"viewer"\` (signifying "run as viewer" behavior) or \`"owner"\` (signifying "run as owner" behavior)
+        Sets the **Run as** role for the object. Must be set to one of \`\`"viewer"\`\` (signifying "run as viewer" behavior) or \`\`"owner"\`\` (signifying "run as owner" behavior)
     - name: tags
       value:
         - "{{ tags }}"

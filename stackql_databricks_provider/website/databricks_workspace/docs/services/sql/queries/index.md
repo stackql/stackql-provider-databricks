@@ -140,7 +140,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "date_value",
         "type": "object",
-        "description": "Date query parameter value. Can only specify one of `dynamic_date_value` or `date_value`.",
+        "description": "Date query parameter value. Can only specify one of ``dynamic_date_value`` or ``date_value``.",
         "children": [
           {
             "name": "date_value",
@@ -405,7 +405,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "date_value",
         "type": "object",
-        "description": "Date query parameter value. Can only specify one of `dynamic_date_value` or `date_value`.",
+        "description": "Date query parameter value. Can only specify one of ``dynamic_date_value`` or ``date_value``.",
         "children": [
           {
             "name": "date_value",

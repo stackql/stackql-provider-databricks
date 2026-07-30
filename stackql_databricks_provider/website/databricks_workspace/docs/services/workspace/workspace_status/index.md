@@ -58,9 +58,21 @@ The following fields are returned by `SELECT` queries:
     "description": "Only applicable to files. The creation UTC timestamp."
   },
   {
+    "name": "directory_info",
+    "type": "object",
+    "description": "Additional metadata about the directory. Only set for objects of type ``DIRECTORY``.",
+    "children": [
+      {
+        "name": "is_git_folder",
+        "type": "boolean",
+        "description": "Whether the directory is a Git folder, whose contents are version-controlled by a remote Git repository. How a Git folder is represented depends on whether it has Git CLI access: - A Git folder with Git CLI access has an object type of ``DIRECTORY``, with this field set to ``true``. - A standard Git folder, which does not have Git CLI access, has an object type of ``REPO`` and does not include this field. - A directory that is not Git-backed has this field set to ``false``. Use this field together with ``object_type`` to identify every Git folder in a workspace."
+      }
+    ]
+  },
+  {
     "name": "language",
     "type": "string",
-    "description": "The language of the object. This value is set only if the object type is ``NOTEBOOK``. (PYTHON, R, SCALA, SQL)"
+    "description": "The language of the object. This value is set only if the object type is ``NOTEBOOK``. For Jupyter (.ipynb) notebooks, this is always ``PYTHON``. (PYTHON, R, SCALA, SQL)"
   },
   {
     "name": "modified_at",
@@ -70,7 +82,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "object_type",
     "type": "string",
-    "description": "The type of the object in workspace. - `NOTEBOOK`: document that contains runnable code, visualizations, and explanatory text. - `DIRECTORY`: directory - `LIBRARY`: library - `FILE`: file - `REPO`: repository - `DASHBOARD`: Lakeview dashboard (DASHBOARD, DIRECTORY, FILE, LIBRARY, NOTEBOOK, REPO)"
+    "description": "The type of the object in workspace. - ``NOTEBOOK``: document that contains runnable code, visualizations, and explanatory text. - ``DIRECTORY``: directory - ``LIBRARY``: library - ``FILE``: file - ``REPO``: repository - ``DASHBOARD``: Lakeview dashboard (DASHBOARD, DIRECTORY, FILE, LIBRARY, NOTEBOOK, REPO)"
   },
   {
     "name": "path",
@@ -106,7 +118,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-path"><code>path</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Gets the status of an object or a directory. If `path` does not exist, this call returns an error</td>
+    <td>Gets the status of an object or a directory. If ``path`` does not exist, this call returns an error</td>
 </tr>
 </tbody>
 </table>
@@ -147,13 +159,14 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Gets the status of an object or a directory. If `path` does not exist, this call returns an error
+Gets the status of an object or a directory. If ``path`` does not exist, this call returns an error
 
 ```sql
 SELECT
 object_id,
 resource_id,
 created_at,
+directory_info,
 language,
 modified_at,
 object_type,

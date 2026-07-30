@@ -51,22 +51,27 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "data_provider_global_metastore_id",
     "type": "string",
-    "description": "The global UC metastore id of the data provider. This field is only present when the __authentication_type__ is **DATABRICKS**. The identifier is of format __cloud__:__region__:__metastore-uuid__."
+    "description": "The global UC metastore id of the data provider. This field is only present when the **authentication_type** is **DATABRICKS**. The identifier is of format **cloud**:**region**:**metastore-uuid**."
+  },
+  {
+    "name": "email_recipient_id",
+    "type": "string",
+    "description": "The ID of the email recipient this provider is being created to accept. Only valid on DATABRICKS CreateProvider when accepting an email invite."
   },
   {
     "name": "metastore_id",
     "type": "string",
-    "description": "UUID of the provider's UC metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "UUID of the provider's UC metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "authentication_type",
     "type": "string",
-    "description": "The delta sharing authentication type. (DATABRICKS, OAUTH_CLIENT_CREDENTIALS, OIDC_FEDERATION, TOKEN)"
+    "description": "The delta sharing authentication type. (DATABRICKS, EMAIL, OAUTH_CLIENT_CREDENTIALS, OIDC_FEDERATION, TOKEN)"
   },
   {
     "name": "cloud",
     "type": "string",
-    "description": "Cloud vendor of the provider's UC metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Cloud vendor of the provider's UC metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "comment",
@@ -91,7 +96,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "recipient_profile",
     "type": "object",
-    "description": "The recipient profile. This field is only present when the authentication_type is `TOKEN` or `OAUTH_CLIENT_CREDENTIALS`.",
+    "description": "The recipient profile. This field is only present when the authentication_type is ``TOKEN`` or ``OAUTH_CLIENT_CREDENTIALS``.",
     "children": [
       {
         "name": "bearer_token",
@@ -113,12 +118,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "recipient_profile_str",
     "type": "string",
-    "description": "This field is required when the __authentication_type__ is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
+    "description": "This field is required when the **authentication_type** is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
   },
   {
     "name": "region",
     "type": "string",
-    "description": "Cloud region of the provider's UC metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Cloud region of the provider's UC metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "updated_at",
@@ -143,22 +148,27 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "data_provider_global_metastore_id",
     "type": "string",
-    "description": "The global UC metastore id of the data provider. This field is only present when the __authentication_type__ is **DATABRICKS**. The identifier is of format __cloud__:__region__:__metastore-uuid__."
+    "description": "The global UC metastore id of the data provider. This field is only present when the **authentication_type** is **DATABRICKS**. The identifier is of format **cloud**:**region**:**metastore-uuid**."
+  },
+  {
+    "name": "email_recipient_id",
+    "type": "string",
+    "description": "The ID of the email recipient this provider is being created to accept. Only valid on DATABRICKS CreateProvider when accepting an email invite."
   },
   {
     "name": "metastore_id",
     "type": "string",
-    "description": "UUID of the provider's UC metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "UUID of the provider's UC metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "authentication_type",
     "type": "string",
-    "description": "The delta sharing authentication type. (DATABRICKS, OAUTH_CLIENT_CREDENTIALS, OIDC_FEDERATION, TOKEN)"
+    "description": "The delta sharing authentication type. (DATABRICKS, EMAIL, OAUTH_CLIENT_CREDENTIALS, OIDC_FEDERATION, TOKEN)"
   },
   {
     "name": "cloud",
     "type": "string",
-    "description": "Cloud vendor of the provider's UC metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Cloud vendor of the provider's UC metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "comment",
@@ -183,7 +193,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "recipient_profile",
     "type": "object",
-    "description": "The recipient profile. This field is only present when the authentication_type is `TOKEN` or `OAUTH_CLIENT_CREDENTIALS`.",
+    "description": "The recipient profile. This field is only present when the authentication_type is ``TOKEN`` or ``OAUTH_CLIENT_CREDENTIALS``.",
     "children": [
       {
         "name": "bearer_token",
@@ -205,12 +215,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "recipient_profile_str",
     "type": "string",
-    "description": "This field is required when the __authentication_type__ is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
+    "description": "This field is required when the **authentication_type** is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided."
   },
   {
     "name": "region",
     "type": "string",
-    "description": "Cloud region of the provider's UC metastore. This field is only present when the __authentication_type__ is **DATABRICKS**."
+    "description": "Cloud region of the provider's UC metastore. This field is only present when the **authentication_type** is **DATABRICKS**."
   },
   {
     "name": "updated_at",
@@ -337,6 +347,7 @@ Gets a specific authentication provider. The caller must supply the name of the 
 SELECT
 name,
 data_provider_global_metastore_id,
+email_recipient_id,
 metastore_id,
 authentication_type,
 cloud,
@@ -363,6 +374,7 @@ Gets an array of available authentication providers. The caller must either be a
 SELECT
 name,
 data_provider_global_metastore_id,
+email_recipient_id,
 metastore_id,
 authentication_type,
 cloud,
@@ -404,6 +416,7 @@ INSERT INTO databricks_workspace.sharing.providers (
 name,
 authentication_type,
 comment,
+email_recipient_id,
 recipient_profile_str,
 deployment_name
 )
@@ -411,11 +424,13 @@ SELECT
 '{{ name }}' /* required */,
 '{{ authentication_type }}' /* required */,
 '{{ comment }}',
+'{{ email_recipient_id }}',
 '{{ recipient_profile_str }}',
 '{{ deployment_name }}'
 RETURNING
 name,
 data_provider_global_metastore_id,
+email_recipient_id,
 metastore_id,
 authentication_type,
 cloud,
@@ -451,10 +466,14 @@ updated_by
       value: "{{ comment }}"
       description: |
         Description about the provider.
+    - name: email_recipient_id
+      value: "{{ email_recipient_id }}"
+      description: |
+        The ID of the email recipient this provider is being created to accept. Only valid on DATABRICKS CreateProvider when accepting an email invite.
     - name: recipient_profile_str
       value: "{{ recipient_profile_str }}"
       description: |
-        This field is required when the __authentication_type__ is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided.
+        This field is required when the **authentication_type** is **TOKEN**, **OAUTH_CLIENT_CREDENTIALS** or not provided.
 `}</CodeBlock>
 
 </TabItem>
@@ -486,6 +505,7 @@ AND deployment_name = '{{ deployment_name }}' --required
 RETURNING
 name,
 data_provider_global_metastore_id,
+email_recipient_id,
 metastore_id,
 authentication_type,
 cloud,

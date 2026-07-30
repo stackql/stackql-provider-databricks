@@ -145,7 +145,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "volume_type",
     "type": "string",
-    "description": "The type of the volume. An external volume is located in the specified external location. A managed volume is located in the default location which is specified by the parent schema, or the parent catalog, or the Metastore. [Learn more] [Learn more]: https://docs.databricks.com/aws/en/volumes/managed-vs-external (EXTERNAL, MANAGED)"
+    "description": "The type of the volume. An external volume is located in the specified external location. A managed volume is located in the default location which is specified by the parent schema, or the parent catalog, or the Metastore. `Learn more <https://docs.databricks.com/aws/en/volumes/managed-vs-external>`__ (EXTERNAL, MANAGED)"
   }
 ]} />
 </TabItem>
@@ -254,7 +254,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "volume_type",
     "type": "string",
-    "description": "The type of the volume. An external volume is located in the specified external location. A managed volume is located in the default location which is specified by the parent schema, or the parent catalog, or the Metastore. [Learn more] [Learn more]: https://docs.databricks.com/aws/en/volumes/managed-vs-external (EXTERNAL, MANAGED)"
+    "description": "The type of the volume. An external volume is located in the specified external location. A managed volume is located in the default location which is specified by the parent schema, or the parent catalog, or the Metastore. `Learn more <https://docs.databricks.com/aws/en/volumes/managed-vs-external>`__ (EXTERNAL, MANAGED)"
   }
 ]} />
 </TabItem>
@@ -514,7 +514,7 @@ volume_type
     - name: volume_type
       value: "{{ volume_type }}"
       description: |
-        The type of the volume. An external volume is located in the specified external location. A managed volume is located in the default location which is specified by the parent schema, or the parent catalog, or the Metastore. [Learn more] [Learn more]: https://docs.databricks.com/aws/en/volumes/managed-vs-external
+        The type of the volume. An external volume is located in the specified external location. A managed volume is located in the default location which is specified by the parent schema, or the parent catalog, or the Metastore. \`Learn more <https://docs.databricks.com/aws/en/volumes/managed-vs-external>\`__
     - name: comment
       value: "{{ comment }}"
       description: |

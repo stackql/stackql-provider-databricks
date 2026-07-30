@@ -106,7 +106,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "data_type",
     "type": "string",
-    "description": "Scalar function return data type. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+    "description": "Scalar function return data type. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FILE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLEREF_TYPE, TABLE_TYPE, TIME, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
   },
   {
     "name": "external_language",
@@ -141,7 +141,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "type_name",
             "type": "string",
-            "description": "Name of type (INT, STRUCT, MAP, etc.) (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+            "description": "Name of type (INT, STRUCT, MAP, etc.) (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FILE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLEREF_TYPE, TABLE_TYPE, TIME, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
           },
           {
             "name": "position",
@@ -240,7 +240,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "type_name",
             "type": "string",
-            "description": "Name of type (INT, STRUCT, MAP, etc.) (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+            "description": "Name of type (INT, STRUCT, MAP, etc.) (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FILE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLEREF_TYPE, TABLE_TYPE, TIME, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
           },
           {
             "name": "position",
@@ -319,7 +319,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "connection_name",
                 "type": "string",
-                "description": "Full name of the dependent connection, in the form of __connection_name__."
+                "description": "Full name of the dependent connection, in the form of **connection_name**."
               }
             ]
           },
@@ -331,7 +331,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "credential_name",
                 "type": "string",
-                "description": "Full name of the dependent credential, in the form of __credential_name__."
+                "description": "Full name of the dependent credential, in the form of **credential_name**."
               }
             ]
           },
@@ -343,7 +343,24 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "function_full_name",
                 "type": "string",
-                "description": "Full name of the dependent function, in the form of __catalog_name__.__schema_name__.__function_name__."
+                "description": "Full name of the dependent function, in the form of **catalog_name**.**schema_name**.**function_name**."
+              }
+            ]
+          },
+          {
+            "name": "metastore_name",
+            "type": "string",
+            "description": "Metastore context for the dependency. Global UC server responses currently populate this with the metastore UUID string so clients can disambiguate dependencies with identical names across metastores."
+          },
+          {
+            "name": "secret",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog secret.",
+            "children": [
+              {
+                "name": "secret_full_name",
+                "type": "string",
+                "description": "Full name of the dependent secret, in the form of **catalog_name**.**schema_name**.**secret_name**."
               }
             ]
           },
@@ -355,7 +372,19 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "table_full_name",
                 "type": "string",
-                "description": "Full name of the dependent table, in the form of __catalog_name__.__schema_name__.__table_name__."
+                "description": "Full name of the dependent table, in the form of **catalog_name**.**schema_name**.**table_name**."
+              }
+            ]
+          },
+          {
+            "name": "volume",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog volume.",
+            "children": [
+              {
+                "name": "volume_full_name",
+                "type": "string",
+                "description": "Full name of the dependent volume, in the form of **catalog_name**.**schema_name**.**volume_name**."
               }
             ]
           }
@@ -456,7 +485,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "data_type",
     "type": "string",
-    "description": "Scalar function return data type. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+    "description": "Scalar function return data type. (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FILE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLEREF_TYPE, TABLE_TYPE, TIME, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
   },
   {
     "name": "external_language",
@@ -491,7 +520,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "type_name",
             "type": "string",
-            "description": "Name of type (INT, STRUCT, MAP, etc.) (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+            "description": "Name of type (INT, STRUCT, MAP, etc.) (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FILE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLEREF_TYPE, TABLE_TYPE, TIME, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
           },
           {
             "name": "position",
@@ -590,7 +619,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "type_name",
             "type": "string",
-            "description": "Name of type (INT, STRUCT, MAP, etc.) (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLE_TYPE, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
+            "description": "Name of type (INT, STRUCT, MAP, etc.) (ARRAY, BINARY, BOOLEAN, BYTE, CHAR, DATE, DECIMAL, DOUBLE, FILE, FLOAT, GEOGRAPHY, GEOMETRY, INT, INTERVAL, LONG, MAP, NULL, SHORT, STRING, STRUCT, TABLEREF_TYPE, TABLE_TYPE, TIME, TIMESTAMP, TIMESTAMP_NTZ, USER_DEFINED_TYPE, VARIANT)"
           },
           {
             "name": "position",
@@ -669,7 +698,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "connection_name",
                 "type": "string",
-                "description": "Full name of the dependent connection, in the form of __connection_name__."
+                "description": "Full name of the dependent connection, in the form of **connection_name**."
               }
             ]
           },
@@ -681,7 +710,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "credential_name",
                 "type": "string",
-                "description": "Full name of the dependent credential, in the form of __credential_name__."
+                "description": "Full name of the dependent credential, in the form of **credential_name**."
               }
             ]
           },
@@ -693,7 +722,24 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "function_full_name",
                 "type": "string",
-                "description": "Full name of the dependent function, in the form of __catalog_name__.__schema_name__.__function_name__."
+                "description": "Full name of the dependent function, in the form of **catalog_name**.**schema_name**.**function_name**."
+              }
+            ]
+          },
+          {
+            "name": "metastore_name",
+            "type": "string",
+            "description": "Metastore context for the dependency. Global UC server responses currently populate this with the metastore UUID string so clients can disambiguate dependencies with identical names across metastores."
+          },
+          {
+            "name": "secret",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog secret.",
+            "children": [
+              {
+                "name": "secret_full_name",
+                "type": "string",
+                "description": "Full name of the dependent secret, in the form of **catalog_name**.**schema_name**.**secret_name**."
               }
             ]
           },
@@ -705,7 +751,19 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "table_full_name",
                 "type": "string",
-                "description": "Full name of the dependent table, in the form of __catalog_name__.__schema_name__.__table_name__."
+                "description": "Full name of the dependent table, in the form of **catalog_name**.**schema_name**.**table_name**."
+              }
+            ]
+          },
+          {
+            "name": "volume",
+            "type": "object",
+            "description": "A dependency on a Unity Catalog volume.",
+            "children": [
+              {
+                "name": "volume_full_name",
+                "type": "string",
+                "description": "Full name of the dependent volume, in the form of **catalog_name**.**schema_name**.**volume_name**."
               }
             ]
           }
@@ -821,7 +879,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-name">
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The fully-qualified name of the function (of the form __catalog_name__.__schema_name__.__function__name__) .</td>
+    <td>The fully-qualified name of the function (of the form **catalog_name**.**schema_name**.**function__name**) .</td>
 </tr>
 <tr id="parameter-schema_name">
     <td><CopyableCode code="schema_name" /></td>
@@ -1017,7 +1075,7 @@ updated_by
       description: Required parameter for the functions resource.
     - name: function_info
       description: |
-        Partial __FunctionInfo__ specifying the function to be created.
+        Partial **FunctionInfo** specifying the function to be created.
       value:
         name: "{{ name }}"
         catalog_name: "{{ catalog_name }}"
@@ -1072,8 +1130,13 @@ updated_by
                 credential_name: "{{ credential_name }}"
               function:
                 function_full_name: "{{ function_full_name }}"
+              metastore_name: "{{ metastore_name }}"
+              secret:
+                secret_full_name: "{{ secret_full_name }}"
               table:
                 table_full_name: "{{ table_full_name }}"
+              volume:
+                volume_full_name: "{{ volume_full_name }}"
         sql_path: "{{ sql_path }}"
 `}</CodeBlock>
 

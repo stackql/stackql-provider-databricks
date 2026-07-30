@@ -88,7 +88,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="insert" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Create provider analytics dashboard. Returns Marketplace specific `id`. Not to be confused with the</td>
+    <td>Create provider analytics dashboard. Returns Marketplace specific ``id``. Not to be confused with the</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
@@ -169,7 +169,7 @@ WHERE deployment_name = '{{ deployment_name }}' -- required
 >
 <TabItem value="create">
 
-Create provider analytics dashboard. Returns Marketplace specific `id`. Not to be confused with the
+Create provider analytics dashboard. Returns Marketplace specific ``id``. Not to be confused with the
 
 ```sql
 INSERT INTO databricks_workspace.marketplace.provider_provider_analytics_dashboards (

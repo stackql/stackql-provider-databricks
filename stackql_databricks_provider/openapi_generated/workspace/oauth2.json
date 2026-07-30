@@ -4,8 +4,8 @@
     "title": "Databricks Oauth2 API (workspace)",
     "description": "OpenAPI specification for the Databricks oauth2 service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.oauth2"
   },
   "servers": [
@@ -29,7 +29,7 @@
           "oauth2",
           "service_principal_secrets_proxy"
         ],
-        "description": "Create a secret for the given service principal.\n\n:param service_principal_id: str\n  The service principal ID.\n:param lifetime: str (optional)\n  The lifetime of the secret in seconds. If this parameter is not provided, the secret will have a\n  default lifetime of 730 days (63072000s).\n\n:returns: :class:`CreateServicePrincipalSecretResponse`",
+        "description": "Create a secret for the given service principal.\n\n:param service_principal_id: str\n  The service principal ID.\n:param lifetime: str (optional)\n  The lifetime of the secret in seconds. If this parameter is not provided, the secret will have a\n  default lifetime of 730 days (63072000s).\n:param scopes: List[str] (optional)\n  OAuth API scopes to bind to the secret; a minted token cannot exceed them. Empty = unrestricted\n  (all-apis). E.g. all-apis, sql, iam.groups:read.\n\n:returns: :class:`CreateServicePrincipalSecretResponse`",
         "parameters": [
           {
             "name": "service_principal_id",
@@ -50,6 +50,13 @@
                   "lifetime": {
                     "type": "string",
                     "description": "The lifetime of the secret in seconds. If this parameter is not provided, the secret will have a default lifetime of 730 days (63072000s)."
+                  },
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "OAuth API scopes to bind to the secret; a minted token cannot exceed them. Empty = unrestricted (all-apis). E.g. all-apis, sql, iam.groups:read."
                   }
                 }
               }
@@ -95,7 +102,7 @@
           "oauth2",
           "service_principal_secrets_proxy"
         ],
-        "description": "List all secrets associated with the given service principal. This operation only returns information\nabout the secrets themselves and does not include the secret values.\n\n:param service_principal_id: str\n  The service principal ID.\n:param page_size: int (optional)\n:param page_token: str (optional)\n  An opaque page token which was the `next_page_token` in the response of the previous request to list\n  the secrets for this service principal. Provide this token to retrieve the next page of secret\n  entries. When providing a `page_token`, all other parameters provided to the request must match the\n  previous request. To list all of the secrets for a service principal, it is necessary to continue\n  requesting pages of entries until the response contains no `next_page_token`. Note that the number\n  of entries returned must not be used to determine when the listing is complete.\n\n:returns: Iterator over :class:`SecretInfo`",
+        "description": "List all secrets associated with the given service principal. This operation only returns information\nabout the secrets themselves and does not include the secret values.\n\n:param service_principal_id: str\n  The service principal ID.\n:param page_size: int (optional)\n:param page_token: str (optional)\n  An opaque page token which was the ``next_page_token`` in the response of the previous request to\n  list the secrets for this service principal. Provide this token to retrieve the next page of secret\n  entries. When providing a ``page_token``, all other parameters provided to the request must match\n  the previous request. To list all of the secrets for a service principal, it is necessary to\n  continue requesting pages of entries until the response contains no ``next_page_token``. Note that\n  the number of entries returned must not be used to determine when the listing is complete.\n\n:returns: Iterator over :class:`SecretInfo`",
         "parameters": [
           {
             "name": "service_principal_id",
@@ -121,7 +128,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "An opaque page token which was the `next_page_token` in the response of the previous request to list the secrets for this service principal. Provide this token to retrieve the next page of secret entries. When providing a `page_token`, all other parameters provided to the request must match the previous request. To list all of the secrets for a service principal, it is necessary to continue requesting pages of entries until the response contains no `next_page_token`. Note that the number of entries returned must not be used to determine when the listing is complete."
+            "description": "An opaque page token which was the ``next_page_token`` in the response of the previous request to list the secrets for this service principal. Provide this token to retrieve the next page of secret entries. When providing a ``page_token``, all other parameters provided to the request must match the previous request. To list all of the secrets for a service principal, it is necessary to continue requesting pages of entries until the response contains no ``next_page_token``. Note that the number of entries returned must not be used to determine when the listing is complete."
           }
         ],
         "responses": {
@@ -225,9 +232,18 @@
             "type": "string",
             "description": "OAuth client-secret generated by the Databricks. If this is a confidential OAuth app client-secret will be generated."
           },
+          "client_secret_expire_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The expiration time of the client secret. If not present, the secret does not expire."
+          },
           "integration_id": {
             "type": "string",
             "description": "Unique integration id for the custom OAuth app"
+          },
+          "principal_id": {
+            "type": "integer",
+            "description": "The principal id of the service principal associated with this OAuth app."
           }
         }
       },
@@ -252,6 +268,13 @@
           "id": {
             "type": "string",
             "description": "ID of the secret"
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "OAuth API scopes bound to this secret. Empty = unrestricted (all-apis)."
           },
           "secret": {
             "type": "string",
@@ -291,7 +314,7 @@
           },
           "name": {
             "type": "string",
-            "description": "Resource name for the federation policy. Example values include `accounts/<account-id>/federationPolicies/my-federation-policy` for Account Federation Policies, and `accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
+            "description": "Resource name for the federation policy. Example values include ``accounts/<account-id>/federationPolicies/my-federation-policy`` for Account Federation Policies, and ``accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy`` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
           },
           "oidc_policy": {
             "$ref": "#/components/schemas/OidcFederationPolicy"
@@ -340,6 +363,10 @@
           "name": {
             "type": "string",
             "description": "The display name of the custom OAuth app"
+          },
+          "principal_id": {
+            "type": "integer",
+            "description": "The principal id of the service principal associated with this OAuth app."
           },
           "redirect_urls": {
             "type": "array",
@@ -549,6 +576,13 @@
           "id": {
             "type": "string",
             "description": "ID of the secret"
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "OAuth API scopes bound to this secret. Empty = unrestricted (all-apis)."
           },
           "secret_hash": {
             "type": "string",

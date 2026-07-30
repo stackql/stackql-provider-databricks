@@ -51,7 +51,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "Name of the vector search endpoint"
+    "description": "Name of the AI Search endpoint"
+  },
+  {
+    "name": "budget_policy_id",
+    "type": "string",
+    "description": ""
   },
   {
     "name": "effective_budget_policy_id",
@@ -61,7 +66,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "creation_timestamp",
     "type": "integer",
-    "description": ""
+    "description": "Timestamp of endpoint creation"
   },
   {
     "name": "creator",
@@ -81,7 +86,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "value",
         "type": "string",
-        "description": "[Optional] Value field for a vector search endpoint tag."
+        "description": "[Optional] Value field for an AI Search endpoint tag."
       }
     ]
   },
@@ -105,7 +110,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "endpoint_type",
     "type": "string",
-    "description": "Type of endpoint (STANDARD)"
+    "description": "Type of endpoint (STANDARD, STORAGE_OPTIMIZED)"
   },
   {
     "name": "last_updated_timestamp",
@@ -128,7 +133,7 @@ The following fields are returned by `SELECT` queries:
     "description": "Scaling information for the endpoint",
     "children": [
       {
-        "name": "requested_min_qps",
+        "name": "requested_target_qps",
         "type": "integer",
         "description": ""
       },
@@ -136,6 +141,58 @@ The following fields are returned by `SELECT` queries:
         "name": "state",
         "type": "string",
         "description": "The current state of the scaling change request. (SCALING_CHANGE_APPLIED, SCALING_CHANGE_IN_PROGRESS, SCALING_CHANGE_UNSPECIFIED)"
+      }
+    ]
+  },
+  {
+    "name": "throughput_info",
+    "type": "object",
+    "description": "Throughput information for the endpoint",
+    "children": [
+      {
+        "name": "change_request_message",
+        "type": "string",
+        "description": "Additional information about the throughput change request"
+      },
+      {
+        "name": "change_request_state",
+        "type": "string",
+        "description": "The state of the most recent throughput change request (CHANGE_ADJUSTED, CHANGE_FAILED, CHANGE_IN_PROGRESS, CHANGE_REACHED_MAXIMUM, CHANGE_REACHED_MINIMUM, CHANGE_SUCCESS)"
+      },
+      {
+        "name": "current_concurrency",
+        "type": "number",
+        "description": "The current concurrency (total CPU) allocated to the endpoint"
+      },
+      {
+        "name": "current_concurrency_utilization_percentage",
+        "type": "number",
+        "description": "The current utilization of concurrency as a percentage (0-100)"
+      },
+      {
+        "name": "current_num_replicas",
+        "type": "integer",
+        "description": "The current number of replicas allocated to the endpoint"
+      },
+      {
+        "name": "maximum_concurrency_allowed",
+        "type": "number",
+        "description": "The maximum concurrency allowed for this endpoint"
+      },
+      {
+        "name": "minimal_concurrency_allowed",
+        "type": "number",
+        "description": "The minimum concurrency allowed for this endpoint"
+      },
+      {
+        "name": "requested_concurrency",
+        "type": "number",
+        "description": "The requested concurrency (total CPU) for the endpoint"
+      },
+      {
+        "name": "requested_num_replicas",
+        "type": "integer",
+        "description": "The requested number of replicas for the endpoint"
       }
     ]
   }
@@ -152,7 +209,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "Name of the vector search endpoint"
+    "description": "Name of the AI Search endpoint"
+  },
+  {
+    "name": "budget_policy_id",
+    "type": "string",
+    "description": ""
   },
   {
     "name": "effective_budget_policy_id",
@@ -162,7 +224,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "creation_timestamp",
     "type": "integer",
-    "description": ""
+    "description": "Timestamp of endpoint creation"
   },
   {
     "name": "creator",
@@ -182,7 +244,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "value",
         "type": "string",
-        "description": "[Optional] Value field for a vector search endpoint tag."
+        "description": "[Optional] Value field for an AI Search endpoint tag."
       }
     ]
   },
@@ -206,7 +268,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "endpoint_type",
     "type": "string",
-    "description": "Type of endpoint (STANDARD)"
+    "description": "Type of endpoint (STANDARD, STORAGE_OPTIMIZED)"
   },
   {
     "name": "last_updated_timestamp",
@@ -229,7 +291,7 @@ The following fields are returned by `SELECT` queries:
     "description": "Scaling information for the endpoint",
     "children": [
       {
-        "name": "requested_min_qps",
+        "name": "requested_target_qps",
         "type": "integer",
         "description": ""
       },
@@ -237,6 +299,58 @@ The following fields are returned by `SELECT` queries:
         "name": "state",
         "type": "string",
         "description": "The current state of the scaling change request. (SCALING_CHANGE_APPLIED, SCALING_CHANGE_IN_PROGRESS, SCALING_CHANGE_UNSPECIFIED)"
+      }
+    ]
+  },
+  {
+    "name": "throughput_info",
+    "type": "object",
+    "description": "Throughput information for the endpoint",
+    "children": [
+      {
+        "name": "change_request_message",
+        "type": "string",
+        "description": "Additional information about the throughput change request"
+      },
+      {
+        "name": "change_request_state",
+        "type": "string",
+        "description": "The state of the most recent throughput change request (CHANGE_ADJUSTED, CHANGE_FAILED, CHANGE_IN_PROGRESS, CHANGE_REACHED_MAXIMUM, CHANGE_REACHED_MINIMUM, CHANGE_SUCCESS)"
+      },
+      {
+        "name": "current_concurrency",
+        "type": "number",
+        "description": "The current concurrency (total CPU) allocated to the endpoint"
+      },
+      {
+        "name": "current_concurrency_utilization_percentage",
+        "type": "number",
+        "description": "The current utilization of concurrency as a percentage (0-100)"
+      },
+      {
+        "name": "current_num_replicas",
+        "type": "integer",
+        "description": "The current number of replicas allocated to the endpoint"
+      },
+      {
+        "name": "maximum_concurrency_allowed",
+        "type": "number",
+        "description": "The maximum concurrency allowed for this endpoint"
+      },
+      {
+        "name": "minimal_concurrency_allowed",
+        "type": "number",
+        "description": "The minimum concurrency allowed for this endpoint"
+      },
+      {
+        "name": "requested_concurrency",
+        "type": "number",
+        "description": "The requested concurrency (total CPU) for the endpoint"
+      },
+      {
+        "name": "requested_num_replicas",
+        "type": "integer",
+        "description": "The requested number of replicas for the endpoint"
       }
     ]
   }
@@ -264,14 +378,14 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-endpoint_name"><code>endpoint_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Get details for a single vector search endpoint.</td>
+    <td>Get details for a single AI Search endpoint.</td>
 </tr>
 <tr>
     <td><a href="#list"><CopyableCode code="list" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-page_token"><code>page_token</code></a></td>
-    <td>List all vector search endpoints in the workspace.</td>
+    <td>List all AI Search endpoints in the workspace.</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -285,7 +399,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="delete" /></td>
     <td><a href="#parameter-endpoint_name"><code>endpoint_name</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Delete a vector search endpoint.</td>
+    <td>Delete an AI Search endpoint.</td>
 </tr>
 <tr>
     <td><a href="#retrieve_user_visible_metrics"><CopyableCode code="retrieve_user_visible_metrics" /></a></td>
@@ -332,12 +446,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-endpoint_name">
     <td><CopyableCode code="endpoint_name" /></td>
     <td><code>string</code></td>
-    <td>Name of the vector search endpoint</td>
+    <td>Name of the AI Search endpoint</td>
 </tr>
 <tr id="parameter-name">
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>Vector search endpoint name</td>
+    <td>AI Search endpoint name</td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -358,12 +472,13 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 >
 <TabItem value="get">
 
-Get details for a single vector search endpoint.
+Get details for a single AI Search endpoint.
 
 ```sql
 SELECT
 id,
 name,
+budget_policy_id,
 effective_budget_policy_id,
 creation_timestamp,
 creator,
@@ -373,7 +488,8 @@ endpoint_type,
 last_updated_timestamp,
 last_updated_user,
 num_indexes,
-scaling_info
+scaling_info,
+throughput_info
 FROM databricks_workspace.vectorsearch.endpoints
 WHERE endpoint_name = '{{ endpoint_name }}' -- required
 AND deployment_name = '{{ deployment_name }}' -- required
@@ -382,12 +498,13 @@ AND deployment_name = '{{ deployment_name }}' -- required
 </TabItem>
 <TabItem value="list">
 
-List all vector search endpoints in the workspace.
+List all AI Search endpoints in the workspace.
 
 ```sql
 SELECT
 id,
 name,
+budget_policy_id,
 effective_budget_policy_id,
 creation_timestamp,
 creator,
@@ -397,7 +514,8 @@ endpoint_type,
 last_updated_timestamp,
 last_updated_user,
 num_indexes,
-scaling_info
+scaling_info,
+throughput_info
 FROM databricks_workspace.vectorsearch.endpoints
 WHERE deployment_name = '{{ deployment_name }}' -- required
 AND page_token = '{{ page_token }}'
@@ -425,18 +543,23 @@ INSERT INTO databricks_workspace.vectorsearch.endpoints (
 name,
 endpoint_type,
 budget_policy_id,
-min_qps,
+num_replicas,
+target_qps,
+usage_policy_id,
 deployment_name
 )
 SELECT 
 '{{ name }}' /* required */,
 '{{ endpoint_type }}' /* required */,
 '{{ budget_policy_id }}',
-{{ min_qps }},
+{{ num_replicas }},
+{{ target_qps }},
+'{{ usage_policy_id }}',
 '{{ deployment_name }}'
 RETURNING
 id,
 name,
+budget_policy_id,
 effective_budget_policy_id,
 creation_timestamp,
 creator,
@@ -446,7 +569,8 @@ endpoint_type,
 last_updated_timestamp,
 last_updated_user,
 num_indexes,
-scaling_info
+scaling_info,
+throughput_info
 ;
 ```
 </TabItem>
@@ -461,7 +585,7 @@ scaling_info
     - name: name
       value: "{{ name }}"
       description: |
-        Name of the vector search endpoint
+        Name of the AI Search endpoint
     - name: endpoint_type
       value: "{{ endpoint_type }}"
       description: |
@@ -470,10 +594,18 @@ scaling_info
       value: "{{ budget_policy_id }}"
       description: |
         The budget policy id to be applied
-    - name: min_qps
-      value: {{ min_qps }}
+    - name: num_replicas
+      value: {{ num_replicas }}
       description: |
-        Min QPS for the endpoint. Mutually exclusive with num_replicas. The actual replica count is calculated at index creation/sync time based on this value.
+        Initial number of replicas for the endpoint. If not specified, defaults to 1.
+    - name: target_qps
+      value: {{ target_qps }}
+      description: |
+        Target QPS for the endpoint. Mutually exclusive with num_replicas. The actual replica count is calculated at index creation/sync time based on this value. Best-effort target; the system does not guarantee this QPS will be achieved.
+    - name: usage_policy_id
+      value: "{{ usage_policy_id }}"
+      description: |
+        The usage policy id to be applied once we've migrated to usage policies
 `}</CodeBlock>
 
 </TabItem>
@@ -490,7 +622,7 @@ scaling_info
 >
 <TabItem value="delete">
 
-Delete a vector search endpoint.
+Delete an AI Search endpoint.
 
 ```sql
 DELETE FROM databricks_workspace.vectorsearch.endpoints

@@ -18,7 +18,7 @@ billing service documentation.
 
 :::info[Service Summary]
 
-total resources: __11__  
+total resources: __12__  
 
 :::
 
@@ -30,9 +30,10 @@ total resources: __11__
 <a href="/services/billing/budgets/">budgets</a><br />
 <a href="/services/billing/log_delivery/">log_delivery</a><br />
 <a href="/services/billing/usage_dashboards/">usage_dashboards</a><br />
-<a href="/services/billing/vw_budget_alert_actions/">vw_budget_alert_actions</a>
+<a href="/services/billing/usage_policy/">usage_policy</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/billing/vw_budget_alert_actions/">vw_budget_alert_actions</a><br />
 <a href="/services/billing/vw_budget_filter_tags/">vw_budget_filter_tags</a><br />
 <a href="/services/billing/vw_budget_policies/">vw_budget_policies</a><br />
 <a href="/services/billing/vw_budgets/">vw_budgets</a><br />

@@ -56,7 +56,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "global_metastore_id",
     "type": "string",
-    "description": "Globally unique metastore ID across clouds and regions, of the form `cloud:region:metastore_id`."
+    "description": "Globally unique metastore ID across clouds and regions, of the form ``cloud:region:metastore_id``."
   },
   {
     "name": "metastore_id",
@@ -116,12 +116,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "privilege_model_version",
     "type": "string",
-    "description": "Privilege model version of the metastore, of the form `major.minor` (e.g., `1.0`)."
+    "description": "Privilege model version of the metastore, of the form ``major.minor`` (e.g., ``1.0``)."
   },
   {
     "name": "region",
     "type": "string",
-    "description": "Cloud region which the metastore serves (e.g., `us-west-2`, `westus`)."
+    "description": "Cloud region which the metastore serves (e.g., ``us-west-2``, ``westus``)."
   },
   {
     "name": "storage_root",
@@ -156,7 +156,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "global_metastore_id",
     "type": "string",
-    "description": "Globally unique metastore ID across clouds and regions, of the form `cloud:region:metastore_id`."
+    "description": "Globally unique metastore ID across clouds and regions, of the form ``cloud:region:metastore_id``."
   },
   {
     "name": "metastore_id",
@@ -216,12 +216,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "privilege_model_version",
     "type": "string",
-    "description": "Privilege model version of the metastore, of the form `major.minor` (e.g., `1.0`)."
+    "description": "Privilege model version of the metastore, of the form ``major.minor`` (e.g., ``1.0``)."
   },
   {
     "name": "region",
     "type": "string",
-    "description": "Cloud region which the metastore serves (e.g., `us-west-2`, `westus`)."
+    "description": "Cloud region which the metastore serves (e.g., ``us-west-2``, ``westus``)."
   },
   {
     "name": "storage_root",
@@ -269,7 +269,7 @@ The following methods are available for this resource:
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td><a href="#parameter-max_results"><code>max_results</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
-    <td>Gets an array of the available metastores (as __MetastoreInfo__ objects). The caller must be an admin</td>
+    <td>Gets an array of the available metastores (as **MetastoreInfo** objects). The caller must be an admin</td>
 </tr>
 <tr>
     <td><a href="#create"><CopyableCode code="create" /></a></td>
@@ -283,21 +283,21 @@ The following methods are available for this resource:
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-workspace_id"><code>workspace_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Updates a metastore assignment. This operation can be used to update __metastore_id__ or</td>
+    <td>Updates a metastore assignment. This operation can be used to update **metastore_id** or</td>
 </tr>
 <tr>
     <td><a href="#update"><CopyableCode code="update" /></a></td>
     <td><CopyableCode code="update" /></td>
     <td><a href="#parameter-id"><code>id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
     <td></td>
-    <td>Updates information for a specific metastore. The caller must be a metastore admin. If the __owner__</td>
+    <td>Updates information for a specific metastore. The caller must be a metastore admin. If the **owner**</td>
 </tr>
 <tr>
     <td><a href="#assign"><CopyableCode code="assign" /></a></td>
     <td><CopyableCode code="replace" /></td>
     <td><a href="#parameter-workspace_id"><code>workspace_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-metastore_id"><code>metastore_id</code></a>, <a href="#parameter-default_catalog_name"><code>default_catalog_name</code></a></td>
     <td></td>
-    <td>Creates a new metastore assignment. If an assignment for the same __workspace_id__ exists, it will be</td>
+    <td>Creates a new metastore assignment. If an assignment for the same **workspace_id** exists, it will be</td>
 </tr>
 <tr>
     <td><a href="#unassign"><CopyableCode code="unassign" /></a></td>
@@ -409,7 +409,7 @@ AND deployment_name = '{{ deployment_name }}' -- required
 </TabItem>
 <TabItem value="list">
 
-Gets an array of the available metastores (as __MetastoreInfo__ objects). The caller must be an admin
+Gets an array of the available metastores (as **MetastoreInfo** objects). The caller must be an admin
 
 ```sql
 SELECT
@@ -511,7 +511,7 @@ updated_by
     - name: region
       value: "{{ region }}"
       description: |
-        Cloud region which the metastore serves (e.g., \`us-west-2\`, \`westus\`).
+        Cloud region which the metastore serves (e.g., \`\`us-west-2\`\`, \`\`westus\`\`).
     - name: storage_root
       value: "{{ storage_root }}"
       description: |
@@ -533,7 +533,7 @@ updated_by
 >
 <TabItem value="update_assignment">
 
-Updates a metastore assignment. This operation can be used to update __metastore_id__ or
+Updates a metastore assignment. This operation can be used to update **metastore_id** or
 
 ```sql
 UPDATE databricks_workspace.catalog.metastores
@@ -547,7 +547,7 @@ AND deployment_name = '{{ deployment_name }}' --required;
 </TabItem>
 <TabItem value="update">
 
-Updates information for a specific metastore. The caller must be a metastore admin. If the __owner__
+Updates information for a specific metastore. The caller must be a metastore admin. If the **owner**
 
 ```sql
 UPDATE databricks_workspace.catalog.metastores
@@ -598,7 +598,7 @@ updated_by;
 >
 <TabItem value="assign">
 
-Creates a new metastore assignment. If an assignment for the same __workspace_id__ exists, it will be
+Creates a new metastore assignment. If an assignment for the same **workspace_id** exists, it will be
 
 ```sql
 REPLACE databricks_workspace.catalog.metastores

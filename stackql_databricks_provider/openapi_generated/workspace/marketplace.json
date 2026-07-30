@@ -4,8 +4,8 @@
     "title": "Databricks Marketplace API (workspace)",
     "description": "OpenAPI specification for the Databricks marketplace service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.marketplace"
   },
   "servers": [
@@ -92,12 +92,12 @@
     "/api/2.1/marketplace-consumer/listings/{listing_id}/fulfillments": {
       "get": {
         "operationId": "consumer_fulfillments_list",
-        "summary": "Get all listings fulfillments associated with a listing. A _fulfillment_ is a potential installation.",
+        "summary": "Get all listings fulfillments associated with a listing. A *fulfillment* is a potential installation.",
         "tags": [
           "marketplace",
           "consumer_fulfillments"
         ],
-        "description": "Get all listings fulfillments associated with a listing. A _fulfillment_ is a potential installation.\nStandard installations contain metadata about the attached share or git repo. Only one of these fields\nwill be present. Personalized installations contain metadata about the attached share or git repo, as\nwell as the Delta Sharing recipient type.\n\n:param listing_id: str\n:param page_size: int (optional)\n:param page_token: str (optional)\n\n:returns: Iterator over :class:`ListingFulfillment`",
+        "description": "Get all listings fulfillments associated with a listing. A *fulfillment* is a potential installation.\nStandard installations contain metadata about the attached share or git repo. Only one of these fields\nwill be present. Personalized installations contain metadata about the attached share or git repo, as\nwell as the Delta Sharing recipient type.\n\n:param listing_id: str\n:param page_size: int (optional)\n:param page_token: str (optional)\n\n:returns: Iterator over :class:`ListingFulfillment`",
         "parameters": [
           {
             "name": "listing_id",
@@ -165,7 +165,7 @@
           "marketplace",
           "consumer_installations"
         ],
-        "description": "Install payload associated with a Databricks Marketplace listing.\n\n:param listing_id: str\n:param accepted_consumer_terms: :class:`ConsumerTerms` (optional)\n:param catalog_name: str (optional)\n:param recipient_type: :class:`DeltaSharingRecipientType` (optional)\n:param repo_detail: :class:`RepoInstallation` (optional)\n  for git repo installations\n:param share_name: str (optional)\n\n:returns: :class:`Installation`",
+        "description": "Install payload associated with a Databricks Marketplace listing.\n\n:param listing_id: str\n:param accepted_consumer_terms: :class:`ConsumerTerms` (optional)\n:param catalog_name: str (optional)\n:param mcp_connection_detail: :class:`InstallListingMcpConnectionDetail` (optional)\n:param recipient_type: :class:`DeltaSharingRecipientType` (optional)\n:param repo_detail: :class:`RepoInstallation` (optional)\n  for git repo installations\n:param share_name: str (optional)\n\n:returns: :class:`Installation`",
         "parameters": [
           {
             "name": "listing_id",
@@ -195,6 +195,57 @@
                   },
                   "catalog_name": {
                     "type": "string"
+                  },
+                  "mcp_connection_detail": {
+                    "type": "object",
+                    "properties": {
+                      "connection_name": {
+                        "type": "string",
+                        "description": "Name of the Unity Catalog connection to create for the MCP server."
+                      },
+                      "base_path": {
+                        "type": "string",
+                        "description": "Optional override of the MCP server base path. Defaults to the base path on the listing."
+                      },
+                      "bearer_token": {
+                        "type": "string",
+                        "description": "Bearer token supplied by the consumer, for bearer-token authentication."
+                      },
+                      "catalog": {
+                        "type": "string",
+                        "description": "Catalog the MCP service (and its schema-scoped UC connection) is created under. The consumer must hold the privileges to create a service and connection in this catalog/schema."
+                      },
+                      "host": {
+                        "type": "string",
+                        "description": "Optional override of the MCP server host. Defaults to the host configured on the listing."
+                      },
+                      "oauth_credentials": {
+                        "type": "object",
+                        "properties": {
+                          "client_id": {
+                            "type": "string",
+                            "description": "OAuth client id. Identifies the credential; not the secret itself."
+                          },
+                          "client_secret": {
+                            "type": "string",
+                            "description": "OAuth client secret supplied by the consumer."
+                          }
+                        },
+                        "required": [
+                          "client_id",
+                          "client_secret"
+                        ],
+                        "description": "OAuth client credentials supplied by the consumer, for OAuth (U2M/M2M) authentication."
+                      },
+                      "schema": {
+                        "type": "string",
+                        "description": "Schema (within ``catalog``) the MCP service and its UC connection are created under."
+                      }
+                    },
+                    "required": [
+                      "connection_name"
+                    ],
+                    "description": "Consumer-supplied details for creating the Unity Catalog HTTP connection when installing an MCP\n    listing. Values the provider configures on the listing (port, credential type, OAuth\n    token/authorization endpoints, scope, exchange method) are not repeated here."
                   },
                   "recipient_type": {
                     "type": "string",
@@ -387,7 +438,7 @@
           "marketplace",
           "consumer_installations"
         ],
-        "description": "This is a update API that will update the part of the fields defined in the installation table as well\nas interact with external services according to the fields not included in the installation table 1.\nthe token will be rotate if the rotateToken flag is true 2. the token will be forcibly rotate if the\nrotateToken flag is true and the tokenInfo field is empty\n\n:param listing_id: str\n:param installation_id: str\n:param installation: :class:`InstallationDetail`\n:param rotate_token: bool (optional)\n\n:returns: :class:`UpdateInstallationResponse`",
+        "description": "This is a update API that will update the part of the fields defined in the installation table as well\nas interact with external services according to the fields not included in the installation table\n\n1. the token will be rotate if the rotateToken flag is true\n2. the token will be forcibly rotate if the rotateToken flag is true and the tokenInfo field is empty\n\n:param listing_id: str\n:param installation_id: str\n:param installation: :class:`InstallationDetail`\n:param rotate_token: bool (optional)\n\n:returns: :class:`UpdateInstallationResponse`",
         "parameters": [
           {
             "name": "listing_id",
@@ -732,7 +783,7 @@
           "marketplace",
           "consumer_listings"
         ],
-        "description": "List all published listings in the Databricks Marketplace that the consumer has access to.\n\n:param assets: List[:class:`AssetType`] (optional)\n  Matches any of the following asset types\n:param categories: List[:class:`Category`] (optional)\n  Matches any of the following categories\n:param is_free: bool (optional)\n  Filters each listing based on if it is free.\n:param is_private_exchange: bool (optional)\n  Filters each listing based on if it is a private exchange.\n:param is_staff_pick: bool (optional)\n  Filters each listing based on whether it is a staff pick.\n:param page_size: int (optional)\n:param page_token: str (optional)\n:param provider_ids: List[str] (optional)\n  Matches any of the following provider ids\n:param tags: List[:class:`ListingTag`] (optional)\n  Matches any of the following tags\n\n:returns: Iterator over :class:`Listing`",
+        "description": "List all published listings in the Databricks Marketplace that the consumer has access to.\n\n:param assets: List[:class:`AssetType`] (optional)\n  Matches any of the following asset types\n:param categories: List[:class:`Category`] (optional)\n  Matches any of the following categories\n:param is_free: bool (optional)\n  Filters each listing based on if it is free.\n:param is_private_exchange: bool (optional)\n  Filters each listing based on if it is a private exchange.\n:param is_staff_pick: bool (optional)\n  Filters each listing based on whether it is a staff pick.\n:param page_size: int (optional)\n:param page_token: str (optional)\n:param provider_ids: List[str] (optional)\n  Matches any of the following provider ids\n:param tags: :class:`ListingTag` (optional)\n  Matches listings with this tag\n\n:returns: Iterator over :class:`Listing`",
         "parameters": [
           {
             "name": "assets",
@@ -818,12 +869,9 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ListingTag"
-              }
+              "$ref": "#/components/schemas/ListingTag"
             },
-            "description": "Matches any of the following tags"
+            "description": "Matches listings with this tag"
           }
         ],
         "responses": {
@@ -2429,8 +2477,7 @@
                         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                       },
                       "parent_id": {
-                        "type": "string",
-                        "description": "TODO make the following fields required"
+                        "type": "string"
                       }
                     }
                   },
@@ -2438,8 +2485,11 @@
                     "type": "string",
                     "x-enum": [
                       "APP",
+                      "COMMIT_DRAWDOWN_REQUEST_ATTACHMENT",
+                      "EMBEDDED_MARKDOWN",
                       "EMBEDDED_NOTEBOOK",
-                      "PROVIDER_ICON"
+                      "PROVIDER_ICON",
+                      "SCREENSHOT"
                     ],
                     "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                   },
@@ -2704,6 +2754,7 @@
                                 "LOOKUP_TABLES",
                                 "MANUFACTURING",
                                 "MEDIA",
+                                "OPEN_SOURCE",
                                 "OTHER",
                                 "PUBLIC_SECTOR",
                                 "RETAIL",
@@ -2926,8 +2977,7 @@
                                       "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                     },
                                     "parent_id": {
-                                      "type": "string",
-                                      "description": "TODO make the following fields required"
+                                      "type": "string"
                                     }
                                   }
                                 },
@@ -2938,8 +2988,11 @@
                                   "type": "string",
                                   "x-enum": [
                                     "APP",
+                                    "COMMIT_DRAWDOWN_REQUEST_ATTACHMENT",
+                                    "EMBEDDED_MARKDOWN",
                                     "EMBEDDED_NOTEBOOK",
-                                    "PROVIDER_ICON"
+                                    "PROVIDER_ICON",
+                                    "SCREENSHOT"
                                   ],
                                   "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
@@ -2949,6 +3002,7 @@
                                 "status": {
                                   "type": "string",
                                   "x-enum": [
+                                    "FILE_STATUS_COMMIT_DRAWDOWN",
                                     "FILE_STATUS_PUBLISHED",
                                     "FILE_STATUS_SANITIZATION_FAILED",
                                     "FILE_STATUS_SANITIZING",
@@ -2982,7 +3036,7 @@
                           },
                           "pricing_model": {
                             "type": "string",
-                            "description": "What the pricing model is (e.g. paid, subscription, paid upfront); should only be present if cost is paid TODO: Not used yet, should deprecate if we will never use it"
+                            "description": "What the pricing model is (e.g. paid, subscription, paid upfront); should only be present if cost is paid"
                           },
                           "privacy_policy_link": {
                             "type": "string"
@@ -3254,6 +3308,7 @@
                                 "LOOKUP_TABLES",
                                 "MANUFACTURING",
                                 "MEDIA",
+                                "OPEN_SOURCE",
                                 "OTHER",
                                 "PUBLIC_SECTOR",
                                 "RETAIL",
@@ -3476,8 +3531,7 @@
                                       "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                     },
                                     "parent_id": {
-                                      "type": "string",
-                                      "description": "TODO make the following fields required"
+                                      "type": "string"
                                     }
                                   }
                                 },
@@ -3488,8 +3542,11 @@
                                   "type": "string",
                                   "x-enum": [
                                     "APP",
+                                    "COMMIT_DRAWDOWN_REQUEST_ATTACHMENT",
+                                    "EMBEDDED_MARKDOWN",
                                     "EMBEDDED_NOTEBOOK",
-                                    "PROVIDER_ICON"
+                                    "PROVIDER_ICON",
+                                    "SCREENSHOT"
                                   ],
                                   "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
                                 },
@@ -3499,6 +3556,7 @@
                                 "status": {
                                   "type": "string",
                                   "x-enum": [
+                                    "FILE_STATUS_COMMIT_DRAWDOWN",
                                     "FILE_STATUS_PUBLISHED",
                                     "FILE_STATUS_SANITIZATION_FAILED",
                                     "FILE_STATUS_SANITIZING",
@@ -3532,7 +3590,7 @@
                           },
                           "pricing_model": {
                             "type": "string",
-                            "description": "What the pricing model is (e.g. paid, subscription, paid upfront); should only be present if cost is paid TODO: Not used yet, should deprecate if we will never use it"
+                            "description": "What the pricing model is (e.g. paid, subscription, paid upfront); should only be present if cost is paid"
                           },
                           "privacy_policy_link": {
                             "type": "string"
@@ -3880,12 +3938,12 @@
     "/api/2.0/marketplace-provider/analytics_dashboard": {
       "post": {
         "operationId": "provider_provider_analytics_dashboards_create",
-        "summary": "Create provider analytics dashboard. Returns Marketplace specific `id`. Not to be confused with the",
+        "summary": "Create provider analytics dashboard. Returns Marketplace specific ``id``. Not to be confused with the",
         "tags": [
           "marketplace",
           "provider_provider_analytics_dashboards"
         ],
-        "description": "Create provider analytics dashboard. Returns Marketplace specific `id`. Not to be confused with the\nLakeview dashboard id.\n\n\n:returns: :class:`ProviderAnalyticsDashboard`",
+        "description": "Create provider analytics dashboard. Returns Marketplace specific ``id``. Not to be confused with the\nLakeview dashboard id.\n\n\n:returns: :class:`ProviderAnalyticsDashboard`",
         "responses": {
           "200": {
             "description": "Success",
@@ -4755,8 +4813,7 @@
             "$ref": "#/components/schemas/FileParentType"
           },
           "parent_id": {
-            "type": "string",
-            "description": "TODO make the following fields required"
+            "type": "string"
           }
         }
       },
@@ -4838,6 +4895,61 @@
             "$ref": "#/components/schemas/ProviderInfo"
           }
         }
+      },
+      "InstallListingMcpConnectionDetail": {
+        "type": "object",
+        "properties": {
+          "connection_name": {
+            "type": "string",
+            "description": "Name of the Unity Catalog connection to create for the MCP server."
+          },
+          "base_path": {
+            "type": "string",
+            "description": "Optional override of the MCP server base path. Defaults to the base path on the listing."
+          },
+          "bearer_token": {
+            "type": "string",
+            "description": "Bearer token supplied by the consumer, for bearer-token authentication."
+          },
+          "catalog": {
+            "type": "string",
+            "description": "Catalog the MCP service (and its schema-scoped UC connection) is created under. The consumer must hold the privileges to create a service and connection in this catalog/schema."
+          },
+          "host": {
+            "type": "string",
+            "description": "Optional override of the MCP server host. Defaults to the host configured on the listing."
+          },
+          "oauth_credentials": {
+            "$ref": "#/components/schemas/InstallListingMcpConnectionDetailOauthCredentials",
+            "description": "OAuth client credentials supplied by the consumer, for OAuth (U2M/M2M) authentication."
+          },
+          "schema": {
+            "type": "string",
+            "description": "Schema (within ``catalog``) the MCP service and its UC connection are created under."
+          }
+        },
+        "required": [
+          "connection_name"
+        ],
+        "description": "Consumer-supplied details for creating the Unity Catalog HTTP connection when installing an MCP\n    listing. Values the provider configures on the listing (port, credential type, OAuth\n    token/authorization endpoints, scope, exchange method) are not repeated here."
+      },
+      "InstallListingMcpConnectionDetailOauthCredentials": {
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "description": "OAuth client id. Identifies the credential; not the secret itself."
+          },
+          "client_secret": {
+            "type": "string",
+            "description": "OAuth client secret supplied by the consumer."
+          }
+        },
+        "required": [
+          "client_id",
+          "client_secret"
+        ],
+        "description": "OAuth client credentials supplied by the consumer for an MCP connection."
       },
       "Installation": {
         "type": "object",
@@ -5141,7 +5253,7 @@
           },
           "pricing_model": {
             "type": "string",
-            "description": "What the pricing model is (e.g. paid, subscription, paid upfront); should only be present if cost is paid TODO: Not used yet, should deprecate if we will never use it"
+            "description": "What the pricing model is (e.g. paid, subscription, paid upfront); should only be present if cost is paid"
           },
           "privacy_policy_link": {
             "type": "string"
@@ -5642,6 +5754,7 @@
           "LOOKUP_TABLES",
           "MANUFACTURING",
           "MEDIA",
+          "OPEN_SOURCE",
           "OTHER",
           "PUBLIC_SECTOR",
           "RETAIL",
@@ -5703,6 +5816,7 @@
       "FileStatus": {
         "type": "string",
         "x-enum": [
+          "FILE_STATUS_COMMIT_DRAWDOWN",
           "FILE_STATUS_PUBLISHED",
           "FILE_STATUS_SANITIZATION_FAILED",
           "FILE_STATUS_SANITIZING",
@@ -5764,8 +5878,11 @@
         "type": "string",
         "x-enum": [
           "APP",
+          "COMMIT_DRAWDOWN_REQUEST_ATTACHMENT",
+          "EMBEDDED_MARKDOWN",
           "EMBEDDED_NOTEBOOK",
-          "PROVIDER_ICON"
+          "PROVIDER_ICON",
+          "SCREENSHOT"
         ],
         "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
       },

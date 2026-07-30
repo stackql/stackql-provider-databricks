@@ -55,7 +55,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "global_metastore_id",
     "type": "string",
-    "description": "Globally unique metastore ID across clouds and regions, of the form `cloud:region:metastore_id`."
+    "description": "Globally unique metastore ID across clouds and regions, of the form ``cloud:region:metastore_id``."
   },
   {
     "name": "metastore_id",
@@ -115,12 +115,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "privilege_model_version",
     "type": "string",
-    "description": "Privilege model version of the metastore, of the form `major.minor` (e.g., `1.0`)."
+    "description": "Privilege model version of the metastore, of the form ``major.minor`` (e.g., ``1.0``)."
   },
   {
     "name": "region",
     "type": "string",
-    "description": "Cloud region which the metastore serves (e.g., `us-west-2`, `westus`)."
+    "description": "Cloud region which the metastore serves (e.g., ``us-west-2``, ``westus``)."
   },
   {
     "name": "storage_root",

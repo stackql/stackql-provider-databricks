@@ -55,14 +55,14 @@ The following methods are available for this resource:
     <td><a href="#get_url"><CopyableCode code="get_url" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-activation_url"><code>activation_url</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td></td>
+    <td><a href="#parameter-metastore_id"><code>metastore_id</code></a></td>
     <td>Gets an activation URL for a share.</td>
 </tr>
 <tr>
     <td><a href="#retrieve_token"><CopyableCode code="retrieve_token" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-activation_url"><code>activation_url</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td></td>
+    <td><a href="#parameter-metastore_id"><code>metastore_id</code></a></td>
     <td>Retrieve access token with an activation url. This is a public API without any authentication.</td>
 </tr>
 </tbody>
@@ -91,6 +91,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>The Databricks Workspace Deployment Name (default: dbc-abcd0123-a1bc)</td>
 </tr>
+<tr id="parameter-metastore_id">
+    <td><CopyableCode code="metastore_id" /></td>
+    <td><code>string</code></td>
+    <td>The provider metastore ID. Optional for now; used as a routing hint when present and principal context</td>
+</tr>
 </tbody>
 </table>
 
@@ -110,7 +115,8 @@ Gets an activation URL for a share.
 ```sql
 EXEC databricks_workspace.sharing.recipient_activation.get_url 
 @activation_url='{{ activation_url }}' --required, 
-@deployment_name='{{ deployment_name }}' --required
+@deployment_name='{{ deployment_name }}' --required, 
+@metastore_id='{{ metastore_id }}'
 ;
 ```
 </TabItem>
@@ -121,7 +127,8 @@ Retrieve access token with an activation url. This is a public API without any a
 ```sql
 EXEC databricks_workspace.sharing.recipient_activation.retrieve_token 
 @activation_url='{{ activation_url }}' --required, 
-@deployment_name='{{ deployment_name }}' --required
+@deployment_name='{{ deployment_name }}' --required, 
+@metastore_id='{{ metastore_id }}'
 ;
 ```
 </TabItem>

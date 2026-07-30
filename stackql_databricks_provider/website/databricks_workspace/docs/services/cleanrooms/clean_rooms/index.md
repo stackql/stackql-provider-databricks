@@ -46,7 +46,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "The name of the clean room. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+    "description": "The name of the clean room. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
   },
   {
     "name": "access_restricted",
@@ -62,6 +62,11 @@ The following fields are returned by `SELECT` queries:
     "name": "created_at",
     "type": "integer",
     "description": "When the clean room was created, in epoch milliseconds."
+  },
+  {
+    "name": "enable_shared_output",
+    "type": "boolean",
+    "description": "Whether allow task to write to shared output schema. When enabled, clean room task runs triggered by the current collaborator can write to the run-scoped shared output schema which is accessible by all collaborators."
   },
   {
     "name": "local_collaborator_alias",
@@ -113,7 +118,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "collaborator_alias",
             "type": "string",
-            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
           },
           {
             "name": "display_name",
@@ -167,7 +172,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "collaborator_alias",
             "type": "string",
-            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
           },
           {
             "name": "display_name",
@@ -202,9 +207,50 @@ The following fields are returned by `SELECT` queries:
         "description": "Egress network policy to apply to the central clean room workspace."
       },
       {
+        "name": "enable_shared_output",
+        "type": "boolean",
+        "description": "Whether to enable shared output for the central clean room. When enabled, clean room task runs can write to the run-scoped shared output schema which is accessible by all collaborators."
+      },
+      {
+        "name": "package_provider_collaborator_alias",
+        "type": "string",
+        "description": "Alias of the provider collaborator. If set, packaged clean rooms mode is enabled. The consumer's experience is restricted: they can view notebook names and READMEs, add their own data assets, and trigger runs, but cannot view notebook code, provider data assets, or notebook run output."
+      },
+      {
         "name": "region",
         "type": "string",
         "description": "Region of the central clean room."
+      }
+    ]
+  },
+  {
+    "name": "replication_config",
+    "type": "object",
+    "description": "Replication setting for the calling collaborator's input share. Set via UpdateCleanRoom before the collaborator adds their first asset (immutable thereafter), and read back on GetCleanRoom. When enabled, that collaborator's input data is replicated into the central clean-room region.",
+    "children": [
+      {
+        "name": "enabled",
+        "type": "boolean",
+        "description": "Whether this collaborator's input share is replicated into the central clean-room region."
+      },
+      {
+        "name": "schedule",
+        "type": "object",
+        "description": "Optional schedule describing when replication runs. When unset, the service-default schedule (currently every hour) applies.",
+        "children": [
+          {
+            "name": "interval",
+            "type": "object",
+            "description": "Fixed-interval replication schedule.",
+            "children": [
+              {
+                "name": "duration",
+                "type": "string",
+                "description": "How often the collaborator's input-share data should be replicated. When unset, the service-default interval applies."
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -226,7 +272,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "name",
     "type": "string",
-    "description": "The name of the clean room. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+    "description": "The name of the clean room. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
   },
   {
     "name": "access_restricted",
@@ -242,6 +288,11 @@ The following fields are returned by `SELECT` queries:
     "name": "created_at",
     "type": "integer",
     "description": "When the clean room was created, in epoch milliseconds."
+  },
+  {
+    "name": "enable_shared_output",
+    "type": "boolean",
+    "description": "Whether allow task to write to shared output schema. When enabled, clean room task runs triggered by the current collaborator can write to the run-scoped shared output schema which is accessible by all collaborators."
   },
   {
     "name": "local_collaborator_alias",
@@ -293,7 +344,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "collaborator_alias",
             "type": "string",
-            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
           },
           {
             "name": "display_name",
@@ -347,7 +398,7 @@ The following fields are returned by `SELECT` queries:
           {
             "name": "collaborator_alias",
             "type": "string",
-            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow [UC securable naming requirements]. [UC securable naming requirements]: https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements"
+            "description": "Collaborator alias specified by the clean room creator. It is unique across all collaborators of this clean room, and used to derive multiple values internally such as catalog alias and clean room name for single metastore clean rooms. It should follow `UC securable naming requirements <https://docs.databricks.com/en/data-governance/unity-catalog/index.html#securable-object-naming-requirements>`__."
           },
           {
             "name": "display_name",
@@ -382,9 +433,50 @@ The following fields are returned by `SELECT` queries:
         "description": "Egress network policy to apply to the central clean room workspace."
       },
       {
+        "name": "enable_shared_output",
+        "type": "boolean",
+        "description": "Whether to enable shared output for the central clean room. When enabled, clean room task runs can write to the run-scoped shared output schema which is accessible by all collaborators."
+      },
+      {
+        "name": "package_provider_collaborator_alias",
+        "type": "string",
+        "description": "Alias of the provider collaborator. If set, packaged clean rooms mode is enabled. The consumer's experience is restricted: they can view notebook names and READMEs, add their own data assets, and trigger runs, but cannot view notebook code, provider data assets, or notebook run output."
+      },
+      {
         "name": "region",
         "type": "string",
         "description": "Region of the central clean room."
+      }
+    ]
+  },
+  {
+    "name": "replication_config",
+    "type": "object",
+    "description": "Replication setting for the calling collaborator's input share. Set via UpdateCleanRoom before the collaborator adds their first asset (immutable thereafter), and read back on GetCleanRoom. When enabled, that collaborator's input data is replicated into the central clean-room region.",
+    "children": [
+      {
+        "name": "enabled",
+        "type": "boolean",
+        "description": "Whether this collaborator's input share is replicated into the central clean-room region."
+      },
+      {
+        "name": "schedule",
+        "type": "object",
+        "description": "Optional schedule describing when replication runs. When unset, the service-default schedule (currently every hour) applies.",
+        "children": [
+          {
+            "name": "interval",
+            "type": "object",
+            "description": "Fixed-interval replication schedule.",
+            "children": [
+              {
+                "name": "duration",
+                "type": "string",
+                "description": "How often the collaborator's input-share data should be replicated. When unset, the service-default interval applies."
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -522,10 +614,12 @@ name,
 access_restricted,
 comment,
 created_at,
+enable_shared_output,
 local_collaborator_alias,
 output_catalog,
 owner,
 remote_detailed_info,
+replication_config,
 status,
 updated_at
 FROM databricks_workspace.cleanrooms.clean_rooms
@@ -544,10 +638,12 @@ name,
 access_restricted,
 comment,
 created_at,
+enable_shared_output,
 local_collaborator_alias,
 output_catalog,
 owner,
 remote_detailed_info,
+replication_config,
 status,
 updated_at
 FROM databricks_workspace.cleanrooms.clean_rooms
@@ -586,10 +682,12 @@ name,
 access_restricted,
 comment,
 created_at,
+enable_shared_output,
 local_collaborator_alias,
 output_catalog,
 owner,
 remote_detailed_info,
+replication_config,
 status,
 updated_at
 ;
@@ -608,6 +706,7 @@ updated_at
         access_restricted: "{{ access_restricted }}"
         comment: "{{ comment }}"
         created_at: {{ created_at }}
+        enable_shared_output: {{ enable_shared_output }}
         local_collaborator_alias: "{{ local_collaborator_alias }}"
         name: "{{ name }}"
         output_catalog:
@@ -635,7 +734,14 @@ updated_at
             invite_recipient_workspace_id: {{ invite_recipient_workspace_id }}
             organization_name: "{{ organization_name }}"
           egress_network_policy: "{{ egress_network_policy }}"
+          enable_shared_output: {{ enable_shared_output }}
+          package_provider_collaborator_alias: "{{ package_provider_collaborator_alias }}"
           region: "{{ region }}"
+        replication_config:
+          enabled: {{ enabled }}
+          schedule:
+            interval:
+              duration: "{{ duration }}"
         status: "{{ status }}"
         updated_at: {{ updated_at }}
 `}</CodeBlock>
@@ -668,10 +774,12 @@ name,
 access_restricted,
 comment,
 created_at,
+enable_shared_output,
 local_collaborator_alias,
 output_catalog,
 owner,
 remote_detailed_info,
+replication_config,
 status,
 updated_at;
 ```

@@ -61,7 +61,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "author_scope",
     "type": "string",
-    "description": "Scope of authors covered by the rule. Only one of `author_collaborator_alias` and `author_scope` can be set. (ANY_AUTHOR)"
+    "description": "Scope of authors covered by the rule. Only one of ``author_collaborator_alias`` and ``author_scope`` can be set. (ANY_AUTHOR)"
   },
   {
     "name": "created_at",
@@ -101,7 +101,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "author_scope",
     "type": "string",
-    "description": "Scope of authors covered by the rule. Only one of `author_collaborator_alias` and `author_scope` can be set. (ANY_AUTHOR)"
+    "description": "Scope of authors covered by the rule. Only one of ``author_collaborator_alias`` and ``author_scope`` can be set. (ANY_AUTHOR)"
   },
   {
     "name": "created_at",

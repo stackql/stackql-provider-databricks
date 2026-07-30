@@ -72,12 +72,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "displayName",
     "type": "string",
-    "description": "String that represents a concatenation of given and family names. For example `John Smith`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update `displayName`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation"
+    "description": "String that represents a concatenation of given and family names. For example ``John Smith``. This field cannot be updated through the Workspace SCIM APIs when `identity federation is enabled <https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation>`__. Use Account SCIM APIs to update ``displayName``."
   },
   {
     "name": "emails",
     "type": "array",
-    "description": "All the emails associated with the Databricks user.",
+    "description": "All the emails associated with the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored.",
     "children": [
       {
         "name": "display",
@@ -109,7 +109,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "entitlements",
     "type": "array",
-    "description": "Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements",
+    "description": "Entitlements assigned to the user. See `assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__ for a full list of supported values.",
     "children": [
       {
         "name": "display",
@@ -215,7 +215,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "userName",
     "type": "string",
-    "description": "Email address of the Databricks user."
+    "description": "Email address of the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored."
   }
 ]} />
 </TabItem>
@@ -240,7 +240,7 @@ The following methods are available for this resource:
     <td><a href="#get"><CopyableCode code="get" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a></td>
-    <td></td>
+    <td><a href="#parameter-attributes"><code>attributes</code></a>, <a href="#parameter-excluded_attributes"><code>excluded_attributes</code></a></td>
     <td>Get details about the current method caller's identity.</td>
 </tr>
 </tbody>
@@ -263,6 +263,16 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><CopyableCode code="deployment_name" /></td>
     <td><code>string</code></td>
     <td>The Databricks Workspace Deployment Name (default: dbc-abcd0123-a1bc)</td>
+</tr>
+<tr id="parameter-attributes">
+    <td><CopyableCode code="attributes" /></td>
+    <td><code>string</code></td>
+    <td>Comma-separated list of attributes to return in response.</td>
+</tr>
+<tr id="parameter-excluded_attributes">
+    <td><CopyableCode code="excluded_attributes" /></td>
+    <td><code>string</code></td>
+    <td>Comma-separated list of attributes to exclude in response.</td>
 </tr>
 </tbody>
 </table>
@@ -294,6 +304,8 @@ schemas,
 userName
 FROM databricks_workspace.iam.current_user
 WHERE deployment_name = '{{ deployment_name }}' -- required
+AND attributes = '{{ attributes }}'
+AND excluded_attributes = '{{ excluded_attributes }}'
 ;
 ```
 </TabItem>

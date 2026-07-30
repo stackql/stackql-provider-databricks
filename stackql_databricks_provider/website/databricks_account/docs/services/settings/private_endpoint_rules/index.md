@@ -106,7 +106,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "enabled",
     "type": "boolean",
-    "description": "Only used by private endpoints towards an AWS S3 service. Update this field to activate/deactivate this private endpoint to allow egress access from serverless compute resources."
+    "description": "Update this field to activate/deactivate this private endpoint to allow egress access from serverless compute resources. Only honored for first-party services on each cloud (e.g. AWS S3)."
   },
   {
     "name": "endpoint_service",
@@ -117,6 +117,40 @@ The following fields are returned by `SELECT` queries:
     "name": "error_message",
     "type": "string",
     "description": ""
+  },
+  {
+    "name": "gcp_endpoint",
+    "type": "object",
+    "description": "",
+    "children": [
+      {
+        "name": "all_vpc_sc_services",
+        "type": "boolean",
+        "description": ""
+      },
+      {
+        "name": "google_api_endpoints",
+        "type": "object",
+        "description": "Selected Google API hostnames, e.g. \"storage.googleapis.com\", \"bigquery.googleapis.com\".",
+        "children": [
+          {
+            "name": "endpoints",
+            "type": "array",
+            "description": "Google API hostnames, e.g. \"storage.googleapis.com\", \"bigquery.googleapis.com\". Use \"googleapis.com\" to cover all Google APIs."
+          }
+        ]
+      },
+      {
+        "name": "psc_endpoint_uri",
+        "type": "string",
+        "description": "Output only. The URI of the created PSC endpoint."
+      },
+      {
+        "name": "service_attachment",
+        "type": "string",
+        "description": "The full url of the target service attachment. Example: projects/my-gcp-project/regions/us-east4/serviceAttachments/my-service-attachment"
+      }
+    ]
   },
   {
     "name": "resource_names",
@@ -196,7 +230,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "enabled",
     "type": "boolean",
-    "description": "Only used by private endpoints towards an AWS S3 service. Update this field to activate/deactivate this private endpoint to allow egress access from serverless compute resources."
+    "description": "Update this field to activate/deactivate this private endpoint to allow egress access from serverless compute resources. Only honored for first-party services on each cloud (e.g. AWS S3)."
   },
   {
     "name": "endpoint_service",
@@ -207,6 +241,40 @@ The following fields are returned by `SELECT` queries:
     "name": "error_message",
     "type": "string",
     "description": ""
+  },
+  {
+    "name": "gcp_endpoint",
+    "type": "object",
+    "description": "",
+    "children": [
+      {
+        "name": "all_vpc_sc_services",
+        "type": "boolean",
+        "description": ""
+      },
+      {
+        "name": "google_api_endpoints",
+        "type": "object",
+        "description": "Selected Google API hostnames, e.g. \"storage.googleapis.com\", \"bigquery.googleapis.com\".",
+        "children": [
+          {
+            "name": "endpoints",
+            "type": "array",
+            "description": "Google API hostnames, e.g. \"storage.googleapis.com\", \"bigquery.googleapis.com\". Use \"googleapis.com\" to cover all Google APIs."
+          }
+        ]
+      },
+      {
+        "name": "psc_endpoint_uri",
+        "type": "string",
+        "description": "Output only. The URI of the created PSC endpoint."
+      },
+      {
+        "name": "service_attachment",
+        "type": "string",
+        "description": "The full url of the target service attachment. Example: projects/my-gcp-project/regions/us-east4/serviceAttachments/my-service-attachment"
+      }
+    ]
   },
   {
     "name": "resource_names",
@@ -248,7 +316,7 @@ The following methods are available for this resource:
     <td><a href="#list_private_endpoint_rules"><CopyableCode code="list_private_endpoint_rules" /></a></td>
     <td><CopyableCode code="select" /></td>
     <td><a href="#parameter-account_id"><code>account_id</code></a>, <a href="#parameter-network_connectivity_config_id"><code>network_connectivity_config_id</code></a></td>
-    <td><a href="#parameter-page_token"><code>page_token</code></a></td>
+    <td><a href="#parameter-page_size"><code>page_size</code></a>, <a href="#parameter-page_token"><code>page_token</code></a></td>
     <td>Gets an array of private endpoint rules.</td>
 </tr>
 <tr>
@@ -306,7 +374,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names.</td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names.</td>
+</tr>
+<tr id="parameter-page_size">
+    <td><CopyableCode code="page_size" /></td>
+    <td><code>integer</code></td>
+    <td></td>
 </tr>
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
@@ -346,6 +419,7 @@ domain_names,
 enabled,
 endpoint_service,
 error_message,
+gcp_endpoint,
 resource_names,
 updated_time
 FROM databricks_account.settings.private_endpoint_rules
@@ -376,11 +450,13 @@ domain_names,
 enabled,
 endpoint_service,
 error_message,
+gcp_endpoint,
 resource_names,
 updated_time
 FROM databricks_account.settings.private_endpoint_rules
 WHERE account_id = '{{ account_id }}' -- required
 AND network_connectivity_config_id = '{{ network_connectivity_config_id }}' -- required
+AND page_size = '{{ page_size }}'
 AND page_token = '{{ page_token }}'
 ;
 ```
@@ -427,6 +503,7 @@ domain_names,
 enabled,
 endpoint_service,
 error_message,
+gcp_endpoint,
 resource_names,
 updated_time
 ;
@@ -452,6 +529,13 @@ updated_time
           - "{{ domain_names }}"
         endpoint_service: "{{ endpoint_service }}"
         error_message: "{{ error_message }}"
+        gcp_endpoint:
+          all_vpc_sc_services: {{ all_vpc_sc_services }}
+          google_api_endpoints:
+            endpoints:
+              - "{{ endpoints }}"
+          psc_endpoint_uri: "{{ psc_endpoint_uri }}"
+          service_attachment: "{{ service_attachment }}"
         group_id: "{{ group_id }}"
         resource_id: "{{ resource_id }}"
         resource_names:
@@ -500,6 +584,7 @@ domain_names,
 enabled,
 endpoint_service,
 error_message,
+gcp_endpoint,
 resource_names,
 updated_time;
 ```

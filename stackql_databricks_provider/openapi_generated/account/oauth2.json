@@ -4,8 +4,8 @@
     "title": "Databricks Oauth2 API (account)",
     "description": "OpenAPI specification for the Databricks oauth2 service (account-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.oauth2"
   },
   "servers": [
@@ -61,7 +61,7 @@
                       },
                       "name": {
                         "type": "string",
-                        "description": "Resource name for the federation policy. Example values include `accounts/<account-id>/federationPolicies/my-federation-policy` for Account Federation Policies, and `accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
+                        "description": "Resource name for the federation policy. Example values include ``accounts/<account-id>/federationPolicies/my-federation-policy`` for Account Federation Policies, and ``accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy`` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
                       },
                       "oidc_policy": {
                         "type": "object",
@@ -387,7 +387,7 @@
                       },
                       "name": {
                         "type": "string",
-                        "description": "Resource name for the federation policy. Example values include `accounts/<account-id>/federationPolicies/my-federation-policy` for Account Federation Policies, and `accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
+                        "description": "Resource name for the federation policy. Example values include ``accounts/<account-id>/federationPolicies/my-federation-policy`` for Account Federation Policies, and ``accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy`` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
                       },
                       "oidc_policy": {
                         "type": "object",
@@ -489,7 +489,7 @@
           "oauth2",
           "custom_app_integration"
         ],
-        "description": "Create Custom OAuth App Integration.\n\nYou can retrieve the custom OAuth app integration via :method:CustomAppIntegration/get.\n\n:param confidential: bool (optional)\n  This field indicates whether an OAuth client secret is required to authenticate this client.\n:param name: str (optional)\n  Name of the custom OAuth app\n:param redirect_urls: List[str] (optional)\n  List of OAuth redirect urls\n:param scopes: List[str] (optional)\n  OAuth scopes granted to the application. Supported scopes: all-apis, sql, offline_access, openid,\n  profile, email.\n:param token_access_policy: :class:`TokenAccessPolicy` (optional)\n  Token access policy\n:param user_authorized_scopes: List[str] (optional)\n  Scopes that will need to be consented by end user to mint the access token. If the user does not\n  authorize the access token will not be minted. Must be a subset of scopes.\n\n:returns: :class:`CreateCustomAppIntegrationOutput`",
+        "description": "Create Custom OAuth App Integration.\n\nYou can retrieve the custom OAuth app integration via `CustomAppIntegration/get\n<https://docs.databricks.com/api/account/customappintegration/get>`__.\n\n:param confidential: bool (optional)\n  This field indicates whether an OAuth client secret is required to authenticate this client.\n:param is_agent: bool (optional)\n  When true, the custom OAuth app integration is backed by an agent service principal instead of a\n  standard application service principal. The public surface stays a simple boolean; the server maps\n  it to the internal OAuthClientApp.agent message.\n:param name: str (optional)\n  Name of the custom OAuth app\n:param redirect_urls: List[str] (optional)\n  List of OAuth redirect urls\n:param scopes: List[str] (optional)\n  OAuth scopes granted to the application. Supported scopes: all-apis, sql, offline_access, openid,\n  profile, email.\n:param token_access_policy: :class:`TokenAccessPolicy` (optional)\n  Token access policy\n:param user_authorized_scopes: List[str] (optional)\n  Scopes that will need to be consented by end user to mint the access token. If the user does not\n  authorize the access token will not be minted. Must be a subset of scopes.\n\n:returns: :class:`CreateCustomAppIntegrationOutput`",
         "parameters": [
           {
             "name": "account_id",
@@ -509,6 +509,10 @@
                   "confidential": {
                     "type": "boolean",
                     "description": "This field indicates whether an OAuth client secret is required to authenticate this client."
+                  },
+                  "is_agent": {
+                    "type": "boolean",
+                    "description": "When true, the custom OAuth app integration is backed by an agent service principal instead of a standard application service principal. The public surface stays a simple boolean; the server maps it to the internal OAuthClientApp.agent message."
                   },
                   "name": {
                     "type": "string",
@@ -600,7 +604,7 @@
           "oauth2",
           "custom_app_integration"
         ],
-        "description": "Get the list of custom OAuth app integrations for the specified Databricks account\n\n:param include_creator_username: bool (optional)\n:param page_size: int (optional)\n:param page_token: str (optional)\n\n:returns: Iterator over :class:`GetCustomAppIntegrationOutput`",
+        "description": "Get the list of custom OAuth app integrations for the specified Databricks account\n\n:param include_creator_username: bool (optional)\n:param page_size: int (optional)\n:param page_token: str (optional)\n:param search_keyword: str (optional)\n  Search term to filter app integrations (case-insensitive substring match). Matches if the display\n  name, the OAuth client_id (a UUID for custom apps or a stable string like \"databricks-cli\" for\n  published apps), or the integration id contains the term.\n\n:returns: Iterator over :class:`GetCustomAppIntegrationOutput`",
         "parameters": [
           {
             "name": "account_id",
@@ -633,6 +637,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "search_keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search term to filter app integrations (case-insensitive substring match). Matches if the display name, the OAuth client_id (a UUID for custom apps or a stable string like \"databricks-cli\" for published apps), or the integration id contains the term."
           }
         ],
         "responses": {
@@ -676,7 +689,7 @@
           "oauth2",
           "custom_app_integration"
         ],
-        "description": "Delete an existing Custom OAuth App Integration. You can retrieve the custom OAuth app integration via\n:method:CustomAppIntegration/get.\n\n:param integration_id: str",
+        "description": "Delete an existing Custom OAuth App Integration. You can retrieve the custom OAuth app integration via\n`CustomAppIntegration/get <https://docs.databricks.com/api/account/customappintegration/get>`__.\n\n:param integration_id: str",
         "parameters": [
           {
             "name": "account_id",
@@ -786,7 +799,7 @@
           "oauth2",
           "custom_app_integration"
         ],
-        "description": "Updates an existing custom OAuth App Integration. You can retrieve the custom OAuth app integration\nvia :method:CustomAppIntegration/get.\n\n:param integration_id: str\n:param redirect_urls: List[str] (optional)\n  List of OAuth redirect urls to be updated in the custom OAuth app integration\n:param scopes: List[str] (optional)\n  List of OAuth scopes to be updated in the custom OAuth app integration, similar to redirect URIs\n  this will fully replace the existing values instead of appending\n:param token_access_policy: :class:`TokenAccessPolicy` (optional)\n  Token access policy to be updated in the custom OAuth app integration\n:param user_authorized_scopes: List[str] (optional)\n  Scopes that will need to be consented by end user to mint the access token. If the user does not\n  authorize the access token will not be minted. Must be a subset of scopes.",
+        "description": "Updates an existing custom OAuth App Integration. You can retrieve the custom OAuth app integration\nvia `CustomAppIntegration/get <https://docs.databricks.com/api/account/customappintegration/get>`__.\n\n:param integration_id: str\n:param redirect_urls: List[str] (optional)\n  List of OAuth redirect urls to be updated in the custom OAuth app integration\n:param scopes: List[str] (optional)\n  List of OAuth scopes to be updated in the custom OAuth app integration, similar to redirect URIs\n  this will fully replace the existing values instead of appending\n:param token_access_policy: :class:`TokenAccessPolicy` (optional)\n  Token access policy to be updated in the custom OAuth app integration\n:param user_authorized_scopes: List[str] (optional)\n  Scopes that will need to be consented by end user to mint the access token. If the user does not\n  authorize the access token will not be minted. Must be a subset of scopes.",
         "parameters": [
           {
             "name": "account_id",
@@ -962,7 +975,7 @@
           "oauth2",
           "published_app_integration"
         ],
-        "description": "Create Published OAuth App Integration.\n\nYou can retrieve the published OAuth app integration via :method:PublishedAppIntegration/get.\n\n:param app_id: str (optional)\n  App id of the OAuth published app integration. For example power-bi, tableau-deskop\n:param token_access_policy: :class:`TokenAccessPolicy` (optional)\n  Token access policy\n\n:returns: :class:`CreatePublishedAppIntegrationOutput`",
+        "description": "Create Published OAuth App Integration.\n\nYou can retrieve the published OAuth app integration via `PublishedAppIntegration/get\n<https://docs.databricks.com/api/account/publishedappintegration/get>`__.\n\n:param app_id: str (optional)\n  App id of the OAuth published app integration. For example power-bi, tableau-deskop\n:param token_access_policy: :class:`TokenAccessPolicy` (optional)\n  Token access policy\n\n:returns: :class:`CreatePublishedAppIntegrationOutput`",
         "parameters": [
           {
             "name": "account_id",
@@ -1048,7 +1061,7 @@
           "oauth2",
           "published_app_integration"
         ],
-        "description": "Get the list of published OAuth app integrations for the specified Databricks account\n\n:param page_size: int (optional)\n:param page_token: str (optional)\n\n:returns: Iterator over :class:`GetPublishedAppIntegrationOutput`",
+        "description": "Get the list of published OAuth app integrations for the specified Databricks account\n\n:param page_size: int (optional)\n:param page_token: str (optional)\n:param search_keyword: str (optional)\n  Search term to filter app integrations (case-insensitive substring match). Matches if the display\n  name, the OAuth client_id, or the integration id contains the term.\n\n:returns: Iterator over :class:`GetPublishedAppIntegrationOutput`",
         "parameters": [
           {
             "name": "account_id",
@@ -1073,6 +1086,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "search_keyword",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search term to filter app integrations (case-insensitive substring match). Matches if the display name, the OAuth client_id, or the integration id contains the term."
           }
         ],
         "responses": {
@@ -1116,7 +1138,7 @@
           "oauth2",
           "published_app_integration"
         ],
-        "description": "Delete an existing Published OAuth App Integration. You can retrieve the published OAuth app\nintegration via :method:PublishedAppIntegration/get.\n\n:param integration_id: str",
+        "description": "Delete an existing Published OAuth App Integration. You can retrieve the published OAuth app\nintegration via `PublishedAppIntegration/get\n<https://docs.databricks.com/api/account/publishedappintegration/get>`__.\n\n:param integration_id: str",
         "parameters": [
           {
             "name": "account_id",
@@ -1225,7 +1247,7 @@
           "oauth2",
           "published_app_integration"
         ],
-        "description": "Updates an existing published OAuth App Integration. You can retrieve the published OAuth app\nintegration via :method:PublishedAppIntegration/get.\n\n:param integration_id: str\n:param token_access_policy: :class:`TokenAccessPolicy` (optional)\n  Token access policy to be updated in the published OAuth app integration",
+        "description": "Updates an existing published OAuth App Integration. You can retrieve the published OAuth app\nintegration via `PublishedAppIntegration/get\n<https://docs.databricks.com/api/account/publishedappintegration/get>`__.\n\n:param integration_id: str\n:param token_access_policy: :class:`TokenAccessPolicy` (optional)\n  Token access policy to be updated in the published OAuth app integration",
         "parameters": [
           {
             "name": "account_id",
@@ -1357,7 +1379,7 @@
                       },
                       "name": {
                         "type": "string",
-                        "description": "Resource name for the federation policy. Example values include `accounts/<account-id>/federationPolicies/my-federation-policy` for Account Federation Policies, and `accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
+                        "description": "Resource name for the federation policy. Example values include ``accounts/<account-id>/federationPolicies/my-federation-policy`` for Account Federation Policies, and ``accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy`` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
                       },
                       "oidc_policy": {
                         "type": "object",
@@ -1719,7 +1741,7 @@
                       },
                       "name": {
                         "type": "string",
-                        "description": "Resource name for the federation policy. Example values include `accounts/<account-id>/federationPolicies/my-federation-policy` for Account Federation Policies, and `accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
+                        "description": "Resource name for the federation policy. Example values include ``accounts/<account-id>/federationPolicies/my-federation-policy`` for Account Federation Policies, and ``accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy`` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
                       },
                       "oidc_policy": {
                         "type": "object",
@@ -1821,7 +1843,7 @@
           "oauth2",
           "service_principal_secrets"
         ],
-        "description": "Create a secret for the given service principal.\n\n:param service_principal_id: str\n  The service principal ID.\n:param lifetime: str (optional)\n  The lifetime of the secret in seconds. If this parameter is not provided, the secret will have a\n  default lifetime of 730 days (63072000s).\n\n:returns: :class:`CreateServicePrincipalSecretResponse`",
+        "description": "Create a secret for the given service principal.\n\n:param service_principal_id: str\n  The service principal ID.\n:param lifetime: str (optional)\n  The lifetime of the secret in seconds. If this parameter is not provided, the secret will have a\n  default lifetime of 730 days (63072000s).\n:param scopes: List[str] (optional)\n  OAuth API scopes to bind to the secret; a minted token cannot exceed them. Empty = unrestricted\n  (all-apis). E.g. all-apis, sql, iam.groups:read.\n\n:returns: :class:`CreateServicePrincipalSecretResponse`",
         "parameters": [
           {
             "name": "account_id",
@@ -1850,6 +1872,13 @@
                   "lifetime": {
                     "type": "string",
                     "description": "The lifetime of the secret in seconds. If this parameter is not provided, the secret will have a default lifetime of 730 days (63072000s)."
+                  },
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "OAuth API scopes to bind to the secret; a minted token cannot exceed them. Empty = unrestricted (all-apis). E.g. all-apis, sql, iam.groups:read."
                   }
                 }
               }
@@ -1895,7 +1924,7 @@
           "oauth2",
           "service_principal_secrets"
         ],
-        "description": "List all secrets associated with the given service principal. This operation only returns information\nabout the secrets themselves and does not include the secret values.\n\n:param service_principal_id: str\n  The service principal ID.\n:param page_size: int (optional)\n:param page_token: str (optional)\n  An opaque page token which was the `next_page_token` in the response of the previous request to list\n  the secrets for this service principal. Provide this token to retrieve the next page of secret\n  entries. When providing a `page_token`, all other parameters provided to the request must match the\n  previous request. To list all of the secrets for a service principal, it is necessary to continue\n  requesting pages of entries until the response contains no `next_page_token`. Note that the number\n  of entries returned must not be used to determine when the listing is complete.\n\n:returns: Iterator over :class:`SecretInfo`",
+        "description": "List all secrets associated with the given service principal. This operation only returns information\nabout the secrets themselves and does not include the secret values.\n\n:param service_principal_id: str\n  The service principal ID.\n:param page_size: int (optional)\n:param page_token: str (optional)\n  An opaque page token which was the ``next_page_token`` in the response of the previous request to\n  list the secrets for this service principal. Provide this token to retrieve the next page of secret\n  entries. When providing a ``page_token``, all other parameters provided to the request must match\n  the previous request. To list all of the secrets for a service principal, it is necessary to\n  continue requesting pages of entries until the response contains no ``next_page_token``. Note that\n  the number of entries returned must not be used to determine when the listing is complete.\n\n:returns: Iterator over :class:`SecretInfo`",
         "parameters": [
           {
             "name": "account_id",
@@ -1929,7 +1958,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "An opaque page token which was the `next_page_token` in the response of the previous request to list the secrets for this service principal. Provide this token to retrieve the next page of secret entries. When providing a `page_token`, all other parameters provided to the request must match the previous request. To list all of the secrets for a service principal, it is necessary to continue requesting pages of entries until the response contains no `next_page_token`. Note that the number of entries returned must not be used to determine when the listing is complete."
+            "description": "An opaque page token which was the ``next_page_token`` in the response of the previous request to list the secrets for this service principal. Provide this token to retrieve the next page of secret entries. When providing a ``page_token``, all other parameters provided to the request must match the previous request. To list all of the secrets for a service principal, it is necessary to continue requesting pages of entries until the response contains no ``next_page_token``. Note that the number of entries returned must not be used to determine when the listing is complete."
           }
         ],
         "responses": {
@@ -2041,9 +2070,18 @@
             "type": "string",
             "description": "OAuth client-secret generated by the Databricks. If this is a confidential OAuth app client-secret will be generated."
           },
+          "client_secret_expire_time": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The expiration time of the client secret. If not present, the secret does not expire."
+          },
           "integration_id": {
             "type": "string",
             "description": "Unique integration id for the custom OAuth app"
+          },
+          "principal_id": {
+            "type": "integer",
+            "description": "The principal id of the service principal associated with this OAuth app."
           }
         }
       },
@@ -2068,6 +2106,13 @@
           "id": {
             "type": "string",
             "description": "ID of the secret"
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "OAuth API scopes bound to this secret. Empty = unrestricted (all-apis)."
           },
           "secret": {
             "type": "string",
@@ -2107,7 +2152,7 @@
           },
           "name": {
             "type": "string",
-            "description": "Resource name for the federation policy. Example values include `accounts/<account-id>/federationPolicies/my-federation-policy` for Account Federation Policies, and `accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
+            "description": "Resource name for the federation policy. Example values include ``accounts/<account-id>/federationPolicies/my-federation-policy`` for Account Federation Policies, and ``accounts/<account-id>/servicePrincipals/<service-principal-id>/federationPolicies/my-federation-policy`` for Service Principal Federation Policies. Typically an output parameter, which does not need to be specified in create or update requests. If specified in a request, must match the value in the request URL."
           },
           "oidc_policy": {
             "$ref": "#/components/schemas/OidcFederationPolicy"
@@ -2156,6 +2201,10 @@
           "name": {
             "type": "string",
             "description": "The display name of the custom OAuth app"
+          },
+          "principal_id": {
+            "type": "integer",
+            "description": "The principal id of the service principal associated with this OAuth app."
           },
           "redirect_urls": {
             "type": "array",
@@ -2365,6 +2414,13 @@
           "id": {
             "type": "string",
             "description": "ID of the secret"
+          },
+          "scopes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "OAuth API scopes bound to this secret. Empty = unrestricted (all-apis)."
           },
           "secret_hash": {
             "type": "string",

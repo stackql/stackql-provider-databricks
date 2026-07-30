@@ -205,11 +205,11 @@ width
     - name: text
       value: "{{ text }}"
       description: |
-        If this is a textbox widget, the application displays this text. This field is ignored if the widget contains a visualization in the \`visualization\` field.
+        If this is a textbox widget, the application displays this text. This field is ignored if the widget contains a visualization in the \`\`visualization\`\` field.
     - name: visualization_id
       value: "{{ visualization_id }}"
       description: |
-        Query Vizualization ID returned by :method:queryvisualizations/create.
+        Query Visualization ID returned by :method:queryvisualizations/create.
 `}</CodeBlock>
 
 </TabItem>

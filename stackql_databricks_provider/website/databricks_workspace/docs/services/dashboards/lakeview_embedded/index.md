@@ -67,19 +67,19 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "resource_name",
         "type": "string",
-        "description": "The resource name to which the authorization rule applies. This field is specific to `workspace_rule_set` constraint. Format: `workspaces/&#123;workspace_id&#125;/dashboards/&#123;dashboard_id&#125;`"
+        "description": "The resource name to which the authorization rule applies. This field is specific to ``workspace_rule_set`` constraint. Format: ``workspaces/&#123;workspace_id&#125;/dashboards/&#123;dashboard_id&#125;``"
       },
       {
         "name": "type",
         "type": "string",
-        "description": "The type of authorization downscoping policy. Ex: `workspace_rule_set` defines access rules for a specific workspace resource"
+        "description": "The type of authorization downscoping policy. Ex: ``workspace_rule_set`` defines access rules for a specific workspace resource"
       }
     ]
   },
   {
     "name": "custom_claim",
     "type": "string",
-    "description": "Custom claim generated from external_value and external_viewer_id. Format: `urn:aibi:external_data:<external_value>:<external_viewer_id>:<dashboard_id>`"
+    "description": "Custom claim generated from external_value and external_viewer_id. Format: ``urn:aibi:external_data:&lt;external_value&gt;:&lt;external_viewer_id&gt;:&lt;dashboard_id&gt;``"
   },
   {
     "name": "scope",

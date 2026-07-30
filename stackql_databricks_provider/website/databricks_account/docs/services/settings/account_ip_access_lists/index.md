@@ -81,7 +81,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "list_type",
     "type": "string",
-    "description": "Type of IP access list. Valid values are as follows and are case-sensitive:<br /><br />* `ALLOW`: An allow list. Include this IP or range. * `BLOCK`: A block list. Exclude this IP or<br />range. IP addresses in the block list are excluded even if they are included in an allow list. (ALLOW, BLOCK)"
+    "description": "Type of IP access list. Valid values are as follows and are case-sensitive:<br /><br />- ``ALLOW``: An allow list. Include this IP or range.<br />- ``BLOCK``: A block list. Exclude this IP or range. IP addresses in the block list are excluded<br />  even if they are included in an allow list. (ALLOW, BLOCK)"
   },
   {
     "name": "updated_at",
@@ -136,7 +136,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "list_type",
     "type": "string",
-    "description": "Type of IP access list. Valid values are as follows and are case-sensitive:<br /><br />* `ALLOW`: An allow list. Include this IP or range. * `BLOCK`: A block list. Exclude this IP or<br />range. IP addresses in the block list are excluded even if they are included in an allow list. (ALLOW, BLOCK)"
+    "description": "Type of IP access list. Valid values are as follows and are case-sensitive:<br /><br />- ``ALLOW``: An allow list. Include this IP or range.<br />- ``BLOCK``: A block list. Exclude this IP or range. IP addresses in the block list are excluded<br />  even if they are included in an allow list. (ALLOW, BLOCK)"
   },
   {
     "name": "updated_at",
@@ -339,8 +339,9 @@ ip_access_list
       value: "{{ list_type }}"
       description: |
         Type of IP access list. Valid values are as follows and are case-sensitive:
-        * \`ALLOW\`: An allow list. Include this IP or range. * \`BLOCK\`: A block list. Exclude this IP or
-        range. IP addresses in the block list are excluded even if they are included in an allow list.
+        - \`\`ALLOW\`\`: An allow list. Include this IP or range.
+        - \`\`BLOCK\`\`: A block list. Exclude this IP or range. IP addresses in the block list are excluded
+        even if they are included in an allow list.
     - name: ip_addresses
       value:
         - "{{ ip_addresses }}"

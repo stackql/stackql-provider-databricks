@@ -71,12 +71,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "dashboard_filters_enabled",
     "type": "boolean",
-    "description": "In the web application, query filters that share a name are coupled to a single selection box if this value is `true`."
+    "description": "In the web application, query filters that share a name are coupled to a single selection box if this value is ``true``."
   },
   {
     "name": "is_archived",
     "type": "boolean",
-    "description": "Indicates whether a dashboard is trashed. Trashed dashboards won't appear in list views. If this boolean is `true`, the `options` property for this dashboard includes a `moved_to_trash_at` timestamp. Items in trash are permanently deleted after 30 days."
+    "description": "Indicates whether a dashboard is trashed. Trashed dashboards won't appear in list views. If this boolean is ``true``, the ``options`` property for this dashboard includes a ``moved_to_trash_at`` timestamp. Items in trash are permanently deleted after 30 days."
   },
   {
     "name": "is_draft",
@@ -108,12 +108,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "permission_tier",
     "type": "string",
-    "description": "* `CAN_VIEW`: Can view the query * `CAN_RUN`: Can run the query * `CAN_EDIT`: Can edit the query * `CAN_MANAGE`: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
+    "description": "- ``CAN_VIEW``: Can view the query - ``CAN_RUN``: Can run the query - ``CAN_EDIT``: Can edit the query - ``CAN_MANAGE``: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
   },
   {
     "name": "slug",
     "type": "string",
-    "description": "URL slug. Usually mirrors the query name with dashes (`-`) instead of spaces. Appears in the URL for this query."
+    "description": "URL slug. Usually mirrors the query name with dashes (``-``) instead of spaces. Appears in the URL for this query."
   },
   {
     "name": "tags",
@@ -229,7 +229,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "visualization",
         "type": "object",
-        "description": "The visualization description API changes frequently and is unsupported. You can duplicate a visualization by copying description objects received _from the API_ and then using them to create a new one with a POST request to the same endpoint. Databricks does not recommend constructing ad-hoc visualizations entirely in JSON.",
+        "description": "The visualization description API changes frequently and is unsupported. You can duplicate a visualization by copying description objects received *from the API* and then using them to create a new one with a POST request to the same endpoint. Databricks does not recommend constructing ad-hoc visualizations entirely in JSON.",
         "children": [
           {
             "name": "created_at",
@@ -274,7 +274,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "data_source_id",
                 "type": "string",
-                "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+                "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. `Learn more <https://docs.databricks.com/api/workspace/datasources/list>`__"
               },
               {
                 "name": "description",
@@ -289,7 +289,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "is_archived",
                 "type": "boolean",
-                "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is `true`, the `options` property for this query includes a `moved_to_trash_at` timestamp. Trashed queries are permanently deleted after 30 days."
+                "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is ``true``, the ``options`` property for this query includes a ``moved_to_trash_at`` timestamp. Trashed queries are permanently deleted after 30 days."
               },
               {
                 "name": "is_draft",
@@ -304,7 +304,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "is_safe",
                 "type": "boolean",
-                "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to `true` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
+                "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to ``true`` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
               },
               {
                 "name": "last_modified_by",
@@ -339,7 +339,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "permission_tier",
                 "type": "string",
-                "description": "* `CAN_VIEW`: Can view the query * `CAN_RUN`: Can run the query * `CAN_EDIT`: Can edit the query * `CAN_MANAGE`: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
+                "description": "- ``CAN_VIEW``: Can view the query - ``CAN_RUN``: Can run the query - ``CAN_EDIT``: Can edit the query - ``CAN_MANAGE``: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
               },
               {
                 "name": "query",
@@ -354,7 +354,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "run_as_role",
                 "type": "string",
-                "description": "Sets the **Run as** role for the object. Must be set to one of `\"viewer\"` (signifying \"run as viewer\" behavior) or `\"owner\"` (signifying \"run as owner\" behavior) (owner, viewer)"
+                "description": "Sets the **Run as** role for the object. Must be set to one of ``\"viewer\"`` (signifying \"run as viewer\" behavior) or ``\"owner\"`` (signifying \"run as owner\" behavior) (owner, viewer)"
               },
               {
                 "name": "tags",
@@ -435,12 +435,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "dashboard_filters_enabled",
     "type": "boolean",
-    "description": "In the web application, query filters that share a name are coupled to a single selection box if this value is `true`."
+    "description": "In the web application, query filters that share a name are coupled to a single selection box if this value is ``true``."
   },
   {
     "name": "is_archived",
     "type": "boolean",
-    "description": "Indicates whether a dashboard is trashed. Trashed dashboards won't appear in list views. If this boolean is `true`, the `options` property for this dashboard includes a `moved_to_trash_at` timestamp. Items in trash are permanently deleted after 30 days."
+    "description": "Indicates whether a dashboard is trashed. Trashed dashboards won't appear in list views. If this boolean is ``true``, the ``options`` property for this dashboard includes a ``moved_to_trash_at`` timestamp. Items in trash are permanently deleted after 30 days."
   },
   {
     "name": "is_draft",
@@ -472,12 +472,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "permission_tier",
     "type": "string",
-    "description": "* `CAN_VIEW`: Can view the query * `CAN_RUN`: Can run the query * `CAN_EDIT`: Can edit the query * `CAN_MANAGE`: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
+    "description": "- ``CAN_VIEW``: Can view the query - ``CAN_RUN``: Can run the query - ``CAN_EDIT``: Can edit the query - ``CAN_MANAGE``: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
   },
   {
     "name": "slug",
     "type": "string",
-    "description": "URL slug. Usually mirrors the query name with dashes (`-`) instead of spaces. Appears in the URL for this query."
+    "description": "URL slug. Usually mirrors the query name with dashes (``-``) instead of spaces. Appears in the URL for this query."
   },
   {
     "name": "tags",
@@ -593,7 +593,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "visualization",
         "type": "object",
-        "description": "The visualization description API changes frequently and is unsupported. You can duplicate a visualization by copying description objects received _from the API_ and then using them to create a new one with a POST request to the same endpoint. Databricks does not recommend constructing ad-hoc visualizations entirely in JSON.",
+        "description": "The visualization description API changes frequently and is unsupported. You can duplicate a visualization by copying description objects received *from the API* and then using them to create a new one with a POST request to the same endpoint. Databricks does not recommend constructing ad-hoc visualizations entirely in JSON.",
         "children": [
           {
             "name": "created_at",
@@ -638,7 +638,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "data_source_id",
                 "type": "string",
-                "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. [Learn more] [Learn more]: https://docs.databricks.com/api/workspace/datasources/list"
+                "description": "Data source ID maps to the ID of the data source used by the resource and is distinct from the warehouse ID. `Learn more <https://docs.databricks.com/api/workspace/datasources/list>`__"
               },
               {
                 "name": "description",
@@ -653,7 +653,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "is_archived",
                 "type": "boolean",
-                "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is `true`, the `options` property for this query includes a `moved_to_trash_at` timestamp. Trashed queries are permanently deleted after 30 days."
+                "description": "Indicates whether the query is trashed. Trashed queries can't be used in dashboards, or appear in search results. If this boolean is ``true``, the ``options`` property for this query includes a ``moved_to_trash_at`` timestamp. Trashed queries are permanently deleted after 30 days."
               },
               {
                 "name": "is_draft",
@@ -668,7 +668,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "is_safe",
                 "type": "boolean",
-                "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to `true` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
+                "description": "Text parameter types are not safe from SQL injection for all types of data source. Set this Boolean parameter to ``true`` if a query either does not use any text type parameters or uses a data source type where text type parameters are handled safely."
               },
               {
                 "name": "last_modified_by",
@@ -703,7 +703,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "permission_tier",
                 "type": "string",
-                "description": "* `CAN_VIEW`: Can view the query * `CAN_RUN`: Can run the query * `CAN_EDIT`: Can edit the query * `CAN_MANAGE`: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
+                "description": "- ``CAN_VIEW``: Can view the query - ``CAN_RUN``: Can run the query - ``CAN_EDIT``: Can edit the query - ``CAN_MANAGE``: Can manage the query (CAN_EDIT, CAN_MANAGE, CAN_RUN, CAN_VIEW)"
               },
               {
                 "name": "query",
@@ -718,7 +718,7 @@ The following fields are returned by `SELECT` queries:
               {
                 "name": "run_as_role",
                 "type": "string",
-                "description": "Sets the **Run as** role for the object. Must be set to one of `\"viewer\"` (signifying \"run as viewer\" behavior) or `\"owner\"` (signifying \"run as owner\" behavior) (owner, viewer)"
+                "description": "Sets the **Run as** role for the object. Must be set to one of ``\"viewer\"`` (signifying \"run as viewer\" behavior) or ``\"owner\"`` (signifying \"run as owner\" behavior) (owner, viewer)"
               },
               {
                 "name": "tags",
@@ -1008,7 +1008,7 @@ widgets
     - name: run_as_role
       value: "{{ run_as_role }}"
       description: |
-        Sets the **Run as** role for the object. Must be set to one of \`"viewer"\` (signifying "run as viewer" behavior) or \`"owner"\` (signifying "run as owner" behavior)
+        Sets the **Run as** role for the object. Must be set to one of \`\`"viewer"\`\` (signifying "run as viewer" behavior) or \`\`"owner"\`\` (signifying "run as owner" behavior)
     - name: tags
       value:
         - "{{ tags }}"

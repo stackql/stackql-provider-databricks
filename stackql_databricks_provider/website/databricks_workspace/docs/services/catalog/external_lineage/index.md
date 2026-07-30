@@ -104,6 +104,18 @@ The following fields are returned by `SELECT` queries:
                 "description": ""
               }
             ]
+          },
+          {
+            "name": "volume",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": ""
+              }
+            ]
           }
         ]
       },
@@ -155,6 +167,18 @@ The following fields are returned by `SELECT` queries:
           },
           {
             "name": "table",
+            "type": "object",
+            "description": "",
+            "children": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": ""
+              }
+            ]
+          },
+          {
+            "name": "volume",
             "type": "object",
             "description": "",
             "children": [
@@ -303,6 +327,33 @@ The following fields are returned by `SELECT` queries:
         "description": "Name of Schema."
       }
     ]
+  },
+  {
+    "name": "volume_info",
+    "type": "object",
+    "description": "Information about the volume involved in the lineage relationship.",
+    "children": [
+      {
+        "name": "catalog_name",
+        "type": "string",
+        "description": ""
+      },
+      {
+        "name": "event_time",
+        "type": "string (date-time)",
+        "description": "Timestamp of the lineage event."
+      },
+      {
+        "name": "name",
+        "type": "string",
+        "description": "Name of the volume."
+      },
+      {
+        "name": "schema_name",
+        "type": "string",
+        "description": "Name of the schema."
+      }
+    ]
   }
 ]} />
 </TabItem>
@@ -385,12 +436,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-object_info">
     <td><CopyableCode code="object_info" /></td>
     <td><code>object</code></td>
-    <td>The object to query external lineage relationships for. Since this field is a query parameter, please flatten the nested fields. For example, if the object is a table, the query parameter should look like: `object_info.table.name=main.sales.customers`</td>
+    <td>The object to query external lineage relationships for. Since this field is a query parameter, please flatten the nested fields. For example, if the object is a table, the query parameter should look like: ``object_info.table.name=main.sales.customers``</td>
 </tr>
 <tr id="parameter-update_mask">
     <td><CopyableCode code="update_mask" /></td>
     <td><code>string</code></td>
-    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (`.`) to navigate sub-fields (e.g., `author.given_name`). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of `*` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using `*` wildcards, as it can lead to unintended results if the API changes in the future.</td>
+    <td>The field mask must be a single string, with multiple fields separated by commas (no spaces). The field path is relative to the resource object, using a dot (``.``) to navigate sub-fields (e.g., ``author.given_name``). Specification of elements in sequence or map fields is not allowed, as only the entire collection field can be specified. Field names must exactly match the resource field names. A field mask of ``*`` indicates full replacement. It’s recommended to always explicitly list the fields being updated and avoid using ``*`` wildcards, as it can lead to unintended results if the API changes in the future.</td>
 </tr>
 <tr id="parameter-page_size">
     <td><CopyableCode code="page_size" /></td>
@@ -423,7 +474,8 @@ external_lineage_info,
 external_metadata_info,
 file_info,
 model_info,
-table_info
+table_info,
+volume_info
 FROM databricks_workspace.catalog.external_lineage
 WHERE object_info = '{{ object_info }}' -- required
 AND lineage_direction = '{{ lineage_direction }}' -- required
@@ -486,6 +538,8 @@ target
             url: "{{ url }}"
           table:
             name: "{{ name }}"
+          volume:
+            name: "{{ name }}"
         target:
           external_metadata:
             name: "{{ name }}"
@@ -495,6 +549,8 @@ target
           path:
             url: "{{ url }}"
           table:
+            name: "{{ name }}"
+          volume:
             name: "{{ name }}"
         columns:
           - source: "{{ source }}"

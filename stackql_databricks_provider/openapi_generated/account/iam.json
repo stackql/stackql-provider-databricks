@@ -4,8 +4,8 @@
     "title": "Databricks Iam API (account)",
     "description": "OpenAPI specification for the Databricks iam service (account-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.iam"
   },
   "servers": [
@@ -23,7 +23,7 @@
           "iam",
           "account_access_control"
         ],
-        "description": "Gets all the roles that can be granted on an account level resource. A role is grantable if the rule\nset on the resource can contain an access rule of the role.\n\n:param resource: str\n  The resource name for which assignable roles will be listed.\n\n  Examples | Summary :--- | :--- `resource=accounts/<ACCOUNT_ID>` | A resource name for the account.\n  `resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>` | A resource name for the group.\n  `resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SP_ID>` | A resource name for the service\n  principal. `resource=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>` | A resource name for the\n  tag policy.\n\n:returns: :class:`GetAssignableRolesForResourceResponse`",
+        "description": "Gets all the roles that can be granted on an account level resource. A role is grantable if the rule\nset on the resource can contain an access rule of the role.\n\n:param resource: str\n  The resource name for which assignable roles will be listed.\n\n  Examples | Summary :--- | :--- ``resource=accounts/<ACCOUNT_ID>`` | A resource name for the account.\n  ``resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>`` | A resource name for the group.\n  ``resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SP_ID>`` | A resource name for the service\n  principal. ``resource=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>`` | A resource name for the\n  tag policy.\n\n:returns: :class:`GetAssignableRolesForResourceResponse`",
         "parameters": [
           {
             "name": "account_id",
@@ -40,7 +40,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The resource name for which assignable roles will be listed. Examples | Summary :--- | :--- `resource=accounts/<ACCOUNT_ID>` | A resource name for the account. `resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>` | A resource name for the group. `resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SP_ID>` | A resource name for the service principal. `resource=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>` | A resource name for the tag policy."
+            "description": "The resource name for which assignable roles will be listed. Examples | Summary :--- | :--- ``resource=accounts/<ACCOUNT_ID>`` | A resource name for the account. ``resource=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>`` | A resource name for the group. ``resource=accounts/<ACCOUNT_ID>/servicePrincipals/<SP_ID>`` | A resource name for the service principal. ``resource=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>`` | A resource name for the tag policy."
           }
         ],
         "responses": {
@@ -84,7 +84,7 @@
           "iam",
           "account_access_control"
         ],
-        "description": "Get a rule set by its name. A rule set is always attached to a resource and contains a list of access\nrules on the said resource. Currently only a default rule set for each resource is supported.\n\n:param name: str\n  The ruleset name associated with the request.\n\n  Examples | Summary :--- | :--- `name=accounts/<ACCOUNT_ID>/ruleSets/default` | A name for a rule set\n  on the account. `name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default` | A name for a rule\n  set on the group.\n  `name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default` |\n  A name for a rule set on the service principal.\n  `name=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>/ruleSets/default` | A name for a rule set on\n  the tag policy.\n:param etag: str\n  Etag used for versioning. The response is at least as fresh as the eTag provided. Etag is used for\n  optimistic concurrency control as a way to help prevent simultaneous updates of a rule set from\n  overwriting each other. It is strongly suggested that systems make use of the etag in the read ->\n  modify -> write pattern to perform rule set updates in order to avoid race conditions that is get an\n  etag from a GET rule set request, and pass it with the PUT update request to identify the rule set\n  version you are updating.\n\n  Examples | Summary :--- | :--- `etag=` | An empty etag can only be used in GET to indicate no\n  freshness requirements. `etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==` | An\n  etag encoded a specific version of the rule set to get or to be updated.\n\n:returns: :class:`RuleSetResponse`",
+        "description": "Get a rule set by its name. A rule set is always attached to a resource and contains a list of access\nrules on the said resource. Currently only a default rule set for each resource is supported.\n\n:param name: str\n  The ruleset name associated with the request.\n\n  Examples | Summary :--- | :--- ``name=accounts/<ACCOUNT_ID>/ruleSets/default`` | A name for a rule\n  set on the account. ``name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default`` | A name for a\n  rule set on the group.\n  ``name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default``\n  | A name for a rule set on the service principal.\n  ``name=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>/ruleSets/default`` | A name for a rule set\n  on the tag policy.\n:param etag: str\n  Etag used for versioning. The response is at least as fresh as the eTag provided. Etag is used for\n  optimistic concurrency control as a way to help prevent simultaneous updates of a rule set from\n  overwriting each other. It is strongly suggested that systems make use of the etag in the read ->\n  modify -> write pattern to perform rule set updates in order to avoid race conditions that is get an\n  etag from a GET rule set request, and pass it with the PUT update request to identify the rule set\n  version you are updating.\n\n  Examples | Summary :--- | :--- ``etag=`` | An empty etag can only be used in GET to indicate no\n  freshness requirements. ``etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==`` | An\n  etag encoded a specific version of the rule set to get or to be updated.\n\n:returns: :class:`RuleSetResponse`",
         "parameters": [
           {
             "name": "account_id",
@@ -101,7 +101,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "The ruleset name associated with the request. Examples | Summary :--- | :--- `name=accounts/<ACCOUNT_ID>/ruleSets/default` | A name for a rule set on the account. `name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default` | A name for a rule set on the group. `name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default` | A name for a rule set on the service principal. `name=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>/ruleSets/default` | A name for a rule set on the tag policy."
+            "description": "The ruleset name associated with the request. Examples | Summary :--- | :--- ``name=accounts/<ACCOUNT_ID>/ruleSets/default`` | A name for a rule set on the account. ``name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default`` | A name for a rule set on the group. ``name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default`` | A name for a rule set on the service principal. ``name=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>/ruleSets/default`` | A name for a rule set on the tag policy."
           },
           {
             "name": "etag",
@@ -110,7 +110,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Etag used for versioning. The response is at least as fresh as the eTag provided. Etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a rule set from overwriting each other. It is strongly suggested that systems make use of the etag in the read -> modify -> write pattern to perform rule set updates in order to avoid race conditions that is get an etag from a GET rule set request, and pass it with the PUT update request to identify the rule set version you are updating. Examples | Summary :--- | :--- `etag=` | An empty etag can only be used in GET to indicate no freshness requirements. `etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==` | An etag encoded a specific version of the rule set to get or to be updated."
+            "description": "Etag used for versioning. The response is at least as fresh as the eTag provided. Etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a rule set from overwriting each other. It is strongly suggested that systems make use of the etag in the read -> modify -> write pattern to perform rule set updates in order to avoid race conditions that is get an etag from a GET rule set request, and pass it with the PUT update request to identify the rule set version you are updating. Examples | Summary :--- | :--- ``etag=`` | An empty etag can only be used in GET to indicate no freshness requirements. ``etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==`` | An etag encoded a specific version of the rule set to get or to be updated."
           }
         ],
         "responses": {
@@ -196,7 +196,7 @@
                               "items": {
                                 "type": "string"
                               },
-                              "description": "Principals this grant rule applies to. A principal can be a user (for end users), a service principal (for applications and compute workloads), or an account group. Each principal has its own identifier format: * users/<USERNAME> * groups/<GROUP_NAME> * servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>"
+                              "description": "Principals this grant rule applies to. A principal can be a user (for end users), a service principal (for applications and compute workloads), or an account group. Each principal has its own identifier format: - users/<USERNAME> - groups/<GROUP_NAME> - servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>"
                             }
                           },
                           "required": [
@@ -388,7 +388,7 @@
           "iam",
           "account_groups_v2"
         ],
-        "description": "Gets all details of the groups associated with the Databricks account. As of 08/22/2025, this endpoint\nwill no longer return members. Instead, members should be retrieved by iterating through `Get group\ndetails`. Existing accounts that rely on this attribute will not be impacted and will continue\nreceiving member data as before.\n\n:param attributes: str (optional)\n  Comma-separated list of attributes to return in response.\n:param count: int (optional)\n  Desired number of results per page. Default is 10000.\n:param excluded_attributes: str (optional)\n  Comma-separated list of attributes to exclude in response.\n:param filter: str (optional)\n  Query by which the results have to be filtered. Supported operators are equals(`eq`),\n  contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be\n  formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently\n  only support simple expressions.\n\n  [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2\n:param sort_by: str (optional)\n  Attribute to sort the results.\n:param sort_order: :class:`ListSortOrder` (optional)\n  The order to sort the results.\n:param start_index: int (optional)\n  Specifies the index of the first result. First item is number 1.\n\n:returns: Iterator over :class:`AccountGroup`",
+        "description": "Gets all details of the groups associated with the Databricks account. As of 08/22/2025, this endpoint\nwill no longer return members. Instead, members should be retrieved by iterating through ``Get group\ndetails``. Existing accounts that rely on this attribute will not be impacted and will continue\nreceiving member data as before.\n\n:param attributes: str (optional)\n  Comma-separated list of attributes to return in response.\n:param count: int (optional)\n  Desired number of results per page. Default is 10000.\n:param excluded_attributes: str (optional)\n  Comma-separated list of attributes to exclude in response.\n:param filter: str (optional)\n  Query by which the results have to be filtered. Supported operators are equals(``eq``),\n  contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can\n  be formed using logical operators - ``and`` and ``or``. The `SCIM RFC\n  <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only\n  support simple expressions.\n:param sort_by: str (optional)\n  Attribute to sort the results.\n:param sort_order: :class:`ListSortOrder` (optional)\n  The order to sort the results.\n:param start_index: int (optional)\n  Specifies the index of the first result. First item is number 1.\n\n:returns: Iterator over :class:`AccountGroup`",
         "parameters": [
           {
             "name": "account_id",
@@ -432,7 +432,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Query by which the results have to be filtered. Supported operators are equals(`eq`), contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently only support simple expressions. [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2"
+            "description": "Query by which the results have to be filtered. Supported operators are equals(``eq``), contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can be formed using logical operators - ``and`` and ``or``. The `SCIM RFC <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only support simple expressions."
           },
           {
             "name": "sort_by",
@@ -945,7 +945,7 @@
           "iam",
           "account_service_principals_v2"
         ],
-        "description": "Gets the set of service principals associated with a Databricks account.\n\n:param attributes: str (optional)\n  Comma-separated list of attributes to return in response.\n:param count: int (optional)\n  Desired number of results per page. Default is 10000.\n:param excluded_attributes: str (optional)\n  Comma-separated list of attributes to exclude in response.\n:param filter: str (optional)\n  Query by which the results have to be filtered. Supported operators are equals(`eq`),\n  contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be\n  formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently\n  only support simple expressions.\n\n  [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2\n:param sort_by: str (optional)\n  Attribute to sort the results.\n:param sort_order: :class:`ListSortOrder` (optional)\n  The order to sort the results.\n:param start_index: int (optional)\n  Specifies the index of the first result. First item is number 1.\n\n:returns: Iterator over :class:`AccountServicePrincipal`",
+        "description": "Gets the set of service principals associated with a Databricks account.\n\n:param attributes: str (optional)\n  Comma-separated list of attributes to return in response.\n:param count: int (optional)\n  Desired number of results per page. Default is 10000.\n:param excluded_attributes: str (optional)\n  Comma-separated list of attributes to exclude in response.\n:param filter: str (optional)\n  Query by which the results have to be filtered. Supported operators are equals(``eq``),\n  contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can\n  be formed using logical operators - ``and`` and ``or``. The `SCIM RFC\n  <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only\n  support simple expressions.\n:param sort_by: str (optional)\n  Attribute to sort the results.\n:param sort_order: :class:`ListSortOrder` (optional)\n  The order to sort the results.\n:param start_index: int (optional)\n  Specifies the index of the first result. First item is number 1.\n\n:returns: Iterator over :class:`AccountServicePrincipal`",
         "parameters": [
           {
             "name": "account_id",
@@ -989,7 +989,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Query by which the results have to be filtered. Supported operators are equals(`eq`), contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently only support simple expressions. [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2"
+            "description": "Query by which the results have to be filtered. Supported operators are equals(``eq``), contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can be formed using logical operators - ``and`` and ``or``. The `SCIM RFC <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only support simple expressions."
           },
           {
             "name": "sort_by",
@@ -1374,7 +1374,7 @@
           "iam",
           "account_users_v2"
         ],
-        "description": "Creates a new user in the Databricks account. This new user will also be added to the Databricks\naccount.\n\n:param active: bool (optional)\n  If this user is active\n:param display_name: str (optional)\n  String that represents a concatenation of given and family names. For example `John Smith`.\n:param emails: List[:class:`ComplexValue`] (optional)\n  All the emails associated with the Databricks user.\n:param external_id: str (optional)\n  External ID is not currently supported. It is reserved for future use.\n:param id: str (optional)\n  Databricks user ID.\n:param name: :class:`Name` (optional)\n:param roles: List[:class:`ComplexValue`] (optional)\n  Indicates if the group has the admin role.\n:param user_name: str (optional)\n  Email address of the Databricks user.\n\n:returns: :class:`AccountUser`",
+        "description": "Creates a new user in the Databricks account. This new user will also be added to the Databricks\naccount.\n\n:param active: bool (optional)\n  If this user is active\n:param display_name: str (optional)\n  String that represents a concatenation of given and family names. For example ``John Smith``.\n:param emails: List[:class:`ComplexValue`] (optional)\n  All the emails associated with the Databricks user.\n:param external_id: str (optional)\n  External ID is not currently supported. It is reserved for future use.\n:param id: str (optional)\n  Databricks user ID.\n:param name: :class:`Name` (optional)\n:param roles: List[:class:`ComplexValue`] (optional)\n  Indicates if the group has the admin role.\n:param user_name: str (optional)\n  Email address of the Databricks user.\n\n:returns: :class:`AccountUser`",
         "parameters": [
           {
             "name": "account_id",
@@ -1397,7 +1397,7 @@
                   },
                   "displayName": {
                     "type": "string",
-                    "description": "String that represents a concatenation of given and family names. For example `John Smith`."
+                    "description": "String that represents a concatenation of given and family names. For example ``John Smith``."
                   },
                   "emails": {
                     "type": "array",
@@ -1515,7 +1515,7 @@
           "iam",
           "account_users_v2"
         ],
-        "description": "Gets details for all the users associated with a Databricks account.\n\n:param attributes: str (optional)\n  Comma-separated list of attributes to return in response.\n:param count: int (optional)\n  Desired number of results per page. Default is 10000.\n:param excluded_attributes: str (optional)\n  Comma-separated list of attributes to exclude in response.\n:param filter: str (optional)\n  Query by which the results have to be filtered. Supported operators are equals(`eq`),\n  contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be\n  formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently\n  only support simple expressions.\n\n  [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2\n:param sort_by: str (optional)\n  Attribute to sort the results. Multi-part paths are supported. For example, `userName`,\n  `name.givenName`, and `emails`.\n:param sort_order: :class:`ListSortOrder` (optional)\n  The order to sort the results.\n:param start_index: int (optional)\n  Specifies the index of the first result. First item is number 1.\n\n:returns: Iterator over :class:`AccountUser`",
+        "description": "Gets details for all the users associated with a Databricks account.\n\n:param attributes: str (optional)\n  Comma-separated list of attributes to return in response.\n:param count: int (optional)\n  Desired number of results per page. Default is 10000.\n:param excluded_attributes: str (optional)\n  Comma-separated list of attributes to exclude in response.\n:param filter: str (optional)\n  Query by which the results have to be filtered. Supported operators are equals(``eq``),\n  contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can\n  be formed using logical operators - ``and`` and ``or``. The `SCIM RFC\n  <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only\n  support simple expressions.\n:param sort_by: str (optional)\n  Attribute to sort the results. Multi-part paths are supported. For example, ``userName``,\n  ``name.givenName``, and ``emails``.\n:param sort_order: :class:`ListSortOrder` (optional)\n  The order to sort the results.\n:param start_index: int (optional)\n  Specifies the index of the first result. First item is number 1.\n\n:returns: Iterator over :class:`AccountUser`",
         "parameters": [
           {
             "name": "account_id",
@@ -1559,7 +1559,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Query by which the results have to be filtered. Supported operators are equals(`eq`), contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently only support simple expressions. [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2"
+            "description": "Query by which the results have to be filtered. Supported operators are equals(``eq``), contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can be formed using logical operators - ``and`` and ``or``. The `SCIM RFC <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only support simple expressions."
           },
           {
             "name": "sort_by",
@@ -1568,7 +1568,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Attribute to sort the results. Multi-part paths are supported. For example, `userName`, `name.givenName`, and `emails`."
+            "description": "Attribute to sort the results. Multi-part paths are supported. For example, ``userName``, ``name.givenName``, and ``emails``."
           },
           {
             "name": "sort_order",
@@ -1682,7 +1682,7 @@
           "iam",
           "account_users_v2"
         ],
-        "description": "Gets information for a specific user in Databricks account.\n\n:param id: str\n  Unique ID for a user in the Databricks account.\n:param attributes: str (optional)\n  Comma-separated list of attributes to return in response.\n:param count: int (optional)\n  Desired number of results per page. Default is 10000.\n:param excluded_attributes: str (optional)\n  Comma-separated list of attributes to exclude in response.\n:param filter: str (optional)\n  Query by which the results have to be filtered. Supported operators are equals(`eq`),\n  contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be\n  formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently\n  only support simple expressions.\n\n  [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2\n:param sort_by: str (optional)\n  Attribute to sort the results. Multi-part paths are supported. For example, `userName`,\n  `name.givenName`, and `emails`.\n:param sort_order: :class:`GetSortOrder` (optional)\n  The order to sort the results.\n:param start_index: int (optional)\n  Specifies the index of the first result. First item is number 1.\n\n:returns: :class:`AccountUser`",
+        "description": "Gets information for a specific user in Databricks account.\n\n:param id: str\n  Unique ID for a user in the Databricks account.\n:param attributes: str (optional)\n  Comma-separated list of attributes to return in response.\n:param count: int (optional)\n  Desired number of results per page. Default is 10000.\n:param excluded_attributes: str (optional)\n  Comma-separated list of attributes to exclude in response.\n:param filter: str (optional)\n  Query by which the results have to be filtered. Supported operators are equals(``eq``),\n  contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can\n  be formed using logical operators - ``and`` and ``or``. The `SCIM RFC\n  <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only\n  support simple expressions.\n:param sort_by: str (optional)\n  Attribute to sort the results. Multi-part paths are supported. For example, ``userName``,\n  ``name.givenName``, and ``emails``.\n:param sort_order: :class:`GetSortOrder` (optional)\n  The order to sort the results.\n:param start_index: int (optional)\n  Specifies the index of the first result. First item is number 1.\n\n:returns: :class:`AccountUser`",
         "parameters": [
           {
             "name": "account_id",
@@ -1735,7 +1735,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Query by which the results have to be filtered. Supported operators are equals(`eq`), contains(`co`), starts with(`sw`) and not equals(`ne`). Additionally, simple expressions can be formed using logical operators - `and` and `or`. The [SCIM RFC] has more details but we currently only support simple expressions. [SCIM RFC]: https://tools.ietf.org/html/rfc7644#section-3.4.2.2"
+            "description": "Query by which the results have to be filtered. Supported operators are equals(``eq``), contains(``co``), starts with(``sw``) and not equals(``ne``). Additionally, simple expressions can be formed using logical operators - ``and`` and ``or``. The `SCIM RFC <https://tools.ietf.org/html/rfc7644#section-3.4.2.2>`__ has more details but we currently only support simple expressions."
           },
           {
             "name": "sort_by",
@@ -1744,7 +1744,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Attribute to sort the results. Multi-part paths are supported. For example, `userName`, `name.givenName`, and `emails`."
+            "description": "Attribute to sort the results. Multi-part paths are supported. For example, ``userName``, ``name.givenName``, and ``emails``."
           },
           {
             "name": "sort_order",
@@ -1799,12 +1799,12 @@
       },
       "patch": {
         "operationId": "account_users_v2_patch",
-        "summary": "Partially updates a user resource by applying the supplied operations on specific user attributes.",
+        "summary": "Partially updates a user resource by applying the supplied operations on specific user attributes. The",
         "tags": [
           "iam",
           "account_users_v2"
         ],
-        "description": "Partially updates a user resource by applying the supplied operations on specific user attributes.\n\n:param id: str\n  Unique ID in the Databricks workspace.\n:param operations: List[:class:`Patch`] (optional)\n:param schemas: List[:class:`PatchSchema`] (optional)\n  The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"].",
+        "description": "Partially updates a user resource by applying the supplied operations on specific user attributes. The\n``userName`` and ``emails`` attributes cannot be updated through this API; any supplied changes to\nthem are ignored (no-op).\n\n:param id: str\n  Unique ID in the Databricks workspace.\n:param operations: List[:class:`Patch`] (optional)\n:param schemas: List[:class:`PatchSchema`] (optional)\n  The schema of the patch request. Must be [\"urn:ietf:params:scim:api:messages:2.0:PatchOp\"].",
         "parameters": [
           {
             "name": "account_id",
@@ -1903,7 +1903,7 @@
           "iam",
           "account_users_v2"
         ],
-        "description": "Replaces a user's information with the data supplied in request.\n\n:param id: str\n  Databricks user ID.\n:param active: bool (optional)\n  If this user is active\n:param display_name: str (optional)\n  String that represents a concatenation of given and family names. For example `John Smith`.\n:param emails: List[:class:`ComplexValue`] (optional)\n  All the emails associated with the Databricks user.\n:param external_id: str (optional)\n  External ID is not currently supported. It is reserved for future use.\n:param name: :class:`Name` (optional)\n:param roles: List[:class:`ComplexValue`] (optional)\n  Indicates if the group has the admin role.\n:param user_name: str (optional)\n  Email address of the Databricks user.",
+        "description": "Replaces a user's information with the data supplied in request.\n\n:param id: str\n  Databricks user ID.\n:param active: bool (optional)\n  If this user is active\n:param display_name: str (optional)\n  String that represents a concatenation of given and family names. For example ``John Smith``.\n:param emails: List[:class:`ComplexValue`] (optional)\n  All the emails associated with the Databricks user.\n:param external_id: str (optional)\n  External ID is not currently supported. It is reserved for future use.\n:param name: :class:`Name` (optional)\n:param roles: List[:class:`ComplexValue`] (optional)\n  Indicates if the group has the admin role.\n:param user_name: str (optional)\n  Email address of the Databricks user.",
         "parameters": [
           {
             "name": "account_id",
@@ -1935,7 +1935,7 @@
                   },
                   "displayName": {
                     "type": "string",
-                    "description": "String that represents a concatenation of given and family names. For example `John Smith`."
+                    "description": "String that represents a concatenation of given and family names. For example ``John Smith``."
                   },
                   "emails": {
                     "type": "array",
@@ -2260,7 +2260,7 @@
           "iam",
           "workspace_assignment"
         ],
-        "description": "Get the permission assignments for the specified Databricks account and Databricks workspace.\n\n:param workspace_id: int\n  The workspace ID for the account.\n\n:returns: Iterator over :class:`PermissionAssignment`",
+        "description": "Get the permission assignments for the specified Databricks account and Databricks workspace.\n\n:param workspace_id: int\n  The workspace ID for the account.\n:param filter: str (optional)\n  Filter string to search principals.\n:param max_results: int (optional)\n  Maximum number of permission assignments to return.\n:param page_token: str (optional)\n  Page token returned by previous call to retrieve the next page of results.\n\n:returns: Iterator over :class:`PermissionAssignment`",
         "parameters": [
           {
             "name": "account_id",
@@ -2278,6 +2278,33 @@
               "type": "integer"
             },
             "description": "The workspace ID for the account."
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter string to search principals."
+          },
+          {
+            "name": "max_results",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Maximum number of permission assignments to return."
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Page token returned by previous call to retrieve the next page of results."
           }
         ],
         "responses": {
@@ -2445,14 +2472,14 @@
           },
           "displayName": {
             "type": "string",
-            "description": "String that represents a concatenation of given and family names. For example `John Smith`."
+            "description": "String that represents a concatenation of given and family names. For example ``John Smith``."
           },
           "emails": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ComplexValue"
             },
-            "description": "All the emails associated with the Databricks user."
+            "description": "All the emails associated with the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored."
           },
           "externalId": {
             "type": "string",
@@ -2474,7 +2501,7 @@
           },
           "userName": {
             "type": "string",
-            "description": "Email address of the Databricks user."
+            "description": "Email address of the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored."
           }
         }
       },
@@ -2580,7 +2607,7 @@
             "items": {
               "type": "string"
             },
-            "description": "Principals this grant rule applies to. A principal can be a user (for end users), a service principal (for applications and compute workloads), or an account group. Each principal has its own identifier format: * users/<USERNAME> * groups/<GROUP_NAME> * servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>"
+            "description": "Principals this grant rule applies to. A principal can be a user (for end users), a service principal (for applications and compute workloads), or an account group. Each principal has its own identifier format: - users/<USERNAME> - groups/<GROUP_NAME> - servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>"
           }
         },
         "required": [
@@ -2598,7 +2625,7 @@
             "items": {
               "$ref": "#/components/schemas/ComplexValue"
             },
-            "description": "Entitlements assigned to the group. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"
+            "description": "Entitlements assigned to the group. See `assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__ for a full list of supported values."
           },
           "externalId": {
             "type": "string",
@@ -2987,11 +3014,19 @@
       "PermissionAssignments": {
         "type": "object",
         "properties": {
+          "next_page_token": {
+            "type": "string"
+          },
           "permission_assignments": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PermissionAssignment"
-            }
+            },
+            "description": "Array of permissions assignments defined for a workspace."
+          },
+          "prev_page_token": {
+            "type": "string",
+            "description": "Token to retrieve the previous page of results."
           }
         }
       },
@@ -3144,7 +3179,7 @@
             "items": {
               "$ref": "#/components/schemas/ComplexValue"
             },
-            "description": "Entitlements assigned to the service principal. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"
+            "description": "Entitlements assigned to the service principal. See `assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__ for a full list of supported values."
           },
           "externalId": {
             "type": "string"
@@ -3183,21 +3218,21 @@
           },
           "displayName": {
             "type": "string",
-            "description": "String that represents a concatenation of given and family names. For example `John Smith`. This field cannot be updated through the Workspace SCIM APIs when [identity federation is enabled]. Use Account SCIM APIs to update `displayName`. [identity federation is enabled]: https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation"
+            "description": "String that represents a concatenation of given and family names. For example ``John Smith``. This field cannot be updated through the Workspace SCIM APIs when `identity federation is enabled <https://docs.databricks.com/administration-guide/users-groups/best-practices.html#enable-identity-federation>`__. Use Account SCIM APIs to update ``displayName``."
           },
           "emails": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ComplexValue"
             },
-            "description": "All the emails associated with the Databricks user."
+            "description": "All the emails associated with the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored."
           },
           "entitlements": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ComplexValue"
             },
-            "description": "Entitlements assigned to the user. See [assigning entitlements] for a full list of supported values. [assigning entitlements]: https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements"
+            "description": "Entitlements assigned to the user. See `assigning entitlements <https://docs.databricks.com/administration-guide/users-groups/index.html#assigning-entitlements>`__ for a full list of supported values."
           },
           "externalId": {
             "type": "string",
@@ -3232,7 +3267,7 @@
           },
           "userName": {
             "type": "string",
-            "description": "Email address of the Databricks user."
+            "description": "Email address of the Databricks user. This attribute cannot be updated through the SCIM PATCH or PUT APIs; any supplied change is ignored."
           }
         }
       },
@@ -3246,6 +3281,18 @@
             }
           }
         }
+      },
+      "AutoscopeState": {
+        "type": "string",
+        "x-enum": [
+          "AUTOSCOPE_STATE_API_NOT_COVERED",
+          "AUTOSCOPE_STATE_BACKFILLED",
+          "AUTOSCOPE_STATE_COMPLETED",
+          "AUTOSCOPE_STATE_DISABLED",
+          "AUTOSCOPE_STATE_RUNNING",
+          "AUTOSCOPE_STATE_USER_SELECTED"
+        ],
+        "description": "State of inferred scope collection (autoscope) for an external PAT. Mirrored in\ndatabricks.identity.AutoscopeState in common/principal-context/api/proto/tokendetails.proto.\nToken store and token management proto can depend on this. Principal context proto should NOT\ndepend on this proto definitions because too many services depend on the principal context\nproto."
       },
       "GetSortOrder": {
         "type": "string",
@@ -3322,7 +3369,8 @@
           "CAN_USE",
           "CAN_VIEW",
           "CAN_VIEW_METADATA",
-          "IS_OWNER"
+          "IS_OWNER",
+          "UNSPECIFIED"
         ],
         "description": "Permission level"
       },

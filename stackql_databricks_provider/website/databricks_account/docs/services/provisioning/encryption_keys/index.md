@@ -76,7 +76,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "reuse_key_for_cluster_volumes",
         "type": "boolean",
-        "description": "This field applies only if the `use_cases` property includes `STORAGE`. If this is set to true or omitted, the key is also used to encrypt cluster EBS volumes. If you do not want to use this key for encrypting EBS volumes, set to false."
+        "description": "This field applies only if the ``use_cases`` property includes ``STORAGE``. If this is set to true or omitted, the key is also used to encrypt cluster EBS volumes. If you do not want to use this key for encrypting EBS volumes, set to false."
       }
     ]
   },
@@ -111,6 +111,11 @@ The following fields are returned by `SELECT` queries:
         "name": "key_vault_uri",
         "type": "string",
         "description": "The base URI of the KeyVault."
+      },
+      {
+        "name": "subscription_id",
+        "type": "string",
+        "description": "The Azure subscription ID to use for Key Vault access validation during CMK creation."
       },
       {
         "name": "tenant_id",
@@ -150,6 +155,11 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           }
         ]
+      },
+      {
+        "name": "manual",
+        "type": "boolean",
+        "description": "When true, Databricks will not use OAuth to grant the service account access to the KMS key. The customer is responsible for granting access manually."
       }
     ]
   },
@@ -196,7 +206,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "reuse_key_for_cluster_volumes",
         "type": "boolean",
-        "description": "This field applies only if the `use_cases` property includes `STORAGE`. If this is set to true or omitted, the key is also used to encrypt cluster EBS volumes. If you do not want to use this key for encrypting EBS volumes, set to false."
+        "description": "This field applies only if the ``use_cases`` property includes ``STORAGE``. If this is set to true or omitted, the key is also used to encrypt cluster EBS volumes. If you do not want to use this key for encrypting EBS volumes, set to false."
       }
     ]
   },
@@ -231,6 +241,11 @@ The following fields are returned by `SELECT` queries:
         "name": "key_vault_uri",
         "type": "string",
         "description": "The base URI of the KeyVault."
+      },
+      {
+        "name": "subscription_id",
+        "type": "string",
+        "description": "The Azure subscription ID to use for Key Vault access validation during CMK creation."
       },
       {
         "name": "tenant_id",
@@ -270,6 +285,11 @@ The following fields are returned by `SELECT` queries:
             "description": ""
           }
         ]
+      },
+      {
+        "name": "manual",
+        "type": "boolean",
+        "description": "When true, Databricks will not use OAuth to grant the service account access to the KMS key. The customer is responsible for granting access manually."
       }
     ]
   },
@@ -420,12 +440,14 @@ Creates a customer-managed key configuration object for an account, specified by
 INSERT INTO databricks_account.provisioning.encryption_keys (
 use_cases,
 aws_key_info,
+azure_key_info,
 gcp_key_info,
 account_id
 )
 SELECT 
 '{{ use_cases }}' /* required */,
 '{{ aws_key_info }}',
+'{{ azure_key_info }}',
 '{{ gcp_key_info }}',
 '{{ account_id }}'
 RETURNING
@@ -458,11 +480,22 @@ use_cases
         key_alias: "{{ key_alias }}"
         key_region: "{{ key_region }}"
         reuse_key_for_cluster_volumes: {{ reuse_key_for_cluster_volumes }}
+    - name: azure_key_info
+      value:
+        disk_encryption_set_id: "{{ disk_encryption_set_id }}"
+        key_access_configuration:
+          credential_id: "{{ credential_id }}"
+        key_name: "{{ key_name }}"
+        key_vault_uri: "{{ key_vault_uri }}"
+        subscription_id: "{{ subscription_id }}"
+        tenant_id: "{{ tenant_id }}"
+        version: "{{ version }}"
     - name: gcp_key_info
       value:
         kms_key_id: "{{ kms_key_id }}"
         gcp_service_account:
           service_account_email: "{{ service_account_email }}"
+        manual: {{ manual }}
 `}</CodeBlock>
 
 </TabItem>

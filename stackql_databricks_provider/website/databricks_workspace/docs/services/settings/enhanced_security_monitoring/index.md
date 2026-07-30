@@ -50,12 +50,12 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "enhanced_security_monitoring_workspace",
     "type": "object",
-    "description": "SHIELD feature: ESM",
+    "description": "SHIELD feature: ESM Enhanced Security Monitoring (ESM) enables additional security monitoring on<br />    the workspace.",
     "children": [
       {
         "name": "is_enabled",
         "type": "boolean",
-        "description": ""
+        "description": "Whether Enhanced Security Monitoring (ESM) is enabled on the workspace."
       }
     ]
   },

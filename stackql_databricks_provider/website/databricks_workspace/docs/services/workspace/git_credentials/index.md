@@ -96,7 +96,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "git_provider",
     "type": "string",
-    "description": "The Git provider associated with the credential."
+    "description": "The Git provider associated with the credential. One of ``gitHub``, ``bitbucketCloud``, ``gitLab``, ``azureDevOpsServices`` (Azure DevOps Services, including Microsoft Entra ID authentication), ``gitHubEnterprise``, ``bitbucketServer`` (Bitbucket Data Center), ``gitLabEnterpriseEdition`` (GitLab Self-Managed), or ``awsCodeCommit`` (deprecated)."
   },
   {
     "name": "git_username",
@@ -299,7 +299,7 @@ is_default_for_provider
     - name: git_provider
       value: "{{ git_provider }}"
       description: |
-        Git provider. This field is case-insensitive. The available Git providers are \`gitHub\`, \`bitbucketCloud\`, \`gitLab\`, \`azureDevOpsServices\`, \`gitHubEnterprise\`, \`bitbucketServer\`, \`gitLabEnterpriseEdition\` and \`awsCodeCommit\`.
+        Git provider. This field is case-insensitive. The available Git providers are \`\`gitHub\`\`, \`\`bitbucketCloud\`\`, \`\`gitLab\`\`, \`\`azureDevOpsServices\`\` (Azure DevOps Services, including Microsoft Entra ID authentication), \`\`gitHubEnterprise\`\`, \`\`bitbucketServer\`\` (Bitbucket Data Center), \`\`gitLabEnterpriseEdition\`\` (GitLab Self-Managed), and \`\`awsCodeCommit\`\` (deprecated by AWS, not accepting new customers).
     - name: git_email
       value: "{{ git_email }}"
       description: |
@@ -319,7 +319,7 @@ is_default_for_provider
     - name: personal_access_token
       value: "{{ personal_access_token }}"
       description: |
-        The personal access token used to authenticate to the corresponding Git provider. For certain providers, support may exist for other types of scoped access tokens. [Learn more]. [Learn more]: https://docs.databricks.com/repos/get-access-tokens-from-git-provider.html
+        The personal access token used to authenticate to the corresponding Git provider. For certain providers, support may exist for other types of scoped access tokens. \`Learn more <https://docs.databricks.com/repos/get-access-tokens-from-git-provider.html>\`__.
     - name: principal_id
       value: {{ principal_id }}
       description: |

@@ -48,9 +48,19 @@ The following fields are returned by `SELECT` queries:
     "description": "The ID of this token."
   },
   {
-    "name": "comment",
+    "name": "autoscope_state",
     "type": "string",
     "description": ""
+  },
+  {
+    "name": "backfill_scopes",
+    "type": "array",
+    "description": "Output only. Scopes inferred from offline backfill processing."
+  },
+  {
+    "name": "comment",
+    "type": "string",
+    "description": "Comment the token was created with, if applicable."
   },
   {
     "name": "creation_time",
@@ -61,6 +71,21 @@ The following fields are returned by `SELECT` queries:
     "name": "expiry_time",
     "type": "integer",
     "description": "Server time (in epoch milliseconds) when the token will expire, or -1 if not applicable."
+  },
+  {
+    "name": "inferred_scopes",
+    "type": "array",
+    "description": "Output only. Inferred API path scopes collected for this token when autoscope is enabled."
+  },
+  {
+    "name": "last_accessed_time",
+    "type": "integer",
+    "description": "Server time (in epoch milliseconds) when the token was accessed most recently."
+  },
+  {
+    "name": "scopes",
+    "type": "array",
+    "description": "Scope of the token was created with, if applicable."
   }
 ]} />
 </TabItem>
@@ -96,6 +121,13 @@ The following methods are available for this resource:
     <td>Creates and returns a token for a user. If this call is made through token authentication, it creates</td>
 </tr>
 <tr>
+    <td><a href="#tokens_update"><CopyableCode code="tokens_update" /></a></td>
+    <td><CopyableCode code="update" /></td>
+    <td><a href="#parameter-token_id"><code>token_id</code></a>, <a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-token"><code>token</code></a>, <a href="#parameter-update_mask"><code>update_mask</code></a></td>
+    <td></td>
+    <td>Updates the comment or scopes of a token.</td>
+</tr>
+<tr>
     <td><a href="#delete"><CopyableCode code="delete" /></a></td>
     <td><CopyableCode code="exec" /></td>
     <td><a href="#parameter-deployment_name"><code>deployment_name</code></a>, <a href="#parameter-token_id"><code>token_id</code></a></td>
@@ -123,6 +155,11 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
     <td><code>string</code></td>
     <td>The Databricks Workspace Deployment Name (default: dbc-abcd0123-a1bc)</td>
 </tr>
+<tr id="parameter-token_id">
+    <td><CopyableCode code="token_id" /></td>
+    <td><code>string</code></td>
+    <td>The SHA-256 hash of the token to be updated.</td>
+</tr>
 </tbody>
 </table>
 
@@ -141,9 +178,14 @@ Lists all the valid tokens for a user-workspace pair.
 ```sql
 SELECT
 token_id,
+autoscope_state,
+backfill_scopes,
 comment,
 creation_time,
-expiry_time
+expiry_time,
+inferred_scopes,
+last_accessed_time,
+scopes
 FROM databricks_workspace.settings.tokens
 WHERE deployment_name = '{{ deployment_name }}' -- required
 ;
@@ -167,13 +209,17 @@ Creates and returns a token for a user. If this call is made through token authe
 
 ```sql
 INSERT INTO databricks_workspace.settings.tokens (
+autoscope_enabled,
 comment,
 lifetime_seconds,
+scopes,
 deployment_name
 )
 SELECT 
+{{ autoscope_enabled }},
 '{{ comment }}',
 {{ lifetime_seconds }},
+'{{ scopes }}',
 '{{ deployment_name }}'
 RETURNING
 token_info,
@@ -189,6 +235,10 @@ token_value
     - name: deployment_name
       value: "{{ deployment_name }}"
       description: Required parameter for the tokens resource.
+    - name: autoscope_enabled
+      value: {{ autoscope_enabled }}
+      description: |
+        Whether to enable autoscoping for this token. When true, the token will automatically collect inferred API path scopes as it is used.
     - name: comment
       value: "{{ comment }}"
       description: |
@@ -197,8 +247,40 @@ token_value
       value: {{ lifetime_seconds }}
       description: |
         The lifetime of the token, in seconds. If the lifetime is not specified, this token remains valid for 2 years.
+    - name: scopes
+      value:
+        - "{{ scopes }}"
+      description: |
+        Optional scopes of the token.
 `}</CodeBlock>
 
+</TabItem>
+</Tabs>
+
+
+## `UPDATE` examples
+
+<Tabs
+    defaultValue="tokens_update"
+    values={[
+        { label: 'tokens_update', value: 'tokens_update' }
+    ]}
+>
+<TabItem value="tokens_update">
+
+Updates the comment or scopes of a token.
+
+```sql
+UPDATE databricks_workspace.settings.tokens
+SET 
+token = '{{ token }}',
+update_mask = '{{ update_mask }}'
+WHERE 
+token_id = '{{ token_id }}' --required
+AND deployment_name = '{{ deployment_name }}' --required
+AND token = '{{ token }}' --required
+AND update_mask = '{{ update_mask }}' --required;
+```
 </TabItem>
 </Tabs>
 

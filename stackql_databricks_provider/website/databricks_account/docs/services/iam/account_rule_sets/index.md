@@ -65,7 +65,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "principals",
         "type": "array",
-        "description": "Principals this grant rule applies to. A principal can be a user (for end users), a service principal (for applications and compute workloads), or an account group. Each principal has its own identifier format: * users/&lt;USERNAME&gt; * groups/&lt;GROUP_NAME&gt; * servicePrincipals/&lt;SERVICE_PRINCIPAL_APPLICATION_ID&gt;"
+        "description": "Principals this grant rule applies to. A principal can be a user (for end users), a service principal (for applications and compute workloads), or an account group. Each principal has its own identifier format: - users/&lt;USERNAME&gt; - groups/&lt;GROUP_NAME&gt; - servicePrincipals/&lt;SERVICE_PRINCIPAL_APPLICATION_ID&gt;"
       }
     ]
   }
@@ -126,12 +126,12 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-etag">
     <td><CopyableCode code="etag" /></td>
     <td><code>string</code></td>
-    <td>Etag used for versioning. The response is at least as fresh as the eTag provided. Etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a rule set from overwriting each other. It is strongly suggested that systems make use of the etag in the read -&gt; modify -&gt; write pattern to perform rule set updates in order to avoid race conditions that is get an etag from a GET rule set request, and pass it with the PUT update request to identify the rule set version you are updating. Examples | Summary :--- | :--- `etag=` | An empty etag can only be used in GET to indicate no freshness requirements. `etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==` | An etag encoded a specific version of the rule set to get or to be updated.</td>
+    <td>Etag used for versioning. The response is at least as fresh as the eTag provided. Etag is used for optimistic concurrency control as a way to help prevent simultaneous updates of a rule set from overwriting each other. It is strongly suggested that systems make use of the etag in the read -&gt; modify -&gt; write pattern to perform rule set updates in order to avoid race conditions that is get an etag from a GET rule set request, and pass it with the PUT update request to identify the rule set version you are updating. Examples | Summary :--- | :--- ``etag=`` | An empty etag can only be used in GET to indicate no freshness requirements. ``etag=RENUAAABhSweA4NvVmmUYdiU717H3Tgy0UJdor3gE4a+mq/oj9NjAf8ZsQ==`` | An etag encoded a specific version of the rule set to get or to be updated.</td>
 </tr>
 <tr id="parameter-name">
     <td><CopyableCode code="name" /></td>
     <td><code>string</code></td>
-    <td>The ruleset name associated with the request. Examples | Summary :--- | :--- `name=accounts/<ACCOUNT_ID>/ruleSets/default` | A name for a rule set on the account. `name=accounts/<ACCOUNT_ID>/groups/<GROUP_ID>/ruleSets/default` | A name for a rule set on the group. `name=accounts/<ACCOUNT_ID>/servicePrincipals/<SERVICE_PRINCIPAL_APPLICATION_ID>/ruleSets/default` | A name for a rule set on the service principal. `name=accounts/<ACCOUNT_ID>/tagPolicies/<TAG_POLICY_ID>/ruleSets/default` | A name for a rule set on the tag policy.</td>
+    <td>The ruleset name associated with the request. Examples | Summary :--- | :--- ``name=accounts/&lt;ACCOUNT_ID&gt;/ruleSets/default`` | A name for a rule set on the account. ``name=accounts/&lt;ACCOUNT_ID&gt;/groups/&lt;GROUP_ID&gt;/ruleSets/default`` | A name for a rule set on the group. ``name=accounts/&lt;ACCOUNT_ID&gt;/servicePrincipals/&lt;SERVICE_PRINCIPAL_APPLICATION_ID&gt;/ruleSets/default`` | A name for a rule set on the service principal. ``name=accounts/&lt;ACCOUNT_ID&gt;/tagPolicies/&lt;TAG_POLICY_ID&gt;/ruleSets/default`` | A name for a rule set on the tag policy.</td>
 </tr>
 </tbody>
 </table>

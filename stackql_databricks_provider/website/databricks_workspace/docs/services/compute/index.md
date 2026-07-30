@@ -18,7 +18,7 @@ compute service documentation.
 
 :::info[Service Summary]
 
-total resources: __20__  
+total resources: __22__  
 
 :::
 
@@ -34,9 +34,11 @@ total resources: __20__
 <a href="/services/compute/cluster_policy_permissions/">cluster_policy_permissions</a><br />
 <a href="/services/compute/cluster_zones/">cluster_zones</a><br />
 <a href="/services/compute/clusters/">clusters</a><br />
-<a href="/services/compute/command_execution/">command_execution</a>
+<a href="/services/compute/command_execution/">command_execution</a><br />
+<a href="/services/compute/default_base_environment/">default_base_environment</a>
 </div>
 <div class="providerDocColumn">
+<a href="/services/compute/default_base_environments/">default_base_environments</a><br />
 <a href="/services/compute/execution_contexts/">execution_contexts</a><br />
 <a href="/services/compute/global_init_scripts/">global_init_scripts</a><br />
 <a href="/services/compute/instance_pool_permission_levels/">instance_pool_permission_levels</a><br />

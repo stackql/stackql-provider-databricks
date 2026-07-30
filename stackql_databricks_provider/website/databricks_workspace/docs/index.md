@@ -27,8 +27,8 @@ For Databricks account operations use the [__`databricks_account`__](https://dat
 
 :::info[Provider Summary]
 
-total services: __26__
-total resources: __285__
+total services: __29__
+total resources: __342__
 
 :::
 
@@ -76,7 +76,9 @@ stackql.exe shell --auth=$Auth
 <div class="row">
 <div class="providerDocColumn">
 <a href="/services/agentbricks/">agentbricks</a><br />
+<a href="/services/aisearch/">aisearch</a><br />
 <a href="/services/apps/">apps</a><br />
+<a href="/services/bundledeployments/">bundledeployments</a><br />
 <a href="/services/catalog/">catalog</a><br />
 <a href="/services/cleanrooms/">cleanrooms</a><br />
 <a href="/services/compute/">compute</a><br />
@@ -100,6 +102,7 @@ stackql.exe shell --auth=$Auth
 <a href="/services/settingsv2/">settingsv2</a><br />
 <a href="/services/sharing/">sharing</a><br />
 <a href="/services/sql/">sql</a><br />
+<a href="/services/supervisoragents/">supervisoragents</a><br />
 <a href="/services/tags/">tags</a><br />
 <a href="/services/vectorsearch/">vectorsearch</a><br />
 <a href="/services/workspace/">workspace</a><br />

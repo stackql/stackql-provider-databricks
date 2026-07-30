@@ -1,0 +1,303 @@
+vw_projects:
+  name: vw_projects
+  id: databricks_workspace.postgres.vw_projects
+  config:
+    docs:
+      fields:
+      - name: name
+        type: string
+        description: The project identifier (last component of the resource path).
+      - name: create_time
+        type: string
+        description: Timestamp when the project was created.
+      - name: initial_endpoint_spec
+        type: object
+        description: Initial endpoint configuration for the project.
+      - name: spec
+        type: object
+        description: Project specification including display_name, pg_version, and default endpoint settings.
+      - name: compute_last_active_time
+        type: string
+        description: Timestamp of the last compute activity on the project.
+      - name: min_cu
+        type: number
+        description: Minimum autoscaling Compute Units for the default endpoint.
+      - name: max_cu
+        type: number
+        description: Maximum autoscaling Compute Units for the default endpoint.
+      - name: suspend_timeout_duration
+        type: string
+        description: Duration of inactivity after which the default endpoint is automatically suspended.
+      - name: display_name
+        type: string
+        description: Human-readable project name.
+      - name: enable_pg_native_login
+        type: boolean
+        description: Whether PG native password login is enabled on all endpoints in this project.
+      - name: history_retention_duration
+        type: string
+        description: Duration for retaining point-in-time recovery history across all branches.
+      - name: owner
+        type: string
+        description: Email of the project owner.
+      - name: pg_version
+        type: integer
+        description: Major Postgres version number in use.
+      - name: uid
+        type: string
+        description: System-generated unique ID for the project.
+      - name: update_time
+        type: string
+        description: Timestamp when the project was last updated.
+      requiredParams:
+      - name: deployment_name
+        type: string
+        description: The Databricks workspace deployment name.
+    views:
+      select:
+        predicate: sqlDialect == "sqlite3"
+        ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  create_time,\n  initial_endpoint_spec,\n  spec,\n  JSON_EXTRACT(status, '$.compute_last_active_time') AS compute_last_active_time,\n  JSON_EXTRACT(status, '$.default_endpoint_settings.autoscaling_limit_min_cu') AS min_cu,\n  JSON_EXTRACT(status, '$.default_endpoint_settings.autoscaling_limit_max_cu') AS max_cu,\n  JSON_EXTRACT(status, '$.default_endpoint_settings.suspend_timeout_duration') AS suspend_timeout_duration,\n  JSON_EXTRACT(status, '$.display_name') AS display_name,\n  JSON_EXTRACT(status, '$.enable_pg_native_login') AS enable_pg_native_login,\n  JSON_EXTRACT(status, '$.history_retention_duration') AS history_retention_duration,\n  JSON_EXTRACT(status, '$.owner') AS owner,\n  JSON_EXTRACT(status, '$.pg_version') AS pg_version,\n  uid,\n  update_time\nFROM databricks_workspace.postgres.postgres_projects\nWHERE deployment_name = '{{ deployment_name }}'"
+        fallback:
+          predicate: sqlDialect == "postgres"
+          ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  create_time,\n  initial_endpoint_spec,\n  spec,\n  (status::jsonb)->>'compute_last_active_time' AS compute_last_active_time,\n  (status::jsonb)#>>'{default_endpoint_settings,autoscaling_limit_min_cu}' AS min_cu,\n  (status::jsonb)#>>'{default_endpoint_settings,autoscaling_limit_max_cu}' AS max_cu,\n  (status::jsonb)#>>'{default_endpoint_settings,suspend_timeout_duration}' AS suspend_timeout_duration,\n  (status::jsonb)->>'display_name' AS display_name,\n  (status::jsonb)->>'enable_pg_native_login' AS enable_pg_native_login,\n  (status::jsonb)->>'history_retention_duration' AS history_retention_duration,\n  (status::jsonb)->>'owner' AS owner,\n  (status::jsonb)->>'pg_version' AS pg_version,\n  uid,\n  update_time\nFROM databricks_workspace.postgres.postgres_projects\nWHERE deployment_name = '{{ deployment_name }}'"
+vw_branches:
+  name: vw_branches
+  id: databricks_workspace.postgres.vw_branches
+  config:
+    docs:
+      fields:
+      - name: name
+        type: string
+        description: The branch identifier (last component of the resource path).
+      - name: create_time
+        type: string
+        description: Timestamp when the branch was created.
+      - name: project_id
+        type: string
+        description: The project identifier that owns this branch.
+      - name: spec
+        type: object
+        description: Branch specification including expiry and protection settings.
+      - name: branch_id
+        type: string
+        description: System-assigned branch identifier.
+      - name: current_state
+        type: string
+        description: Current operational state of the branch (e.g. READY, INIT).
+      - name: default
+        type: boolean
+        description: Whether this is the project's default branch.
+      - name: is_protected
+        type: boolean
+        description: Whether the branch is protected from deletion and reset.
+      - name: logical_size_bytes
+        type: integer
+        description: Logical size of the branch in bytes.
+      - name: state_change_time
+        type: string
+        description: Timestamp indicating when the current_state began.
+      - name: uid
+        type: string
+        description: System-generated unique ID for the branch.
+      - name: update_time
+        type: string
+        description: Timestamp when the branch was last updated.
+      requiredParams:
+      - name: project_id
+        type: string
+        description: The project identifier to scope the query.
+      - name: deployment_name
+        type: string
+        description: The Databricks workspace deployment name.
+    views:
+      select:
+        predicate: sqlDialect == "sqlite3"
+        ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  create_time,\n  project_id,\n  spec,\n  JSON_EXTRACT(status, '$.branch_id') AS branch_id,\n  JSON_EXTRACT(status, '$.current_state') AS current_state,\n  JSON_EXTRACT(status, '$.default') AS default,\n  JSON_EXTRACT(status, '$.is_protected') AS is_protected,\n  JSON_EXTRACT(status, '$.logical_size_bytes') AS logical_size_bytes,\n  JSON_EXTRACT(status, '$.state_change_time') AS state_change_time,\n  uid,\n  update_time\nFROM databricks_workspace.postgres.postgres_branches\nWHERE project_id = '{{ project_id }}'\nAND deployment_name = '{{ deployment_name }}'"
+        fallback:
+          predicate: sqlDialect == "postgres"
+          ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  create_time,\n  project_id,\n  spec,\n  (status::jsonb)->>'branch_id' AS branch_id,\n  (status::jsonb)->>'current_state' AS current_state,\n  (status::jsonb)->>'default' AS default,\n  (status::jsonb)->>'is_protected' AS is_protected,\n  (status::jsonb)->>'logical_size_bytes' AS logical_size_bytes,\n  (status::jsonb)->>'state_change_time' AS state_change_time,\n  uid,\n  update_time\nFROM databricks_workspace.postgres.postgres_branches\nWHERE project_id = '{{ project_id }}'\nAND deployment_name = '{{ deployment_name }}'"
+vw_databases:
+  name: vw_databases
+  id: databricks_workspace.postgres.vw_databases
+  config:
+    docs:
+      fields:
+      - name: name
+        type: string
+        description: The database identifier (last component of the resource path).
+      - name: project_id
+        type: string
+        description: The project identifier that owns this database.
+      - name: branch_id
+        type: string
+        description: The branch identifier that owns this database.
+      - name: spec
+        type: object
+        description: Database specification including postgres_database name and owner role.
+      - name: postgres_database
+        type: string
+        description: The name of the Postgres database.
+      - name: role
+        type: string
+        description: The identifier of the role that owns the database (last component of the resource path).
+      requiredParams:
+      - name: project_id
+        type: string
+        description: The project identifier to scope the query.
+      - name: branch_id
+        type: string
+        description: The branch identifier to scope the query.
+      - name: deployment_name
+        type: string
+        description: The Databricks workspace deployment name.
+    views:
+      select:
+        predicate: sqlDialect == "sqlite3"
+        ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  project_id,\n  branch_id,\n  spec,\n  JSON_EXTRACT(status, '$.postgres_database') AS postgres_database,\n  SPLIT_PART(JSON_EXTRACT(status, '$.role'), '/', -1) AS role\nFROM databricks_workspace.postgres.postgres_databases\nWHERE deployment_name = '{{ deployment_name }}'\nAND project_id = '{{ project_id }}'\nAND branch_id = '{{ branch_id }}'"
+        fallback:
+          predicate: sqlDialect == "postgres"
+          ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  project_id,\n  branch_id,\n  spec,\n  (status::jsonb)->>'postgres_database' AS postgres_database,\n  SPLIT_PART((status::jsonb)->>'role', '/', -1) AS role\nFROM databricks_workspace.postgres.postgres_databases\nWHERE deployment_name = '{{ deployment_name }}'\nAND project_id = '{{ project_id }}'\nAND branch_id = '{{ branch_id }}'"
+vw_roles:
+  name: vw_roles
+  id: databricks_workspace.postgres.vw_roles
+  config:
+    docs:
+      fields:
+      - name: name
+        type: string
+        description: The role identifier (last component of the resource path).
+      - name: create_time
+        type: string
+        description: Timestamp when the role was created.
+      - name: project_id
+        type: string
+        description: The project identifier that owns this role.
+      - name: branch_id
+        type: string
+        description: The branch identifier that owns this role.
+      - name: spec
+        type: object
+        description: Role specification including identity type, auth method, and attributes.
+      - name: bypassrls
+        type: boolean
+        description: Whether the role has the BYPASSRLS attribute.
+      - name: createdb
+        type: boolean
+        description: Whether the role has the CREATEDB attribute.
+      - name: createrole
+        type: boolean
+        description: Whether the role has the CREATEROLE attribute.
+      - name: auth_method
+        type: string
+        description: Authentication method used when connecting to Postgres.
+      - name: identity_type
+        type: string
+        description: The type of Databricks identity backing this role (USER, SERVICE_PRINCIPAL, GROUP).
+      - name: membership_roles
+        type: string
+        description: Standard roles this role is a member of (e.g. DATABRICKS_SUPERUSER).
+      - name: postgres_role
+        type: string
+        description: The name of the underlying Postgres role.
+      - name: update_time
+        type: string
+        description: Timestamp when the role was last updated.
+      requiredParams:
+      - name: project_id
+        type: string
+        description: The project identifier to scope the query.
+      - name: branch_id
+        type: string
+        description: The branch identifier to scope the query.
+      - name: deployment_name
+        type: string
+        description: The Databricks workspace deployment name.
+    views:
+      select:
+        predicate: sqlDialect == "sqlite3"
+        ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  create_time,\n  project_id,\n  branch_id,\n  spec,\n  JSON_EXTRACT(status, '$.attributes.bypassrls') AS bypassrls,\n  JSON_EXTRACT(status, '$.attributes.createdb') AS createdb,\n  JSON_EXTRACT(status, '$.attributes.createrole') AS createrole,\n  JSON_EXTRACT(status, '$.auth_method') AS auth_method,\n  JSON_EXTRACT(status, '$.identity_type') AS identity_type,\n  JSON_EXTRACT(status, '$.membership_roles') AS membership_roles,\n  JSON_EXTRACT(status, '$.postgres_role') AS postgres_role,\n  update_time\nFROM databricks_workspace.postgres.postgres_roles\nWHERE project_id = '{{ project_id }}'\nAND branch_id = '{{ branch_id }}'\nAND deployment_name = '{{ deployment_name }}'"
+        fallback:
+          predicate: sqlDialect == "postgres"
+          ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  create_time,\n  project_id,\n  branch_id,\n  spec,\n  (status::jsonb)#>>'{attributes,bypassrls}' AS bypassrls,\n  (status::jsonb)#>>'{attributes,createdb}' AS createdb,\n  (status::jsonb)#>>'{attributes,createrole}' AS createrole,\n  (status::jsonb)->>'auth_method' AS auth_method,\n  (status::jsonb)->>'identity_type' AS identity_type,\n  (status::jsonb)->>'membership_roles' AS membership_roles,\n  (status::jsonb)->>'postgres_role' AS postgres_role,\n  update_time\nFROM databricks_workspace.postgres.postgres_roles\nWHERE project_id = '{{ project_id }}'\nAND branch_id = '{{ branch_id }}'\nAND deployment_name = '{{ deployment_name }}'"
+vw_endpoints:
+  name: vw_endpoints
+  id: databricks_workspace.postgres.vw_endpoints
+  config:
+    docs:
+      fields:
+      - name: name
+        type: string
+        description: The endpoint identifier (last component of the resource path).
+      - name: create_time
+        type: string
+        description: Timestamp when the endpoint was created.
+      - name: project_id
+        type: string
+        description: The project identifier that owns this endpoint.
+      - name: branch_id
+        type: string
+        description: The branch identifier that owns this endpoint.
+      - name: spec
+        type: object
+        description: Endpoint specification including type, autoscaling limits, and suspension settings.
+      - name: max_cu
+        type: number
+        description: Maximum autoscaling Compute Units for the endpoint.
+      - name: min_cu
+        type: number
+        description: Minimum autoscaling Compute Units for the endpoint.
+      - name: current_state
+        type: string
+        description: Current operational state of the endpoint (e.g. ACTIVE, IDLE, INIT).
+      - name: disabled
+        type: boolean
+        description: Whether connections to the endpoint are restricted.
+      - name: endpoint_type
+        type: string
+        description: The compute endpoint type (ENDPOINT_TYPE_READ_WRITE or ENDPOINT_TYPE_READ_ONLY).
+      - name: last_active_time
+        type: string
+        description: Timestamp of the last activity on the endpoint.
+      - name: settings
+        type: object
+        description: Postgres settings for the endpoint.
+      - name: group_enable_readable_secondaries
+        type: boolean
+        description: Whether read-only connections to the read-write endpoint are allowed.
+      - name: group_max
+        type: integer
+        description: Maximum number of computes in the endpoint group.
+      - name: group_min
+        type: integer
+        description: Minimum number of computes in the endpoint group.
+      - name: host
+        type: string
+        description: Hostname for connecting to this endpoint.
+      - name: read_write_pooled_host
+        type: string
+        description: Pooled read-write hostname for the endpoint.
+      - name: uid
+        type: string
+        description: System-generated unique ID for the endpoint.
+      - name: update_time
+        type: string
+        description: Timestamp when the endpoint was last updated.
+      requiredParams:
+      - name: project_id
+        type: string
+        description: The project identifier to scope the query.
+      - name: branch_id
+        type: string
+        description: The branch identifier to scope the query.
+      - name: deployment_name
+        type: string
+        description: The Databricks workspace deployment name.
+    views:
+      select:
+        predicate: sqlDialect == "sqlite3"
+        ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  create_time,\n  project_id,\n  branch_id,\n  spec,\n  JSON_EXTRACT(status, '$.autoscaling_limit_max_cu') AS max_cu,\n  JSON_EXTRACT(status, '$.autoscaling_limit_min_cu') AS min_cu,\n  JSON_EXTRACT(status, '$.current_state') AS current_state,\n  JSON_EXTRACT(status, '$.disabled') AS disabled,\n  JSON_EXTRACT(status, '$.endpoint_type') AS endpoint_type,\n  JSON_EXTRACT(status, '$.last_active_time') AS last_active_time,\n  JSON_EXTRACT(status, '$.settings') AS settings,\n  JSON_EXTRACT(status, '$.group.enable_readable_secondaries') AS group_enable_readable_secondaries,\n  JSON_EXTRACT(status, '$.group.max') AS group_max,\n  JSON_EXTRACT(status, '$.group.min') AS group_min,\n  JSON_EXTRACT(status, '$.hosts.host') AS host,\n  JSON_EXTRACT(status, '$.hosts.read_write_pooled_host') AS read_write_pooled_host,\n  uid,\n  update_time\nFROM databricks_workspace.postgres.postgres_endpoints\nWHERE project_id = '{{ project_id }}'\nAND branch_id\
+          \ = '{{ branch_id }}'\nAND deployment_name = '{{ deployment_name }}'"
+        fallback:
+          predicate: sqlDialect == "postgres"
+          ddl: "SELECT\n  SPLIT_PART(name, '/', -1) AS name,\n  create_time,\n  project_id,\n  branch_id,\n  spec,\n  (status::jsonb)->>'autoscaling_limit_max_cu' AS max_cu,\n  (status::jsonb)->>'autoscaling_limit_min_cu' AS min_cu,\n  (status::jsonb)->>'current_state' AS current_state,\n  (status::jsonb)->>'disabled' AS disabled,\n  (status::jsonb)->>'endpoint_type' AS endpoint_type,\n  (status::jsonb)->>'last_active_time' AS last_active_time,\n  (status::jsonb)->>'settings' AS settings,\n  (status::jsonb)#>>'{group,enable_readable_secondaries}' AS group_enable_readable_secondaries,\n  (status::jsonb)#>>'{group,max}' AS group_max,\n  (status::jsonb)#>>'{group,min}' AS group_min,\n  (status::jsonb)#>>'{hosts,host}' AS host,\n  (status::jsonb)#>>'{hosts,read_write_pooled_host}' AS read_write_pooled_host,\n  uid,\n  update_time\nFROM databricks_workspace.postgres.postgres_endpoints\nWHERE project_id = '{{ project_id }}'\nAND branch_id = '{{ branch_id }}'\nAND deployment_name = '{{ deployment_name\
+            \ }}'"

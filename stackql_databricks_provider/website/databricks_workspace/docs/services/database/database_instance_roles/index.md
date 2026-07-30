@@ -257,7 +257,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-allow_missing">
     <td><CopyableCode code="allow_missing" /></td>
     <td><code>boolean</code></td>
-    <td>This is the AIP standard name for the equivalent of Postgres' `IF EXISTS` option</td>
+    <td>This is the AIP standard name for the equivalent of Postgres' ``IF EXISTS`` option</td>
 </tr>
 <tr id="parameter-database_instance_name">
     <td><CopyableCode code="database_instance_name" /></td>

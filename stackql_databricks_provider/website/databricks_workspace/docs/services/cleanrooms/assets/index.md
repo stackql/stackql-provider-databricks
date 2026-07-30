@@ -61,7 +61,7 @@ The following fields are returned by `SELECT` queries:
   {
     "name": "asset_type",
     "type": "string",
-    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FOREIGN_TABLE, NOTEBOOK_FILE, TABLE, VIEW, VOLUME)"
+    "description": "Create a collection of name/value pairs.<br /><br />Example enumeration:<br /><br />&gt;&gt;&gt; class Color(Enum):<br />...     RED = 1<br />...     BLUE = 2<br />...     GREEN = 3<br /><br />Access them by:<br /><br />- attribute access:<br /><br />  &gt;&gt;&gt; Color.RED<br />  &lt;Color.RED: 1&gt;<br /><br />- value lookup:<br /><br />  &gt;&gt;&gt; Color(1)<br />  &lt;Color.RED: 1&gt;<br /><br />- name lookup:<br /><br />  &gt;&gt;&gt; Color['RED']<br />  &lt;Color.RED: 1&gt;<br /><br />Enumerations can be iterated over, and know how many members they have:<br /><br />&gt;&gt;&gt; len(Color)<br />3<br /><br />&gt;&gt;&gt; list(Color)<br />[&lt;Color.RED: 1&gt;, &lt;Color.BLUE: 2&gt;, &lt;Color.GREEN: 3&gt;]<br /><br />Methods can be added to enumerations, and members can have their own<br />attributes -- see the documentation for details. (FOREIGN_TABLE, GENIE_SPACE, JAR_ANALYSIS, NOTEBOOK_FILE, TABLE, VIEW, VOLUME)"
   },
   {
     "name": "foreign_table",
@@ -88,6 +88,85 @@ The following fields are returned by `SELECT` queries:
     ]
   },
   {
+    "name": "genie_space",
+    "type": "object",
+    "description": "Genie space details. The space_id sub-field is only returned to the owner; other fields (e.g. prompts_limit_per_day) are visible to all collaborators. Present if and only if **asset_type** is **GENIE_SPACE**"
+  },
+  {
+    "name": "jar_analysis",
+    "type": "object",
+    "description": "Jar analysis details available to all collaborators of the clean room. Present if and only if **asset_type** is **JAR_ANALYSIS**",
+    "children": [
+      {
+        "name": "central_jar_file_paths",
+        "type": "array",
+        "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "description": "Optional description of the jar analysis shown to all collaborators."
+      },
+      {
+        "name": "environment_version",
+        "type": "string",
+        "description": "The serverless environment version used to execute the JAR analysis (e.g. \"4\"). Defaults to \"4-scala-preview\" if not specified."
+      },
+      {
+        "name": "etag",
+        "type": "string",
+        "description": "Server generated etag that represents the jar analysis version."
+      },
+      {
+        "name": "main_class_name",
+        "type": "string",
+        "description": "The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library The code must use ``SparkContext.getOrCreate`` to obtain a Spark context; otherwise, runs of the job fail"
+      },
+      {
+        "name": "review_state",
+        "type": "string",
+        "description": "Top-level status derived from all reviews. (APPROVED, PENDING, REJECTED)"
+      },
+      {
+        "name": "reviews",
+        "type": "array",
+        "description": "All existing approvals or rejections.",
+        "children": [
+          {
+            "name": "comment",
+            "type": "string",
+            "description": "review comment"
+          },
+          {
+            "name": "created_at_millis",
+            "type": "integer",
+            "description": "timestamp of when the review was submitted"
+          },
+          {
+            "name": "review_state",
+            "type": "string",
+            "description": "review outcome (APPROVED, PENDING, REJECTED)"
+          },
+          {
+            "name": "review_sub_reason",
+            "type": "string",
+            "description": "specified when the review was not explicitly made by a user (AUTO_APPROVED)"
+          },
+          {
+            "name": "reviewer_collaborator_alias",
+            "type": "string",
+            "description": "collaborator alias of the reviewer"
+          }
+        ]
+      },
+      {
+        "name": "runner_collaborator_aliases",
+        "type": "array",
+        "description": "Collaborators that can run the jar."
+      }
+    ]
+  },
+  {
     "name": "notebook",
     "type": "object",
     "description": "Notebook details available to all collaborators of the clean room. Present if and only if **asset_type** is **NOTEBOOK_FILE**",
@@ -96,6 +175,16 @@ The following fields are returned by `SELECT` queries:
         "name": "notebook_content",
         "type": "string",
         "description": ""
+      },
+      {
+        "name": "description",
+        "type": "string",
+        "description": "Optional description of the notebook shown to all collaborators."
+      },
+      {
+        "name": "environment_version",
+        "type": "string",
+        "description": "The serverless environment version used to execute the notebook (e.g. \"4\"). Defaults to \"2\" if not specified."
       },
       {
         "name": "etag",
@@ -356,6 +445,8 @@ added_at,
 asset_type,
 foreign_table,
 foreign_table_local_details,
+genie_space,
+jar_analysis,
 notebook,
 owner_collaborator_alias,
 status,
@@ -420,6 +511,8 @@ added_at,
 asset_type,
 foreign_table,
 foreign_table_local_details,
+genie_space,
+jar_analysis,
 notebook,
 owner_collaborator_alias,
 status,
@@ -454,8 +547,27 @@ volume_local_details
           columns: "{{ columns }}"
         foreign_table_local_details:
           local_name: "{{ local_name }}"
+        genie_space: "{{ genie_space }}"
+        jar_analysis:
+          central_jar_file_paths:
+            - "{{ central_jar_file_paths }}"
+          description: "{{ description }}"
+          environment_version: "{{ environment_version }}"
+          etag: "{{ etag }}"
+          main_class_name: "{{ main_class_name }}"
+          review_state: "{{ review_state }}"
+          reviews:
+            - comment: "{{ comment }}"
+              created_at_millis: {{ created_at_millis }}
+              review_state: "{{ review_state }}"
+              review_sub_reason: "{{ review_sub_reason }}"
+              reviewer_collaborator_alias: "{{ reviewer_collaborator_alias }}"
+          runner_collaborator_aliases:
+            - "{{ runner_collaborator_aliases }}"
         notebook:
           notebook_content: "{{ notebook_content }}"
+          description: "{{ description }}"
+          environment_version: "{{ environment_version }}"
           etag: "{{ etag }}"
           review_state: "{{ review_state }}"
           reviews:
@@ -516,6 +628,8 @@ added_at,
 asset_type,
 foreign_table,
 foreign_table_local_details,
+genie_space,
+jar_analysis,
 notebook,
 owner_collaborator_alias,
 status,
@@ -575,6 +689,7 @@ EXEC databricks_workspace.cleanrooms.assets.review
 @@json=
 '{
 "asset_type": "{{ asset_type }}", 
+"jar_analysis_review": "{{ jar_analysis_review }}", 
 "notebook_review": "{{ notebook_review }}"
 }'
 ;

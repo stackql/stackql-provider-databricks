@@ -4,8 +4,8 @@
     "title": "Databricks Billing API (account)",
     "description": "OpenAPI specification for the Databricks billing service (account-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.billing"
   },
   "servers": [
@@ -23,7 +23,7 @@
           "billing",
           "billable_usage"
         ],
-        "description": "Returns billable usage logs in CSV format for the specified account and date range. For the data\nschema, see:\n\n- AWS: [CSV file schema]. - GCP: [CSV file schema].\n\nNote that this method might take multiple minutes to complete.\n\n**Warning**: Depending on the queried date range, the number of workspaces in the account, the size of\nthe response and the internet speed of the caller, this API may hit a timeout after a few minutes. If\nyou experience this, try to mitigate by calling the API with narrower date ranges.\n\n[CSV file schema]: https://docs.gcp.databricks.com/administration-guide/account-settings/usage-analysis.html#csv-file-schema\n\n:param start_month: str\n  Format specification for month in the format `YYYY-MM`. This is used to specify billable usage\n  `start_month` and `end_month` properties. **Note**: Billable usage logs are unavailable before March\n  2019 (`2019-03`).\n:param end_month: str\n  Format: `YYYY-MM`. Last month to return billable usage logs for. This field is required.\n:param personal_data: bool (optional)\n  Specify whether to include personally identifiable information in the billable usage logs, for\n  example the email addresses of cluster creators. Handle this information with care. Defaults to\n  false.\n\n:returns: :class:`DownloadResponse`",
+        "description": "Returns billable usage logs in CSV format for the specified account and date range. For the data\nschema, see:\n\n- AWS: `CSV file schema\n  <https://docs.databricks.com/administration-guide/account-settings/usage-analysis.html#schema>`__.\n- GCP: `CSV file schema\n  <https://docs.gcp.databricks.com/administration-guide/account-settings/usage-analysis.html#csv-file-schema>`__.\n\nNote that this method might take multiple minutes to complete.\n\n**Warning**: Depending on the queried date range, the number of workspaces in the account, the size of\nthe response and the internet speed of the caller, this API may hit a timeout after a few minutes. If\nyou experience this, try to mitigate by calling the API with narrower date ranges.\n\n:param start_month: str\n  Format specification for month in the format ``YYYY-MM``. This is used to specify billable usage\n  ``start_month`` and ``end_month`` properties. **Note**: Billable usage logs are unavailable before\n  March 2019 (``2019-03``).\n:param end_month: str\n  Format: ``YYYY-MM``. Last month to return billable usage logs for. This field is required.\n:param personal_data: bool (optional)\n  Specify whether to include personally identifiable information in the billable usage logs, for\n  example the email addresses of cluster creators. Handle this information with care. Defaults to\n  false.\n\n:returns: :class:`DownloadResponse`",
         "parameters": [
           {
             "name": "account_id",
@@ -40,7 +40,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Format specification for month in the format `YYYY-MM`. This is used to specify billable usage `start_month` and `end_month` properties. **Note**: Billable usage logs are unavailable before March 2019 (`2019-03`)."
+            "description": "Format specification for month in the format ``YYYY-MM``. This is used to specify billable usage ``start_month`` and ``end_month`` properties. **Note**: Billable usage logs are unavailable before March 2019 (``2019-03``)."
           },
           {
             "name": "end_month",
@@ -49,7 +49,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "Format: `YYYY-MM`. Last month to return billable usage logs for. This field is required."
+            "description": "Format: ``YYYY-MM``. Last month to return billable usage logs for. This field is required."
           },
           {
             "name": "personal_data",
@@ -107,7 +107,7 @@
           "billing",
           "budget_policy"
         ],
-        "description": "Creates a new policy.\n\n:param policy: :class:`BudgetPolicy` (optional)\n  The policy to create. `policy_id` needs to be empty as it will be generated `policy_name` must be\n  provided, custom_tags may need to be provided depending on the cloud provider. All other fields are\n  optional.\n:param request_id: str (optional)\n  A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is\n  recommended. This request is only idempotent if a `request_id` is provided.\n\n:returns: :class:`BudgetPolicy`",
+        "description": "Creates a new policy.\n\n:param policy: :class:`BudgetPolicy` (optional)\n  The policy to create. ``policy_id`` needs to be empty as it will be generated ``policy_name`` must\n  be provided, custom_tags may need to be provided depending on the cloud provider. All other fields\n  are optional.\n:param request_id: str (optional)\n  A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is\n  recommended. This request is only idempotent if a ``request_id`` is provided.\n\n:returns: :class:`BudgetPolicy`",
         "parameters": [
           {
             "name": "account_id",
@@ -144,14 +144,14 @@
                       },
                       "policy_name": {
                         "type": "string",
-                        "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as `databricks:default-policy`."
+                        "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as ``databricks:default-policy``."
                       }
                     },
-                    "description": "The policy to create. `policy_id` needs to be empty as it will be generated `policy_name` must be provided, custom_tags may need to be provided depending on the cloud provider. All other fields are optional."
+                    "description": "The policy to create. ``policy_id`` needs to be empty as it will be generated ``policy_name`` must be provided, custom_tags may need to be provided depending on the cloud provider. All other fields are optional."
                   },
                   "request_id": {
                     "type": "string",
-                    "description": "A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is only idempotent if a `request_id` is provided."
+                    "description": "A unique identifier for this request. Restricted to 36 ASCII characters. A random UUID is recommended. This request is only idempotent if a ``request_id`` is provided."
                   }
                 }
               }
@@ -197,7 +197,7 @@
           "billing",
           "budget_policy"
         ],
-        "description": "Lists all policies. Policies are returned in the alphabetically ascending order of their names.\n\n:param filter_by: :class:`Filter` (optional)\n  A filter to apply to the list of policies.\n:param page_size: int (optional)\n  The maximum number of budget policies to return. If unspecified, at most 100 budget policies will be\n  returned. The maximum value is 1000; values above 1000 will be coerced to 1000.\n:param page_token: str (optional)\n  A page token, received from a previous `ListServerlessPolicies` call. Provide this to retrieve the\n  subsequent page. If unspecified, the first page will be returned.\n\n  When paginating, all other parameters provided to `ListServerlessPoliciesRequest` must match the\n  call that provided the page token.\n:param sort_spec: :class:`SortSpec` (optional)\n  The sort specification.\n\n:returns: Iterator over :class:`BudgetPolicy`",
+        "description": "Lists all policies. Policies are returned in the alphabetically ascending order of their names.\n\n:param filter_by: :class:`Filter` (optional)\n  A filter to apply to the list of policies.\n:param page_size: int (optional)\n  The maximum number of budget policies to return. If unspecified, at most 100 budget policies will be\n  returned. The maximum value is 1000; values above 1000 will be coerced to 1000.\n:param page_token: str (optional)\n  A page token, received from a previous ``ListServerlessPolicies`` call. Provide this to retrieve the\n  subsequent page. If unspecified, the first page will be returned.\n\n  When paginating, all other parameters provided to ``ListServerlessPoliciesRequest`` must match the\n  call that provided the page token.\n:param sort_spec: :class:`SortSpec` (optional)\n  The sort specification.\n\n:returns: Iterator over :class:`BudgetPolicy`",
         "parameters": [
           {
             "name": "account_id",
@@ -232,7 +232,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "A page token, received from a previous `ListServerlessPolicies` call. Provide this to retrieve the subsequent page. If unspecified, the first page will be returned. When paginating, all other parameters provided to `ListServerlessPoliciesRequest` must match the call that provided the page token."
+            "description": "A page token, received from a previous ``ListServerlessPolicies`` call. Provide this to retrieve the subsequent page. If unspecified, the first page will be returned. When paginating, all other parameters provided to ``ListServerlessPoliciesRequest`` must match the call that provided the page token."
           },
           {
             "name": "sort_spec",
@@ -396,7 +396,7 @@
           "billing",
           "budget_policy"
         ],
-        "description": "Updates a policy\n\n:param policy_id: str\n  The Id of the policy. This field is generated by Databricks and globally unique.\n:param policy: :class:`BudgetPolicy`\n  The policy to update. `creator_user_id` cannot be specified in the request. All other fields must be\n  specified even if not changed. The `policy_id` is used to identify the policy to update.\n:param limit_config: :class:`LimitConfig` (optional)\n  DEPRECATED. This is redundant field as LimitConfig is part of the BudgetPolicy\n\n:returns: :class:`BudgetPolicy`",
+        "description": "Updates a policy\n\n:param policy_id: str\n  The Id of the policy. This field is generated by Databricks and globally unique.\n:param policy: :class:`BudgetPolicy`\n  The policy to update. ``creator_user_id`` cannot be specified in the request. All other fields must\n  be specified even if not changed. The ``policy_id`` is used to identify the policy to update.\n:param limit_config: :class:`LimitConfig` (optional)\n  DEPRECATED. This is redundant field as LimitConfig is part of the BudgetPolicy\n:param update_mask: str (optional)\n  Field mask specifying which fields to update. When not provided, all fields are updated.\n\n:returns: :class:`BudgetPolicy`",
         "parameters": [
           {
             "name": "account_id",
@@ -423,6 +423,15 @@
               "$ref": "#/components/schemas/LimitConfig"
             },
             "description": "DEPRECATED. This is redundant field as LimitConfig is part of the BudgetPolicy"
+          },
+          {
+            "name": "update_mask",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Field mask specifying which fields to update. When not provided, all fields are updated."
           }
         ],
         "requestBody": {
@@ -451,10 +460,10 @@
                       },
                       "policy_name": {
                         "type": "string",
-                        "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as `databricks:default-policy`."
+                        "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as ``databricks:default-policy``."
                       }
                     },
-                    "description": "The policy to update. `creator_user_id` cannot be specified in the request. All other fields must be specified even if not changed. The `policy_id` is used to identify the policy to update."
+                    "description": "The policy to update. ``creator_user_id`` cannot be specified in the request. All other fields must be specified even if not changed. The ``policy_id`` is used to identify the policy to update."
                   }
                 },
                 "required": [
@@ -543,7 +552,7 @@
                                     "x-enum": [
                                       "EMAIL_NOTIFICATION"
                                     ],
-                                    "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+                                    "description": "Type of action that a budget alert executes when its threshold is crossed."
                                   },
                                   "target": {
                                     "type": "string",
@@ -554,14 +563,14 @@
                             },
                             "quantity_threshold": {
                               "type": "string",
-                              "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on `quantity_type`."
+                              "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on ``quantity_type``."
                             },
                             "quantity_type": {
                               "type": "string",
                               "x-enum": [
                                 "LIST_PRICE_DOLLARS_USD"
                               ],
-                              "description": "The way to calculate cost for this budget alert. This is what `quantity_threshold` is measured in."
+                              "description": "The way to calculate cost for this budget alert. This is what ``quantity_threshold`` is measured in."
                             },
                             "time_period": {
                               "type": "string",
@@ -926,14 +935,14 @@
                             },
                             "quantity_threshold": {
                               "type": "string",
-                              "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on `quantity_type`."
+                              "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on ``quantity_type``."
                             },
                             "quantity_type": {
                               "type": "string",
                               "x-enum": [
                                 "LIST_PRICE_DOLLARS_USD"
                               ],
-                              "description": "The way to calculate cost for this budget alert. This is what `quantity_threshold` is measured in."
+                              "description": "The way to calculate cost for this budget alert. This is what ``quantity_threshold`` is measured in."
                             },
                             "time_period": {
                               "type": "string",
@@ -1067,7 +1076,7 @@
           "billing",
           "log_delivery"
         ],
-        "description": "Creates a new Databricks log delivery configuration to enable delivery of the specified type of logs\nto your storage location. This requires that you already created a [credential\nobject](:method:Credentials/Create) (which encapsulates a cross-account service IAM role) and a\n[storage configuration object](:method:Storage/Create) (which encapsulates an S3 bucket).\n\nFor full details, including the required IAM role policies and bucket policies, see [Deliver and\naccess billable usage logs] or [Configure audit logging].\n\n**Note**: There is a limit on the number of log delivery configurations available per account (each\nlimit applies separately to each log type including billable usage and audit logs). You can create a\nmaximum of two enabled account-level delivery configurations (configurations without a workspace\nfilter) per type. Additionally, you can create two enabled workspace-level delivery configurations per\nworkspace for each log type, which means that the same workspace ID can occur in the workspace filter\nfor no more than two delivery configurations per log type.\n\nYou cannot delete a log delivery configuration, but you can disable it (see [Enable or disable log\ndelivery configuration](:method:LogDelivery/PatchStatus)).\n\n[Configure audit logging]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html\n[Deliver and access billable usage logs]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html\n\n:param log_delivery_configuration: :class:`CreateLogDeliveryConfigurationParams`\n\n:returns: :class:`WrappedLogDeliveryConfiguration`",
+        "description": "Creates a new Databricks log delivery configuration to enable delivery of the specified type of logs\nto your storage location. This requires that you already created a [credential\nobject](:method:Credentials/Create) (which encapsulates a cross-account service IAM role) and a\n[storage configuration object](:method:Storage/Create) (which encapsulates an S3 bucket).\n\nFor full details, including the required IAM role policies and bucket policies, see `Deliver and\naccess billable usage logs\n<https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__ or\n`Configure audit logging\n<https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__.\n\n**Note**: There is a limit on the number of log delivery configurations available per account (each\nlimit applies separately to each log type including billable usage and audit logs). You can create a\nmaximum of two enabled account-level delivery configurations (configurations without a workspace\nfilter) per type. Additionally, you can create two enabled workspace-level delivery configurations per\nworkspace for each log type, which means that the same workspace ID can occur in the workspace filter\nfor no more than two delivery configurations per log type.\n\nYou cannot delete a log delivery configuration, but you can disable it (see [Enable or disable log\ndelivery configuration](:method:LogDelivery/PatchStatus)).\n\n:param log_delivery_configuration: :class:`CreateLogDeliveryConfigurationParams`\n\n:returns: :class:`WrappedLogDeliveryConfiguration`",
         "parameters": [
           {
             "name": "account_id",
@@ -1093,7 +1102,7 @@
                           "AUDIT_LOGS",
                           "BILLABLE_USAGE"
                         ],
-                        "description": "Log delivery type. Supported values are: * `BILLABLE_USAGE` \u2014 Configure [billable usage log delivery]. For the CSV schema, see the [View billable usage]. * `AUDIT_LOGS` \u2014 Configure [audit log delivery]. For the JSON schema, see [Configure audit logging] [Configure audit logging]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html [View billable usage]: https://docs.databricks.com/administration-guide/account-settings/usage.html [audit log delivery]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html [billable usage log delivery]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html"
+                        "description": "Log delivery type. Supported values are: - ``BILLABLE_USAGE`` \u2014 Configure `billable usage log delivery <https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__. For the CSV schema, see the `View billable usage <https://docs.databricks.com/administration-guide/account-settings/usage.html>`__. - ``AUDIT_LOGS`` \u2014 Configure `audit log delivery <https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__. For the JSON schema, see `Configure audit logging <https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__"
                       },
                       "output_format": {
                         "type": "string",
@@ -1101,15 +1110,15 @@
                           "CSV",
                           "JSON"
                         ],
-                        "description": "The file type of log delivery. * If `log_type` is `BILLABLE_USAGE`, this value must be `CSV`. Only the CSV (comma-separated values) format is supported. For the schema, see the [View billable usage] * If `log_type` is `AUDIT_LOGS`, this value must be `JSON`. Only the JSON (JavaScript Object Notation) format is supported. For the schema, see the [Configuring audit logs]. [Configuring audit logs]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html [View billable usage]: https://docs.databricks.com/administration-guide/account-settings/usage.html"
+                        "description": "The file type of log delivery. - If ``log_type`` is ``BILLABLE_USAGE``, this value must be ``CSV``. Only the CSV (comma-separated values) format is supported. For the schema, see the `View billable usage <https://docs.databricks.com/administration-guide/account-settings/usage.html>`__ - If ``log_type`` is ``AUDIT_LOGS``, this value must be ``JSON``. Only the JSON (JavaScript Object Notation) format is supported. For the schema, see the `Configuring audit logs <https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__."
                       },
                       "credentials_id": {
                         "type": "string",
-                        "description": "The ID for a method:credentials/create that represents the AWS IAM role with policy and trust relationship as described in the main billable usage documentation page. See [Configure billable usage delivery]. [Configure billable usage delivery]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html"
+                        "description": "The ID for a method:credentials/create that represents the AWS IAM role with policy and trust relationship as described in the main billable usage documentation page. See `Configure billable usage delivery <https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__."
                       },
                       "storage_configuration_id": {
                         "type": "string",
-                        "description": "The ID for a method:storage/create that represents the S3 bucket with bucket policy as described in the main billable usage documentation page. See [Configure billable usage delivery]. [Configure billable usage delivery]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html"
+                        "description": "The ID for a method:storage/create that represents the S3 bucket with bucket policy as described in the main billable usage documentation page. See `Configure billable usage delivery <https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__."
                       },
                       "config_name": {
                         "type": "string",
@@ -1129,14 +1138,14 @@
                           "DISABLED",
                           "ENABLED"
                         ],
-                        "description": "Status of log delivery configuration. Set to `ENABLED` (enabled) or `DISABLED` (disabled). Defaults to `ENABLED`. You can [enable or disable the configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed."
+                        "description": "Status of log delivery configuration. Set to ``ENABLED`` (enabled) or ``DISABLED`` (disabled). Defaults to ``ENABLED``. You can [enable or disable the configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed."
                       },
                       "workspace_ids_filter": {
                         "type": "array",
                         "items": {
                           "type": "integer"
                         },
-                        "description": "Optional filter that specifies workspace IDs to deliver logs for. By default the workspace filter is empty and log delivery applies at the account level, delivering workspace-level logs for all workspaces in your account, plus account level logs. You can optionally set this field to an array of workspace IDs (each one is an `int64`) to which log delivery should apply, in which case only workspace-level logs relating to the specified workspaces are delivered. If you plan to use different log delivery configurations for different workspaces, set this field explicitly. Be aware that delivery configurations mentioning specific workspaces won't apply to new workspaces created in the future, and delivery won't include account level logs. For some types of Databricks deployments there is only one workspace per account ID, so this field is unnecessary."
+                        "description": "Optional filter that specifies workspace IDs to deliver logs for. By default the workspace filter is empty and log delivery applies at the account level, delivering workspace-level logs for all workspaces in your account, plus account level logs. You can optionally set this field to an array of workspace IDs (each one is an ``int64``) to which log delivery should apply, in which case only workspace-level logs relating to the specified workspaces are delivered. If you plan to use different log delivery configurations for different workspaces, set this field explicitly. Be aware that delivery configurations mentioning specific workspaces won't apply to new workspaces created in the future, and delivery won't include account level logs. For some types of Databricks deployments there is only one workspace per account ID, so this field is unnecessary."
                       }
                     },
                     "required": [
@@ -1145,7 +1154,7 @@
                       "credentials_id",
                       "storage_configuration_id"
                     ],
-                    "description": "* Log Delivery Configuration"
+                    "description": "Log Delivery Configuration"
                   }
                 },
                 "required": [
@@ -1341,7 +1350,7 @@
           "billing",
           "log_delivery"
         ],
-        "description": "Enables or disables a log delivery configuration. Deletion of delivery configurations is not\nsupported, so disable log delivery configurations that are no longer needed. Note that you can't\nre-enable a delivery configuration if this would violate the delivery configuration limits described\nunder [Create log delivery](:method:LogDelivery/Create).\n\n:param log_delivery_configuration_id: str\n  The log delivery configuration id of customer\n:param status: :class:`LogDeliveryConfigStatus`\n  Status of log delivery configuration. Set to `ENABLED` (enabled) or `DISABLED` (disabled). Defaults\n  to `ENABLED`. You can [enable or disable the\n  configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is\n  not supported, so disable a log delivery configuration that is no longer needed.",
+        "description": "Enables or disables a log delivery configuration. Deletion of delivery configurations is not\nsupported, so disable log delivery configurations that are no longer needed. Note that you can't\nre-enable a delivery configuration if this would violate the delivery configuration limits described\nunder [Create log delivery](:method:LogDelivery/Create).\n\n:param log_delivery_configuration_id: str\n  The log delivery configuration id of customer\n:param status: :class:`LogDeliveryConfigStatus`\n  Status of log delivery configuration. Set to ``ENABLED`` (enabled) or ``DISABLED`` (disabled).\n  Defaults to ``ENABLED``. You can [enable or disable the\n  configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is\n  not supported, so disable a log delivery configuration that is no longer needed.",
         "parameters": [
           {
             "name": "account_id",
@@ -1373,7 +1382,7 @@
                       "DISABLED",
                       "ENABLED"
                     ],
-                    "description": "Status of log delivery configuration. Set to `ENABLED` (enabled) or `DISABLED` (disabled). Defaults to `ENABLED`. You can [enable or disable the configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed."
+                    "description": "Status of log delivery configuration. Set to ``ENABLED`` (enabled) or ``DISABLED`` (disabled). Defaults to ``ENABLED``. You can [enable or disable the configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed."
                   }
                 },
                 "required": [
@@ -1559,6 +1568,404 @@
         },
         "x-stackql-sdk-source": "UsageDashboardsAPI"
       }
+    },
+    "/api/2.1/accounts/{account_id}/usage-policies": {
+      "post": {
+        "operationId": "usage_policy_create",
+        "summary": "Creates a new usage policy.",
+        "tags": [
+          "billing",
+          "usage_policy"
+        ],
+        "description": "Creates a new usage policy.\n\n:param policy: :class:`UsagePolicy` (optional)\n  The policy to create. ``policy_id`` needs to be empty as it will be generated\n:param request_id: str (optional)\n  A unique identifier for this request. Restricted to 36 ASCII characters.\n\n:returns: :class:`UsagePolicy`",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "object",
+                    "properties": {
+                      "binding_workspace_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "List of workspaces that this usage policy will be exclusively bound to."
+                      },
+                      "custom_tags": {
+                        "type": "string",
+                        "description": "A list of tags defined by the customer. At most 20 entries are allowed per policy."
+                      },
+                      "policy_id": {
+                        "type": "string",
+                        "description": "The Id of the policy. This field is generated by Databricks and globally unique."
+                      },
+                      "policy_name": {
+                        "type": "string",
+                        "description": "The name of the policy."
+                      }
+                    },
+                    "description": "The policy to create. ``policy_id`` needs to be empty as it will be generated"
+                  },
+                  "request_id": {
+                    "type": "string",
+                    "description": "A unique identifier for this request. Restricted to 36 ASCII characters."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsagePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "UsagePolicyAPI"
+      },
+      "get": {
+        "operationId": "usage_policy_list",
+        "summary": "Lists all usage policies. Policies are returned in the alphabetically ascending order of their names.",
+        "tags": [
+          "billing",
+          "usage_policy"
+        ],
+        "description": "Lists all usage policies. Policies are returned in the alphabetically ascending order of their names.\n\n:param filter_by: :class:`Filter` (optional)\n  A filter to apply to the list of policies.\n:param page_size: int (optional)\n  The maximum number of usage policies to return.\n:param page_token: str (optional)\n  A page token, received from a previous ``ListUsagePolicies`` call.\n:param sort_spec: :class:`SortSpec` (optional)\n  The sort specification.\n\n:returns: Iterator over :class:`UsagePolicy`",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "filter_by",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/Filter"
+            },
+            "description": "A filter to apply to the list of policies."
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The maximum number of usage policies to return."
+          },
+          {
+            "name": "page_token",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "A page token, received from a previous ``ListUsagePolicies`` call."
+          },
+          {
+            "name": "sort_spec",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/SortSpec"
+            },
+            "description": "The sort specification."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListUsagePoliciesResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "UsagePolicyAPI"
+      }
+    },
+    "/api/2.1/accounts/{account_id}/usage-policies/{policy_id}": {
+      "delete": {
+        "operationId": "usage_policy_delete",
+        "summary": "Deletes a usage policy",
+        "tags": [
+          "billing",
+          "usage_policy"
+        ],
+        "description": "Deletes a usage policy\n\n:param policy_id: str\n  The Id of the policy.",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "policy_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Id of the policy."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "UsagePolicyAPI"
+      },
+      "get": {
+        "operationId": "usage_policy_get",
+        "summary": "Retrieves a usage policy by it's ID.",
+        "tags": [
+          "billing",
+          "usage_policy"
+        ],
+        "description": "Retrieves a usage policy by it's ID.\n\n:param policy_id: str\n  The Id of the policy.\n\n:returns: :class:`UsagePolicy`",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "policy_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Id of the policy."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsagePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "UsagePolicyAPI"
+      },
+      "patch": {
+        "operationId": "usage_policy_update",
+        "summary": "Updates a usage policy",
+        "tags": [
+          "billing",
+          "usage_policy"
+        ],
+        "description": "Updates a usage policy\n\n:param policy_id: str\n  The Id of the policy. This field is generated by Databricks and globally unique.\n:param policy: :class:`UsagePolicy`\n  The policy to update. ``creator_user_id`` cannot be specified in the request.\n:param limit_config: :class:`LimitConfig` (optional)\n  DEPRECATED. This is redundant field as LimitConfig is part of the UsagePolicy\n\n:returns: :class:`UsagePolicy`",
+        "parameters": [
+          {
+            "name": "account_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "policy_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The Id of the policy. This field is generated by Databricks and globally unique."
+          },
+          {
+            "name": "limit_config",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/LimitConfig"
+            },
+            "description": "DEPRECATED. This is redundant field as LimitConfig is part of the UsagePolicy"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "object",
+                    "properties": {
+                      "binding_workspace_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "List of workspaces that this usage policy will be exclusively bound to."
+                      },
+                      "custom_tags": {
+                        "type": "string",
+                        "description": "A list of tags defined by the customer. At most 20 entries are allowed per policy."
+                      },
+                      "policy_id": {
+                        "type": "string",
+                        "description": "The Id of the policy. This field is generated by Databricks and globally unique."
+                      },
+                      "policy_name": {
+                        "type": "string",
+                        "description": "The name of the policy."
+                      }
+                    },
+                    "description": "The policy to update. ``creator_user_id`` cannot be specified in the request."
+                  }
+                },
+                "required": [
+                  "policy"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsagePolicy"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Error response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-stackql-sdk-source": "UsagePolicyAPI"
+      }
     }
   },
   "components": {
@@ -1594,11 +2001,11 @@
           },
           "quantity_threshold": {
             "type": "string",
-            "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on `quantity_type`."
+            "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on ``quantity_type``."
           },
           "quantity_type": {
             "$ref": "#/components/schemas/AlertConfigurationQuantityType",
-            "description": "The way to calculate cost for this budget alert. This is what `quantity_threshold` is measured in."
+            "description": "The way to calculate cost for this budget alert. This is what ``quantity_threshold`` is measured in."
           },
           "time_period": {
             "$ref": "#/components/schemas/AlertConfigurationTimePeriod",
@@ -1719,7 +2126,7 @@
           },
           "policy_name": {
             "type": "string",
-            "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as `databricks:default-policy`."
+            "description": "The name of the policy. - Must be unique among active policies. - Can contain only characters from the ISO 8859-1 (latin1) set. - Can't start with reserved keywords such as ``databricks:default-policy``."
           }
         },
         "description": "Contains the BudgetPolicy details."
@@ -1778,11 +2185,11 @@
           },
           "quantity_threshold": {
             "type": "string",
-            "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on `quantity_type`."
+            "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on ``quantity_type``."
           },
           "quantity_type": {
             "$ref": "#/components/schemas/AlertConfigurationQuantityType",
-            "description": "The way to calculate cost for this budget alert. This is what `quantity_threshold` is measured in."
+            "description": "The way to calculate cost for this budget alert. This is what ``quantity_threshold`` is measured in."
           },
           "time_period": {
             "$ref": "#/components/schemas/AlertConfigurationTimePeriod",
@@ -1807,19 +2214,19 @@
         "properties": {
           "log_type": {
             "$ref": "#/components/schemas/LogType",
-            "description": "Log delivery type. Supported values are: * `BILLABLE_USAGE` \u2014 Configure [billable usage log delivery]. For the CSV schema, see the [View billable usage]. * `AUDIT_LOGS` \u2014 Configure [audit log delivery]. For the JSON schema, see [Configure audit logging] [Configure audit logging]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html [View billable usage]: https://docs.databricks.com/administration-guide/account-settings/usage.html [audit log delivery]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html [billable usage log delivery]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html"
+            "description": "Log delivery type. Supported values are: - ``BILLABLE_USAGE`` \u2014 Configure `billable usage log delivery <https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__. For the CSV schema, see the `View billable usage <https://docs.databricks.com/administration-guide/account-settings/usage.html>`__. - ``AUDIT_LOGS`` \u2014 Configure `audit log delivery <https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__. For the JSON schema, see `Configure audit logging <https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__"
           },
           "output_format": {
             "$ref": "#/components/schemas/OutputFormat",
-            "description": "The file type of log delivery. * If `log_type` is `BILLABLE_USAGE`, this value must be `CSV`. Only the CSV (comma-separated values) format is supported. For the schema, see the [View billable usage] * If `log_type` is `AUDIT_LOGS`, this value must be `JSON`. Only the JSON (JavaScript Object Notation) format is supported. For the schema, see the [Configuring audit logs]. [Configuring audit logs]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html [View billable usage]: https://docs.databricks.com/administration-guide/account-settings/usage.html"
+            "description": "The file type of log delivery. - If ``log_type`` is ``BILLABLE_USAGE``, this value must be ``CSV``. Only the CSV (comma-separated values) format is supported. For the schema, see the `View billable usage <https://docs.databricks.com/administration-guide/account-settings/usage.html>`__ - If ``log_type`` is ``AUDIT_LOGS``, this value must be ``JSON``. Only the JSON (JavaScript Object Notation) format is supported. For the schema, see the `Configuring audit logs <https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__."
           },
           "credentials_id": {
             "type": "string",
-            "description": "The ID for a method:credentials/create that represents the AWS IAM role with policy and trust relationship as described in the main billable usage documentation page. See [Configure billable usage delivery]. [Configure billable usage delivery]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html"
+            "description": "The ID for a method:credentials/create that represents the AWS IAM role with policy and trust relationship as described in the main billable usage documentation page. See `Configure billable usage delivery <https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__."
           },
           "storage_configuration_id": {
             "type": "string",
-            "description": "The ID for a method:storage/create that represents the S3 bucket with bucket policy as described in the main billable usage documentation page. See [Configure billable usage delivery]. [Configure billable usage delivery]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html"
+            "description": "The ID for a method:storage/create that represents the S3 bucket with bucket policy as described in the main billable usage documentation page. See `Configure billable usage delivery <https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__."
           },
           "config_name": {
             "type": "string",
@@ -1835,14 +2242,14 @@
           },
           "status": {
             "$ref": "#/components/schemas/LogDeliveryConfigStatus",
-            "description": "Status of log delivery configuration. Set to `ENABLED` (enabled) or `DISABLED` (disabled). Defaults to `ENABLED`. You can [enable or disable the configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed."
+            "description": "Status of log delivery configuration. Set to ``ENABLED`` (enabled) or ``DISABLED`` (disabled). Defaults to ``ENABLED``. You can [enable or disable the configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed."
           },
           "workspace_ids_filter": {
             "type": "array",
             "items": {
               "type": "integer"
             },
-            "description": "Optional filter that specifies workspace IDs to deliver logs for. By default the workspace filter is empty and log delivery applies at the account level, delivering workspace-level logs for all workspaces in your account, plus account level logs. You can optionally set this field to an array of workspace IDs (each one is an `int64`) to which log delivery should apply, in which case only workspace-level logs relating to the specified workspaces are delivered. If you plan to use different log delivery configurations for different workspaces, set this field explicitly. Be aware that delivery configurations mentioning specific workspaces won't apply to new workspaces created in the future, and delivery won't include account level logs. For some types of Databricks deployments there is only one workspace per account ID, so this field is unnecessary."
+            "description": "Optional filter that specifies workspace IDs to deliver logs for. By default the workspace filter is empty and log delivery applies at the account level, delivering workspace-level logs for all workspaces in your account, plus account level logs. You can optionally set this field to an array of workspace IDs (each one is an ``int64``) to which log delivery should apply, in which case only workspace-level logs relating to the specified workspaces are delivered. If you plan to use different log delivery configurations for different workspaces, set this field explicitly. Be aware that delivery configurations mentioning specific workspaces won't apply to new workspaces created in the future, and delivery won't include account level logs. For some types of Databricks deployments there is only one workspace per account ID, so this field is unnecessary."
           }
         },
         "required": [
@@ -1851,7 +2258,7 @@
           "credentials_id",
           "storage_configuration_id"
         ],
-        "description": "* Log Delivery Configuration"
+        "description": "Log Delivery Configuration"
       },
       "DeleteBudgetConfigurationResponse": {
         "type": "object",
@@ -1875,7 +2282,7 @@
           },
           "creator_user_name": {
             "type": "string",
-            "description": "The policy creator user name to be filtered on. If unspecified, all policies will be returned."
+            "description": "Deprecated: Do not use this field in new integrations. Creator filtering will be removed in a future version. The policy creator user name to be filtered on. If unspecified, all policies will be returned."
           },
           "policy_name": {
             "type": "string",
@@ -1928,7 +2335,7 @@
           },
           "next_page_token": {
             "type": "string",
-            "description": "Token which can be sent as `page_token` to retrieve the next page of results. If this field is omitted, there are no subsequent budgets."
+            "description": "Token which can be sent as ``page_token`` to retrieve the next page of results. If this field is omitted, there are no subsequent budgets."
           }
         }
       },
@@ -1937,7 +2344,7 @@
         "properties": {
           "next_page_token": {
             "type": "string",
-            "description": "A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages."
+            "description": "A token that can be sent as ``page_token`` to retrieve the next page. If this field is omitted, there are no subsequent pages."
           },
           "policies": {
             "type": "array",
@@ -1947,29 +2354,49 @@
           },
           "previous_page_token": {
             "type": "string",
-            "description": "A token that can be sent as `page_token` to retrieve the previous page. In this field is omitted, there are no previous pages."
+            "description": "A token that can be sent as ``page_token`` to retrieve the previous page. In this field is omitted, there are no previous pages."
           }
         },
         "description": "A list of policies."
+      },
+      "ListUsagePoliciesResponse": {
+        "type": "object",
+        "properties": {
+          "next_page_token": {
+            "type": "string",
+            "description": "A token that can be sent as ``page_token`` to retrieve the next page."
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UsagePolicy"
+            }
+          },
+          "previous_page_token": {
+            "type": "string",
+            "description": "A token that can be sent as ``page_token`` to retrieve the previous page."
+          }
+        },
+        "description": "A list of usage policies."
       },
       "LogDeliveryConfiguration": {
         "type": "object",
         "properties": {
           "log_type": {
             "$ref": "#/components/schemas/LogType",
-            "description": "Log delivery type. Supported values are: * `BILLABLE_USAGE` \u2014 Configure [billable usage log delivery]. For the CSV schema, see the [View billable usage]. * `AUDIT_LOGS` \u2014 Configure [audit log delivery]. For the JSON schema, see [Configure audit logging] [Configure audit logging]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html [View billable usage]: https://docs.databricks.com/administration-guide/account-settings/usage.html [audit log delivery]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html [billable usage log delivery]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html"
+            "description": "Log delivery type. Supported values are: - ``BILLABLE_USAGE`` \u2014 Configure `billable usage log delivery <https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__. For the CSV schema, see the `View billable usage <https://docs.databricks.com/administration-guide/account-settings/usage.html>`__. - ``AUDIT_LOGS`` \u2014 Configure `audit log delivery <https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__. For the JSON schema, see `Configure audit logging <https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__"
           },
           "output_format": {
             "$ref": "#/components/schemas/OutputFormat",
-            "description": "The file type of log delivery. * If `log_type` is `BILLABLE_USAGE`, this value must be `CSV`. Only the CSV (comma-separated values) format is supported. For the schema, see the [View billable usage] * If `log_type` is `AUDIT_LOGS`, this value must be `JSON`. Only the JSON (JavaScript Object Notation) format is supported. For the schema, see the [Configuring audit logs]. [Configuring audit logs]: https://docs.databricks.com/administration-guide/account-settings/audit-logs.html [View billable usage]: https://docs.databricks.com/administration-guide/account-settings/usage.html"
+            "description": "The file type of log delivery. - If ``log_type`` is ``BILLABLE_USAGE``, this value must be ``CSV``. Only the CSV (comma-separated values) format is supported. For the schema, see the `View billable usage <https://docs.databricks.com/administration-guide/account-settings/usage.html>`__ - If ``log_type`` is ``AUDIT_LOGS``, this value must be ``JSON``. Only the JSON (JavaScript Object Notation) format is supported. For the schema, see the `Configuring audit logs <https://docs.databricks.com/administration-guide/account-settings/audit-logs.html>`__."
           },
           "credentials_id": {
             "type": "string",
-            "description": "The ID for a method:credentials/create that represents the AWS IAM role with policy and trust relationship as described in the main billable usage documentation page. See [Configure billable usage delivery]. [Configure billable usage delivery]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html"
+            "description": "The ID for a method:credentials/create that represents the AWS IAM role with policy and trust relationship as described in the main billable usage documentation page. See `Configure billable usage delivery <https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__."
           },
           "storage_configuration_id": {
             "type": "string",
-            "description": "The ID for a method:storage/create that represents the S3 bucket with bucket policy as described in the main billable usage documentation page. See [Configure billable usage delivery]. [Configure billable usage delivery]: https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html"
+            "description": "The ID for a method:storage/create that represents the S3 bucket with bucket policy as described in the main billable usage documentation page. See `Configure billable usage delivery <https://docs.databricks.com/administration-guide/account-settings/billable-usage-delivery.html>`__."
           },
           "account_id": {
             "type": "string",
@@ -2001,7 +2428,7 @@
           },
           "status": {
             "$ref": "#/components/schemas/LogDeliveryConfigStatus",
-            "description": "Status of log delivery configuration. Set to `ENABLED` (enabled) or `DISABLED` (disabled). Defaults to `ENABLED`. You can [enable or disable the configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed."
+            "description": "Status of log delivery configuration. Set to ``ENABLED`` (enabled) or ``DISABLED`` (disabled). Defaults to ``ENABLED``. You can [enable or disable the configuration](#operation/patch-log-delivery-config-status) later. Deletion of a configuration is not supported, so disable a log delivery configuration that is no longer needed."
           },
           "update_time": {
             "type": "integer",
@@ -2012,7 +2439,7 @@
             "items": {
               "type": "integer"
             },
-            "description": "Optional filter that specifies workspace IDs to deliver logs for. By default the workspace filter is empty and log delivery applies at the account level, delivering workspace-level logs for all workspaces in your account, plus account level logs. You can optionally set this field to an array of workspace IDs (each one is an `int64`) to which log delivery should apply, in which case only workspace-level logs relating to the specified workspaces are delivered. If you plan to use different log delivery configurations for different workspaces, set this field explicitly. Be aware that delivery configurations mentioning specific workspaces won't apply to new workspaces created in the future, and delivery won't include account level logs. For some types of Databricks deployments there is only one workspace per account ID, so this field is unnecessary."
+            "description": "Optional filter that specifies workspace IDs to deliver logs for. By default the workspace filter is empty and log delivery applies at the account level, delivering workspace-level logs for all workspaces in your account, plus account level logs. You can optionally set this field to an array of workspace IDs (each one is an ``int64``) to which log delivery should apply, in which case only workspace-level logs relating to the specified workspaces are delivered. If you plan to use different log delivery configurations for different workspaces, set this field explicitly. Be aware that delivery configurations mentioning specific workspaces won't apply to new workspaces created in the future, and delivery won't include account level logs. For some types of Databricks deployments there is only one workspace per account ID, so this field is unnecessary."
           }
         },
         "required": [
@@ -2021,7 +2448,7 @@
           "credentials_id",
           "storage_configuration_id"
         ],
-        "description": "* Log Delivery Configuration"
+        "description": "Log Delivery Configuration"
       },
       "LogDeliveryStatus": {
         "type": "object",
@@ -2098,6 +2525,31 @@
           }
         }
       },
+      "UsagePolicy": {
+        "type": "object",
+        "properties": {
+          "binding_workspace_ids": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "description": "List of workspaces that this usage policy will be exclusively bound to."
+          },
+          "custom_tags": {
+            "type": "string",
+            "description": "A list of tags defined by the customer. At most 20 entries are allowed per policy."
+          },
+          "policy_id": {
+            "type": "string",
+            "description": "The Id of the policy. This field is generated by Databricks and globally unique."
+          },
+          "policy_name": {
+            "type": "string",
+            "description": "The name of the policy."
+          }
+        },
+        "description": "Contains the UsagePolicy details (same structure as BudgetPolicy)"
+      },
       "WrappedLogDeliveryConfiguration": {
         "type": "object",
         "properties": {
@@ -2117,7 +2569,7 @@
           },
           "next_page_token": {
             "type": "string",
-            "description": "Token which can be sent as `page_token` to retrieve the next page of results. If this field is omitted, there are no subsequent budgets."
+            "description": "Token which can be sent as ``page_token`` to retrieve the next page of results. If this field is omitted, there are no subsequent budgets."
           }
         }
       },
@@ -2126,7 +2578,7 @@
         "x-enum": [
           "EMAIL_NOTIFICATION"
         ],
-        "description": "Create a collection of name/value pairs.\n\nExample enumeration:\n\n>>> class Color(Enum):\n...     RED = 1\n...     BLUE = 2\n...     GREEN = 3\n\nAccess them by:\n\n- attribute access:\n\n  >>> Color.RED\n  <Color.RED: 1>\n\n- value lookup:\n\n  >>> Color(1)\n  <Color.RED: 1>\n\n- name lookup:\n\n  >>> Color['RED']\n  <Color.RED: 1>\n\nEnumerations can be iterated over, and know how many members they have:\n\n>>> len(Color)\n3\n\n>>> list(Color)\n[<Color.RED: 1>, <Color.BLUE: 2>, <Color.GREEN: 3>]\n\nMethods can be added to enumerations, and members can have their own\nattributes -- see the documentation for details."
+        "description": "Type of action that a budget alert executes when its threshold is crossed."
       },
       "AlertConfigurationQuantityType": {
         "type": "string",
@@ -2165,7 +2617,7 @@
           "SYSTEM_FAILURE",
           "USER_FAILURE"
         ],
-        "description": "* The status string for log delivery. Possible values are: `CREATED`: There were no log delivery\nattempts since the config was created. `SUCCEEDED`: The latest attempt of log delivery has\nsucceeded completely. `USER_FAILURE`: The latest attempt of log delivery failed because of\nmisconfiguration of customer provided permissions on role or storage. `SYSTEM_FAILURE`: The\nlatest attempt of log delivery failed because of an Databricks internal error. Contact support\nif it doesn't go away soon. `NOT_FOUND`: The log delivery status as the configuration has been\ndisabled since the release of this feature or there are no workspaces in the account."
+        "description": "The status string for log delivery. Possible values are: ``CREATED``: There were no log delivery\nattempts since the config was created. ``SUCCEEDED``: The latest attempt of log delivery has\nsucceeded completely. ``USER_FAILURE``: The latest attempt of log delivery failed because of\nmisconfiguration of customer provided permissions on role or storage. ``SYSTEM_FAILURE``: The\nlatest attempt of log delivery failed because of an Databricks internal error. Contact support\nif it doesn't go away soon. ``NOT_FOUND``: The log delivery status as the configuration has been\ndisabled since the release of this feature or there are no workspaces in the account."
       },
       "LogDeliveryConfigStatus": {
         "type": "string",
@@ -2173,7 +2625,7 @@
           "DISABLED",
           "ENABLED"
         ],
-        "description": "* Log Delivery Status\n\n`ENABLED`: All dependencies have executed and succeeded `DISABLED`: At least one dependency has\nsucceeded"
+        "description": "Log Delivery Status\n\n``ENABLED``: All dependencies have executed and succeeded ``DISABLED``: At least one dependency\nhas succeeded"
       },
       "LogType": {
         "type": "string",
@@ -2181,7 +2633,7 @@
           "AUDIT_LOGS",
           "BILLABLE_USAGE"
         ],
-        "description": "* Log Delivery Type"
+        "description": "Log Delivery Type"
       },
       "OutputFormat": {
         "type": "string",
@@ -2189,7 +2641,7 @@
           "CSV",
           "JSON"
         ],
-        "description": "* Log Delivery Output Format"
+        "description": "Log Delivery Output Format"
       },
       "SortSpecField": {
         "type": "string",

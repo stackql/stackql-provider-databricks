@@ -4,8 +4,8 @@
     "title": "Databricks Files API (workspace)",
     "description": "OpenAPI specification for the Databricks files service (workspace-level APIs), generated from the Databricks Python SDK.",
     "version": "0.1.0",
-    "x-stackql-sdk-version": "0.86.0",
-    "x-stackql-date-generated": "2026-03-20",
+    "x-stackql-sdk-version": "0.123.0",
+    "x-stackql-date-generated": "2026-07-31",
     "x-stackql-sdk-namespace": "databricks.sdk.service.files"
   },
   "servers": [
@@ -140,7 +140,7 @@
           "files",
           "dbfs"
         ],
-        "description": "Opens a stream to write to a file and returns a handle to this stream. There is a 10 minute idle\ntimeout on this handle. If a file or directory already exists on the given path and __overwrite__ is\nset to false, this call will throw an exception with ``RESOURCE_ALREADY_EXISTS``.\n\nA typical workflow for file upload would be:\n\n1. Issue a ``create`` call and get a handle. 2. Issue one or more ``add-block`` calls with the handle\nyou have. 3. Issue a ``close`` call with the handle you have.\n\n:param path: str\n  The path of the new file. The path should be the absolute DBFS path.\n:param overwrite: bool (optional)\n  The flag that specifies whether to overwrite existing file/files.\n\n:returns: :class:`CreateResponse`",
+        "description": "Opens a stream to write to a file and returns a handle to this stream. There is a 10 minute idle\ntimeout on this handle. If a file or directory already exists on the given path and **overwrite** is\nset to false, this call will throw an exception with ``RESOURCE_ALREADY_EXISTS``.\n\nA typical workflow for file upload would be:\n\n1. Issue a ``create`` call and get a handle.\n2. Issue one or more ``add-block`` calls with the handle you have.\n3. Issue a ``close`` call with the handle you have.\n\n:param path: str\n  The path of the new file. The path should be the absolute DBFS path.\n:param overwrite: bool (optional)\n  The flag that specifies whether to overwrite existing file/files.\n\n:returns: :class:`CreateResponse`",
         "requestBody": {
           "content": {
             "application/json": {
@@ -204,7 +204,7 @@
           "files",
           "dbfs"
         ],
-        "description": "Delete the file or directory (optionally recursively delete all files in the directory). This call\nthrows an exception with `IO_ERROR` if the path is a non-empty directory and `recursive` is set to\n`false` or on other similar errors.\n\nWhen you delete a large number of files, the delete operation is done in increments. The call returns\na response after approximately 45 seconds with an error message (503 Service Unavailable) asking you\nto re-invoke the delete operation until the directory structure is fully deleted.\n\nFor operations that delete more than 10K files, we discourage using the DBFS REST API, but advise you\nto perform such operations in the context of a cluster, using the [File system utility\n(dbutils.fs)](/dev-tools/databricks-utils.html#dbutils-fs). `dbutils.fs` covers the functional scope\nof the DBFS REST API, but from notebooks. Running such operations using notebooks provides better\ncontrol and manageability, such as selective deletes, and the possibility to automate periodic delete\njobs.\n\n:param path: str\n  The path of the file or directory to delete. The path should be the absolute DBFS path.\n:param recursive: bool (optional)\n  Whether or not to recursively delete the directory's contents. Deleting empty directories can be\n  done without providing the recursive flag.",
+        "description": "Delete the file or directory (optionally recursively delete all files in the directory). This call\nthrows an exception with ``IO_ERROR`` if the path is a non-empty directory and ``recursive`` is set to\n``false`` or on other similar errors.\n\nWhen you delete a large number of files, the delete operation is done in increments. The call returns\na response after approximately 45 seconds with an error message (503 Service Unavailable) asking you\nto re-invoke the delete operation until the directory structure is fully deleted.\n\nFor operations that delete more than 10K files, we discourage using the DBFS REST API, but advise you\nto perform such operations in the context of a cluster, using the [File system utility\n(dbutils.fs)](/dev-tools/databricks-utils.html#dbutils-fs). ``dbutils.fs`` covers the functional scope\nof the DBFS REST API, but from notebooks. Running such operations using notebooks provides better\ncontrol and manageability, such as selective deletes, and the possibility to automate periodic delete\njobs.\n\n:param path: str\n  The path of the file or directory to delete. The path should be the absolute DBFS path.\n:param recursive: bool (optional)\n  Whether or not to recursively delete the directory's contents. Deleting empty directories can be\n  done without providing the recursive flag.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -261,7 +261,7 @@
           "files",
           "dbfs"
         ],
-        "description": "Gets the file information for a file or directory. If the file or directory does not exist, this call\nthrows an exception with `RESOURCE_DOES_NOT_EXIST`.\n\n:param path: str\n  The path of the file or directory. The path should be the absolute DBFS path.\n\n:returns: :class:`FileInfo`",
+        "description": "Gets the file information for a file or directory. If the file or directory does not exist, this call\nthrows an exception with ``RESOURCE_DOES_NOT_EXIST``.\n\n:param path: str\n  The path of the file or directory. The path should be the absolute DBFS path.\n\n:returns: :class:`FileInfo`",
         "parameters": [
           {
             "name": "path",
@@ -314,7 +314,7 @@
           "files",
           "dbfs"
         ],
-        "description": "List the contents of a directory, or details of the file. If the file or directory does not exist,\nthis call throws an exception with `RESOURCE_DOES_NOT_EXIST`.\n\nWhen calling list on a large directory, the list operation will time out after approximately 60\nseconds. We strongly recommend using list only on directories containing less than 10K files and\ndiscourage using the DBFS REST API for operations that list more than 10K files. Instead, we recommend\nthat you perform such operations in the context of a cluster, using the [File system utility\n(dbutils.fs)](/dev-tools/databricks-utils.html#dbutils-fs), which provides the same functionality\nwithout timing out.\n\n:param path: str\n  The path of the file or directory. The path should be the absolute DBFS path.\n\n:returns: Iterator over :class:`FileInfo`",
+        "description": "List the contents of a directory, or details of the file. If the file or directory does not exist,\nthis call throws an exception with ``RESOURCE_DOES_NOT_EXIST``.\n\nWhen calling list on a large directory, the list operation will time out after approximately 60\nseconds. We strongly recommend using list only on directories containing less than 10K files and\ndiscourage using the DBFS REST API for operations that list more than 10K files. Instead, we recommend\nthat you perform such operations in the context of a cluster, using the [File system utility\n(dbutils.fs)](/dev-tools/databricks-utils.html#dbutils-fs), which provides the same functionality\nwithout timing out.\n\n:param path: str\n  The path of the file or directory. The path should be the absolute DBFS path.\n\n:returns: Iterator over :class:`FileInfo`",
         "parameters": [
           {
             "name": "path",
@@ -367,7 +367,7 @@
           "files",
           "dbfs"
         ],
-        "description": "Creates the given directory and necessary parent directories if they do not exist. If a file (not a\ndirectory) exists at any prefix of the input path, this call throws an exception with\n`RESOURCE_ALREADY_EXISTS`. **Note**: If this operation fails, it might have succeeded in creating some\nof the necessary parent directories.\n\n:param path: str\n  The path of the new directory. The path should be the absolute DBFS path.",
+        "description": "Creates the given directory and necessary parent directories if they do not exist. If a file (not a\ndirectory) exists at any prefix of the input path, this call throws an exception with\n``RESOURCE_ALREADY_EXISTS``. **Note**: If this operation fails, it might have succeeded in creating\nsome of the necessary parent directories.\n\n:param path: str\n  The path of the new directory. The path should be the absolute DBFS path.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -420,7 +420,7 @@
           "files",
           "dbfs"
         ],
-        "description": "Moves a file from one location to another location within DBFS. If the source file does not exist,\nthis call throws an exception with `RESOURCE_DOES_NOT_EXIST`. If a file already exists in the\ndestination path, this call throws an exception with `RESOURCE_ALREADY_EXISTS`. If the given source\npath is a directory, this call always recursively moves all files.\n\n:param source_path: str\n  The source path of the file or directory. The path should be the absolute DBFS path.\n:param destination_path: str\n  The destination path of the file or directory. The path should be the absolute DBFS path.",
+        "description": "Moves a file from one location to another location within DBFS. If the source file does not exist,\nthis call throws an exception with ``RESOURCE_DOES_NOT_EXIST``. If a file already exists in the\ndestination path, this call throws an exception with ``RESOURCE_ALREADY_EXISTS``. If the given source\npath is a directory, this call always recursively moves all files.\n\n:param source_path: str\n  The source path of the file or directory. The path should be the absolute DBFS path.\n:param destination_path: str\n  The destination path of the file or directory. The path should be the absolute DBFS path.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -478,7 +478,7 @@
           "files",
           "dbfs"
         ],
-        "description": "Uploads a file through the use of multipart form post. It is mainly used for streaming uploads, but\ncan also be used as a convenient single call for data upload.\n\nAlternatively you can pass contents as base64 string.\n\nThe amount of data that can be passed (when not streaming) using the __contents__ parameter is limited\nto 1 MB. `MAX_BLOCK_SIZE_EXCEEDED` will be thrown if this limit is exceeded.\n\nIf you want to upload large files, use the streaming upload. For details, see :method:dbfs/create,\n:method:dbfs/addBlock, :method:dbfs/close.\n\n:param path: str\n  The path of the new file. The path should be the absolute DBFS path.\n:param contents: str (optional)\n  This parameter might be absent, and instead a posted file will be used.\n:param overwrite: bool (optional)\n  The flag that specifies whether to overwrite existing file/files.",
+        "description": "Uploads a file through the use of multipart form post. It is mainly used for streaming uploads, but\ncan also be used as a convenient single call for data upload.\n\nAlternatively you can pass contents as base64 string.\n\nThe amount of data that can be passed (when not streaming) using the **contents** parameter is limited\nto 1 MB. ``MAX_BLOCK_SIZE_EXCEEDED`` will be thrown if this limit is exceeded.\n\nIf you want to upload large files, use the streaming upload. For details, see :method:dbfs/create,\n:method:dbfs/addBlock, :method:dbfs/close.\n\n:param path: str\n  The path of the new file. The path should be the absolute DBFS path.\n:param contents: str (optional)\n  This parameter might be absent, and instead a posted file will be used.\n:param overwrite: bool (optional)\n  The flag that specifies whether to overwrite existing file/files.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -539,7 +539,7 @@
           "files",
           "dbfs"
         ],
-        "description": "Returns the contents of a file. If the file does not exist, this call throws an exception with\n`RESOURCE_DOES_NOT_EXIST`. If the path is a directory, the read length is negative, or if the offset\nis negative, this call throws an exception with `INVALID_PARAMETER_VALUE`. If the read length exceeds\n1 MB, this call throws an exception with `MAX_READ_SIZE_EXCEEDED`.\n\nIf `offset + length` exceeds the number of bytes in a file, it reads the contents until the end of\nfile.\n\n:param path: str\n  The path of the file to read. The path should be the absolute DBFS path.\n:param length: int (optional)\n  The number of bytes to read starting from the offset. This has a limit of 1 MB, and a default value\n  of 0.5 MB.\n:param offset: int (optional)\n  The offset to read from in bytes.\n\n:returns: :class:`ReadResponse`",
+        "description": "Returns the contents of a file. If the file does not exist, this call throws an exception with\n``RESOURCE_DOES_NOT_EXIST``. If the path is a directory, the read length is negative, or if the offset\nis negative, this call throws an exception with ``INVALID_PARAMETER_VALUE``. If the read length\nexceeds 1 MB, this call throws an exception with ``MAX_READ_SIZE_EXCEEDED``.\n\nIf ``offset + length`` exceeds the number of bytes in a file, it reads the contents until the end of\nfile.\n\n:param path: str\n  The path of the file to read. The path should be the absolute DBFS path.\n:param length: int (optional)\n  The number of bytes to read starting from the offset. This has a limit of 1 MB, and a default value\n  of 0.5 MB.\n:param offset: int (optional)\n  The offset to read from in bytes.\n\n:returns: :class:`ReadResponse`",
         "parameters": [
           {
             "name": "path",
@@ -609,7 +609,7 @@
         "tags": [
           "files"
         ],
-        "description": "Creates an empty directory. If necessary, also creates any parent directories of the new, empty\ndirectory (like the shell command `mkdir -p`). If called on an existing directory, returns a success\nresponse; this method is idempotent (it will succeed if the directory already exists).\n\n:param directory_path: str\n  The absolute path of a directory.",
+        "description": "Creates an empty directory. If necessary, also creates any parent directories of the new, empty\ndirectory (like the shell command ``mkdir -p``). If called on an existing directory, returns a success\nresponse; this method is idempotent (it will succeed if the directory already exists).\n\n:param directory_path: str\n  The absolute path of a directory.",
         "parameters": [
           {
             "name": "directory_path",
@@ -695,7 +695,7 @@
         "tags": [
           "files"
         ],
-        "description": "Get the metadata of a directory. The response HTTP headers contain the metadata. There is no response\nbody.\n\nThis method is useful to check if a directory exists and the caller has access to it.\n\nIf you wish to ensure the directory exists, you can instead use `PUT`, which will create the directory\nif it does not exist, and is idempotent (it will succeed if the directory already exists).\n\n:param directory_path: str\n  The absolute path of a directory.",
+        "description": "Get the metadata of a directory. The response HTTP headers contain the metadata. There is no response\nbody.\n\nThis method is useful to check if a directory exists and the caller has access to it.\n\nIf you wish to ensure the directory exists, you can instead use ``PUT``, which will create the\ndirectory if it does not exist, and is idempotent (it will succeed if the directory already exists).\n\n:param directory_path: str\n  The absolute path of a directory.",
         "parameters": [
           {
             "name": "directory_path",
@@ -734,11 +734,11 @@
       },
       "get": {
         "operationId": "files_list_directory_contents",
-        "summary": "Returns the contents of a directory. If there is no directory at the specified path, the API returns a",
+        "summary": "Returns the contents of a directory. If there is no directory at the specified path, the API returns",
         "tags": [
           "files"
         ],
-        "description": "Returns the contents of a directory. If there is no directory at the specified path, the API returns a\nHTTP 404 error.\n\n:param directory_path: str\n  The absolute path of a directory.\n:param page_size: int (optional)\n  The maximum number of directory entries to return. The response may contain fewer entries. If the\n  response contains a `next_page_token`, there may be more entries, even if fewer than `page_size`\n  entries are in the response.\n\n  We recommend not to set this value unless you are intentionally listing less than the complete\n  directory contents.\n\n  If unspecified, at most 1000 directory entries will be returned. The maximum value is 1000. Values\n  above 1000 will be coerced to 1000.\n:param page_token: str (optional)\n  An opaque page token which was the `next_page_token` in the response of the previous request to list\n  the contents of this directory. Provide this token to retrieve the next page of directory entries.\n  When providing a `page_token`, all other parameters provided to the request must match the previous\n  request. To list all of the entries in a directory, it is necessary to continue requesting pages of\n  entries until the response contains no `next_page_token`. Note that the number of entries returned\n  must not be used to determine when the listing is complete.\n\n:returns: Iterator over :class:`DirectoryEntry`",
+        "description": "Returns the contents of a directory. If there is no directory at the specified path, the API returns\nan HTTP 404 error.\n\n:param directory_path: str\n  The absolute path of a directory.\n:param page_size: int (optional)\n  The maximum number of directory entries to return. The response may contain fewer entries. If the\n  response contains a ``next_page_token``, there may be more entries, even if fewer than ``page_size``\n  entries are in the response.\n\n  We recommend not to set this value unless you are intentionally listing less than the complete\n  directory contents.\n\n  If unspecified, at most 1000 directory entries will be returned. The maximum value is 1000. Values\n  above 1000 will be coerced to 1000.\n:param page_token: str (optional)\n  An opaque page token which was the ``next_page_token`` in the response of the previous request to\n  list the contents of this directory. Provide this token to retrieve the next page of directory\n  entries. When providing a ``page_token``, all other parameters provided to the request must match\n  the previous request. To list all of the entries in a directory, it is necessary to continue\n  requesting pages of entries until the response contains no ``next_page_token``. Note that the number\n  of entries returned must not be used to determine when the listing is complete.\n\n:returns: Iterator over :class:`DirectoryEntry`",
         "parameters": [
           {
             "name": "directory_path",
@@ -756,7 +756,7 @@
             "schema": {
               "type": "integer"
             },
-            "description": "The maximum number of directory entries to return. The response may contain fewer entries. If the response contains a `next_page_token`, there may be more entries, even if fewer than `page_size` entries are in the response. We recommend not to set this value unless you are intentionally listing less than the complete directory contents. If unspecified, at most 1000 directory entries will be returned. The maximum value is 1000. Values above 1000 will be coerced to 1000."
+            "description": "The maximum number of directory entries to return. The response may contain fewer entries. If the response contains a ``next_page_token``, there may be more entries, even if fewer than ``page_size`` entries are in the response. We recommend not to set this value unless you are intentionally listing less than the complete directory contents. If unspecified, at most 1000 directory entries will be returned. The maximum value is 1000. Values above 1000 will be coerced to 1000."
           },
           {
             "name": "page_token",
@@ -765,7 +765,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "An opaque page token which was the `next_page_token` in the response of the previous request to list the contents of this directory. Provide this token to retrieve the next page of directory entries. When providing a `page_token`, all other parameters provided to the request must match the previous request. To list all of the entries in a directory, it is necessary to continue requesting pages of entries until the response contains no `next_page_token`. Note that the number of entries returned must not be used to determine when the listing is complete."
+            "description": "An opaque page token which was the ``next_page_token`` in the response of the previous request to list the contents of this directory. Provide this token to retrieve the next page of directory entries. When providing a ``page_token``, all other parameters provided to the request must match the previous request. To list all of the entries in a directory, it is necessary to continue requesting pages of entries until the response contains no ``next_page_token``. Note that the number of entries returned must not be used to determine when the listing is complete."
           }
         ],
         "responses": {
@@ -1129,7 +1129,7 @@
           },
           "next_page_token": {
             "type": "string",
-            "description": "A token, which can be sent as `page_token` to retrieve the next page."
+            "description": "A token, which can be sent as ``page_token`` to retrieve the next page."
           }
         }
       },

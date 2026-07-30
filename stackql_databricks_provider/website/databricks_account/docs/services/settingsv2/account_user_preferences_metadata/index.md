@@ -48,6 +48,11 @@ The following fields are returned by `SELECT` queries:
     "description": "Name of the setting."
   },
   {
+    "name": "display_name",
+    "type": "string",
+    "description": "Human-readable display name for the setting or feature preview. This field may be unset if no display name is available."
+  },
+  {
     "name": "description",
     "type": "string",
     "description": ""
@@ -56,6 +61,11 @@ The following fields are returned by `SELECT` queries:
     "name": "docs_link",
     "type": "string",
     "description": "Link to databricks documentation for the setting"
+  },
+  {
+    "name": "preview_phase",
+    "type": "string",
+    "description": "Preview phase for feature preview settings. This field is not set for non-preview settings. (BETA, GA, GA_SOON, PRIVATE_PREVIEW, PUBLIC_PREVIEW)"
   },
   {
     "name": "type",
@@ -122,7 +132,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>A page token, received from a previous `ListAccountUserPreferencesMetadataRequest` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListAccountUserPreferencesMetadataRequest` must match the call that provided the page token.</td>
+    <td>A page token, received from a previous ``ListAccountUserPreferencesMetadataRequest`` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ``ListAccountUserPreferencesMetadataRequest`` must match the call that provided the page token.</td>
 </tr>
 </tbody>
 </table>
@@ -142,8 +152,10 @@ List valid user preferences and their metadata for a specific user. User prefere
 ```sql
 SELECT
 name,
+display_name,
 description,
 docs_link,
+preview_phase,
 type
 FROM databricks_account.settingsv2.account_user_preferences_metadata
 WHERE account_id = '{{ account_id }}' -- required

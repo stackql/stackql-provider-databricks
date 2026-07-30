@@ -81,7 +81,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "timezone_id",
         "type": "string",
-        "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See [Java TimeZone] for details. [Java TimeZone]: https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html"
+        "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See `Java TimeZone <https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html>`__ for details."
       }
     ]
   },
@@ -143,7 +143,7 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "timezone_id",
         "type": "string",
-        "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See [Java TimeZone] for details. [Java TimeZone]: https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html"
+        "description": "A Java timezone id. The schedule will be resolved with respect to this timezone. See `Java TimeZone <https://docs.oracle.com/javase/7/docs/api/java/util/TimeZone.html>`__ for details."
       }
     ]
   },
@@ -253,7 +253,7 @@ Parameters can be passed in the `WHERE` clause of a query. Check the [Methods](#
 <tr id="parameter-page_token">
     <td><CopyableCode code="page_token" /></td>
     <td><code>string</code></td>
-    <td>A page token, received from a previous `ListSchedules` call. Use this to retrieve the subsequent page.</td>
+    <td>A page token, received from a previous ``ListSchedules`` call. Use this to retrieve the subsequent page.</td>
 </tr>
 </tbody>
 </table>

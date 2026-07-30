@@ -93,12 +93,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "quantity_threshold",
         "type": "string",
-        "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on `quantity_type`."
+        "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on ``quantity_type``."
       },
       {
         "name": "quantity_type",
         "type": "string",
-        "description": "The way to calculate cost for this budget alert. This is what `quantity_threshold` is measured in. (LIST_PRICE_DOLLARS_USD)"
+        "description": "The way to calculate cost for this budget alert. This is what ``quantity_threshold`` is measured in. (LIST_PRICE_DOLLARS_USD)"
       },
       {
         "name": "time_period",
@@ -230,12 +230,12 @@ The following fields are returned by `SELECT` queries:
       {
         "name": "quantity_threshold",
         "type": "string",
-        "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on `quantity_type`."
+        "description": "The threshold for the budget alert to determine if it is in a triggered state. The number is evaluated based on ``quantity_type``."
       },
       {
         "name": "quantity_type",
         "type": "string",
-        "description": "The way to calculate cost for this budget alert. This is what `quantity_threshold` is measured in. (LIST_PRICE_DOLLARS_USD)"
+        "description": "The way to calculate cost for this budget alert. This is what ``quantity_threshold`` is measured in. (LIST_PRICE_DOLLARS_USD)"
       },
       {
         "name": "time_period",

@@ -114,6 +114,7 @@ config,
 ai_gateway,
 budget_policy_id,
 email_notifications,
+relocate_pt_commitment,
 tags,
 deployment_name
 )
@@ -123,6 +124,7 @@ SELECT
 '{{ ai_gateway }}',
 '{{ budget_policy_id }}',
 '{{ email_notifications }}',
+'{{ relocate_pt_commitment }}',
 '{{ tags }}',
 '{{ deployment_name }}'
 RETURNING
@@ -143,7 +145,9 @@ permission_level,
 route_optimized,
 state,
 tags,
-task
+task,
+telemetry_config,
+uc_system_metrics_export_state
 ;
 ```
 </TabItem>
@@ -169,6 +173,8 @@ task
             burst_scaling_enabled: {{ burst_scaling_enabled }}
             entity_version: "{{ entity_version }}"
             name: "{{ name }}"
+            pt_auto_renew: {{ pt_auto_renew }}
+            pt_term: "{{ pt_term }}"
         traffic_config:
           routes:
             - traffic_percentage: {{ traffic_percentage }}
@@ -222,6 +228,13 @@ task
           - "{{ on_update_failure }}"
         on_update_success:
           - "{{ on_update_success }}"
+    - name: relocate_pt_commitment
+      description: |
+        Relocate ("upgrade") an existing reserved commitment into this newly created endpoint, whose served model must be a same-line upgrade of the commitment's current model.
+      value:
+        source_endpoint: "{{ source_endpoint }}"
+        commitment_ids:
+          - "{{ commitment_ids }}"
     - name: tags
       description: |
         Tags to be attached to the serving endpoint and automatically propagated to billing logs.
@@ -249,7 +262,9 @@ Updates any combination of the pt endpoint's served entities, the compute config
 ```sql
 REPLACE databricks_workspace.serving.serving_endpoints_pt
 SET 
-config = '{{ config }}'
+config = '{{ config }}',
+pt_commitment_auto_renew = '{{ pt_commitment_auto_renew }}',
+relocate_pt_commitment = '{{ relocate_pt_commitment }}'
 WHERE 
 name = '{{ name }}' --required
 AND deployment_name = '{{ deployment_name }}' --required
@@ -272,7 +287,9 @@ permission_level,
 route_optimized,
 state,
 tags,
-task;
+task,
+telemetry_config,
+uc_system_metrics_export_state;
 ```
 </TabItem>
 </Tabs>
