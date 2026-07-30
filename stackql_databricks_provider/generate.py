@@ -247,7 +247,7 @@ def _load_overrides(overrides_path: Optional[str] = None) -> Dict[str, Any]:
     path = overrides_path or OVERRIDES_PATH
     if not os.path.exists(path):
         return {}
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         data = json.load(f)
     # Strip comment keys
     return {k: v for k, v in data.items() if not k.startswith("_")}
@@ -478,7 +478,7 @@ def _sanitize_orphaned_refs(paths: Dict[str, Any], schemas: Dict[str, Any]) -> N
 def _write_spec(spec: Dict[str, Any], directory: str, service_name: str) -> str:
     """Write a spec to a JSON file and return the path."""
     filepath = os.path.join(directory, f"{service_name}.json")
-    with open(filepath, "w") as f:
+    with open(filepath, "w", encoding="utf-8", newline="\n") as f:
         json.dump(spec, f, indent=2, sort_keys=False)
     logger.info("Wrote %s", filepath)
     return filepath

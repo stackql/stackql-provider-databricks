@@ -1,4 +1,6 @@
-.venv
+/.venv
+/.venv-win
+/stackql_databricks_provider/.venv
 *.
 build
 dist
@@ -15,8 +17,12 @@ node_modules
 .env
 .stackql/
 stackql
+stackql.exe
 stackql-*.sh
 stackql-server.log
 stackql-zip
+.stackql-smoke
+.stackql-smoke-live
+.venv-win
 billable_usage.csv
 pyrefly.toml

@@ -166,7 +166,7 @@ def load_existing_csv(csv_path: str) -> Dict[str, Dict[str, str]]:
     existing: Dict[str, Dict[str, str]] = {}
     if not os.path.exists(csv_path):
         return existing
-    with open(csv_path, "r", newline="") as f:
+    with open(csv_path, "r", newline="", encoding="utf-8") as f:
         reader = csv.DictReader(f)
         for row in reader:
             key = _make_row_key(row)
@@ -197,7 +197,7 @@ def generate_inventory_for_spec(
     service_name = os.path.splitext(os.path.basename(spec_path))[0]
     filename = f"{service_name}.json"
 
-    with open(spec_path) as f:
+    with open(spec_path, encoding="utf-8") as f:
         spec = json.load(f)
 
     rows = extract_operations_from_spec(spec, service_name, filename)
@@ -231,7 +231,7 @@ def generate_inventory_for_spec(
             new_operations.append(row)
 
     # Write
-    with open(csv_path, "w", newline="") as f:
+    with open(csv_path, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(final_rows)
@@ -301,7 +301,7 @@ def generate_all_inventories(
                     })
 
                 # Collect rows for consolidated CSV
-                with open(csv_path, "r", newline="") as f:
+                with open(csv_path, "r", newline="", encoding="utf-8") as f:
                     reader = csv.DictReader(f)
                     for row in reader:
                         all_rows.append(row)
@@ -313,7 +313,7 @@ def generate_all_inventories(
         if all_rows:
             scope_dir = os.path.join(output_dir, scope)
             consolidated_path = os.path.join(scope_dir, "all_services.csv")
-            with open(consolidated_path, "w", newline="") as f:
+            with open(consolidated_path, "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction="ignore")
                 writer.writeheader()
                 writer.writerows(all_rows)
@@ -473,7 +473,7 @@ def populate_object_keys(
             rows: List[Dict[str, str]] = []
             updated = 0
 
-            with open(csv_path, "r", newline="") as f:
+            with open(csv_path, "r", newline="", encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
                     op_id = row.get("operationId", "")
@@ -485,7 +485,7 @@ def populate_object_keys(
                     rows.append(row)
 
             if updated > 0:
-                with open(csv_path, "w", newline="") as f:
+                with open(csv_path, "w", newline="", encoding="utf-8") as f:
                     writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction="ignore")
                     writer.writeheader()
                     writer.writerows(rows)
@@ -497,7 +497,7 @@ def populate_object_keys(
         # Reconstitute all_services.csv
         if all_rows:
             consolidated_path = os.path.join(scope_dir, "all_services.csv")
-            with open(consolidated_path, "w", newline="") as f:
+            with open(consolidated_path, "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction="ignore")
                 writer.writeheader()
                 writer.writerows(all_rows)
@@ -546,12 +546,12 @@ def refresh_response_objects(
             if not os.path.exists(spec_path):
                 # No matching spec, keep CSV as-is
                 csv_path = os.path.join(scope_inv_dir, fname)
-                with open(csv_path, "r", newline="") as f:
+                with open(csv_path, "r", newline="", encoding="utf-8") as f:
                     all_rows.extend(list(csv.DictReader(f)))
                 continue
 
             # Build operationId -> response_object from spec
-            with open(spec_path) as f:
+            with open(spec_path, encoding="utf-8") as f:
                 spec = json.load(f)
             spec_resp_map: Dict[str, str] = {}
             for path_str, methods in spec.get("paths", {}).items():
@@ -564,7 +564,7 @@ def refresh_response_objects(
             csv_path = os.path.join(scope_inv_dir, fname)
             rows: List[Dict[str, str]] = []
             updated = 0
-            with open(csv_path, "r", newline="") as f:
+            with open(csv_path, "r", newline="", encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 for row in reader:
                     op_id = row.get("operationId", "")
@@ -576,7 +576,7 @@ def refresh_response_objects(
                     rows.append(row)
 
             if updated > 0:
-                with open(csv_path, "w", newline="") as f:
+                with open(csv_path, "w", newline="", encoding="utf-8") as f:
                     writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction="ignore")
                     writer.writeheader()
                     writer.writerows(rows)
@@ -588,7 +588,7 @@ def refresh_response_objects(
         # Reconstitute all_services.csv
         if all_rows:
             consolidated_path = os.path.join(scope_inv_dir, "all_services.csv")
-            with open(consolidated_path, "w", newline="") as f:
+            with open(consolidated_path, "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=CSV_COLUMNS, extrasaction="ignore")
                 writer.writeheader()
                 writer.writerows(all_rows)

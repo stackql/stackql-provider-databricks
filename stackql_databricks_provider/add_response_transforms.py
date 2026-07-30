@@ -60,7 +60,7 @@ def load_transforms(transforms_path: Optional[str] = None) -> Dict[str, Any]:
     if not os.path.exists(path):
         logger.warning("Transforms file not found: %s", path)
         return {}
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         data = json.load(f)
     transforms = data.get("transforms", {})
     logger.info("Loaded %d transform entries from %s", len(transforms), path)
@@ -199,7 +199,7 @@ def apply_transforms(
             )
             continue
 
-        with open(spec_path) as f:
+        with open(spec_path, encoding="utf-8") as f:
             spec = yaml.safe_load(f)
 
         resources = spec.get("components", {}).get("x-stackQL-resources", {})
@@ -228,7 +228,7 @@ def apply_transforms(
             logger.info("Applied transform: %s", key)
 
         if modified:
-            with open(spec_path, "w") as f:
+            with open(spec_path, "w", encoding="utf-8", newline="\n") as f:
                 yaml.dump(spec, f, default_flow_style=False, sort_keys=False,
                           allow_unicode=True, width=120)
             logger.info("Updated %s", spec_path)

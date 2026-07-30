@@ -77,7 +77,7 @@ def _discover_views(views_dir: str) -> Dict[str, Dict[str, Any]]:
         parts = path.replace(views_dir, "").strip(os.sep).split(os.sep)
         if len(parts) >= 3:
             scope, service = parts[0], parts[1]
-            with open(path) as f:
+            with open(path, encoding="utf-8") as f:
                 data = yaml.safe_load(f)
             if data:
                 key = f"{scope}/{service}"
@@ -132,7 +132,7 @@ def merge_views(
             )
             continue
 
-        with open(spec_path) as f:
+        with open(spec_path, encoding="utf-8") as f:
             spec = yaml.safe_load(f)
 
         resources = spec.get("components", {}).get("x-stackQL-resources")
@@ -152,7 +152,7 @@ def merge_views(
             logger.info("Merged view: %s.%s.%s", provider, service, view_name)
 
         if views_added > 0:
-            with open(spec_path, "w") as f:
+            with open(spec_path, "w", encoding="utf-8", newline="\n") as f:
                 yaml.dump(spec, f, default_flow_style=False, sort_keys=False,
                           allow_unicode=True, width=120)
             summary[scope] += views_added

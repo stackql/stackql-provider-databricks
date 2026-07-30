@@ -42,7 +42,7 @@ def load_examples(examples_path: Optional[str] = None) -> List[Dict[str, Any]]:
     if not os.path.exists(path):
         logger.warning("Examples config not found: %s", path)
         return []
-    with open(path) as f:
+    with open(path, encoding="utf-8") as f:
         data = json.load(f)
     examples = data.get("examples", [])
     logger.info("Loaded %d doc example entries from %s", len(examples), path)
@@ -178,7 +178,7 @@ def apply_doc_examples(
             summary["skipped"] += 1
             continue
 
-        with open(doc_path, "r") as f:
+        with open(doc_path, "r", encoding="utf-8") as f:
             content = f.read()
 
         # Check if tabs are already injected (idempotency)
@@ -203,7 +203,7 @@ def apply_doc_examples(
             continue
 
         if updated != content:
-            with open(doc_path, "w") as f:
+            with open(doc_path, "w", encoding="utf-8", newline="\n") as f:
                 f.write(updated)
             logger.info(
                 "Injected %d example tab(s) into %s/%s/%s",

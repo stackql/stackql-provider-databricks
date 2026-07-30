@@ -2,6 +2,8 @@
 
 This document describes the end-to-end workflow for generating, testing, and publishing the StackQL Databricks provider.
 
+> **Shortcut:** the entire workflow below is automated in the [Makefile](Makefile) - run `make help` in this directory (POSIX shell; WSL on Windows). `make all` runs specs -> inventories -> unit tests -> providers -> meta-route tests -> smoke tests -> docs. `make smoke` runs authenticated view-based smoke tests against the locally generated provider; `make smoke-live` tests the latest published providers from the public registry (see `smoke_tests/smoke.py`).
+
 ## Prerequisites
 
 - Python 3.9+ with the Databricks SDK installed (`pip install -e ".[dev]"` from repo root)
