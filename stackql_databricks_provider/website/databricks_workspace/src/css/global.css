@@ -272,3 +272,16 @@ div:has(> .vhsImage) {
   flex: 1;
   min-width: 0;
 }
+
+/*
+* registry logo: swap to the narrower -mobile mark below the Docusaurus
+* mobile breakpoint (996px), per theme
+*/
+@media (max-width: 996px) {
+  .navbar__logo img[src$='stackql-registry-logo.svg'] {
+    content: url('/img/stackql-registry-logo-mobile.svg');
+  }
+  .navbar__logo img[src$='stackql-registry-logo-white.svg'] {
+    content: url('/img/stackql-registry-logo-white-mobile.svg');
+  }
+}

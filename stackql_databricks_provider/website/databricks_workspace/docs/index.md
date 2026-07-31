@@ -72,6 +72,116 @@ $Auth = "{ 'databricks_workspace': { 'type': 'bearer', 'credentialsenvvar': 'DAT
 stackql.exe shell --auth=$Auth
 ```
 
+## Unity Catalog inventory
+
+Catalogs in a workspace, with ownership and audit fields:
+
+```sql
+SELECT
+  full_name,
+  catalog_type,
+  owner,
+  comment,
+  datetime(created_at/1000, 'unixepoch') AS created,
+  created_by
+FROM databricks_workspace.catalog.catalogs
+WHERE deployment_name = '<deployment_name>';
+```
+
+Walk the catalog hierarchy - schemas and tables in a catalog:
+
+```sql
+SELECT full_name, table_type, data_source_format, owner
+FROM databricks_workspace.catalog.tables
+WHERE catalog_name = 'main'
+AND schema_name = 'default'
+AND deployment_name = '<deployment_name>';
+```
+
+## SQL statement execution - the full lifecycle
+
+The Databricks SQL Statement Execution API maps naturally to SQL verbs - `INSERT` submits a statement, `SELECT` polls it, `DELETE` cancels it:
+
+```sql
+/* submit a statement to a SQL warehouse */
+INSERT INTO databricks_workspace.sql.statement_execution (
+  statement,
+  warehouse_id,
+  wait_timeout,
+  deployment_name
+)
+SELECT
+  'SELECT * FROM samples.nyctaxi.trips LIMIT 100',
+  '<warehouse_id>',
+  '0s',
+  '<deployment_name>';
+
+/* poll for status and results */
+SELECT status, manifest, result
+FROM databricks_workspace.sql.statement_execution
+WHERE statement_id = '<statement_id>'
+AND deployment_name = '<deployment_name>';
+
+/* cancel a running statement */
+DELETE FROM databricks_workspace.sql.statement_execution
+WHERE statement_id = '<statement_id>'
+AND deployment_name = '<deployment_name>';
+```
+
+Recent query history across SQL warehouses and serverless compute:
+
+```sql
+SELECT query_id, status, query_text, user_name
+FROM databricks_workspace.sql.query_history
+WHERE deployment_name = '<deployment_name>';
+```
+
+## Workspace identity
+
+Users, their groups and entitlements, flattened with built-in views:
+
+```sql
+SELECT * FROM databricks_workspace.iam.vw_users WHERE deployment_name = '<deployment_name>';
+SELECT * FROM databricks_workspace.iam.vw_user_groups WHERE deployment_name = '<deployment_name>';
+SELECT * FROM databricks_workspace.iam.vw_user_entitlements WHERE deployment_name = '<deployment_name>';
+SELECT * FROM databricks_workspace.iam.vw_group_members WHERE deployment_name = '<deployment_name>';
+```
+
+## Compute estate
+
+Clusters with their state, node types and autotermination settings:
+
+```sql
+SELECT
+  cluster_id,
+  cluster_name,
+  state,
+  node_type_id,
+  autotermination_minutes,
+  spark_version
+FROM databricks_workspace.compute.clusters
+WHERE deployment_name = '<deployment_name>';
+```
+
+SQL warehouses, sized and by state:
+
+```sql
+SELECT id, name, state, cluster_size, num_clusters, auto_stop_mins
+FROM databricks_workspace.sql.warehouses
+WHERE deployment_name = '<deployment_name>';
+```
+
+## Workspace settings
+
+All workspace admin settings as key/value pairs, using a built-in view:
+
+```sql
+SELECT key, value
+FROM databricks_workspace.settings.vw_all_settings
+WHERE deployment_name = '<deployment_name>';
+```
+
+
 ## Services
 <div class="row">
 <div class="providerDocColumn">

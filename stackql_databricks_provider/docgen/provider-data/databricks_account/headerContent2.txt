@@ -36,3 +36,91 @@ AUTH='{ "databricks_account": { "type": "bearer", "credentialsenvvar": "DATABRIC
 $Auth = "{ 'databricks_account': { 'type': 'bearer', 'credentialsenvvar': 'DATABRICKS_TOKEN' }}"
 stackql.exe shell --auth=$Auth
 ```
+
+## Workspace inventory
+
+Every workspace in the account, with status, region and when it was created:
+
+```sql
+SELECT
+  workspace_id,
+  workspace_name,
+  workspace_status,
+  aws_region,
+  deployment_name,
+  datetime(creation_time/1000, 'unixepoch') AS created
+FROM databricks_account.provisioning.workspaces
+WHERE account_id = '<account_id>'
+ORDER BY creation_time DESC;
+```
+
+Join workspaces to their permission assignments - who can access what:
+
+```sql
+SELECT
+  w.workspace_id,
+  w.workspace_name,
+  w.workspace_status,
+  json_extract(wa.principal, '$.display_name') AS principal,
+  wa.permissions
+FROM databricks_account.provisioning.workspaces w
+LEFT JOIN databricks_account.iam.workspace_assignment wa
+ON w.workspace_id = wa.workspace_id
+WHERE account_id = '<account_id>';
+```
+
+## Identity at a glance
+
+Account users flattened to one row per role assignment, using a built-in view:
+
+```sql
+SELECT *
+FROM databricks_account.iam.vw_account_user_roles
+WHERE account_id = '<account_id>';
+```
+
+Find the account admins:
+
+```sql
+SELECT
+  id AS user_id,
+  userName AS user_name,
+  displayName AS display_name
+FROM databricks_account.iam.vw_account_user_roles
+WHERE account_id = '<account_id>'
+AND role = 'account_admin';
+```
+
+## FinOps queries
+
+Budget policies and budget configurations:
+
+```sql
+SELECT *
+FROM databricks_account.billing.vw_budget_policies
+WHERE account_id = '<account_id>';
+
+SELECT *
+FROM databricks_account.billing.vw_budgets
+WHERE account_id = '<account_id>';
+```
+
+Download a month of billable usage to CSV:
+
+```bash
+stackql exec -o text --hideheaders -f billable_usage.csv \
+  "SELECT contents FROM databricks_account.billing.billable_usage
+   WHERE start_month = '2026-06' AND end_month = '2026-07'
+   AND account_id = '<account_id>'"
+```
+
+## Network and storage configuration
+
+Audit the account's registered infrastructure - credentials, storage configurations, networks and encryption keys - using the built-in views:
+
+```sql
+SELECT * FROM databricks_account.provisioning.vw_credentials WHERE account_id = '<account_id>';
+SELECT * FROM databricks_account.provisioning.vw_storage_configurations WHERE account_id = '<account_id>';
+SELECT * FROM databricks_account.provisioning.vw_networks WHERE account_id = '<account_id>';
+SELECT * FROM databricks_account.settings.vw_network_connectivity_configs WHERE account_id = '<account_id>';
+```

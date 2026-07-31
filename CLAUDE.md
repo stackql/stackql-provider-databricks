@@ -32,6 +32,7 @@ Key concepts:
 - **CSV inventories are masters**: manual edits to `stackql_resource_name`, `stackql_method_name`, `stackql_verb`, `stackql_object_key` in the per-service CSVs are preserved by `inventory_gen.py`; only new operations are appended. `all_services.csv` per scope is regenerated from the masters and is the input to provider generation.
 - **Views**: SQL views live in `stackql_databricks_provider/views/{account,workspace}/{service}/views.yaml` and are merged into `components.x-stackQL-resources` of the matching service spec by `merge_views.py` (must run last). Views are also the smoke test surface.
 - **Auth**: both providers use OAuth2 client credentials with `DATABRICKS_ACCOUNT_ID`, `DATABRICKS_CLIENT_ID`, `DATABRICKS_CLIENT_SECRET` (same vars as Terraform / the Databricks CLI). Local dev secrets can go in `stackql_databricks_provider/.env` (gitignored).
+- **Doc microsites**: the docusaurus sites under `website/databricks_{account,workspace}` vendor the shared StackQL site config - `npm run build` (via `prebuild`) shallow-clones [stackql/docusaurus-config](https://github.com/stackql/docusaurus-config) into a gitignored `.shared-config/` and `docusaurus.config.js` calls its `createConfig` factory, with only `provider.js` (name/title) and a couple of overrides per site. The provider index page content (intro, auth, getting-started reference queries) is mastered in `docgen/provider-data/<provider>/headerContent{1,2}.txt` and spliced in by `generate-docs`.
 
 ## Workflow (Makefile)
 
